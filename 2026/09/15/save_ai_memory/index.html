@@ -1,0 +1,166 @@
+<!DOCTYPE html><html lang="en" theme-mode="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>text | Hexo</title><meta name="description" content="ai的使用逐渐普及，与工业革命机器代替劳动而出现的健身房一般，ai代替思考的当下我们应该有一个健脑房我的blog将会科普许多数字工作者当下该有的常识 本期将介绍ai记忆的保存问题（基础） 为什么你调用的ai记不住你说的话？ 如下是ds的流式输出代码答案其实很朴素：大模型 API 默认是无状态的。你看到的所有“记忆”，几乎都不是模型自己记住了，而是代码在每一轮请求里，把历史消息重新塞回去。这个过程，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="text">
+<meta property="og:url" content="http://example.com/2026/09/15/save_ai_memory/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="ai的使用逐渐普及，与工业革命机器代替劳动而出现的健身房一般，ai代替思考的当下我们应该有一个健脑房我的blog将会科普许多数字工作者当下该有的常识 本期将介绍ai记忆的保存问题（基础） 为什么你调用的ai记不住你说的话？ 如下是ds的流式输出代码答案其实很朴素：大模型 API 默认是无状态的。你看到的所有“记忆”，几乎都不是模型自己记住了，而是代码在每一轮请求里，把历史消息重新塞回去。这个过程，">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-09-15T13:20:52.000Z">
+<meta property="article:modified_time" content="2026-09-16T06:08:29.109Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary"><link rel="canonical" href="http://example.com/2026/09/15/save_ai_memory/"><link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="preload" as="font" crossorigin="anonymous" href="/font/Bender.ttf"><link rel="preload" as="font" crossorigin="anonymous" href="/font/BenderLight.woff2"><link rel="preload" as="font" crossorigin="anonymous" href="/font/JetBrainsMono-Regular.woff2"><link rel="stylesheet" href="/css/arknights.css"><style>@font-face {
+  font-family: Bender;
+  src: local('Bender'), url("/font/Bender.ttf"), url("/font/Bender.otf");
+}
+@font-face {
+  font-family: BenderLight;
+  src: local('BenderLight'), url("/font/BenderLight.woff2") format('woff2');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}
+</style><meta name="page-config" content="{&quot;code_fold&quot;:null}"><script class="pjax-js">var config = {"root":"/","code_fold":15,"search":{"preload":false,"activeHolder":"键入以继续","blurHolder":"数据检索","noResult":"无 $0 相关数据"},"code":{"codeInfo":"$0 - $1 行","copy":"复制"}};
+var page_config = {
+  code_fold: null
+};
+function updatePageConfig() {
+  var newPageConfig = document.querySelector('meta[name="page-config"]');
+  if (newPageConfig) {
+    page_config = JSON.parse(newPageConfig.content);
+  }
+}
+document.addEventListener('pjax:complete', function() { updatePageConfig(); });
+updatePageConfig();</script><link type="text/css" rel="stylesheet" href="/lib/encrypt/hbe.style.css"><script src="//unpkg.com/mermaid@11.12.2/dist/mermaid.min.js"></script><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lightgallery.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-zoom.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-thumbnail.css"><link type="text/css" rel="stylesheet" href="/lib/fontawesome/css/all.min.css"><script>if (window.localStorage.getItem('theme-mode') === 'light')
+ document.documentElement.setAttribute('theme-mode', 'light')
+if (window.localStorage.getItem('theme-mode') === 'dark')
+ document.documentElement.setAttribute('theme-mode', 'dark')</script><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.woff2") format('woff2');
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><style>:root {
+ --dark-background: url('https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg');
+ --light-background: url('/img/bk.jpg');
+ --theme-encrypt-confirm: '确认'
+}</style><script defer src="/js/arknights.js"></script><script defer src="/js/search.js"></script><script defer type="module">import mermaid from '//unpkg.com/mermaid@11.12.2/dist/mermaid.esm.min.mjs';
+window.mermaid = mermaid;
+code.paintMermaid();
+</script><script async src="//unpkg.com/lightgallery@2.7.1/lightgallery.min.js"></script><script async src="//unpkg.com/lightgallery@2.7.1/plugins/zoom/lg-zoom.min.js"></script><script async src="//unpkg.com/lightgallery@2.7.1/plugins/thumbnail/lg-thumbnail.min.js"></script><script async src="/lib/encrypt/hbe.js"></script><script async src="/js/pjax.js"></script><script class="pjax-js">reset= () => {document.querySelector('.lg-container')?.remove()
+lightGallery(document.getElementById('post-bg'), {
+  plugins: [lgZoom,lgThumbnail],
+  selector: '.item-img'})}</script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js','data-pjax','.vercount','meta[name=page-config]'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);reset()})</script><script class="pjax-js">reset= () => {document.querySelector('.lg-container')?.remove()
+const postBg = document.querySelector('#post-bg');
+if (postBg) lightGallery(postBg, {
+  plugins: [lgZoom,lgThumbnail],
+  selector: '.item-img'})}</script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js','data-pjax','.vercount','meta[name=page-config]'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="数据检索" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>text</h1><div id="post-info"><span>文章发布时间: <div class="control"><time datetime="2026-09-15T13:20:52.000Z" id="date"> 2026-09-15</time></div></span><br><span>最后更新时间: <div class="control"><time datetime="2026-09-16T06:08:29.109Z" id="updated"> 2026-09-16</time></div></span></div></div><hr><div id="post-content"><p>ai的使用逐渐普及，与工业革命机器代替劳动而出现的健身房一般，ai代替思考的当下我们应该有一个健脑房<br>我的blog将会科普许多数字工作者当下该有的常识</p>
+<p>本期将介绍ai记忆的保存问题（基础）</p>
+<p>为什么你调用的ai记不住你说的话？</p>
+<p>如下是ds的流式输出代码<br>答案其实很朴素：大模型 API 默认是无状态的。<br>你看到的所有“记忆”，几乎都不是模型自己记住了，而是代码在每一轮请求里，把历史消息重新塞回去。这个过程，像滚雪球。</p>
+<p>在网页版聊天框里，AI 好像有连续记忆。<br>但在代码层面，一次 AI 调用更像一个函数：</p>
+<p>text<br>response &#x3D; model(messages)<br>你传进去什么，它就基于什么回答。<br>除非你再次把历史传进去，否则它不知道上一轮发生了什么。</p>
+<p>所以，所谓“AI记忆”，在大多数 API 场景里其实是：</p>
+<p>text<br>messages &#x3D; messages + [用户新消息, AI回复]<br>下一次请求 &#x3D; 把整个 messages 再发给模型</p>
+<p>假设最开始只有一个系统提示：<br>messages &#x3D; [<br>    {“role”: “system”, “content”: “你是一名严谨的技术助理。”}<br>]<br>用户问：“什么是向量数据库？”</p>
+<p>代码把用户消息追加进去：<br>messages.append({“role”: “user”, “content”: “什么是向量数据库？”})<br>调用模型，得到回答。</p>
+<p>然后代码又把回答追加进去：<br>messages.append({“role”: “assistant”, “content”: answer})<br>下一轮，用户再问：“它和传统数据库有什么区别？”</p>
+<p>此时发给模型的 messages 已经包含：</p>
+<p>系统提示</p>
+<p>第一轮用户问题</p>
+<p>第一轮 AI 回答</p>
+<p>第二轮用户问题</p>
+<p>模型看到的不是“它”，而是完整的前情提要。<br>代码替模型记住了上下文。</p>
+<p>一个最小实现大概是这样：<br>from openai import OpenAI</p>
+<p>client &#x3D; OpenAI()</p>
+<p>messages &#x3D; [<br>    {“role”: “system”, “content”: “你是一名严谨的技术助理。”}<br>]</p>
+<p>def chat(user_input):<br>    messages.append({“role”: “user”, “content”: user_input})</p>
+<pre><code>resp = client.chat.completions.create(
+    model=&quot;gpt-4o-mini&quot;,
+    messages=messages,
+)
+
+answer = resp.choices[0].message.content
+messages.append({&quot;role&quot;: &quot;assistant&quot;, &quot;content&quot;: answer})
+return answer
+</code></pre>
+<p>messages 数组就是 AI 的短期记忆。<br>每一次 append，都是在滚雪球。</p>
+<p>三、雪球越滚越大，问题也会出现<br>滚雪球式记忆简单有效，但它不是无限的。</p>
+<ol>
+<li><p>上下文窗口有限<br>模型一次能看的 token 有上限。<br>雪球滚太大，早期内容会被截断，或者直接报错。</p>
+</li>
+<li><p>成本和延迟上升<br>每轮都把历史重新发一遍。<br>历史越长，token 越多，费用越高，响应也可能越慢。</p>
+</li>
+<li><p>噪声会越来越多<br>旧对话里可能有错误、闲聊、过期信息。<br>它们会继续影响新回答，像雪球里混进了泥沙。</p>
+</li>
+<li><p>隐私风险<br>历史消息会反复上传。<br>如果里面有手机号、密钥、客户数据，风险会被放大。</p>
+</li>
+</ol>
+<p>如何完善？</p>
+<p>四、工程化记忆</p>
+<p>AI记忆不是模型能力，而是上下文工程。</p>
+<p>常见做法有几类：</p>
+<ol>
+<li>截断：只保留最近几轮<br>python<br>MAX_TURNS &#x3D; 10</li>
+</ol>
+<p>def trim(messages):<br>    system &#x3D; messages[0]<br>    recent &#x3D; messages[-MAX_TURNS:]<br>    return [system] + recent</p>
+<ol start="2">
+<li><p>摘要：把旧雪球压成一句话<br>python<br>def trim_with_summary(messages):<br> if len(messages) &lt;&#x3D; 12:<br> return messages<br> system &#x3D; messages[0]<br> old &#x3D; messages[1:-10]<br> recent &#x3D; messages[-10:]</p>
+<p> summary &#x3D; summarize(old)  # 调模型或规则生成摘要</p>
+<p> return [<br> system,<br> {“role”: “system”, “content”: f”历史摘要：{summary}”},<br> *recent<br> ]</p>
+</li>
+</ol>
+<p>这样既保留长期线索，又控制 token。</p>
+<ol start="3">
+<li>检索：长期记忆放仓库，按需取用<br>把知识、文档、历史记录存进向量数据库。<br>每次只检索最相关的几段，塞进当前提示。</li>
+</ol>
+<p>def build_messages(user_input):<br>    docs &#x3D; vector_db.search(user_input, top_k&#x3D;5)<br>    context &#x3D; “\n”.join(docs)</p>
+<pre><code>return [
+    {&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: &quot;根据以下资料回答：\n&quot; + context},
+    {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: user_input}
+]
+</code></pre>
+<p>这相当于：<br>雪球不把所有东西都粘上，而是需要哪块，就去仓库取哪块。</p>
+<ol start="4">
+<li>结构化记忆：状态存数据库，不靠自然语言<br>用户偏好、任务进度、订单状态，最好存成字段：</li>
+</ol>
+<p>json<br>{<br>  “user_id”: “u123”,<br>  “preferred_language”: “中文”,<br>  “current_task”: “写博客”,<br>  “last_topic”: “AI记忆”<br>}</p>
+<p>我个人其实更认同一个结合体：<br>ai会记录并搭建个人的知识库，实现定制的检索手段</p>
+<p>#调用ai大模型<br>    response &#x3D; client.chat.completions.create(<br>        model&#x3D;”deepseek-v4-pro”,<br>        messages&#x3D;[<br>            {“role”: “system”, “content”: system_prompt % (st.session_state.nick_name, st.session_state.nature)},<br>            *st.session_state.messages<br>        ],<br>        stream&#x3D;True, reasoning_effort&#x3D;”high”, extra_body&#x3D;{“thinking”: {“type”: “enabled”}})</p>
+<pre><code>#流式输出
+response_message = st.empty()
+full_response = &quot;&quot;
+for chunk in response:
+    if chunk.choices[0].delta.content is not None:
+        content = chunk.choices[0].delta.content
+        full_response += content
+        response_message.chat_message(&quot;assistant&quot;).write(full_response)
+</code></pre>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages" style="justify-content: flex-end"><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/09/15/hello-world/">Hello World 上一篇 →</a></div></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="回到顶部" style="opacity: 0; display: none;">∧ </a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="切换主题"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">John Doe</a></h1><div id="description"><p></p></div></div><div id="aside-block"></div><footer><nobr>构建自 <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> 使用主题 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> 主题作者 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>
