@@ -1,0 +1,627 @@
+<!DOCTYPE html><html lang="en" theme-mode="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>deepseek建议与实践 | Hexo</title><meta name="description" content="1.一个当前会话内容查询功能（好像最近已经被官方实现了）搜索算法用的是精确子串 + Token 覆盖的混合策略，适合”用户查找”场景：精确匹配得 100 分，Token 全命中再加 30 分。这意味着你搜”之前那个报错”和搜”报错”都能命中同一条消息，但前者如果恰好是原文子串，会排在最前面。不需要向量检索——关键词匹配在这个场景下足够快、足够准。 中文分词用 bigram（双字组合）做中文分词。比">
+<meta property="og:type" content="article">
+<meta property="og:title" content="deepseek建议与实践">
+<meta property="og:url" content="http://example.com/2026/09/20/deepseek/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1.一个当前会话内容查询功能（好像最近已经被官方实现了）搜索算法用的是精确子串 + Token 覆盖的混合策略，适合”用户查找”场景：精确匹配得 100 分，Token 全命中再加 30 分。这意味着你搜”之前那个报错”和搜”报错”都能命中同一条消息，但前者如果恰好是原文子串，会排在最前面。不需要向量检索——关键词匹配在这个场景下足够快、足够准。 中文分词用 bigram（双字组合）做中文分词。比">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-09-20T04:26:20.000Z">
+<meta property="article:modified_time" content="2026-09-20T04:31:04.115Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary"><link rel="canonical" href="http://example.com/2026/09/20/deepseek/"><link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="preload" as="font" crossorigin="anonymous" href="/font/Bender.ttf"><link rel="preload" as="font" crossorigin="anonymous" href="/font/BenderLight.woff2"><link rel="preload" as="font" crossorigin="anonymous" href="/font/JetBrainsMono-Regular.woff2"><link rel="stylesheet" href="/css/arknights.css"><style>@font-face {
+  font-family: Bender;
+  src: local('Bender'), url("/font/Bender.ttf"), url("/font/Bender.otf");
+}
+@font-face {
+  font-family: BenderLight;
+  src: local('BenderLight'), url("/font/BenderLight.woff2") format('woff2');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}
+</style><meta name="page-config" content="{&quot;code_fold&quot;:null}"><script class="pjax-js">var config = {"root":"/","code_fold":15,"search":{"preload":false,"activeHolder":"Enter here","blurHolder":"Search","noResult":"Data \"$0\" not found"},"code":{"codeInfo":"$0 - $1 lines","copy":"copy"}};
+var page_config = {
+  code_fold: null
+};
+function updatePageConfig() {
+  var newPageConfig = document.querySelector('meta[name="page-config"]');
+  if (newPageConfig) {
+    page_config = JSON.parse(newPageConfig.content);
+  }
+}
+document.addEventListener('pjax:complete', function() { updatePageConfig(); });
+updatePageConfig();</script><link type="text/css" rel="stylesheet" href="/lib/encrypt/hbe.style.css"><script src="//unpkg.com/mermaid@11.12.2/dist/mermaid.min.js"></script><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lightgallery.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-zoom.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-thumbnail.css"><link type="text/css" rel="stylesheet" href="/lib/fontawesome/css/all.min.css"><script>if (window.localStorage.getItem('theme-mode') === 'light')
+ document.documentElement.setAttribute('theme-mode', 'light')
+if (window.localStorage.getItem('theme-mode') === 'dark')
+ document.documentElement.setAttribute('theme-mode', 'dark')</script><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.woff2") format('woff2');
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><style>:root {
+ --dark-background: url('https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg');
+ --light-background: url('/img/bk.jpg');
+ --theme-encrypt-confirm: 'confirm'
+}</style><script defer src="/js/arknights.js"></script><script defer src="/js/search.js"></script><script defer type="module">import mermaid from '//unpkg.com/mermaid@11.12.2/dist/mermaid.esm.min.mjs';
+window.mermaid = mermaid;
+code.paintMermaid();
+</script><script async src="//unpkg.com/lightgallery@2.7.1/lightgallery.min.js"></script><script async src="//unpkg.com/lightgallery@2.7.1/plugins/zoom/lg-zoom.min.js"></script><script async src="//unpkg.com/lightgallery@2.7.1/plugins/thumbnail/lg-thumbnail.min.js"></script><script async src="/lib/encrypt/hbe.js"></script><script async src="/js/pjax.js"></script><script class="pjax-js">reset= () => {document.querySelector('.lg-container')?.remove()
+lightGallery(document.getElementById('post-bg'), {
+  plugins: [lgZoom,lgThumbnail],
+  selector: '.item-img'})}</script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js','data-pjax','.vercount','meta[name=page-config]'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);reset()})</script><script class="pjax-js">reset= () => {document.querySelector('.lg-container')?.remove()
+const postBg = document.querySelector('#post-bg');
+if (postBg) lightGallery(postBg, {
+  plugins: [lgZoom,lgThumbnail],
+  selector: '.item-img'})}</script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js','data-pjax','.vercount','meta[name=page-config]'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>deepseek建议与实践</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2026-09-20T04:26:20.000Z" id="date"> 2026-09-20</time></div></span><br><span>Last Update: <div class="control"><time datetime="2026-09-20T04:31:04.115Z" id="updated"> 2026-09-20</time></div></span></div></div><hr><div id="post-content"><p>1.一个当前会话内容查询功能（好像最近已经被官方实现了）<br>搜索算法<br>用的是精确子串 + Token 覆盖的混合策略，适合”用户查找”场景：精确匹配得 100 分，Token 全命中再加 30 分。这意味着你搜”之前那个报错”和搜”报错”都能命中同一条消息，但前者如果恰好是原文子串，会排在最前面。不需要向量检索——关键词匹配在这个场景下足够快、足够准。</p>
+<p>中文分词<br>用 bigram（双字组合）做中文分词。比如”搜索插件”会被拆成 搜、索、插、件、搜索、索插、插件。这样即使用户输入的关键词和原文不完全一致，也能通过 bigram 重叠匹配到。代码里用的是正则 [\u4e00-\u9fff\u3400-\u4dbf] 提取 CJK 字符，覆盖了基本汉字和扩展 A 区。</p>
+<p>虚拟滚动处理<br>提供了 loadAllMessages() 函数，但默认没有自动调用，因为它会强制滚动页面。如果你觉得搜索结果不全，可以在搜索前手动调用：</p>
+<p>js<br>&#x2F;&#x2F; 在控制台手动触发<br>loadAllMessages().then(() &#x3D;&gt; console.log(‘加载完成，可以搜索了’));<br>更好的做法是在面板里加一个”加载全部消息”按钮，但考虑到首次使用体验，默认不触发滚动。</p>
+<p>增量索引<br>MutationObserver 监听 document.body 的子节点变化，防抖 800ms 后调用 incrementalIndex()。这个函数只添加 ID 不在索引中的新消息，不会重建整个索引，性能开销很小。</p>
+<p>会话切换<br>通过监听 location.href 变化来检测会话切换。DeepSeek 是 SPA，切换会话不会刷新页面，所以需要监听 URL 变化。检测到变化后等 1 秒重建索引。</p>
+<p>&#x2F;&#x2F; &#x3D;&#x3D;UserScript&#x3D;&#x3D;<br>&#x2F;&#x2F; @name         DeepSeek 会话搜索<br>&#x2F;&#x2F; @namespace    <a target="_blank" rel="noopener" href="https://chat.deepseek.com/">https://chat.deepseek.com/</a><br>&#x2F;&#x2F; @version      1.0.0<br>&#x2F;&#x2F; @description  为 DeepSeek 网页版添加会话内消息搜索功能，支持关键词定位、高亮跳转<br>&#x2F;&#x2F; @author       You<br>&#x2F;&#x2F; @match        <a target="_blank" rel="noopener" href="https://chat.deepseek.com/">https://chat.deepseek.com/</a>*<br>&#x2F;&#x2F; @grant        GM_setValue<br>&#x2F;&#x2F; @grant        GM_getValue<br>&#x2F;&#x2F; @grant        GM_registerMenuCommand<br>&#x2F;&#x2F; @run-at       document-idle<br>&#x2F;&#x2F; &#x3D;&#x3D;&#x2F;UserScript&#x3D;&#x3D;</p>
+<p>(function () {<br>  ‘use strict’;</p>
+<p>  &#x2F;&#x2F; &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; 配置 &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;<br>  const CONFIG &#x3D; {<br>    &#x2F;&#x2F; 消息选择器 —— 优先用 data 属性，如果不匹配则回退到 class 策略<br>    MESSAGE_SELECTOR: ‘[data-message-author-role]’,<br>    FALLBACK_SELECTOR: ‘div[class*&#x3D;”message”]’,<br>    &#x2F;&#x2F; 搜索面板最大结果显示数<br>    MAX_RESULTS: 30,<br>    &#x2F;&#x2F; 搜索防抖延迟（毫秒）<br>    DEBOUNCE_MS: 150,<br>  };</p>
+<p>  &#x2F;&#x2F; &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; 状态 &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;<br>  const state &#x3D; {<br>    messages: [],        &#x2F;&#x2F; { id, role, text, el }<br>    index: new Map(),    &#x2F;&#x2F; id -&gt; message 对象<br>    panelOpen: false,<br>    currentQuery: ‘’,<br>    resultElements: [],  &#x2F;&#x2F; 搜索结果对应的 DOM 元素<br>    currentResultIndex: -1,<br>  };</p>
+<p>  &#x2F;&#x2F; &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; 工具函数 &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</p>
+<p>  &#x2F;** 简单字符串 hash，用于生成稳定 ID *&#x2F;<br>  function simpleHash(str) {<br>    let hash &#x3D; 0;<br>    for (let i &#x3D; 0; i &lt; str.length; i++) {<br>      const char &#x3D; str.charCodeAt(i);<br>      hash &#x3D; (hash &lt;&lt; 5) - hash + char;<br>      hash |&#x3D; 0;<br>    }<br>    return Math.abs(hash).toString(36);<br>  }</p>
+<p>  &#x2F;** 从 URL 提取会话 ID *&#x2F;<br>  function getSessionId() {<br>    const parts &#x3D; location.pathname.split(‘&#x2F;‘).filter(Boolean);<br>    return parts[parts.length - 1] || ‘default’;<br>  }</p>
+<p>  &#x2F;** 中文分词：bigram + 英文单词 *&#x2F;<br>  function tokenize(text) {<br>    const tokens &#x3D; [];<br>    const lower &#x3D; text.toLowerCase();</p>
+<pre><code>// 英文单词和数字
+const wordMatches = lower.match(/[a-z0-9_]+/g);
+if (wordMatches) tokens.push(...wordMatches);
+
+// 中文字符 bigram
+const cjkRegex = /[\u4e00-\u9fff\u3400-\u4dbf]/g;
+const cjkChars = lower.match(cjkRegex);
+if (cjkChars) {
+  tokens.push(...cjkChars);
+  for (let i = 0; i &lt; cjkChars.length - 1; i++) {
+    tokens.push(cjkChars[i] + cjkChars[i + 1]);
+  }
+}
+
+return tokens;
+</code></pre>
+<p>  }</p>
+<p>  &#x2F;** 检测消息角色 *&#x2F;<br>  function detectRole(el) {<br>    &#x2F;&#x2F; 优先用 data 属性<br>    const role &#x3D; el.dataset.messageAuthorRole;<br>    if (role &#x3D;&#x3D;&#x3D; ‘user’ || role &#x3D;&#x3D;&#x3D; ‘assistant’) return role;</p>
+<pre><code>// 回退：根据 class 或文本特征判断
+const className = el.className || &#39;&#39;;
+if (className.includes(&#39;user&#39;) || className.includes(&#39;User&#39;)) return &#39;user&#39;;
+if (className.includes(&#39;assistant&#39;) || className.includes(&#39;Assistant&#39;)) return &#39;assistant&#39;;
+
+// 最后回退：用户消息通常较短
+return el.innerText.length &lt; 300 ? &#39;user&#39; : &#39;assistant&#39;;
+</code></pre>
+<p>  }</p>
+<p>  &#x2F;&#x2F; &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; 消息提取 &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</p>
+<p>  &#x2F;** 提取页面中所有已加载的消息 *&#x2F;<br>  function extractMessages() {<br>    let elements &#x3D; […document.querySelectorAll(CONFIG.MESSAGE_SELECTOR)];</p>
+<pre><code>// 如果主选择器没有匹配到，尝试回退
+if (elements.length === 0) {
+  elements = [...document.querySelectorAll(CONFIG.FALLBACK_SELECTOR)]
+    .filter(el =&gt; {
+      const rect = el.getBoundingClientRect();
+      return rect.width &gt; 300 &amp;&amp; el.innerText.trim().length &gt; 5;
+    });
+}
+
+// 去重：如果父元素和子元素都匹配，只保留最深的
+const deduped = elements.filter(el =&gt; {
+  return !elements.some(other =&gt; other !== el &amp;&amp; other.contains(el));
+});
+
+// 按 DOM 顺序排列
+deduped.sort((a, b) =&gt; {
+  const pos = a.compareDocumentPosition(b);
+  if (pos &amp; Node.DOCUMENT_POSITION_FOLLOWING) return -1;
+  if (pos &amp; Node.DOCUMENT_POSITION_PRECEDING) return 1;
+  return 0;
+});
+
+return deduped.map((el, i) =&gt; {
+  const text = el.innerText.trim();
+  const id = `msg-${getSessionId()}-${i}-${simpleHash(text.slice(0, 100))}`;
+  return {
+    id,
+    role: detectRole(el),
+    text,
+    el,
+  };
+});
+</code></pre>
+<p>  }</p>
+<p>  &#x2F;** 重建索引 *&#x2F;<br>  function rebuildIndex() {<br>    state.messages &#x3D; extractMessages();<br>    state.index.clear();<br>    state.messages.forEach(msg &#x3D;&gt; state.index.set(msg.id, msg));<br>    updateResultCount();<br>  }</p>
+<p>  &#x2F;** 增量索引：只添加新消息 *&#x2F;<br>  function incrementalIndex() {<br>    const current &#x3D; extractMessages();<br>    let added &#x3D; 0;</p>
+<pre><code>current.forEach(msg =&gt; {
+  if (!state.index.has(msg.id)) {
+    state.messages.push(msg);
+    state.index.set(msg.id, msg);
+    added++;
+  }
+});
+
+if (added &gt; 0) {
+  // 重新排序，保持 DOM 顺序
+  state.messages.sort((a, b) =&gt; {
+    const pos = a.el.compareDocumentPosition(b.el);
+    if (pos &amp; Node.DOCUMENT_POSITION_FOLLOWING) return -1;
+    if (pos &amp; Node.DOCUMENT_POSITION_PRECEDING) return 1;
+    return 0;
+  });
+}
+</code></pre>
+<p>  }</p>
+<p>  &#x2F;&#x2F; &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; 搜索逻辑 &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</p>
+<p>  &#x2F;** 执行搜索 *&#x2F;<br>  function search(query) {<br>    if (!query || query.trim().length &lt; 1) {<br>      renderResults([]);<br>      return;<br>    }</p>
+<pre><code>const queryTokens = tokenize(query);
+if (queryTokens.length === 0) {
+  renderResults([]);
+  return;
+}
+
+const queryLower = query.toLowerCase();
+
+// 对每条消息计算得分
+const scored = state.messages.map(msg =&gt; {
+  const textLower = msg.text.toLowerCase();
+  const textTokens = tokenize(msg.text);
+  const tokenSet = new Set(textTokens);
+
+  let score = 0;
+
+  // 1. 精确子串匹配（最高权重）
+  if (textLower.includes(queryLower)) {
+    score += 100;
+    // 如果在开头附近匹配，额外加分
+    const idx = textLower.indexOf(queryLower);
+    if (idx &lt; 50) score += 20;
+  }
+
+  // 2. Token 匹配
+  let matchedTokens = 0;
+  for (const token of queryTokens) {
+    if (tokenSet.has(token)) {
+      matchedTokens++;
+      score += 10;
+    }
+  }
+
+  // 3. Token 覆盖率奖励
+  if (queryTokens.length &gt; 1) {
+    const coverage = matchedTokens / queryTokens.length;
+    if (coverage === 1) score += 30; // 全部命中
+    else if (coverage &gt;= 0.5) score += 10;
+  }
+
+  // 4. 角色过滤奖励（用户提问通常更需要被搜索到）
+  if (msg.role === &#39;user&#39; &amp;&amp; score &gt; 0) score += 5;
+
+  return { msg, score };
+});
+
+// 过滤掉得分为 0 的，排序取 top
+const results = scored
+  .filter(item =&gt; item.score &gt; 0)
+  .sort((a, b) =&gt; b.score - a.score)
+  .slice(0, CONFIG.MAX_RESULTS)
+  .map(item =&gt; item.msg);
+
+renderResults(results, query);
+</code></pre>
+<p>  }</p>
+<p>  &#x2F;&#x2F; &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; UI 构建 &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</p>
+<p>  &#x2F;** 创建搜索面板 DOM *&#x2F;<br>  function createPanel() {<br>    const panel &#x3D; document.createElement(‘div’);<br>    panel.id &#x3D; ‘ds-search-panel’;<br>    panel.innerHTML &#x3D; <code>      &lt;div class=&quot;ds-search-header&quot;&gt;         &lt;input id=&quot;ds-search-input&quot; type=&quot;text&quot; placeholder=&quot;搜索当前会话...&quot; autocomplete=&quot;off&quot; /&gt;         &lt;span id=&quot;ds-search-count&quot;&gt;&lt;/span&gt;         &lt;button id=&quot;ds-search-close&quot; title=&quot;关闭&quot;&gt;✕&lt;/button&gt;       &lt;/div&gt;       &lt;div id=&quot;ds-search-results&quot;&gt;&lt;/div&gt;       &lt;div class=&quot;ds-search-footer&quot;&gt;         &lt;span&gt;Enter 跳转到下一条 · Shift+Enter 上一条 · Esc 关闭&lt;/span&gt;       &lt;/div&gt;    </code>;</p>
+<pre><code>// 注入样式
+const style = document.createElement(&#39;style&#39;);
+style.textContent = `
+  #ds-search-panel {
+    position: fixed;
+    top: 60px;
+    right: 20px;
+    width: 420px;
+    max-height: 70vh;
+    background: var(--ds-bg-color, #1e1e2e);
+    color: var(--ds-text-color, #cdd6f4);
+    border: 1px solid rgba(128, 128, 128, 0.3);
+    border-radius: 12px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    z-index: 99999;
+    display: none;
+    flex-direction: column;
+    font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, sans-serif;
+    font-size: 14px;
+    overflow: hidden;
+    backdrop-filter: blur(12px);
+  }
+  #ds-search-panel.open { display: flex; }
+
+  .ds-search-header {
+    display: flex;
+    align-items: center;
+    padding: 10px 12px;
+    border-bottom: 1px solid rgba(128, 128, 128, 0.2);
+    gap: 8px;
+  }
+  #ds-search-input {
+    flex: 1;
+    background: rgba(128, 128, 128, 0.15);
+    border: 1px solid rgba(128, 128, 128, 0.2);
+    border-radius: 6px;
+    padding: 8px 10px;
+    color: inherit;
+    font-size: 14px;
+    outline: none;
+  }
+  #ds-search-input:focus {
+    border-color: #7c3aed;
+    box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.2);
+  }
+  #ds-search-count {
+    font-size: 12px;
+    opacity: 0.6;
+    white-space: nowrap;
+  }
+  #ds-search-close {
+    background: none;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    font-size: 16px;
+    opacity: 0.6;
+    padding: 4px;
+  }
+  #ds-search-close:hover { opacity: 1; }
+
+  #ds-search-results {
+    overflow-y: auto;
+    flex: 1;
+    padding: 4px;
+  }
+
+  .ds-result-item {
+    padding: 8px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-bottom: 2px;
+    transition: background 0.15s;
+  }
+  .ds-result-item:hover,
+  .ds-result-item.active {
+    background: rgba(124, 58, 237, 0.15);
+  }
+  .ds-result-role {
+    font-size: 11px;
+    font-weight: 600;
+    opacity: 0.5;
+    margin-bottom: 3px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .ds-result-snippet {
+    font-size: 13px;
+    line-height: 1.5;
+    opacity: 0.85;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .ds-result-snippet mark {
+    background: rgba(124, 58, 237, 0.4);
+    color: inherit;
+    border-radius: 2px;
+    padding: 0 2px;
+  }
+  .ds-result-empty {
+    padding: 20px;
+    text-align: center;
+    opacity: 0.5;
+    font-size: 13px;
+  }
+
+  .ds-search-footer {
+    padding: 6px 12px;
+    border-top: 1px solid rgba(128, 128, 128, 0.2);
+    font-size: 11px;
+    opacity: 0.4;
+    text-align: center;
+  }
+
+  /* 消息高亮动画 */
+  .ds-search-hit {
+    animation: ds-hit-flash 1.5s ease-out !important;
+    outline: 2px solid #7c3aed !important;
+    outline-offset: 2px;
+    border-radius: 8px;
+  }
+  @keyframes ds-hit-flash {
+    0% { outline-color: #7c3aed; outline-width: 4px; }
+    100% { outline-color: transparent; outline-width: 2px; }
+  }
+
+  /* 悬浮按钮 */
+  #ds-search-fab {
+    position: fixed;
+    bottom: 100px;
+    right: 24px;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: #7c3aed;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 18px;
+    z-index: 99998;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.4);
+    transition: transform 0.15s, box-shadow 0.15s;
+  }
+  #ds-search-fab:hover {
+    transform: scale(1.1);
+    box-shadow: 0 6px 16px rgba(124, 58, 237, 0.5);
+  }
+`;
+
+document.head.appendChild(style);
+document.body.appendChild(panel);
+
+// 悬浮按钮
+const fab = document.createElement(&#39;button&#39;);
+fab.id = &#39;ds-search-fab&#39;;
+fab.title = &#39;搜索会话 (Alt+K)&#39;;
+fab.textContent = &#39;🔍&#39;;
+document.body.appendChild(fab);
+
+// ==================== 事件绑定 ====================
+
+const input = panel.querySelector(&#39;#ds-search-input&#39;);
+const resultsEl = panel.querySelector(&#39;#ds-search-results&#39;);
+const closeBtn = panel.querySelector(&#39;#ds-search-close&#39;);
+
+// 输入防抖
+let debounceTimer;
+input.addEventListener(&#39;input&#39;, () =&gt; {
+  clearTimeout(debounceTimer);
+  debounceTimer = setTimeout(() =&gt; {
+    state.currentQuery = input.value;
+    search(input.value);
+  }, CONFIG.DEBOUNCE_MS);
+});
+
+// 键盘导航
+input.addEventListener(&#39;keydown&#39;, (e) =&gt; {
+  if (e.key === &#39;Enter&#39;) {
+    e.preventDefault();
+    if (e.shiftKey) navigateResult(-1);
+    else navigateResult(1);
+  } else if (e.key === &#39;Escape&#39;) {
+    closePanel();
+  }
+});
+
+// 关闭按钮
+closeBtn.addEventListener(&#39;click&#39;, closePanel);
+fab.addEventListener(&#39;click&#39;, togglePanel);
+
+// 全局快捷键 Alt+K
+document.addEventListener(&#39;keydown&#39;, (e) =&gt; {
+  if (e.altKey &amp;&amp; e.key === &#39;k&#39;) {
+    e.preventDefault();
+    togglePanel();
+  }
+  if (e.key === &#39;Escape&#39; &amp;&amp; state.panelOpen) {
+    closePanel();
+  }
+});
+
+// 点击面板外部关闭（可选，注释掉以免误关）
+// document.addEventListener(&#39;click&#39;, (e) =&gt; {
+//   if (state.panelOpen &amp;&amp; !panel.contains(e.target) &amp;&amp; e.target !== fab) {
+//     closePanel();
+//   }
+// });
+</code></pre>
+<p>  }</p>
+<p>  &#x2F;** 打开&#x2F;关闭面板 *&#x2F;<br>  function togglePanel() {<br>    const panel &#x3D; document.getElementById(‘ds-search-panel’);<br>    if (!panel) return;</p>
+<pre><code>if (state.panelOpen) {
+  closePanel();
+} else {
+  panel.classList.add(&#39;open&#39;);
+  state.panelOpen = true;
+  const input = document.getElementById(&#39;ds-search-input&#39;);
+  input.value = &#39;&#39;;
+  input.focus();
+  // 打开时重建索引，确保包含最新消息
+  rebuildIndex();
+  renderResults([]);
+}
+</code></pre>
+<p>  }</p>
+<p>  function closePanel() {<br>    const panel &#x3D; document.getElementById(‘ds-search-panel’);<br>    if (panel) panel.classList.remove(‘open’);<br>    state.panelOpen &#x3D; false;<br>    state.resultElements &#x3D; [];<br>    state.currentResultIndex &#x3D; -1;<br>  }</p>
+<p>  &#x2F;** 渲染搜索结果 *&#x2F;<br>  function renderResults(results, query) {<br>    const resultsEl &#x3D; document.getElementById(‘ds-search-results’);<br>    if (!resultsEl) return;</p>
+<pre><code>state.resultElements = results.map(r =&gt; r.el);
+state.currentResultIndex = -1;
+
+if (results.length === 0) {
+  resultsEl.innerHTML = query
+    ? &#39;&lt;div class=&quot;ds-result-empty&quot;&gt;没有找到匹配的消息&lt;/div&gt;&#39;
+    : &#39;&lt;div class=&quot;ds-result-empty&quot;&gt;输入关键词开始搜索&lt;/div&gt;&#39;;
+  updateResultCount();
+  return;
+}
+
+resultsEl.innerHTML = results.map((msg, i) =&gt; {
+  // 生成高亮片段
+  let snippet = msg.text.slice(0, 200);
+  if (query) {
+    const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, &#39;\\$&amp;&#39;);
+    snippet = snippet.replace(
+      new RegExp(`(${escaped})`, &#39;gi&#39;),
+      &#39;&lt;mark&gt;$1&lt;/mark&gt;&#39;
+    );
+  }
+  const roleLabel = msg.role === &#39;user&#39; ? &#39;你&#39; : &#39;AI&#39;;
+
+  return `
+    &lt;div class=&quot;ds-result-item&quot; data-index=&quot;${i}&quot;&gt;
+      &lt;div class=&quot;ds-result-role&quot;&gt;${roleLabel}&lt;/div&gt;
+      &lt;div class=&quot;ds-result-snippet&quot;&gt;${snippet}&lt;/div&gt;
+    &lt;/div&gt;
+  `;
+}).join(&#39;&#39;);
+
+// 绑定点击事件
+resultsEl.querySelectorAll(&#39;.ds-result-item&#39;).forEach(item =&gt; {
+  item.addEventListener(&#39;click&#39;, () =&gt; {
+    const idx = parseInt(item.dataset.index, 10);
+    jumpToResult(idx);
+  });
+});
+
+updateResultCount();
+</code></pre>
+<p>  }</p>
+<p>  &#x2F;** 更新结果计数显示 *&#x2F;<br>  function updateResultCount() {<br>    const countEl &#x3D; document.getElementById(‘ds-search-count’);<br>    if (!countEl) return;<br>    const total &#x3D; state.resultElements.length;<br>    if (state.currentResultIndex &gt;&#x3D; 0 &amp;&amp; total &gt; 0) {<br>      countEl.textContent &#x3D; <code>${state.currentResultIndex + 1}/${total}</code>;<br>    } else {<br>      countEl.textContent &#x3D; total &gt; 0 ? <code>${total} 条</code> : ‘’;<br>    }<br>  }</p>
+<p>  &#x2F;** 导航到上一条&#x2F;下一条结果 *&#x2F;<br>  function navigateResult(direction) {<br>    const total &#x3D; state.resultElements.length;<br>    if (total &#x3D;&#x3D;&#x3D; 0) return;</p>
+<pre><code>state.currentResultIndex += direction;
+if (state.currentResultIndex &lt; 0) state.currentResultIndex = total - 1;
+if (state.currentResultIndex &gt;= total) state.currentResultIndex = 0;
+
+// 更新 UI 选中态
+document.querySelectorAll(&#39;.ds-result-item&#39;).forEach((item, i) =&gt; {
+  item.classList.toggle(&#39;active&#39;, i === state.currentResultIndex);
+});
+
+// 滚动到对应消息
+const el = state.resultElements[state.currentResultIndex];
+if (el) {
+  el.scrollIntoView({ behavior: &#39;smooth&#39;, block: &#39;center&#39; });
+  el.classList.add(&#39;ds-search-hit&#39;);
+  setTimeout(() =&gt; el.classList.remove(&#39;ds-search-hit&#39;), 1600);
+}
+
+updateResultCount();
+</code></pre>
+<p>  }</p>
+<p>  &#x2F;** 跳转到指定索引的结果 *&#x2F;<br>  function jumpToResult(index) {<br>    state.currentResultIndex &#x3D; index;</p>
+<pre><code>document.querySelectorAll(&#39;.ds-result-item&#39;).forEach((item, i) =&gt; {
+  item.classList.toggle(&#39;active&#39;, i === index);
+});
+
+const el = state.resultElements[index];
+if (el) {
+  el.scrollIntoView({ behavior: &#39;smooth&#39;, block: &#39;center&#39; });
+  el.classList.add(&#39;ds-search-hit&#39;);
+  setTimeout(() =&gt; el.classList.remove(&#39;ds-search-hit&#39;), 1600);
+}
+
+updateResultCount();
+</code></pre>
+<p>  }</p>
+<p>  &#x2F;&#x2F; &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; 虚拟滚动处理 &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</p>
+<p>  &#x2F;**</p>
+<ul>
+<li><p>尝试加载更早的历史消息。</p>
+</li>
+<li><p>DeepSeek 使用虚拟滚动，未加载到 DOM 的消息无法搜索。</p>
+</li>
+<li><p>策略：滚动到顶部触发加载，等待后重建索引。<br>   *&#x2F;<br>  function loadAllMessages() {<br>return new Promise((resolve) &#x3D;&gt; {<br> const scrollContainer &#x3D; findScrollContainer();<br> if (!scrollContainer) {<br>   resolve();<br>   return;<br> }</p>
+<p> const originalScrollTop &#x3D; scrollContainer.scrollTop;<br> let attempts &#x3D; 0;<br> const maxAttempts &#x3D; 10;</p>
+<p> function scrollUpAndWait() {<br>   scrollContainer.scrollTop &#x3D; 0;<br>   attempts++;</p>
+<p>   &#x2F;&#x2F; 等待一会儿看 DOM 是否变化<br>   setTimeout(() &#x3D;&gt; {<br> const currentCount &#x3D; extractMessages().length;<br> const prevCount &#x3D; state.messages.length;<br><br> if (currentCount &gt; prevCount &amp;&amp; attempts &lt; maxAttempts) {<br>   &#x2F;&#x2F; 有新消息加载，继续<br>   rebuildIndex();<br>   scrollUpAndWait();<br> } else {<br>   &#x2F;&#x2F; 没有更多了，恢复滚动位置<br>   scrollContainer.scrollTop &#x3D; originalScrollTop;<br>   rebuildIndex();<br>   resolve();<br> }<br>   }, 500);<br> }</p>
+<p> scrollUpAndWait();</p>
+</li>
+</ul>
+<pre><code>});
+</code></pre>
+<p>  }</p>
+<p>  &#x2F;** 找到滚动容器 <em>&#x2F;<br>  function findScrollContainer() {<br>    &#x2F;&#x2F; 尝试常见的滚动容器选择器<br>    const candidates &#x3D; [<br>      ‘[data-conversation-scroll]’,<br>      ‘.chat-container’,<br>      ‘main’,<br>      ‘[class</em>&#x3D;”scroll”]’,<br>    ];</p>
+<pre><code>for (const sel of candidates) {
+  const el = document.querySelector(sel);
+  if (el &amp;&amp; el.scrollHeight &gt; el.clientHeight) return el;
+}
+
+// 回退：找 scrollHeight 最大的元素
+let best = null;
+let bestScrollHeight = 0;
+document.querySelectorAll(&#39;div&#39;).forEach(el =&gt; {
+  if (el.scrollHeight &gt; el.clientHeight &amp;&amp; el.scrollHeight &gt; bestScrollHeight) {
+    best = el;
+    bestScrollHeight = el.scrollHeight;
+  }
+});
+return best;
+</code></pre>
+<p>  }</p>
+<p>  &#x2F;&#x2F; &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; 初始化 &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</p>
+<p>  function init() {<br>    &#x2F;&#x2F; 等待页面加载完成<br>    const checkReady &#x3D; setInterval(() &#x3D;&gt; {<br>      const msgs &#x3D; document.querySelectorAll(CONFIG.MESSAGE_SELECTOR);<br>      if (msgs.length &gt; 0 || document.querySelector(‘#chat-input’)) {<br>        clearInterval(checkReady);</p>
+<pre><code>    // 创建 UI
+    createPanel();
+
+    // 首次索引
+    rebuildIndex();
+
+    // 监听 DOM 变化，增量索引
+    const observer = new MutationObserver(() =&gt; {
+      // 防抖，避免频繁重建
+      clearTimeout(observer._timer);
+      observer._timer = setTimeout(() =&gt; {
+        incrementalIndex();
+      }, 800);
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    // 监听 URL 变化（切换会话）
+    let lastUrl = location.href;
+    new MutationObserver(() =&gt; {
+      if (location.href !== lastUrl) {
+        lastUrl = location.href;
+        setTimeout(() =&gt; {
+          rebuildIndex();
+          if (state.panelOpen) renderResults([]);
+        }, 1000);
+      }
+    }).observe(document.body, { childList: true, subtree: true });
+
+    console.log(&#39;[DeepSeek搜索] 已加载，按 Alt+K 打开搜索面板&#39;);
+  }
+}, 1000);
+
+// 10 秒后放弃等待
+setTimeout(() =&gt; clearInterval(checkReady), 10000);
+</code></pre>
+<p>  }</p>
+<p>  &#x2F;&#x2F; 启动<br>  if (document.readyState &#x3D;&#x3D;&#x3D; ‘loading’) {<br>    document.addEventListener(‘DOMContentLoaded’, init);<br>  } else {<br>    init();<br>  }<br>})();</p>
+<p>2.一个壁纸类插件</p>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages" style="justify-content: flex-end"><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/09/19/wps/">wps小技巧 Prev →</a></div></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="To Top" style="opacity: 0; display: none;">∧ </a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="Change Theme"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">John Doe</a></h1><div id="description"><p></p></div></div><div id="aside-block"></div><footer><nobr>Published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>
