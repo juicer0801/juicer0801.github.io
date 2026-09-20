@@ -1,0 +1,186 @@
+<!DOCTYPE html><html lang="en" theme-mode="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>基于C语言算法 | Hexo</title><meta name="description" content="1.二分查找#include &lt;stdio.h&gt;int main(){	int arr[] &#x3D; { 1,2,3,4,5,6,7,8,9,10 };	int left &#x3D; 0;	int right &#x3D; sizeof(arr) &#x2F; sizeof(arr[0]) - 1;	int mid;	int key &#x3D; 7;&#x2F;&#x2F; E">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于C语言算法">
+<meta property="og:url" content="http://example.com/2026/09/20/suanfa/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1.二分查找#include &lt;stdio.h&gt;int main(){	int arr[] &#x3D; { 1,2,3,4,5,6,7,8,9,10 };	int left &#x3D; 0;	int right &#x3D; sizeof(arr) &#x2F; sizeof(arr[0]) - 1;	int mid;	int key &#x3D; 7;&#x2F;&#x2F; E">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-09-20T05:52:18.000Z">
+<meta property="article:modified_time" content="2026-09-20T15:28:41.017Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary"><link rel="canonical" href="http://example.com/2026/09/20/suanfa/"><link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="preload" as="font" crossorigin="anonymous" href="/font/Bender.ttf"><link rel="preload" as="font" crossorigin="anonymous" href="/font/BenderLight.woff2"><link rel="preload" as="font" crossorigin="anonymous" href="/font/JetBrainsMono-Regular.woff2"><link rel="stylesheet" href="/css/arknights.css"><style>@font-face {
+  font-family: Bender;
+  src: local('Bender'), url("/font/Bender.ttf"), url("/font/Bender.otf");
+}
+@font-face {
+  font-family: BenderLight;
+  src: local('BenderLight'), url("/font/BenderLight.woff2") format('woff2');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}
+</style><meta name="page-config" content="{&quot;code_fold&quot;:null}"><script class="pjax-js">var config = {"root":"/","code_fold":15,"search":{"preload":false,"activeHolder":"Enter here","blurHolder":"Search","noResult":"Data \"$0\" not found"},"code":{"codeInfo":"$0 - $1 lines","copy":"copy"}};
+var page_config = {
+  code_fold: null
+};
+function updatePageConfig() {
+  var newPageConfig = document.querySelector('meta[name="page-config"]');
+  if (newPageConfig) {
+    page_config = JSON.parse(newPageConfig.content);
+  }
+}
+document.addEventListener('pjax:complete', function() { updatePageConfig(); });
+updatePageConfig();</script><link type="text/css" rel="stylesheet" href="/lib/encrypt/hbe.style.css"><script src="//unpkg.com/mermaid@11.12.2/dist/mermaid.min.js"></script><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lightgallery.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-zoom.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-thumbnail.css"><link type="text/css" rel="stylesheet" href="/lib/fontawesome/css/all.min.css"><script>if (window.localStorage.getItem('theme-mode') === 'light')
+ document.documentElement.setAttribute('theme-mode', 'light')
+if (window.localStorage.getItem('theme-mode') === 'dark')
+ document.documentElement.setAttribute('theme-mode', 'dark')</script><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.woff2") format('woff2');
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><style>:root {
+ --dark-background: url('https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg');
+ --light-background: url('/img/bk.jpg');
+ --theme-encrypt-confirm: 'confirm'
+}</style><script defer src="/js/arknights.js"></script><script defer src="/js/search.js"></script><script defer type="module">import mermaid from '//unpkg.com/mermaid@11.12.2/dist/mermaid.esm.min.mjs';
+window.mermaid = mermaid;
+code.paintMermaid();
+</script><script async src="//unpkg.com/lightgallery@2.7.1/lightgallery.min.js"></script><script async src="//unpkg.com/lightgallery@2.7.1/plugins/zoom/lg-zoom.min.js"></script><script async src="//unpkg.com/lightgallery@2.7.1/plugins/thumbnail/lg-thumbnail.min.js"></script><script async src="/lib/encrypt/hbe.js"></script><script async src="/js/pjax.js"></script><script class="pjax-js">reset= () => {document.querySelector('.lg-container')?.remove()
+lightGallery(document.getElementById('post-bg'), {
+  plugins: [lgZoom,lgThumbnail],
+  selector: '.item-img'})}</script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js','data-pjax','.vercount','meta[name=page-config]'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);reset()})</script><script class="pjax-js">reset= () => {document.querySelector('.lg-container')?.remove()
+const postBg = document.querySelector('#post-bg');
+if (postBg) lightGallery(postBg, {
+  plugins: [lgZoom,lgThumbnail],
+  selector: '.item-img'})}</script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js','data-pjax','.vercount','meta[name=page-config]'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>基于C语言算法</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2026-09-20T05:52:18.000Z" id="date"> 2026-09-20</time></div></span><br><span>Last Update: <div class="control"><time datetime="2026-09-20T15:28:41.017Z" id="updated"> 2026-09-20</time></div></span></div></div><hr><div id="post-content"><p>1.二分查找<br>#include &lt;stdio.h&gt;<br>int main()<br>{<br>	int arr[] &#x3D; { 1,2,3,4,5,6,7,8,9,10 };<br>	int left &#x3D; 0;<br>	int right &#x3D; sizeof(arr) &#x2F; sizeof(arr[0]) - 1;<br>	int mid;<br>	int key &#x3D; 7;&#x2F;&#x2F; Element to search for<br>	int found &#x3D; 0;</p>
+<pre><code>while (left &lt;= right) 
+{
+	mid = left + (right - left) / 2;// Calculate mid index
+	if (arr[mid] == key) 
+	{
+		printf(&quot;Element found at index %d\n&quot;, mid);
+		found = 1;
+		break;
+	}
+	else if (arr[mid] &lt; key) 
+	{
+		left = mid + 1;
+	}
+	else 
+	{
+		right = mid - 1;
+	}
+}
+if (left &gt; right)
+{
+	printf(&quot;Element not found\n&quot;);
+}
+return 0;
+</code></pre>
+<p>}</p>
+<p>2.快速排序<br>如果你不满足我C语言基础计算技巧的排序方法 qsort<br>那么以下介绍快排</p>
+<p>原理：快速排序只有两个步骤：<br>选一个基准值 pivot；<br>把数组划分成两部分：左边全 ≤ pivot，右边全 ≥ pivot。<br>划分完成后，pivot 就落在了它最终该在的位置上。接着对左右两段递归做同样的事，整个数组就有序了。<br>partition 这个函数尤为重要分区写得好不好，直接决定了快排是 O(n log n) 还是 O(n²)。</p>
+<p>第一版：Lomuto 分区法</p>
+<p>用一个指针 i 维护”已确认小于 pivot”的区域边界：</p>
+<p>static void swap(int *a, int *b) {<br>    int t &#x3D; *a; *a &#x3D; *b; *b &#x3D; t;<br>} &#x2F;&#x2F;交换函数</p>
+<p>&#x2F;* 返回 pivot 最终所在的下标 <em>&#x2F;<br>int partition_lomuto(int <em>a, int lo, int hi) {     &#x2F;&#x2F;a 是数组，lo 是这段的左边界，hi 是右边界<br>    int pivot &#x3D; a[hi];      &#x2F;</em> 取最后一个元素作基准 <em>&#x2F;<br>    int i &#x3D; lo;  &#x2F;</em> i 指向”比标杆小的区域”的下一个空位</em>&#x2F;<br>    for (int j &#x3D; lo; j &lt; hi; ++j) {<br>        if (a[j] &lt; pivot) {<br>            swap(&amp;a[i], &amp;a[j]);<br>            ++i;<br>        }<br>    }<br>    swap(&amp;a[i], &amp;a[hi]);    &#x2F;* pivot 归位 *&#x2F;<br>    return i;<br>}</p>
+<p>void quick_sort_lomuto(int *a, int lo, int hi) {<br>    if (lo &gt;&#x3D; hi)<br>	    return;<br>    int p &#x3D; partition_lomuto(a, lo, hi);<br>    quick_sort_lomuto(a, lo, p - 1);<br>    quick_sort_lomuto(a, p + 1, hi);<br>}<br>优点：逻辑清晰，边界好记，pivot 位置一目了然。<br>缺点：<br>对已经有序的数组会退化成 O(n²)。因为每次都取末尾元素当基准，有序数组里它永远是最大值，分区后一边是 n-1 个元素、一边是 0 个，递归深度变成 O(n)。<br>对大量重复元素同样退化。<br>交换次数偏多。</p>
+<p>第二版：Hoare 分区法</p>
+<p>Hoare 是快排发明者本人给出的分区方案：两个指针从两端向中间夹逼（我第一次听说这个词还是在《机器学习的数学基础》里），各自找到”站错队”的元素再交换。</p>
+<p>int partition_hoare(int *a, int lo, int hi) {<br>    int pivot &#x3D; a[lo + (hi - lo) &#x2F; 2];<br>    int i &#x3D; lo - 1, j &#x3D; hi + 1;<br>    for (;;) {<br>        do { ++i; } while (a[i] &lt; pivot);<br>        do { –j; } while (a[j] &gt; pivot);<br>        if (i &gt;&#x3D; j) return j;<br>        swap(&amp;a[i], &amp;a[j]);<br>    }<br>}</p>
+<p>Hoare 版的分区交换次数大约只有 Lomuto 的三分之一，而且在元素全部相同时也能把数组对半分，不会退化。<br>但是：返回的 j 不一定是 pivot 的最终位置，递归边界要写成 (lo, j) 和 (j+1, hi)，容易写错。<br>注意：a[i] &lt; pivot 而不是 &lt;&#x3D;，a[j] &gt; pivot 而不是 &gt;&#x3D;，这两个不等号如果写反，遇到重复元素就会死循环。</p>
+<p>优化继续<br>第三版，短数组排序改用插入排序<br>当子数组长度小于某个阈值（一般 8~32）时，快排的递归开销（函数调用、栈帧）已经超过了排序本身。此时插入排序虽然理论复杂度是 O(n²)，但常数极小、缓存友好，反而更快。</p>
+<p>#define INSERTION_THRESHOLD 16</p>
+<p>static void insertion_sort(int *a, int lo, int hi) {<br>    for (int i &#x3D; lo + 1; i &lt;&#x3D; hi; ++i) {<br>        int key &#x3D; a[i];<br>        int j &#x3D; i - 1;<br>        while (j &gt;&#x3D; lo &amp;&amp; a[j] &gt; key) {<br>            a[j + 1] &#x3D; a[j];<br>            –j;<br>        }<br>        a[j + 1] &#x3D; key;<br>    }<br>}</p>
+<p>第四版<br>三数取中选 pivot<br>为了避免有序数组排序时间长我们从 a[lo]、a[mid]、a[hi] 里取中位数当基准：</p>
+<p>static int median_of_three(int <em>a, int lo, int hi) {<br>    int mid &#x3D; lo + ((hi - lo) &gt;&gt; 1);<br>    if (a[mid] &lt; a[lo]) swap(&amp;a[mid], &amp;a[lo]);<br>    if (a[hi]  &lt; a[lo]) swap(&amp;a[hi],  &amp;a[lo]);<br>    if (a[hi]  &lt; a[mid]) swap(&amp;a[hi], &amp;a[mid]);<br>    &#x2F;</em> 此时 a[lo] &lt;&#x3D; a[mid] &lt;&#x3D; a[hi] <em>&#x2F;<br>    swap(&amp;a[mid], &amp;a[lo]);   &#x2F;</em> 把中位数换到 lo 位置 *&#x2F;<br>    return a[lo];<br>}</p>
+<p>优点:<br>a[hi] 一定 ≥ pivot，所以从左往右扫描不会越界；<br>a[lo] 就是 pivot，所以从右往左扫描也不会越界。<br>内层循环因此可以省掉边界判断(十分方便)</p>
+<p>第五版<br>尾递归消除和优先递归小分区</p>
+<p>快排的递归深度最坏是 O(n)，造成栈溢出，如何解决？<br>优先递归较短的那一半，较长的那一半用循环处理（尾递归消除）。这样栈深度最坏也是 O(log n)<br>小区间直接插排返回，不再递归。</p>
+<p>void quick_sort(int <em>a, int lo, int hi) {<br>    while (lo &lt; hi) {<br>        if (hi - lo &lt; INSERTION_THRESHOLD) {<br>            insertion_sort(a, lo, hi);<br>            return;<br>        }<br>        int p &#x3D; partition(a, lo, hi);<br>        if (p - lo &lt; hi - p) {          &#x2F;</em> 左边更短 <em>&#x2F;<br>            quick_sort(a, lo, p - 1);   &#x2F;</em> 递归处理短的 <em>&#x2F;<br>            lo &#x3D; p + 1;                 &#x2F;</em> 长的走循环 *&#x2F;<br>        } else {<br>            quick_sort(a, p + 1, hi);<br>            hi &#x3D; p - 1;<br>        }<br>    }<br>}</p>
+<p>最终（终于到这一步了，直接超级拼装）</p>
+<p>#include &lt;stdio.h&gt;<br>#include &lt;stdlib.h&gt;<br>#include &lt;string.h&gt;<br>#include &lt;time.h&gt;</p>
+<p>#define INSERTION_THRESHOLD 16</p>
+<p>static inline void swap(int *a, int *b) {<br>    int t &#x3D; *a; *a &#x3D; *b; *b &#x3D; t;<br>}</p>
+<p>static void insertion_sort(int *a, int lo, int hi) {<br>    for (int i &#x3D; lo + 1; i &lt;&#x3D; hi; ++i) {<br>        int key &#x3D; a[i];<br>        int j &#x3D; i - 1;<br>        while (j &gt;&#x3D; lo &amp;&amp; a[j] &gt; key) {<br>            a[j + 1] &#x3D; a[j];<br>            –j;<br>        }<br>        a[j + 1] &#x3D; key;<br>    }<br>}</p>
+<p>&#x2F;* 三数取中，并把中位数放到 a[lo]，返回其值 *&#x2F;<br>static int median_of_three(int *a, int lo, int hi) {<br>    int mid &#x3D; lo + ((hi - lo) &gt;&gt; 1);<br>    if (a[mid] &lt; a[lo]) swap(&amp;a[mid], &amp;a[lo]);<br>    if (a[hi]  &lt; a[lo]) swap(&amp;a[hi],  &amp;a[lo]);<br>    if (a[hi]  &lt; a[mid]) swap(&amp;a[hi], &amp;a[mid]);<br>    swap(&amp;a[mid], &amp;a[lo]);<br>    return a[lo];<br>}</p>
+<p>&#x2F;* Hoare 分区；返回分界点 j，a[lo..j] &lt;&#x3D; pivot &lt;&#x3D; a[j+1..hi] <em>&#x2F;<br>static int partition(int <em>a, int lo, int hi) {<br>    int pivot &#x3D; median_of_three(a, lo, hi);<br>    int i &#x3D; lo, j &#x3D; hi + 1;<br>    for (;;) {<br>        while (a[++i] &lt; pivot) { }   &#x2F;* a[hi] &gt;&#x3D; pivot<br>        while (a[–j] &gt; pivot) { }   &#x2F;</em> a[lo] &#x3D;&#x3D; pivot<br>        if (i &gt;&#x3D; j) break;<br>        swap(&amp;a[i], &amp;a[j]);<br>    }<br>    swap(&amp;a[lo], &amp;a[j]);             &#x2F;</em> pivot 归位到 j *&#x2F;<br>    return j;<br>}</p>
+<p>void quick_sort(int *a, int lo, int hi) {<br>    while (lo &lt; hi) {<br>        if (hi - lo &lt; INSERTION_THRESHOLD) {<br>            insertion_sort(a, lo, hi);<br>            return;<br>        }<br>        int p &#x3D; partition(a, lo, hi);<br>        if (p - lo &lt; hi - p) {<br>            quick_sort(a, lo, p - 1);<br>            lo &#x3D; p + 1;<br>        } else {<br>            quick_sort(a, p + 1, hi);<br>            hi &#x3D; p - 1;<br>        }<br>    }<br>}</p>
+<p>void quick_sort_array(int *a, size_t n) {<br>    if (n &gt; 1) quick_sort(a, 0, (int)n - 1);<br>}</p>
+<p>&#x2F;* —————- 测试 —————- *&#x2F;</p>
+<p>static int cmp_int(const void *x, const void *y) {<br>    int a &#x3D; *(const int *)x, b &#x3D; *(const int *)y;<br>    return (a &gt; b) - (a &lt; b);<br>}</p>
+<p>static double now_ms(void) {<br>    struct timespec ts;<br>    clock_gettime(CLOCK_MONOTONIC, &amp;ts);<br>    return ts.tv_sec * 1000.0 + ts.tv_nsec &#x2F; 1e6;<br>}</p>
+<p>static int is_sorted(const int *a, size_t n) {<br>    for (size_t i &#x3D; 1; i &lt; n; ++i)<br>        if (a[i - 1] &gt; a[i]) return 0;<br>    return 1;<br>}</p>
+<p>static void bench(const char *name, int *src, size_t n) {<br>    int *a &#x3D; malloc(n * sizeof(int));<br>    int *b &#x3D; malloc(n * sizeof(int));<br>    memcpy(a, src, n * sizeof(int));<br>    memcpy(b, src, n * sizeof(int));</p>
+<pre><code>double t0 = now_ms();
+quick_sort_array(a, n);
+double t1 = now_ms();
+qsort(b, n, sizeof(int), cmp_int);
+double t2 = now_ms();
+
+printf(&quot;%-12s | my quicksort %8.1f ms | qsort %8.1f ms | sorted=%d equal=%d\n&quot;,
+       name, t1 - t0, t2 - t1,
+       is_sorted(a, n),
+       memcmp(a, b, n * sizeof(int)) == 0);
+
+free(a); free(b);
+</code></pre>
+<p>}</p>
+<p>int main(void) {<br>    const size_t N &#x3D; 1000000;<br>    int *buf &#x3D; malloc(N * sizeof(int));<br>    if (!buf) { fprintf(stderr, “OOM\n”); return 1; }</p>
+<pre><code>srand(20240521);
+
+/* 1. 随机数据 */
+for (size_t i = 0; i &lt; N; ++i) buf[i] = rand();
+bench(&quot;random&quot;, buf, N);
+
+/* 2. 完全有序 */
+for (size_t i = 0; i &lt; N; ++i) buf[i] = (int)i;
+bench(&quot;sorted&quot;, buf, N);
+
+/* 3. 完全逆序 */
+for (size_t i = 0; i &lt; N; ++i) buf[i] = (int)(N - i);
+bench(&quot;reversed&quot;, buf, N);
+
+/* 4. 全部相同 */
+for (size_t i = 0; i &lt; N; ++i) buf[i] = 42;
+bench(&quot;all-equal&quot;, buf, N);
+
+free(buf);
+return 0;
+</code></pre>
+<p>}</p>
+<p>在本机（gcc -O2，x86_64）跑一遍，大致是这个量级：</p>
+<p>text<br>random       | my quicksort     62.3 ms | qsort     71.5 ms | sorted&#x3D;1 equal&#x3D;1<br>sorted       | my quicksort      9.1 ms | qsort     13.2 ms | sorted&#x3D;1 equal&#x3D;1<br>reversed     | my quicksort      9.4 ms | qsort     13.6 ms | sorted&#x3D;1 equal&#x3D;1<br>all-equal    | my quicksort      6.7 ms | qsort      6.9 ms | sorted&#x3D;1 equal&#x3D;1</p>
+<p>然后然后<br>有序&#x2F;逆序数据比随机数据还快。因为三数取中每次都能选到真正的中位数，分区绝对均匀。<br>全部相同的数据也很快。Hoare 分区遇到相等元素会两边交换，自动对半分，不会退化。<br>all-equal 是最快的，因为 partition 只做扫描不做交换（i &gt;&#x3D; j 很快就成立）。</p>
+<p>第六版<br>你不会以为结束了吧（其实我也不行了）<br>如果排序内容包含多个重复元素也有一种更加有效的方式<br>可以用荷兰国旗问题的思路把数组分成 &lt; pivot、&#x3D;&#x3D; pivot、&gt; pivot 三段，中间那段直接跳过递归：<br>void quick_sort_3way(int *a, int lo, int hi) {<br>    if (lo &gt;&#x3D; hi) return;<br>    int pivot &#x3D; a[lo];<br>    int lt &#x3D; lo, i &#x3D; lo + 1, gt &#x3D; hi;<br>    while (i &lt;&#x3D; gt) {<br>        if (a[i] &lt; pivot)      swap(&amp;a[lt++], &amp;a[i++]);<br>        else if (a[i] &gt; pivot) swap(&amp;a[i], &amp;a[gt–]);<br>        else                   ++i;<br>    }<br>    quick_sort_3way(a, lo, lt - 1);<br>    quick_sort_3way(a, gt + 1, hi);<br>}<br>他好像有个名字叫三路划分<br>可以把复杂度压到接近 O(n)（不过它对普通随机数据会比双路略慢一点点，按场景选用即可）</p>
+<p>如果这篇文章对你有帮助，求分享。</p>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages" style="justify-content: flex-end"><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/09/20/deepseek/">deepseek建议与实践 Prev →</a></div></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="To Top" style="opacity: 0; display: none;">∧ </a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="Change Theme"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">John Doe</a></h1><div id="description"><p></p></div></div><div id="aside-block"></div><footer><nobr>Published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>
