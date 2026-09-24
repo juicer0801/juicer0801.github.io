@@ -1,10 +1,12 @@
-<!DOCTYPE html><html lang="en" theme-mode="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>c28 | Hexo</title><meta property="og:type" content="article">
-<meta property="og:title" content="c28">
+<!DOCTYPE html><html lang="en" theme-mode="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>vim操作全解 | Hexo</title><meta name="description" content="首先windows需要手动安装vim 以下按功能分类列举常用 Vim 操作，默认在 Normal 模式 下。Ctrl- 表示按住 Ctrl。 模式切换i：光标前插入 I：行首插入 a：光标后插入 A：行尾插入 o：下方新建行插入 O：上方新建行插入 v：字符可视模式 V：行可视模式 Ctrl-v：块可视模式 R：替换模式 Esc &#x2F; Ctrl-[：返回 Normal 模式 :：命令行模式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vim操作全解">
 <meta property="og:url" content="http://example.com/2026/09/22/c28/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="首先windows需要手动安装vim 以下按功能分类列举常用 Vim 操作，默认在 Normal 模式 下。Ctrl- 表示按住 Ctrl。 模式切换i：光标前插入 I：行首插入 a：光标后插入 A：行尾插入 o：下方新建行插入 O：上方新建行插入 v：字符可视模式 V：行可视模式 Ctrl-v：块可视模式 R：替换模式 Esc &#x2F; Ctrl-[：返回 Normal 模式 :：命令行模式">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2026-09-22T04:48:37.000Z">
-<meta property="article:modified_time" content="2026-09-22T04:48:37.280Z">
+<meta property="article:modified_time" content="2026-09-23T13:54:23.827Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary"><link rel="canonical" href="http://example.com/2026/09/22/c28/"><link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="preload" as="font" crossorigin="anonymous" href="/font/Bender.ttf"><link rel="preload" as="font" crossorigin="anonymous" href="/font/BenderLight.woff2"><link rel="preload" as="font" crossorigin="anonymous" href="/font/JetBrainsMono-Regular.woff2"><link rel="stylesheet" href="/css/arknights.css"><style>@font-face {
   font-family: Bender;
@@ -18,7 +20,7 @@
   font-family: 'JetBrains Mono';
   src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
 }
-</style><meta name="page-config" content="{&quot;code_fold&quot;:null}"><script class="pjax-js">var config = {"root":"/","code_fold":15,"search":{"preload":false,"activeHolder":"Enter here","blurHolder":"Search","noResult":"Data \"$0\" not found"},"code":{"codeInfo":"$0 - $1 lines","copy":"copy"}};
+</style><meta name="page-config" content="{&quot;code_fold&quot;:null}"><script class="pjax-js">var config = {"root":"/","code_fold":15,"search":{"preload":false,"activeHolder":"键入以继续","blurHolder":"数据检索","noResult":"无 $0 相关数据"},"code":{"codeInfo":"$0 - $1 行","copy":"复制"}};
 var page_config = {
   code_fold: null
 };
@@ -42,7 +44,7 @@ if (window.localStorage.getItem('theme-mode') === 'dark')
 }</style><style>:root {
  --dark-background: url('https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg');
  --light-background: url('/img/bk.jpg');
- --theme-encrypt-confirm: 'confirm'
+ --theme-encrypt-confirm: '确认'
 }</style><script defer src="/js/arknights.js"></script><script defer src="/js/search.js"></script><script defer type="module">import mermaid from '//unpkg.com/mermaid@11.12.2/dist/mermaid.esm.min.mjs';
 window.mermaid = mermaid;
 code.paintMermaid();
@@ -79,4 +81,162 @@ if (postBg) lightGallery(postBg, {
    }
  }
 });
-document.addEventListener("pjax:complete", reset);reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>c28</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2026-09-22T04:48:37.000Z" id="date"> 2026-09-22</time></div></span><br><span>Last Update: <div class="control"><time datetime="2026-09-22T04:48:37.280Z" id="updated"> 2026-09-22</time></div></span></div></div><hr><div id="post-content"><div id="paginator"></div></div><div id="post-footer"><div id="pages" style="justify-content: flex-end"><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/09/22/c27/">c27 Prev →</a></div></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="To Top" style="opacity: 0; display: none;">∧ </a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="Change Theme"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">John Doe</a></h1><div id="description"><p></p></div></div><div id="aside-block"></div><footer><nobr>Published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>
+document.addEventListener("pjax:complete", reset);reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="数据检索" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>vim操作全解</h1><div id="post-info"><span>文章发布时间: <div class="control"><time datetime="2026-09-22T04:48:37.000Z" id="date"> 2026-09-22</time></div></span><br><span>最后更新时间: <div class="control"><time datetime="2026-09-23T13:54:23.827Z" id="updated"> 2026-09-23</time></div></span></div></div><hr><div id="post-content"><p>首先windows需要手动安装vim</p>
+<p>以下按功能分类列举常用 Vim 操作，默认在 Normal 模式 下。Ctrl- 表示按住 Ctrl。</p>
+<p>模式切换<br>i：光标前插入</p>
+<p>I：行首插入</p>
+<p>a：光标后插入</p>
+<p>A：行尾插入</p>
+<p>o：下方新建行插入</p>
+<p>O：上方新建行插入</p>
+<p>v：字符可视模式</p>
+<p>V：行可视模式</p>
+<p>Ctrl-v：块可视模式</p>
+<p>R：替换模式</p>
+<p>Esc &#x2F; Ctrl-[：返回 Normal 模式</p>
+<p>:：命令行模式</p>
+<p>&#x2F;、?：搜索模式</p>
+<p>光标移动<br>h j k l：左 下 上 右</p>
+<p>w &#x2F; b：下一个 &#x2F; 上一个单词开头</p>
+<p>e &#x2F; ge：下一个 &#x2F; 上一个单词结尾</p>
+<p>0 &#x2F; ^ &#x2F; $：行首 &#x2F; 第一个非空字符 &#x2F; 行尾</p>
+<p>gg &#x2F; G：文件开头 &#x2F; 文件结尾</p>
+<p>nG 或 :n：跳到第 n 行</p>
+<p>f{char} &#x2F; F{char}：向后 &#x2F; 向前查找字符</p>
+<p>t{char} &#x2F; T{char}：到字符前 &#x2F; 后</p>
+<p>; &#x2F; ,：重复 &#x2F; 反向重复 f&#x2F;t</p>
+<p>%：匹配括号跳转</p>
+<p>{ &#x2F; }：上 &#x2F; 下段落</p>
+<p>( &#x2F; )：上 &#x2F; 下句子</p>
+<p>H &#x2F; M &#x2F; L：屏幕顶 &#x2F; 中 &#x2F; 底</p>
+<p>Ctrl-f &#x2F; Ctrl-b：下 &#x2F; 上翻页</p>
+<p>Ctrl-d &#x2F; Ctrl-u：下 &#x2F; 上半页</p>
+<p>zt &#x2F; zz &#x2F; zb：当前行置顶 &#x2F; 中 &#x2F; 底</p>
+<ul>
+<li>&#x2F; #：搜索光标下单词，向后 &#x2F; 向前</li>
+</ul>
+<p>编辑与删除<br>x &#x2F; X：删除光标处 &#x2F; 前一个字符</p>
+<p>dd：删除整行</p>
+<p>D：删除到行尾</p>
+<p>dw &#x2F; de：删除到下一个单词 &#x2F; 单词尾</p>
+<p>d0 &#x2F; d$：删除到行首 &#x2F; 行尾</p>
+<p>dgg &#x2F; dG：删除到文件头 &#x2F; 尾</p>
+<p>s：删除字符并插入</p>
+<p>S 或 cc：删除整行并插入</p>
+<p>C：删除到行尾并插入</p>
+<p>r：替换单个字符</p>
+<p>~：切换大小写</p>
+<p>J：合并下一行，带空格</p>
+<p>gJ：合并下一行，不带空格</p>
+<blockquote>
+<blockquote>
+<p>&#x2F; &lt;&lt;：右 &#x2F; 左缩进</p>
+</blockquote>
+</blockquote>
+<p>&#x3D;：自动缩进</p>
+<p>gg&#x3D;G：全文自动缩进</p>
+<p>Ctrl-a &#x2F; Ctrl-x：数字加一 &#x2F; 减一</p>
+<p>u：撤销</p>
+<p>Ctrl-r：重做</p>
+<p>U：撤销对当前行的所有修改</p>
+<p>.：重复上次修改</p>
+<p>复制、粘贴、寄存器<br>yy &#x2F; Y：复制整行</p>
+<p>yw：复制单词</p>
+<p>y$：复制到行尾</p>
+<p>yG：复制到文件尾</p>
+<p>p &#x2F; P：光标后 &#x2F; 前粘贴</p>
+<p>“+y &#x2F; “+p：复制到 &#x2F; 粘贴系统剪贴板</p>
+<p>“_dd：删除到黑洞寄存器，不覆盖剪贴板</p>
+<p>“0p：粘贴最近复制内容</p>
+<p>“aY &#x2F; “ap：复制到 &#x2F; 粘贴寄存器 a</p>
+<p>:reg：查看寄存器</p>
+<p>搜索与替换<br>&#x2F;pattern：向下搜索</p>
+<p>?pattern：向上搜索</p>
+<p>n &#x2F; N：下一个 &#x2F; 上一个匹配</p>
+<p>:noh：取消搜索高亮</p>
+<p>:s&#x2F;old&#x2F;new&#x2F;：当前行替换第一个</p>
+<p>:s&#x2F;old&#x2F;new&#x2F;g：当前行全部替换</p>
+<p>:%s&#x2F;old&#x2F;new&#x2F;g：全文替换</p>
+<p>:%s&#x2F;old&#x2F;new&#x2F;gc：全文替换并确认</p>
+<p>:n,m s&#x2F;old&#x2F;new&#x2F;g：第 n 到 m 行替换</p>
+<p>:g&#x2F;pattern&#x2F;d：删除匹配行</p>
+<p>:v&#x2F;pattern&#x2F;d：删除不匹配行</p>
+<p>:%s&#x2F;\s+$&#x2F;&#x2F;e：删除行尾空格</p>
+<p>文本对象<br>可配合 d、c、y、v 使用：</p>
+<p>iw &#x2F; aw：单词内 &#x2F; 一个单词</p>
+<p>i” &#x2F; a”：双引号内 &#x2F; 含双引号</p>
+<p>i’ &#x2F; a’：单引号内 &#x2F; 含单引号</p>
+<p>i( &#x2F; a(：括号内 &#x2F; 含括号</p>
+<p>i{ &#x2F; a{：花括号内 &#x2F; 含花括号</p>
+<p>it &#x2F; at：标签内 &#x2F; 含标签</p>
+<p>ip &#x2F; ap：段落内 &#x2F; 含段落</p>
+<p>例：diw 删除单词，ci” 修改双引号内容，ya{ 复制花括号块</p>
+<p>可视模式<br>v &#x2F; V &#x2F; Ctrl-v：字符 &#x2F; 行 &#x2F; 块选择</p>
+<p>o：切换选择活动端</p>
+<p>gv：重选上次可视区域</p>
+<p>d &#x2F; y &#x2F; c：删除 &#x2F; 复制 &#x2F; 修改选中</p>
+<blockquote>
+<p>&#x2F; &lt;：缩进 &#x2F; 反缩进</p>
+</blockquote>
+<p>~ &#x2F; U &#x2F; u：切换大小写 &#x2F; 大写 &#x2F; 小写</p>
+<p>块选择下 I &#x2F; A：多行同时插入 &#x2F; 追加</p>
+<p>:’&lt;,’&gt;s&#x2F;old&#x2F;new&#x2F;g：对选中行替换</p>
+<p>文件、保存、退出<br>:w：保存</p>
+<p>:q：退出</p>
+<p>:wq：保存退出</p>
+<p>:x：保存退出，未修改则直接退出</p>
+<p>ZZ：保存退出</p>
+<p>:q!：强制退出不保存</p>
+<p>ZQ：强制退出不保存</p>
+<p>:e file：编辑文件</p>
+<p>:saveas newfile：另存为</p>
+<p>:r file：读入文件内容</p>
+<p>:w !sudo tee %：用 sudo 保存当前文件</p>
+<p>:bn &#x2F; :bp：下一个 &#x2F; 上一个缓冲区</p>
+<p>:bd：关闭缓冲区</p>
+<p>:ls：列出缓冲区</p>
+<p>窗口与标签<br>:sp &#x2F; :vsp：水平 &#x2F; 垂直分屏</p>
+<p>Ctrl-w h&#x2F;j&#x2F;k&#x2F;l：切换窗口</p>
+<p>Ctrl-w q：关闭当前窗口</p>
+<p>Ctrl-w o：只保留当前窗口</p>
+<p>Ctrl-w &#x3D;：等宽等高</p>
+<p>:tabnew：新建标签页</p>
+<p>gt &#x2F; gT：下一个 &#x2F; 上一个标签页</p>
+<p>:tabclose：关闭标签页</p>
+<p>宏与标记<br>qa：开始录制宏到寄存器 a</p>
+<p>q：停止录制</p>
+<p>@a：播放宏 a</p>
+<p>@@：重复上次宏</p>
+<p>ma：设置标记 a</p>
+<p>&#96;a：跳转到标记 a</p>
+<p>‘a：跳转到标记 a 行首</p>
+<p> &#96;&#96;：上次跳转位置</p>
+<p>‘.：最后修改位置</p>
+<p>gi：上次插入位置并进入插入</p>
+<p>Ctrl-o &#x2F; Ctrl-i：跳转历史后退 &#x2F; 前进</p>
+<p>g; &#x2F; g,：上一个 &#x2F; 下一个修改位置</p>
+<p>Shell 与命令<br>:!cmd：执行 shell 命令</p>
+<p>:r !cmd：插入命令输出</p>
+<p>:%!cmd：用命令过滤全文</p>
+<p>:sh：进入 shell，exit 返回</p>
+<p>:terminal：打开终端</p>
+<p>:sort：排序</p>
+<p>:help：帮助</p>
+<p>:set nu &#x2F; :set nonu：显示 &#x2F; 隐藏行号</p>
+<p>:set ic &#x2F; :set noic：忽略 &#x2F; 区分大小写</p>
+<p>:set hls &#x2F; :set nohls：搜索高亮开 &#x2F; 关</p>
+<p>:set paste &#x2F; :set nopaste：粘贴模式开 &#x2F; 关</p>
+<p>:set list：显示不可见字符</p>
+<p>:set wrap &#x2F; :set nowrap：自动换行开 &#x2F; 关</p>
+<p>折叠<br>zf：创建折叠</p>
+<p>zo &#x2F; zc：打开 &#x2F; 关闭折叠</p>
+<p>za：切换折叠</p>
+<p>zR &#x2F; zM：打开 &#x2F; 关闭所有折叠</p>
+<p>高频组合<br>ggVG：全选</p>
+<p>gg&#x3D;G：全文缩进</p>
+<p>:%y+：全文复制到系统剪贴板</p>
+<p>:set paste 后粘贴，再 :set nopaste：避免自动缩进</p>
+<p>qa … q @a：录制并播放宏</p>
+<p>:g&#x2F;^$&#x2F;d：删除所有空行</p>
+<p>:s&#x2F;old&#x2F;new&#x2F;gc：当前行确认替换</p>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2026/09/24/c29/">← 下一篇 react框架教程</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/09/22/c27/">vite dev与preview的区别 上一篇 →</a></div></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="回到顶部" style="opacity: 0; display: none;">∧ </a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="切换主题"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">John Doe</a></h1><div id="description"><p></p></div></div><div id="aside-block"></div><footer><nobr>构建自 <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> 使用主题 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> 主题作者 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>

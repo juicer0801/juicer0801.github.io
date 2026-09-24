@@ -1,0 +1,126 @@
+<!DOCTYPE html><html lang="en" theme-mode="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>react框架教程 | Hexo</title><meta name="description" content="首先我们需要了解一个工具vite Vite（法语意为“快速的”，发音 &#x2F;viːt&#x2F;）是由尤雨溪及其团队于 2019 年开发的前端构建工具，核心目标是解决传统 JavaScript 工具在大型项目中面临的启动缓慢、热更新延迟等性能瓶颈问题。它的思路和 Webpack 这样的传统打包器有本质区别：不在开发阶段打包传统的打包器需要先把整个项目的所有模块分析、编译、打包成一个或多个 b">
+<meta property="og:type" content="article">
+<meta property="og:title" content="react框架教程">
+<meta property="og:url" content="http://example.com/2026/09/24/c29/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="首先我们需要了解一个工具vite Vite（法语意为“快速的”，发音 &#x2F;viːt&#x2F;）是由尤雨溪及其团队于 2019 年开发的前端构建工具，核心目标是解决传统 JavaScript 工具在大型项目中面临的启动缓慢、热更新延迟等性能瓶颈问题。它的思路和 Webpack 这样的传统打包器有本质区别：不在开发阶段打包传统的打包器需要先把整个项目的所有模块分析、编译、打包成一个或多个 b">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-09-24T04:36:07.000Z">
+<meta property="article:modified_time" content="2026-09-24T13:55:09.425Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary"><link rel="canonical" href="http://example.com/2026/09/24/c29/"><link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="preload" as="font" crossorigin="anonymous" href="/font/Bender.ttf"><link rel="preload" as="font" crossorigin="anonymous" href="/font/BenderLight.woff2"><link rel="preload" as="font" crossorigin="anonymous" href="/font/JetBrainsMono-Regular.woff2"><link rel="stylesheet" href="/css/arknights.css"><style>@font-face {
+  font-family: Bender;
+  src: local('Bender'), url("/font/Bender.ttf"), url("/font/Bender.otf");
+}
+@font-face {
+  font-family: BenderLight;
+  src: local('BenderLight'), url("/font/BenderLight.woff2") format('woff2');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}
+</style><meta name="page-config" content="{&quot;code_fold&quot;:null}"><script class="pjax-js">var config = {"root":"/","code_fold":15,"search":{"preload":false,"activeHolder":"键入以继续","blurHolder":"数据检索","noResult":"无 $0 相关数据"},"code":{"codeInfo":"$0 - $1 行","copy":"复制"}};
+var page_config = {
+  code_fold: null
+};
+function updatePageConfig() {
+  var newPageConfig = document.querySelector('meta[name="page-config"]');
+  if (newPageConfig) {
+    page_config = JSON.parse(newPageConfig.content);
+  }
+}
+document.addEventListener('pjax:complete', function() { updatePageConfig(); });
+updatePageConfig();</script><link type="text/css" rel="stylesheet" href="/lib/encrypt/hbe.style.css"><script src="//unpkg.com/mermaid@11.12.2/dist/mermaid.min.js"></script><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lightgallery.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-zoom.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-thumbnail.css"><link type="text/css" rel="stylesheet" href="/lib/fontawesome/css/all.min.css"><script>if (window.localStorage.getItem('theme-mode') === 'light')
+ document.documentElement.setAttribute('theme-mode', 'light')
+if (window.localStorage.getItem('theme-mode') === 'dark')
+ document.documentElement.setAttribute('theme-mode', 'dark')</script><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.woff2") format('woff2');
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><style>:root {
+ --dark-background: url('https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg');
+ --light-background: url('/img/bk.jpg');
+ --theme-encrypt-confirm: '确认'
+}</style><script defer src="/js/arknights.js"></script><script defer src="/js/search.js"></script><script defer type="module">import mermaid from '//unpkg.com/mermaid@11.12.2/dist/mermaid.esm.min.mjs';
+window.mermaid = mermaid;
+code.paintMermaid();
+</script><script async src="//unpkg.com/lightgallery@2.7.1/lightgallery.min.js"></script><script async src="//unpkg.com/lightgallery@2.7.1/plugins/zoom/lg-zoom.min.js"></script><script async src="//unpkg.com/lightgallery@2.7.1/plugins/thumbnail/lg-thumbnail.min.js"></script><script async src="/lib/encrypt/hbe.js"></script><script async src="/js/pjax.js"></script><script class="pjax-js">reset= () => {document.querySelector('.lg-container')?.remove()
+lightGallery(document.getElementById('post-bg'), {
+  plugins: [lgZoom,lgThumbnail],
+  selector: '.item-img'})}</script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js','data-pjax','.vercount','meta[name=page-config]'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);reset()})</script><script class="pjax-js">reset= () => {document.querySelector('.lg-container')?.remove()
+const postBg = document.querySelector('#post-bg');
+if (postBg) lightGallery(postBg, {
+  plugins: [lgZoom,lgThumbnail],
+  selector: '.item-img'})}</script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js','data-pjax','.vercount','meta[name=page-config]'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="数据检索" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>react框架教程</h1><div id="post-info"><span>文章发布时间: <div class="control"><time datetime="2026-09-24T04:36:07.000Z" id="date"> 2026-09-24</time></div></span><br><span>最后更新时间: <div class="control"><time datetime="2026-09-24T13:55:09.425Z" id="updated"> 2026-09-24</time></div></span></div></div><hr><div id="post-content"><p>首先我们需要了解一个工具vite</p>
+<p>Vite（法语意为“快速的”，发音 &#x2F;viːt&#x2F;）是由尤雨溪及其团队于 2019 年开发的前端构建工具，核心目标是解决传统 JavaScript 工具在大型项目中面临的启动缓慢、热更新延迟等性能瓶颈问题。它的思路和 Webpack 这样的传统打包器有本质区别：不在开发阶段打包<br>传统的打包器需要先把整个项目的所有模块分析、编译、打包成一个或多个 bundle，然后才能启动开发服务器。Vite 的做法是直接利用浏览器原生的 ES 模块支持，开发服务器按需编译模块——浏览器请求哪个模块，Vite 就实时编译哪个模块并返回。这意味着无论项目有 10 个模块还是 1000 个模块，启动速度几乎一样快。（Vite 这个工具，本身是用 JavaScript 写的。）</p>
+<p>如何安装vite？</p>
+<p>1.环境检查<br>Vite 需要 Node.js 版本 20.19+ 或 22.12+。在终端里检查一下：<br>node -v<br>npm -v<br>如果版本不够，用 nvm 或 nvm-windows 升级</p>
+<p>2.安装<br>如果你已经安装好了node.js，估计要在目录下做一次初始化<br>npm init -y<br>运行完，目录里会多出一个文件 package.jso（暂且不用管）<br>然后在目录下<br>npm install -D vite<br>运行完目录里多出一个 node_modules 文件夹（暂且不用管）<br>package.json 现在多了一段 devDependencies：<br>同时还多出一个 package-lock.json</p>
+<p>3.启动<br>npm create vite@latest my-react-app – –template react-swc-ts（生成完整的项目结构默认选择SWC 作为编译器）</p>
+<p>然后<br>cd my-react-app<br>npm install<br>npm run dev</p>
+<p>终端输出：<br>  VITE v8.x.x  ready in 320 ms</p>
+<p>  ➜  Local:   <a target="_blank" rel="noopener" href="http://localhost:5173/">http://localhost:5173/</a><br>  ➜  Network: use –host to expose</p>
+<p>4.概览<br>一个典型的 react-swc-ts 项目长这样：<br>my-react-app&#x2F;<br>├── index.html              # 入口 HTML，包含 <div id="root"><br>├── package.json<br>├── vite.config.ts          # Vite 配置<br>├── tsconfig.json           # TypeScript 配置<br>├── src&#x2F;<br>│   ├── main.tsx            # React 挂载入口<br>│   ├── App.tsx             # 根组件<br>│   ├── App.css<br>│   ├── index.css<br>│   └── assets&#x2F;             # 静态资源<br>└── public&#x2F;                 # 不需要处理的公共资源</p>
+<p>index.html 在项目根目录，而不是在 public&#x2F; 里。在 Vite 中，index.html 是应用的真正入口，Vite 以它为中心来解析和构建整个应用。你可以直接在 index.html 里写 <script type="module" src="/src/main.tsx"></script>，Vite 会处理这个入口的依赖关系。</p>
+<p>src&#x2F;main.tsx 是 React 的挂载点：</p>
+<p>import { StrictMode } from ‘react’<br>import { createRoot } from ‘react-dom&#x2F;client’<br>import App from ‘.&#x2F;App.tsx’<br>import ‘.&#x2F;index.css’</p>
+<p>createRoot(document.getElementById(‘root’)!).render(<br>  <StrictMode><br>    <App /><br>  </StrictMode>,<br>)<br>StrictMode 在开发模式下会做额外的检查（比如检测副作用是否被正确清理），生产构建中不会产生任何开销。建议保留。</p>
+<p>理解 vite.config.ts<br>脚手架生成的配置文件基本是空的，但它是你后续定制构建行为的核心入口。Vite 会自动解析项目根目录下的 vite.config.js 或 vite.config.ts。</p>
+
+
+
+
+<p>一个基础的 React 项目配置长这样：</p>
+<p>import { defineConfig } from ‘vite’<br>import react from ‘@vitejs&#x2F;plugin-react-swc’</p>
+<p>export default defineConfig({<br>  plugins: [react()],<br>})</p>
+<p>defineConfig 是一个辅助函数，主要作用是提供 TypeScript 类型提示。没有它也能跑，但有了它，你在编辑器里写配置项时会有完整的补全和类型检查。</p>
+<p>如果你选了 react-ts 模板（Babel 版），插件是 @vitejs&#x2F;plugin-react；react-swc-ts 则是 @vitejs&#x2F;plugin-react-swc。两者 API 一致，SWC 版在大型项目中编译更快。</p>
+<p>5.写一个自己的组件<br>默认的 App.tsx 包含了一些演示内容，可以清掉，写一个简单的组件来确认一切正常：</p>
+<p>&#x2F;&#x2F; src&#x2F;components&#x2F;Greeting.tsx<br>interface GreetingProps {<br>  name: string<br>}</p>
+<p>export function Greeting({ name }: GreetingProps) {<br>  return <h2>你好，{name}！React + Vite 已就绪。</h2><br>}<br>然后在 App.tsx 中使用：</p>
+
+import { Greeting } from './components/Greeting'
+
+function App() {
+  return (
+    <div style={{ padding: '2rem' }}>
+      <Greeting name="开发者" />
+    </div>
+  )
+}
+
+export default App
+
+
+<p>保存，浏览器自动更新。到这里，你的 React 项目已经正常运转了。</p>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2026/09/24/c30/">← 下一篇 c30</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/09/22/c28/">vim操作全解 上一篇 →</a></div></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="回到顶部" style="opacity: 0; display: none;">∧ </a><a class="i-index" id="to-index" onClick="tocControl.change()" title="文章目录"><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span></a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="切换主题"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">John Doe</a></h1><div id="description"><p></p></div></div><div id="aside-block"><div id="toc-div"><h1>目录</h1><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#root"><span class="toc-number">1.</span> <span class="toc-text">你好，{name}！React + Vite 已就绪。</span></a></li></ol></div></div><footer><nobr>构建自 <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> 使用主题 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> 主题作者 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>
