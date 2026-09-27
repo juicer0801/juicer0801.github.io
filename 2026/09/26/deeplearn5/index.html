@@ -1,10 +1,12 @@
-<!DOCTYPE html><html lang="en" theme-mode="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>deeplearn5 | Hexo</title><meta property="og:type" content="article">
-<meta property="og:title" content="deeplearn5">
+<!DOCTYPE html><html lang="en" theme-mode="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>深度学习的小demo展示（激励一下） | Hexo</title><meta name="description" content="基于 ResNet18 迁移学习的图像分类系统 流程介绍数据集：Oxford Flowers102（torchvision 自带，102 类）或 Kaggle Dogs vs Cats模型：ResNet18 &#x2F; ResNet50 预训练模型框架：PyTorch + torchvision技术点：数据增强、迁移学习、冻结-解冻、余弦退火、早停、混淆矩阵结果：验证集准确率 90% 左右部署：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深度学习的小demo展示（激励一下）">
 <meta property="og:url" content="http://example.com/2026/09/26/deeplearn5/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="基于 ResNet18 迁移学习的图像分类系统 流程介绍数据集：Oxford Flowers102（torchvision 自带，102 类）或 Kaggle Dogs vs Cats模型：ResNet18 &#x2F; ResNet50 预训练模型框架：PyTorch + torchvision技术点：数据增强、迁移学习、冻结-解冻、余弦退火、早停、混淆矩阵结果：验证集准确率 90% 左右部署：">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2026-09-26T11:35:00.000Z">
-<meta property="article:modified_time" content="2026-09-26T11:35:00.093Z">
+<meta property="article:modified_time" content="2026-09-27T09:13:01.029Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary"><link rel="canonical" href="http://example.com/2026/09/26/deeplearn5/"><link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="preload" as="font" crossorigin="anonymous" href="/font/Bender.ttf"><link rel="preload" as="font" crossorigin="anonymous" href="/font/BenderLight.woff2"><link rel="preload" as="font" crossorigin="anonymous" href="/font/JetBrainsMono-Regular.woff2"><link rel="stylesheet" href="/css/arknights.css"><style>@font-face {
   font-family: Bender;
@@ -79,4 +81,99 @@ if (postBg) lightGallery(postBg, {
    }
  }
 });
-document.addEventListener("pjax:complete", reset);reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>deeplearn5</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2026-09-26T11:35:00.000Z" id="date"> 2026-09-26</time></div></span><br><span>Last Update: <div class="control"><time datetime="2026-09-26T11:35:00.093Z" id="updated"> 2026-09-26</time></div></span></div></div><hr><div id="post-content"><div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2026/09/26/deeplearn6/">← Next deeplearn6</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/09/26/deeplearn4/">pytorch基本操作 Prev →</a></div></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="To Top" style="opacity: 0; display: none;">∧ </a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="Change Theme"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">John Doe</a></h1><div id="description"><p></p></div></div><div id="aside-block"></div><footer><nobr>Published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>
+document.addEventListener("pjax:complete", reset);reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>深度学习的小demo展示（激励一下）</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2026-09-26T11:35:00.000Z" id="date"> 2026-09-26</time></div></span><br><span>Last Update: <div class="control"><time datetime="2026-09-27T09:13:01.029Z" id="updated"> 2026-09-27</time></div></span></div></div><hr><div id="post-content"><p>基于 ResNet18 迁移学习的图像分类系统</p>
+<p>流程介绍<br>数据集：Oxford Flowers102（torchvision 自带，102 类）或 Kaggle Dogs vs Cats<br>模型：ResNet18 &#x2F; ResNet50 预训练模型<br>框架：PyTorch + torchvision<br>技术点：数据增强、迁移学习、冻结-解冻、余弦退火、早停、混淆矩阵<br>结果：验证集准确率 90% 左右<br>部署：Gradio &#x2F; Streamlit，上传图片输出 Top-3 类别和置信度<br>开源：GitHub README + 结果截图 + Demo 链接</p>
+<p>加载数据集<br>Flowers102 是 torchvision 内置数据集，包含 102 类花卉。数据划分如下<br>train	1,020（每类 10 张）<br>val	1,020（每类 10 张）<br>test	6,149（每类至少 20 张）</p>
+<p>注意：训练集只有 1020 张，这就是为什么要用迁移学习——从零训练在这么少的数据上很难收敛。</p>
+<p>数据增强与预处理（训练集用增强，验证&#x2F;测试集不用）：<br>from torchvision import transforms, datasets<br>from torch.utils.data import DataLoader</p>
+<h1 id="训练集增强"><a href="#训练集增强" class="headerlink" title="训练集增强"></a>训练集增强</h1><p>train_transform &#x3D; transforms.Compose([<br>    transforms.RandomResizedCrop(224, scale&#x3D;(0.7, 1.0)),<br>    transforms.RandomHorizontalFlip(),<br>    transforms.ColorJitter(brightness&#x3D;0.2, contrast&#x3D;0.2, saturation&#x3D;0.2),<br>    transforms.ToTensor(),<br>    transforms.Normalize(mean&#x3D;[0.485, 0.456, 0.406],<br>                         std&#x3D;[0.229, 0.224, 0.225])<br>])</p>
+<h1 id="验证-测试集仅-Resize-Normalize"><a href="#验证-测试集仅-Resize-Normalize" class="headerlink" title="验证&#x2F;测试集仅 Resize + Normalize"></a>验证&#x2F;测试集仅 Resize + Normalize</h1><p>val_transform &#x3D; transforms.Compose([<br>    transforms.Resize(256),<br>    transforms.CenterCrop(224),<br>    transforms.ToTensor(),<br>    transforms.Normalize(mean&#x3D;[0.485, 0.456, 0.406],<br>                         std&#x3D;[0.229, 0.224, 0.225])<br>])</p>
+<h1 id="加载数据集"><a href="#加载数据集" class="headerlink" title="加载数据集"></a>加载数据集</h1><p>train_set &#x3D; datasets.Flowers102(root&#x3D;’.&#x2F;data’, split&#x3D;’train’,<br>                                 download&#x3D;True, transform&#x3D;train_transform)<br>val_set &#x3D; datasets.Flowers102(root&#x3D;’.&#x2F;data’, split&#x3D;’val’,<br>                               download&#x3D;True, transform&#x3D;val_transform)<br>test_set &#x3D; datasets.Flowers102(root&#x3D;’.&#x2F;data’, split&#x3D;’test’,<br>                                download&#x3D;True, transform&#x3D;val_transform)</p>
+<p>train_loader &#x3D; DataLoader(train_set, batch_size&#x3D;32, shuffle&#x3D;True, num_workers&#x3D;4)<br>val_loader &#x3D; DataLoader(val_set, batch_size&#x3D;32, shuffle&#x3D;False, num_workers&#x3D;4)<br>test_loader &#x3D; DataLoader(test_set, batch_size&#x3D;32, shuffle&#x3D;False, num_workers&#x3D;4)</p>
+<p>num_workers 设为 4，可根据 CPU 核心数调整。</p>
+<p>第三步：加载 ResNet18 并改造模型<br>import torch.nn as nn<br>from torchvision import models</p>
+<p>device &#x3D; torch.device(“cuda” if torch.cuda.is_available() else “cpu”) #兼容cpu</p>
+<h1 id="加载-ImageNet-预训练-ResNet18"><a href="#加载-ImageNet-预训练-ResNet18" class="headerlink" title="加载 ImageNet 预训练 ResNet18"></a>加载 ImageNet 预训练 ResNet18</h1><p>model &#x3D; models.resnet18(weights&#x3D;models.ResNet18_Weights.DEFAULT)</p>
+<h1 id="冻结所有预训练层"><a href="#冻结所有预训练层" class="headerlink" title="冻结所有预训练层"></a>冻结所有预训练层</h1><p>for param in model.parameters():<br>    param.requires_grad &#x3D; False</p>
+<h1 id="替换最后的全连接层：512-102"><a href="#替换最后的全连接层：512-102" class="headerlink" title="替换最后的全连接层：512 -&gt; 102"></a>替换最后的全连接层：512 -&gt; 102</h1><p>num_features &#x3D; model.fc.in_features<br>model.fc &#x3D; nn.Linear(num_features, 102)</p>
+<p>model &#x3D; model.to(device)</p>
+<p>冻结所有层后，仅 fc 层的参数可训练，可训练参数量从约 1100 万降到约 5.2 万，可以降低了在小数据集上过拟合的风险。</p>
+<p>第四步：阶段一训练（只训练分类头）<br>import torch.optim as optim<br>from torch.optim.lr_scheduler import CosineAnnealingLR</p>
+<p>criterion &#x3D; nn.CrossEntropyLoss()<br>optimizer &#x3D; optim.Adam(model.fc.parameters(), lr&#x3D;0.001)<br>scheduler &#x3D; CosineAnnealingLR(optimizer, T_max&#x3D;5)</p>
+<p>best_val_acc &#x3D; 0.0<br>patience &#x3D; 3<br>no_improve &#x3D; 0</p>
+<p>for epoch in range(5):<br>    # 训练<br>    model.train()<br>    running_loss, correct, total &#x3D; 0.0, 0, 0<br>    for images, labels in train_loader:<br>        images, labels &#x3D; images.to(device), labels.to(device)<br>        optimizer.zero_grad()<br>        outputs &#x3D; model(images)<br>        loss &#x3D; criterion(outputs, labels)<br>        loss.backward()<br>        optimizer.step()<br>        running_loss +&#x3D; loss.item() * images.size(0)<br>        correct +&#x3D; (outputs.argmax(1) &#x3D;&#x3D; labels).sum().item()<br>        total +&#x3D; labels.size(0)<br>    train_acc &#x3D; correct &#x2F; total</p>
+<pre><code># 验证
+model.eval()
+val_correct, val_total = 0, 0
+with torch.no_grad():
+    for images, labels in val_loader:
+        images, labels = images.to(device), labels.to(device)
+        outputs = model(images)
+        val_correct += (outputs.argmax(1) == labels).sum().item()
+        val_total += labels.size(0)
+val_acc = val_correct / val_total
+
+scheduler.step()
+print(f&quot;Epoch {epoch+1} | Train Acc: {train_acc:.4f} | Val Acc: {val_acc:.4f}&quot;)
+
+# 提前叫停
+if val_acc &gt; best_val_acc:
+    best_val_acc = val_acc
+    no_improve = 0
+    torch.save(model.state_dict(), &#39;best_model_stage1.pth&#39;)
+else:
+    no_improve += 1
+    if no_improve &gt;= patience:
+        print(f&quot;Early stopping at epoch {epoch+1}&quot;)
+        break
+</code></pre>
+<p>余弦退火调度器让学习率按余弦曲线从初始值逐渐降到 0，帮助模型在后期更稳定地收敛。</p>
+<p>第五步：阶段二训练——解冻部分层微调</p>
+<h1 id="加载阶段一最优权重"><a href="#加载阶段一最优权重" class="headerlink" title="加载阶段一最优权重"></a>加载阶段一最优权重</h1><p>model.load_state_dict(torch.load(‘best_model_stage1.pth’))</p>
+<h1 id="解冻-layer4（ResNet18-最后一个残差块）"><a href="#解冻-layer4（ResNet18-最后一个残差块）" class="headerlink" title="解冻 layer4（ResNet18 最后一个残差块）"></a>解冻 layer4（ResNet18 最后一个残差块）</h1><p>for param in model.layer4.parameters():<br>    param.requires_grad &#x3D; True</p>
+<h1 id="用更小的学习率微调"><a href="#用更小的学习率微调" class="headerlink" title="用更小的学习率微调"></a>用更小的学习率微调</h1><p>optimizer &#x3D; optim.Adam(filter(lambda p: p.requires_grad, model.parameters()),<br>                       lr&#x3D;1e-4)<br>scheduler &#x3D; CosineAnnealingLR(optimizer, T_max&#x3D;10)</p>
+<p>best_val_acc &#x3D; 0.0<br>no_improve &#x3D; 0</p>
+<p>for epoch in range(10):<br>    model.train()<br>    running_loss, correct, total &#x3D; 0.0, 0, 0<br>    for images, labels in train_loader:<br>        images, labels &#x3D; images.to(device), labels.to(device)<br>        optimizer.zero_grad()<br>        outputs &#x3D; model(images)<br>        loss &#x3D; criterion(outputs, labels)<br>        loss.backward()<br>        optimizer.step()<br>        running_loss +&#x3D; loss.item() * images.size(0)<br>        correct +&#x3D; (outputs.argmax(1) &#x3D;&#x3D; labels).sum().item()<br>        total +&#x3D; labels.size(0)<br>    train_acc &#x3D; correct &#x2F; total</p>
+<pre><code>model.eval()
+val_correct, val_total = 0, 0
+with torch.no_grad():
+    for images, labels in val_loader:
+        images, labels = images.to(device), labels.to(device)
+        outputs = model(images)
+        val_correct += (outputs.argmax(1) == labels).sum().item()
+        val_total += labels.size(0)
+val_acc = val_correct / val_total
+
+scheduler.step()
+print(f&quot;[Fine-tune] Epoch {epoch+1} | Train Acc: {train_acc:.4f} | Val Acc: {val_acc:.4f}&quot;)
+
+if val_acc &gt; best_val_acc:
+    best_val_acc = val_acc
+    no_improve = 0
+    torch.save(model.state_dict(), &#39;best_model.pth&#39;)
+else:
+    no_improve += 1
+    if no_improve &gt;= patience:
+        print(f&quot;Early stopping at epoch {epoch+1}&quot;)
+        break
+</code></pre>
+<p>layer4 包含最高层的语义特征，与花卉分类最相关，故而解冻 layer4 而不是全部解冻；底层卷积层提取的是通用边缘&#x2F;纹理特征，保留冻结即可。全解冻反而容易在小数据集上过拟合。</p>
+<p>第六步：评估<br>测试集准确率：<br>model.load_state_dict(torch.load(‘best_model.pth’))<br>model.eval()<br>test_correct, test_total &#x3D; 0, 0<br>all_preds, all_labels &#x3D; [], []</p>
+<p>with torch.no_grad():<br>    for images, labels in test_loader:<br>        images, labels &#x3D; images.to(device), labels.to(device)<br>        outputs &#x3D; model(images)<br>        preds &#x3D; outputs.argmax(1)<br>        test_correct +&#x3D; (preds &#x3D;&#x3D; labels).sum().item()<br>        test_total +&#x3D; labels.size(0)<br>        all_preds.extend(preds.cpu().numpy())<br>        all_labels.extend(labels.cpu().numpy())</p>
+<p>print(f”Test Accuracy: {test_correct &#x2F; test_total:.4f}”)</p>
+<p>混淆矩阵：<br>from sklearn.metrics import confusion_matrix, classification_report<br>import matplotlib.pyplot as plt</p>
+<p>cm &#x3D; confusion_matrix(all_labels, all_preds)<br>print(classification_report(all_labels, all_preds, digits&#x3D;4))</p>
+<p>plt.figure(figsize&#x3D;(20, 20))<br>plt.imshow(cm, cmap&#x3D;’Blues’)<br>plt.colorbar()<br>plt.xlabel(‘Predicted’)<br>plt.ylabel(‘True’)<br>plt.title(‘Confusion Matrix’)<br>plt.savefig(‘confusion_matrix.png’, dpi&#x3D;150)</p>
+<p>预期结果：测试集准确率约 90%-95%。有研究显示，用 ImageNet 预训练的 ResNet18 微调花卉分类，20 分钟内可达到 90%+ 的准确率。另有一个 GitHub 项目对 Flowers102 做 ResNet18 微调，验证集准确率达到 100%，训练集 96.45%——说明这个任务的上限很高。（抄的，其实不用这么精确）</p>
+<p>第七步：Gradio 部署<br>创建 app.py：<br>import gradio as gr<br>import torch<br>import torch.nn as nn<br>from torchvision import models, transforms<br>from PIL import Image</p>
+<h1 id="模型定义（必须和训练时一致）"><a href="#模型定义（必须和训练时一致）" class="headerlink" title="模型定义（必须和训练时一致）"></a>模型定义（必须和训练时一致）</h1><p>model &#x3D; models.resnet18(weights&#x3D;None)<br>model.fc &#x3D; nn.Linear(512, 102)<br>model.load_state_dict(torch.load(‘best_model.pth’, map_location&#x3D;’cpu’))<br>model.eval()</p>
+<h1 id="预处理"><a href="#预处理" class="headerlink" title="预处理"></a>预处理</h1><p>transform &#x3D; transforms.Compose([<br>    transforms.Resize(256),<br>    transforms.CenterCrop(224),<br>    transforms.ToTensor(),<br>    transforms.Normalize(mean&#x3D;[0.485, 0.456, 0.406],<br>                         std&#x3D;[0.229, 0.224, 0.225])<br>])</p>
+<p>def predict(image):<br>    img &#x3D; transform(image).unsqueeze(0)<br>    with torch.no_grad():<br>        outputs &#x3D; model(img)<br>        probs &#x3D; torch.nn.functional.softmax(outputs, dim&#x3D;1)[0]<br>    top3_prob, top3_idx &#x3D; torch.topk(probs, 3)<br>    return {f”Class {idx.item()}”: prob.item()<br>            for prob, idx in zip(top3_prob, top3_idx)}</p>
+<p>demo &#x3D; gr.Interface(<br>    fn&#x3D;predict,<br>    inputs&#x3D;gr.Image(type&#x3D;”pil”),<br>    outputs&#x3D;gr.Label(num_top_classes&#x3D;3),<br>    title&#x3D;”花卉分类器”,<br>    description&#x3D;”上传一张花卉图片，返回最可能的 3 个类别及置信度”<br>)</p>
+<p>demo.launch()<br>本地运行 python app.py，浏览器打开 <a target="_blank" rel="noopener" href="http://localhost:7860/">http://localhost:7860</a> 测试。</p>
+<p>第八步：部署到 HuggingFace Spaces<br>注册 HuggingFace 账号，访问 huggingface.co&#x2F;new-space<br>SDK 选 Gradio，硬件选 CPU (free)，命名如 flower-classifier</p>
+<p>上传以下文件：<br>app.py（上面的 Gradio 代码）<br>best_model.pth（训练好的权重）<br>requirements.txt<br>README.md</p>
+<p>上传后在 Space 页面即可获得公开 Demo 链接</p>
+<p>第九步：GitHub 仓库整理<br>flower-classification&#x2F;<br>├── train.py              # 完整训练脚本<br>├── evaluate.py           # 评估脚本<br>├── app.py                # Gradio 推理<br>├── best_model.pth        # 训练好的权重<br>├── requirements.txt<br>├── README.md             # 项目说明<br>├── confusion_matrix.png  # 混淆矩阵截图<br>└── results&#x2F;<br>    ├── training_curve.png<br>    └── sample_predictions.png</p>
+<p>推荐README包含：任务描述、数据集信息、模型架构、训练策略（冻结-解冻两阶段）、最终指标（测试集准确率）、Demo 链接、运行方式。</p>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2026/09/26/deeplearn6/">← Next 数据预处理</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/09/26/deeplearn4/">pytorch基本操作 Prev →</a></div></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="To Top" style="opacity: 0; display: none;">∧ </a><a class="i-index" id="to-index" onClick="tocControl.change()" title="To Catalog"><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span></a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="Change Theme"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">John Doe</a></h1><div id="description"><p></p></div></div><div id="aside-block"><div id="toc-div"><h1>Catalog</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%AD%E7%BB%83%E9%9B%86%E5%A2%9E%E5%BC%BA"><span class="toc-number">1.</span> <span class="toc-text">训练集增强</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%AA%8C%E8%AF%81-%E6%B5%8B%E8%AF%95%E9%9B%86%E4%BB%85-Resize-Normalize"><span class="toc-number">2.</span> <span class="toc-text">验证&#x2F;测试集仅 Resize + Normalize</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8A%A0%E8%BD%BD%E6%95%B0%E6%8D%AE%E9%9B%86"><span class="toc-number">3.</span> <span class="toc-text">加载数据集</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8A%A0%E8%BD%BD-ImageNet-%E9%A2%84%E8%AE%AD%E7%BB%83-ResNet18"><span class="toc-number">4.</span> <span class="toc-text">加载 ImageNet 预训练 ResNet18</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%86%BB%E7%BB%93%E6%89%80%E6%9C%89%E9%A2%84%E8%AE%AD%E7%BB%83%E5%B1%82"><span class="toc-number">5.</span> <span class="toc-text">冻结所有预训练层</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9B%BF%E6%8D%A2%E6%9C%80%E5%90%8E%E7%9A%84%E5%85%A8%E8%BF%9E%E6%8E%A5%E5%B1%82%EF%BC%9A512-102"><span class="toc-number">6.</span> <span class="toc-text">替换最后的全连接层：512 -&gt; 102</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%8A%A0%E8%BD%BD%E9%98%B6%E6%AE%B5%E4%B8%80%E6%9C%80%E4%BC%98%E6%9D%83%E9%87%8D"><span class="toc-number">7.</span> <span class="toc-text">加载阶段一最优权重</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%A7%A3%E5%86%BB-layer4%EF%BC%88ResNet18-%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E6%AE%8B%E5%B7%AE%E5%9D%97%EF%BC%89"><span class="toc-number">8.</span> <span class="toc-text">解冻 layer4（ResNet18 最后一个残差块）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%94%A8%E6%9B%B4%E5%B0%8F%E7%9A%84%E5%AD%A6%E4%B9%A0%E7%8E%87%E5%BE%AE%E8%B0%83"><span class="toc-number">9.</span> <span class="toc-text">用更小的学习率微调</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E5%AE%9A%E4%B9%89%EF%BC%88%E5%BF%85%E9%A1%BB%E5%92%8C%E8%AE%AD%E7%BB%83%E6%97%B6%E4%B8%80%E8%87%B4%EF%BC%89"><span class="toc-number">10.</span> <span class="toc-text">模型定义（必须和训练时一致）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%A2%84%E5%A4%84%E7%90%86"><span class="toc-number">11.</span> <span class="toc-text">预处理</span></a></li></ol></div></div><footer><nobr>Published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>
