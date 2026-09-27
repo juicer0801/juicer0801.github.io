@@ -1,0 +1,198 @@
+<!DOCTYPE html><html lang="en" theme-mode="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>零基础拥有一个自己的liev2d形象 | Hexo</title><meta name="description" content="零基础制作属于自己的Live2D形象：从下载到动起来的完整指南 本文从完全零基础的角度出发，带你完成第一个可动的Live2D模型。不需要任何建模经验，只需要一台电脑和一份想要动起来的插画。 开始之前，我们先理清整个流程的逻辑。Live2D的本质是让一张平面的插画，通过分层、网格变形和参数控制，产生三维运动感。它不是3D建模，也许像是2.5d 制作一个Live2D模型，大致需要经历这几个阶段： 绘画">
+<meta property="og:type" content="article">
+<meta property="og:title" content="零基础拥有一个自己的liev2d形象">
+<meta property="og:url" content="http://example.com/2026/09/25/liev2d/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="零基础制作属于自己的Live2D形象：从下载到动起来的完整指南 本文从完全零基础的角度出发，带你完成第一个可动的Live2D模型。不需要任何建模经验，只需要一台电脑和一份想要动起来的插画。 开始之前，我们先理清整个流程的逻辑。Live2D的本质是让一张平面的插画，通过分层、网格变形和参数控制，产生三维运动感。它不是3D建模，也许像是2.5d 制作一个Live2D模型，大致需要经历这几个阶段： 绘画">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-09-25T03:45:41.000Z">
+<meta property="article:modified_time" content="2026-09-26T05:00:32.648Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary"><link rel="canonical" href="http://example.com/2026/09/25/liev2d/"><link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="preload" as="font" crossorigin="anonymous" href="/font/Bender.ttf"><link rel="preload" as="font" crossorigin="anonymous" href="/font/BenderLight.woff2"><link rel="preload" as="font" crossorigin="anonymous" href="/font/JetBrainsMono-Regular.woff2"><link rel="stylesheet" href="/css/arknights.css"><style>@font-face {
+  font-family: Bender;
+  src: local('Bender'), url("/font/Bender.ttf"), url("/font/Bender.otf");
+}
+@font-face {
+  font-family: BenderLight;
+  src: local('BenderLight'), url("/font/BenderLight.woff2") format('woff2');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}
+</style><meta name="page-config" content="{&quot;code_fold&quot;:null}"><script class="pjax-js">var config = {"root":"/","code_fold":15,"search":{"preload":false,"activeHolder":"Enter here","blurHolder":"Search","noResult":"Data \"$0\" not found"},"code":{"codeInfo":"$0 - $1 lines","copy":"copy"}};
+var page_config = {
+  code_fold: null
+};
+function updatePageConfig() {
+  var newPageConfig = document.querySelector('meta[name="page-config"]');
+  if (newPageConfig) {
+    page_config = JSON.parse(newPageConfig.content);
+  }
+}
+document.addEventListener('pjax:complete', function() { updatePageConfig(); });
+updatePageConfig();</script><link type="text/css" rel="stylesheet" href="/lib/encrypt/hbe.style.css"><script src="//unpkg.com/mermaid@11.12.2/dist/mermaid.min.js"></script><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lightgallery.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-zoom.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-thumbnail.css"><link type="text/css" rel="stylesheet" href="/lib/fontawesome/css/all.min.css"><script>if (window.localStorage.getItem('theme-mode') === 'light')
+ document.documentElement.setAttribute('theme-mode', 'light')
+if (window.localStorage.getItem('theme-mode') === 'dark')
+ document.documentElement.setAttribute('theme-mode', 'dark')</script><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.woff2") format('woff2');
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><style>:root {
+ --dark-background: url('https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg');
+ --light-background: url('/img/bk.jpg');
+ --theme-encrypt-confirm: 'confirm'
+}</style><script defer src="/js/arknights.js"></script><script defer src="/js/search.js"></script><script defer type="module">import mermaid from '//unpkg.com/mermaid@11.12.2/dist/mermaid.esm.min.mjs';
+window.mermaid = mermaid;
+code.paintMermaid();
+</script><script async src="//unpkg.com/lightgallery@2.7.1/lightgallery.min.js"></script><script async src="//unpkg.com/lightgallery@2.7.1/plugins/zoom/lg-zoom.min.js"></script><script async src="//unpkg.com/lightgallery@2.7.1/plugins/thumbnail/lg-thumbnail.min.js"></script><script async src="/lib/encrypt/hbe.js"></script><script async src="/js/pjax.js"></script><script class="pjax-js">reset= () => {document.querySelector('.lg-container')?.remove()
+lightGallery(document.getElementById('post-bg'), {
+  plugins: [lgZoom,lgThumbnail],
+  selector: '.item-img'})}</script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js','data-pjax','.vercount','meta[name=page-config]'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);reset()})</script><script class="pjax-js">reset= () => {document.querySelector('.lg-container')?.remove()
+const postBg = document.querySelector('#post-bg');
+if (postBg) lightGallery(postBg, {
+  plugins: [lgZoom,lgThumbnail],
+  selector: '.item-img'})}</script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js','data-pjax','.vercount','meta[name=page-config]'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>零基础拥有一个自己的liev2d形象</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2026-09-25T03:45:41.000Z" id="date"> 2026-09-25</time></div></span><br><span>Last Update: <div class="control"><time datetime="2026-09-26T05:00:32.648Z" id="updated"> 2026-09-26</time></div></span></div></div><hr><div id="post-content"><p>零基础制作属于自己的Live2D形象：从下载到动起来的完整指南</p>
+<p>本文从完全零基础的角度出发，带你完成第一个可动的Live2D模型。不需要任何建模经验，只需要一台电脑和一份想要动起来的插画。</p>
+<p>开始之前，我们先理清整个流程的逻辑。Live2D的本质是让一张平面的插画，通过分层、网格变形和参数控制，产生三维运动感。它不是3D建模，也许像是2.5d</p>
+<p>制作一个Live2D模型，大致需要经历这几个阶段：</p>
+<p>绘画阶段：你需要一张线稿<br>准备阶段：安装Cubism Editor，准备一张分好图层的PSD插画。<br>建模阶段：导入PSD，为每个部件创建网格，用变形器搭建层级关系。<br>参数阶段：设置“角度X”“眼睛开闭”“嘴巴开合”等参数，并让部件随着参数动起来。<br>导出与使用：导出模型文件，配合追踪软件或SDK使用。</p>
+<p>第一步：获取并安装 Live2D Cubism Editor<br>Live2D Cubism Editor 是制作Live2D模型的核心软件，官方提供免费版本可供使用。</p>
+<p>下载<br>访问 Live2D 官方教程站点的下载入口即可获取最新版：<a target="_blank" rel="noopener" href="https://docs.live2d.com/zh-CHS/cubism-editor-tutorials/top/">https://docs.live2d.com/zh-CHS/cubism-editor-tutorials/top/</a></p>
+<p>在官网下载页，你需要先阅读并同意软件使用授权协议，然后点击橙色的“下载最新版本”按钮。Cubism Editor 分为 Windows 版和 macOS 版，根据你的操作系统选择对应版本即可。</p>
+<p>Windows 版下载后得到的是 Live2D_Cubism_Setup_X.X.XX.exe，macOS 版则是 .pkg 文件。</p>
+<p>安装<br>Windows：双击安装包，依次点击“下一步”，接受许可协议，选择安装路径，点击“安装”等待完成即可。</p>
+<p>macOS：双击 .pkg 文件，按照提示继续，输入系统密码授权安装，最后点击“关闭”完成。</p>
+<p>启动与版本选择<br>首次启动 Cubism Editor 时，会弹出一个许可证选择对话框。这里有三个选项：</p>
+<p>PRO版：需要输入许可证密钥激活，功能无限制。<br>Trial版：免费试用42天的PRO版全部功能，从首次启动之日起算。<br>FREE版：永久免费，但有功能限制。</p>
+<p>对于零基础的新手，建议直接选择“开始免费试用PRO版” 。42天的试用期足够你完成第一个模型的学习。试用期结束后，软件会自动转为FREE版，你仍然可以打开之前用PRO版保存的文件，但保存时需要将数据裁剪到FREE版的限制范围内。</p>
+<p>FREE版的核心限制包括：纹理文件最多1张（最大2048px）、ArtMesh最多100个、参数最多30个、变形器最多50个、图片分割数最大9×9。对于简单的小模型，这些限制通常够用；但如果你的插画图层很多、想做精细的头部运动，FREE版可能会在中途卡住。</p>
+<p>安装完成后，你会在电脑上看到两个程序：Cubism Editor（编辑器）和 Cubism Viewer（查看器）。制作模型主要用 Editor。</p>
+<p>官方教程站点提供了完整的初学者教程和基础教程（共6课），建议在开始之前先浏览一遍视频，对流程有个整体印象。</p>
+<p>第二步：准备你的插画素材<br>Live2D 不能直接处理一张扁平的 JPG 或 PNG。它需要的是分层 PSD 文件，每个需要独立运动的部件都必须是单独的图层。</p>
+<p>画线稿可以使用优动漫(乃树坂串绪老师推荐的，但是没有免费版，小贵)<br>拆分可以用<a target="_blank" rel="noopener" href="https://www.photopea.com/">https://www.photopea.com/</a></p>
+<p>草稿 → 线稿 → 上色（完整画完） → 补全隐藏部分 → 拆分图层 → 整理命名 → 导出 PSD</p>
+<p>先明确一个核心原则：画的时候就要想着“拆”<br>大部分新手犯的错误是：先画完一张完整的立绘，然后再痛苦地手动拆分。有博主分享过真实经历——立绘绘制花了约 7 小时，拆分拆了 14 小时。</p>
+<p>正确的做法是：在绘制阶段就按 Live2D 的拆分逻辑来画。 每一个将来需要独立运动的部件，从线稿阶段就单独建图层。</p>
+<p>第 1 步：确定角色设计和姿势<br>画正面对称的角色。正面的可动性最高，也最容易拆分。不要一开始就画大侧身或者复杂透视，那会给拆分和建模都带来不必要的麻烦。<br>如果你的目标只是先走通流程，画一个 Q 版角色是很好的选择。Q 版比例简单，图层数量少，官方入门教程以及大多数B站教程也是从 Q 版开始的。</p>
+<p>第 2 步：草稿与线稿——按部件分层描线（描线之前要注意部件的拆分）<br>从草稿开始，就需要养成“分层”的习惯。不要把所有东西画在同一层上。<br>推荐的绘制顺序是：先画整体草稿作为参考，然后新建图层，逐个部件描线。<br>按照 Live2D 的拆分标准，一个角色的线稿至少需要覆盖以下部件：</p>
+<p>头发部分<br>前发（刘海）：如果刘海分成左、中、右几片，每片单独一层<br>侧发：左右分开<br>后发：一整层，但必须补全被头部遮挡的部分（头壳顶部的头发）<br>呆毛（如果角色有）：单独一层</p>
+<p>脸部部分<br>脸部轮廓：描线时不要只描可见的边缘，要把被头发遮住的发际线、额头也画出来<br>眉毛：左右分开<br>眼睛：这是最需要细分的区域<br>上睫毛（左右分开）<br>下睫毛（左右分开）<br>眼白（左右分开，且必须补全被瞳孔遮挡的部分）<br>眼珠&#x2F;瞳孔（左右分开）<br>高光（左右分开，如果高光需要独立运动）</p>
+<p>鼻子</p>
+<p>嘴巴：上唇、下唇、嘴巴内部（张嘴时能看到的区域）</p>
+<p>耳朵：左右分开，补全被头发遮住的部分</p>
+<p>身体部分</p>
+<p>脖子：画得比实际可见的长一些，这样头部转动时不会被“切掉”</p>
+<p>躯干&#x2F;衣服</p>
+<p>手臂：按上臂、前臂、手来分</p>
+<p>饰品：如果想让丝带、耳环飘动，单独分层</p>
+<p>线稿的线条要有一定粗细和清晰度，但不需要过度风格化，因为在 Live2D 中线条会随着变形拉伸，太夸张的笔触在运动时可能显得奇怪。</p>
+<p>第 3 步：上色——每个部件独立铺色<br>上色阶段继续沿用图层分离的逻辑。不要把所有颜色合并到一个图层再拆分。（先上底色，在以拆分部件为准着色）</p>
+<p>推荐的上色流程是二次元插画常用的方式<br>铺固有色：为每个部件铺上基础颜色，颜色选择偏灰、偏左上的区域（不要用纯黑阴影或纯白高光）<br>画二分阴影：设定一个光源方向，用正片叠底图层画暗部。形状要有“整”有“碎”，大块面和小细节结合<br>加灰部过渡：用柔和笔刷让明暗过渡自然<br>卡闭塞：在光源照不到的角落加深，增强体积感<br>高光和补色：提亮关键区域，增加画面层次</p>
+<p>关键要求：每个部件的颜色和线条需要在同一图层或同一组内，方便后续合并。Live2D 的“载入用 PSD”要求一个部件对应一个图层。</p>
+<p>第 4 步：补全“隐藏部分”——这一步最容易被忽略，也最重要<br>Live2D 的官方文档反复强调这一点：划分的时候请勿忘记加上原图中隐藏的部分。如果没有额外的绘图，当部分移动时，它看起来将不连贯。</p>
+<p>具体来说：</p>
+<p>脸部轮廓：头发遮住的额头、鬓角遮住的侧脸，都要画出来，填充肤色。</p>
+<p>眼白：瞳孔遮住的那部分眼白必须补全，否则眼球移动时会露出空洞。</p>
+<p>脖子：画到嘴巴附近，确保头部倾斜时脖子仍然连贯。</p>
+<p>嘴巴内部：张嘴时能看到的口腔内部、牙齿，在闭嘴状态下虽然看不见，但必须画出来。嘴巴内部的绘制尺寸要比可见区域大一号，防止变形时露出边缘。</p>
+<p>后发：头顶被前发遮住的头发区域要补全，发旋的位置可以画出来。头发的内面（翻起来看到的那一面）建议用暗色。</p>
+<p>第 5 步：整理图层命名与结构<br>图层命名混乱是后期调试的难点。在导出 PSD 之前，必须做好整理。<br>调整某一层的时候，可以把该图层透明度降到 50%，可以透视看到底下底图对齐，对齐完透明度改回 100%</p>
+<p>命名规则：<br>用中文或英文描述性名称，不要用“图层 57”“副本 3”（考虑兼容性）<br>左右部件明确标注：左眉 &#x2F; 右眉，左眼白 &#x2F; 右眼白<br>如果有多层结构（比如眼睛包含眼白、瞳孔、高光），用一个组来管理：组名 左眼，内部图层 眼白、瞳孔、高光</p>
+<p>图层顺序：按照从前到后的遮挡关系排列。但 Live2D 导入后会根据 PSD 的图层结构生成部件层级，所以 PSD 中的顺序要符合视觉逻辑。</p>
+<p>第 6 步：创建两个 PSD 文件（也就是在图层合并完成后选择另存为.pds文件，保留涂层结构</p>
+<p>这是 Live2D 官方推荐的工作方式：</p>
+<p>文件 A：素材拆分用 PSD（工作文件）<br>保留所有图层、图层蒙版、剪贴蒙版、组结构。这个文件用于后续修改和调整。</p>
+<p>命名建议：角色名_素材拆分.psd</p>
+<p>文件 B：载入用 PSD（导入 Cubism Editor 用）<br>将素材拆分用 PSD 中的每个部件组合并为单个图层。即：每个部件（组）对应一个图层，合并线稿、颜色、阴影等所有内容。</p>
+<p>命名建议：角色名_载入.psd</p>
+<p>合并时的注意事项：</p>
+<p>图层属性：PSD 中的混合模式如果设置为“正常”以外的值（如正片叠底、滤色等），导入 Cubism Editor 时会尝试匹配其色彩混合属性。如果 Editor 中没有对应模式，会自动改为“正常”。建议在载入用 PSD 中尽量使用“正常”混合模式，导入后再在 Editor 中设置。</p>
+<p>不透明度 vs 填充：PSD 中的“不透明度”会被 Editor 保留，“填充”则不会。如果需要做腮红等半透明效果，用“不透明度”而不是“填充”来调整。</p>
+<p>不使用图层蒙版：如果素材拆分用 PSD 中还有图层蒙版，在合并前先“应用图层蒙版”。</p>
+<p>色彩模式：必须是 RGB，色彩配置文件设为 sRGB。</p>
+<p>检查路径信息：如果使用 Photoshop CC 2019 或更高版本，PSD 中可能包含路径信息，导入可能失败。在合并前删除所有路径。</p>
+<p>清理垃圾：删掉画布上任何忘记擦除的杂点或透明区域，它们会被 Editor 当作素材处理，导致自动网格生成出错。</p>
+<p>第 7 步：导出 PSD 并导入 Live2D<br>将“载入用 PSD”保存好之后，就可以回到原文的第四步——打开 Cubism Editor，将 PSD 拖入工作区，开始创建 ArtMesh 和变形器了。<br>1.将pds拖入即可，读完进度条即可显示完毕<br>2.乃树坂串绪老师书中提供教程<br>菜单栏——文件——创建——模型  即可创建名为“Untitled Model”的新模型文件区域中，打开“模型设定”对话框。选择“Untitled Model(模型)”，单击“OK”后会弹出“再次导入的设定”对话框。</p>
+<p>注意：如果使用.psd文件创建新模型且在”模型设定”对话框中选择”使用PSD文件创建新模型”则不会弹出“再次导入的设定”对话框，直接完成导入。</p>
+<p>在”再次导入的设定”对话框中	再次导入的设定	<br>选择”&lt;将所有图层添加为新的图形网格&gt;”，单击”OK”，即可导入.psd文件。</p>
+<p>注意：如果导入的.psd文件的尺寸大于新创建的模型文件的画布尺寸，则可能出现模型超出画布的情况。如	果需要将.psd文件导入固定尺寸画布，也可以使用这种方式，但推荐 直接拖入</p>
+<p>注意：在查看区域中用鼠标拖动部件，确认部件是否为独立且分开的状态,如果是，则.psd文件导入完成。</p>
+<p>如果你在绘制阶段已经按照上述方式拆分了图层，导入后的部件面板会直接呈现出清晰的结构，省去大量后期整理的时间。</p>
+<p>补充建议：如果你完全不会画画，或者想先专注学习 Live2D 的操作，可以下载 Live2D 官方的 SD 模板来练习建模，跳过绘制阶段直接体验完整流程。但如果你希望拥有一个真正属于自己的形象，从线稿到 PSD 的这一步是绕不开的，而且画的时候多想着“这个部件会不会单独动”，后面的建模会顺利很多。</p>
+<p>图层拆分的原则<br>你需要把角色拆解成足够细致的部件。以一张半身像为例，通常至少需要分离出以下部分：</p>
+<p>头部相关：前发、后发、脸部轮廓、眉毛（左右）、上睫毛（左右）、下睫毛（左右）、眼白（左右）、瞳孔（左右）、高光（左右）、嘴巴、鼻子、耳朵（左右）。</p>
+<p>身体相关：脖子、肩膀、衣服主体、手臂、手。</p>
+<p>关键注意事项<br>画的时候要多画一些“藏起来”的部分。这是新手最容易忽略的。当你转动头部时，原本被头发遮住的皮肤会露出来；闭眼时，被睫毛挡住的眼皮需要存在；张嘴时，嘴巴内部和牙齿需要能看到。所以在绘制素材时，所有可能露出的区域都要画全，宁可多画不能少画。</p>
+<p>图层命名要清晰。不要把图层叫“图层57”或“副本3”。用“左眉”“右眼白”“前发”这样的命名。Live2D 在导入 PSD 时会把图层结构直接映射成部件列表，命名混乱会让你在后期调试时非常痛苦。</p>
+<p>合并同类图层。比如眼白、瞳孔、高光如果不需要独立运动，可以合并为一层“左眼”；但如果瞳孔需要单独移动（比如视线追踪），就必须保持分离。</p>
+<p>导出格式：PSD，色彩模式 RGB，色彩配置文件 sRGB。图层混合模式尽量使用“正常”，不透明度100%。Photoshop 的剪贴蒙版不会直接导入到 Live2D，需要在 Editor 中重新设置。</p>
+<p>如果你完全不会画画，或者想先熟悉流程再画自己的素材，官方提供了一个模板功能，可以直接下载预设的 SD 角色模板来练习：<a target="_blank" rel="noopener" href="https://docs.live2d.com/cubism-editor-tutorials/template/">https://docs.live2d.com/cubism-editor-tutorials/template/</a></p>
+<p>还有很多做好的pds可直接下载使用，另外使用agent也可以直接生成多图层的pds<br>在这里其实有一个更简便的方法就是直接使用agent生成后续动作，缺点就是简陋<br>这里推荐<a target="_blank" rel="noopener" href="https://github.com/tsunehimatoi/psd2live%EF%BC%8C%E7%9B%B4%E6%8E%A5%E5%B0%86pds%E6%96%87%E4%BB%B6%E6%8B%96%E5%85%A5%E5%8D%B3%E5%8F%AF">https://github.com/tsunehimatoi/psd2live，直接将pds文件拖入即可</a></p>
+<p>第三步：导入 PSD 并创建 ArtMesh<br>打开 Cubism Editor，选择“创建新项目”，然后将你的 PSD 文件直接拖拽到 Editor 的“Model”工作区中。</p>
+<p>导入后，你会看到左侧的部件列表和右侧的模型预览。PSD 的图层结构会原封不动地出现在部件列表中。</p>
+<p>什么是 ArtMesh<br>Editor 会自动为每个图层分配一个ArtMesh（艺术网格）。ArtMesh 是一个由顶点和线构成的多边形网格，覆盖在图像上方。当你移动 ArtMesh 的顶点时，底下的图像就会跟着变形。</p>
+<p>自动生成的 ArtMesh 通常比较粗糙，对于大面积的头发、衣服等简单形状够用，但对于眼睛、嘴巴等需要精细变形的部位，你需要手动编辑网格。</p>
+<p>哪些部位需要手动编辑<br>以下部位建议手动重画 ArtMesh 以获得更好的变形效果：</p>
+<p>眼部轮廓（睫毛） ：需要沿着睫毛的弧度布置顶点，让睫毛在闭合时能自然弯曲而不是生硬折叠。<br>嘴巴：上下唇的顶点需要加密，嘴型变化（啊、咦、呜）才能流畅过渡。<br>鼻子：虽然鼻子运动幅度小，但顶点位置不当会导致变形时出现尖锐的拉扯。<br>其他需要精细变形的地方：比如衣服的褶皱、飘带等。</p>
+<p>编辑网格时，可以使用工具栏的“镜像编辑”功能，让左右对称的部件（如左右眼）的网格修改保持同步。</p>
+<p>常见问题：变形时出现“撕裂”<br>如果变形后图像某个部分被拉得很尖锐或出现空洞，通常是 ArtMesh 的顶点不够或者三角形太细长。避免使用过于狭长的三角形，尽量让网格的三角形接近等边形状。在运动剧烈的区域（如嘴角、眼皮）增加顶点密度。</p>
+<p>第四步：用变形器和参数搭建运动系统<br>这是 Live2D 建模的核心逻辑，也是新手最容易卡住的地方。理解了变形器的层级关系，后面的操作就顺了。</p>
+<p>变形器是什么<br>变形器本身不直接对应图像，它是一个容器。你把 ArtMesh 放进变形器里，变形器动，里面的 ArtMesh 就跟着动。</p>
+<p>有两种变形器：<br>弯曲变形器（Warp Deformer） ：可以自由拖拽控制点，让内部物体产生弯曲、拉伸、压缩。适合头发、身体等需要柔和变形的部位。<br>旋转变形器（Rotation Deformer） ：只能旋转和缩放，适合眼球、头部整体转向等。</p>
+<p>层级关系：从大到小<br>正确的层级结构是：大的变形器包含小的变形器，小的变形器包含 ArtMesh。</p>
+<p>举个例子，一个典型的头部结构可能是这样的：<br>头部旋转（Rotation Deformer）<br>├── 脸部（Warp Deformer）<br>│   ├── 左眼组（Warp）<br>│   │   ├── 左眼白（ArtMesh）<br>│   │   ├── 左瞳孔（ArtMesh）<br>│   │   └── 左睫毛（ArtMesh）<br>│   ├── 右眼组（Warp）<br>│   ├── 嘴巴（Warp）<br>│   └── 鼻子（ArtMesh）<br>├── 前发（Warp）<br>└── 后发（Warp）<br>当“头部旋转”变形器转动时，整个头部跟着动。当“左眼组”单独调整时，只有左眼动。这种嵌套结构让你可以从整体到局部逐级控制。</p>
+<p>注意：变形器内部的 ArtMesh 不要超出变形器的范围，否则变形时可能会出现意外的拉伸。</p>
+<p>创建参数<br>参数是驱动运动的“控制杆”。在 Editor 的参数面板中，你可以创建各种参数，每个参数有一个 0 到 1（或 -1 到 1）的取值区间。</p>
+<p>常用的基础参数包括：<br>ParamAngleX：头部左右转动（-30 到 30）<br>ParamAngleY：头部上下转动（-30 到 30）<br>ParamAngleZ：头部倾斜（-30 到 30）<br>ParamEyeLOpen &#x2F; ParamEyeROpen：眼睛开闭（0 到 1）<br>ParamEyeBallX &#x2F; ParamEyeBallY：眼球移动（-1 到 1）<br>ParamMouthOpenY：嘴巴张合（0 到 1）<br>ParamBodyAngleX：身体左右倾斜（-10 到 10）</p>
+<p>选中一个变形器，切换到某个参数值（比如 ParamAngleX &#x3D; 30），然后拖拽变形器让头部向右转，这个姿态就会被记录在参数上。回到 0，再设置向左转的姿态。Live2D 会在关键姿态之间自动插值，产生平滑的运动。</p>
+<p>给主要部件设置参数的基本思路<br>头部XY：选中头部旋转变形器，在 ParamAngleX 的 -30、0、30 三个值上分别设置左转、正中、右转的姿态。然后对 ParamAngleY 做同样的操作。</p>
+<p>眼睛开闭：选中包含睫毛和眼皮的变形器，在 ParamEyeOpen 的 0 和 1 上设置闭眼和睁眼的姿态。</p>
+<p>嘴巴：选中嘴巴变形器，在 ParamMouthOpenY 的 0 和 1 上设置闭嘴和张嘴。</p>
+<p>眼球：选中瞳孔的 ArtMesh，在 ParamEyeBallX 和 ParamEyeBallY 上设置瞳孔的移动范围。</p>
+<p>具体操作时，官方的基础教程（共6次课程）有详细的视频演示，建议跟着做一遍。</p>
+<p>第五步：添加物理效果和动画<br>当基本参数都设置好后，你的模型已经可以手动拖拽参数来“摆姿势”了。但它还不能自己动。</p>
+<p>物理模拟<br>Live2D 有一个物理模拟系统，可以让头发、饰品等部件在头部转动时产生自然的摆动。在 Editor 中打开“物理”面板，你可以为头发、飘带等部件设置摆锤式的物理效果，让它们随着头部运动产生延迟和回弹。</p>
+<p>动画<br>如果你想让模型做出一套完整的动作（比如一个打招呼的循环），需要进入“Animation”模式，在时间轴上为参数设置关键帧，创建 Motion 文件。这部分的内容相对进阶，建议在完成第一个可动模型后再深入学习。</p>
+<p>第六步：导出和使用<br>导出模型文件<br>在 Editor 中完成建模后，通过“文件 → 导出”可以输出以下文件：</p>
+<p>.moc3：模型的核心数据文件，包含网格、变形器和参数信息。<br>纹理图片：模型的贴图文件（通常是 PNG）。<br>.model3.json：模型的配置文件，描述纹理路径、物理设置、动作文件等。</p>
+<p>这三个文件组合在一起，才能被 SDK 或追踪软件正确加载。</p>
+<p>让它动起来<br>导出后的模型可以通过多种方式使用：</p>
+<p>nizima LIVE：Live2D 官方面部追踪软件，可以用摄像头捕捉你的表情和头部运动，实时驱动模型。需要注册 nizima 账号，免费版有功能限制（包括 logo 显示）。下载地址：<a target="_blank" rel="noopener" href="https://docs.live2d.com/nizimalive/en/tutorials/introduction/">https://docs.live2d.com/nizimalive/en/tutorials/introduction/</a></p>
+<p>Cubism SDK：如果你有开发能力，可以用 SDK 将模型嵌入到自己的应用或网页中。Web 版 SDK 的下载页面在这里：<a target="_blank" rel="noopener" href="https://www.live2d.com/en/sdk/download/web/">https://www.live2d.com/en/sdk/download/web/</a></p>
+<p>视频制作：导出模型后，也可以在动画软件中录制动作，用于视频内容制作。</p>
+<p>刚开始做模型简陋很正常，多花点时间</p>
+<p>善用官方教程。Live2D 的官方文档和视频教程质量很高，而且是中文的。遇到具体问题时，直接在教程站搜索关键词，通常能找到对应的说明：<a target="_blank" rel="noopener" href="https://docs.live2d.com/zh-CHS/cubism-editor-tutorials/top/">https://docs.live2d.com/zh-CHS/cubism-editor-tutorials/top/</a></p>
+<p>42天试用期是足够的。如果你每天花1-2小时，两周左右就能做出一个简单但可用的模型。试用期结束后，你仍然可以用 FREE 版继续调整已有的模型，或者等到真正需要时再购买 PRO。</p>
+<p>从“模板”开始也是好选择。如果你对画图不熟练，或者想先专注学习 Live2D 的操作而不是画图，官方的 SD 模板功能可以让你跳过素材准备阶段，直接体验完整的建模流程。</p>
+<p>以上就是零基础制作 Live2D 形象的完整流程。从安装软件到导出可用的模型文件，整个路径虽然不短，但每一步都有官方的中文文档和视频教程可以参照。祝你做出属于自己的第一个 Live2D 形象。</p>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2026/09/26/deeplearn1/">← Next 标量，向量，矩阵，张量，轴，维度</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/09/24/deeplearn/">新章节（作者也在探索）--深度学习 Prev →</a></div></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="To Top" style="opacity: 0; display: none;">∧ </a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="Change Theme"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">John Doe</a></h1><div id="description"><p></p></div></div><div id="aside-block"></div><footer><nobr>Published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>

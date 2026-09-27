@@ -1,0 +1,132 @@
+<!DOCTYPE html><html lang="en" theme-mode="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>深度学习的框架 | Hexo</title><meta name="description" content="李沐在《动手学深度学习》里讲数据操作的时候，推荐 PyTorch 的 tensor，而不是 NumPy 的 array。同样为张量类但是 NumPy 的数组运算默认在 CPU 上跑。一个稍微像样的模型，参数几百万起步，矩阵乘法每秒要做几十亿次。CPU 那点算力，训到猴年马月。GPU 不一样，它天生适合做大规模并行计算，做矩阵乘法等。但 NumPy 不支持 GPU，你得自己写 CUDA 代码。 其次">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深度学习的框架">
+<meta property="og:url" content="http://example.com/2026/09/26/deeplearn2/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="李沐在《动手学深度学习》里讲数据操作的时候，推荐 PyTorch 的 tensor，而不是 NumPy 的 array。同样为张量类但是 NumPy 的数组运算默认在 CPU 上跑。一个稍微像样的模型，参数几百万起步，矩阵乘法每秒要做几十亿次。CPU 那点算力，训到猴年马月。GPU 不一样，它天生适合做大规模并行计算，做矩阵乘法等。但 NumPy 不支持 GPU，你得自己写 CUDA 代码。 其次">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-09-26T11:34:49.000Z">
+<meta property="article:modified_time" content="2026-09-26T12:04:20.874Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary"><link rel="canonical" href="http://example.com/2026/09/26/deeplearn2/"><link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="preload" as="font" crossorigin="anonymous" href="/font/Bender.ttf"><link rel="preload" as="font" crossorigin="anonymous" href="/font/BenderLight.woff2"><link rel="preload" as="font" crossorigin="anonymous" href="/font/JetBrainsMono-Regular.woff2"><link rel="stylesheet" href="/css/arknights.css"><style>@font-face {
+  font-family: Bender;
+  src: local('Bender'), url("/font/Bender.ttf"), url("/font/Bender.otf");
+}
+@font-face {
+  font-family: BenderLight;
+  src: local('BenderLight'), url("/font/BenderLight.woff2") format('woff2');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}
+</style><meta name="page-config" content="{&quot;code_fold&quot;:null}"><script class="pjax-js">var config = {"root":"/","code_fold":15,"search":{"preload":false,"activeHolder":"Enter here","blurHolder":"Search","noResult":"Data \"$0\" not found"},"code":{"codeInfo":"$0 - $1 lines","copy":"copy"}};
+var page_config = {
+  code_fold: null
+};
+function updatePageConfig() {
+  var newPageConfig = document.querySelector('meta[name="page-config"]');
+  if (newPageConfig) {
+    page_config = JSON.parse(newPageConfig.content);
+  }
+}
+document.addEventListener('pjax:complete', function() { updatePageConfig(); });
+updatePageConfig();</script><link type="text/css" rel="stylesheet" href="/lib/encrypt/hbe.style.css"><script src="//unpkg.com/mermaid@11.12.2/dist/mermaid.min.js"></script><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lightgallery.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-zoom.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-thumbnail.css"><link type="text/css" rel="stylesheet" href="/lib/fontawesome/css/all.min.css"><script>if (window.localStorage.getItem('theme-mode') === 'light')
+ document.documentElement.setAttribute('theme-mode', 'light')
+if (window.localStorage.getItem('theme-mode') === 'dark')
+ document.documentElement.setAttribute('theme-mode', 'dark')</script><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.woff2") format('woff2');
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><style>:root {
+ --dark-background: url('https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg');
+ --light-background: url('/img/bk.jpg');
+ --theme-encrypt-confirm: 'confirm'
+}</style><script defer src="/js/arknights.js"></script><script defer src="/js/search.js"></script><script defer type="module">import mermaid from '//unpkg.com/mermaid@11.12.2/dist/mermaid.esm.min.mjs';
+window.mermaid = mermaid;
+code.paintMermaid();
+</script><script async src="//unpkg.com/lightgallery@2.7.1/lightgallery.min.js"></script><script async src="//unpkg.com/lightgallery@2.7.1/plugins/zoom/lg-zoom.min.js"></script><script async src="//unpkg.com/lightgallery@2.7.1/plugins/thumbnail/lg-thumbnail.min.js"></script><script async src="/lib/encrypt/hbe.js"></script><script async src="/js/pjax.js"></script><script class="pjax-js">reset= () => {document.querySelector('.lg-container')?.remove()
+lightGallery(document.getElementById('post-bg'), {
+  plugins: [lgZoom,lgThumbnail],
+  selector: '.item-img'})}</script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js','data-pjax','.vercount','meta[name=page-config]'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);reset()})</script><script class="pjax-js">reset= () => {document.querySelector('.lg-container')?.remove()
+const postBg = document.querySelector('#post-bg');
+if (postBg) lightGallery(postBg, {
+  plugins: [lgZoom,lgThumbnail],
+  selector: '.item-img'})}</script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js','data-pjax','.vercount','meta[name=page-config]'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>深度学习的框架</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2026-09-26T11:34:49.000Z" id="date"> 2026-09-26</time></div></span><br><span>Last Update: <div class="control"><time datetime="2026-09-26T12:04:20.874Z" id="updated"> 2026-09-26</time></div></span></div></div><hr><div id="post-content"><p>李沐在《动手学深度学习》里讲数据操作的时候，推荐 PyTorch 的 tensor，而不是 NumPy 的 array。<br>同样为张量类但是<br> NumPy 的数组运算默认在 CPU 上跑。一个稍微像样的模型，参数几百万起步，矩阵乘法每秒要做几十亿次。CPU 那点算力，训到猴年马月。GPU 不一样，它天生适合做大规模并行计算，做矩阵乘法等。但 NumPy 不支持 GPU，你得自己写 CUDA 代码。</p>
+<p>其次，不会自动求导。 反向传播需要算梯度。你要是用 NumPy，就得手推每个参数的梯度公式，然后一行行写出来。网络一深，梯度公式能写到你怀疑人生。而且改一下网络结构，梯度推导就得重来。</p>
+<p>框架的作用就呼之欲出了：<br>把张量放到 GPU 上算<br>自动帮你算梯度，我们只用搭网络、写前向传播，反向传播它自己搞定。</p>
+<p>其实PyTorch 的官方教程说得很直白：PyTorch 核心就两个东西——一个能跑在 GPU 上的 n 维张量，和一个自动微分引擎。</p>
+<p>举个例子吧<br>不写框架，用 NumPy 拟合一个多项式<br>import numpy as np</p>
+<p>x &#x3D; np.linspace(-np.pi, np.pi, 2000)<br>y &#x3D; np.sin(x)</p>
+<p>a &#x3D; np.random.randn()<br>b &#x3D; np.random.randn()</p>
+<h1 id="…-初始化-c-d"><a href="#…-初始化-c-d" class="headerlink" title="… 初始化 c, d"></a>… 初始化 c, d</h1><p>for t in range(2000):<br>    y_pred &#x3D; a + b * x + c * x<strong>2 + d * x</strong>3<br>    loss &#x3D; np.square(y_pred - y).sum()</p>
+<pre><code># 手动算梯度，手推公式
+grad_y_pred = 2.0 * (y_pred - y)
+grad_a = grad_y_pred.sum()
+grad_b = (grad_y_pred * x).sum()
+grad_c = (grad_y_pred * x**2).sum()
+grad_d = (grad_y_pred * x**3).sum()
+
+# 手动更新
+a -= learning_rate * grad_a
+# ...
+</code></pre>
+<p>这是最简单的三阶多项式，只有一个输入特征，梯度公式就已经长这样了。要是换成多层神经网络，几百个参数，呃，我不行了</p>
+<p>但是使用 PyTorch 写<br>import torch</p>
+<p>x &#x3D; torch.linspace(-torch.pi, torch.pi, 2000)<br>y &#x3D; torch.sin(x)</p>
+<p>a &#x3D; torch.randn((), requires_grad&#x3D;True)<br>b &#x3D; torch.randn((), requires_grad&#x3D;True)</p>
+<h1 id="…"><a href="#…" class="headerlink" title="…"></a>…</h1><p>for t in range(2000):<br>    y_pred &#x3D; a + b * x + c * x<strong>2 + d * x</strong>3<br>    loss &#x3D; (y_pred - y).pow(2).sum()</p>
+<pre><code>loss.backward()      # 就这一行，梯度全算好了
+
+with torch.no_grad():
+    a -= learning_rate * a.grad
+    # ...
+    a.grad.zero_()
+    # ...
+</code></pre>
+<p>调一下loss.backward() ，所有 requires_grad&#x3D;True 的张量，.grad 属性里就存好了对应的梯度。你不用管公式长什么样，框架的自动微分引擎会帮我们计算好</p>
+<p>那么接下来介绍以下主流框架</p>
+<p>PyTorch，Meta（就是以前的 Facebook）2016 年开源的。它的前身是 Torch，一个用 Lua 写的框架，Meta 的研究员把它用 Python 重写了一遍，就成了 PyTorch。现在由 Linux 基金会下面的 PyTorch 基金会管，不只是 Meta 一家说了算。</p>
+<p>TensorFlow，Google 2015 年开源。它的前身是 Google Brain 团队内部用的 DistBelief，Google 把经验教训总结之后，重新搞了一套开源出来。TensorFlow 1.x 时代用的是静态计算图，写起来比较绕。2.x 之后默认改成动态执行了，加上 Keras 的集成，上手难度降了不少。</p>
+<p>JAX，Google 后来搞的另一个东西。它长得特别像 NumPy，但能在 GPU 和 TPU 上跑，而且做了大量编译优化。JAX 不是传统意义上的“深度学习框架”，更像一个高性能数值计算库，深度学习只是它能干的事情之一。Anthropic、xAI 这些做头部大模型的公司也在用它。</p>
+<p>飞桨（PaddlePaddle） ，百度的，国内第一个自主研发的开源深度学习平台。它的定位很明确：产业级。围绕它有一整套工具，OCR、图像分类、目标检测、部署推理，该有的都有。它的 PaddleOCR 在 GitHub 上 Star 数过了 7 万，是全球 Star 最高的 OCR 项目。</p>
+<p>延申概念：</p>
+<p>动态图和静态图</p>
+<p>静态图，是先把整个计算流程“画”好，定义成一个图，然后再把数据喂进去跑。好处是框架可以提前优化整个图，跑起来快。坏处是调试很痛苦，因为没法像写普通 Python 一样，中间打断点看看某个变量到底是多少。TensorFlow 1.x 就是这个方法。</p>
+<p>动态图，是写一行代码，它就跑一行。跟写普通 Python 没区别。可以在循环里打断点，可以打印中间张量，可以随便改网络结构。PyTorch 从第一天起就是这个设计。</p>
+<p>JetBrains 的博客有一句话：PyTorch 的动态图让调试变得自然，你用标准的 Python 工具就行，训练循环里随便设断点，执行到一半也能检查张量值。</p>
+<p>这也是为什么 PyTorch 在学术界几乎一统天下——顶级 AI 会议上 85% 的深度学习论文用的是 PyTorch。研究者要的就是灵活和好调试，动态图正好满足这个需求。</p>
+<p>TensorFlow 2.x 也改成了动态执行，但保留了静态图编译的选项，算是两条路都给你留着。</p>
+<p>TensorFlow在工业部署上更成熟，TF Serving、TF Lite、TensorFlow.js 这一套部署工具链，是经过大规模生产验证的。</p>
+<p>JAX 适合已经有一定基础，想在大规模训练上榨性能的人。它的函数式编程范式跟 PyTorch 差别很大，纯函数、不可变状态、grad 是函数变换而不是方法调用。我直接被劝退ing</p>
+<p>飞桨适合什么人？适合在国内做产业落地、需要适配国产硬件的人。它的硬件适配层支持超过 60 款芯片，跟国产 GPU 的兼容性做得比较到位。如果你做的是国内政企项目，飞桨可能是更合适的选择。</p>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2026/09/26/deeplearn3/">← Next jupyter安装</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/09/26/deeplearn1/">标量，向量，矩阵，张量，轴，维度 Prev →</a></div></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="To Top" style="opacity: 0; display: none;">∧ </a><a class="i-index" id="to-index" onClick="tocControl.change()" title="To Catalog"><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span></a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="Change Theme"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">John Doe</a></h1><div id="description"><p></p></div></div><div id="aside-block"><div id="toc-div"><h1>Catalog</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E2%80%A6-%E5%88%9D%E5%A7%8B%E5%8C%96-c-d"><span class="toc-number">1.</span> <span class="toc-text">… 初始化 c, d</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E2%80%A6"><span class="toc-number">2.</span> <span class="toc-text">…</span></a></li></ol></div></div><footer><nobr>Published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>
