@@ -1,0 +1,245 @@
+<!DOCTYPE html><html lang="en" theme-mode="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>自动微分与反向传播 | Hexo</title><meta name="description" content="第 8 节：自动微分线性代数负责前向传播，微积分负责反向传播。但到目前为止，梯度都是手动算的，或者用 backward() 。 8.1 为什么要自动微分求导的计算本身很简单，只需要一些基本的微积分知识。但对于复杂的模型，手工进行更新是一件很痛苦的事情，而且经常容易出错。 先用 NumPy 写一个多项式拟合的例子。 123456789101112131415161718192021222324252">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自动微分与反向传播">
+<meta property="og:url" content="http://example.com/2026/09/30/deeplearn12/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="第 8 节：自动微分线性代数负责前向传播，微积分负责反向传播。但到目前为止，梯度都是手动算的，或者用 backward() 。 8.1 为什么要自动微分求导的计算本身很简单，只需要一些基本的微积分知识。但对于复杂的模型，手工进行更新是一件很痛苦的事情，而且经常容易出错。 先用 NumPy 写一个多项式拟合的例子。 123456789101112131415161718192021222324252">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-09-30T03:37:32.000Z">
+<meta property="article:modified_time" content="2026-10-03T13:55:33.155Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary"><link rel="canonical" href="http://example.com/2026/09/30/deeplearn12/"><link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="preload" as="font" crossorigin="anonymous" href="/font/Bender.ttf"><link rel="preload" as="font" crossorigin="anonymous" href="/font/BenderLight.woff2"><link rel="preload" as="font" crossorigin="anonymous" href="/font/JetBrainsMono-Regular.woff2"><link rel="stylesheet" href="/css/arknights.css"><style>@font-face {
+  font-family: Bender;
+  src: local('Bender'), url("/font/Bender.ttf"), url("/font/Bender.otf");
+}
+@font-face {
+  font-family: BenderLight;
+  src: local('BenderLight'), url("/font/BenderLight.woff2") format('woff2');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}
+</style><meta name="page-config" content="{&quot;code_fold&quot;:null}"><script class="pjax-js">var config = {"root":"/","code_fold":15,"search":{"preload":false,"activeHolder":"键入以继续","blurHolder":"数据检索","noResult":"无 $0 相关数据"},"code":{"codeInfo":"$0 - $1 行","copy":"复制"}};
+var page_config = {
+  code_fold: null
+};
+function updatePageConfig() {
+  var newPageConfig = document.querySelector('meta[name="page-config"]');
+  if (newPageConfig) {
+    page_config = JSON.parse(newPageConfig.content);
+  }
+}
+document.addEventListener('pjax:complete', function() { updatePageConfig(); });
+updatePageConfig();</script><link type="text/css" rel="stylesheet" href="/lib/encrypt/hbe.style.css"><script src="//unpkg.com/mermaid@11.12.2/dist/mermaid.min.js"></script><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lightgallery.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-zoom.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-thumbnail.css"><link type="text/css" rel="stylesheet" href="/lib/fontawesome/css/all.min.css"><script>if (window.localStorage.getItem('theme-mode') === 'light')
+ document.documentElement.setAttribute('theme-mode', 'light')
+if (window.localStorage.getItem('theme-mode') === 'dark')
+ document.documentElement.setAttribute('theme-mode', 'dark')</script><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.woff2") format('woff2');
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><style>:root {
+ --dark-background: url('https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg');
+ --light-background: url('/img/bk.jpg');
+ --theme-encrypt-confirm: '确认'
+}</style><script defer src="/js/arknights.js"></script><script defer src="/js/search.js"></script><script defer type="module">import mermaid from '//unpkg.com/mermaid@11.12.2/dist/mermaid.esm.min.mjs';
+window.mermaid = mermaid;
+code.paintMermaid();
+</script><script async src="//unpkg.com/lightgallery@2.7.1/lightgallery.min.js"></script><script async src="//unpkg.com/lightgallery@2.7.1/plugins/zoom/lg-zoom.min.js"></script><script async src="//unpkg.com/lightgallery@2.7.1/plugins/thumbnail/lg-thumbnail.min.js"></script><script async src="/lib/encrypt/hbe.js"></script><script async src="/js/pjax.js"></script><script class="pjax-js">reset= () => {document.querySelector('.lg-container')?.remove()
+lightGallery(document.getElementById('post-bg'), {
+  plugins: [lgZoom,lgThumbnail],
+  selector: '.item-img'})}</script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js','data-pjax','.vercount','meta[name=page-config]'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);reset()})</script><script class="pjax-js">reset= () => {document.querySelector('.lg-container')?.remove()
+const postBg = document.querySelector('#post-bg');
+if (postBg) lightGallery(postBg, {
+  plugins: [lgZoom,lgThumbnail],
+  selector: '.item-img'})}</script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js','data-pjax','.vercount','meta[name=page-config]'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="数据检索" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>自动微分与反向传播</h1><div id="post-info"><span>文章发布时间: <div class="control"><time datetime="2026-09-30T03:37:32.000Z" id="date"> 2026-09-30</time></div></span><br><span>最后更新时间: <div class="control"><time datetime="2026-10-03T13:55:33.155Z" id="updated"> 2026-10-03</time></div></span></div></div><hr><div id="post-content"><h1 id="第-8-节：自动微分"><a href="#第-8-节：自动微分" class="headerlink" title="第 8 节：自动微分"></a>第 8 节：自动微分</h1><p>线性代数负责前向传播，微积分负责反向传播。但到目前为止，梯度都是手动算的，或者用 <code>backward()</code> 。</p>
+<h2 id="8-1-为什么要自动微分"><a href="#8-1-为什么要自动微分" class="headerlink" title="8.1 为什么要自动微分"></a>8.1 为什么要自动微分</h2><p>求导的计算本身很简单，只需要一些基本的微积分知识。但对于复杂的模型，手工进行更新是一件很痛苦的事情，而且经常容易出错。</p>
+<p>先用 NumPy 写一个多项式拟合的例子。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><br>x = np.linspace(-np.pi, np.pi, <span class="hljs-number">2000</span>)<br>y = np.sin(x)<br><br><span class="hljs-comment"># 初始化参数</span><br>a = np.random.randn()<br>b = np.random.randn()<br>c = np.random.randn()<br>d = np.random.randn()<br><br>learning_rate = <span class="hljs-number">1e-6</span><br><br><span class="hljs-keyword">for</span> t <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">2000</span>):<br>    <span class="hljs-comment"># 前向传播</span><br>    y_pred = a + b * x + c * x**<span class="hljs-number">2</span> + d * x**<span class="hljs-number">3</span><br>    loss = np.square(y_pred - y).<span class="hljs-built_in">sum</span>()<br><br>    <span class="hljs-comment"># 手动计算梯度——这一步是最痛苦的</span><br>    grad_y_pred = <span class="hljs-number">2.0</span> * (y_pred - y)<br>    grad_a = grad_y_pred.<span class="hljs-built_in">sum</span>()<br>    grad_b = (grad_y_pred * x).<span class="hljs-built_in">sum</span>()<br>    grad_c = (grad_y_pred * x**<span class="hljs-number">2</span>).<span class="hljs-built_in">sum</span>()<br>    grad_d = (grad_y_pred * x**<span class="hljs-number">3</span>).<span class="hljs-built_in">sum</span>()<br><br>    <span class="hljs-comment"># 手动更新参数</span><br>    a -= learning_rate * grad_a<br>    b -= learning_rate * grad_b<br>    c -= learning_rate * grad_c<br>    d -= learning_rate * grad_d<br></code></pre></td></tr></table></figure>
+
+<p>注意看梯度那几行。这只是一个三阶多项式，只有一个输入特征，梯度公式就已经长这样了。如果换成多层神经网络，几百个参数，每一层的激活函数还不一样，手推梯度基本不可行。而且改一下网络结构，所有梯度公式都要重来。</p>
+<p>根据设计好的模型，系统会构建一个计算图来跟踪计算是哪些数据通过哪些操作组合起来产生输出，自动微分使系统能够随后反向传播梯度。</p>
+<h2 id="8-2-一个简单的例子"><a href="#8-2-一个简单的例子" class="headerlink" title="8.2 一个简单的例子"></a>8.2 一个简单的例子</h2><p>李沐大神用一个非常小的例子来演示自动微分。假设我们要对函数 (y &#x3D; 2\mathbf{x}^\top \mathbf{x}) 关于列向量 (\mathbf{x}) 求导。</p>
+<p>先创建变量 <code>x</code> 并分配初始值：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> torch<br><br>x = torch.arange(<span class="hljs-number">4.0</span>)<br><span class="hljs-built_in">print</span>(x)   <span class="hljs-comment"># tensor([0., 1., 2., 3.])</span><br></code></pre></td></tr></table></figure>
+
+<p>在计算 <code>y</code> 关于 <code>x</code> 的梯度之前，需要一个地方来存储梯度。重要的是，我们不会在每次对一个参数求导时都分配新的内存，因为我们经常会更新成千上万次，如果每次都分配新的内存，很快就会把内存耗尽。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">x.requires_grad_(<span class="hljs-literal">True</span>)   <span class="hljs-comment"># 等价于 x = torch.arange(4.0, requires_grad=True)</span><br><span class="hljs-built_in">print</span>(x.grad)            <span class="hljs-comment"># None，默认值是 None</span><br></code></pre></td></tr></table></figure>
+<p>x.grad 能打印出值，通常需要满足：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">x.requires_grad = <span class="hljs-literal">True</span><br></code></pre></td></tr></table></figure>
+<p>而且 y 是由 x 参与计算得到的，</p>
+<p>现在计算 <code>y</code>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">y = <span class="hljs-number">2</span> * torch.dot(x, x)<br><span class="hljs-built_in">print</span>(y)   <span class="hljs-comment"># tensor(28., grad_fn=&lt;MulBackward0&gt;)</span><br></code></pre></td></tr></table></figure>
+
+<p><code>x</code> 是一个长度为 4 的向量，<code>torch.dot(x, x)</code> 计算 <code>x</code> 和 <code>x</code> 的点积，得到标量输出。注意 <code>y</code> 有一个 <code>grad_fn</code> 属性，这是 PyTorch 自动记录计算图的入口。</p>
+<p>接下来，通过调用反向传播函数来自动计算 <code>y</code> 关于 <code>x</code> 每个分量的梯度：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">y.backward()<br><span class="hljs-built_in">print</span>(x.grad)   <span class="hljs-comment"># tensor([ 0.,  4.,  8., 12.])</span><br></code></pre></td></tr></table></figure>
+<p>结果正好是 (4\mathbf{x})，验证了手动求导的结果。<code>y = 2x^\top x</code> 对 <code>x</code> 求导确实是 <code>4x</code>。</p>
+<p>注意：y 通常是标量<br>y.backward() 默认要求 y 是标量，比如 loss：<br>loss &#x3D; criterion(output, target)<br>loss.backward()</p>
+<p>如果 y 是向量，直接：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">python<br>y.backward()<br></code></pre></td></tr></table></figure>
+<p>会报错：<br>RuntimeError: grad can be implicitly created only for scalar outputs<br>这时需要传入一个和 y 同形状的梯度：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">y.backward(torch.ones_like(y))<br></code></pre></td></tr></table></figure>
+
+
+<p>现在计算 <code>x</code> 的另一个函数。注意，在默认情况下，PyTorch 会累积梯度，我们需要先清除之前的值：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">x.grad.zero_()   <span class="hljs-comment"># 清零</span><br>y = x.<span class="hljs-built_in">sum</span>()<br>y.backward()<br><span class="hljs-built_in">print</span>(x.grad)    <span class="hljs-comment"># tensor([1., 1., 1., 1.])</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="8-3-计算图"><a href="#8-3-计算图" class="headerlink" title="8.3 计算图"></a>8.3 计算图</h2><p>似乎与梯度绑定了</p>
+<p><code>backward()</code>靠<strong>计算图</strong>的作用。</p>
+<p>前向传播的时候，PyTorch 不只算出结果，还把每一步运算记录下来，构成一张有向无环图。图的叶子是输入张量，根是输出张量。反向传播的时候，从根出发，沿图反向走，用链式法则一层层算梯度。</p>
+<p>例子：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">x = torch.tensor(<span class="hljs-number">2.0</span>, requires_grad=<span class="hljs-literal">True</span>) <span class="hljs-comment">#创建一个叶子张量</span><br>a = x * <span class="hljs-number">3</span><br>b = a + <span class="hljs-number">1</span><br>c = b ** <span class="hljs-number">2</span><br>c.backward()<br><span class="hljs-built_in">print</span>(x.grad)   <span class="hljs-comment"># tensor(42.)</span><br></code></pre></td></tr></table></figure>
+
+<p>前向传播构建的图是：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">x ──(×3)──&gt; a ──(+1)──&gt; b ──(²)──&gt; c<br></code></pre></td></tr></table></figure>
+
+<p>反向：</p>
+<ul>
+<li>(c) 对 (b) 的梯度：(\frac{dc}{db} &#x3D; 2b &#x3D; 14)</li>
+<li>(b) 对 (a) 的梯度：(\frac{db}{da} &#x3D; 1)</li>
+<li>(a) 对 (x) 的梯度：(\frac{da}{dx} &#x3D; 3)</li>
+<li>乘起来：(14 \times 1 \times 3 &#x3D; 42)</li>
+</ul>
+<p>每个张量都有一个 <code>grad_fn</code> 属性，<strong>指向创建它的运算</strong>。这就是计算图的“反向边”：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(c.grad_fn)                  <span class="hljs-comment"># &lt;PowBackward0&gt;</span><br><span class="hljs-built_in">print</span>(c.grad_fn.next_functions)   <span class="hljs-comment"># ((&lt;AddBackward0&gt;, 0),)</span><br><span class="hljs-built_in">print</span>(b.grad_fn)                  <span class="hljs-comment"># &lt;AddBackward0&gt;</span><br><span class="hljs-built_in">print</span>(a.grad_fn)                  <span class="hljs-comment"># &lt;MulBackward0&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p><code>grad_fn</code> 串起来就是整张计算图。<code>backward()</code> 沿着 <code>grad_fn</code> 链反向走，每一步调用对应的反向函数，把梯度传下去。</p>
+<p><strong>叶子节点</strong>是用户直接创建的张量，<code>grad_fn</code> 永远为 <code>None</code>。中间由运算产生的张量，grad_fn 不为 None <code>grad_fn</code> 指向创建它的运算。</p>
+<p>PyTorch 的 autograd 机制有一个重要的设计特点：<strong>计算图在每次迭代中都是从头重建的</strong>，这正是它能够使用任意 Python 控制流语句的原因。你不需要事先编码所有可能的路径——运行什么，就微分什么。</p>
+<h2 id="8-4-非标量输出的反向传播"><a href="#8-4-非标量输出的反向传播" class="headerlink" title="8.4 非标量输出的反向传播"></a>8.4 非标量输出的反向传播</h2><p>前面的例子里，<code>y</code> 都是标量。如果 <code>y</code> 是向量，直接 <code>y.backward()</code> 会报错：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">x = torch.arange(<span class="hljs-number">4.0</span>, requires_grad=<span class="hljs-literal">True</span>)<br>y = x * <span class="hljs-number">2</span><br>y.backward()   <span class="hljs-comment"># 报错：grad can be implicitly created only for scalar outputs</span><br></code></pre></td></tr></table></figure>
+
+<p>当 <code>y</code> 不是标量时，向量 <code>y</code> 关于向量 <code>x</code> 的导数最自然的解释是一个矩阵。对于高阶和高维的 <code>y</code> 和 <code>x</code>，求导的结果可以是一个高阶张量。而 <code>backward()</code> 只能对标量进行，所以需要对 <code>y</code> 进行求和以降维。</p>
+<p>解决办法是传入一个梯度参数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">x = torch.arange(<span class="hljs-number">4.0</span>, requires_grad=<span class="hljs-literal">True</span>)<br>y = x * <span class="hljs-number">2</span><br><br>y.backward(torch.ones(<span class="hljs-number">4</span>))<br><span class="hljs-built_in">print</span>(x.grad)   <span class="hljs-comment"># tensor([2., 2., 2., 2.])</span><br></code></pre></td></tr></table></figure>
+
+<p><code>torch.ones(4)</code> 的意思是在 PyTorch中：把 <code>y</code> 的每个分量都当成独立的目标，分别求导后按权重加总。传入全 1 向量，等价于对 <code>y.sum()</code> 求导。</p>
+<p>也可以传别的权重：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">x.grad.zero_()<br>y = x * <span class="hljs-number">2</span><br>y.backward(torch.tensor([<span class="hljs-number">1.0</span>, <span class="hljs-number">0.1</span>, <span class="hljs-number">0.01</span>, <span class="hljs-number">0.001</span>]))<br><span class="hljs-built_in">print</span>(x.grad)   <span class="hljs-comment"># tensor([2.0000, 0.2000, 0.0200, 0.0020])</span><br></code></pre></td></tr></table></figure>
+
+<p>结果等于 <code>2 * [1, 0.1, 0.01, 0.001]</code>。</p>
+<p>这个机制叫<strong>向量-雅可比积</strong>（Vector-Jacobian Product，VJP）。反向传播真正算的不是完整的雅可比矩阵，而是雅可比矩阵转置乘以一个向量。这个向量就是 <code>backward()</code> 的参数。</p>
+<h2 id="8-5-分离计算"><a href="#8-5-分离计算" class="headerlink" title="8.5 分离计算"></a>8.5 分离计算</h2><p>有时候我们不想让某个张量参与梯度计算。PyTorch 提供了几种方式。</p>
+<h3 id="detach"><a href="#detach" class="headerlink" title="detach()"></a>detach()</h3><p><code>detach()</code> 返回一个跟原张量<strong>共享数据</strong>、但<strong>不跟踪梯度</strong>的新张量：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">x = torch.arange(<span class="hljs-number">4.0</span>, requires_grad=<span class="hljs-literal">True</span>)<br>y = x * <span class="hljs-number">2</span><br>z = y.detach()<br><br><span class="hljs-built_in">print</span>(z.requires_grad)   <span class="hljs-comment"># False</span><br>z.<span class="hljs-built_in">sum</span>().backward()       <span class="hljs-comment"># 报错，z 不跟踪梯度</span><br></code></pre></td></tr></table></figure>
+
+<p>书里举了一个更具体的例子。假设 <code>y</code> 是作为 <code>x</code> 的函数计算的，而 <code>z</code> 则是作为 <code>y</code> 和 <code>x</code> 的函数计算的。如果想计算 <code>z</code> 关于 <code>x</code> 的梯度，但希望将 <code>y</code> 视为一个常数，只考虑 <code>x</code> 在 <code>y</code> 被计算后发挥的作用，可以分离 <code>y</code> 来返回一个新变量 <code>u</code>，该变量与 <code>y</code> 具有相同的值，但丢弃计算图中如何计算 <code>y</code> 的任何信息。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python">x = torch.arange(<span class="hljs-number">4.0</span>, requires_grad=<span class="hljs-literal">True</span>)<br>y = x * x          <span class="hljs-comment"># y 是 x 的函数</span><br>u = y.detach()     <span class="hljs-comment"># 分离 y，u 与 y 值相同，但不跟踪梯度</span><br>z = u * x          <span class="hljs-comment"># z 作为 u 和 x 的函数</span><br><br>z.<span class="hljs-built_in">sum</span>().backward()<br><span class="hljs-built_in">print</span>(x.grad)      <span class="hljs-comment"># tensor([0., 1., 4., 9.])</span><br></code></pre></td></tr></table></figure>
+
+<p>因为 <code>u</code> 被当作常数，<code>z = u * x</code> 对 <code>x</code> 的偏导数就是 <code>u</code>，也就是 <code>x²</code>。</p>
+<p><strong>共享数据</strong>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">x = torch.tensor([<span class="hljs-number">1.0</span>, <span class="hljs-number">2.0</span>, <span class="hljs-number">3.0</span>], requires_grad=<span class="hljs-literal">True</span>)<br>y = x.detach()<br>y[<span class="hljs-number">0</span>] = <span class="hljs-number">100</span><br><span class="hljs-built_in">print</span>(x)   <span class="hljs-comment"># tensor([100.,   2.,   3.], requires_grad=True)</span><br></code></pre></td></tr></table></figure>
+
+<p>改 <code>y</code> 会改 <code>x</code>。如果不想共享，用 <code>x.detach().clone()</code>。</p>
+<h3 id="torch-no-grad"><a href="#torch-no-grad" class="headerlink" title="torch.no_grad()"></a>torch.no_grad()</h3><p><code>detach()</code> 是对单个张量操作。如果一整段代码都不需要梯度，用 <code>torch.no_grad()</code>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">x = torch.tensor([<span class="hljs-number">1.0</span>, <span class="hljs-number">2.0</span>], requires_grad=<span class="hljs-literal">True</span>)<br><br><span class="hljs-keyword">with</span> torch.no_grad():<br>    y = x * <span class="hljs-number">2</span><br>    <span class="hljs-built_in">print</span>(y.requires_grad)   <span class="hljs-comment"># False</span><br></code></pre></td></tr></table></figure>
+
+<p><code>no_grad()</code> 里面所有运算都不构建计算图。这在以下两个场景下非常有用：</p>
+<p><strong>推理</strong>。预测的时候不需要梯度，关掉可以省显存、提速：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">model.<span class="hljs-built_in">eval</span>()<br><span class="hljs-keyword">with</span> torch.no_grad():<br>    output = model(<span class="hljs-built_in">input</span>)<br></code></pre></td></tr></table></figure>
+
+<p><strong>更新参数</strong>。手动写梯度下降的时候，更新步骤本身不能被记录：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">with</span> torch.no_grad():<br>    x -= lr * x.grad<br>    x.grad.zero_()<br></code></pre></td></tr></table></figure>
+
+<h3 id="detach-和-no-grad-的区别"><a href="#detach-和-no-grad-的区别" class="headerlink" title="detach 和 no_grad 的区别"></a>detach 和 no_grad 的区别</h3><ul>
+<li><code>detach()</code> 是对<strong>已经计算出来的张量</strong>做处理，把它从计算图里摘出来。</li>
+<li><code>no_grad()</code> 是对<strong>即将进行的运算</strong>做处理，让这些运算不构建计算图。</li>
+</ul>
+<h2 id="8-6-一个完整的训练循环"><a href="#8-6-一个完整的训练循环" class="headerlink" title="8.6 一个完整的训练循环"></a>8.6 一个完整的训练循环</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> torch<br><span class="hljs-keyword">import</span> torch.nn <span class="hljs-keyword">as</span> nn<br><br><span class="hljs-comment"># 数据</span><br>x = torch.randn(<span class="hljs-number">100</span>, <span class="hljs-number">10</span>)<br>y = torch.randn(<span class="hljs-number">100</span>, <span class="hljs-number">1</span>)<br><br><span class="hljs-comment"># 模型</span><br>model = nn.Linear(<span class="hljs-number">10</span>, <span class="hljs-number">1</span>)<br>criterion = nn.MSELoss()<br>optimizer = torch.optim.SGD(model.parameters(), lr=<span class="hljs-number">0.01</span>)<br><br><span class="hljs-keyword">for</span> epoch <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">100</span>):<br>    <span class="hljs-comment"># 前向传播</span><br>    pred = model(x)<br>    loss = criterion(pred, y)<br><br>    <span class="hljs-comment"># 反向传播</span><br>    optimizer.zero_grad()   <span class="hljs-comment"># 清空上一轮梯度</span><br>    loss.backward()         <span class="hljs-comment"># 计算梯度</span><br><br>    <span class="hljs-comment"># 更新参数</span><br>    optimizer.step()        <span class="hljs-comment"># 用梯度更新参数</span><br><br>    <span class="hljs-keyword">if</span> epoch % <span class="hljs-number">10</span> == <span class="hljs-number">0</span>:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;epoch <span class="hljs-subst">&#123;epoch&#125;</span>, loss <span class="hljs-subst">&#123;loss.item():<span class="hljs-number">.4</span>f&#125;</span>&quot;</span>)<br></code></pre></td></tr></table></figure>
+
+<p>前向、算损失、清零、反向、更新——是所有 PyTorch 训练代码的骨架。</p>
+<p><code>optimizer.zero_grad()</code> 对应梯度累积问题。<code>loss.backward()</code> 对应计算图和链式法则。<code>optimizer.step()</code> 里面用了 <code>no_grad()</code>分离计算。</p>
+<h2 id="8-7-梯度累积：一个实用案例"><a href="#8-7-梯度累积：一个实用案例" class="headerlink" title="8.7 梯度累积：一个实用案例"></a>8.7 梯度累积：一个实用案例</h2><p><code>zero_grad()</code> 要放在循环开头。PyTorch 默认会<strong>累积梯度</strong>，不清零的话梯度会一直加下去。这个特性有时候是麻烦，有时候却很有用。</p>
+<p>假设你只有一张 8GB 显存的显卡，想训练一个需要 64 batch size 的模型，但显存只够跑 16。这时候可以用<strong>梯度累积</strong>——跑 4 个 mini-batch，累积梯度，再做一次参数更新，等价于 64 的 batch size。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python">accumulation_steps = <span class="hljs-number">4</span><br><br><span class="hljs-keyword">for</span> i, (inputs, labels) <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(dataloader):<br>    outputs = model(inputs)<br>    loss = criterion(outputs, labels)<br>    loss = loss / accumulation_steps   <span class="hljs-comment"># 归一化，避免梯度放大</span><br><br>    loss.backward()   <span class="hljs-comment"># 梯度累积到 .grad 里，不立即更新</span><br><br>    <span class="hljs-keyword">if</span> (i + <span class="hljs-number">1</span>) % accumulation_steps == <span class="hljs-number">0</span>:<br>        optimizer.step()       <span class="hljs-comment"># 累积够了，更新一次参数</span><br>        optimizer.zero_grad()  <span class="hljs-comment"># 清零，准备下一轮累积</span><br></code></pre></td></tr></table></figure>
+
+<p>注意 <code>loss = loss / accumulation_steps</code> ，梯度会变成原来的 4 倍，相当于学习率变大了 4 倍</p>
+<h2 id="8-8-自动微分的意义"><a href="#8-8-自动微分的意义" class="headerlink" title="8.8 自动微分的意义"></a>8.8 自动微分的意义</h2><p>手动求导的问题不在于难，而在于<strong>改结构就要重推</strong>。</p>
+<p>用 NumPy 写一个三阶多项式拟合，梯度公式还能手推。但如果换成十层神经网络，几百个参数，每一层的激活函数还不一样，手推梯度基本不可行。改一下网络结构，所有梯度公式都要重来。</p>
+<p>自动微分解决了这个问题。你只需要写前向传播，反向传播由框架自动生成。网络结构随便改，激活函数随便换。</p>
+<p>这就是为什么 PyTorch、TensorFlow、JAX 这些框架都把自动微分作为核心功能。</p>
+<h2 id="本节小结"><a href="#本节小结" class="headerlink" title="本节小结"></a>本节小结</h2><ul>
+<li><strong>自动微分</strong>是框架自动计算梯度的机制，核心是计算图和链式法则。</li>
+<li><strong>计算图</strong>在前向传播时构建，记录每一步运算。反向传播沿图反向走，用链式法则算梯度。</li>
+<li><strong>叶子节点</strong>是用户直接创建的张量，<code>grad_fn</code> 为 <code>None</code>。中间结果的 <code>grad_fn</code> 指向创建它的运算。</li>
+<li><strong>非标量输出</strong>需要传入梯度参数，本质是向量-雅可比积。</li>
+<li><strong><code>detach()</code></strong> 把张量从计算图里摘出来，返回共享数据但不跟踪梯度的新张量。</li>
+<li><strong><code>torch.no_grad()</code></strong> 让一段代码不构建计算图，用于推理和参数更新。</li>
+<li><strong>梯度会累积</strong>，每次反向传播前要手动清零。反过来，这个特性可以用来实现梯度累积，在小显存上模拟大 batch size。</li>
+<li><strong>反向模式</strong>适合输入多输出少的情况，是深度学习的默认选择。</li>
+</ul>
+<p>现在你知道 <code>loss.backward()</code> 那一行背后发生了什么了</p>
+<p>问题：<br>如果 y.grad_fn 也是 None<br>那说明 y 根本没有参与需要梯度的计算，无法从它反向传播。</p>
+<p>常见原因：</p>
+<p>① 输入没有 requires_grad&#x3D;True</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">x = torch.tensor(<span class="hljs-number">2.0</span>)      <span class="hljs-comment"># 默认 requires_grad=False</span><br>y = x ** <span class="hljs-number">2</span><br></code></pre></td></tr></table></figure>
+<p>print(y.grad_fn)           # None<br>y.backward()               # 报错<br>报错类似：</p>
+<p>RuntimeError: element 0 of tensors does not require grad and does not have a grad_fn<br>② 使用了 detach()</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">x = torch.tensor(<span class="hljs-number">2.0</span>, requires_grad=<span class="hljs-literal">True</span>)<br>y = x.detach() ** <span class="hljs-number">2</span><br><br><span class="hljs-built_in">print</span>(y.grad_fn)           <span class="hljs-comment"># None</span><br>detach() 会把张量从计算图中剥离。<br></code></pre></td></tr></table></figure>
+
+<p>③ 在 torch.no_grad() 下计算</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">x = torch.tensor(<span class="hljs-number">2.0</span>, requires_grad=<span class="hljs-literal">True</span>)<br><br><span class="hljs-keyword">with</span> torch.no_grad():<br>    y = x ** <span class="hljs-number">2</span><br><br><span class="hljs-built_in">print</span>(y.grad_fn)           <span class="hljs-comment"># None</span><br></code></pre></td></tr></table></figure>
+
+<p>④ 直接创建了 y</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">y = torch.tensor(<span class="hljs-number">3.0</span>, requires_grad=<span class="hljs-literal">True</span>)<br><span class="hljs-built_in">print</span>(y.grad_fn)           <span class="hljs-comment"># None</span><br></code></pre></td></tr></table></figure>
+<p>它也是叶子张量。</p>
+<ol start="4">
+<li>如果 x.grad 是 None<br>这是更常见的困惑。x.grad 为 None 的可能原因：</li>
+</ol>
+<p>① 没有调用 backward()</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">x = torch.tensor(<span class="hljs-number">2.0</span>, requires_grad=<span class="hljs-literal">True</span>)<br>y = x ** <span class="hljs-number">2</span><br><br><span class="hljs-built_in">print</span>(x.grad)   <span class="hljs-comment"># None</span><br></code></pre></td></tr></table></figure>
+<p>必须反向传播后才有值：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python">y.backward()<br><span class="hljs-built_in">print</span>(x.grad)   <span class="hljs-comment"># tensor(4.)</span><br>② x.requires_grad=<span class="hljs-literal">False</span><br>python<br>x = torch.tensor(<span class="hljs-number">2.0</span>)<br>y = x ** <span class="hljs-number">2</span><br>y.backward()    <span class="hljs-comment"># 报错</span><br><span class="hljs-built_in">print</span>(x.grad)   <span class="hljs-comment"># None</span><br></code></pre></td></tr></table></figure>
+<p>③ x 不是叶子张量<br>中间张量默认不保存 .grad：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python">x = torch.tensor(<span class="hljs-number">2.0</span>, requires_grad=<span class="hljs-literal">True</span>)<br>z = x ** <span class="hljs-number">2</span><br>y = z ** <span class="hljs-number">2</span><br><br>y.backward()<br><br><span class="hljs-built_in">print</span>(x.grad)   <span class="hljs-comment"># tensor(32.)，x 是叶子，有梯度</span><br><span class="hljs-built_in">print</span>(z.grad)   <span class="hljs-comment"># None，z 是中间张量，默认不保存</span><br></code></pre></td></tr></table></figure>
+<p>如果确实想看中间张量的梯度：</p>
+<pre><code class="language-python">z.retain_grad()
+y.backward()
+```print(z.grad)   # tensor(...)
+
+④ 梯度被清零了
+训练循环里经常这样：
+izer.zero_grad()
+如果 zero_grad() 之后没有 backward()，x.grad 就会变成 None 或全零。
+
+⑤ 计算被 detach 或 no_grad 截断
+python
+x = torch.tensor(2.0, requires_grad=True)
+
+with torch.no_grad():
+    y = x ** 2
+
+y.backward()    # 报错
+print(x.grad)   # None
+</code></pre>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2026/09/30/deeplearn13/">← 下一篇 经典代码学习</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/09/28/next-js/">next.js教程 上一篇 →</a></div></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="回到顶部" style="opacity: 0; display: none;">∧ </a><a class="i-index" id="to-index" onClick="tocControl.change()" title="文章目录"><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span></a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="切换主题"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">John Doe</a></h1><div id="description"><p></p></div></div><div id="aside-block"><div id="toc-div"><h1>目录</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC-8-%E8%8A%82%EF%BC%9A%E8%87%AA%E5%8A%A8%E5%BE%AE%E5%88%86"><span class="toc-number">1.</span> <span class="toc-text">第 8 节：自动微分</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#8-1-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E8%87%AA%E5%8A%A8%E5%BE%AE%E5%88%86"><span class="toc-number">1.1.</span> <span class="toc-text">8.1 为什么要自动微分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-2-%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="toc-number">1.2.</span> <span class="toc-text">8.2 一个简单的例子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-3-%E8%AE%A1%E7%AE%97%E5%9B%BE"><span class="toc-number">1.3.</span> <span class="toc-text">8.3 计算图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-4-%E9%9D%9E%E6%A0%87%E9%87%8F%E8%BE%93%E5%87%BA%E7%9A%84%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD"><span class="toc-number">1.4.</span> <span class="toc-text">8.4 非标量输出的反向传播</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-5-%E5%88%86%E7%A6%BB%E8%AE%A1%E7%AE%97"><span class="toc-number">1.5.</span> <span class="toc-text">8.5 分离计算</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#detach"><span class="toc-number">1.5.1.</span> <span class="toc-text">detach()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#torch-no-grad"><span class="toc-number">1.5.2.</span> <span class="toc-text">torch.no_grad()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#detach-%E5%92%8C-no-grad-%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">1.5.3.</span> <span class="toc-text">detach 和 no_grad 的区别</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-6-%E4%B8%80%E4%B8%AA%E5%AE%8C%E6%95%B4%E7%9A%84%E8%AE%AD%E7%BB%83%E5%BE%AA%E7%8E%AF"><span class="toc-number">1.6.</span> <span class="toc-text">8.6 一个完整的训练循环</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-7-%E6%A2%AF%E5%BA%A6%E7%B4%AF%E7%A7%AF%EF%BC%9A%E4%B8%80%E4%B8%AA%E5%AE%9E%E7%94%A8%E6%A1%88%E4%BE%8B"><span class="toc-number">1.7.</span> <span class="toc-text">8.7 梯度累积：一个实用案例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-8-%E8%87%AA%E5%8A%A8%E5%BE%AE%E5%88%86%E7%9A%84%E6%84%8F%E4%B9%89"><span class="toc-number">1.8.</span> <span class="toc-text">8.8 自动微分的意义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%AC%E8%8A%82%E5%B0%8F%E7%BB%93"><span class="toc-number">1.9.</span> <span class="toc-text">本节小结</span></a></li></ol></li></ol></div></div><footer><nobr>构建自 <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> 使用主题 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> 主题作者 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>
