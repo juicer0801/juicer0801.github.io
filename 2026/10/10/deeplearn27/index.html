@@ -1,0 +1,170 @@
+<!DOCTYPE html><html lang="en" theme-mode="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>关于分量和shape | Hexo</title><meta name="description" content="基于您的要求，我将在原有文章结构的基础上，专门新增一个核心章节，深度剖析 shape 中“数字个数”与“数字大小”的严格意义，以帮助读者彻底厘清维度、轴长与形状之间的关系。以下为完善后的完整博客文章。  深度学习中的张量解析：形状、分量、轴、轴长与维度的严谨剖析一、 核心概念的定义与相互关系在深度学习中，张量是数据的基本载体。我们可以从以下几个维度对其进行精确刻画： 1. 维度（Dimension">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于分量和shape">
+<meta property="og:url" content="http://example.com/2026/10/10/deeplearn27/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="基于您的要求，我将在原有文章结构的基础上，专门新增一个核心章节，深度剖析 shape 中“数字个数”与“数字大小”的严格意义，以帮助读者彻底厘清维度、轴长与形状之间的关系。以下为完善后的完整博客文章。  深度学习中的张量解析：形状、分量、轴、轴长与维度的严谨剖析一、 核心概念的定义与相互关系在深度学习中，张量是数据的基本载体。我们可以从以下几个维度对其进行精确刻画： 1. 维度（Dimension">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-10-10T07:28:54.000Z">
+<meta property="article:modified_time" content="2026-10-10T07:43:30.089Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary"><link rel="canonical" href="http://example.com/2026/10/10/deeplearn27/"><link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="preload" as="font" crossorigin="anonymous" href="/font/Bender.ttf"><link rel="preload" as="font" crossorigin="anonymous" href="/font/BenderLight.woff2"><link rel="preload" as="font" crossorigin="anonymous" href="/font/JetBrainsMono-Regular.woff2"><link rel="stylesheet" href="/css/arknights.css"><style>@font-face {
+  font-family: Bender;
+  src: local('Bender'), url("/font/Bender.ttf"), url("/font/Bender.otf");
+}
+@font-face {
+  font-family: BenderLight;
+  src: local('BenderLight'), url("/font/BenderLight.woff2") format('woff2');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}
+</style><meta name="page-config" content="{&quot;code_fold&quot;:null}"><script class="pjax-js">var config = {"root":"/","code_fold":15,"search":{"preload":false,"activeHolder":"Enter here","blurHolder":"Search","noResult":"Data \"$0\" not found"},"code":{"codeInfo":"$0 - $1 lines","copy":"copy"}};
+var page_config = {
+  code_fold: null
+};
+function updatePageConfig() {
+  var newPageConfig = document.querySelector('meta[name="page-config"]');
+  if (newPageConfig) {
+    page_config = JSON.parse(newPageConfig.content);
+  }
+}
+document.addEventListener('pjax:complete', function() { updatePageConfig(); });
+updatePageConfig();</script><link type="text/css" rel="stylesheet" href="/lib/encrypt/hbe.style.css"><script src="//unpkg.com/mermaid@11.12.2/dist/mermaid.min.js"></script><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lightgallery.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-zoom.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-thumbnail.css"><link type="text/css" rel="stylesheet" href="/lib/fontawesome/css/all.min.css"><script>if (window.localStorage.getItem('theme-mode') === 'light')
+ document.documentElement.setAttribute('theme-mode', 'light')
+if (window.localStorage.getItem('theme-mode') === 'dark')
+ document.documentElement.setAttribute('theme-mode', 'dark')</script><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.woff2") format('woff2');
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><style>:root {
+ --dark-background: url('https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg');
+ --light-background: url('/img/bk.jpg');
+ --theme-encrypt-confirm: 'confirm'
+}</style><script defer src="/js/arknights.js"></script><script defer src="/js/search.js"></script><script defer type="module">import mermaid from '//unpkg.com/mermaid@11.12.2/dist/mermaid.esm.min.mjs';
+window.mermaid = mermaid;
+code.paintMermaid();
+</script><script async src="//unpkg.com/lightgallery@2.7.1/lightgallery.min.js"></script><script async src="//unpkg.com/lightgallery@2.7.1/plugins/zoom/lg-zoom.min.js"></script><script async src="//unpkg.com/lightgallery@2.7.1/plugins/thumbnail/lg-thumbnail.min.js"></script><script async src="/lib/encrypt/hbe.js"></script><script async src="/js/pjax.js"></script><script class="pjax-js">reset= () => {document.querySelector('.lg-container')?.remove()
+lightGallery(document.getElementById('post-bg'), {
+  plugins: [lgZoom,lgThumbnail],
+  selector: '.item-img'})}</script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js','data-pjax','.vercount','meta[name=page-config]'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);reset()})</script><script class="pjax-js">reset= () => {document.querySelector('.lg-container')?.remove()
+const postBg = document.querySelector('#post-bg');
+if (postBg) lightGallery(postBg, {
+  plugins: [lgZoom,lgThumbnail],
+  selector: '.item-img'})}</script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js','data-pjax','.vercount','meta[name=page-config]'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>关于分量和shape</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2026-10-10T07:28:54.000Z" id="date"> 2026-10-10</time></div></span><br><span>Last Update: <div class="control"><time datetime="2026-10-10T07:43:30.089Z" id="updated"> 2026-10-10</time></div></span></div></div><hr><div id="post-content"><p>基于您的要求，我将在原有文章结构的基础上，专门新增一个核心章节，深度剖析 <code>shape</code> 中“数字个数”与“数字大小”的严格意义，以帮助读者彻底厘清维度、轴长与形状之间的关系。以下为完善后的完整博客文章。</p>
+<hr>
+<h1 id="深度学习中的张量解析：形状、分量、轴、轴长与维度的严谨剖析"><a href="#深度学习中的张量解析：形状、分量、轴、轴长与维度的严谨剖析" class="headerlink" title="深度学习中的张量解析：形状、分量、轴、轴长与维度的严谨剖析"></a>深度学习中的张量解析：形状、分量、轴、轴长与维度的严谨剖析</h1><h2 id="一、-核心概念的定义与相互关系"><a href="#一、-核心概念的定义与相互关系" class="headerlink" title="一、 核心概念的定义与相互关系"></a>一、 核心概念的定义与相互关系</h2><p>在深度学习中，张量是数据的基本载体。我们可以从以下几个维度对其进行精确刻画：</p>
+<h3 id="1-维度（Dimension-Rank）"><a href="#1-维度（Dimension-Rank）" class="headerlink" title="1. 维度（Dimension &#x2F; Rank）"></a>1. 维度（Dimension &#x2F; Rank）</h3><p><strong>维度</strong>，在张量语境下，通常被称为“阶”（Rank）或“维数”。它指的是张量<strong>轴的数量</strong>，而不是形状元组中数字的个数。</p>
+<ul>
+<li>标量（Scalar）是0维张量。</li>
+<li>向量（Vector）是1维张量。</li>
+<li>矩阵（Matrix）是2维张量。</li>
+<li>三维及以上的数组统称为高维张量。<br>在CNN中，我们常说的“四维张量”，指的就是具有4个轴的张量。</li>
+</ul>
+<h3 id="2-轴（Axis）"><a href="#2-轴（Axis）" class="headerlink" title="2. 轴（Axis）"></a>2. 轴（Axis）</h3><p><strong>轴</strong>是张量中独立的索引方向。轴是有顺序的，通常从0开始编号（0轴、1轴、2轴……）。<br>在深度学习中，不同框架对轴的排列约定不同。例如：</p>
+<ul>
+<li>PyTorch采用 <code>(N, C, H, W)</code> 格式（批次、通道、高度、宽度）。</li>
+<li>TensorFlow曾采用 <code>(N, H, W, C)</code> 格式。<br>轴决定了我们在进行切片、广播或计算时，数据是如何对齐的。</li>
+</ul>
+<h3 id="3-轴长（Axis-Length-Size）"><a href="#3-轴长（Axis-Length-Size）" class="headerlink" title="3. 轴长（Axis Length &#x2F; Size）"></a>3. 轴长（Axis Length &#x2F; Size）</h3><p><strong>轴长</strong>是指在特定轴上元素的个数。它是描述张量形状的具体数值。<br>例如，在一个形状为 <code>(3, 32, 32)</code> 的张量中：</p>
+<ul>
+<li>0轴（通道轴）的轴长为3。</li>
+<li>1轴（高度轴）的轴长为32。</li>
+<li>2轴（宽度轴）的轴长为32。</li>
+</ul>
+<h3 id="4-形状（Shape）"><a href="#4-形状（Shape）" class="headerlink" title="4. 形状（Shape）"></a>4. 形状（Shape）</h3><p><strong>形状</strong>是描述张量在所有轴上轴长的有序元组（Tuple）。形状完整地定义了张量的空间结构。数学上表示为 <code>(size_0, size_1, ..., size_n)</code>。</p>
+<h3 id="5-分量（Component）"><a href="#5-分量（Component）" class="headerlink" title="5. 分量（Component）"></a>5. 分量（Component）</h3><p><strong>分量</strong>（或称元素、标量值）是张量中最基本的、不可再分的个体。高维张量是由低维张量构成的嵌套结构。一个高维张量的总分量个数，等于其各个轴长的乘积。例如，<code>(3, 32, 32)</code> 张量的总分量数为 <code>3 * 32 * 32 = 3072</code> 个。</p>
+<p>这里想发问一下李沐老师书中<strong>三维向量</strong>的歧义，详见考究</p>
+<p><strong>相互关系总结</strong>：维度决定了张量有几个轴；每个轴对应一个轴长；所有的轴长按顺序排列构成了形状；而所有这些轴长相乘的积，则是该张量所包含的总分量数量。</p>
+<h2 id="二、-深度剖析：Shape中数字个数与数字大小的本质意义"><a href="#二、-深度剖析：Shape中数字个数与数字大小的本质意义" class="headerlink" title="二、 深度剖析：Shape中数字个数与数字大小的本质意义"></a>二、 深度剖析：Shape中数字个数与数字大小的本质意义</h2><p>对于初学者而言，最容易混淆的是形状元组 <code>(3, 32, 32)</code> 中<strong>数字的个数</strong>与<strong>数字的大小</strong>。这两个概念分别对应了张量完全不同的属性，必须严格区分。</p>
+<h3 id="1-数字的个数：决定“维度”（Dimension-Rank）"><a href="#1-数字的个数：决定“维度”（Dimension-Rank）" class="headerlink" title="1. 数字的个数：决定“维度”（Dimension &#x2F; Rank）"></a>1. 数字的个数：决定“维度”（Dimension &#x2F; Rank）</h3><p>Shape 元组中数字的个数，严格等于张量的<strong>维度数</strong>（或称阶数）。</p>
+<ul>
+<li>若 Shape 为 <code>(576)</code>，包含1个数字，它是一个<strong>1维张量</strong>（向量），索引它需要1个坐标。</li>
+<li>若 Shape 为 <code>(120, 576)</code>，包含2个数字，它是一个<strong>2维张量</strong>（矩阵），索引它需要2个坐标（行号和列号）。</li>
+<li>若 Shape 为 <code>(16, 6, 6)</code>，包含3个数字，它是一个<strong>3维张量</strong>，索引它需要3个坐标（通道、高、宽）。</li>
+<li>若 Shape 为 <code>(N, 16, 6, 6)</code>，包含4个数字，它是一个<strong>4维张量</strong>，索引它需要4个坐标（批次、通道、高、宽）。</li>
+</ul>
+<p><strong>意义解读</strong>：数字的个数决定了张量的“层级深度”或“空间复杂度”。在深度学习中，增加或减少 Shape 中数字的个数，往往意味着升维或降维操作（例如 <code>unsqueeze</code> 或 <code>squeeze</code>）。全连接层要求输入必须是2维（数字个数为2），因此多维特征图必须通过 Reshape 展平，将其数字个数压缩为2个。</p>
+<h3 id="2-数字的大小：决定“轴长”（Axis-Length-Size）"><a href="#2-数字的大小：决定“轴长”（Axis-Length-Size）" class="headerlink" title="2. 数字的大小：决定“轴长”（Axis Length &#x2F; Size）"></a>2. 数字的大小：决定“轴长”（Axis Length &#x2F; Size）</h3><p>Shape 元组中每一个具体数字的数值大小，代表了该张量在对应轴（Axis）上的<strong>轴长</strong>。</p>
+<ul>
+<li>在 <code>(3, 32, 32)</code> 中：<ul>
+<li>第0个数字的大小是 <code>3</code>，代表0轴（通道）的轴长为3。</li>
+<li>第1个数字的大小是 <code>32</code>，代表1轴（高度）的轴长为32。</li>
+<li>第2个数字的大小是 <code>32</code>，代表2轴（宽度）的轴长为32。</li>
+</ul>
+</li>
+</ul>
+<p><strong>意义解读</strong>：数字的大小决定了张量在某个特定方向上的“延伸范围”或“容量”。它直接决定了数据的物理占用空间（内存或显存大小）。在CNN中，卷积核的数量决定了输出通道的轴长，而图像的分辨率决定了高、宽轴的轴长。</p>
+<h3 id="3-区分关系与常见误区"><a href="#3-区分关系与常见误区" class="headerlink" title="3. 区分关系与常见误区"></a>3. 区分关系与常见误区</h3><ul>
+<li><strong>误区一：将数字大小误认为维度</strong>。例如，看到 <code>(3, 32, 32)</code>，误称其为“32维张量”。这是错误的，它只有3个数字，是3维张量，其中32是轴的“长度”。</li>
+<li><strong>误区二：混淆数字个数与分量总数</strong>。<code>(16, 6, 6)</code> 的张量，其包含的分量总数为 <code>16 × 6 × 6 = 576</code> 个，但它的 Shape 元组中只有3个数字。</li>
+<li><strong>关系总结</strong>：Shape 元组中的<strong>数字个数</strong>决定了张量的<strong>维度</strong>；Shape 元组中的<strong>数字大小</strong>决定了张量的<strong>轴长</strong>；所有<strong>数字大小的乘积</strong>决定了张量的<strong>分量总数</strong>。</li>
+</ul>
+<h2 id="三、-括号的语义学：区分数学表达与代码实现"><a href="#三、-括号的语义学：区分数学表达与代码实现" class="headerlink" title="三、 括号的语义学：区分数学表达与代码实现"></a>三、 括号的语义学：区分数学表达与代码实现</h2><p>在阅读文献或编写代码时，括号的不同使用往往代表了截然不同的数据结构或语义，这是极易产生混淆的地方。</p>
+<h3 id="1-圆括号-：数学元组与形状声明"><a href="#1-圆括号-：数学元组与形状声明" class="headerlink" title="1. 圆括号 ()：数学元组与形状声明"></a>1. 圆括号 <code>()</code>：数学元组与形状声明</h3><p>在数学和框架底层设计中，圆括号 <code>(3, 32, 32)</code> 用于表示<strong>元组（Tuple）</strong>，即形状本身。它强调这是一个不可变的序列，用于描述维度的结构。<br>例如，<code>(3, 32, 32)</code> 表示一个3维张量，其在0轴、1轴、2轴上的长度分别为3、32、32。</p>
+<h3 id="2-方括号-：列表、批次与代码对象"><a href="#2-方括号-：列表、批次与代码对象" class="headerlink" title="2. 方括号 []：列表、批次与代码对象"></a>2. 方括号 <code>[]</code>：列表、批次与代码对象</h3><p>在Python及深度学习框架（如PyTorch）中，方括号 <code>[]</code> 具有多重语义：</p>
+<ul>
+<li><strong>列表（List）</strong>：代表可变序列。例如，<code>[3, 32, 32]</code>。</li>
+<li><strong>代码中的形状对象</strong>：在PyTorch中打印张量形状时，会得到 <code>torch.Size([3, 32, 32])</code>。这里的 <code>[]</code> 是 <code>torch.Size</code> 这个类（继承自元组）的打印格式，本质上仍是形状声明。</li>
+<li><strong>批次（Batch）的显式表达</strong>：在实际训练中，数据总是以批次形式输入的。此时，形状会从单样本的 <code>(C, H, W)</code> 变为 <code>(N, C, H, W)</code>，其中 <code>N</code> 是批次大小。如果在代码中看到类似 <code>[(3, 6, 16, 16)]</code> 的写法，它通常意味着这是一个包含一个样本的列表（即批次大小N&#x3D;1），或者是作者为了强调“这是一个被包裹在批次中的多通道数据”而使用的非标准伪代码。</li>
+</ul>
+<h3 id="3-嵌套括号-：强调批次维度的存在"><a href="#3-嵌套括号-：强调批次维度的存在" class="headerlink" title="3. 嵌套括号 [(...)]：强调批次维度的存在"></a>3. 嵌套括号 <code>[(...)]</code>：强调批次维度的存在</h3><p>回顾此前的讨论：“图像是仅仅以一个通道为例为[(6,16,16)]，（实际是三通道一起，[(3,6,16,16)]）”。<br>这个描述中存在概念混淆。经过多次卷积和池化后，通道数已经发生了变化。准确的结构演变不应停留在原始通道数“3”上。<br>引入批次维度后，真实的四维张量结构应严谨地写为 <code>(N, C, H, W)</code>。<br>如果我们要用嵌套括号的视角来理解，单张图片是 <code>(C, H, W)</code>。当放入一个批次列表中时，就变成了 <code>[(C, H, W), (C, H, W), ...]</code>。在框架内部，这会堆叠成一个四维张量 <code>(N, C, H, W)</code>。因此，<code>[(3,6,16,16)]</code> 这种写法，其本意是想表达“第N个批次样本的原始维度”，但在经历层层卷积后，通道维度早已不是3，而是由卷积核数量决定（例如16）。</p>
+<h2 id="四、-CNN案例中的维度演进与Reshape的本质"><a href="#四、-CNN案例中的维度演进与Reshape的本质" class="headerlink" title="四、 CNN案例中的维度演进与Reshape的本质"></a>四、 CNN案例中的维度演进与Reshape的本质</h2><p>结合具体案例（输入32x32的图像，分类10类），我们梳理从输入到全连接层的严谨数据流。</p>
+<h3 id="1-输入层"><a href="#1-输入层" class="headerlink" title="1. 输入层"></a>1. 输入层</h3><p>输入图像为RGB三通道，单张图片的形状为 <code>(3, 32, 32)</code>。<br>此时：</p>
+<ul>
+<li>维度：3维（Shape元组中有3个数字）</li>
+<li>0轴（通道）轴长：3</li>
+<li>1轴（高度）轴长：32</li>
+<li>2轴（宽度）轴长：32</li>
+<li>分量总数：3072</li>
+</ul>
+<h3 id="2-卷积与池化过程（以单样本为例）"><a href="#2-卷积与池化过程（以单样本为例）" class="headerlink" title="2. 卷积与池化过程（以单样本为例）"></a>2. 卷积与池化过程（以单样本为例）</h3><ul>
+<li><strong>第一层卷积（6个卷积核）</strong>：输入的3通道被6个尺寸为 <code>3x3x3</code> 的卷积核处理。因为每个卷积核在滑动时，会将该位置的27个输入分量（3通道 * 3 * 3）融合为1个值。6个卷积核产生6个输出特征图。输出形状变为 <code>(6, 30, 30)</code>。此时，原始输入通道“3”已经消失，被压缩成了卷积核的数量“6”。</li>
+<li><strong>第一层池化（2x2, 步长2）</strong>：空间维度减半，形状变为 <code>(6, 15, 15)</code>。</li>
+<li><strong>第二层卷积（16个卷积核）</strong>：形状变为 <code>(16, 13, 13)</code>。</li>
+<li><strong>第二层池化（2x2, 步长2）</strong>：形状变为 <code>(16, 6, 6)</code>。</li>
+</ul>
+<p>至此，单张图片的特征图维度为3维（Shape中有3个数字），形状为 <code>(16, 6, 6)</code>。其包含的总分量数为 <code>16 * 6 * 6 = 576</code>。</p>
+<h3 id="3-Reshape（展平）的数学逻辑"><a href="#3-Reshape（展平）的数学逻辑" class="headerlink" title="3. Reshape（展平）的数学逻辑"></a>3. Reshape（展平）的数学逻辑</h3><p>全连接层（Fully Connected Layer）在数学上执行的是矩阵乘法：<code>Y = XW^T + b</code>。<br>矩阵乘法要求输入 <code>X</code> 必须是一个二维矩阵，形状为 <code>(样本数, 特征数)</code>。<br>然而，经过池化后的特征图是三维的 <code>(16, 6, 6)</code>（若考虑批次，则是四维的 <code>(N, 16, 6, 6)</code>）。三维或四维张量无法直接参与矩阵乘法。</p>
+<p>因此，必须进行<strong>Reshape（展平&#x2F;Flatten）操作</strong>。<br>Reshape的本质是：<strong>保持数据在内存中的物理顺序不变，仅改变张量的形状声明。</strong> 即改变 Shape 元组中数字的个数（从3个变成2个），但保持所有数字大小的乘积（分量总数）不变。</p>
+<p>将 <code>(16, 6, 6)</code> 展平为 <code>(576)</code> 的过程，是将16个大小为6x6的特征图，首尾相接拼接成一个一维向量。<br>如果考虑批次，则是将 <code>(N, 16, 6, 6)</code> 展平为 <code>(N, 576)</code>。这里的 <code>576 = 16 * 6 * 6</code>。</p>
+<p><strong>为什么不能直接展平成 <code>(576)</code> 而必须保留 <code>N</code>？</strong><br>因为全连接层是对每一个样本独立计算，但为了计算效率，框架会并行处理一个批次的数据。所以展平后的二维矩阵 <code>(N, 576)</code> 中，每一行代表一个样本的特征向量，列数576是该样本的总特征数。随后，这个 <code>(N, 576)</code> 的矩阵与权重矩阵 <code>(120, 576)</code> 相乘，得到 <code>(N, 120)</code> 的输出，以此类推，最终得到 <code>(N, 10)</code> 的分类结果。</p>
+<h2 id="五、-总结"><a href="#五、-总结" class="headerlink" title="五、 总结"></a>五、 总结</h2><ol>
+<li><strong>维度</strong>是 Shape 元组中数字的个数；<strong>轴长</strong>是 Shape 元组中每个数字的大小；<strong>形状</strong>是轴长的有序元组；<strong>分量</strong>是张量的基本标量。</li>
+<li>圆括号 <code>()</code> 用于描述数学上的形状元组；方括号 <code>[]</code> 在代码中表示列表或形状对象，有时用于包裹批次数据以强调 <code>N</code> 的存在。</li>
+<li>在CNN中，输入通道数（如3）在第一层卷积后便不再保留，后续的通道数完全取决于当前层卷积核的数量（如6、16）。</li>
+<li>全连接层仅接受二维矩阵 <code>(N, Features)</code>。因此，必须将 <code>(N, 16, 6, 6)</code> 这样具有空间和通道结构的四维张量，通过 Reshape 操作，在保留批次维度 <code>N</code> 的前提下，将 <code>16 * 6 * 6</code> 展平为576，转化为 <code>(N, 576)</code> 才能进入全连接层。</li>
+</ol>
+<p>对形状、轴与维度的精确把握，尤其是清晰区分 Shape 中数字个数（维度）与数字大小（轴长）的意义，是构建复杂神经网络、排查张量维度不匹配（Shape Mismatch）报错的必备基本功。</p>
+<p>分量就是tensor中元素的个数，是微观体<br>轴上的元素也是分量，轴长就是这条轴上元素（分量）个数，也是shape里数字的大小，较为宏观<br>轴的个数是该张量的维数，与分量没什么太大关系</p>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2026/10/10/deeplearn28/">← Next RNN神经网络</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/10/10/deeplearn26/">rnn神经网络1 Prev →</a></div></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="To Top" style="opacity: 0; display: none;">∧ </a><a class="i-index" id="to-index" onClick="tocControl.change()" title="To Catalog"><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span></a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="Change Theme"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">John Doe</a></h1><div id="description"><p></p></div></div><div id="aside-block"><div id="toc-div"><h1>Catalog</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E5%BC%A0%E9%87%8F%E8%A7%A3%E6%9E%90%EF%BC%9A%E5%BD%A2%E7%8A%B6%E3%80%81%E5%88%86%E9%87%8F%E3%80%81%E8%BD%B4%E3%80%81%E8%BD%B4%E9%95%BF%E4%B8%8E%E7%BB%B4%E5%BA%A6%E7%9A%84%E4%B8%A5%E8%B0%A8%E5%89%96%E6%9E%90"><span class="toc-number">1.</span> <span class="toc-text">深度学习中的张量解析：形状、分量、轴、轴长与维度的严谨剖析</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81-%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%E7%9A%84%E5%AE%9A%E4%B9%89%E4%B8%8E%E7%9B%B8%E4%BA%92%E5%85%B3%E7%B3%BB"><span class="toc-number">1.1.</span> <span class="toc-text">一、 核心概念的定义与相互关系</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E7%BB%B4%E5%BA%A6%EF%BC%88Dimension-Rank%EF%BC%89"><span class="toc-number">1.1.1.</span> <span class="toc-text">1. 维度（Dimension &#x2F; Rank）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%BD%B4%EF%BC%88Axis%EF%BC%89"><span class="toc-number">1.1.2.</span> <span class="toc-text">2. 轴（Axis）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E8%BD%B4%E9%95%BF%EF%BC%88Axis-Length-Size%EF%BC%89"><span class="toc-number">1.1.3.</span> <span class="toc-text">3. 轴长（Axis Length &#x2F; Size）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%BD%A2%E7%8A%B6%EF%BC%88Shape%EF%BC%89"><span class="toc-number">1.1.4.</span> <span class="toc-text">4. 形状（Shape）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E5%88%86%E9%87%8F%EF%BC%88Component%EF%BC%89"><span class="toc-number">1.1.5.</span> <span class="toc-text">5. 分量（Component）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81-%E6%B7%B1%E5%BA%A6%E5%89%96%E6%9E%90%EF%BC%9AShape%E4%B8%AD%E6%95%B0%E5%AD%97%E4%B8%AA%E6%95%B0%E4%B8%8E%E6%95%B0%E5%AD%97%E5%A4%A7%E5%B0%8F%E7%9A%84%E6%9C%AC%E8%B4%A8%E6%84%8F%E4%B9%89"><span class="toc-number">1.2.</span> <span class="toc-text">二、 深度剖析：Shape中数字个数与数字大小的本质意义</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%95%B0%E5%AD%97%E7%9A%84%E4%B8%AA%E6%95%B0%EF%BC%9A%E5%86%B3%E5%AE%9A%E2%80%9C%E7%BB%B4%E5%BA%A6%E2%80%9D%EF%BC%88Dimension-Rank%EF%BC%89"><span class="toc-number">1.2.1.</span> <span class="toc-text">1. 数字的个数：决定“维度”（Dimension &#x2F; Rank）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%95%B0%E5%AD%97%E7%9A%84%E5%A4%A7%E5%B0%8F%EF%BC%9A%E5%86%B3%E5%AE%9A%E2%80%9C%E8%BD%B4%E9%95%BF%E2%80%9D%EF%BC%88Axis-Length-Size%EF%BC%89"><span class="toc-number">1.2.2.</span> <span class="toc-text">2. 数字的大小：决定“轴长”（Axis Length &#x2F; Size）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%8C%BA%E5%88%86%E5%85%B3%E7%B3%BB%E4%B8%8E%E5%B8%B8%E8%A7%81%E8%AF%AF%E5%8C%BA"><span class="toc-number">1.2.3.</span> <span class="toc-text">3. 区分关系与常见误区</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81-%E6%8B%AC%E5%8F%B7%E7%9A%84%E8%AF%AD%E4%B9%89%E5%AD%A6%EF%BC%9A%E5%8C%BA%E5%88%86%E6%95%B0%E5%AD%A6%E8%A1%A8%E8%BE%BE%E4%B8%8E%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.3.</span> <span class="toc-text">三、 括号的语义学：区分数学表达与代码实现</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%9C%86%E6%8B%AC%E5%8F%B7-%EF%BC%9A%E6%95%B0%E5%AD%A6%E5%85%83%E7%BB%84%E4%B8%8E%E5%BD%A2%E7%8A%B6%E5%A3%B0%E6%98%8E"><span class="toc-number">1.3.1.</span> <span class="toc-text">1. 圆括号 ()：数学元组与形状声明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%96%B9%E6%8B%AC%E5%8F%B7-%EF%BC%9A%E5%88%97%E8%A1%A8%E3%80%81%E6%89%B9%E6%AC%A1%E4%B8%8E%E4%BB%A3%E7%A0%81%E5%AF%B9%E8%B1%A1"><span class="toc-number">1.3.2.</span> <span class="toc-text">2. 方括号 []：列表、批次与代码对象</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%B5%8C%E5%A5%97%E6%8B%AC%E5%8F%B7-%EF%BC%9A%E5%BC%BA%E8%B0%83%E6%89%B9%E6%AC%A1%E7%BB%B4%E5%BA%A6%E7%9A%84%E5%AD%98%E5%9C%A8"><span class="toc-number">1.3.3.</span> <span class="toc-text">3. 嵌套括号 [(...)]：强调批次维度的存在</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81-CNN%E6%A1%88%E4%BE%8B%E4%B8%AD%E7%9A%84%E7%BB%B4%E5%BA%A6%E6%BC%94%E8%BF%9B%E4%B8%8EReshape%E7%9A%84%E6%9C%AC%E8%B4%A8"><span class="toc-number">1.4.</span> <span class="toc-text">四、 CNN案例中的维度演进与Reshape的本质</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%BE%93%E5%85%A5%E5%B1%82"><span class="toc-number">1.4.1.</span> <span class="toc-text">1. 输入层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%8D%B7%E7%A7%AF%E4%B8%8E%E6%B1%A0%E5%8C%96%E8%BF%87%E7%A8%8B%EF%BC%88%E4%BB%A5%E5%8D%95%E6%A0%B7%E6%9C%AC%E4%B8%BA%E4%BE%8B%EF%BC%89"><span class="toc-number">1.4.2.</span> <span class="toc-text">2. 卷积与池化过程（以单样本为例）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-Reshape%EF%BC%88%E5%B1%95%E5%B9%B3%EF%BC%89%E7%9A%84%E6%95%B0%E5%AD%A6%E9%80%BB%E8%BE%91"><span class="toc-number">1.4.3.</span> <span class="toc-text">3. Reshape（展平）的数学逻辑</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81-%E6%80%BB%E7%BB%93"><span class="toc-number">1.5.</span> <span class="toc-text">五、 总结</span></a></li></ol></li></ol></div></div><footer><nobr>Published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>

@@ -1,0 +1,502 @@
+<!DOCTYPE html><html lang="en" theme-mode="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>ai助教 | Hexo</title><meta name="description" content="RNN 完整教程：从零开始彻底搞懂循环神经网络 目标读者：已学完深度学习基础（前馈神经网络、损失函数、反向传播），但对 RNN 细节不清楚的学习者。 本教程包含：概念讲解、数学推导、图片教学、代码逐行注释、常见疑问解答   目录 为什么需要 RNN RNN 的核心思想 词嵌入层 RNN 循环网络层 数据形状变换 滑动窗口采样 案例代码逐行详解 训练过程可视化 预测过程详解 RNN 的局限与进阶方向">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ai助教">
+<meta property="og:url" content="http://example.com/2026/10/10/deeplearn33/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="RNN 完整教程：从零开始彻底搞懂循环神经网络 目标读者：已学完深度学习基础（前馈神经网络、损失函数、反向传播），但对 RNN 细节不清楚的学习者。 本教程包含：概念讲解、数学推导、图片教学、代码逐行注释、常见疑问解答   目录 为什么需要 RNN RNN 的核心思想 词嵌入层 RNN 循环网络层 数据形状变换 滑动窗口采样 案例代码逐行详解 训练过程可视化 预测过程详解 RNN 的局限与进阶方向">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/artifacts/generated-images/83965c57269bedb7/image-01.png">
+<meta property="og:image" content="http://example.com/artifacts/generated-images/91c2d2aca72aa0a7/image-01.png">
+<meta property="og:image" content="http://example.com/artifacts/generated-images/52c4ebf8d43870ae/image-01.png">
+<meta property="og:image" content="http://example.com/artifacts/generated-images/af91772349d3d234/image-01.png">
+<meta property="og:image" content="http://example.com/artifacts/generated-images/6f7328a3985cbd81/image-01.png">
+<meta property="og:image" content="http://example.com/artifacts/generated-images/19f0b156d006bf0e/image-01.png">
+<meta property="article:published_time" content="2026-10-10T07:29:12.000Z">
+<meta property="article:modified_time" content="2026-10-12T09:06:49.505Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/artifacts/generated-images/83965c57269bedb7/image-01.png"><link rel="canonical" href="http://example.com/2026/10/10/deeplearn33/"><link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="preload" as="font" crossorigin="anonymous" href="/font/Bender.ttf"><link rel="preload" as="font" crossorigin="anonymous" href="/font/BenderLight.woff2"><link rel="preload" as="font" crossorigin="anonymous" href="/font/JetBrainsMono-Regular.woff2"><link rel="stylesheet" href="/css/arknights.css"><style>@font-face {
+  font-family: Bender;
+  src: local('Bender'), url("/font/Bender.ttf"), url("/font/Bender.otf");
+}
+@font-face {
+  font-family: BenderLight;
+  src: local('BenderLight'), url("/font/BenderLight.woff2") format('woff2');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}
+</style><meta name="page-config" content="{&quot;code_fold&quot;:null}"><script class="pjax-js">var config = {"root":"/","code_fold":15,"search":{"preload":false,"activeHolder":"Enter here","blurHolder":"Search","noResult":"Data \"$0\" not found"},"code":{"codeInfo":"$0 - $1 lines","copy":"copy"}};
+var page_config = {
+  code_fold: null
+};
+function updatePageConfig() {
+  var newPageConfig = document.querySelector('meta[name="page-config"]');
+  if (newPageConfig) {
+    page_config = JSON.parse(newPageConfig.content);
+  }
+}
+document.addEventListener('pjax:complete', function() { updatePageConfig(); });
+updatePageConfig();</script><link type="text/css" rel="stylesheet" href="/lib/encrypt/hbe.style.css"><script src="//unpkg.com/mermaid@11.12.2/dist/mermaid.min.js"></script><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lightgallery.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-zoom.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-thumbnail.css"><link type="text/css" rel="stylesheet" href="/lib/fontawesome/css/all.min.css"><script>if (window.localStorage.getItem('theme-mode') === 'light')
+ document.documentElement.setAttribute('theme-mode', 'light')
+if (window.localStorage.getItem('theme-mode') === 'dark')
+ document.documentElement.setAttribute('theme-mode', 'dark')</script><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.woff2") format('woff2');
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><style>:root {
+ --dark-background: url('https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg');
+ --light-background: url('/img/bk.jpg');
+ --theme-encrypt-confirm: 'confirm'
+}</style><script defer src="/js/arknights.js"></script><script defer src="/js/search.js"></script><script defer type="module">import mermaid from '//unpkg.com/mermaid@11.12.2/dist/mermaid.esm.min.mjs';
+window.mermaid = mermaid;
+code.paintMermaid();
+</script><script async src="//unpkg.com/lightgallery@2.7.1/lightgallery.min.js"></script><script async src="//unpkg.com/lightgallery@2.7.1/plugins/zoom/lg-zoom.min.js"></script><script async src="//unpkg.com/lightgallery@2.7.1/plugins/thumbnail/lg-thumbnail.min.js"></script><script async src="/lib/encrypt/hbe.js"></script><script async src="/js/pjax.js"></script><script class="pjax-js">reset= () => {document.querySelector('.lg-container')?.remove()
+lightGallery(document.getElementById('post-bg'), {
+  plugins: [lgZoom,lgThumbnail],
+  selector: '.item-img'})}</script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js','data-pjax','.vercount','meta[name=page-config]'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);reset()})</script><script class="pjax-js">reset= () => {document.querySelector('.lg-container')?.remove()
+const postBg = document.querySelector('#post-bg');
+if (postBg) lightGallery(postBg, {
+  plugins: [lgZoom,lgThumbnail],
+  selector: '.item-img'})}</script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js','data-pjax','.vercount','meta[name=page-config]'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>ai助教</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2026-10-10T07:29:12.000Z" id="date"> 2026-10-10</time></div></span><br><span>Last Update: <div class="control"><time datetime="2026-10-12T09:06:49.505Z" id="updated"> 2026-10-12</time></div></span></div></div><hr><div id="post-content"><h1 id="RNN-完整教程：从零开始彻底搞懂循环神经网络"><a href="#RNN-完整教程：从零开始彻底搞懂循环神经网络" class="headerlink" title="RNN 完整教程：从零开始彻底搞懂循环神经网络"></a>RNN 完整教程：从零开始彻底搞懂循环神经网络</h1><blockquote>
+<p>目标读者：已学完深度学习基础（前馈神经网络、损失函数、反向传播），但对 RNN 细节不清楚的学习者。</p>
+<p>本教程包含：概念讲解、数学推导、图片教学、代码逐行注释、常见疑问解答</p>
+</blockquote>
+<hr>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ol>
+<li>为什么需要 RNN</li>
+<li>RNN 的核心思想</li>
+<li>词嵌入层</li>
+<li>RNN 循环网络层</li>
+<li>数据形状变换</li>
+<li>滑动窗口采样</li>
+<li>案例代码逐行详解</li>
+<li>训练过程可视化</li>
+<li>预测过程详解</li>
+<li>RNN 的局限与进阶方向</li>
+<li>常见疑问 FAQ</li>
+</ol>
+<hr>
+<h2 id="1-为什么需要-RNN"><a href="#1-为什么需要-RNN" class="headerlink" title="1. 为什么需要 RNN"></a>1. 为什么需要 RNN</h2><h3 id="1-1-前馈神经网络的局限"><a href="#1-1-前馈神经网络的局限" class="headerlink" title="1.1 前馈神经网络的局限"></a>1.1 前馈神经网络的局限</h3><p>前馈神经网络（全连接网络、CNN）有一个共同假设：<strong>输入和输出相互独立</strong>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">前馈网络：x1 -&gt; [隐藏层] -&gt; y1    （每次输入互不影响）<br>          x2 -&gt; [隐藏层] -&gt; y2<br></code></pre></td></tr></table></figure>
+
+<p>这对图像分类没问题。但序列数据不行！</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">&quot;我 爱 你&quot;  和  &quot;你 爱 我&quot;  -&gt; 完全不同的含义！<br></code></pre></td></tr></table></figure>
+
+<p>序列数据的特点是：<strong>后面的数据和前面的数据有关</strong>。</p>
+<h3 id="1-2-什么是序列数据"><a href="#1-2-什么是序列数据" class="headerlink" title="1.2 什么是序列数据"></a>1.2 什么是序列数据</h3><table>
+<thead>
+<tr>
+<th>类型</th>
+<th>例子</th>
+<th>序列关系</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>文本</td>
+<td>“今天天气真___”</td>
+<td>需要根据前面的词预测下一个词</td>
+</tr>
+<tr>
+<td>时间序列</td>
+<td>股票价格</td>
+<td>明天的价格和今天的价格有关</td>
+</tr>
+<tr>
+<td>语音</td>
+<td>一段话</td>
+<td>后面的音节依赖前面的音节</td>
+</tr>
+<tr>
+<td>音乐</td>
+<td>一段旋律</td>
+<td>下一个音符依赖前面的音符</td>
+</tr>
+</tbody></table>
+<p class='item-img' data-src='/artifacts/generated-images/83965c57269bedb7/image-01.png'><img src="/artifacts/generated-images/83965c57269bedb7/image-01.png" alt="RNN vs 前馈神经网络对比"></p>
+<blockquote>
+<p>左图：前馈网络，数据单向流动，没有”记忆”。<br>右图：RNN，隐藏状态 h 会”循环”回来，作为下一步的输入之一。</p>
+</blockquote>
+<hr>
+<h2 id="2-RNN-的核心思想"><a href="#2-RNN-的核心思想" class="headerlink" title="2. RNN 的核心思想"></a>2. RNN 的核心思想</h2><h3 id="2-1-一句话概括"><a href="#2-1-一句话概括" class="headerlink" title="2.1 一句话概括"></a>2.1 一句话概括</h3><p><strong>RNN &#x3D; 一个带有”记忆”的神经元，在每个时间步都会更新记忆。</strong></p>
+<h3 id="2-2-类比理解"><a href="#2-2-类比理解" class="headerlink" title="2.2 类比理解"></a>2.2 类比理解</h3><p>想象你在读一本书：</p>
+<ul>
+<li>你读到第5章时，不会忘记第1章讲了什么</li>
+<li>你的”理解”（隐藏状态）随着阅读不断积累</li>
+<li>每读一个新句子，你结合”已有理解 + 新句子”来更新”理解”</li>
+</ul>
+<p>RNN 就是这样工作的：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">新理解(h_t) = f(旧理解(h_&#123;t-1&#125;) + 新输入(x_t))<br></code></pre></td></tr></table></figure>
+
+<h3 id="2-3-RNN-的两种视角"><a href="#2-3-RNN-的两种视角" class="headerlink" title="2.3 RNN 的两种视角"></a>2.3 RNN 的两种视角</h3><p><strong>视角一：循环视角（Compact）</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">      +--------------+<br>      |              |<br>x_t -&gt;|   RNN 神经元  |-&gt; h_t -&gt; y_t<br>      |              |<br>      ^    h_&#123;t-1&#125;   |<br>      +--------------+<br></code></pre></td></tr></table></figure>
+
+<p>看起来是一个神经元，但它被<strong>反复使用</strong>于每个时间步。</p>
+<p><strong>视角二：展开视角（Unrolled）</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">时间步1          时间步2          时间步3<br>x1=&quot;我&quot;          x2=&quot;爱&quot;          x3=&quot;你&quot;<br>  |                |                |<br>  v                v                v<br>[RNN]--h1---&gt; [RNN]--h2---&gt; [RNN]--h3---&gt; y3<br>  ^                ^                |<br> h0=0            h1               h2<br></code></pre></td></tr></table></figure>
+
+<p>展开后更容易看清数据流动：每个时间步的 RNN 单元<strong>共享同一组参数</strong>（权重矩阵），但处理不同的输入。</p>
+<p class='item-img' data-src='/artifacts/generated-images/91c2d2aca72aa0a7/image-01.png'><img src="/artifacts/generated-images/91c2d2aca72aa0a7/image-01.png" alt="RNN 时序展开与计算流程"></p>
+<hr>
+<h2 id="3-词嵌入层"><a href="#3-词嵌入层" class="headerlink" title="3. 词嵌入层"></a>3. 词嵌入层</h2><h3 id="3-1-为什么需要词嵌入"><a href="#3-1-为什么需要词嵌入" class="headerlink" title="3.1 为什么需要词嵌入"></a>3.1 为什么需要词嵌入</h3><p>计算机不认识”猫”和”狗”，它只认识数字。</p>
+<p><strong>方案一：One-Hot 编码（已淘汰）</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">猫 -&gt; [1, 0, 0, 0, ...]   （词汇量10000，向量就是10000维）<br>狗 -&gt; [0, 1, 0, 0, ...]<br></code></pre></td></tr></table></figure>
+
+<p>问题：维度太高，任意两个词的距离都一样。</p>
+<p><strong>方案二：词嵌入（Word Embedding）</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">猫 -&gt; [0.2, -0.5, 0.8, 0.1, ...]   （128维）<br>狗 -&gt; [0.3, -0.4, 0.7, 0.2, ...]   （和猫很接近！）<br>飞机 -&gt; [-0.9, 0.1, -0.3, 0.6, ...] （和猫狗很远）<br></code></pre></td></tr></table></figure>
+
+<p class='item-img' data-src='/artifacts/generated-images/52c4ebf8d43870ae/image-01.png'><img src="/artifacts/generated-images/52c4ebf8d43870ae/image-01.png" alt="词嵌入 Word Embedding 原理"></p>
+<h3 id="3-2-词嵌入层的工作流程"><a href="#3-2-词嵌入层的工作流程" class="headerlink" title="3.2 词嵌入层的工作流程"></a>3.2 词嵌入层的工作流程</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">步骤1：分词<br>&quot;我爱北京天安门&quot; -&gt; [&quot;我&quot;, &quot;爱&quot;, &quot;北京&quot;, &quot;天安门&quot;]<br><br>步骤2：构建词表（词到索引映射）<br>&#123;&quot;我&quot;: 0, &quot;爱&quot;: 1, &quot;北京&quot;: 2, &quot;天安门&quot;: 3, ...&#125;<br><br>步骤3：查表得到词向量<br>&quot;我&quot; -&gt; 索引0 -&gt; 查嵌入矩阵第0行 -&gt; [0.12, -0.34, ...]（128维向量）<br></code></pre></td></tr></table></figure>
+
+<h3 id="3-3-PyTorch-代码"><a href="#3-3-PyTorch-代码" class="headerlink" title="3.3 PyTorch 代码"></a>3.3 PyTorch 代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 创建词嵌入层</span><br><span class="hljs-comment"># num_embeddings=10000: 词汇表有10000个词</span><br><span class="hljs-comment"># embedding_dim=128: 每个词用128维向量表示</span><br>embed = nn.Embedding(num_embeddings=<span class="hljs-number">10000</span>, embedding_dim=<span class="hljs-number">128</span>)<br><br><span class="hljs-comment"># 输入：词的索引（整数）</span><br><span class="hljs-comment"># 输出：对应的词向量</span><br>word_indices = torch.tensor([<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>])  <span class="hljs-comment"># 3个词</span><br>vectors = embed(word_indices)           <span class="hljs-comment"># 形状: [3, 128]</span><br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>关键理解：词嵌入层本质上就是一个<strong>查找表（Lookup Table）</strong>。<br>它的参数是一个 (词汇量 x 向量维度) 的矩阵，输入索引，输出对应行的向量。<br>训练过程中，这些向量会被不断更新，最终学到语义信息。</p>
+</blockquote>
+<hr>
+<h2 id="4-RNN-循环网络层"><a href="#4-RNN-循环网络层" class="headerlink" title="4. RNN 循环网络层"></a>4. RNN 循环网络层</h2><h3 id="4-1-RNN-内部的数学计算"><a href="#4-1-RNN-内部的数学计算" class="headerlink" title="4.1 RNN 内部的数学计算"></a>4.1 RNN 内部的数学计算</h3><p><strong>RNN 神经元在每个时间步做两件事：</strong></p>
+<h4 id="第一步：计算新的隐藏状态-h-t"><a href="#第一步：计算新的隐藏状态-h-t" class="headerlink" title="第一步：计算新的隐藏状态 h_t"></a>第一步：计算新的隐藏状态 h_t</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">h_t = tanh(W_ih * x_t + b_ih + W_hh * h_&#123;t-1&#125; + b_hh)<br></code></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>含义</th>
+<th>形状</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>x_t</td>
+<td>当前时间步的输入（词向量）</td>
+<td>[batch, input_size]</td>
+</tr>
+<tr>
+<td>h_{t-1}</td>
+<td>上一个时间步的隐藏状态</td>
+<td>[batch, hidden_size]</td>
+</tr>
+<tr>
+<td>W_ih</td>
+<td>输入到隐藏的权重矩阵</td>
+<td>[input_size, hidden_size]</td>
+</tr>
+<tr>
+<td>b_ih</td>
+<td>输入到隐藏的偏置</td>
+<td>[hidden_size]</td>
+</tr>
+<tr>
+<td>W_hh</td>
+<td>隐藏到隐藏的权重矩阵</td>
+<td>[hidden_size, hidden_size]</td>
+</tr>
+<tr>
+<td>b_hh</td>
+<td>隐藏到隐藏的偏置</td>
+<td>[hidden_size]</td>
+</tr>
+<tr>
+<td>h_t</td>
+<td>当前时间步的隐藏状态</td>
+<td>[batch, hidden_size]</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>直觉理解：</p>
+<ul>
+<li>W_ih * x_t：当前输入的信息</li>
+<li>W_hh * h_{t-1}：过去记忆的信息</li>
+<li>两者相加 -&gt; 融合”新信息”和”旧记忆”</li>
+<li>tanh：把结果压缩到 (-1, 1) 之间</li>
+</ul>
+</blockquote>
+<h4 id="第二步：计算输出-y-t"><a href="#第二步：计算输出-y-t" class="headerlink" title="第二步：计算输出 y_t"></a>第二步：计算输出 y_t</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">y_t = W_hy * h_t + b_y<br></code></pre></td></tr></table></figure>
+
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>y_t</td>
+<td>当前时间步的输出</td>
+</tr>
+<tr>
+<td>W_hy</td>
+<td>隐藏到输出的权重矩阵</td>
+</tr>
+<tr>
+<td>b_y</td>
+<td>输出层偏置</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p>在歌词生成任务中，y_t 的维度 &#x3D; 词汇表大小（5703），表示对每个词的”得分”。</p>
+</blockquote>
+<h3 id="4-2-从得分到预测词"><a href="#4-2-从得分到预测词" class="headerlink" title="4.2 从得分到预测词"></a>4.2 从得分到预测词</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">y_t = [2.1, 0.5, -0.3, 4.7, 1.2, ...]  （5703个得分）<br>                    | softmax<br>概率 = [0.01, 0.002, 0.001, 0.15, 0.03, ...]  （加起来=1）<br>                    | argmax<br>预测词 = 索引3对应的词 -&gt; &quot;你&quot;<br></code></pre></td></tr></table></figure>
+
+<h3 id="4-3-PyTorch-中的-RNN-层"><a href="#4-3-PyTorch-中的-RNN-层" class="headerlink" title="4.3 PyTorch 中的 RNN 层"></a>4.3 PyTorch 中的 RNN 层</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python">rnn = nn.RNN(<br>    input_size=<span class="hljs-number">128</span>,    <span class="hljs-comment"># 输入维度 = 词向量维度</span><br>    hidden_size=<span class="hljs-number">256</span>,   <span class="hljs-comment"># 隐藏状态维度</span><br>    num_layers=<span class="hljs-number">1</span>       <span class="hljs-comment"># RNN层数</span><br>)<br><br>output, h_n = rnn(x, h_0)<br></code></pre></td></tr></table></figure>
+
+<p><strong>输入输出的形状（最容易搞混的部分！）：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">输入 x:   [seq_len, batch, input_size]<br>输入 h_0: [num_layers, batch, hidden_size]<br><br>输出 output: [seq_len, batch, hidden_size]<br>输出 h_n:    [num_layers, batch, hidden_size]<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意：PyTorch 的 RNN 默认输入格式是 [seq_len, batch, feature]，<br>而不是常见的 [batch, seq_len, feature]。所以需要 transpose(0,1) 来交换维度！</p>
+</blockquote>
+<hr>
+<h2 id="5-数据形状变换"><a href="#5-数据形状变换" class="headerlink" title="5. 数据形状变换"></a>5. 数据形状变换</h2><p class='item-img' data-src='/artifacts/generated-images/af91772349d3d234/image-01.png'><img src="/artifacts/generated-images/af91772349d3d234/image-01.png" alt="RNN 数据形状变换"></p>
+<p>用具体数字来追踪（以你的代码为例）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">假设：batch_size=5, seq_len=32, vocab_size=5703<br><br>1. 输入 x:           [5, 32]          （5个句子，每句32个词的索引）<br>2. 词嵌入后 embd:    [5, 32, 128]     （每个词索引变成128维向量）<br>3. 转置后:           [32, 5, 128]     （交换第0维和第1维）<br>4. RNN输出 output:   [32, 5, 256]     （每个时间步输出256维隐藏状态）<br>5. reshape后:        [160, 256]       （32x5=160，展平成二维）<br>6. 全连接层输出:      [160, 5703]      （每个位置对5703个词的得分）<br><br>对应的目标值 y:<br>原始 y:             [5, 32]<br>转置+reshape后:      [160]            （160个目标词索引）<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>为什么要 reshape？全连接层 nn.Linear(256, 5703) 只接受二维输入 [N, 256]，<br>所以要把 [32, 5, 256] 展平成 [160, 256]。</p>
+</blockquote>
+<hr>
+<h2 id="6-滑动窗口采样"><a href="#6-滑动窗口采样" class="headerlink" title="6. 滑动窗口采样"></a>6. 滑动窗口采样</h2><h3 id="6-1-训练数据怎么构造"><a href="#6-1-训练数据怎么构造" class="headerlink" title="6.1 训练数据怎么构造"></a>6.1 训练数据怎么构造</h3><p>我们有一长串歌词索引：[0, 1, 2, 3, 40, 0, 4, 5, 6, 7, 8, 3, …]</p>
+<p>目标是：<strong>给一段词，预测下一个词</strong>。</p>
+<p class='item-img' data-src='/artifacts/generated-images/6f7328a3985cbd81/image-01.png'><img src="/artifacts/generated-images/6f7328a3985cbd81/image-01.png" alt="滑动窗口数据采样策略"></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">原始序列: [0, 1, 2, 3, 40, 0, 4, 5, 6, 7, ...]<br><br>窗口大小 = 5（即 num_chars=5）<br><br>样本1: x = [0, 1, 2, 3, 40]    y = [1, 2, 3, 40, 0]<br>样本2: x = [1, 2, 3, 40, 0]    y = [2, 3, 40, 0, 4]<br>样本3: x = [2, 3, 40, 0, 4]    y = [3, 40, 0, 4, 5]<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>关键：y 就是 x 向右移动一位！<br>给定位置 i 的词，模型要预测位置 i+1 的词。</p>
+</blockquote>
+<h3 id="6-2-代码实现"><a href="#6-2-代码实现" class="headerlink" title="6.2 代码实现"></a>6.2 代码实现</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">LyricsDataset</span>(torch.utils.data.Dataset):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__getitem__</span>(<span class="hljs-params">self, idx</span>):<br>        start = idx<br>        end = start + <span class="hljs-variable language_">self</span>.num_chars<br>        <br>        x = <span class="hljs-variable language_">self</span>.corpus_idx[start:end]        <span class="hljs-comment"># 输入：5个词</span><br>        y = <span class="hljs-variable language_">self</span>.corpus_idx[start+<span class="hljs-number">1</span>:end+<span class="hljs-number">1</span>]    <span class="hljs-comment"># 目标：后移1位的5个词</span><br>        <br>        <span class="hljs-keyword">return</span> torch.tensor(x), torch.tensor(y)<br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="7-案例代码逐行详解"><a href="#7-案例代码逐行详解" class="headerlink" title="7. 案例代码逐行详解"></a>7. 案例代码逐行详解</h2><h3 id="7-1-整体结构"><a href="#7-1-整体结构" class="headerlink" title="7.1 整体结构"></a>7.1 整体结构</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">+-------------------------------------------------+<br>|                 完整流程                          |<br>|                                                   |<br>|  1. build_vocab()    -&gt; 构建词表                   |<br>|  2. LyricsDataset    -&gt; 构造训练数据                |<br>|  3. TextGenerator    -&gt; 定义RNN模型                |<br>|  4. train()          -&gt; 训练模型                   |<br>|  5. evaluate()       -&gt; 用训练好的模型生成歌词       |<br>+-------------------------------------------------+<br></code></pre></td></tr></table></figure>
+
+<p class='item-img' data-src='/artifacts/generated-images/19f0b156d006bf0e/image-01.png'><img src="/artifacts/generated-images/19f0b156d006bf0e/image-01.png" alt="RNN 歌词生成完整流程"></p>
+<h3 id="7-2-第一步：构建词表-build-vocab"><a href="#7-2-第一步：构建词表-build-vocab" class="headerlink" title="7.2 第一步：构建词表 build_vocab()"></a>7.2 第一步：构建词表 build_vocab()</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">build_vocab</span>():<br>    <span class="hljs-comment"># unique_words: 去重后的所有词</span><br>    <span class="hljs-comment"># all_words: 每行歌词的分词结果（不去重）</span><br>    unique_words, all_words = [], []<br>    <br>    <span class="hljs-comment"># 逐行读取歌词文件</span><br>    <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;./data/jaychou_lyrics.txt&#x27;</span>, <span class="hljs-string">&#x27;r&#x27;</span>, encoding=<span class="hljs-string">&#x27;utf-8&#x27;</span>):<br>        <span class="hljs-comment"># jieba分词: &quot;想要有直升机&quot; -&gt; [&#x27;想要&#x27;, &#x27;有&#x27;, &#x27;直升机&#x27;]</span><br>        words = jieba.lcut(line)<br>        <br>        <span class="hljs-comment"># 记录每行的分词结果</span><br>        all_words.append(words)<br>        <br>        <span class="hljs-comment"># 去重：如果这个词还没见过，就加入unique_words</span><br>        <span class="hljs-keyword">for</span> word <span class="hljs-keyword">in</span> words:<br>            <span class="hljs-keyword">if</span> word <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> unique_words:<br>                unique_words.append(word)<br>    <br>    <span class="hljs-comment"># 词汇表大小（去重后约5703个词）</span><br>    word_count = <span class="hljs-built_in">len</span>(unique_words)<br>    <br>    <span class="hljs-comment"># 构建词表字典: &#123;&#x27;想要&#x27;: 0, &#x27;有&#x27;: 1, &#x27;直升机&#x27;: 2, ...&#125;</span><br>    word_to_index = &#123;word: i <span class="hljs-keyword">for</span> i, word <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(unique_words)&#125;<br>    <br>    <span class="hljs-comment"># 把整篇歌词转换成索引序列</span><br>    corpus_idx = []<br>    <span class="hljs-keyword">for</span> words <span class="hljs-keyword">in</span> all_words:<br>        tmp = []<br>        <span class="hljs-keyword">for</span> word <span class="hljs-keyword">in</span> words:<br>            tmp.append(word_to_index[word])  <span class="hljs-comment"># 词 -&gt; 索引</span><br>        tmp.append(word_to_index[<span class="hljs-string">&#x27; &#x27;</span>])       <span class="hljs-comment"># 每行末尾加空格</span><br>        corpus_idx.extend(tmp)<br>    <br>    <span class="hljs-keyword">return</span> unique_words, word_to_index, word_count, corpus_idx<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>为什么要加空格？每行歌词之间用空格隔开，让模型知道”这里是换行”。</p>
+</blockquote>
+<p><strong>结果示意：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">原始歌词: &quot;想要有直升机\n想要和你飞到宇宙去\n&quot;<br>分词:     [&#x27;想要&#x27;, &#x27;有&#x27;, &#x27;直升机&#x27;, &#x27;\n&#x27;, &#x27;想要&#x27;, &#x27;和&#x27;, &#x27;你&#x27;, ...]<br>索引:     [0,      1,   2,        3,    0,      4,   5,    ...]<br></code></pre></td></tr></table></figure>
+
+<h3 id="7-3-第二步：数据集-LyricsDataset"><a href="#7-3-第二步：数据集-LyricsDataset" class="headerlink" title="7.3 第二步：数据集 LyricsDataset"></a>7.3 第二步：数据集 LyricsDataset</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">LyricsDataset</span>(torch.utils.data.Dataset):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, corpus_idx, num_chars</span>):<br>        <span class="hljs-variable language_">self</span>.corpus_idx = corpus_idx    <span class="hljs-comment"># 整篇歌词的索引序列</span><br>        <span class="hljs-variable language_">self</span>.num_chars = num_chars      <span class="hljs-comment"># 每个样本的长度（32个词）</span><br>        <span class="hljs-variable language_">self</span>.word_count = <span class="hljs-built_in">len</span>(<span class="hljs-variable language_">self</span>.corpus_idx)<br>        <span class="hljs-variable language_">self</span>.number = <span class="hljs-variable language_">self</span>.word_count // <span class="hljs-variable language_">self</span>.num_chars<br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__len__</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-keyword">return</span> <span class="hljs-variable language_">self</span>.number<br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__getitem__</span>(<span class="hljs-params">self, idx</span>):<br>        start = <span class="hljs-built_in">min</span>(<span class="hljs-built_in">max</span>(idx, <span class="hljs-number">0</span>), <span class="hljs-variable language_">self</span>.word_count - <span class="hljs-variable language_">self</span>.num_chars - <span class="hljs-number">1</span>)<br>        end = start + <span class="hljs-variable language_">self</span>.num_chars<br>        <br>        x = <span class="hljs-variable language_">self</span>.corpus_idx[start:end]        <span class="hljs-comment"># 输入序列</span><br>        y = <span class="hljs-variable language_">self</span>.corpus_idx[start + <span class="hljs-number">1</span>:end + <span class="hljs-number">1</span>] <span class="hljs-comment"># 目标序列（右移一位）</span><br>        <br>        <span class="hljs-keyword">return</span> torch.tensor(x), torch.tensor(y)<br></code></pre></td></tr></table></figure>
+
+<p><strong>具体例子（num_chars&#x3D;5）：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">corpus_idx = [0, 1, 2, 3, 40, 0, 4, 5, 6, 7, 8, ...]<br><br>idx=0: x=[0,1,2,3,40],     y=[1,2,3,40,0]<br>idx=1: x=[1,2,3,40,0],     y=[2,3,40,0,4]<br>idx=2: x=[2,3,40,0,4],     y=[3,40,0,4,5]<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>核心思想：模型看到 x 中的词，要学会预测 y 中对应位置的下一个词。</p>
+</blockquote>
+<h3 id="7-4-第三步：模型-TextGenerator"><a href="#7-4-第三步：模型-TextGenerator" class="headerlink" title="7.4 第三步：模型 TextGenerator"></a>7.4 第三步：模型 TextGenerator</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">TextGenerator</span>(nn.Module):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, unique_word_count</span>):  <span class="hljs-comment"># = 5703</span><br>        <span class="hljs-built_in">super</span>().__init__()<br>        <br>        <span class="hljs-comment"># 1. 词嵌入层</span><br>        <span class="hljs-comment"># 参数矩阵形状：[5703, 128]</span><br>        <span class="hljs-variable language_">self</span>.ebd = nn.Embedding(unique_word_count, <span class="hljs-number">128</span>)<br>        <br>        <span class="hljs-comment"># 2. RNN层</span><br>        <span class="hljs-comment"># 参数：W_ih[128,256], W_hh[256,256], b_ih[256], b_hh[256]</span><br>        <span class="hljs-variable language_">self</span>.rnn = nn.RNN(<span class="hljs-number">128</span>, <span class="hljs-number">256</span>, <span class="hljs-number">1</span>)<br>        <br>        <span class="hljs-comment"># 3. 全连接输出层</span><br>        <span class="hljs-comment"># 参数：W[256, 5703], b[5703]</span><br>        <span class="hljs-variable language_">self</span>.out = nn.Linear(<span class="hljs-number">256</span>, unique_word_count)<br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">self, inputs, hidden</span>):<br>        <span class="hljs-comment"># inputs形状: [batch=5, seq_len=32]</span><br>        <br>        <span class="hljs-comment"># 1. 词嵌入 -&gt; [5, 32, 128]</span><br>        embd = <span class="hljs-variable language_">self</span>.ebd(inputs)<br>        <br>        <span class="hljs-comment"># 2. 转置 [5,32,128] -&gt; [32,5,128]，然后RNN</span><br>        <span class="hljs-comment">#    output: [32, 5, 256]</span><br>        <span class="hljs-comment">#    hidden: [1, 5, 256]</span><br>        output, hidden = <span class="hljs-variable language_">self</span>.rnn(embd.transpose(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>), hidden)<br>        <br>        <span class="hljs-comment"># 3. reshape [32,5,256] -&gt; [160,256]，然后全连接</span><br>        <span class="hljs-comment">#    输出: [160, 5703]</span><br>        output = <span class="hljs-variable language_">self</span>.out(output.reshape(shape=(-<span class="hljs-number">1</span>, output.shape[-<span class="hljs-number">1</span>])))<br>        <br>        <span class="hljs-keyword">return</span> output, hidden<br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">init_hidden</span>(<span class="hljs-params">self, bs</span>):<br>        <span class="hljs-comment"># 初始化隐藏状态为全0: [1层, batch, 256维]</span><br>        <span class="hljs-keyword">return</span> torch.zeros(<span class="hljs-number">1</span>, bs, <span class="hljs-number">256</span>)<br></code></pre></td></tr></table></figure>
+
+<p><strong>模型结构图：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">输入 [5, 32]（词索引）<br>    |<br>    v<br>+------------------+<br>|  Embedding       |  [5703, 128] 的查找表<br>|  5703 -&gt; 128     |<br>+------------------+<br>    | [5, 32, 128]<br>    v<br>+------------------+<br>|  transpose(0,1)  |  交换维度<br>+------------------+<br>    | [32, 5, 128]<br>    v<br>+------------------+<br>|  RNN             |  32个时间步<br>|  128 -&gt; 256      |<br>+------------------+<br>    | [32, 5, 256]<br>    v<br>+------------------+<br>|  reshape         |  展平<br>+------------------+<br>    | [160, 256]<br>    v<br>+------------------+<br>|  Linear          |  全连接层<br>|  256 -&gt; 5703     |<br>+------------------+<br>    | [160, 5703]<br>    v<br>输出：每个位置对5703个词的得分<br></code></pre></td></tr></table></figure>
+
+<h3 id="7-5-第四步：训练-train"><a href="#7-5-第四步：训练-train" class="headerlink" title="7.5 第四步：训练 train()"></a>7.5 第四步：训练 train()</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">train</span>():<br>    <span class="hljs-comment"># 1. 构建词表</span><br>    unique_words, word_to_index, unique_word_count, corpus_idx = build_vocab()<br>    <br>    <span class="hljs-comment"># 2. 创建数据集（每个样本32个词）</span><br>    lyrics = LyricsDataset(corpus_idx, <span class="hljs-number">32</span>)<br>    <br>    <span class="hljs-comment"># 3. 创建模型</span><br>    model = TextGenerator(unique_word_count)<br>    <br>    <span class="hljs-comment"># 4. 数据加载器（每批5个样本，打乱顺序）</span><br>    lyrics_dataloader = DataLoader(lyrics, batch_size=<span class="hljs-number">5</span>, shuffle=<span class="hljs-literal">True</span>)<br>    <br>    <span class="hljs-comment"># 5. 损失函数：交叉熵损失（多分类问题）</span><br>    criterion = nn.CrossEntropyLoss()<br>    <br>    <span class="hljs-comment"># 6. 优化器：Adam</span><br>    optimizer = torch.optim.Adam(model.parameters(), lr=<span class="hljs-number">0.001</span>)<br>    <br>    <span class="hljs-comment"># 7. 训练50轮</span><br>    epochs = <span class="hljs-number">50</span><br>    <span class="hljs-keyword">for</span> epoch <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(epochs):<br>        start, iter_num, total_loss = time.time(), <span class="hljs-number">0</span>, <span class="hljs-number">0.0</span><br>        <br>        <span class="hljs-keyword">for</span> x, y <span class="hljs-keyword">in</span> lyrics_dataloader:<br>            <span class="hljs-comment"># x形状: [5, 32]  y形状: [5, 32]</span><br>            <br>            <span class="hljs-comment"># 初始化隐藏状态</span><br>            hidden = model.init_hidden(<span class="hljs-number">5</span>)  <span class="hljs-comment"># [1, 5, 256]</span><br>            <br>            <span class="hljs-comment"># 前向传播</span><br>            output, hidden = model(x, hidden)<br>            <span class="hljs-comment"># output形状: [160, 5703]</span><br>            <br>            <span class="hljs-comment"># 处理目标值y: [5,32] -&gt; 转置[32,5] -&gt; reshape[160]</span><br>            y = torch.transpose(y, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>).reshape(shape=(-<span class="hljs-number">1</span>,))<br>            <br>            <span class="hljs-comment"># 计算损失</span><br>            loss = criterion(output, y)<br>            <br>            <span class="hljs-comment"># 反向传播三步曲</span><br>            optimizer.zero_grad()   <span class="hljs-comment"># 梯度清零</span><br>            loss.backward()         <span class="hljs-comment"># 计算梯度</span><br>            optimizer.step()        <span class="hljs-comment"># 更新参数</span><br>            <br>            total_loss += loss.item()<br>            iter_num += <span class="hljs-number">1</span><br>        <br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;epoch: <span class="hljs-subst">&#123;epoch+<span class="hljs-number">1</span>&#125;</span>, loss: <span class="hljs-subst">&#123;total_loss/iter_num:<span class="hljs-number">.4</span>f&#125;</span>&#x27;</span>)<br>    <br>    <span class="hljs-comment"># 8. 保存模型</span><br>    torch.save(model.state_dict(), <span class="hljs-string">&#x27;./model/text_generator.pth&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>训练过程核心逻辑：</p>
+<ol>
+<li>给模型一段文本 x（32个词）</li>
+<li>模型对每个位置预测下一个词的概率分布（5703个概率）</li>
+<li>和真实答案 y 比较，计算损失</li>
+<li>反向传播，更新参数</li>
+<li>重复，直到损失足够小</li>
+</ol>
+</blockquote>
+<h3 id="7-6-第五步：预测-evaluate"><a href="#7-6-第五步：预测-evaluate" class="headerlink" title="7.6 第五步：预测 evaluate()"></a>7.6 第五步：预测 evaluate()</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">evaluate</span>(<span class="hljs-params">start_word, sentence_length</span>):<br>    <span class="hljs-comment"># 1. 构建词表</span><br>    unique_words, word_to_index, unique_word_count, _ = build_vocab()<br>    <br>    <span class="hljs-comment"># 2. 创建模型并加载训练好的参数</span><br>    model = TextGenerator(unique_word_count)<br>    model.load_state_dict(torch.load(<span class="hljs-string">&#x27;./model/text_generator.pth&#x27;</span>))<br>    <br>    <span class="hljs-comment"># 3. 初始化隐藏状态（batch=1）</span><br>    hidden = model.init_hidden(<span class="hljs-number">1</span>)<br>    <br>    <span class="hljs-comment"># 4. 把起始词转为索引</span><br>    word_idx = word_to_index[start_word]<br>    <br>    <span class="hljs-comment"># 5. 存放生成的词索引</span><br>    generate_sentence = [word_idx]<br>    <br>    <span class="hljs-comment"># 6. 逐个生成</span><br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(sentence_length):<br>        <span class="hljs-comment"># 输入当前词（形状: [1, 1]）</span><br>        output, hidden = model(torch.tensor([[word_idx]]), hidden)<br>        <br>        <span class="hljs-comment"># 从5703个得分中选最大的</span><br>        word_idx = torch.argmax(output)<br>        <br>        generate_sentence.append(word_idx)<br>    <br>    <span class="hljs-comment"># 7. 把索引转回词并打印</span><br>    <span class="hljs-keyword">for</span> idx <span class="hljs-keyword">in</span> generate_sentence:<br>        <span class="hljs-built_in">print</span>(unique_words[idx], end=<span class="hljs-string">&#x27;&#x27;</span>)<br></code></pre></td></tr></table></figure>
+
+<p><strong>预测过程图解：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">输入: &quot;星星&quot;<br>       |<br>       v<br>  [词嵌入] -&gt; [RNN] -&gt; [全连接] -&gt; 5703个得分 -&gt; argmax -&gt; &quot;在&quot;<br>                                    |<br>                                    v<br>                              [词嵌入] -&gt; [RNN] -&gt; [全连接] -&gt; 5703个得分 -&gt; argmax -&gt; &quot;天&quot;<br>                                    |<br>                                    v<br>                              ... 继续生成 ...<br><br>最终输出: &quot;星星在天...&quot;（共50个词）<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>注意：预测时，每一步的输入是<strong>上一步预测的词</strong>，而不是真实数据。<br>这就是”自回归”生成。如果某一步预测错了，错误会累积。</p>
+</blockquote>
+<hr>
+<h2 id="8-训练过程可视化"><a href="#8-训练过程可视化" class="headerlink" title="8. 训练过程可视化"></a>8. 训练过程可视化</h2><p>训练过程中 loss 的变化：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">epoch: 1,  loss: 1.8442  &lt;- 刚开始，模型几乎随机猜<br>epoch: 2,  loss: 0.2115  &lt;- 快速下降！<br>epoch: 3,  loss: 0.1201<br>epoch: 5,  loss: 0.1023<br>epoch: 10, loss: 0.0957  &lt;- 逐渐收敛<br>epoch: 50, loss: ~0.08   &lt;- 模型已经很熟练了<br></code></pre></td></tr></table></figure>
+
+<p><strong>loss 含义解读：</strong></p>
+<table>
+<thead>
+<tr>
+<th>loss 值</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>~6.36 (&#x3D;ln5703)</td>
+<td>完全随机猜（均匀分布）</td>
+</tr>
+<tr>
+<td>~1.84</td>
+<td>开始学到一些规律</td>
+</tr>
+<tr>
+<td>~0.1</td>
+<td>基本能预测对大部分词</td>
+</tr>
+<tr>
+<td>~0.01</td>
+<td>几乎完美预测（可能过拟合）</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="9-预测过程详解"><a href="#9-预测过程详解" class="headerlink" title="9. 预测过程详解"></a>9. 预测过程详解</h2><h3 id="9-1-温度参数（进阶技巧）"><a href="#9-1-温度参数（进阶技巧）" class="headerlink" title="9.1 温度参数（进阶技巧）"></a>9.1 温度参数（进阶技巧）</h3><p>当前代码直接用 argmax 选概率最大的词，这会导致生成很”保守”。</p>
+<p>可以加入<strong>温度参数</strong>来控制生成的随机性：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">predict_with_temperature</span>(<span class="hljs-params">output, temperature=<span class="hljs-number">0.8</span></span>):<br>    <span class="hljs-comment"># temperature &lt; 1: 更确定，选高概率词</span><br>    <span class="hljs-comment"># temperature = 1: 正常</span><br>    <span class="hljs-comment"># temperature &gt; 1: 更随机，更有创造性</span><br>    probs = torch.softmax(output / temperature, dim=-<span class="hljs-number">1</span>)<br>    word_idx = torch.multinomial(probs, <span class="hljs-number">1</span>)[<span class="hljs-number">0</span>]<br>    <span class="hljs-keyword">return</span> word_idx<br></code></pre></td></tr></table></figure>
+
+<h3 id="9-2-生成示例"><a href="#9-2-生成示例" class="headerlink" title="9.2 生成示例"></a>9.2 生成示例</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">输入: evaluate(&#x27;分手&#x27;, 50)<br><br>输出:<br>分手的话像语言暴力<br>我已无能为力再提起 决定中断熟悉<br>一步两步三步四步望著天 看星星<br>一颗两颗三颗四颗 连成线背著背默默许下心愿<br>看远方的星<br></code></pre></td></tr></table></figure>
+
+<blockquote>
+<p>模型确实学到了周杰伦歌词的风格和模式！</p>
+</blockquote>
+<hr>
+<h2 id="10-RNN-的局限与进阶方向"><a href="#10-RNN-的局限与进阶方向" class="headerlink" title="10. RNN 的局限与进阶方向"></a>10. RNN 的局限与进阶方向</h2><h3 id="10-1-梯度消失问题"><a href="#10-1-梯度消失问题" class="headerlink" title="10.1 梯度消失问题"></a>10.1 梯度消失问题</h3><p>RNN 在反向传播时，梯度需要沿着时间步往回传：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">h_T -&gt; h_&#123;T-1&#125; -&gt; h_&#123;T-2&#125; -&gt; ... -&gt; h_1<br></code></pre></td></tr></table></figure>
+
+<p>如果序列很长，梯度会<strong>指数级衰减</strong>，导致模型学不到长距离依赖。</p>
+<h3 id="10-2-解决方案"><a href="#10-2-解决方案" class="headerlink" title="10.2 解决方案"></a>10.2 解决方案</h3><table>
+<thead>
+<tr>
+<th>方案</th>
+<th>核心思想</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>LSTM</strong></td>
+<td>引入”门控”机制（遗忘门、输入门、输出门），选择性记忆和遗忘</td>
+</tr>
+<tr>
+<td><strong>GRU</strong></td>
+<td>LSTM 的简化版，只有两个门，训练更快，效果相当</td>
+</tr>
+<tr>
+<td><strong>双向 RNN</strong></td>
+<td>同时从左到右和从右到左处理序列</td>
+</tr>
+<tr>
+<td><strong>Attention</strong></td>
+<td>让模型”看到”序列中所有位置</td>
+</tr>
+<tr>
+<td><strong>Transformer</strong></td>
+<td>完全基于 Attention，抛弃 RNN 结构（GPT、BERT 的基础）</td>
+</tr>
+</tbody></table>
+<h3 id="10-3-PyTorch-中使用-LSTM"><a href="#10-3-PyTorch-中使用-LSTM" class="headerlink" title="10.3 PyTorch 中使用 LSTM"></a>10.3 PyTorch 中使用 LSTM</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 只需要把 nn.RNN 换成 nn.LSTM</span><br><span class="hljs-variable language_">self</span>.lstm = nn.LSTM(input_size=<span class="hljs-number">128</span>, hidden_size=<span class="hljs-number">256</span>, num_layers=<span class="hljs-number">1</span>)<br><br><span class="hljs-comment"># LSTM 有两个隐藏状态: (h_n, c_n)</span><br><span class="hljs-comment"># h_n: 隐藏状态</span><br><span class="hljs-comment"># c_n: 细胞状态（LSTM 特有的&quot;长期记忆&quot;）</span><br></code></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="11-常见疑问-FAQ"><a href="#11-常见疑问-FAQ" class="headerlink" title="11. 常见疑问 FAQ"></a>11. 常见疑问 FAQ</h2><h3 id="Q1-为什么隐藏状态初始化为全0"><a href="#Q1-为什么隐藏状态初始化为全0" class="headerlink" title="Q1: 为什么隐藏状态初始化为全0"></a>Q1: 为什么隐藏状态初始化为全0</h3><p>A: 因为没有先验知识。全0是一个中性的起点，让模型从数据中学习。</p>
+<h3 id="Q2-为什么每个-batch-都要重新初始化-hidden"><a href="#Q2-为什么每个-batch-都要重新初始化-hidden" class="headerlink" title="Q2: 为什么每个 batch 都要重新初始化 hidden"></a>Q2: 为什么每个 batch 都要重新初始化 hidden</h3><p>A: 因为每个 batch 是独立的样本，不应该共享记忆。</p>
+<h3 id="Q3-为什么-RNN-的输入要-transpose"><a href="#Q3-为什么-RNN-的输入要-transpose" class="headerlink" title="Q3: 为什么 RNN 的输入要 transpose"></a>Q3: 为什么 RNN 的输入要 transpose</h3><p>A: PyTorch 的 nn.RNN 要求输入格式是 [seq_len, batch, feature]，<br>而我们的数据是 [batch, seq_len, feature]。所以需要 transpose(0,1)。</p>
+<h3 id="Q4-CrossEntropyLoss-和-NLLLoss-有什么区别"><a href="#Q4-CrossEntropyLoss-和-NLLLoss-有什么区别" class="headerlink" title="Q4: CrossEntropyLoss 和 NLLLoss 有什么区别"></a>Q4: CrossEntropyLoss 和 NLLLoss 有什么区别</h3><p>A: CrossEntropyLoss &#x3D; LogSoftmax + NLLLoss。它内部自动做了 softmax，<br>所以模型的输出不需要手动加 softmax。</p>
+<h3 id="Q5-为什么预测时-batch-size-1"><a href="#Q5-为什么预测时-batch-size-1" class="headerlink" title="Q5: 为什么预测时 batch_size&#x3D;1"></a>Q5: 为什么预测时 batch_size&#x3D;1</h3><p>A: 因为预测时我们只生成一段文本，不需要批量处理。</p>
+<h3 id="Q6-模型参数量有多少"><a href="#Q6-模型参数量有多少" class="headerlink" title="Q6: 模型参数量有多少"></a>Q6: 模型参数量有多少</h3><p>A: 粗略计算：</p>
+<ul>
+<li>Embedding: 5703 x 128 &#x3D; 约73万</li>
+<li>RNN: 128x256 + 256x256 + 256 + 256 &#x3D; 约10万</li>
+<li>Linear: 256x5703 + 5703 &#x3D; 约146万</li>
+<li>总计约 230万参数</li>
+</ul>
+<h3 id="Q7-训练多久能出效果"><a href="#Q7-训练多久能出效果" class="headerlink" title="Q7: 训练多久能出效果"></a>Q7: 训练多久能出效果</h3><p>A: CPU 上大约 5-6 秒&#x2F;epoch，50 个 epoch 约 5 分钟就能看到不错的效果。</p>
+<h3 id="Q8-生成的歌词为什么有时候不通顺"><a href="#Q8-生成的歌词为什么有时候不通顺" class="headerlink" title="Q8: 生成的歌词为什么有时候不通顺"></a>Q8: 生成的歌词为什么有时候不通顺</h3><p>A: 几个原因：</p>
+<ol>
+<li>基础 RNN 的”记忆”有限，长距离依赖学不好</li>
+<li>训练数据有限</li>
+<li>词级别的处理粒度</li>
+<li>没有使用 beam search 等更好的解码策略</li>
+</ol>
+<hr>
+<h2 id="总结：RNN-核心知识点速查表"><a href="#总结：RNN-核心知识点速查表" class="headerlink" title="总结：RNN 核心知识点速查表"></a>总结：RNN 核心知识点速查表</h2><table>
+<thead>
+<tr>
+<th>知识点</th>
+<th>关键点</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>为什么用RNN</td>
+<td>处理序列数据，具有”记忆”能力</td>
+</tr>
+<tr>
+<td>词嵌入</td>
+<td>把词映射为低维稠密向量，捕捉语义</td>
+</tr>
+<tr>
+<td>隐藏状态 h</td>
+<td>RNN 的”记忆”，融合旧记忆和新输入</td>
+</tr>
+<tr>
+<td>核心公式</td>
+<td>h_t &#x3D; tanh(W * x_t + U * h_{t-1} + b)</td>
+</tr>
+<tr>
+<td>参数共享</td>
+<td>所有时间步共用同一组权重</td>
+</tr>
+<tr>
+<td>数据格式</td>
+<td>RNN输入: [seq_len, batch, feature]</td>
+</tr>
+<tr>
+<td>训练目标</td>
+<td>给定前n个词，预测第n+1个词</td>
+</tr>
+<tr>
+<td>损失函数</td>
+<td>CrossEntropyLoss（多分类）</td>
+</tr>
+<tr>
+<td>预测方式</td>
+<td>自回归：上一步输出作为下一步输入</td>
+</tr>
+<tr>
+<td>主要缺点</td>
+<td>梯度消失，难以处理长序列</td>
+</tr>
+<tr>
+<td>改进方向</td>
+<td>LSTM, GRU, Attention, Transformer</td>
+</tr>
+</tbody></table>
+<hr>
+<blockquote>
+<p>学习建议：</p>
+<ol>
+<li>先理解概念，不要急着写代码</li>
+<li>用具体数字跟踪数据形状变化（最重要的技能！）</li>
+<li>动手跑一遍代码，打印每一步的形状</li>
+<li>尝试修改参数（hidden_size, num_chars, lr），观察效果</li>
+<li>学完 RNN 后，继续学 LSTM -&gt; Attention -&gt; Transformer</li>
+</ol>
+</blockquote>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2026/10/10/deeplearn34/">← Next rnn情感分类器</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/10/10/deeplearn32/">情感分析器代码讲解2 Prev →</a></div></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="To Top" style="opacity: 0; display: none;">∧ </a><a class="i-index" id="to-index" onClick="tocControl.change()" title="To Catalog"><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span></a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="Change Theme"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">John Doe</a></h1><div id="description"><p></p></div></div><div id="aside-block"><div id="toc-div"><h1>Catalog</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#RNN-%E5%AE%8C%E6%95%B4%E6%95%99%E7%A8%8B%EF%BC%9A%E4%BB%8E%E9%9B%B6%E5%BC%80%E5%A7%8B%E5%BD%BB%E5%BA%95%E6%90%9E%E6%87%82%E5%BE%AA%E7%8E%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C"><span class="toc-number">1.</span> <span class="toc-text">RNN 完整教程：从零开始彻底搞懂循环神经网络</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95"><span class="toc-number">1.1.</span> <span class="toc-text">目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81-RNN"><span class="toc-number">1.2.</span> <span class="toc-text">1. 为什么需要 RNN</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E5%89%8D%E9%A6%88%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E7%9A%84%E5%B1%80%E9%99%90"><span class="toc-number">1.2.1.</span> <span class="toc-text">1.1 前馈神经网络的局限</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E4%BB%80%E4%B9%88%E6%98%AF%E5%BA%8F%E5%88%97%E6%95%B0%E6%8D%AE"><span class="toc-number">1.2.2.</span> <span class="toc-text">1.2 什么是序列数据</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-RNN-%E7%9A%84%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3"><span class="toc-number">1.3.</span> <span class="toc-text">2. RNN 的核心思想</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%A6%82%E6%8B%AC"><span class="toc-number">1.3.1.</span> <span class="toc-text">2.1 一句话概括</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E7%B1%BB%E6%AF%94%E7%90%86%E8%A7%A3"><span class="toc-number">1.3.2.</span> <span class="toc-text">2.2 类比理解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-RNN-%E7%9A%84%E4%B8%A4%E7%A7%8D%E8%A7%86%E8%A7%92"><span class="toc-number">1.3.3.</span> <span class="toc-text">2.3 RNN 的两种视角</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E8%AF%8D%E5%B5%8C%E5%85%A5%E5%B1%82"><span class="toc-number">1.4.</span> <span class="toc-text">3. 词嵌入层</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E8%AF%8D%E5%B5%8C%E5%85%A5"><span class="toc-number">1.4.1.</span> <span class="toc-text">3.1 为什么需要词嵌入</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E8%AF%8D%E5%B5%8C%E5%85%A5%E5%B1%82%E7%9A%84%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="toc-number">1.4.2.</span> <span class="toc-text">3.2 词嵌入层的工作流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-PyTorch-%E4%BB%A3%E7%A0%81"><span class="toc-number">1.4.3.</span> <span class="toc-text">3.3 PyTorch 代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-RNN-%E5%BE%AA%E7%8E%AF%E7%BD%91%E7%BB%9C%E5%B1%82"><span class="toc-number">1.5.</span> <span class="toc-text">4. RNN 循环网络层</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-RNN-%E5%86%85%E9%83%A8%E7%9A%84%E6%95%B0%E5%AD%A6%E8%AE%A1%E7%AE%97"><span class="toc-number">1.5.1.</span> <span class="toc-text">4.1 RNN 内部的数学计算</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E8%AE%A1%E7%AE%97%E6%96%B0%E7%9A%84%E9%9A%90%E8%97%8F%E7%8A%B6%E6%80%81-h-t"><span class="toc-number">1.5.1.1.</span> <span class="toc-text">第一步：计算新的隐藏状态 h_t</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E8%AE%A1%E7%AE%97%E8%BE%93%E5%87%BA-y-t"><span class="toc-number">1.5.1.2.</span> <span class="toc-text">第二步：计算输出 y_t</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E4%BB%8E%E5%BE%97%E5%88%86%E5%88%B0%E9%A2%84%E6%B5%8B%E8%AF%8D"><span class="toc-number">1.5.2.</span> <span class="toc-text">4.2 从得分到预测词</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-PyTorch-%E4%B8%AD%E7%9A%84-RNN-%E5%B1%82"><span class="toc-number">1.5.3.</span> <span class="toc-text">4.3 PyTorch 中的 RNN 层</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E6%95%B0%E6%8D%AE%E5%BD%A2%E7%8A%B6%E5%8F%98%E6%8D%A2"><span class="toc-number">1.6.</span> <span class="toc-text">5. 数据形状变换</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E9%87%87%E6%A0%B7"><span class="toc-number">1.7.</span> <span class="toc-text">6. 滑动窗口采样</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-%E8%AE%AD%E7%BB%83%E6%95%B0%E6%8D%AE%E6%80%8E%E4%B9%88%E6%9E%84%E9%80%A0"><span class="toc-number">1.7.1.</span> <span class="toc-text">6.1 训练数据怎么构造</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.7.2.</span> <span class="toc-text">6.2 代码实现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E6%A1%88%E4%BE%8B%E4%BB%A3%E7%A0%81%E9%80%90%E8%A1%8C%E8%AF%A6%E8%A7%A3"><span class="toc-number">1.8.</span> <span class="toc-text">7. 案例代码逐行详解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1-%E6%95%B4%E4%BD%93%E7%BB%93%E6%9E%84"><span class="toc-number">1.8.1.</span> <span class="toc-text">7.1 整体结构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-2-%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E6%9E%84%E5%BB%BA%E8%AF%8D%E8%A1%A8-build-vocab"><span class="toc-number">1.8.2.</span> <span class="toc-text">7.2 第一步：构建词表 build_vocab()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-3-%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E6%95%B0%E6%8D%AE%E9%9B%86-LyricsDataset"><span class="toc-number">1.8.3.</span> <span class="toc-text">7.3 第二步：数据集 LyricsDataset</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-4-%E7%AC%AC%E4%B8%89%E6%AD%A5%EF%BC%9A%E6%A8%A1%E5%9E%8B-TextGenerator"><span class="toc-number">1.8.4.</span> <span class="toc-text">7.4 第三步：模型 TextGenerator</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-5-%E7%AC%AC%E5%9B%9B%E6%AD%A5%EF%BC%9A%E8%AE%AD%E7%BB%83-train"><span class="toc-number">1.8.5.</span> <span class="toc-text">7.5 第四步：训练 train()</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-6-%E7%AC%AC%E4%BA%94%E6%AD%A5%EF%BC%9A%E9%A2%84%E6%B5%8B-evaluate"><span class="toc-number">1.8.6.</span> <span class="toc-text">7.6 第五步：预测 evaluate()</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E8%AE%AD%E7%BB%83%E8%BF%87%E7%A8%8B%E5%8F%AF%E8%A7%86%E5%8C%96"><span class="toc-number">1.9.</span> <span class="toc-text">8. 训练过程可视化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%E9%A2%84%E6%B5%8B%E8%BF%87%E7%A8%8B%E8%AF%A6%E8%A7%A3"><span class="toc-number">1.10.</span> <span class="toc-text">9. 预测过程详解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#9-1-%E6%B8%A9%E5%BA%A6%E5%8F%82%E6%95%B0%EF%BC%88%E8%BF%9B%E9%98%B6%E6%8A%80%E5%B7%A7%EF%BC%89"><span class="toc-number">1.10.1.</span> <span class="toc-text">9.1 温度参数（进阶技巧）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-2-%E7%94%9F%E6%88%90%E7%A4%BA%E4%BE%8B"><span class="toc-number">1.10.2.</span> <span class="toc-text">9.2 生成示例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-RNN-%E7%9A%84%E5%B1%80%E9%99%90%E4%B8%8E%E8%BF%9B%E9%98%B6%E6%96%B9%E5%90%91"><span class="toc-number">1.11.</span> <span class="toc-text">10. RNN 的局限与进阶方向</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#10-1-%E6%A2%AF%E5%BA%A6%E6%B6%88%E5%A4%B1%E9%97%AE%E9%A2%98"><span class="toc-number">1.11.1.</span> <span class="toc-text">10.1 梯度消失问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-2-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-number">1.11.2.</span> <span class="toc-text">10.2 解决方案</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-3-PyTorch-%E4%B8%AD%E4%BD%BF%E7%94%A8-LSTM"><span class="toc-number">1.11.3.</span> <span class="toc-text">10.3 PyTorch 中使用 LSTM</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-%E5%B8%B8%E8%A7%81%E7%96%91%E9%97%AE-FAQ"><span class="toc-number">1.12.</span> <span class="toc-text">11. 常见疑问 FAQ</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Q1-%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9A%90%E8%97%8F%E7%8A%B6%E6%80%81%E5%88%9D%E5%A7%8B%E5%8C%96%E4%B8%BA%E5%85%A80"><span class="toc-number">1.12.1.</span> <span class="toc-text">Q1: 为什么隐藏状态初始化为全0</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q2-%E4%B8%BA%E4%BB%80%E4%B9%88%E6%AF%8F%E4%B8%AA-batch-%E9%83%BD%E8%A6%81%E9%87%8D%E6%96%B0%E5%88%9D%E5%A7%8B%E5%8C%96-hidden"><span class="toc-number">1.12.2.</span> <span class="toc-text">Q2: 为什么每个 batch 都要重新初始化 hidden</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q3-%E4%B8%BA%E4%BB%80%E4%B9%88-RNN-%E7%9A%84%E8%BE%93%E5%85%A5%E8%A6%81-transpose"><span class="toc-number">1.12.3.</span> <span class="toc-text">Q3: 为什么 RNN 的输入要 transpose</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q4-CrossEntropyLoss-%E5%92%8C-NLLLoss-%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB"><span class="toc-number">1.12.4.</span> <span class="toc-text">Q4: CrossEntropyLoss 和 NLLLoss 有什么区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q5-%E4%B8%BA%E4%BB%80%E4%B9%88%E9%A2%84%E6%B5%8B%E6%97%B6-batch-size-1"><span class="toc-number">1.12.5.</span> <span class="toc-text">Q5: 为什么预测时 batch_size&#x3D;1</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q6-%E6%A8%A1%E5%9E%8B%E5%8F%82%E6%95%B0%E9%87%8F%E6%9C%89%E5%A4%9A%E5%B0%91"><span class="toc-number">1.12.6.</span> <span class="toc-text">Q6: 模型参数量有多少</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q7-%E8%AE%AD%E7%BB%83%E5%A4%9A%E4%B9%85%E8%83%BD%E5%87%BA%E6%95%88%E6%9E%9C"><span class="toc-number">1.12.7.</span> <span class="toc-text">Q7: 训练多久能出效果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Q8-%E7%94%9F%E6%88%90%E7%9A%84%E6%AD%8C%E8%AF%8D%E4%B8%BA%E4%BB%80%E4%B9%88%E6%9C%89%E6%97%B6%E5%80%99%E4%B8%8D%E9%80%9A%E9%A1%BA"><span class="toc-number">1.12.8.</span> <span class="toc-text">Q8: 生成的歌词为什么有时候不通顺</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93%EF%BC%9ARNN-%E6%A0%B8%E5%BF%83%E7%9F%A5%E8%AF%86%E7%82%B9%E9%80%9F%E6%9F%A5%E8%A1%A8"><span class="toc-number">1.13.</span> <span class="toc-text">总结：RNN 核心知识点速查表</span></a></li></ol></li></ol></div></div><footer><nobr>Published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>
