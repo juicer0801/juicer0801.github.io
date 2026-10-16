@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en" theme-mode="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>deepseek建议与实践 | Hexo</title><meta name="description" content="1.一个当前会话内容查询功能（好像最近已经被官方实现了）（等等deepseek官方那里有bug）搜索算法用的是精确子串 + Token 覆盖的混合策略，适合”用户查找”场景：精确匹配得 100 分，Token 全命中再加 30 分。这意味着你搜”之前那个报错”和搜”报错”都能命中同一条消息，但前者如果恰好是原文子串，会排在最前面。不需要向量检索——关键词匹配在这个场景下足够快、足够准。 中文分词用">
+<!DOCTYPE html><html lang="en" theme-mode="auto"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>deepseek建议与实践 | Hexo</title><meta name="description" content="1.一个当前会话内容查询功能（好像最近已经被官方实现了）（等等deepseek官方那里有bug）搜索算法用的是精确子串 + Token 覆盖的混合策略，适合”用户查找”场景：精确匹配得 100 分，Token 全命中再加 30 分。这意味着你搜”之前那个报错”和搜”报错”都能命中同一条消息，但前者如果恰好是原文子串，会排在最前面。不需要向量检索——关键词匹配在这个场景下足够快、足够准。 中文分词用">
 <meta property="og:type" content="article">
 <meta property="og:title" content="deepseek建议与实践">
 <meta property="og:url" content="http://example.com/2026/09/20/deepseek/index.html">
@@ -20,7 +20,7 @@
   font-family: 'JetBrains Mono';
   src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
 }
-</style><meta name="page-config" content="{&quot;code_fold&quot;:null}"><script class="pjax-js">var config = {"root":"/","code_fold":15,"search":{"preload":false,"activeHolder":"Enter here","blurHolder":"Search","noResult":"Data \"$0\" not found"},"code":{"codeInfo":"$0 - $1 lines","copy":"copy"}};
+</style><meta name="page-config" content="{&quot;code_fold&quot;:null}"><script class="pjax-js">var config = {"root":"/","code_fold":15,"search":{"preload":true,"activeHolder":"键入以继续","blurHolder":"数据检索","noResult":"无 $0 相关数据"},"code":{"codeInfo":"$0 - $1 行","copy":"复制"}};
 var page_config = {
   code_fold: null
 };
@@ -31,9 +31,26 @@ function updatePageConfig() {
   }
 }
 document.addEventListener('pjax:complete', function() { updatePageConfig(); });
-updatePageConfig();</script><link type="text/css" rel="stylesheet" href="/lib/encrypt/hbe.style.css"><script src="//unpkg.com/mermaid@11.12.2/dist/mermaid.min.js"></script><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lightgallery.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-zoom.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-thumbnail.css"><link type="text/css" rel="stylesheet" href="/lib/fontawesome/css/all.min.css"><script>if (window.localStorage.getItem('theme-mode') === 'light')
+updatePageConfig();</script><link type="text/css" rel="stylesheet" href="/lib/encrypt/hbe.style.css"><script src="//unpkg.com/mermaid@11.12.2/dist/mermaid.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.1/MathJax.js"></script><script>MathJax.Hub.Config({
+ menuSettings: {
+   zoom: "None"
+ },
+ showMathMenu: false,
+ jax: ["input/TeX","output/CommonHTML"],
+ extensions: ["tex2jax.js"],
+ TeX: {
+   extensions: ["AMSmath.js","AMSsymbols.js"],
+   equationNumbers: {
+     autoNumber: "AMS"
+   }
+ },
+ tex2jax: {
+   inlineMath: [["\\(", "\\)"]],
+   displayMath: [["\\[", "\\]"]]
+ }
+});</script><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lightgallery.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-zoom.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-thumbnail.css"><link type="text/css" rel="stylesheet" href="/lib/fontawesome/css/all.min.css"><script>if (window.localStorage.getItem('theme-mode') === 'light' || window.matchMedia('(prefers-color-scheme:light)').matches)
  document.documentElement.setAttribute('theme-mode', 'light')
-if (window.localStorage.getItem('theme-mode') === 'dark')
+if (window.localStorage.getItem('theme-mode') === 'dark' || window.matchMedia('(prefers-color-scheme:dark)').matches)
  document.documentElement.setAttribute('theme-mode', 'dark')</script><style>@font-face {
  font-family: BenderLight;
  src: local('Bender'), url("/font/BenderLight.woff2") format('woff2');
@@ -44,10 +61,28 @@ if (window.localStorage.getItem('theme-mode') === 'dark')
 }</style><style>:root {
  --dark-background: url('https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg');
  --light-background: url('/img/bk.jpg');
- --theme-encrypt-confirm: 'confirm'
-}</style><script defer src="/js/arknights.js"></script><script defer src="/js/search.js"></script><script defer type="module">import mermaid from '//unpkg.com/mermaid@11.12.2/dist/mermaid.esm.min.mjs';
+ --theme-encrypt-confirm: '确认'
+}</style><script defer src="/js/arknights.js"></script><script defer src="/js/search.js"></script><script defer src="https://vercount.one/js"></script><script defer type="module">import mermaid from '//unpkg.com/mermaid@11.12.2/dist/mermaid.esm.min.mjs';
 window.mermaid = mermaid;
 code.paintMermaid();
+</script><script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.1/MathJax.js"></script><script>MathJax.Hub.Config({
+  menuSettings: {
+    zoom: "None"
+  },
+  showMathMenu: false,
+  jax: ["input/TeX","output/CommonHTML"],
+  extensions: ["tex2jax.js"],
+  TeX: {
+    extensions: ["AMSmath.js","AMSsymbols.js"],
+    equationNumbers: {
+      autoNumber: "AMS"
+    }
+  },
+  tex2jax: {
+    inlineMath: [["\\(", "\\)"]],
+    displayMath: [["\\[", "\\]"]]
+  }
+});
 </script><script async src="//unpkg.com/lightgallery@2.7.1/lightgallery.min.js"></script><script async src="//unpkg.com/lightgallery@2.7.1/plugins/zoom/lg-zoom.min.js"></script><script async src="//unpkg.com/lightgallery@2.7.1/plugins/thumbnail/lg-thumbnail.min.js"></script><script async src="/lib/encrypt/hbe.js"></script><script async src="/js/pjax.js"></script><script class="pjax-js">reset= () => {document.querySelector('.lg-container')?.remove()
 lightGallery(document.getElementById('post-bg'), {
   plugins: [lgZoom,lgThumbnail],
@@ -64,7 +99,22 @@ lightGallery(document.getElementById('post-bg'), {
    }
  }
 });
-document.addEventListener("pjax:complete", reset);reset()})</script><script class="pjax-js">reset= () => {document.querySelector('.lg-container')?.remove()
+document.addEventListener("pjax:complete", reset);document.addEventListener('pjax:success', _ => {
+ const script = document.createElement('script');
+ script.src = 'https://vercount.one/js';
+ document.head.appendChild(script);
+});reset()})</script><script class="pjax-js">reset= () => {window.giscusSettings = {
+ repo: 'juicer0801/juicer0801.github.io',
+ repoId: 'R_kgDOUcAR_w',
+ category: 'Announcements',
+ categoryId: 'DIC_kwDOUcAR_84DIlqM',
+ mapping: 'pathname',
+ strict: '0',
+ reactionsEnabled: '1',
+ emitMetadata: '0',
+ inputPosition: 'bottom',
+ lang: 'zh-CN',
+ crossorigin: 'anonymous' , loading: 'lazy'};window.giscusThemeConfig = { theme: 'preferred_color_scheme' };MathJax.Hub.Queue(["Typeset", MathJax.Hub]);document.querySelector('.lg-container')?.remove()
 const postBg = document.querySelector('#post-bg');
 if (postBg) lightGallery(postBg, {
   plugins: [lgZoom,lgThumbnail],
@@ -81,19 +131,23 @@ if (postBg) lightGallery(postBg, {
    }
  }
 });
-document.addEventListener("pjax:complete", reset);reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>deepseek建议与实践</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2026-09-20T04:26:20.000Z" id="date"> 2026-09-20</time></div></span><br><span>Last Update: <div class="control"><time datetime="2026-09-20T15:25:35.213Z" id="updated"> 2026-09-20</time></div></span></div></div><hr><div id="post-content"><p>1.一个当前会话内容查询功能（好像最近已经被官方实现了）（等等deepseek官方那里有bug）<br>搜索算法<br>用的是精确子串 + Token 覆盖的混合策略，适合”用户查找”场景：精确匹配得 100 分，Token 全命中再加 30 分。这意味着你搜”之前那个报错”和搜”报错”都能命中同一条消息，但前者如果恰好是原文子串，会排在最前面。不需要向量检索——关键词匹配在这个场景下足够快、足够准。</p>
+document.addEventListener("pjax:complete", reset);document.addEventListener('pjax:success', _ => {
+ const script = document.createElement('script');
+ script.src = 'https://vercount.one/js';
+ document.head.appendChild(script);
+});reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="数据检索" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/tags/"><span class="navItemTitle">Tags</span></a></li><li class="navItem"><a class="navBlock" href="/categories/"><span class="navItemTitle">Categories</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>deepseek建议与实践</h1><div id="post-info"><span>文章发布时间: <div class="control"><time datetime="2026-09-20T04:26:20.000Z" id="date"> 2026-09-20</time></div></span><br><span>最后更新时间: <div class="control"><time datetime="2026-09-20T15:25:35.213Z" id="updated"> 2026-09-20</time></div></span><br><span>文章总字数: <div class="control">3.1k</div></span><br><span>预计阅读时间: <div class="control">16 分钟</div></span><br><span id="vercount_container_page_pv">页面浏览: <span class="control" id="vercount_value_page_pv">加载中...</span></span></div></div><hr><div id="post-content"><p>1.一个当前会话内容查询功能（好像最近已经被官方实现了）（等等deepseek官方那里有bug）<br>搜索算法<br>用的是精确子串 + Token 覆盖的混合策略，适合”用户查找”场景：精确匹配得 100 分，Token 全命中再加 30 分。这意味着你搜”之前那个报错”和搜”报错”都能命中同一条消息，但前者如果恰好是原文子串，会排在最前面。不需要向量检索——关键词匹配在这个场景下足够快、足够准。</p>
 <p>中文分词<br>用 bigram（双字组合）做中文分词。比如”搜索插件”会被拆成 搜、索、插、件、搜索、索插、插件。这样即使用户输入的关键词和原文不完全一致，也能通过 bigram 重叠匹配到。代码里用的是正则 [\u4e00-\u9fff\u3400-\u4dbf] 提取 CJK 字符，覆盖了基本汉字和扩展 A 区。</p>
 <p>虚拟滚动处理<br>提供了 loadAllMessages() 函数，但默认没有自动调用，因为它会强制滚动页面。如果你觉得搜索结果不全，可以在搜索前手动调用：</p>
-<p>js<br>&#x2F;&#x2F; 在控制台手动触发<br>loadAllMessages().then(() &#x3D;&gt; console.log(‘加载完成，可以搜索了’));<br>更好的做法是在面板里加一个”加载全部消息”按钮，但考虑到首次使用体验，默认不触发滚动。</p>
+<p>js<br>// 在控制台手动触发<br>loadAllMessages().then(() =&gt; console.log(‘加载完成，可以搜索了’));<br>更好的做法是在面板里加一个”加载全部消息”按钮，但考虑到首次使用体验，默认不触发滚动。</p>
 <p>增量索引<br>MutationObserver 监听 document.body 的子节点变化，防抖 800ms 后调用 incrementalIndex()。这个函数只添加 ID 不在索引中的新消息，不会重建整个索引，性能开销很小。</p>
 <p>会话切换<br>通过监听 location.href 变化来检测会话切换。DeepSeek 是 SPA，切换会话不会刷新页面，所以需要监听 URL 变化。检测到变化后等 1 秒重建索引。</p>
 <p>(function () {<br>  ‘use strict’;</p>
-<p>  &#x2F;&#x2F; &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; 配置 &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;<br>  const CONFIG &#x3D; {<br>    &#x2F;&#x2F; 消息选择器 —— 优先用 data 属性，如果不匹配则回退到 class 策略<br>    MESSAGE_SELECTOR: ‘[data-message-author-role]’,<br>    FALLBACK_SELECTOR: ‘div[class*&#x3D;”message”]’,<br>    &#x2F;&#x2F; 搜索面板最大结果显示数<br>    MAX_RESULTS: 30,<br>    &#x2F;&#x2F; 搜索防抖延迟（毫秒）<br>    DEBOUNCE_MS: 150,<br>  };</p>
-<p>  &#x2F;&#x2F; &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; 状态 &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;<br>  const state &#x3D; {<br>    messages: [],        &#x2F;&#x2F; { id, role, text, el }<br>    index: new Map(),    &#x2F;&#x2F; id -&gt; message 对象<br>    panelOpen: false,<br>    currentQuery: ‘’,<br>    resultElements: [],  &#x2F;&#x2F; 搜索结果对应的 DOM 元素<br>    currentResultIndex: -1,<br>  };</p>
-<p>  &#x2F;&#x2F; &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; 工具函数 &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</p>
-<p>  &#x2F;** 简单字符串 hash，用于生成稳定 ID *&#x2F;<br>  function simpleHash(str) {<br>    let hash &#x3D; 0;<br>    for (let i &#x3D; 0; i &lt; str.length; i++) {<br>      const char &#x3D; str.charCodeAt(i);<br>      hash &#x3D; (hash &lt;&lt; 5) - hash + char;<br>      hash |&#x3D; 0;<br>    }<br>    return Math.abs(hash).toString(36);<br>  }</p>
-<p>  &#x2F;** 从 URL 提取会话 ID *&#x2F;<br>  function getSessionId() {<br>    const parts &#x3D; location.pathname.split(‘&#x2F;‘).filter(Boolean);<br>    return parts[parts.length - 1] || ‘default’;<br>  }</p>
-<p>  &#x2F;** 中文分词：bigram + 英文单词 *&#x2F;<br>  function tokenize(text) {<br>    const tokens &#x3D; [];<br>    const lower &#x3D; text.toLowerCase();</p>
+<p>  // ==================== 配置 ====================<br>  const CONFIG = {<br>    // 消息选择器 —— 优先用 data 属性，如果不匹配则回退到 class 策略<br>    MESSAGE_SELECTOR: ‘[data-message-author-role]’,<br>    FALLBACK_SELECTOR: ‘div[class*=”message”]’,<br>    // 搜索面板最大结果显示数<br>    MAX_RESULTS: 30,<br>    // 搜索防抖延迟（毫秒）<br>    DEBOUNCE_MS: 150,<br>  };</p>
+<p>  // ==================== 状态 ====================<br>  const state = {<br>    messages: [],        // { id, role, text, el }<br>    index: new Map(),    // id -&gt; message 对象<br>    panelOpen: false,<br>    currentQuery: ‘’,<br>    resultElements: [],  // 搜索结果对应的 DOM 元素<br>    currentResultIndex: -1,<br>  };</p>
+<p>  // ==================== 工具函数 ====================</p>
+<p>  /<em>* 简单字符串 hash，用于生成稳定 ID </em>/<br>  function simpleHash(str) {<br>    let hash = 0;<br>    for (let i = 0; i &lt; str.length; i++) {<br>      const char = str.charCodeAt(i);<br>      hash = (hash &lt;&lt; 5) - hash + char;<br>      hash |= 0;<br>    }<br>    return Math.abs(hash).toString(36);<br>  }</p>
+<p>  /<em>* 从 URL 提取会话 ID </em>/<br>  function getSessionId() {<br>    const parts = location.pathname.split(‘/‘).filter(Boolean);<br>    return parts[parts.length - 1] || ‘default’;<br>  }</p>
+<p>  /<em>* 中文分词：bigram + 英文单词 </em>/<br>  function tokenize(text) {<br>    const tokens = [];<br>    const lower = text.toLowerCase();</p>
 <pre><code>// 英文单词和数字
 const wordMatches = lower.match(/[a-z0-9_]+/g);
 if (wordMatches) tokens.push(...wordMatches);
@@ -109,9 +163,8 @@ if (cjkChars) {
 }
 
 return tokens;
-</code></pre>
-<p>  }</p>
-<p>  &#x2F;** 检测消息角色 *&#x2F;<br>  function detectRole(el) {<br>    &#x2F;&#x2F; 优先用 data 属性<br>    const role &#x3D; el.dataset.messageAuthorRole;<br>    if (role &#x3D;&#x3D;&#x3D; ‘user’ || role &#x3D;&#x3D;&#x3D; ‘assistant’) return role;</p>
+</code></pre><p>  }</p>
+<p>  /<em>* 检测消息角色 </em>/<br>  function detectRole(el) {<br>    // 优先用 data 属性<br>    const role = el.dataset.messageAuthorRole;<br>    if (role === ‘user’ || role === ‘assistant’) return role;</p>
 <pre><code>// 回退：根据 class 或文本特征判断
 const className = el.className || &#39;&#39;;
 if (className.includes(&#39;user&#39;) || className.includes(&#39;User&#39;)) return &#39;user&#39;;
@@ -119,10 +172,9 @@ if (className.includes(&#39;assistant&#39;) || className.includes(&#39;Assistant
 
 // 最后回退：用户消息通常较短
 return el.innerText.length &lt; 300 ? &#39;user&#39; : &#39;assistant&#39;;
-</code></pre>
-<p>  }</p>
-<p>  &#x2F;&#x2F; &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; 消息提取 &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</p>
-<p>  &#x2F;** 提取页面中所有已加载的消息 *&#x2F;<br>  function extractMessages() {<br>    let elements &#x3D; […document.querySelectorAll(CONFIG.MESSAGE_SELECTOR)];</p>
+</code></pre><p>  }</p>
+<p>  // ==================== 消息提取 ====================</p>
+<p>  /<em>* 提取页面中所有已加载的消息 </em>/<br>  function extractMessages() {<br>    let elements = […document.querySelectorAll(CONFIG.MESSAGE_SELECTOR)];</p>
 <pre><code>// 如果主选择器没有匹配到，尝试回退
 if (elements.length === 0) {
   elements = [...document.querySelectorAll(CONFIG.FALLBACK_SELECTOR)]
@@ -155,10 +207,9 @@ return deduped.map((el, i) =&gt; {
     el,
   };
 });
-</code></pre>
-<p>  }</p>
-<p>  &#x2F;** 重建索引 *&#x2F;<br>  function rebuildIndex() {<br>    state.messages &#x3D; extractMessages();<br>    state.index.clear();<br>    state.messages.forEach(msg &#x3D;&gt; state.index.set(msg.id, msg));<br>    updateResultCount();<br>  }</p>
-<p>  &#x2F;** 增量索引：只添加新消息 *&#x2F;<br>  function incrementalIndex() {<br>    const current &#x3D; extractMessages();<br>    let added &#x3D; 0;</p>
+</code></pre><p>  }</p>
+<p>  /<em>* 重建索引 </em>/<br>  function rebuildIndex() {<br>    state.messages = extractMessages();<br>    state.index.clear();<br>    state.messages.forEach(msg =&gt; state.index.set(msg.id, msg));<br>    updateResultCount();<br>  }</p>
+<p>  /<em>* 增量索引：只添加新消息 </em>/<br>  function incrementalIndex() {<br>    const current = extractMessages();<br>    let added = 0;</p>
 <pre><code>current.forEach(msg =&gt; {
   if (!state.index.has(msg.id)) {
     state.messages.push(msg);
@@ -176,10 +227,9 @@ if (added &gt; 0) {
     return 0;
   });
 }
-</code></pre>
-<p>  }</p>
-<p>  &#x2F;&#x2F; &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; 搜索逻辑 &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</p>
-<p>  &#x2F;** 执行搜索 *&#x2F;<br>  function search(query) {<br>    if (!query || query.trim().length &lt; 1) {<br>      renderResults([]);<br>      return;<br>    }</p>
+</code></pre><p>  }</p>
+<p>  // ==================== 搜索逻辑 ====================</p>
+<p>  /<em>* 执行搜索 </em>/<br>  function search(query) {<br>    if (!query || query.trim().length &lt; 1) {<br>      renderResults([]);<br>      return;<br>    }</p>
 <pre><code>const queryTokens = tokenize(query);
 if (queryTokens.length === 0) {
   renderResults([]);
@@ -234,10 +284,17 @@ const results = scored
   .map(item =&gt; item.msg);
 
 renderResults(results, query);
-</code></pre>
-<p>  }</p>
-<p>  &#x2F;&#x2F; &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; UI 构建 &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</p>
-<p>  &#x2F;** 创建搜索面板 DOM *&#x2F;<br>  function createPanel() {<br>    const panel &#x3D; document.createElement(‘div’);<br>    panel.id &#x3D; ‘ds-search-panel’;<br>    panel.innerHTML &#x3D; <code>      &lt;div class=&quot;ds-search-header&quot;&gt;         &lt;input id=&quot;ds-search-input&quot; type=&quot;text&quot; placeholder=&quot;搜索当前会话...&quot; autocomplete=&quot;off&quot; /&gt;         &lt;span id=&quot;ds-search-count&quot;&gt;&lt;/span&gt;         &lt;button id=&quot;ds-search-close&quot; title=&quot;关闭&quot;&gt;✕&lt;/button&gt;       &lt;/div&gt;       &lt;div id=&quot;ds-search-results&quot;&gt;&lt;/div&gt;       &lt;div class=&quot;ds-search-footer&quot;&gt;         &lt;span&gt;Enter 跳转到下一条 · Shift+Enter 上一条 · Esc 关闭&lt;/span&gt;       &lt;/div&gt;    </code>;</p>
+</code></pre><p>  }</p>
+<p>  // ==================== UI 构建 ====================</p>
+<p>  /<em>* 创建搜索面板 DOM </em>/<br>  function createPanel() {<br>    const panel = document.createElement(‘div’);<br>    panel.id = ‘ds-search-panel’;<br>    panel.innerHTML = <code>&lt;div class=&quot;ds-search-header&quot;&gt;
+        &lt;input id=&quot;ds-search-input&quot; type=&quot;text&quot; placeholder=&quot;搜索当前会话...&quot; autocomplete=&quot;off&quot; /&gt;
+        &lt;span id=&quot;ds-search-count&quot;&gt;&lt;/span&gt;
+        &lt;button id=&quot;ds-search-close&quot; title=&quot;关闭&quot;&gt;✕&lt;/button&gt;
+      &lt;/div&gt;
+      &lt;div id=&quot;ds-search-results&quot;&gt;&lt;/div&gt;
+      &lt;div class=&quot;ds-search-footer&quot;&gt;
+        &lt;span&gt;Enter 跳转到下一条 · Shift+Enter 上一条 · Esc 关闭&lt;/span&gt;
+      &lt;/div&gt;</code>;</p>
 <pre><code>// 注入样式
 const style = document.createElement(&#39;style&#39;);
 style.textContent = `
@@ -450,9 +507,8 @@ document.addEventListener(&#39;keydown&#39;, (e) =&gt; {
 //     closePanel();
 //   }
 // });
-</code></pre>
-<p>  }</p>
-<p>  &#x2F;** 打开&#x2F;关闭面板 *&#x2F;<br>  function togglePanel() {<br>    const panel &#x3D; document.getElementById(‘ds-search-panel’);<br>    if (!panel) return;</p>
+</code></pre><p>  }</p>
+<p>  /<em>* 打开/关闭面板 </em>/<br>  function togglePanel() {<br>    const panel = document.getElementById(‘ds-search-panel’);<br>    if (!panel) return;</p>
 <pre><code>if (state.panelOpen) {
   closePanel();
 } else {
@@ -465,10 +521,9 @@ document.addEventListener(&#39;keydown&#39;, (e) =&gt; {
   rebuildIndex();
   renderResults([]);
 }
-</code></pre>
-<p>  }</p>
-<p>  function closePanel() {<br>    const panel &#x3D; document.getElementById(‘ds-search-panel’);<br>    if (panel) panel.classList.remove(‘open’);<br>    state.panelOpen &#x3D; false;<br>    state.resultElements &#x3D; [];<br>    state.currentResultIndex &#x3D; -1;<br>  }</p>
-<p>  &#x2F;** 渲染搜索结果 *&#x2F;<br>  function renderResults(results, query) {<br>    const resultsEl &#x3D; document.getElementById(‘ds-search-results’);<br>    if (!resultsEl) return;</p>
+</code></pre><p>  }</p>
+<p>  function closePanel() {<br>    const panel = document.getElementById(‘ds-search-panel’);<br>    if (panel) panel.classList.remove(‘open’);<br>    state.panelOpen = false;<br>    state.resultElements = [];<br>    state.currentResultIndex = -1;<br>  }</p>
+<p>  /<em>* 渲染搜索结果 </em>/<br>  function renderResults(results, query) {<br>    const resultsEl = document.getElementById(‘ds-search-results’);<br>    if (!resultsEl) return;</p>
 <pre><code>state.resultElements = results.map(r =&gt; r.el);
 state.currentResultIndex = -1;
 
@@ -509,10 +564,9 @@ resultsEl.querySelectorAll(&#39;.ds-result-item&#39;).forEach(item =&gt; {
 });
 
 updateResultCount();
-</code></pre>
-<p>  }</p>
-<p>  &#x2F;** 更新结果计数显示 *&#x2F;<br>  function updateResultCount() {<br>    const countEl &#x3D; document.getElementById(‘ds-search-count’);<br>    if (!countEl) return;<br>    const total &#x3D; state.resultElements.length;<br>    if (state.currentResultIndex &gt;&#x3D; 0 &amp;&amp; total &gt; 0) {<br>      countEl.textContent &#x3D; <code>${state.currentResultIndex + 1}/${total}</code>;<br>    } else {<br>      countEl.textContent &#x3D; total &gt; 0 ? <code>${total} 条</code> : ‘’;<br>    }<br>  }</p>
-<p>  &#x2F;** 导航到上一条&#x2F;下一条结果 *&#x2F;<br>  function navigateResult(direction) {<br>    const total &#x3D; state.resultElements.length;<br>    if (total &#x3D;&#x3D;&#x3D; 0) return;</p>
+</code></pre><p>  }</p>
+<p>  /<em>* 更新结果计数显示 </em>/<br>  function updateResultCount() {<br>    const countEl = document.getElementById(‘ds-search-count’);<br>    if (!countEl) return;<br>    const total = state.resultElements.length;<br>    if (state.currentResultIndex &gt;= 0 &amp;&amp; total &gt; 0) {<br>      countEl.textContent = <code>${state.currentResultIndex + 1}/${total}</code>;<br>    } else {<br>      countEl.textContent = total &gt; 0 ? <code>${total} 条</code> : ‘’;<br>    }<br>  }</p>
+<p>  /<em>* 导航到上一条/下一条结果 </em>/<br>  function navigateResult(direction) {<br>    const total = state.resultElements.length;<br>    if (total === 0) return;</p>
 <pre><code>state.currentResultIndex += direction;
 if (state.currentResultIndex &lt; 0) state.currentResultIndex = total - 1;
 if (state.currentResultIndex &gt;= total) state.currentResultIndex = 0;
@@ -531,9 +585,8 @@ if (el) {
 }
 
 updateResultCount();
-</code></pre>
-<p>  }</p>
-<p>  &#x2F;** 跳转到指定索引的结果 *&#x2F;<br>  function jumpToResult(index) {<br>    state.currentResultIndex &#x3D; index;</p>
+</code></pre><p>  }</p>
+<p>  /<em>* 跳转到指定索引的结果 </em>/<br>  function jumpToResult(index) {<br>    state.currentResultIndex = index;</p>
 <pre><code>document.querySelectorAll(&#39;.ds-result-item&#39;).forEach((item, i) =&gt; {
   item.classList.toggle(&#39;active&#39;, i === index);
 });
@@ -546,81 +599,58 @@ if (el) {
 }
 
 updateResultCount();
-</code></pre>
-<p>  }</p>
-<p>  &#x2F;&#x2F; &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; 虚拟滚动处理 &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</p>
-<p>  &#x2F;**</p>
+</code></pre><p>  }</p>
+<p>  // ==================== 虚拟滚动处理 ====================</p>
+<p>  /**</p>
 <ul>
-<li><p>尝试加载更早的历史消息。</p>
-</li>
-<li><p>DeepSeek 使用虚拟滚动，未加载到 DOM 的消息无法搜索。</p>
-</li>
-<li><p>策略：滚动到顶部触发加载，等待后重建索引。<br>   *&#x2F;<br>  function loadAllMessages() {<br>return new Promise((resolve) &#x3D;&gt; {<br> const scrollContainer &#x3D; findScrollContainer();<br> if (!scrollContainer) {<br>   resolve();<br>   return;<br> }</p>
-<p> const originalScrollTop &#x3D; scrollContainer.scrollTop;<br> let attempts &#x3D; 0;<br> const maxAttempts &#x3D; 10;</p>
-<p> function scrollUpAndWait() {<br>   scrollContainer.scrollTop &#x3D; 0;<br>   attempts++;</p>
-<p>   &#x2F;&#x2F; 等待一会儿看 DOM 是否变化<br>   setTimeout(() &#x3D;&gt; {<br> const currentCount &#x3D; extractMessages().length;<br> const prevCount &#x3D; state.messages.length;<br><br> if (currentCount &gt; prevCount &amp;&amp; attempts &lt; maxAttempts) {<br>   &#x2F;&#x2F; 有新消息加载，继续<br>   rebuildIndex();<br>   scrollUpAndWait();<br> } else {<br>   &#x2F;&#x2F; 没有更多了，恢复滚动位置<br>   scrollContainer.scrollTop &#x3D; originalScrollTop;<br>   rebuildIndex();<br>   resolve();<br> }<br>   }, 500);<br> }</p>
-<p> scrollUpAndWait();</p>
+<li>尝试加载更早的历史消息。</li>
+<li>DeepSeek 使用虚拟滚动，未加载到 DOM 的消息无法搜索。</li>
+<li><p>策略：滚动到顶部触发加载，等待后重建索引。<br>*/<br>function loadAllMessages() {<br>return new Promise((resolve) =&gt; {<br> const scrollContainer = findScrollContainer();<br> if (!scrollContainer) {<br>   resolve();<br>   return;<br> }</p>
+<p> const originalScrollTop = scrollContainer.scrollTop;<br> let attempts = 0;<br> const maxAttempts = 10;</p>
+<p> function scrollUpAndWait() {<br>   scrollContainer.scrollTop = 0;<br>   attempts++;</p>
+<p>   // 等待一会儿看 DOM 是否变化<br>   setTimeout(() =&gt; {</p>
+<pre><code> const currentCount = extractMessages().length;
+ const prevCount = state.messages.length;
+
+ if (currentCount &gt; prevCount &amp;&amp; attempts &lt; maxAttempts) {
+   // 有新消息加载，继续
+   rebuildIndex();
+   scrollUpAndWait();
+ } else {
+   // 没有更多了，恢复滚动位置
+   scrollContainer.scrollTop = originalScrollTop;
+   rebuildIndex();
+   resolve();
+ }
+</code></pre><p>   }, 500);<br> }</p>
+<p> scrollUpAndWait();<br>});<br>}</p>
+<p>/<em>* 找到滚动容器 </em>/<br>function findScrollContainer() {<br>// 尝试常见的滚动容器选择器<br>const candidates = [<br> ‘[data-conversation-scroll]’,<br> ‘.chat-container’,<br> ‘main’,<br> ‘[class*=”scroll”]’,<br>];</p>
+<p>for (const sel of candidates) {<br> const el = document.querySelector(sel);<br> if (el &amp;&amp; el.scrollHeight &gt; el.clientHeight) return el;<br>}</p>
+<p>// 回退：找 scrollHeight 最大的元素<br>let best = null;<br>let bestScrollHeight = 0;<br>document.querySelectorAll(‘div’).forEach(el =&gt; {<br> if (el.scrollHeight &gt; el.clientHeight &amp;&amp; el.scrollHeight &gt; bestScrollHeight) {<br>   best = el;<br>   bestScrollHeight = el.scrollHeight;<br> }<br>});<br>return best;<br>}</p>
+<p>// ==================== 初始化 ====================</p>
+<p>function init() {<br>// 等待页面加载完成<br>const checkReady = setInterval(() =&gt; {<br> const msgs = document.querySelectorAll(CONFIG.MESSAGE_SELECTOR);<br> if (msgs.length &gt; 0 || document.querySelector(‘#chat-input’)) {<br>   clearInterval(checkReady);</p>
+<p>   // 创建 UI<br>   createPanel();</p>
+<p>   // 首次索引<br>   rebuildIndex();</p>
+<p>   // 监听 DOM 变化，增量索引<br>   const observer = new MutationObserver(() =&gt; {</p>
+<pre><code> // 防抖，避免频繁重建
+ clearTimeout(observer._timer);
+ observer._timer = setTimeout(() =&gt; {
+   incrementalIndex();
+ }, 800);
+</code></pre><p>   });<br>   observer.observe(document.body, { childList: true, subtree: true });</p>
+<p>   // 监听 URL 变化（切换会话）<br>   let lastUrl = location.href;<br>   new MutationObserver(() =&gt; {</p>
+<pre><code> if (location.href !== lastUrl) {
+   lastUrl = location.href;
+   setTimeout(() =&gt; {
+     rebuildIndex();
+     if (state.panelOpen) renderResults([]);
+   }, 1000);
+ }
+</code></pre><p>   }).observe(document.body, { childList: true, subtree: true });</p>
+<p>   console.log(‘[DeepSeek搜索] 已加载，按 Alt+K 打开搜索面板’);<br> }<br>}, 1000);</p>
+<p>// 10 秒后放弃等待<br>setTimeout(() =&gt; clearInterval(checkReady), 10000);<br>}</p>
+<p>// 启动<br>if (document.readyState === ‘loading’) {<br>document.addEventListener(‘DOMContentLoaded’, init);<br>} else {<br>init();<br>}<br>})();</p>
 </li>
 </ul>
-<pre><code>});
-</code></pre>
-<p>  }</p>
-<p>  &#x2F;** 找到滚动容器 <em>&#x2F;<br>  function findScrollContainer() {<br>    &#x2F;&#x2F; 尝试常见的滚动容器选择器<br>    const candidates &#x3D; [<br>      ‘[data-conversation-scroll]’,<br>      ‘.chat-container’,<br>      ‘main’,<br>      ‘[class</em>&#x3D;”scroll”]’,<br>    ];</p>
-<pre><code>for (const sel of candidates) {
-  const el = document.querySelector(sel);
-  if (el &amp;&amp; el.scrollHeight &gt; el.clientHeight) return el;
-}
-
-// 回退：找 scrollHeight 最大的元素
-let best = null;
-let bestScrollHeight = 0;
-document.querySelectorAll(&#39;div&#39;).forEach(el =&gt; {
-  if (el.scrollHeight &gt; el.clientHeight &amp;&amp; el.scrollHeight &gt; bestScrollHeight) {
-    best = el;
-    bestScrollHeight = el.scrollHeight;
-  }
-});
-return best;
-</code></pre>
-<p>  }</p>
-<p>  &#x2F;&#x2F; &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D; 初始化 &#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</p>
-<p>  function init() {<br>    &#x2F;&#x2F; 等待页面加载完成<br>    const checkReady &#x3D; setInterval(() &#x3D;&gt; {<br>      const msgs &#x3D; document.querySelectorAll(CONFIG.MESSAGE_SELECTOR);<br>      if (msgs.length &gt; 0 || document.querySelector(‘#chat-input’)) {<br>        clearInterval(checkReady);</p>
-<pre><code>    // 创建 UI
-    createPanel();
-
-    // 首次索引
-    rebuildIndex();
-
-    // 监听 DOM 变化，增量索引
-    const observer = new MutationObserver(() =&gt; {
-      // 防抖，避免频繁重建
-      clearTimeout(observer._timer);
-      observer._timer = setTimeout(() =&gt; {
-        incrementalIndex();
-      }, 800);
-    });
-    observer.observe(document.body, { childList: true, subtree: true });
-
-    // 监听 URL 变化（切换会话）
-    let lastUrl = location.href;
-    new MutationObserver(() =&gt; {
-      if (location.href !== lastUrl) {
-        lastUrl = location.href;
-        setTimeout(() =&gt; {
-          rebuildIndex();
-          if (state.panelOpen) renderResults([]);
-        }, 1000);
-      }
-    }).observe(document.body, { childList: true, subtree: true });
-
-    console.log(&#39;[DeepSeek搜索] 已加载，按 Alt+K 打开搜索面板&#39;);
-  }
-}, 1000);
-
-// 10 秒后放弃等待
-setTimeout(() =&gt; clearInterval(checkReady), 10000);
-</code></pre>
-<p>  }</p>
-<p>  &#x2F;&#x2F; 启动<br>  if (document.readyState &#x3D;&#x3D;&#x3D; ‘loading’) {<br>    document.addEventListener(‘DOMContentLoaded’, init);<br>  } else {<br>    init();<br>  }<br>})();</p>
 <p>2.一个壁纸类插件</p>
-<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2026/09/20/suanfa/">← Next 基于C语言算法——第一节——快速排序</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/09/19/wps/">wps小技巧 Prev →</a></div></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="To Top" style="opacity: 0; display: none;">∧ </a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="Change Theme"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">John Doe</a></h1><div id="description"><p></p></div></div><div id="aside-block"></div><footer><nobr>Published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2026/09/20/suanfa/">← 下一篇 基于C语言算法——第一节——快速排序</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/09/19/wps/">wps小技巧 上一篇 →</a></div></div></div><div id="comments"><div id="giscus"></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="回到顶部" style="opacity: 0; display: none;">∧ </a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="切换主题"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">John Doe</a></h1><div id="description"><p></p></div><div id="social-links"><a class="social" target="_blank" rel="noopener" href="https://github.com/juicer0801"><i class="fab fa-github" alt="GitHub"></i></a></div></div><div id="aside-block"></div><footer><nobr>构建自 <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> 使用主题 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> 主题作者 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>

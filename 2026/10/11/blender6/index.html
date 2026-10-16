@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en" theme-mode="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>笔记分享（不是我写的) | Hexo</title><meta name="description" content="建议配合视频食用 基本workflow-视图与模型控制 建模——补光——材质——渲染 视角控制 旋转视角：鼠标中键按住可旋转（如果鼠标中键无效，可：点击文件——默认——加载初始设置） 围绕物体旋转视角（5.1版本是默认勾选）： 编辑➡偏好设置➡视图导航➡勾选&lt;围绕物体旋转&gt; （如果不需要围绕物体，而是世界中心旋转可取消勾选） 平移视角：shift＋鼠标中键（右侧“手型符号”也可以平移视">
+<!DOCTYPE html><html lang="en" theme-mode="auto"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>笔记分享（不是我写的) | Hexo</title><meta name="description" content="建议配合视频食用 基本workflow-视图与模型控制 建模——补光——材质——渲染 视角控制 旋转视角：鼠标中键按住可旋转（如果鼠标中键无效，可：点击文件——默认——加载初始设置） 围绕物体旋转视角（5.1版本是默认勾选）： 编辑➡偏好设置➡视图导航➡勾选&lt;围绕物体旋转&gt; （如果不需要围绕物体，而是世界中心旋转可取消勾选） 平移视角：shift＋鼠标中键（右侧“手型符号”也可以平移视">
 <meta property="og:type" content="article">
 <meta property="og:title" content="笔记分享（不是我写的)">
 <meta property="og:url" content="http://example.com/2026/10/11/blender6/index.html">
@@ -24,7 +24,7 @@
   font-family: 'JetBrains Mono';
   src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
 }
-</style><meta name="page-config" content="{&quot;code_fold&quot;:null}"><script class="pjax-js">var config = {"root":"/","code_fold":15,"search":{"preload":false,"activeHolder":"Enter here","blurHolder":"Search","noResult":"Data \"$0\" not found"},"code":{"codeInfo":"$0 - $1 lines","copy":"copy"}};
+</style><meta name="page-config" content="{&quot;code_fold&quot;:null}"><script class="pjax-js">var config = {"root":"/","code_fold":15,"search":{"preload":true,"activeHolder":"键入以继续","blurHolder":"数据检索","noResult":"无 $0 相关数据"},"code":{"codeInfo":"$0 - $1 行","copy":"复制"}};
 var page_config = {
   code_fold: null
 };
@@ -35,9 +35,26 @@ function updatePageConfig() {
   }
 }
 document.addEventListener('pjax:complete', function() { updatePageConfig(); });
-updatePageConfig();</script><link type="text/css" rel="stylesheet" href="/lib/encrypt/hbe.style.css"><script src="//unpkg.com/mermaid@11.12.2/dist/mermaid.min.js"></script><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lightgallery.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-zoom.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-thumbnail.css"><link type="text/css" rel="stylesheet" href="/lib/fontawesome/css/all.min.css"><script>if (window.localStorage.getItem('theme-mode') === 'light')
+updatePageConfig();</script><link type="text/css" rel="stylesheet" href="/lib/encrypt/hbe.style.css"><script src="//unpkg.com/mermaid@11.12.2/dist/mermaid.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.1/MathJax.js"></script><script>MathJax.Hub.Config({
+ menuSettings: {
+   zoom: "None"
+ },
+ showMathMenu: false,
+ jax: ["input/TeX","output/CommonHTML"],
+ extensions: ["tex2jax.js"],
+ TeX: {
+   extensions: ["AMSmath.js","AMSsymbols.js"],
+   equationNumbers: {
+     autoNumber: "AMS"
+   }
+ },
+ tex2jax: {
+   inlineMath: [["\\(", "\\)"]],
+   displayMath: [["\\[", "\\]"]]
+ }
+});</script><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lightgallery.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-zoom.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-thumbnail.css"><link type="text/css" rel="stylesheet" href="/lib/fontawesome/css/all.min.css"><script>if (window.localStorage.getItem('theme-mode') === 'light' || window.matchMedia('(prefers-color-scheme:light)').matches)
  document.documentElement.setAttribute('theme-mode', 'light')
-if (window.localStorage.getItem('theme-mode') === 'dark')
+if (window.localStorage.getItem('theme-mode') === 'dark' || window.matchMedia('(prefers-color-scheme:dark)').matches)
  document.documentElement.setAttribute('theme-mode', 'dark')</script><style>@font-face {
  font-family: BenderLight;
  src: local('Bender'), url("/font/BenderLight.woff2") format('woff2');
@@ -48,10 +65,28 @@ if (window.localStorage.getItem('theme-mode') === 'dark')
 }</style><style>:root {
  --dark-background: url('https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg');
  --light-background: url('/img/bk.jpg');
- --theme-encrypt-confirm: 'confirm'
-}</style><script defer src="/js/arknights.js"></script><script defer src="/js/search.js"></script><script defer type="module">import mermaid from '//unpkg.com/mermaid@11.12.2/dist/mermaid.esm.min.mjs';
+ --theme-encrypt-confirm: '确认'
+}</style><script defer src="/js/arknights.js"></script><script defer src="/js/search.js"></script><script defer src="https://vercount.one/js"></script><script defer type="module">import mermaid from '//unpkg.com/mermaid@11.12.2/dist/mermaid.esm.min.mjs';
 window.mermaid = mermaid;
 code.paintMermaid();
+</script><script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.1/MathJax.js"></script><script>MathJax.Hub.Config({
+  menuSettings: {
+    zoom: "None"
+  },
+  showMathMenu: false,
+  jax: ["input/TeX","output/CommonHTML"],
+  extensions: ["tex2jax.js"],
+  TeX: {
+    extensions: ["AMSmath.js","AMSsymbols.js"],
+    equationNumbers: {
+      autoNumber: "AMS"
+    }
+  },
+  tex2jax: {
+    inlineMath: [["\\(", "\\)"]],
+    displayMath: [["\\[", "\\]"]]
+  }
+});
 </script><script async src="//unpkg.com/lightgallery@2.7.1/lightgallery.min.js"></script><script async src="//unpkg.com/lightgallery@2.7.1/plugins/zoom/lg-zoom.min.js"></script><script async src="//unpkg.com/lightgallery@2.7.1/plugins/thumbnail/lg-thumbnail.min.js"></script><script async src="/lib/encrypt/hbe.js"></script><script async src="/js/pjax.js"></script><script class="pjax-js">reset= () => {document.querySelector('.lg-container')?.remove()
 lightGallery(document.getElementById('post-bg'), {
   plugins: [lgZoom,lgThumbnail],
@@ -68,7 +103,22 @@ lightGallery(document.getElementById('post-bg'), {
    }
  }
 });
-document.addEventListener("pjax:complete", reset);reset()})</script><script class="pjax-js">reset= () => {document.querySelector('.lg-container')?.remove()
+document.addEventListener("pjax:complete", reset);document.addEventListener('pjax:success', _ => {
+ const script = document.createElement('script');
+ script.src = 'https://vercount.one/js';
+ document.head.appendChild(script);
+});reset()})</script><script class="pjax-js">reset= () => {window.giscusSettings = {
+ repo: 'juicer0801/juicer0801.github.io',
+ repoId: 'R_kgDOUcAR_w',
+ category: 'Announcements',
+ categoryId: 'DIC_kwDOUcAR_84DIlqM',
+ mapping: 'pathname',
+ strict: '0',
+ reactionsEnabled: '1',
+ emitMetadata: '0',
+ inputPosition: 'bottom',
+ lang: 'zh-CN',
+ crossorigin: 'anonymous' , loading: 'lazy'};window.giscusThemeConfig = { theme: 'preferred_color_scheme' };MathJax.Hub.Queue(["Typeset", MathJax.Hub]);document.querySelector('.lg-container')?.remove()
 const postBg = document.querySelector('#post-bg');
 if (postBg) lightGallery(postBg, {
   plugins: [lgZoom,lgThumbnail],
@@ -85,7 +135,11 @@ if (postBg) lightGallery(postBg, {
    }
  }
 });
-document.addEventListener("pjax:complete", reset);reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>笔记分享（不是我写的)</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2026-10-11T13:35:58.000Z" id="date"> 2026-10-11</time></div></span><br><span>Last Update: <div class="control"><time datetime="2026-10-13T15:53:38.460Z" id="updated"> 2026-10-13</time></div></span></div></div><hr><div id="post-content"><p>建议配合视频食用</p>
+document.addEventListener("pjax:complete", reset);document.addEventListener('pjax:success', _ => {
+ const script = document.createElement('script');
+ script.src = 'https://vercount.one/js';
+ document.head.appendChild(script);
+});reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="数据检索" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/tags/"><span class="navItemTitle">Tags</span></a></li><li class="navItem"><a class="navBlock" href="/categories/"><span class="navItemTitle">Categories</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>笔记分享（不是我写的)</h1><div id="post-info"><span>文章发布时间: <div class="control"><time datetime="2026-10-11T13:35:58.000Z" id="date"> 2026-10-11</time></div></span><br><span>最后更新时间: <div class="control"><time datetime="2026-10-13T15:53:38.460Z" id="updated"> 2026-10-13</time></div></span><br><span>文章总字数: <div class="control">14.6k</div></span><br><span>预计阅读时间: <div class="control">50 分钟</div></span><br><span id="vercount_container_page_pv">页面浏览: <span class="control" id="vercount_value_page_pv">加载中...</span></span></div></div><hr><div id="post-content"><p>建议配合视频食用</p>
 <p>基本workflow-视图与模型控制</p>
 <p>建模——补光——材质——渲染</p>
 <p>视角控制</p>
@@ -141,7 +195,7 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 <p>慢，相对更消耗硬件资源</p>
 <p>认识界面</p>
 <p>窗口面板拆分替换<br>点击窗口左上角符号，打开四大类面板</p>
-<p> tips：建模的时候可以把三个窗口都变成3D视图，就可以看到不同视角了</p>
+<p> tips：建模的时候可以把三个窗口都变成3D视图，就可以看到不同视角了</p>
 <p>右边工作区找不回来可以点下大纲视图就回到初始工具了</p>
 <p>拆分：将光标放在窗口的四角或分界线上左右拉就可以拆分或者合并</p>
 <p>恢复原始布局：点击顶部菜单栏最后的“+”号，新建一个&lt;常规&gt;➡&lt;布局&gt;，然后把第一个布局删掉，把新建的布局右移到原来的布局位置</p>
@@ -175,7 +229,7 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 <p>新建一个物体时有一次更改物体参数的机会，可更改物体密度、段数还数等等</p>
 <p>（面的密度越密，越不好控制，所以可以把面数控制调的小一些）</p>
 <p>右侧文件夹小三角取消后物体不可选择。</p>
-<p>键盘右下角的“?&#x2F;”键，可以将选中物体单独显示。</p>
+<p>键盘右下角的“?/”键，可以将选中物体单独显示。</p>
 <p>（需要在英文模式下）</p>
 <p>点击相机，可在属性栏更改输出分辨率和外边框深度，更方便查看输出范围。</p>
 <p>先拉开两个工作窗口，在其中一个窗口“O”切换到摄像机视角，再按“N”打开→勾选【锁定摄像机到视图方位】</p>
@@ -204,22 +258,18 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 <p>多选：shift</p>
 <p>选择两个元素最短路径：ctrl（刷选和套选的状态下不能用）</p>
 <p>选择相连元素：L（鼠标要在物体上，空白处按是无效的）</p>
-<p>循环选择：按住alt+双击，就可以选择一个循环边</p class='item-img' data-src='/2026/10/11/blender6/Snipaste_2026-10-12_12-22-18.png'><img src="/2026/10/11/blender6/Snipaste_2026-10-12_12-22-18.png" class="" title="Hexo 博客封面示例">
-<img src="/2026/10/11/blender6/Snipaste_2026-10-12_12-22-51.png" class="" title="Hexo 博客封面示例">
-
-<p>垂直方向带循环选择：ctrl+alt+双击</p class='item-img' data-src='/2026/10/11/blender6/Snipaste_2026-10-12_12-21-30.png'><img src="/2026/10/11/blender6/Snipaste_2026-10-12_12-21-30.png" class="" title="Hexo 博客封面示例">
-
-
+<p>循环选择：按住alt+双击，就可以选择一个循环边<br class='item-img' data-src='/2026/10/11/blender6/Snipaste_2026-10-12_12-22-18.png'><img src="/2026/10/11/blender6/Snipaste_2026-10-12_12-22-18.png" class="" title="Hexo 博客封面示例"><br class='item-img' data-src='/2026/10/11/blender6/Snipaste_2026-10-12_12-22-51.png'><img src="/2026/10/11/blender6/Snipaste_2026-10-12_12-22-51.png" class="" title="Hexo 博客封面示例"></p>
+<p>垂直方向带循环选择：ctrl+alt+双击<br class='item-img' data-src='/2026/10/11/blender6/Snipaste_2026-10-12_12-21-30.png'><img src="/2026/10/11/blender6/Snipaste_2026-10-12_12-21-30.png" class="" title="Hexo 博客封面示例"></p>
 <p>随机选择：左上方选择菜单-select -random</p>
 <p>加选：ctrl+数字键盘+号</p>
 <p>减选：ctrl+数字键盘-号</p>
-<p>如果没有小键盘可以点击顶部菜单&lt;选择&gt;➡&lt;加选&#x2F;减选&gt;，和ctrl+数字键盘+-号是一样的</p>
+<p>如果没有小键盘可以点击顶部菜单&lt;选择&gt;➡&lt;加选/减选&gt;，和ctrl+数字键盘+-号是一样的</p>
 <p>再透视模式下，刷选或框选是可以选中物体背面的点线面的（透视快捷键：Alt+Z）</p>
 <p>点线面的控制<br>移动：G</p>
 <p>缩放：S</p>
 <p>旋转：R</p>
 <p>删除：X （注意删除边和融并边带区别，删除会出现孔洞（拆开正方体），融并会把剩下带边连起来（正方体变三角））</p>
-<p>法相&#x2F;法线：指始终垂直某平面或者某切面带虚线，用定义光线如何从曲面反弹向量</p>
+<p>法相/法线：指始终垂直某平面或者某切面带虚线，用定义光线如何从曲面反弹向量</p>
 <p>（打开面朝向可看法相：蓝正红反，shift+N：重新计算法相）</p>
 <p>进入透视模式：alt+Z</p>
 <p>10常用建模操作<br>tips：shift＋空格，工具栏会出现在光标下方</p>
@@ -237,7 +287,7 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 <p>（还有一个方法——栅格填充：可以增加和减少跨分和偏移量，栅格填充的边必须是偶数边）</p>
 <p>tips：ctrl＋F是面菜单，ctrl＋e是边菜单</p>
 <p>切刀：K</p>
-<p>退出：点一下鼠标右键&#x2F;按一下空格键</p>
+<p>退出：点一下鼠标右键/按一下空格键</p>
 <p>桥接：ctrl＋E</p>
 <p>桥接的两个物体相接的两个面需要都删掉</p>
 <p>shift选择两个物体➡ctrl＋J合并成一个物体➡再选择两个物体相接的边➡ctrl＋E</p>
@@ -261,7 +311,7 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 <p>➡ctrl＋B ，移动鼠标，滚动鼠标中键，外边缘的倒角做好了</p>
 <p>➡内边缘的倒角：线模式下，选择内边缘里的随便一条边</p>
 <p>➡窗口顶端&lt;选择&gt;➡&lt;锐边&gt;➡ctrl＋B，滑动滚轮</p>
-<p>修改器：表面细分&#x2F;实体化&#x2F;倒角<br>修改器在编辑模式和物体模式下都可以加</p>
+<p>修改器：表面细分/实体化/倒角<br>修改器在编辑模式和物体模式下都可以加</p>
 <p>优势：</p>
 <p>建模快，效率高，能快速直观的实现一个效果</p>
 <p>非破坏性的建模方式，在不改变原来模型的基础上，可以很精确的控制参数，前提是不要应用修改器，应用之后无法改动</p>
@@ -392,7 +442,7 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 <p>➡右键平滑着色</p>
 <p>树干建模：缩裹修改器<br>新建一个柱体➡细分修改成10，深度高一点SZ，半径细一点SX</p>
 <p>➡RX旋转90°（R+X＋小键盘输入90）</p>
-<p>➡3切换到面模式，选择柱体两端的面，I向内挤压3，挤出一个小面（如果此时挤出来的面是扁的，回到物体模式ctrlA应用一下缩放，再回到编辑模式I向内挤出&#x2F;原理：你在物体模式进行了缩放）</p>
+<p>➡3切换到面模式，选择柱体两端的面，I向内挤压3，挤出一个小面（如果此时挤出来的面是扁的，回到物体模式ctrlA应用一下缩放，再回到编辑模式I向内挤出/原理：你在物体模式进行了缩放）</p>
 <p>➡X把这两个面删掉</p>
 <p>➡2切换成线模式，选中内环的一条边，按住alt，在右键选择旁边的边，就可以全选内环的所有边，再按住shift＋alt，单机另一端的任意一条边，就可以全选</p>
 <p>➡ctrlE桥接循环边</p>
@@ -533,7 +583,7 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 <p>树顶：</p>
 <p>➡选中叶子shiftD复制一个（叶子乱飞可能是衰减没关，或者没有一起选中空物体）</p>
 <p>➡选中复制的叶子，把阵列修改器关掉，空物体删掉，调整树顶叶子</p>
-<p>曲线修改器&#x2F;蒙皮修改器<br>关于曲线的基础知识<br>贝塞尔曲线：通过控制杆控制曲线的走向</p>
+<p>曲线修改器/蒙皮修改器<br>关于曲线的基础知识<br>贝塞尔曲线：通过控制杆控制曲线的走向</p>
 <p>大部分快捷键操作都是一样的</p>
 <p>连接两个点：先选中其中一个点，再shift选另一个点，然后按F；或者选中其中一个点，altC闭合</p>
 <p>Alt+C：闭合或打开曲线。</p>
@@ -600,7 +650,7 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 <p>计算机底层只能识别二进制，所有色彩信息最终会转成0-1的序列储存，0代表黑色，1代表白色，中间的灰度对应中间的数值，用黑白灰亮度信息来控制材质的不同属性，比如用黑白遮罩区分粗糙和光滑区域，或者做纹理的凹凸、透明度变化，不用重新画模型就能做出很细腻的层次效果</p>
 <p>做石头：</p>
 <p>新建一个立方体➡️添加一个表面细分，细分5，渲染5➡️添加一个置换修改器➡️添加一张贴图，将贴图的名字修改成“石头”</p>
-<p>➡️设置纹理“沃罗诺伊图”，参数：间隔矩阵【方形矩阵间隔&#x2F;平方间隔】、尺寸1.22</p>
+<p>➡️设置纹理“沃罗诺伊图”，参数：间隔矩阵【方形矩阵间隔/平方间隔】、尺寸1.22</p>
 <p>➡️回到修改器修改强度值0.5</p>
 <p>➡️右键平滑着色</p>
 <p>➡️shiftD复制一个备份➡️Tap进入编辑模式</p>
@@ -666,7 +716,7 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 <p>材质篇<br>材质基础<br>是PBR材质？</p>
 <p>PhysicallyBasedRendering基于物理的渲染</p>
 <p>DisneyPrincipledBRDF迪士尼双向散射分布函数</p>
-<p>BSDF&#x3D;BRDF（反射）+BTDF（透射）</p>
+<p>BSDF=BRDF（反射）+BTDF（透射）</p>
 <p>如何添加和删除材质？</p>
 <p>新建一个文件，文件初始自带的立方体是自带材质的➡️在右边侧栏打开材质参数</p>
 <p>➡️修改立方体材质的名字基础色修改为红色，点击窗口右上角“视图着色方式：渲染”就能看见材质了</p>
@@ -687,7 +737,7 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 <p>基础色：模型的颜色，也可以接一个颜色贴图，一般不要纯黑或者纯白</p>
 <p>金属度：把物体变成金属和非金属，0是非金属，1是金属，一般不给中间值，要不是0，要不就是1</p>
 <p>糙度：确定漫反射和镜面反射时候物体表面的粗糙程度，0表示非常的平滑，1表示非常的粗糙</p>
-<p>IOR折射率：光进入透明介质时弯折程度的物理数值，同时直接决定菲涅尔反射强度 $$F_$$（垂直高光强度 &#x2F; 颜色）。真空 &#x2F; 空气 IOR&#x3D;1.0，所有物质 IOR 都大于 1。可以网上搜索各种材质的IOR</p>
+<p>IOR折射率：光进入透明介质时弯折程度的物理数值，同时直接决定菲涅尔反射强度 <script type="math/tex">F_</script>（垂直高光强度 / 颜色）。真空 / 空气 IOR=1.0，所有物质 IOR 都大于 1。可以网上搜索各种材质的IOR</p>
 <p>透射：让你的模型透明，只有打开这个，IOR折射率和透射粗糙度才起作用</p>
 <p>自发光（发射）：可以发光，霓虹灯</p>
 <p>自发光强度</p>
@@ -699,7 +749,7 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 <p>随机游走：这一种模拟次表面的渲染方式，不支持EEVEE渲染器</p>
 <p>高光：代表物体的菲尼尔效应反射率程度，数值越大，高光反射量越大，高光越亮，反射率又和菲尼尔效应有关，物体的高光不要完全设为0，所有物体都会有一点高光</p>
 <p>什么是菲尼尔效应？</p>
-<p>法国物理学家菲涅尔发现的光学界面反射规律：光线穿过两种不同透明介质（空气 &#x2F; 水、空气 &#x2F; 玻璃）的接触面时，反射强度由视线角度决定抖音百科：</p>
+<p>法国物理学家菲涅尔发现的光学界面反射规律：光线穿过两种不同透明介质（空气 / 水、空气 / 玻璃）的接触面时，反射强度由视线角度决定抖音百科：</p>
 <p>直视表面（视线垂直平面，入射角小）：反射很弱，光线大多透射过去；</p>
 <p>斜着看（视线几乎平行表面，入射角接近 90°）：反射急剧变强，几乎完全反光、无法看透。</p>
 <p>高光染色：默认不设置的时候，物理默认的高光是白色的，但是你把高光染色调到1，就会被物体本身的颜色和谐，一般金属高光会染色，非金属高光不会染色</p>
@@ -732,4 +782,4 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 <p>当已经有一种材质时，可以再次新建一个材质，或者选择材质栏里已有的材质</p>
 <p>当物体上有两种及以上材质时，默认显示最上层的材质，此时：</p>
 <p>选中下方的材质➡️打开编辑模式，面模式➡️选中一个面，选择下方的一个材质，点击下方的&lt;指定&gt;按钮，下方的材质就会出现在物体上</p>
-<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2026/10/11/blender7/">← Next blender7</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/10/11/blender5/">新版变更操作 Prev →</a></div></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="To Top" style="opacity: 0; display: none;">∧ </a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="Change Theme"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">John Doe</a></h1><div id="description"><p></p></div></div><div id="aside-block"></div><footer><nobr>Published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2026/10/11/blender7/">← 下一篇 blender7</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/10/11/blender5/">新版变更操作 上一篇 →</a></div></div></div><div id="comments"><div id="giscus"></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="回到顶部" style="opacity: 0; display: none;">∧ </a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="切换主题"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">John Doe</a></h1><div id="description"><p></p></div><div id="social-links"><a class="social" target="_blank" rel="noopener" href="https://github.com/juicer0801"><i class="fab fa-github" alt="GitHub"></i></a></div></div><div id="aside-block"></div><footer><nobr>构建自 <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> 使用主题 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> 主题作者 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>

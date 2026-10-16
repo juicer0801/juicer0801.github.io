@@ -1,9 +1,9 @@
-<!DOCTYPE html><html lang="en" theme-mode="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>c语言基础计算方式与技巧一 | Hexo</title><meta name="description" content="1.生成指定0-100随机数#include &lt;stdlib.h&gt;#include &lt;time.h&gt; srand((unsigned)time(NULL)); &#x2F;&#x2F; 程序启动时调用一次int x &#x3D; rand() % 100;        &#x2F;&#x2F; 0 ~ 99int y &#x3D; rand() % 100 + 1;">
+<!DOCTYPE html><html lang="en" theme-mode="auto"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>c语言基础计算方式与技巧一 | Hexo</title><meta name="description" content="1.生成指定0-100随机数 include include srand((unsigned)time(NULL)); &#x2F;&#x2F; 程序启动时调用一次int x &#x3D; rand() % 100;        &#x2F;&#x2F; 0 ~ 99int y &#x3D; rand() % 100 + 1;    &#x2F;&#x2F; 1 ~ 100 提醒：rand() 是伪随机，% 有轻微分布偏差；要求高质量随机可用其他库     rand() %">
 <meta property="og:type" content="article">
 <meta property="og:title" content="c语言基础计算方式与技巧一">
 <meta property="og:url" content="http://example.com/2026/09/19/c2/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1.生成指定0-100随机数#include &lt;stdlib.h&gt;#include &lt;time.h&gt; srand((unsigned)time(NULL)); &#x2F;&#x2F; 程序启动时调用一次int x &#x3D; rand() % 100;        &#x2F;&#x2F; 0 ~ 99int y &#x3D; rand() % 100 + 1;">
+<meta property="og:description" content="1.生成指定0-100随机数 include include srand((unsigned)time(NULL)); &#x2F;&#x2F; 程序启动时调用一次int x &#x3D; rand() % 100;        &#x2F;&#x2F; 0 ~ 99int y &#x3D; rand() % 100 + 1;    &#x2F;&#x2F; 1 ~ 100 提醒：rand() 是伪随机，% 有轻微分布偏差；要求高质量随机可用其他库     rand() %">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2026-09-19T04:22:05.000Z">
 <meta property="article:modified_time" content="2026-09-21T11:55:21.061Z">
@@ -20,7 +20,7 @@
   font-family: 'JetBrains Mono';
   src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
 }
-</style><meta name="page-config" content="{&quot;code_fold&quot;:null}"><script class="pjax-js">var config = {"root":"/","code_fold":15,"search":{"preload":false,"activeHolder":"Enter here","blurHolder":"Search","noResult":"Data \"$0\" not found"},"code":{"codeInfo":"$0 - $1 lines","copy":"copy"}};
+</style><meta name="page-config" content="{&quot;code_fold&quot;:null}"><script class="pjax-js">var config = {"root":"/","code_fold":15,"search":{"preload":true,"activeHolder":"键入以继续","blurHolder":"数据检索","noResult":"无 $0 相关数据"},"code":{"codeInfo":"$0 - $1 行","copy":"复制"}};
 var page_config = {
   code_fold: null
 };
@@ -31,9 +31,26 @@ function updatePageConfig() {
   }
 }
 document.addEventListener('pjax:complete', function() { updatePageConfig(); });
-updatePageConfig();</script><link type="text/css" rel="stylesheet" href="/lib/encrypt/hbe.style.css"><script src="//unpkg.com/mermaid@11.12.2/dist/mermaid.min.js"></script><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lightgallery.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-zoom.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-thumbnail.css"><link type="text/css" rel="stylesheet" href="/lib/fontawesome/css/all.min.css"><script>if (window.localStorage.getItem('theme-mode') === 'light')
+updatePageConfig();</script><link type="text/css" rel="stylesheet" href="/lib/encrypt/hbe.style.css"><script src="//unpkg.com/mermaid@11.12.2/dist/mermaid.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.1/MathJax.js"></script><script>MathJax.Hub.Config({
+ menuSettings: {
+   zoom: "None"
+ },
+ showMathMenu: false,
+ jax: ["input/TeX","output/CommonHTML"],
+ extensions: ["tex2jax.js"],
+ TeX: {
+   extensions: ["AMSmath.js","AMSsymbols.js"],
+   equationNumbers: {
+     autoNumber: "AMS"
+   }
+ },
+ tex2jax: {
+   inlineMath: [["\\(", "\\)"]],
+   displayMath: [["\\[", "\\]"]]
+ }
+});</script><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lightgallery.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-zoom.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-thumbnail.css"><link type="text/css" rel="stylesheet" href="/lib/fontawesome/css/all.min.css"><script>if (window.localStorage.getItem('theme-mode') === 'light' || window.matchMedia('(prefers-color-scheme:light)').matches)
  document.documentElement.setAttribute('theme-mode', 'light')
-if (window.localStorage.getItem('theme-mode') === 'dark')
+if (window.localStorage.getItem('theme-mode') === 'dark' || window.matchMedia('(prefers-color-scheme:dark)').matches)
  document.documentElement.setAttribute('theme-mode', 'dark')</script><style>@font-face {
  font-family: BenderLight;
  src: local('Bender'), url("/font/BenderLight.woff2") format('woff2');
@@ -44,10 +61,28 @@ if (window.localStorage.getItem('theme-mode') === 'dark')
 }</style><style>:root {
  --dark-background: url('https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg');
  --light-background: url('/img/bk.jpg');
- --theme-encrypt-confirm: 'confirm'
-}</style><script defer src="/js/arknights.js"></script><script defer src="/js/search.js"></script><script defer type="module">import mermaid from '//unpkg.com/mermaid@11.12.2/dist/mermaid.esm.min.mjs';
+ --theme-encrypt-confirm: '确认'
+}</style><script defer src="/js/arknights.js"></script><script defer src="/js/search.js"></script><script defer src="https://vercount.one/js"></script><script defer type="module">import mermaid from '//unpkg.com/mermaid@11.12.2/dist/mermaid.esm.min.mjs';
 window.mermaid = mermaid;
 code.paintMermaid();
+</script><script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.1/MathJax.js"></script><script>MathJax.Hub.Config({
+  menuSettings: {
+    zoom: "None"
+  },
+  showMathMenu: false,
+  jax: ["input/TeX","output/CommonHTML"],
+  extensions: ["tex2jax.js"],
+  TeX: {
+    extensions: ["AMSmath.js","AMSsymbols.js"],
+    equationNumbers: {
+      autoNumber: "AMS"
+    }
+  },
+  tex2jax: {
+    inlineMath: [["\\(", "\\)"]],
+    displayMath: [["\\[", "\\]"]]
+  }
+});
 </script><script async src="//unpkg.com/lightgallery@2.7.1/lightgallery.min.js"></script><script async src="//unpkg.com/lightgallery@2.7.1/plugins/zoom/lg-zoom.min.js"></script><script async src="//unpkg.com/lightgallery@2.7.1/plugins/thumbnail/lg-thumbnail.min.js"></script><script async src="/lib/encrypt/hbe.js"></script><script async src="/js/pjax.js"></script><script class="pjax-js">reset= () => {document.querySelector('.lg-container')?.remove()
 lightGallery(document.getElementById('post-bg'), {
   plugins: [lgZoom,lgThumbnail],
@@ -64,7 +99,22 @@ lightGallery(document.getElementById('post-bg'), {
    }
  }
 });
-document.addEventListener("pjax:complete", reset);reset()})</script><script class="pjax-js">reset= () => {document.querySelector('.lg-container')?.remove()
+document.addEventListener("pjax:complete", reset);document.addEventListener('pjax:success', _ => {
+ const script = document.createElement('script');
+ script.src = 'https://vercount.one/js';
+ document.head.appendChild(script);
+});reset()})</script><script class="pjax-js">reset= () => {window.giscusSettings = {
+ repo: 'juicer0801/juicer0801.github.io',
+ repoId: 'R_kgDOUcAR_w',
+ category: 'Announcements',
+ categoryId: 'DIC_kwDOUcAR_84DIlqM',
+ mapping: 'pathname',
+ strict: '0',
+ reactionsEnabled: '1',
+ emitMetadata: '0',
+ inputPosition: 'bottom',
+ lang: 'zh-CN',
+ crossorigin: 'anonymous' , loading: 'lazy'};window.giscusThemeConfig = { theme: 'preferred_color_scheme' };MathJax.Hub.Queue(["Typeset", MathJax.Hub]);document.querySelector('.lg-container')?.remove()
 const postBg = document.querySelector('#post-bg');
 if (postBg) lightGallery(postBg, {
   plugins: [lgZoom,lgThumbnail],
@@ -81,54 +131,38 @@ if (postBg) lightGallery(postBg, {
    }
  }
 });
-document.addEventListener("pjax:complete", reset);reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>c语言基础计算方式与技巧一</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2026-09-19T04:22:05.000Z" id="date"> 2026-09-19</time></div></span><br><span>Last Update: <div class="control"><time datetime="2026-09-21T11:55:21.061Z" id="updated"> 2026-09-21</time></div></span></div></div><hr><div id="post-content"><p>1.生成指定0-100随机数<br>#include &lt;stdlib.h&gt;<br>#include &lt;time.h&gt;</p>
-<p>srand((unsigned)time(NULL)); &#x2F;&#x2F; 程序启动时调用一次<br>int x &#x3D; rand() % 100;        &#x2F;&#x2F; 0 ~ 99<br>int y &#x3D; rand() % 100 + 1;    &#x2F;&#x2F; 1 ~ 100</p>
-<p>提醒：rand() 是伪随机，% 有轻微分布偏差；要求高质量随机可用其他库<br>     rand() % 100 可以生成 0~99，但 % 取模在部分情况下分布略有偏差；要求更均匀时可用：int x &#x3D; (int)(100.0 * rand() &#x2F; (RAND_MAX + 1.0)); &#x2F;&#x2F; 0 ~ 99</p>
-<p>补充：<br>（1）rand()伪随机是因为它的本质是一个算法生成的数字<br>（2）&lt;stdlib.h&gt;是rand（）的头文件<br>（3）rand的算法对一个叫种子的基准进行运算生成的<br>（4）种子默认为1，生成的随机数就永远是41，如果要求生成多个随机数那么就以18467，6334，26500.19169 …等等固定的数字<br>（5）srand(一ge运行的程序，调用一次即可）用来彻始化随机数的生成(种子)器	<br>    void srand （unsigned int seed);<br>    通过srand 函数的参数 seed 来设置rand 函数成随机数时用的种子</p>
+document.addEventListener("pjax:complete", reset);document.addEventListener('pjax:success', _ => {
+ const script = document.createElement('script');
+ script.src = 'https://vercount.one/js';
+ document.head.appendChild(script);
+});reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="数据检索" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/tags/"><span class="navItemTitle">Tags</span></a></li><li class="navItem"><a class="navBlock" href="/categories/"><span class="navItemTitle">Categories</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>c语言基础计算方式与技巧一</h1><div id="post-info"><span>文章发布时间: <div class="control"><time datetime="2026-09-19T04:22:05.000Z" id="date"> 2026-09-19</time></div></span><br><span>最后更新时间: <div class="control"><time datetime="2026-09-21T11:55:21.061Z" id="updated"> 2026-09-21</time></div></span><br><span>文章总字数: <div class="control">1.2k</div></span><br><span>预计阅读时间: <div class="control">4 分钟</div></span><br><span id="vercount_container_page_pv">页面浏览: <span class="control" id="vercount_value_page_pv">加载中...</span></span></div></div><hr><div id="post-content"><p>1.生成指定0-100随机数</p>
+<h1 id="include"><a href="#include" class="headerlink" title="include "></a>include <stdlib.h></h1><h1 id="include-1"><a href="#include-1" class="headerlink" title="include "></a>include <time.h></h1><p>srand((unsigned)time(NULL)); // 程序启动时调用一次<br>int x = rand() % 100;        // 0 ~ 99<br>int y = rand() % 100 + 1;    // 1 ~ 100</p>
+<p>提醒：rand() 是伪随机，% 有轻微分布偏差；要求高质量随机可用其他库<br>     rand() % 100 可以生成 0~99，但 % 取模在部分情况下分布略有偏差；要求更均匀时可用：int x = (int)(100.0 * rand() / (RAND_MAX + 1.0)); // 0 ~ 99</p>
+<p>补充：<br>（1）rand()伪随机是因为它的本质是一个算法生成的数字<br>（2）<stdlib.h>是rand（）的头文件<br>（3）rand的算法对一个叫种子的基准进行运算生成的<br>（4）种子默认为1，生成的随机数就永远是41，如果要求生成多个随机数那么就以18467，6334，26500.19169 …等等固定的数字<br>（5）srand(一ge运行的程序，调用一次即可）用来彻始化随机数的生成(种子)器<br>    void srand （unsigned int seed);<br>    通过srand 函数的参数 seed 来设置rand 函数成随机数时用的种子</p>
 <p>（6）time<br>    一般以时间作为种子<br>    time t time (time_t*timer);<br>    time返回的时间其实是当前时间与1970年1月1日0时0分0秒的差值，单位是秒，返回的类型为time-t(本质上就是32位或64位的整型)<br>    time函数的参数timer如果是非NULL的指针的话函数会将这个返回的差值放在time指向的内存中，如果time是Null，就只返回这个时间的差值。 （time返回的这个时间差也被叫做:时间戳）<br>    头文件:time.h</p>
 <p>重点：通用公式<br>生成a~b范围的随机数<br>a + rand（）%100 + 1</p>
-<p>补充：<br>&#x2F;&#x2F; 更均匀的 0 ~ 99 随机数<br>int x &#x3D; (int)(100.0 * rand() &#x2F; (RAND_MAX + 1.0));</p>
-<ol start="2">
-<li></li>
-</ol>
-<p>int a[10];<br>int n &#x3D; sizeof(a) &#x2F; sizeof(a[0]);   &#x2F;&#x2F; 求数组长度，仅限当前作用域</p>
-<p>3.曾经的面试题，交换两数但不用第三个变量<br>方法一：a ^&#x3D; b; b ^&#x3D; a; a ^&#x3D; b;   &#x2F;&#x2F; 交换两个整数，不用临时变量<br>原理：^支持交换律 例如0^a &#x3D; a  a^a &#x3D; 0  3^5^3 &#x3D; 5  3^3^5 &#x3D; 5(^是计算机基础知识原码补码反码那里的二进制逻辑运算符)<br>优点：^不会进位，故而不会溢出</p>
-<p>方法二：<br>int main()<br>{<br>    int a &#x3D; 0;<br>    int b &#x3D; 0;<br>    scanf(“%d%d”,&amp;a，&amp;b);<br>    a &#x3D; a+b;<br>    b &#x3D; a-b;<br>    a &#x3D; a-b;<br>    printf(“交换后:a&#x3D;%d,b&#x3D;%d”,a,b);</p>
+<p>补充：<br>// 更均匀的 0 ~ 99 随机数<br>int x = (int)(100.0 * rand() / (RAND_MAX + 1.0));</p>
+<p>2.<br>int a[10];<br>int n = sizeof(a) / sizeof(a[0]);   // 求数组长度，仅限当前作用域</p>
+<p>3.曾经的面试题，交换两数但不用第三个变量<br>方法一：a ^= b; b ^= a; a ^= b;   // 交换两个整数，不用临时变量<br>原理：^支持交换律 例如0^a = a  a^a = 0  3^5^3 = 5  3^3^5 = 5(^是计算机基础知识原码补码反码那里的二进制逻辑运算符)<br>优点：^不会进位，故而不会溢出</p>
+<p>方法二：<br>int main()<br>{<br>    int a = 0;<br>    int b = 0;<br>    scanf(“%d%d”,&amp;a，&amp;b);<br>    a = a+b;<br>    b = a-b;<br>    a = a-b;<br>    printf(“交换后:a=%d,b=%d”,a,b);</p>
 <pre><code>return 0;
-</code></pre>
-<p>}<br>缺点：溢出</p>
-<p>4.奇数与二的幂判断<br>if (x &amp; 1) { }                   &#x2F;&#x2F; 判断奇数<br>if (x &gt; 0 &amp;&amp; !(x &amp; (x - 1))) { }&#x2F;&#x2F; 判断 x 是否为 2 的幂<br>（n!&#x3D;0）&amp;&amp;(n&amp;(n-1) &#x3D;&#x3D; 0) &#x2F;&#x2F; 判断 x 是否为 2 的幂</p>
-<p>5.大小写切换<br>c ^&#x3D; 32;    &#x2F;&#x2F; 字母大小写切换，仅对 ‘a’<del>‘z’ &#x2F; ‘A’</del>‘Z’ 有效<br>原理也是acsii码里英文大小写差距</p>
-<p>6.数组一键置零<br>int a[10] &#x3D; {0};                 &#x2F;&#x2F; 全部置 0<br>memset(a, 0, sizeof(a));         &#x2F;&#x2F; 也可以，但 memset 按字节，非 0 值要小心</p>
-<p>7.排序<br>qsort(a, n, sizeof(a[0]), cmp);  &#x2F;&#x2F; 标准库快速排序</p>
-<p>8.计算平均数<br>(lo + hi) &#x2F; 2 在 lo、hi 都很大时可能溢出，写成 lo + (hi - lo) &#x2F; 2 更好</p>
-<ol start="9">
-<li></li>
-</ol>
-<p>#define MAX(a, b) ((a) &gt; (b) ? (a) : (b))<br>#define LOG(…) do { printf(<strong>VA_ARGS</strong>); } while (0)  &#x2F;&#x2F; 多语句宏用 do-while(0) 包裹</p>
-<p>展开知识：<br>do { … } while (0) 是 C 语言里定义多语句宏的经典惯用法，核心目的是：宏内部的“多条语句”在语法上包装成“一条语句”，让它在 if&#x2F;else&#x2F;for&#x2F;while 等控制流里表现正常。<br>因为宏只是文本替换，没有函数那样天然形成语句边界。</p>
+</code></pre><p>}<br>缺点：溢出</p>
+<p>4.奇数与二的幂判断<br>if (x &amp; 1) { }                   // 判断奇数<br>if (x &gt; 0 &amp;&amp; !(x &amp; (x - 1))) { }// 判断 x 是否为 2 的幂<br>（n!=0）&amp;&amp;(n&amp;(n-1) == 0) // 判断 x 是否为 2 的幂</p>
+<p>5.大小写切换<br>c ^= 32;    // 字母大小写切换，仅对 ‘a’~’z’ / ‘A’~’Z’ 有效<br>原理也是acsii码里英文大小写差距</p>
+<p>6.数组一键置零<br>int a[10] = {0};                 // 全部置 0<br>memset(a, 0, sizeof(a));         // 也可以，但 memset 按字节，非 0 值要小心</p>
+<p>7.排序<br>qsort(a, n, sizeof(a[0]), cmp);  // 标准库快速排序</p>
+<p>8.计算平均数<br>(lo + hi) / 2 在 lo、hi 都很大时可能溢出，写成 lo + (hi - lo) / 2 更好</p>
+<p>9.</p>
+<h1 id="define-MAX-a-b-a-gt-b-a-b"><a href="#define-MAX-a-b-a-gt-b-a-b" class="headerlink" title="define MAX(a, b) ((a) &gt; (b) ? (a) : (b))"></a>define MAX(a, b) ((a) &gt; (b) ? (a) : (b))</h1><h1 id="define-LOG-…-do-printf-VA-ARGS-while-0-多语句宏用-do-while-0-包裹"><a href="#define-LOG-…-do-printf-VA-ARGS-while-0-多语句宏用-do-while-0-包裹" class="headerlink" title="define LOG(…) do { printf(VA_ARGS); } while (0)  // 多语句宏用 do-while(0) 包裹"></a>define LOG(…) do { printf(<strong>VA_ARGS</strong>); } while (0)  // 多语句宏用 do-while(0) 包裹</h1><p>展开知识：<br>do { … } while (0) 是 C 语言里定义多语句宏的经典惯用法，核心目的是：宏内部的“多条语句”在语法上包装成“一条语句”，让它在 if/else/for/while 等控制流里表现正常。<br>因为宏只是文本替换，没有函数那样天然形成语句边界。</p>
 <p>例如：<br>if (cond)<br>    LOG(“ok”);<br>else<br>    printf(“fail\n”);</p>
 <p>展开为：<br>if (cond)<br>    do { printf(“ok”); } while (0);<br>else<br>    printf(“fail\n”);</p>
 <p>其中：<br>do { … } while (0) 整体是一条语句；<br>while (0) 条件永远为假，所以循环体只执行一次，不会真的循环；<br>编译器通常会把这个无意义的循环优化掉，没有运行时开销；<br>{ … } 还提供了局部作用域，宏内部变量不会污染外部；<br>调用者仍然像普通语句一样写分号：LOG(“x”);，宏定义末尾通常不写分号。</p>
-<p>所以 do-while(0) 主要解决的是：<br>多语句宏在 if&#x2F;else 等场景下的语法错误、作用域污染和分号的问题。<br>对比一下：MAX 是表达式宏，它必须能出现在表达式里，所以不能用 do-while(0) 包，而是用括号保护：<br>#define MAX(a, b) ((a) &gt; (b) ? (a) : (b))<br>而 LOG 是语句宏，所以用 do { … } while (0) 包装。</p>
-<ol start="10">
-<li></li>
-</ol>
-<p>snprintf(buf, sizeof(buf), “%s”, str);   &#x2F;&#x2F; 比 sprintf 安全，防溢出</p>
-<p>fgets(buf, sizeof(buf), stdin);<br>buf[strcspn(buf, “\n”)] &#x3D; ‘\0’;          &#x2F;&#x2F; 去掉 fgets 读入的换行符</p>
-<ol start="11">
-<li></li>
-</ol>
-<p>scanf(“ %c”, &amp;c);   &#x2F;&#x2F; 前面的空格可以跳过空白字符，避免读到上次的回车</p>
-<ol start="12">
-<li></li>
-</ol>
-<p>assert(p !&#x3D; NULL);  &#x2F;&#x2F; 调试时检查<br>perror(“open”);     &#x2F;&#x2F; 打印系统错误信息</p>
-<ol start="13">
-<li></li>
-</ol>
-<p>if (5 &#x3D;&#x3D; x) { }       &#x2F;&#x2F; 防止写成赋值</p>
-<ol start="14">
-<li></li>
-</ol>
-<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2026/09/19/wps/">← Next wps小技巧</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/09/19/c/">c语言的常见错误一 Prev →</a></div></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="To Top" style="opacity: 0; display: none;">∧ </a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="Change Theme"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">John Doe</a></h1><div id="description"><p></p></div></div><div id="aside-block"></div><footer><nobr>Published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>
+<p>所以 do-while(0) 主要解决的是：<br>多语句宏在 if/else 等场景下的语法错误、作用域污染和分号的问题。<br>对比一下：MAX 是表达式宏，它必须能出现在表达式里，所以不能用 do-while(0) 包，而是用括号保护：</p>
+<h1 id="define-MAX-a-b-a-gt-b-a-b-1"><a href="#define-MAX-a-b-a-gt-b-a-b-1" class="headerlink" title="define MAX(a, b) ((a) &gt; (b) ? (a) : (b))"></a>define MAX(a, b) ((a) &gt; (b) ? (a) : (b))</h1><p>而 LOG 是语句宏，所以用 do { … } while (0) 包装。</p>
+<p>10.<br>snprintf(buf, sizeof(buf), “%s”, str);   // 比 sprintf 安全，防溢出</p>
+<p>fgets(buf, sizeof(buf), stdin);<br>buf[strcspn(buf, “\n”)] = ‘\0’;          // 去掉 fgets 读入的换行符</p>
+<p>11.<br>scanf(“ %c”, &amp;c);   // 前面的空格可以跳过空白字符，避免读到上次的回车</p>
+<p>12.<br>assert(p != NULL);  // 调试时检查<br>perror(“open”);     // 打印系统错误信息</p>
+<p>13.<br>if (5 == x) { }       // 防止写成赋值</p>
+<p>14.</p>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2026/09/19/wps/">← 下一篇 wps小技巧</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/09/19/c/">c语言的常见错误一 上一篇 →</a></div></div></div><div id="comments"><div id="giscus"></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="回到顶部" style="opacity: 0; display: none;">∧ </a><a class="i-index" id="to-index" onClick="tocControl.change()" title="文章目录"><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span></a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="切换主题"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">John Doe</a></h1><div id="description"><p></p></div><div id="social-links"><a class="social" target="_blank" rel="noopener" href="https://github.com/juicer0801"><i class="fab fa-github" alt="GitHub"></i></a></div></div><div id="aside-block"><div id="toc-div"><h1>目录</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#include"><span class="toc-number">1.</span> <span class="toc-text">include </span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#include-1"><span class="toc-number">2.</span> <span class="toc-text">include </span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#define-MAX-a-b-a-gt-b-a-b"><span class="toc-number">3.</span> <span class="toc-text">define MAX(a, b) ((a) &gt; (b) ? (a) : (b))</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#define-LOG-%E2%80%A6-do-printf-VA-ARGS-while-0-%E5%A4%9A%E8%AF%AD%E5%8F%A5%E5%AE%8F%E7%94%A8-do-while-0-%E5%8C%85%E8%A3%B9"><span class="toc-number">4.</span> <span class="toc-text">define LOG(…) do { printf(VA_ARGS); } while (0)  &#x2F;&#x2F; 多语句宏用 do-while(0) 包裹</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#define-MAX-a-b-a-gt-b-a-b-1"><span class="toc-number">5.</span> <span class="toc-text">define MAX(a, b) ((a) &gt; (b) ? (a) : (b))</span></a></li></ol></div></div><footer><nobr>构建自 <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> 使用主题 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> 主题作者 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>

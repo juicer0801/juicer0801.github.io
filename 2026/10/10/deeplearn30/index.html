@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en" theme-mode="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>rnn三行代码的理解 | Hexo</title><meta name="description" content="把 RNN 的这几行代码讲透：从“小本本”到张量形状如果你刚接触 PyTorch 的 RNN，下面这几行代码很容易让人绕晕： 1234rnn &#x3D; nn.RNN(input_size&#x3D;128, hidden_size&#x3D;256, num_layers&#x3D;1)x &#x3D; torch.randn(size&#x3D;(5, 32, 128))h0 &#x3D; torch.randn(size&#x3D;(1, 32, 256))outpu">
+<!DOCTYPE html><html lang="en" theme-mode="auto"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>rnn三行代码的理解 | Hexo</title><meta name="description" content="把 RNN 的这几行代码讲透：从“小本本”到张量形状如果你刚接触 PyTorch 的 RNN，下面这几行代码很容易让人绕晕： 1234rnn &#x3D; nn.RNN(input_size&#x3D;128, hidden_size&#x3D;256, num_layers&#x3D;1)x &#x3D; torch.randn(size&#x3D;(5, 32, 128))h0 &#x3D; torch.randn(size&#x3D;(1, 32, 256))outpu">
 <meta property="og:type" content="article">
 <meta property="og:title" content="rnn三行代码的理解">
 <meta property="og:url" content="http://example.com/2026/10/10/deeplearn30/index.html">
@@ -20,7 +20,7 @@
   font-family: 'JetBrains Mono';
   src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
 }
-</style><meta name="page-config" content="{&quot;code_fold&quot;:null}"><script class="pjax-js">var config = {"root":"/","code_fold":15,"search":{"preload":false,"activeHolder":"Enter here","blurHolder":"Search","noResult":"Data \"$0\" not found"},"code":{"codeInfo":"$0 - $1 lines","copy":"copy"}};
+</style><meta name="page-config" content="{&quot;code_fold&quot;:null}"><script class="pjax-js">var config = {"root":"/","code_fold":15,"search":{"preload":true,"activeHolder":"键入以继续","blurHolder":"数据检索","noResult":"无 $0 相关数据"},"code":{"codeInfo":"$0 - $1 行","copy":"复制"}};
 var page_config = {
   code_fold: null
 };
@@ -31,9 +31,26 @@ function updatePageConfig() {
   }
 }
 document.addEventListener('pjax:complete', function() { updatePageConfig(); });
-updatePageConfig();</script><link type="text/css" rel="stylesheet" href="/lib/encrypt/hbe.style.css"><script src="//unpkg.com/mermaid@11.12.2/dist/mermaid.min.js"></script><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lightgallery.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-zoom.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-thumbnail.css"><link type="text/css" rel="stylesheet" href="/lib/fontawesome/css/all.min.css"><script>if (window.localStorage.getItem('theme-mode') === 'light')
+updatePageConfig();</script><link type="text/css" rel="stylesheet" href="/lib/encrypt/hbe.style.css"><script src="//unpkg.com/mermaid@11.12.2/dist/mermaid.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.1/MathJax.js"></script><script>MathJax.Hub.Config({
+ menuSettings: {
+   zoom: "None"
+ },
+ showMathMenu: false,
+ jax: ["input/TeX","output/CommonHTML"],
+ extensions: ["tex2jax.js"],
+ TeX: {
+   extensions: ["AMSmath.js","AMSsymbols.js"],
+   equationNumbers: {
+     autoNumber: "AMS"
+   }
+ },
+ tex2jax: {
+   inlineMath: [["\\(", "\\)"]],
+   displayMath: [["\\[", "\\]"]]
+ }
+});</script><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lightgallery.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-zoom.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-thumbnail.css"><link type="text/css" rel="stylesheet" href="/lib/fontawesome/css/all.min.css"><script>if (window.localStorage.getItem('theme-mode') === 'light' || window.matchMedia('(prefers-color-scheme:light)').matches)
  document.documentElement.setAttribute('theme-mode', 'light')
-if (window.localStorage.getItem('theme-mode') === 'dark')
+if (window.localStorage.getItem('theme-mode') === 'dark' || window.matchMedia('(prefers-color-scheme:dark)').matches)
  document.documentElement.setAttribute('theme-mode', 'dark')</script><style>@font-face {
  font-family: BenderLight;
  src: local('Bender'), url("/font/BenderLight.woff2") format('woff2');
@@ -44,10 +61,28 @@ if (window.localStorage.getItem('theme-mode') === 'dark')
 }</style><style>:root {
  --dark-background: url('https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg');
  --light-background: url('/img/bk.jpg');
- --theme-encrypt-confirm: 'confirm'
-}</style><script defer src="/js/arknights.js"></script><script defer src="/js/search.js"></script><script defer type="module">import mermaid from '//unpkg.com/mermaid@11.12.2/dist/mermaid.esm.min.mjs';
+ --theme-encrypt-confirm: '确认'
+}</style><script defer src="/js/arknights.js"></script><script defer src="/js/search.js"></script><script defer src="https://vercount.one/js"></script><script defer type="module">import mermaid from '//unpkg.com/mermaid@11.12.2/dist/mermaid.esm.min.mjs';
 window.mermaid = mermaid;
 code.paintMermaid();
+</script><script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.1/MathJax.js"></script><script>MathJax.Hub.Config({
+  menuSettings: {
+    zoom: "None"
+  },
+  showMathMenu: false,
+  jax: ["input/TeX","output/CommonHTML"],
+  extensions: ["tex2jax.js"],
+  TeX: {
+    extensions: ["AMSmath.js","AMSsymbols.js"],
+    equationNumbers: {
+      autoNumber: "AMS"
+    }
+  },
+  tex2jax: {
+    inlineMath: [["\\(", "\\)"]],
+    displayMath: [["\\[", "\\]"]]
+  }
+});
 </script><script async src="//unpkg.com/lightgallery@2.7.1/lightgallery.min.js"></script><script async src="//unpkg.com/lightgallery@2.7.1/plugins/zoom/lg-zoom.min.js"></script><script async src="//unpkg.com/lightgallery@2.7.1/plugins/thumbnail/lg-thumbnail.min.js"></script><script async src="/lib/encrypt/hbe.js"></script><script async src="/js/pjax.js"></script><script class="pjax-js">reset= () => {document.querySelector('.lg-container')?.remove()
 lightGallery(document.getElementById('post-bg'), {
   plugins: [lgZoom,lgThumbnail],
@@ -64,7 +99,22 @@ lightGallery(document.getElementById('post-bg'), {
    }
  }
 });
-document.addEventListener("pjax:complete", reset);reset()})</script><script class="pjax-js">reset= () => {document.querySelector('.lg-container')?.remove()
+document.addEventListener("pjax:complete", reset);document.addEventListener('pjax:success', _ => {
+ const script = document.createElement('script');
+ script.src = 'https://vercount.one/js';
+ document.head.appendChild(script);
+});reset()})</script><script class="pjax-js">reset= () => {window.giscusSettings = {
+ repo: 'juicer0801/juicer0801.github.io',
+ repoId: 'R_kgDOUcAR_w',
+ category: 'Announcements',
+ categoryId: 'DIC_kwDOUcAR_84DIlqM',
+ mapping: 'pathname',
+ strict: '0',
+ reactionsEnabled: '1',
+ emitMetadata: '0',
+ inputPosition: 'bottom',
+ lang: 'zh-CN',
+ crossorigin: 'anonymous' , loading: 'lazy'};window.giscusThemeConfig = { theme: 'preferred_color_scheme' };MathJax.Hub.Queue(["Typeset", MathJax.Hub]);document.querySelector('.lg-container')?.remove()
 const postBg = document.querySelector('#post-bg');
 if (postBg) lightGallery(postBg, {
   plugins: [lgZoom,lgThumbnail],
@@ -81,9 +131,12 @@ if (postBg) lightGallery(postBg, {
    }
  }
 });
-document.addEventListener("pjax:complete", reset);reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>rnn三行代码的理解</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2026-10-10T07:29:04.000Z" id="date"> 2026-10-10</time></div></span><br><span>Last Update: <div class="control"><time datetime="2026-10-12T14:50:30.339Z" id="updated"> 2026-10-12</time></div></span></div></div><hr><div id="post-content"><h1 id="把-RNN-的这几行代码讲透：从“小本本”到张量形状"><a href="#把-RNN-的这几行代码讲透：从“小本本”到张量形状" class="headerlink" title="把 RNN 的这几行代码讲透：从“小本本”到张量形状"></a>把 RNN 的这几行代码讲透：从“小本本”到张量形状</h1><p>如果你刚接触 PyTorch 的 RNN，下面这几行代码很容易让人绕晕：</p>
+document.addEventListener("pjax:complete", reset);document.addEventListener('pjax:success', _ => {
+ const script = document.createElement('script');
+ script.src = 'https://vercount.one/js';
+ document.head.appendChild(script);
+});reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="数据检索" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/tags/"><span class="navItemTitle">Tags</span></a></li><li class="navItem"><a class="navBlock" href="/categories/"><span class="navItemTitle">Categories</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>rnn三行代码的理解</h1><div id="post-info"><span>文章发布时间: <div class="control"><time datetime="2026-10-10T07:29:04.000Z" id="date"> 2026-10-10</time></div></span><br><span>最后更新时间: <div class="control"><time datetime="2026-10-12T14:50:30.339Z" id="updated"> 2026-10-12</time></div></span><br><span>文章总字数: <div class="control">5k</div></span><br><span>预计阅读时间: <div class="control">20 分钟</div></span><br><span id="vercount_container_page_pv">页面浏览: <span class="control" id="vercount_value_page_pv">加载中...</span></span></div></div><hr><div id="post-content"><h1 id="把-RNN-的这几行代码讲透：从“小本本”到张量形状"><a href="#把-RNN-的这几行代码讲透：从“小本本”到张量形状" class="headerlink" title="把 RNN 的这几行代码讲透：从“小本本”到张量形状"></a>把 RNN 的这几行代码讲透：从“小本本”到张量形状</h1><p>如果你刚接触 PyTorch 的 RNN，下面这几行代码很容易让人绕晕：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">rnn = nn.RNN(input_size=<span class="hljs-number">128</span>, hidden_size=<span class="hljs-number">256</span>, num_layers=<span class="hljs-number">1</span>)<br>x = torch.randn(size=(<span class="hljs-number">5</span>, <span class="hljs-number">32</span>, <span class="hljs-number">128</span>))<br>h0 = torch.randn(size=(<span class="hljs-number">1</span>, <span class="hljs-number">32</span>, <span class="hljs-number">256</span>))<br>output, h1 = rnn(x, h0)<br></code></pre></td></tr></table></figure>
-
 <p>明明参数不多，但 <code>128</code>、<code>256</code>、<code>1</code>、<code>5</code>、<code>32</code> 到处出现，形状还互相关联。<br>这篇文章用两种方式讲：</p>
 <ol>
 <li><strong>通俗类比</strong>：把它想成一群人记小本本。</li>
@@ -96,10 +149,8 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 </blockquote>
 <p>默认情况下，PyTorch 的顺序是：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">x:      (seq_len, batch, input_size)<br>h0/h1:  (num_layers * num_directions, batch, hidden_size)<br>output: (seq_len, batch, hidden_size * num_directions)<br></code></pre></td></tr></table></figure>
-
 <p>你的例子里：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">x.shape      <span class="hljs-comment"># (5, 32, 128)</span><br>h0.shape     <span class="hljs-comment"># (1, 32, 256)</span><br>output.shape <span class="hljs-comment"># (5, 32, 256)</span><br>h1.shape     <span class="hljs-comment"># (1, 32, 256)</span><br></code></pre></td></tr></table></figure>
-
 <hr>
 <h2 id="二、通俗理解：32-个人，5-天，小本本"><a href="#二、通俗理解：32-个人，5-天，小本本" class="headerlink" title="二、通俗理解：32 个人，5 天，小本本"></a>二、通俗理解：32 个人，5 天，小本本</h2><p>把 RNN 想成一群人，每个人有一个小本本，用来记记忆。</p>
 <ul>
@@ -111,40 +162,34 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 </ul>
 <p>所以：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">x = (<span class="hljs-number">5</span>, <span class="hljs-number">32</span>, <span class="hljs-number">128</span>)<br></code></pre></td></tr></table></figure>
-
 <p>就是：</p>
 <blockquote>
 <p>5 天，32 个人，每人每天输入 128 个数字。</p>
 </blockquote>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">h0 = (<span class="hljs-number">1</span>, <span class="hljs-number">32</span>, <span class="hljs-number">256</span>)<br></code></pre></td></tr></table></figure>
-
 <p>就是：</p>
 <blockquote>
 <p>给 32 个人各发一本初始小本本，每本 256 个格子；1 表示只有 1 层。</p>
 </blockquote>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">output = (<span class="hljs-number">5</span>, <span class="hljs-number">32</span>, <span class="hljs-number">256</span>)<br></code></pre></td></tr></table></figure>
-
 <p>就是：</p>
 <blockquote>
 <p>RNN 每天都会把每个人当天的小本本内容记下来。<br>所以有 5 天，每天 32 个人，每人 256 个格子。</p>
 </blockquote>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">h1 = (<span class="hljs-number">1</span>, <span class="hljs-number">32</span>, <span class="hljs-number">256</span>)<br></code></pre></td></tr></table></figure>
-
 <p>就是：</p>
 <blockquote>
 <p>5 天结束后，每个人最后的小本本内容。<br>1 还是表示只有 1 层。</p>
 </blockquote>
 <p>单层单向时，最后一天的输出就是最终隐藏状态：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">output[-<span class="hljs-number">1</span>] == h1[<span class="hljs-number">0</span>]<br></code></pre></td></tr></table></figure>
-
 <p>更准确地说：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">torch.allclose(output[-<span class="hljs-number">1</span>], h1[<span class="hljs-number">0</span>])  <span class="hljs-comment"># True</span><br></code></pre></td></tr></table></figure>
-
 <hr>
 <h2 id="三、严谨拆解：每个参数管什么"><a href="#三、严谨拆解：每个参数管什么" class="headerlink" title="三、严谨拆解：每个参数管什么"></a>三、严谨拆解：每个参数管什么</h2><p>先看你写的 API：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">rnn = nn.RNN(input_size=<span class="hljs-number">128</span>, hidden_size=<span class="hljs-number">256</span>, num_layers=<span class="hljs-number">1</span>)<br></code></pre></td></tr></table></figure>
-
 <p>它决定了 RNN 的内部结构：</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -153,14 +198,15 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 <th>对应维度</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td><code>input_size=128</code></td>
 <td>每个时间步输入的特征维度</td>
 <td><code>x</code> 的最后一维</td>
 </tr>
 <tr>
 <td><code>hidden_size=256</code></td>
-<td>隐藏状态&#x2F;记忆的维度</td>
+<td>隐藏状态/记忆的维度</td>
 <td><code>h0</code>、<code>h1</code>、<code>output</code> 的最后一维</td>
 </tr>
 <tr>
@@ -178,16 +224,15 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 <td>默认单向</td>
 <td>方向数 <code>num_directions=1</code></td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p>RNN 内部每个时间步做类似这样的事：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">h_t = tanh( x_t @ W_ih.T + b_ih + h_&#123;t-1&#125; @ W_hh.T + b_hh )<br></code></pre></td></tr></table></figure>
-
 <p>维度对应：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs text">x_t:     (batch, input_size)      = (32, 128)<br>h_&#123;t-1&#125;: (batch, hidden_size)     = (32, 256)<br>W_ih:    (hidden_size, input_size)= (256, 128)<br>W_hh:    (hidden_size, hidden_size)= (256, 256)<br>h_t:     (batch, hidden_size)     = (32, 256)<br></code></pre></td></tr></table></figure>
-
 <p>你可以验证权重形状：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">rnn.weight_ih_l0.shape  <span class="hljs-comment"># torch.Size([256, 128])</span><br>rnn.weight_hh_l0.shape  <span class="hljs-comment"># torch.Size([256, 256])</span><br></code></pre></td></tr></table></figure>
-
 <p>所以：</p>
 <ul>
 <li>输入 <code>128</code> 维，被映射成隐藏记忆 <code>256</code> 维。</li>
@@ -197,7 +242,6 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 <hr>
 <h2 id="四、重点：那些数值相同的参数，分别是什么含义？"><a href="#四、重点：那些数值相同的参数，分别是什么含义？" class="headerlink" title="四、重点：那些数值相同的参数，分别是什么含义？"></a>四、重点：那些数值相同的参数，分别是什么含义？</h2><p>你代码里有很多重复数字。它们不是随便写的，而是 <strong>形状契约</strong>。</p>
 <h3 id="1-128-出现在哪里？"><a href="#1-128-出现在哪里？" class="headerlink" title="1. 128 出现在哪里？"></a>1. <code>128</code> 出现在哪里？</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">input_size=<span class="hljs-number">128</span><br>x = torch.randn(size=(<span class="hljs-number">5</span>, <span class="hljs-number">32</span>, <span class="hljs-number">128</span>))<br></code></pre></td></tr></table></figure>
-
 <p><code>128</code> 表示：</p>
 <blockquote>
 <p>每个时间步，每个样本输入的特征维度。</p>
@@ -210,10 +254,9 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 <p>如果你把 <code>input_size</code> 改成 <code>64</code>，那么 <code>x</code> 的最后一维也必须是 <code>64</code>，否则会报错。</p>
 <hr>
 <h3 id="2-256-出现在哪里？"><a href="#2-256-出现在哪里？" class="headerlink" title="2. 256 出现在哪里？"></a>2. <code>256</code> 出现在哪里？</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">hidden_size=<span class="hljs-number">256</span><br>h0 = torch.randn(size=(<span class="hljs-number">1</span>, <span class="hljs-number">32</span>, <span class="hljs-number">256</span>))<br>output, h1 = rnn(x, h0)<br></code></pre></td></tr></table></figure>
-
 <p><code>256</code> 表示：</p>
 <blockquote>
-<p>RNN 的隐藏状态&#x2F;记忆维度。</p>
+<p>RNN 的隐藏状态/记忆维度。</p>
 </blockquote>
 <p>它出现在：</p>
 <ul>
@@ -226,46 +269,36 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 </ul>
 <p>所以：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">h0.shape[-<span class="hljs-number">1</span>]      <span class="hljs-comment"># 256</span><br>h1.shape[-<span class="hljs-number">1</span>]      <span class="hljs-comment"># 256</span><br>output.shape[-<span class="hljs-number">1</span>]  <span class="hljs-comment"># 256</span><br></code></pre></td></tr></table></figure>
-
 <p>注意：如果是双向 RNN，<code>output</code> 最后一维会变成：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">hidden_size * num_directions = 256 * 2 = 512<br></code></pre></td></tr></table></figure>
-
 <p>但 <code>h0</code>、<code>h1</code> 的最后一维仍然是 <code>hidden_size=256</code>。</p>
 <hr>
 <h3 id="3-1-出现在哪里？"><a href="#3-1-出现在哪里？" class="headerlink" title="3. 1 出现在哪里？"></a>3. <code>1</code> 出现在哪里？</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">num_layers=<span class="hljs-number">1</span><br>h0 = torch.randn(size=(<span class="hljs-number">1</span>, <span class="hljs-number">32</span>, <span class="hljs-number">256</span>))<br></code></pre></td></tr></table></figure>
-
 <p><code>1</code> 表示：</p>
 <blockquote>
 <p>层数 × 方向数。</p>
 </blockquote>
 <p>默认单向时：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">num_directions = 1<br></code></pre></td></tr></table></figure>
-
 <p>所以：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">num_layers * num_directions = 1 * 1 = 1<br></code></pre></td></tr></table></figure>
-
 <p>因此 <code>h0</code>、<code>h1</code> 的第一维是 <code>1</code>。</p>
 <p>如果你设置：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">nn.RNN(<span class="hljs-number">128</span>, <span class="hljs-number">256</span>, num_layers=<span class="hljs-number">1</span>, bidirectional=<span class="hljs-literal">True</span>)<br></code></pre></td></tr></table></figure>
-
 <p>那么方向数变成 <code>2</code>，<code>h0</code>、<code>h1</code> 第一维就变成：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">1 * 2 = 2<br></code></pre></td></tr></table></figure>
-
 <p>如果你设置：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">nn.RNN(<span class="hljs-number">128</span>, <span class="hljs-number">256</span>, num_layers=<span class="hljs-number">2</span>)<br></code></pre></td></tr></table></figure>
-
 <p>那么 <code>h0</code>、<code>h1</code> 第一维就变成：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">2 * 1 = 2<br></code></pre></td></tr></table></figure>
-
 <p>所以 <code>1</code> 这个数字有两个相关含义：</p>
 <ul>
 <li><code>num_layers=1</code>：只有 1 层。</li>
-<li><code>h0.shape[0]=1</code>：层数 × 方向数 &#x3D; 1。</li>
+<li><code>h0.shape[0]=1</code>：层数 × 方向数 = 1。</li>
 </ul>
 <p>单层单向时，它们看起来一样；多层或双向时，就不再一样。</p>
 <hr>
 <h3 id="4-32-出现在哪里？"><a href="#4-32-出现在哪里？" class="headerlink" title="4. 32 出现在哪里？"></a>4. <code>32</code> 出现在哪里？</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">x = torch.randn(size=(<span class="hljs-number">5</span>, <span class="hljs-number">32</span>, <span class="hljs-number">128</span>))<br>h0 = torch.randn(size=(<span class="hljs-number">1</span>, <span class="hljs-number">32</span>, <span class="hljs-number">256</span>))<br></code></pre></td></tr></table></figure>
-
 <p><code>32</code> 表示：</p>
 <blockquote>
 <p>batch size，也就是同时处理多少个独立样本。</p>
@@ -279,16 +312,12 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 </ul>
 <p>默认 <code>batch_first=False</code>，所以 batch 在第二维：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">x:      (时间, 批, 特征)<br>h0/h1:  (层×方向, 批, 记忆)<br>output: (时间, 批, 记忆×方向)<br></code></pre></td></tr></table></figure>
-
 <p>如果你设置 <code>batch_first=True</code>，<code>x</code> 和 <code>output</code> 会变成：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text">x:      (批, 时间, 特征)<br>output: (批, 时间, 记忆×方向)<br></code></pre></td></tr></table></figure>
-
 <p>但注意：<code>h0</code>、<code>h1</code> 的形状不变，仍然是：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">(层×方向, 批, 记忆)<br></code></pre></td></tr></table></figure>
-
 <hr>
 <h3 id="5-5-出现在哪里？"><a href="#5-5-出现在哪里？" class="headerlink" title="5. 5 出现在哪里？"></a>5. <code>5</code> 出现在哪里？</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">x = torch.randn(size=(<span class="hljs-number">5</span>, <span class="hljs-number">32</span>, <span class="hljs-number">128</span>))<br></code></pre></td></tr></table></figure>
-
 <p><code>5</code> 表示：</p>
 <blockquote>
 <p>序列长度，也就是时间步数。</p>
@@ -301,10 +330,10 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 <p>它不会出现在 <code>h0</code>、<code>h1</code> 里，因为隐藏状态只保存最终状态，不保存所有时间步。</p>
 <p>单层单向时：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">output[-<span class="hljs-number">1</span>] == h1[<span class="hljs-number">0</span>]<br></code></pre></td></tr></table></figure>
-
 <p>因为最后一天的输出，就是最后一天的小本本。</p>
 <hr>
-<h2 id="五、形状关系总表"><a href="#五、形状关系总表" class="headerlink" title="五、形状关系总表"></a>五、形状关系总表</h2><table>
+<h2 id="五、形状关系总表"><a href="#五、形状关系总表" class="headerlink" title="五、形状关系总表"></a>五、形状关系总表</h2><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>数值</th>
@@ -313,7 +342,8 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 <th>变化条件</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td><code>128</code></td>
 <td><code>input_size</code>、<code>x.shape[-1]</code></td>
 <td>每步输入特征维度</td>
@@ -340,19 +370,18 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 <tr>
 <td><code>5</code></td>
 <td><code>x/output</code> 第一维</td>
-<td>时间步&#x2F;序列长度</td>
+<td>时间步/序列长度</td>
 <td><code>batch_first=True</code> 时去第二维，<code>h</code> 没有它</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p>记住三句口诀：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">x：时间、批、输入<br>h0/h1：层×方向、批、记忆<br>output：时间、批、记忆×方向<br></code></pre></td></tr></table></figure>
-
 <hr>
 <h2 id="六、如果改成多层或双向，会怎么变？"><a href="#六、如果改成多层或双向，会怎么变？" class="headerlink" title="六、如果改成多层或双向，会怎么变？"></a>六、如果改成多层或双向，会怎么变？</h2><h3 id="1-多层-RNN"><a href="#1-多层-RNN" class="headerlink" title="1. 多层 RNN"></a>1. 多层 RNN</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">rnn = nn.RNN(input_size=<span class="hljs-number">128</span>, hidden_size=<span class="hljs-number">256</span>, num_layers=<span class="hljs-number">2</span>)<br>x = torch.randn(<span class="hljs-number">5</span>, <span class="hljs-number">32</span>, <span class="hljs-number">128</span>)<br>h0 = torch.randn(<span class="hljs-number">2</span>, <span class="hljs-number">32</span>, <span class="hljs-number">256</span>)<br>output, h1 = rnn(x, h0)<br></code></pre></td></tr></table></figure>
-
 <p>形状：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">output.shape  <span class="hljs-comment"># (5, 32, 256)</span><br>h1.shape      <span class="hljs-comment"># (2, 32, 256)</span><br></code></pre></td></tr></table></figure>
-
 <p>含义：</p>
 <ul>
 <li><code>h0[0]</code>：第 0 层初始隐藏状态。</li>
@@ -365,13 +394,10 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 <p>第 1 层的输入维度自动变成第 0 层的 <code>hidden_size=256</code>。</p>
 <hr>
 <h3 id="2-双向-RNN"><a href="#2-双向-RNN" class="headerlink" title="2. 双向 RNN"></a>2. 双向 RNN</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">rnn = nn.RNN(input_size=<span class="hljs-number">128</span>, hidden_size=<span class="hljs-number">256</span>, num_layers=<span class="hljs-number">1</span>, bidirectional=<span class="hljs-literal">True</span>)<br>x = torch.randn(<span class="hljs-number">5</span>, <span class="hljs-number">32</span>, <span class="hljs-number">128</span>)<br>h0 = torch.randn(<span class="hljs-number">2</span>, <span class="hljs-number">32</span>, <span class="hljs-number">256</span>)<br>output, h1 = rnn(x, h0)<br></code></pre></td></tr></table></figure>
-
 <p>形状：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">output.shape  <span class="hljs-comment"># (5, 32, 512)</span><br>h1.shape      <span class="hljs-comment"># (2, 32, 256)</span><br></code></pre></td></tr></table></figure>
-
 <p>因为：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">num_directions = 2<br>output 最后一维 = hidden_size * 2 = 512<br>h0/h1 第一维 = num_layers * num_directions = 1 * 2 = 2<br></code></pre></td></tr></table></figure>
-
 <p>双向就是：</p>
 <blockquote>
 <p>正着读一遍，反着读一遍，最后把两个方向的记忆拼起来。</p>
@@ -380,48 +406,38 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 <h2 id="七、默认-batch-first-False"><a href="#七、默认-batch-first-False" class="headerlink" title="七、默认 batch_first=False"></a>七、默认 <code>batch_first=False</code></h2><p>默认 batch 不在第一维。</p>
 <p>默认：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">x:      (seq_len, batch, input_size)<br>output: (seq_len, batch, hidden_size * num_directions)<br></code></pre></td></tr></table></figure>
-
 <p>如果你写：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">rnn = nn.RNN(<span class="hljs-number">128</span>, <span class="hljs-number">256</span>, batch_first=<span class="hljs-literal">True</span>)<br>x = torch.randn(<span class="hljs-number">32</span>, <span class="hljs-number">5</span>, <span class="hljs-number">128</span>)<br></code></pre></td></tr></table></figure>
-
 <p>那么：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">x:      (batch, seq_len, input_size)<br>output: (batch, seq_len, hidden_size * num_directions)<br></code></pre></td></tr></table></figure>
-
 <p>但 <code>h0</code>、<code>h1</code> 仍然是：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">(num_layers * num_directions, batch, hidden_size)<br></code></pre></td></tr></table></figure>
-
 <p>也就是说，<code>batch_first=True</code> 只影响 <code>x</code> 和 <code>output</code>，不影响隐藏状态 <code>h</code>。</p>
 <hr>
 <h2 id="八、用代码验证一下"><a href="#八、用代码验证一下" class="headerlink" title="八、用代码验证一下"></a>八、用代码验证一下</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> torch<br><span class="hljs-keyword">import</span> torch.nn <span class="hljs-keyword">as</span> nn<br><br>rnn = nn.RNN(input_size=<span class="hljs-number">128</span>, hidden_size=<span class="hljs-number">256</span>, num_layers=<span class="hljs-number">1</span>)<br>x = torch.randn(size=(<span class="hljs-number">5</span>, <span class="hljs-number">32</span>, <span class="hljs-number">128</span>))<br>h0 = torch.randn(size=(<span class="hljs-number">1</span>, <span class="hljs-number">32</span>, <span class="hljs-number">256</span>))<br><br>output, h1 = rnn(x, h0)<br><br><span class="hljs-built_in">print</span>(output.shape)  <span class="hljs-comment"># torch.Size([5, 32, 256])</span><br><span class="hljs-built_in">print</span>(h1.shape)      <span class="hljs-comment"># torch.Size([1, 32, 256])</span><br><br><span class="hljs-built_in">print</span>(torch.allclose(output[-<span class="hljs-number">1</span>], h1[<span class="hljs-number">0</span>]))  <span class="hljs-comment"># True</span><br><br><span class="hljs-built_in">print</span>(rnn.weight_ih_l0.shape)  <span class="hljs-comment"># torch.Size([256, 128])</span><br><span class="hljs-built_in">print</span>(rnn.weight_hh_l0.shape)  <span class="hljs-comment"># torch.Size([256, 256])</span><br></code></pre></td></tr></table></figure>
-
 <hr>
 <h2 id="九、最后总结"><a href="#九、最后总结" class="headerlink" title="九、最后总结"></a>九、最后总结</h2><p>你这段代码可以翻译成：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs text">5 个时间步<br>32 个样本<br>每个样本每步输入 128 维<br>RNN 内部记忆 256 维<br>只有 1 层<br>output 保存所有 5 个时间步的最后一层输出<br>h1 保存每层最后一个时间步的隐藏状态<br></code></pre></td></tr></table></figure>
-
 <p>相同数值的含义：</p>
 <ul>
 <li><code>128</code>：输入特征维度。</li>
 <li><code>256</code>：隐藏记忆维度。</li>
 <li><code>1</code>：层数 × 方向数，默认单向时就是 1。</li>
 <li><code>32</code>：batch 大小。</li>
-<li><code>5</code>：时间步&#x2F;序列长度。</li>
+<li><code>5</code>：时间步/序列长度。</li>
 </ul>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">x：时间、批、输入<br>h0/h1：层×方向、批、记忆<br>output：时间、批、记忆×方向<br></code></pre></td></tr></table></figure>
-
 <h1 id="结合案例：（必看）"><a href="#结合案例：（必看）" class="headerlink" title="结合案例：（必看）"></a>结合案例：（必看）</h1><p> <code>nn.RNN</code> 这个 API 本身</p>
 <p>先只看这一行：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-variable language_">self</span>.rnn = nn.RNN(<span class="hljs-number">128</span>, <span class="hljs-number">256</span>, <span class="hljs-number">1</span>)<br></code></pre></td></tr></table></figure>
-
 <p>它等价于：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-variable language_">self</span>.rnn = nn.RNN(input_size=<span class="hljs-number">128</span>, hidden_size=<span class="hljs-number">256</span>, num_layers=<span class="hljs-number">1</span>)<br></code></pre></td></tr></table></figure>
-
 <p>这行代码只做一件事：</p>
 <blockquote>
 <p><strong>创建一个 RNN 层。</strong><br>它规定了“输入长什么样、记忆多大、叠几层”，但还没真正开始跑数据。</p>
 </blockquote>
 <p>真正跑数据是在 <code>forward</code> 里：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">output, hidden = <span class="hljs-variable language_">self</span>.rnn(x, h0)<br></code></pre></td></tr></table></figure>
-
 <p>所以要搞懂 RNN，只要搞懂两件事：</p>
 <ol>
 <li><strong>构造函数 <code>nn.RNN(...)</code> 的参数</strong></li>
@@ -430,23 +446,18 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 <hr>
 <h2 id="一、构造函数-nn-RNN-的参数"><a href="#一、构造函数-nn-RNN-的参数" class="headerlink" title="一、构造函数 nn.RNN(...) 的参数"></a>一、构造函数 <code>nn.RNN(...)</code> 的参数</h2><p><code>nn.RNN</code> 的完整签名（常用的几个）是：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python">nn.RNN(<br>    input_size,          <span class="hljs-comment"># 每个时间步输入的特征维度</span><br>    hidden_size,         <span class="hljs-comment"># 隐藏记忆的维度</span><br>    num_layers=<span class="hljs-number">1</span>,        <span class="hljs-comment"># 叠几层</span><br>    nonlinearity=<span class="hljs-string">&#x27;tanh&#x27;</span>, <span class="hljs-comment"># 激活函数, &#x27;tanh&#x27; 或 &#x27;relu&#x27;</span><br>    bias=<span class="hljs-literal">True</span>,           <span class="hljs-comment"># 是否加偏置</span><br>    batch_first=<span class="hljs-literal">False</span>,   <span class="hljs-comment"># 输入的第一维是不是 batch</span><br>    dropout=<span class="hljs-number">0</span>,           <span class="hljs-comment"># 层间 dropout</span><br>    bidirectional=<span class="hljs-literal">False</span>, <span class="hljs-comment"># 是否双向</span><br>)<br></code></pre></td></tr></table></figure>
-
 <p>你这个案例只用了前三个：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">nn.RNN(<span class="hljs-number">128</span>, <span class="hljs-number">256</span>, <span class="hljs-number">1</span>)<br></code></pre></td></tr></table></figure>
-
 <h3 id="1-input-size-128-是什么"><a href="#1-input-size-128-是什么" class="headerlink" title="1. input_size=128 是什么"></a>1. <code>input_size=128</code> 是什么</h3><blockquote>
 <p>每个时间步，输入给 RNN 的向量有多少维。</p>
 </blockquote>
 <p>在案例里，这个 <code>128</code> 从哪来？看它上一层：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-variable language_">self</span>.ebd = nn.Embedding(unique_word_count, <span class="hljs-number">128</span>)<br></code></pre></td></tr></table></figure>
-
 <p>Embedding 把每个词（一个整数索引）变成了 <strong>128 维向量</strong>。<br>所以 RNN 每一步收到的就是这 128 维向量，<code>input_size</code> 就必须是 128。</p>
 <p>如果你把 Embedding 改成：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-variable language_">self</span>.ebd = nn.Embedding(unique_word_count, <span class="hljs-number">64</span>)<br></code></pre></td></tr></table></figure>
-
 <p>那 RNN 也必须改成：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-variable language_">self</span>.rnn = nn.RNN(<span class="hljs-number">64</span>, <span class="hljs-number">256</span>, <span class="hljs-number">1</span>)<br></code></pre></td></tr></table></figure>
-
 <p>否则会报错。<strong>这是两个参数之间的第一个约束。</strong></p>
 <h3 id="2-hidden-size-256-是什么"><a href="#2-hidden-size-256-是什么" class="headerlink" title="2. hidden_size=256 是什么"></a>2. <code>hidden_size=256</code> 是什么</h3><blockquote>
 <p>RNN 内部的“记忆”有多少维。</p>
@@ -454,8 +465,8 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 <p>你可以把它理解成：RNN 每一步读完输入后，会把信息压缩成一个 256 维的向量，传给下一步。</p>
 <p>这个 <code>256</code> 决定了很多东西的形状：</p>
 <ul>
-<li>RNN 输出的 <code>output</code> 最后一维 &#x3D; 256</li>
-<li>RNN 返回的 <code>hidden</code> 最后一维 &#x3D; 256</li>
+<li>RNN 输出的 <code>output</code> 最后一维 = 256</li>
+<li>RNN 返回的 <code>hidden</code> 最后一维 = 256</li>
 <li>下一层 <code>nn.Linear(256, unique_word_count)</code> 的输入维度也必须是 256</li>
 </ul>
 <p><strong>这是第二个约束：<code>hidden_size</code> 必须和下一层全连接层的输入维度一致。</strong></p>
@@ -468,27 +479,23 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 </ul>
 <p>它影响的主要是 <code>hidden</code> 的第一维：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">hidden.shape[0] = num_layers * num_directions<br></code></pre></td></tr></table></figure>
-
 <p>单层单向时，就是 <code>1</code>。所以案例里 <code>init_hidden</code> 写的是：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">return</span> torch.zeros(<span class="hljs-number">1</span>, bs, <span class="hljs-number">256</span>)<br></code></pre></td></tr></table></figure>
-
 <p>这个 <code>1</code> 就是 <code>num_layers=1</code> 来的。</p>
 <hr>
 <h2 id="二、调用时的输入：rnn-x-h0"><a href="#二、调用时的输入：rnn-x-h0" class="headerlink" title="二、调用时的输入：rnn(x, h0)"></a>二、调用时的输入：<code>rnn(x, h0)</code></h2><p>调用的时候要传两样东西：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">output, hidden = <span class="hljs-variable language_">self</span>.rnn(x, h0)<br></code></pre></td></tr></table></figure>
-
 <h3 id="1-x：输入序列"><a href="#1-x：输入序列" class="headerlink" title="1. x：输入序列"></a>1. <code>x</code>：输入序列</h3><p>默认（<code>batch_first=False</code>）下，<code>x</code> 的形状必须是：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">(seq_len, batch, input_size)<br></code></pre></td></tr></table></figure>
-
 <p>在案例里就是：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">(32, 5, 128)<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li><strong>32</strong>：序列长度，一个样本有多少个时间步。</li>
 <li><strong>5</strong>：batch，一次喂 5 个句子。</li>
 <li><strong>128</strong>：每个时间步的特征维度，等于 <code>input_size</code>。</li>
 </ul>
 <p>这三个数分别在哪儿定义？</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -497,7 +504,8 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 <th>来源</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td><code>seq_len</code></td>
 <td>32</td>
 <td><code>LyricsDataset(corpus_idx, 32)</code></td>
@@ -512,14 +520,14 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 <td>128</td>
 <td><code>nn.Embedding(unique_word_count, 128)</code></td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p>注意：<strong>RNN 自己不知道 seq_len 和 batch 是多少</strong>，它只看 <code>input_size</code> 对不对得上。<br><code>seq_len</code> 和 <code>batch</code> 可以每次不一样，但 <code>input_size</code> 必须严格等于 <code>128</code>。</p>
 <h3 id="2-h0：初始隐藏状态"><a href="#2-h0：初始隐藏状态" class="headerlink" title="2. h0：初始隐藏状态"></a>2. <code>h0</code>：初始隐藏状态</h3><p>默认形状：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">(num_layers * num_directions, batch, hidden_size)<br></code></pre></td></tr></table></figure>
-
 <p>案例里就是：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">(1, 5, 256)<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li><strong>1</strong>：<code>num_layers * num_directions = 1 * 1 = 1</code></li>
 <li><strong>5</strong>：batch，必须和 <code>x</code> 的 batch 一致</li>
@@ -527,20 +535,16 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 </ul>
 <p>这个 <code>h0</code> 一般用全 0 初始化，案例里就是：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">init_hidden</span>(<span class="hljs-params">self, bs</span>):<br>    <span class="hljs-keyword">return</span> torch.zeros(<span class="hljs-number">1</span>, bs, <span class="hljs-number">256</span>)<br></code></pre></td></tr></table></figure>
-
 <p><strong>这是第三个约束：<code>h0</code> 的 batch 维必须等于 <code>x</code> 的 batch 维。</strong></p>
 <p>如果 <code>x</code> 的 batch 是 5，<code>h0</code> 的 batch 也必须是 5，否则报错。</p>
 <hr>
 <h2 id="三、调用后的输出：output-hidden"><a href="#三、调用后的输出：output-hidden" class="headerlink" title="三、调用后的输出：output, hidden"></a>三、调用后的输出：<code>output, hidden</code></h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">output, hidden = <span class="hljs-variable language_">self</span>.rnn(x, h0)<br></code></pre></td></tr></table></figure>
-
 <p>RNN 返回两个东西。</p>
 <h3 id="1-output：所有时间步的输出"><a href="#1-output：所有时间步的输出" class="headerlink" title="1. output：所有时间步的输出"></a>1. <code>output</code>：所有时间步的输出</h3><p>默认形状：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">(seq_len, batch, hidden_size * num_directions)<br></code></pre></td></tr></table></figure>
-
-<p>案例里单向单层就是：<br>num_layers&#x3D;1 → 单层</p>
-<p>bidirectional&#x3D;False → 单向</p>
+<p>案例里单向单层就是：<br>num_layers=1 → 单层</p>
+<p>bidirectional=False → 单向</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">(32, 5, 256)<br></code></pre></td></tr></table></figure>
-
 <p>含义：</p>
 <blockquote>
 <p>对每一个时间步、每一个样本，RNN 都给出一个 256 维的记忆向量。</p>
@@ -548,17 +552,14 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 <p>所以 <code>output[0]</code> 是第 0 步所有样本的记忆，<code>output[-1]</code> 是最后一步所有样本的记忆。</p>
 <h3 id="2-hidden：最后一个时间步的隐藏状态"><a href="#2-hidden：最后一个时间步的隐藏状态" class="headerlink" title="2. hidden：最后一个时间步的隐藏状态"></a>2. <code>hidden</code>：最后一个时间步的隐藏状态</h3><p>默认形状：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">(num_layers * num_directions, batch, hidden_size)<br></code></pre></td></tr></table></figure>
-
 <p>案例里就是：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">(1, 5, 256)<br></code></pre></td></tr></table></figure>
-
 <p>含义：</p>
 <blockquote>
 <p>每一层最后一步的记忆。</p>
 </blockquote>
 <p>单层单向时：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">output[-<span class="hljs-number">1</span>] == hidden[<span class="hljs-number">0</span>]<br></code></pre></td></tr></table></figure>
-
 <p>因为最后一层的最后一步，就是整段序列读完后的最终记忆。</p>
 <p><strong>注意：</strong></p>
 <ul>
@@ -572,8 +573,8 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 <p>这是最容易混的地方。</p>
 <hr>
 <h2 id="四、一张图把输入输出串起来"><a href="#四、一张图把输入输出串起来" class="headerlink" title="四、一张图把输入输出串起来"></a>四、一张图把输入输出串起来</h2><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs text">输入 x:   (seq_len=32, batch=5, input_size=128)<br>输入 h0:  (num_layers=1, batch=5, hidden_size=256)<br><br>              ↓  RNN<br><br>输出 output: (seq_len=32, batch=5, hidden_size=256)<br>输出 hidden: (num_layers=1, batch=5, hidden_size=256)<br></code></pre></td></tr></table></figure>
-
 <p>和案例代码一一对照：</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -582,7 +583,8 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 <th>由哪些参数决定</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td><code>x</code></td>
 <td><code>(32, 5, 128)</code></td>
 <td>seq_len, batch, <code>input_size</code></td>
@@ -602,24 +604,22 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 <td><code>(1, 5, 256)</code></td>
 <td><code>num_layers</code>, batch, <code>hidden_size</code></td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <hr>
 <h2 id="五、参数之间的三个硬约束"><a href="#五、参数之间的三个硬约束" class="headerlink" title="五、参数之间的三个硬约束"></a>五、参数之间的三个硬约束</h2><p>这三条一旦违反，直接报错：</p>
-<h3 id="约束-1：上一层输出维度-input-size"><a href="#约束-1：上一层输出维度-input-size" class="headerlink" title="约束 1：上一层输出维度 &#x3D; input_size"></a>约束 1：上一层输出维度 &#x3D; <code>input_size</code></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">nn.Embedding(unique_word_count, <span class="hljs-number">128</span>)   <span class="hljs-comment"># 输出 128 维</span><br>nn.RNN(<span class="hljs-number">128</span>, <span class="hljs-number">256</span>, <span class="hljs-number">1</span>)                     <span class="hljs-comment"># input_size 必须是 128</span><br></code></pre></td></tr></table></figure>
-
-<h3 id="约束-2：hidden-size-下一层输入维度"><a href="#约束-2：hidden-size-下一层输入维度" class="headerlink" title="约束 2：hidden_size &#x3D; 下一层输入维度"></a>约束 2：<code>hidden_size</code> &#x3D; 下一层输入维度</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">nn.RNN(<span class="hljs-number">128</span>, <span class="hljs-number">256</span>, <span class="hljs-number">1</span>)                     <span class="hljs-comment"># hidden_size = 256</span><br>nn.Linear(<span class="hljs-number">256</span>, unique_word_count)       <span class="hljs-comment"># 输入必须是 256</span><br></code></pre></td></tr></table></figure>
-
-<h3 id="约束-3：h0-的-batch-x-的-batch"><a href="#约束-3：h0-的-batch-x-的-batch" class="headerlink" title="约束 3：h0 的 batch &#x3D; x 的 batch"></a>约束 3：<code>h0</code> 的 batch &#x3D; <code>x</code> 的 batch</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">hidden = model.init_hidden(<span class="hljs-number">5</span>)           <span class="hljs-comment"># batch = 5</span><br>output, hidden = model(x, hidden)       <span class="hljs-comment"># x 的 batch 也必须是 5</span><br></code></pre></td></tr></table></figure>
-
+<h3 id="约束-1：上一层输出维度-input-size"><a href="#约束-1：上一层输出维度-input-size" class="headerlink" title="约束 1：上一层输出维度 = input_size"></a>约束 1：上一层输出维度 = <code>input_size</code></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">nn.Embedding(unique_word_count, <span class="hljs-number">128</span>)   <span class="hljs-comment"># 输出 128 维</span><br>nn.RNN(<span class="hljs-number">128</span>, <span class="hljs-number">256</span>, <span class="hljs-number">1</span>)                     <span class="hljs-comment"># input_size 必须是 128</span><br></code></pre></td></tr></table></figure>
+<h3 id="约束-2：hidden-size-下一层输入维度"><a href="#约束-2：hidden-size-下一层输入维度" class="headerlink" title="约束 2：hidden_size = 下一层输入维度"></a>约束 2：<code>hidden_size</code> = 下一层输入维度</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">nn.RNN(<span class="hljs-number">128</span>, <span class="hljs-number">256</span>, <span class="hljs-number">1</span>)                     <span class="hljs-comment"># hidden_size = 256</span><br>nn.Linear(<span class="hljs-number">256</span>, unique_word_count)       <span class="hljs-comment"># 输入必须是 256</span><br></code></pre></td></tr></table></figure>
+<h3 id="约束-3：h0-的-batch-x-的-batch"><a href="#约束-3：h0-的-batch-x-的-batch" class="headerlink" title="约束 3：h0 的 batch = x 的 batch"></a>约束 3：<code>h0</code> 的 batch = <code>x</code> 的 batch</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">hidden = model.init_hidden(<span class="hljs-number">5</span>)           <span class="hljs-comment"># batch = 5</span><br>output, hidden = model(x, hidden)       <span class="hljs-comment"># x 的 batch 也必须是 5</span><br></code></pre></td></tr></table></figure>
 <p>另外还有一条<strong>软约束</strong>（不报错但逻辑会乱）：</p>
 <blockquote>
 <p><code>h0</code> 的 <code>num_layers</code> 和 <code>hidden_size</code>，必须和 <code>nn.RNN</code> 里设置的 <code>num_layers</code>、<code>hidden_size</code> 一致。</p>
 </blockquote>
 <p>案例里 <code>init_hidden</code> 写死了 <code>torch.zeros(1, bs, 256)</code>，就是因为模型是 1 层、256 维。<br>如果你把模型改成 <code>nn.RNN(128, 512, 1)</code>，那 <code>init_hidden</code> 也要改成 <code>torch.zeros(1, bs, 512)</code>，同时 <code>nn.Linear</code> 也要改成 <code>nn.Linear(512, unique_word_count)</code>。</p>
 <hr>
-<h2 id="六、和案例里的两次-transpose-reshape-对上"><a href="#六、和案例里的两次-transpose-reshape-对上" class="headerlink" title="六、和案例里的两次 transpose&#x2F;reshape 对上"></a>六、和案例里的两次 transpose&#x2F;reshape 对上</h2><p>案例里 forward 是这么写的：</p>
+<h2 id="六、和案例里的两次-transpose-reshape-对上"><a href="#六、和案例里的两次-transpose-reshape-对上" class="headerlink" title="六、和案例里的两次 transpose/reshape 对上"></a>六、和案例里的两次 transpose/reshape 对上</h2><p>案例里 forward 是这么写的：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">embd = <span class="hljs-variable language_">self</span>.ebd(inputs)                       <span class="hljs-comment"># (5, 32, 128)</span><br>output, hidden = <span class="hljs-variable language_">self</span>.rnn(embd.transpose(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>), hidden)<br>output = <span class="hljs-variable language_">self</span>.out(output.reshape(-<span class="hljs-number">1</span>, <span class="hljs-number">256</span>))<br></code></pre></td></tr></table></figure>
-
 <p>为什么要动形状？就是因为 RNN 的 API 规定死了：</p>
 <ul>
 <li><strong>进来</strong>：<code>(seq_len, batch, input_size)</code></li>
@@ -648,18 +648,16 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 </ul>
 <p><strong>三条硬约束：</strong></p>
 <ol>
-<li>上一层输出维度 &#x3D; <code>input_size</code></li>
-<li><code>hidden_size</code> &#x3D; 下一层输入维度</li>
-<li><code>h0</code> 的 batch &#x3D; <code>x</code> 的 batch</li>
+<li>上一层输出维度 = <code>input_size</code></li>
+<li><code>hidden_size</code> = 下一层输入维度</li>
+<li><code>h0</code> 的 batch = <code>x</code> 的 batch</li>
 </ol>
 <p>你问的这两个点很关键，我单独拆出来讲。</p>
 <hr>
 <h2 id="1-你现在这个是不是单层单向？"><a href="#1-你现在这个是不是单层单向？" class="headerlink" title="1. 你现在这个是不是单层单向？"></a>1. 你现在这个是不是单层单向？</h2><p>是的。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-variable language_">self</span>.rnn = nn.RNN(<span class="hljs-number">128</span>, <span class="hljs-number">256</span>, <span class="hljs-number">1</span>)<br></code></pre></td></tr></table></figure>
-
 <p>等价于：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-variable language_">self</span>.rnn = nn.RNN(<br>    input_size=<span class="hljs-number">128</span>,<br>    hidden_size=<span class="hljs-number">256</span>,<br>    num_layers=<span class="hljs-number">1</span>,<br>    bidirectional=<span class="hljs-literal">False</span>   <span class="hljs-comment"># 默认就是 False</span><br>)<br></code></pre></td></tr></table></figure>
-
 <p>所以：</p>
 <ul>
 <li><code>num_layers=1</code> → <strong>单层</strong></li>
@@ -667,36 +665,27 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 </ul>
 <p>因此 <code>hidden</code> 的第一维就是：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">num_layers * num_directions = 1 * 1 = 1<br></code></pre></td></tr></table></figure>
-
 <p>所以 <code>hidden</code> 的形状是：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">(1, batch, 256)<br></code></pre></td></tr></table></figure>
-
 <p>在案例里 <code>batch=5</code>，所以是 <code>(1, 5, 256)</code>。</p>
 <hr>
 <h2 id="2-“时间步”到底是什么意思？"><a href="#2-“时间步”到底是什么意思？" class="headerlink" title="2. “时间步”到底是什么意思？"></a>2. “时间步”到底是什么意思？</h2><p>其实是那个滑动窗口</p>
 <p>时间步是<strong>序列上的位置</strong>。</p>
 <p>举个例子，假设一个样本是一个句子：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">我  爱  你<br></code></pre></td></tr></table></figure>
-
 <p>分词后是 3 个词，那么这个样本的序列长度 <code>seq_len = 3</code>。</p>
 <p>RNN 会这样处理：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">时间步 1：输入“我”   -&gt; 更新隐藏状态 h1<br>时间步 2：输入“爱”   -&gt; 结合 h1，更新为 h2<br>时间步 3：输入“你”   -&gt; 结合 h2，更新为 h3<br></code></pre></td></tr></table></figure>
-
 <p>所以这个样本经历了 <strong>3 个时间步</strong>。</p>
 <p>在你的案例里：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">LyricsDataset(corpus_idx, <span class="hljs-number">32</span>)<br></code></pre></td></tr></table></figure>
-
 <p>每个样本的长度是 32，所以每个样本都要经历 <strong>32 个时间步</strong>。</p>
 <p>而 <code>batch=5</code> 表示：</p>
 <blockquote>
 <p>一次同时处理 5 个这样的样本。</p>
 </blockquote>
-<p>这 5 个样本是<strong>并行</strong>处理的。在每个时间步，RNN 同时收到 5 个样本的当前输入：</p>
-<figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs text">第 1 个时间步：5 个样本同时各算一次<br>第 2 个时间步：5 个样本同时各算一次<br>...<br>第 32 个时间步：5 个样本同时各算一次<br></code></pre></td></tr></table></figure>
-
-
+<p>这 5 个样本是<strong>并行</strong>处理的。在每个时间步，RNN 同时收到 5 个样本的当前输入：<br><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs text">第 1 个时间步：5 个样本同时各算一次<br>第 2 个时间步：5 个样本同时各算一次<br>...<br>第 32 个时间步：5 个样本同时各算一次<br></code></pre></td></tr></table></figure></p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs text">时间步 1：同时输入 5 个样本的第 1 个词<br>时间步 2：同时输入 5 个样本的第 2 个词<br>...<br>时间步 32：同时输入 5 个样本的第 32 个词<br></code></pre></td></tr></table></figure>
-
 <p>所以：</p>
 <ul>
 <li>对<strong>单个样本</strong>来说，它经过了 <code>seq_len</code> 个时间步。</li>
@@ -706,38 +695,30 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 <p>但 RNN 神经元只有一个（共享权重），它在每个时间步对 batch 里所有样本并行计算。<br>所以“时间步”描述的是<strong>序列推进到了第几个位置</strong>，而不是“所有样本总共经过了多少次”。</p>
 <hr>
 <h2 id="3-hidden-为什么是“最后一个时间步的隐藏状态”？"><a href="#3-hidden-为什么是“最后一个时间步的隐藏状态”？" class="headerlink" title="3. hidden 为什么是“最后一个时间步的隐藏状态”？"></a>3. <code>hidden</code> 为什么是“最后一个时间步的隐藏状态”？</h2><p>RNN 是按时间步顺序处理的。</p>
-<p>假设单层单向，batch&#x3D;1，序列长度&#x3D;3：</p>
+<p>假设单层单向，batch=1，序列长度=3：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs text">初始隐藏状态 h0<br><br>时间步 1：输入 x1 -&gt; 计算 h1<br>时间步 2：输入 x2 -&gt; 计算 h2<br>时间步 3：输入 x3 -&gt; 计算 h3<br></code></pre></td></tr></table></figure>
-
 <p>处理完整个序列后，最后得到的隐藏状态是 <code>h3</code>。</p>
 <p><code>hidden</code> 返回的就是这个 <code>h3</code>。</p>
 <p>因为 <code>h3</code> 是在最后一个时间步产生的，所以叫“最后一个时间步的隐藏状态”。</p>
 <p>它包含了从第 1 步到第 3 步的所有信息。<br>在语言模型里，通常就用这个最终隐藏状态来代表整个序列的“记忆”。</p>
 <hr>
-<h2 id="4-output-和-hidden-的关系"><a href="#4-output-和-hidden-的关系" class="headerlink" title="4. output 和 hidden 的关系"></a>4. <code>output</code> 和 <code>hidden</code> 的关系</h2><p>还是上面那个例子，序列长度&#x3D;3：</p>
+<h2 id="4-output-和-hidden-的关系"><a href="#4-output-和-hidden-的关系" class="headerlink" title="4. output 和 hidden 的关系"></a>4. <code>output</code> 和 <code>hidden</code> 的关系</h2><p>还是上面那个例子，序列长度=3：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text">output = [h1, h2, h3]   # 所有时间步的隐藏状态<br>hidden = [h3]           # 最后一个时间步的隐藏状态<br></code></pre></td></tr></table></figure>
-
 <p>用形状表示：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text">output: (seq_len, batch, hidden_size) = (3, batch, 256)<br>hidden: (num_layers, batch, hidden_size) = (1, batch, 256)<br></code></pre></td></tr></table></figure>
-
 <p>所以：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">output[-<span class="hljs-number">1</span>] == hidden[<span class="hljs-number">0</span>]<br></code></pre></td></tr></table></figure>
-
 <p>在你的案例里：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs text">seq_len = 32<br>batch = 5<br>hidden_size = 256<br><br>output.shape = (32, 5, 256)<br>hidden.shape = (1, 5, 256)<br></code></pre></td></tr></table></figure>
-
 <p><code>output[-1]</code> 就是第 32 个时间步的隐藏状态，形状 <code>(5, 256)</code>。<br><code>hidden[0]</code> 也是第 32 个时间步的隐藏状态，形状 <code>(5, 256)</code>。<br>它们完全相等。</p>
 <hr>
 <h2 id="5-再走一遍"><a href="#5-再走一遍" class="headerlink" title="5. 再走一遍"></a>5. 再走一遍</h2><p><code>forward</code> 里：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">embd = <span class="hljs-variable language_">self</span>.ebd(inputs)                       <span class="hljs-comment"># (5, 32, 128)</span><br>output, hidden = <span class="hljs-variable language_">self</span>.rnn(embd.transpose(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>), hidden)<br></code></pre></td></tr></table></figure>
-
 <p><code>embd.transpose(0, 1)</code> 后：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs text">(32, 5, 128)   -&gt; (seq_len, batch, input_size)<br></code></pre></td></tr></table></figure>
-
 <p>RNN 处理这 32 个时间步，每个时间步同时处理 5 个样本。</p>
 <p>处理完：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs text">output: (32, 5, 256)   -&gt; 每个时间步、每个样本的隐藏状态<br>hidden: (1, 5, 256)    -&gt; 第 32 个时间步、每个样本的隐藏状态<br></code></pre></td></tr></table></figure>
-
 <p>因为只有 1 层、单向，所以 <code>hidden</code> 第一维是 1。<br><code>hidden[0]</code> 就是最后一层（也是唯一一层）在最后一个时间步的隐藏状态。</p>
 <hr>
 <h2 id="6-一句话总结"><a href="#6-一句话总结" class="headerlink" title="6. 一句话总结"></a>6. 一句话总结</h2><ul>
@@ -747,4 +728,4 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 <li><strong><code>output</code></strong>：所有时间步的隐藏状态。</li>
 <li><strong>关系</strong>：单层单向时，<code>output[-1] == hidden[0]</code>。</li>
 </ul>
-<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2026/10/10/deeplearn31/">← Next 完整rnn代码</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/10/10/deeplearn29/">独热编码 Prev →</a></div></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="To Top" style="opacity: 0; display: none;">∧ </a><a class="i-index" id="to-index" onClick="tocControl.change()" title="To Catalog"><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span></a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="Change Theme"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">John Doe</a></h1><div id="description"><p></p></div></div><div id="aside-block"><div id="toc-div"><h1>Catalog</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8A%8A-RNN-%E7%9A%84%E8%BF%99%E5%87%A0%E8%A1%8C%E4%BB%A3%E7%A0%81%E8%AE%B2%E9%80%8F%EF%BC%9A%E4%BB%8E%E2%80%9C%E5%B0%8F%E6%9C%AC%E6%9C%AC%E2%80%9D%E5%88%B0%E5%BC%A0%E9%87%8F%E5%BD%A2%E7%8A%B6"><span class="toc-number">1.</span> <span class="toc-text">把 RNN 的这几行代码讲透：从“小本本”到张量形状</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%80%BB%E8%A7%88"><span class="toc-number">1.1.</span> <span class="toc-text">一、一句话总览</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E9%80%9A%E4%BF%97%E7%90%86%E8%A7%A3%EF%BC%9A32-%E4%B8%AA%E4%BA%BA%EF%BC%8C5-%E5%A4%A9%EF%BC%8C%E5%B0%8F%E6%9C%AC%E6%9C%AC"><span class="toc-number">1.2.</span> <span class="toc-text">二、通俗理解：32 个人，5 天，小本本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E4%B8%A5%E8%B0%A8%E6%8B%86%E8%A7%A3%EF%BC%9A%E6%AF%8F%E4%B8%AA%E5%8F%82%E6%95%B0%E7%AE%A1%E4%BB%80%E4%B9%88"><span class="toc-number">1.3.</span> <span class="toc-text">三、严谨拆解：每个参数管什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E9%87%8D%E7%82%B9%EF%BC%9A%E9%82%A3%E4%BA%9B%E6%95%B0%E5%80%BC%E7%9B%B8%E5%90%8C%E7%9A%84%E5%8F%82%E6%95%B0%EF%BC%8C%E5%88%86%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88%E5%90%AB%E4%B9%89%EF%BC%9F"><span class="toc-number">1.4.</span> <span class="toc-text">四、重点：那些数值相同的参数，分别是什么含义？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-128-%E5%87%BA%E7%8E%B0%E5%9C%A8%E5%93%AA%E9%87%8C%EF%BC%9F"><span class="toc-number">1.4.1.</span> <span class="toc-text">1. 128 出现在哪里？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-256-%E5%87%BA%E7%8E%B0%E5%9C%A8%E5%93%AA%E9%87%8C%EF%BC%9F"><span class="toc-number">1.4.2.</span> <span class="toc-text">2. 256 出现在哪里？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E5%87%BA%E7%8E%B0%E5%9C%A8%E5%93%AA%E9%87%8C%EF%BC%9F"><span class="toc-number">1.4.3.</span> <span class="toc-text">3. 1 出现在哪里？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-32-%E5%87%BA%E7%8E%B0%E5%9C%A8%E5%93%AA%E9%87%8C%EF%BC%9F"><span class="toc-number">1.4.4.</span> <span class="toc-text">4. 32 出现在哪里？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-5-%E5%87%BA%E7%8E%B0%E5%9C%A8%E5%93%AA%E9%87%8C%EF%BC%9F"><span class="toc-number">1.4.5.</span> <span class="toc-text">5. 5 出现在哪里？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%BD%A2%E7%8A%B6%E5%85%B3%E7%B3%BB%E6%80%BB%E8%A1%A8"><span class="toc-number">1.5.</span> <span class="toc-text">五、形状关系总表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E5%A6%82%E6%9E%9C%E6%94%B9%E6%88%90%E5%A4%9A%E5%B1%82%E6%88%96%E5%8F%8C%E5%90%91%EF%BC%8C%E4%BC%9A%E6%80%8E%E4%B9%88%E5%8F%98%EF%BC%9F"><span class="toc-number">1.6.</span> <span class="toc-text">六、如果改成多层或双向，会怎么变？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%A4%9A%E5%B1%82-RNN"><span class="toc-number">1.6.1.</span> <span class="toc-text">1. 多层 RNN</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%8F%8C%E5%90%91-RNN"><span class="toc-number">1.6.2.</span> <span class="toc-text">2. 双向 RNN</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E9%BB%98%E8%AE%A4-batch-first-False"><span class="toc-number">1.7.</span> <span class="toc-text">七、默认 batch_first&#x3D;False</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E7%94%A8%E4%BB%A3%E7%A0%81%E9%AA%8C%E8%AF%81%E4%B8%80%E4%B8%8B"><span class="toc-number">1.8.</span> <span class="toc-text">八、用代码验证一下</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E6%9C%80%E5%90%8E%E6%80%BB%E7%BB%93"><span class="toc-number">1.9.</span> <span class="toc-text">九、最后总结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%93%E5%90%88%E6%A1%88%E4%BE%8B%EF%BC%9A%EF%BC%88%E5%BF%85%E7%9C%8B%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">结合案例：（必看）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0-nn-RNN-%E7%9A%84%E5%8F%82%E6%95%B0"><span class="toc-number">2.1.</span> <span class="toc-text">一、构造函数 nn.RNN(...) 的参数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-input-size-128-%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">2.1.1.</span> <span class="toc-text">1. input_size&#x3D;128 是什么</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-hidden-size-256-%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">2.1.2.</span> <span class="toc-text">2. hidden_size&#x3D;256 是什么</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-num-layers-1-%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">2.1.3.</span> <span class="toc-text">3. num_layers&#x3D;1 是什么</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E8%B0%83%E7%94%A8%E6%97%B6%E7%9A%84%E8%BE%93%E5%85%A5%EF%BC%9Arnn-x-h0"><span class="toc-number">2.2.</span> <span class="toc-text">二、调用时的输入：rnn(x, h0)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-x%EF%BC%9A%E8%BE%93%E5%85%A5%E5%BA%8F%E5%88%97"><span class="toc-number">2.2.1.</span> <span class="toc-text">1. x：输入序列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-h0%EF%BC%9A%E5%88%9D%E5%A7%8B%E9%9A%90%E8%97%8F%E7%8A%B6%E6%80%81"><span class="toc-number">2.2.2.</span> <span class="toc-text">2. h0：初始隐藏状态</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E8%B0%83%E7%94%A8%E5%90%8E%E7%9A%84%E8%BE%93%E5%87%BA%EF%BC%9Aoutput-hidden"><span class="toc-number">2.3.</span> <span class="toc-text">三、调用后的输出：output, hidden</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-output%EF%BC%9A%E6%89%80%E6%9C%89%E6%97%B6%E9%97%B4%E6%AD%A5%E7%9A%84%E8%BE%93%E5%87%BA"><span class="toc-number">2.3.1.</span> <span class="toc-text">1. output：所有时间步的输出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-hidden%EF%BC%9A%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E6%97%B6%E9%97%B4%E6%AD%A5%E7%9A%84%E9%9A%90%E8%97%8F%E7%8A%B6%E6%80%81"><span class="toc-number">2.3.2.</span> <span class="toc-text">2. hidden：最后一个时间步的隐藏状态</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E4%B8%80%E5%BC%A0%E5%9B%BE%E6%8A%8A%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E4%B8%B2%E8%B5%B7%E6%9D%A5"><span class="toc-number">2.4.</span> <span class="toc-text">四、一张图把输入输出串起来</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%8F%82%E6%95%B0%E4%B9%8B%E9%97%B4%E7%9A%84%E4%B8%89%E4%B8%AA%E7%A1%AC%E7%BA%A6%E6%9D%9F"><span class="toc-number">2.5.</span> <span class="toc-text">五、参数之间的三个硬约束</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%A6%E6%9D%9F-1%EF%BC%9A%E4%B8%8A%E4%B8%80%E5%B1%82%E8%BE%93%E5%87%BA%E7%BB%B4%E5%BA%A6-input-size"><span class="toc-number">2.5.1.</span> <span class="toc-text">约束 1：上一层输出维度 &#x3D; input_size</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%A6%E6%9D%9F-2%EF%BC%9Ahidden-size-%E4%B8%8B%E4%B8%80%E5%B1%82%E8%BE%93%E5%85%A5%E7%BB%B4%E5%BA%A6"><span class="toc-number">2.5.2.</span> <span class="toc-text">约束 2：hidden_size &#x3D; 下一层输入维度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%A6%E6%9D%9F-3%EF%BC%9Ah0-%E7%9A%84-batch-x-%E7%9A%84-batch"><span class="toc-number">2.5.3.</span> <span class="toc-text">约束 3：h0 的 batch &#x3D; x 的 batch</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E5%92%8C%E6%A1%88%E4%BE%8B%E9%87%8C%E7%9A%84%E4%B8%A4%E6%AC%A1-transpose-reshape-%E5%AF%B9%E4%B8%8A"><span class="toc-number">2.6.</span> <span class="toc-text">六、和案例里的两次 transpose&#x2F;reshape 对上</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E5%B0%8F%E7%BB%93"><span class="toc-number">2.7.</span> <span class="toc-text">七、小结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%BD%A0%E7%8E%B0%E5%9C%A8%E8%BF%99%E4%B8%AA%E6%98%AF%E4%B8%8D%E6%98%AF%E5%8D%95%E5%B1%82%E5%8D%95%E5%90%91%EF%BC%9F"><span class="toc-number">2.8.</span> <span class="toc-text">1. 你现在这个是不是单层单向？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E2%80%9C%E6%97%B6%E9%97%B4%E6%AD%A5%E2%80%9D%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88%E6%84%8F%E6%80%9D%EF%BC%9F"><span class="toc-number">2.9.</span> <span class="toc-text">2. “时间步”到底是什么意思？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-hidden-%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AF%E2%80%9C%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E6%97%B6%E9%97%B4%E6%AD%A5%E7%9A%84%E9%9A%90%E8%97%8F%E7%8A%B6%E6%80%81%E2%80%9D%EF%BC%9F"><span class="toc-number">2.10.</span> <span class="toc-text">3. hidden 为什么是“最后一个时间步的隐藏状态”？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-output-%E5%92%8C-hidden-%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-number">2.11.</span> <span class="toc-text">4. output 和 hidden 的关系</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E5%86%8D%E8%B5%B0%E4%B8%80%E9%81%8D"><span class="toc-number">2.12.</span> <span class="toc-text">5. 再走一遍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%80%BB%E7%BB%93"><span class="toc-number">2.13.</span> <span class="toc-text">6. 一句话总结</span></a></li></ol></li></ol></div></div><footer><nobr>Published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2026/10/10/deeplearn31/">← 下一篇 完整rnn代码</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/10/10/deeplearn29/">独热编码 上一篇 →</a></div></div></div><div id="comments"><div id="giscus"></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="回到顶部" style="opacity: 0; display: none;">∧ </a><a class="i-index" id="to-index" onClick="tocControl.change()" title="文章目录"><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span></a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="切换主题"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">John Doe</a></h1><div id="description"><p></p></div><div id="social-links"><a class="social" target="_blank" rel="noopener" href="https://github.com/juicer0801"><i class="fab fa-github" alt="GitHub"></i></a></div></div><div id="aside-block"><div id="toc-div"><h1>目录</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8A%8A-RNN-%E7%9A%84%E8%BF%99%E5%87%A0%E8%A1%8C%E4%BB%A3%E7%A0%81%E8%AE%B2%E9%80%8F%EF%BC%9A%E4%BB%8E%E2%80%9C%E5%B0%8F%E6%9C%AC%E6%9C%AC%E2%80%9D%E5%88%B0%E5%BC%A0%E9%87%8F%E5%BD%A2%E7%8A%B6"><span class="toc-number">1.</span> <span class="toc-text">把 RNN 的这几行代码讲透：从“小本本”到张量形状</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%80%BB%E8%A7%88"><span class="toc-number">1.1.</span> <span class="toc-text">一、一句话总览</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E9%80%9A%E4%BF%97%E7%90%86%E8%A7%A3%EF%BC%9A32-%E4%B8%AA%E4%BA%BA%EF%BC%8C5-%E5%A4%A9%EF%BC%8C%E5%B0%8F%E6%9C%AC%E6%9C%AC"><span class="toc-number">1.2.</span> <span class="toc-text">二、通俗理解：32 个人，5 天，小本本</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E4%B8%A5%E8%B0%A8%E6%8B%86%E8%A7%A3%EF%BC%9A%E6%AF%8F%E4%B8%AA%E5%8F%82%E6%95%B0%E7%AE%A1%E4%BB%80%E4%B9%88"><span class="toc-number">1.3.</span> <span class="toc-text">三、严谨拆解：每个参数管什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E9%87%8D%E7%82%B9%EF%BC%9A%E9%82%A3%E4%BA%9B%E6%95%B0%E5%80%BC%E7%9B%B8%E5%90%8C%E7%9A%84%E5%8F%82%E6%95%B0%EF%BC%8C%E5%88%86%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88%E5%90%AB%E4%B9%89%EF%BC%9F"><span class="toc-number">1.4.</span> <span class="toc-text">四、重点：那些数值相同的参数，分别是什么含义？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-128-%E5%87%BA%E7%8E%B0%E5%9C%A8%E5%93%AA%E9%87%8C%EF%BC%9F"><span class="toc-number">1.4.1.</span> <span class="toc-text">1. 128 出现在哪里？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-256-%E5%87%BA%E7%8E%B0%E5%9C%A8%E5%93%AA%E9%87%8C%EF%BC%9F"><span class="toc-number">1.4.2.</span> <span class="toc-text">2. 256 出现在哪里？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E5%87%BA%E7%8E%B0%E5%9C%A8%E5%93%AA%E9%87%8C%EF%BC%9F"><span class="toc-number">1.4.3.</span> <span class="toc-text">3. 1 出现在哪里？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-32-%E5%87%BA%E7%8E%B0%E5%9C%A8%E5%93%AA%E9%87%8C%EF%BC%9F"><span class="toc-number">1.4.4.</span> <span class="toc-text">4. 32 出现在哪里？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-5-%E5%87%BA%E7%8E%B0%E5%9C%A8%E5%93%AA%E9%87%8C%EF%BC%9F"><span class="toc-number">1.4.5.</span> <span class="toc-text">5. 5 出现在哪里？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%BD%A2%E7%8A%B6%E5%85%B3%E7%B3%BB%E6%80%BB%E8%A1%A8"><span class="toc-number">1.5.</span> <span class="toc-text">五、形状关系总表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E5%A6%82%E6%9E%9C%E6%94%B9%E6%88%90%E5%A4%9A%E5%B1%82%E6%88%96%E5%8F%8C%E5%90%91%EF%BC%8C%E4%BC%9A%E6%80%8E%E4%B9%88%E5%8F%98%EF%BC%9F"><span class="toc-number">1.6.</span> <span class="toc-text">六、如果改成多层或双向，会怎么变？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%A4%9A%E5%B1%82-RNN"><span class="toc-number">1.6.1.</span> <span class="toc-text">1. 多层 RNN</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%8F%8C%E5%90%91-RNN"><span class="toc-number">1.6.2.</span> <span class="toc-text">2. 双向 RNN</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E9%BB%98%E8%AE%A4-batch-first-False"><span class="toc-number">1.7.</span> <span class="toc-text">七、默认 batch_first&#x3D;False</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E7%94%A8%E4%BB%A3%E7%A0%81%E9%AA%8C%E8%AF%81%E4%B8%80%E4%B8%8B"><span class="toc-number">1.8.</span> <span class="toc-text">八、用代码验证一下</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E6%9C%80%E5%90%8E%E6%80%BB%E7%BB%93"><span class="toc-number">1.9.</span> <span class="toc-text">九、最后总结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%93%E5%90%88%E6%A1%88%E4%BE%8B%EF%BC%9A%EF%BC%88%E5%BF%85%E7%9C%8B%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">结合案例：（必看）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0-nn-RNN-%E7%9A%84%E5%8F%82%E6%95%B0"><span class="toc-number">2.1.</span> <span class="toc-text">一、构造函数 nn.RNN(...) 的参数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-input-size-128-%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">2.1.1.</span> <span class="toc-text">1. input_size&#x3D;128 是什么</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-hidden-size-256-%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">2.1.2.</span> <span class="toc-text">2. hidden_size&#x3D;256 是什么</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-num-layers-1-%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">2.1.3.</span> <span class="toc-text">3. num_layers&#x3D;1 是什么</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E8%B0%83%E7%94%A8%E6%97%B6%E7%9A%84%E8%BE%93%E5%85%A5%EF%BC%9Arnn-x-h0"><span class="toc-number">2.2.</span> <span class="toc-text">二、调用时的输入：rnn(x, h0)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-x%EF%BC%9A%E8%BE%93%E5%85%A5%E5%BA%8F%E5%88%97"><span class="toc-number">2.2.1.</span> <span class="toc-text">1. x：输入序列</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-h0%EF%BC%9A%E5%88%9D%E5%A7%8B%E9%9A%90%E8%97%8F%E7%8A%B6%E6%80%81"><span class="toc-number">2.2.2.</span> <span class="toc-text">2. h0：初始隐藏状态</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E8%B0%83%E7%94%A8%E5%90%8E%E7%9A%84%E8%BE%93%E5%87%BA%EF%BC%9Aoutput-hidden"><span class="toc-number">2.3.</span> <span class="toc-text">三、调用后的输出：output, hidden</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-output%EF%BC%9A%E6%89%80%E6%9C%89%E6%97%B6%E9%97%B4%E6%AD%A5%E7%9A%84%E8%BE%93%E5%87%BA"><span class="toc-number">2.3.1.</span> <span class="toc-text">1. output：所有时间步的输出</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-hidden%EF%BC%9A%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E6%97%B6%E9%97%B4%E6%AD%A5%E7%9A%84%E9%9A%90%E8%97%8F%E7%8A%B6%E6%80%81"><span class="toc-number">2.3.2.</span> <span class="toc-text">2. hidden：最后一个时间步的隐藏状态</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E4%B8%80%E5%BC%A0%E5%9B%BE%E6%8A%8A%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E4%B8%B2%E8%B5%B7%E6%9D%A5"><span class="toc-number">2.4.</span> <span class="toc-text">四、一张图把输入输出串起来</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%8F%82%E6%95%B0%E4%B9%8B%E9%97%B4%E7%9A%84%E4%B8%89%E4%B8%AA%E7%A1%AC%E7%BA%A6%E6%9D%9F"><span class="toc-number">2.5.</span> <span class="toc-text">五、参数之间的三个硬约束</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%A6%E6%9D%9F-1%EF%BC%9A%E4%B8%8A%E4%B8%80%E5%B1%82%E8%BE%93%E5%87%BA%E7%BB%B4%E5%BA%A6-input-size"><span class="toc-number">2.5.1.</span> <span class="toc-text">约束 1：上一层输出维度 &#x3D; input_size</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%A6%E6%9D%9F-2%EF%BC%9Ahidden-size-%E4%B8%8B%E4%B8%80%E5%B1%82%E8%BE%93%E5%85%A5%E7%BB%B4%E5%BA%A6"><span class="toc-number">2.5.2.</span> <span class="toc-text">约束 2：hidden_size &#x3D; 下一层输入维度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%A6%E6%9D%9F-3%EF%BC%9Ah0-%E7%9A%84-batch-x-%E7%9A%84-batch"><span class="toc-number">2.5.3.</span> <span class="toc-text">约束 3：h0 的 batch &#x3D; x 的 batch</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E5%92%8C%E6%A1%88%E4%BE%8B%E9%87%8C%E7%9A%84%E4%B8%A4%E6%AC%A1-transpose-reshape-%E5%AF%B9%E4%B8%8A"><span class="toc-number">2.6.</span> <span class="toc-text">六、和案例里的两次 transpose&#x2F;reshape 对上</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E5%B0%8F%E7%BB%93"><span class="toc-number">2.7.</span> <span class="toc-text">七、小结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%BD%A0%E7%8E%B0%E5%9C%A8%E8%BF%99%E4%B8%AA%E6%98%AF%E4%B8%8D%E6%98%AF%E5%8D%95%E5%B1%82%E5%8D%95%E5%90%91%EF%BC%9F"><span class="toc-number">2.8.</span> <span class="toc-text">1. 你现在这个是不是单层单向？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E2%80%9C%E6%97%B6%E9%97%B4%E6%AD%A5%E2%80%9D%E5%88%B0%E5%BA%95%E6%98%AF%E4%BB%80%E4%B9%88%E6%84%8F%E6%80%9D%EF%BC%9F"><span class="toc-number">2.9.</span> <span class="toc-text">2. “时间步”到底是什么意思？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-hidden-%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AF%E2%80%9C%E6%9C%80%E5%90%8E%E4%B8%80%E4%B8%AA%E6%97%B6%E9%97%B4%E6%AD%A5%E7%9A%84%E9%9A%90%E8%97%8F%E7%8A%B6%E6%80%81%E2%80%9D%EF%BC%9F"><span class="toc-number">2.10.</span> <span class="toc-text">3. hidden 为什么是“最后一个时间步的隐藏状态”？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-output-%E5%92%8C-hidden-%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-number">2.11.</span> <span class="toc-text">4. output 和 hidden 的关系</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E5%86%8D%E8%B5%B0%E4%B8%80%E9%81%8D"><span class="toc-number">2.12.</span> <span class="toc-text">5. 再走一遍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%80%BB%E7%BB%93"><span class="toc-number">2.13.</span> <span class="toc-text">6. 一句话总结</span></a></li></ol></li></ol></div></div><footer><nobr>构建自 <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> 使用主题 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> 主题作者 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>

@@ -1,0 +1,289 @@
+<!DOCTYPE html><html lang="en" theme-mode="auto"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>KNN算法 | Hexo</title><meta name="description" content="KNN算法KNN算法简介学习目标： 1.理解K近邻算法的思想 2.知道K值选择对结果影响 3.知道K近邻算法分类流程 4.知道K近邻算法回归流程 【理解】KNN算法思想K-近邻算法（K Nearest Neighbor，简称KNN）。比如：根据你的“邻居”来推断出你的类别 KNN算法思想：如果一个样本在特征空间中的 k 个最相似的样本中的大多数属于某一个类别，则该样本也属于这个类别  思考：如何确">
+<meta property="og:type" content="article">
+<meta property="og:title" content="KNN算法">
+<meta property="og:url" content="http://example.com/2026/10/15/ml3/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="KNN算法KNN算法简介学习目标： 1.理解K近邻算法的思想 2.知道K值选择对结果影响 3.知道K近邻算法分类流程 4.知道K近邻算法回归流程 【理解】KNN算法思想K-近邻算法（K Nearest Neighbor，简称KNN）。比如：根据你的“邻居”来推断出你的类别 KNN算法思想：如果一个样本在特征空间中的 k 个最相似的样本中的大多数属于某一个类别，则该样本也属于这个类别  思考：如何确">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2026/10/15/ml3/image-20230831143226786.png">
+<meta property="og:image" content="http://example.com/2026/10/15/ml3/image-20230831143341119.png">
+<meta property="og:image" content="http://example.com/2026/10/15/ml3/image-20230831143403932.png">
+<meta property="og:image" content="http://example.com/2026/10/15/ml3/image-20230831143403932.png">
+<meta property="og:image" content="http://example.com/2026/10/15/ml3/image-20230831143443988.png">
+<meta property="og:image" content="http://example.com/2026/10/15/ml3/image-20230831143443988.png">
+<meta property="og:image" content="http://example.com/2026/10/15/ml3/image-20230831143430741.png">
+<meta property="og:image" content="http://example.com/2026/10/15/ml3/image-20230831143430741.png">
+<meta property="og:image" content="http://example.com/2026/10/15/ml3/image-20230831143416184.png">
+<meta property="og:image" content="http://example.com/2026/10/15/ml3/image-20230831152503338.png">
+<meta property="article:published_time" content="2026-10-15T04:35:17.000Z">
+<meta property="article:modified_time" content="2026-10-15T15:38:51.816Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2026/10/15/ml3/image-20230831143226786.png"><link rel="canonical" href="http://example.com/2026/10/15/ml3/"><link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="preload" as="font" crossorigin="anonymous" href="/font/Bender.ttf"><link rel="preload" as="font" crossorigin="anonymous" href="/font/BenderLight.woff2"><link rel="preload" as="font" crossorigin="anonymous" href="/font/JetBrainsMono-Regular.woff2"><link rel="stylesheet" href="/css/arknights.css"><style>@font-face {
+  font-family: Bender;
+  src: local('Bender'), url("/font/Bender.ttf"), url("/font/Bender.otf");
+}
+@font-face {
+  font-family: BenderLight;
+  src: local('BenderLight'), url("/font/BenderLight.woff2") format('woff2');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}
+</style><meta name="page-config" content="{&quot;code_fold&quot;:null}"><script class="pjax-js">var config = {"root":"/","code_fold":15,"search":{"preload":true,"activeHolder":"键入以继续","blurHolder":"数据检索","noResult":"无 $0 相关数据"},"code":{"codeInfo":"$0 - $1 行","copy":"复制"}};
+var page_config = {
+  code_fold: null
+};
+function updatePageConfig() {
+  var newPageConfig = document.querySelector('meta[name="page-config"]');
+  if (newPageConfig) {
+    page_config = JSON.parse(newPageConfig.content);
+  }
+}
+document.addEventListener('pjax:complete', function() { updatePageConfig(); });
+updatePageConfig();</script><link type="text/css" rel="stylesheet" href="/lib/encrypt/hbe.style.css"><script src="//unpkg.com/mermaid@11.12.2/dist/mermaid.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.1/MathJax.js"></script><script>MathJax.Hub.Config({
+ menuSettings: {
+   zoom: "None"
+ },
+ showMathMenu: false,
+ jax: ["input/TeX","output/CommonHTML"],
+ extensions: ["tex2jax.js"],
+ TeX: {
+   extensions: ["AMSmath.js","AMSsymbols.js"],
+   equationNumbers: {
+     autoNumber: "AMS"
+   }
+ },
+ tex2jax: {
+   inlineMath: [["\\(", "\\)"]],
+   displayMath: [["\\[", "\\]"]]
+ }
+});</script><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lightgallery.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-zoom.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-thumbnail.css"><link type="text/css" rel="stylesheet" href="/lib/fontawesome/css/all.min.css"><script>if (window.localStorage.getItem('theme-mode') === 'light' || window.matchMedia('(prefers-color-scheme:light)').matches)
+ document.documentElement.setAttribute('theme-mode', 'light')
+if (window.localStorage.getItem('theme-mode') === 'dark' || window.matchMedia('(prefers-color-scheme:dark)').matches)
+ document.documentElement.setAttribute('theme-mode', 'dark')</script><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.woff2") format('woff2');
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><style>:root {
+ --dark-background: url('https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg');
+ --light-background: url('/img/bk.jpg');
+ --theme-encrypt-confirm: '确认'
+}</style><script defer src="/js/arknights.js"></script><script defer src="/js/search.js"></script><script defer src="https://vercount.one/js"></script><script defer type="module">import mermaid from '//unpkg.com/mermaid@11.12.2/dist/mermaid.esm.min.mjs';
+window.mermaid = mermaid;
+code.paintMermaid();
+</script><script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.1/MathJax.js"></script><script>MathJax.Hub.Config({
+  menuSettings: {
+    zoom: "None"
+  },
+  showMathMenu: false,
+  jax: ["input/TeX","output/CommonHTML"],
+  extensions: ["tex2jax.js"],
+  TeX: {
+    extensions: ["AMSmath.js","AMSsymbols.js"],
+    equationNumbers: {
+      autoNumber: "AMS"
+    }
+  },
+  tex2jax: {
+    inlineMath: [["\\(", "\\)"]],
+    displayMath: [["\\[", "\\]"]]
+  }
+});
+</script><script async src="//unpkg.com/lightgallery@2.7.1/lightgallery.min.js"></script><script async src="//unpkg.com/lightgallery@2.7.1/plugins/zoom/lg-zoom.min.js"></script><script async src="//unpkg.com/lightgallery@2.7.1/plugins/thumbnail/lg-thumbnail.min.js"></script><script async src="/lib/encrypt/hbe.js"></script><script async src="/js/pjax.js"></script><script class="pjax-js">reset= () => {document.querySelector('.lg-container')?.remove()
+lightGallery(document.getElementById('post-bg'), {
+  plugins: [lgZoom,lgThumbnail],
+  selector: '.item-img'})}</script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js','data-pjax','.vercount','meta[name=page-config]'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);document.addEventListener('pjax:success', _ => {
+ const script = document.createElement('script');
+ script.src = 'https://vercount.one/js';
+ document.head.appendChild(script);
+});reset()})</script><script class="pjax-js">reset= () => {window.giscusSettings = {
+ repo: 'juicer0801/juicer0801.github.io',
+ repoId: 'R_kgDOUcAR_w',
+ category: 'Announcements',
+ categoryId: 'DIC_kwDOUcAR_84DIlqM',
+ mapping: 'pathname',
+ strict: '0',
+ reactionsEnabled: '1',
+ emitMetadata: '0',
+ inputPosition: 'bottom',
+ lang: 'zh-CN',
+ crossorigin: 'anonymous' , loading: 'lazy'};window.giscusThemeConfig = { theme: 'preferred_color_scheme' };MathJax.Hub.Queue(["Typeset", MathJax.Hub]);document.querySelector('.lg-container')?.remove()
+const postBg = document.querySelector('#post-bg');
+if (postBg) lightGallery(postBg, {
+  plugins: [lgZoom,lgThumbnail],
+  selector: '.item-img'})}</script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js','data-pjax','.vercount','meta[name=page-config]'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);document.addEventListener('pjax:success', _ => {
+ const script = document.createElement('script');
+ script.src = 'https://vercount.one/js';
+ document.head.appendChild(script);
+});reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="数据检索" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/tags/"><span class="navItemTitle">Tags</span></a></li><li class="navItem"><a class="navBlock" href="/categories/"><span class="navItemTitle">Categories</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>KNN算法</h1><div id="post-info"><span>文章发布时间: <div class="control"><time datetime="2026-10-15T04:35:17.000Z" id="date"> 2026-10-15</time></div></span><br><span>最后更新时间: <div class="control"><time datetime="2026-10-15T15:38:51.816Z" id="updated"> 2026-10-15</time></div></span><br><span>文章总字数: <div class="control">3.7k</div></span><br><span>预计阅读时间: <div class="control">15 分钟</div></span><br><span id="vercount_container_page_pv">页面浏览: <span class="control" id="vercount_value_page_pv">加载中...</span></span></div></div><hr><div id="post-content"><h1 id="KNN算法"><a href="#KNN算法" class="headerlink" title="KNN算法"></a>KNN算法</h1><h2 id="KNN算法简介"><a href="#KNN算法简介" class="headerlink" title="KNN算法简介"></a>KNN算法简介</h2><p><strong>学习目标：</strong></p>
+<p>1.理解K近邻算法的思想</p>
+<p>2.知道K值选择对结果影响</p>
+<p>3.知道K近邻算法分类流程</p>
+<p>4.知道K近邻算法回归流程</p>
+<h3 id="【理解】KNN算法思想"><a href="#【理解】KNN算法思想" class="headerlink" title="【理解】KNN算法思想"></a>【理解】KNN算法思想</h3><p>K-近邻算法（K Nearest Neighbor，简称KNN）。比如：根据你的“邻居”来推断出你的类别</p class='item-img' data-src='/2026/10/15/ml3/image-20230831143226786.png'><img src="/2026/10/15/ml3/image-20230831143226786.png" class="" title="Hexo 博客封面示例">
+<p>KNN算法思想：如果一个样本在特征空间中的 k 个最相似的样本中的大多数属于某一个类别，则该样本也属于这个类别 </p>
+<p>思考：如何确定样本的相似性？</p>
+<p><strong>样本相似性</strong>：样本都是属于一个任务数据集的。样本距离越近则越相似。</p>
+<p>利用K近邻算法预测电影类型</p class='item-img' data-src='/2026/10/15/ml3/image-20230831143341119.png'><img src="/2026/10/15/ml3/image-20230831143341119.png" class="" title="Hexo 博客封面示例">
+<img src="/2026/10/15/ml3/image-20230831143403932.png" class="" title="Hexo 博客封面示例" class='item-img' data-src='/2026/10/15/ml3/image-20230831143403932.png'><img src="/2026/10/15/ml3/image-20230831143403932.png" class="" title="Hexo 博客封面示例">
+<img src="/2026/10/15/ml3/image-20230831143443988.png" class="" title="Hexo 博客封面示例" class='item-img' data-src='/2026/10/15/ml3/image-20230831143443988.png'><img src="/2026/10/15/ml3/image-20230831143443988.png" class="" title="Hexo 博客封面示例">
+<img src="/2026/10/15/ml3/image-20230831143430741.png" class="" title="Hexo 博客封面示例" class='item-img' data-src='/2026/10/15/ml3/image-20230831143430741.png'><img src="/2026/10/15/ml3/image-20230831143430741.png" class="" title="Hexo 博客封面示例">
+<img src="/2026/10/15/ml3/image-20230831143416184.png" class="" title="Hexo 博客封面示例">
+<h3 id="【知道】K值的选择"><a href="#【知道】K值的选择" class="headerlink" title="【知道】K值的选择"></a>【知道】K值的选择</h3 class='item-img' data-src='/2026/10/15/ml3/image-20230831152503338.png'><img src="/2026/10/15/ml3/image-20230831152503338.png" class="" title="Hexo 博客封面示例">
+<h3 id="【知道】KNN的应用方式"><a href="#【知道】KNN的应用方式" class="headerlink" title="【知道】KNN的应用方式"></a>【知道】KNN的应用方式</h3><ul>
+<li><p>解决问题：分类问题、回归问题</p>
+</li>
+<li><p>算法思想：若一个样本在特征空间中的 k 个最相似的样本大多数属于某一个类别，则该样本也属于这个类别</p>
+</li>
+<li><p>相似性：欧氏距离</p>
+</li>
+<li><p>分类问题的处理流程：</p>
+</li>
+</ul>
+
+<p>1.计算未知样本到每一个训练样本的距离</p>
+<p>2.将训练样本根据距离大小升序排列</p>
+<p>3.取出距离最近的 K 个训练样本</p>
+<p>4.进行多数表决，统计 K 个样本中哪个类别的样本个数最多</p>
+<p>5.将未知的样本归属到出现次数最多的类别</p>
+<ul>
+<li>回归问题的处理流程：</li>
+</ul>
+
+<p>1.计算未知样本到每一个训练样本的距离</p>
+<p>2.将训练样本根据距离大小升序排列</p>
+<p>3.取出距离最近的 K 个训练样本</p>
+<p>4.把这个 K 个样本的目标值计算其平均值</p>
+<p>5.作为将未知的样本预测的值</p>
+<h2 id="API介绍"><a href="#API介绍" class="headerlink" title="API介绍"></a>API介绍</h2><p><strong>学习目标：</strong></p>
+<p>1.掌握KNN算法分类API</p>
+<p>2.掌握KNN算法回归API</p>
+<h3 id="【实操】分类API"><a href="#【实操】分类API" class="headerlink" title="【实操】分类API"></a>【实操】分类API</h3><p>KNN分类API：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">sklearn.neighbors.KNeighborsClassifier(n_neighbors=<span class="hljs-number">5</span>) <br></code></pre></td></tr></table></figure>
+<p>​     n_neighbors：int,可选（默认= 5），k_neighbors查询默认使用的邻居数</p>
+<h3 id="【实操】回归API"><a href="#【实操】回归API" class="headerlink" title="【实操】回归API"></a>【实操】回归API</h3><p>KNN分类API：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">sklearn.neighbors.KNeighborsRegressor(n_neighbors=<span class="hljs-number">5</span>)<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 1.工具包</span><br><span class="hljs-keyword">from</span> sklearn.neighbors <span class="hljs-keyword">import</span> KNeighborsClassifier,KNeighborsRegressor<br><span class="hljs-comment"># from sklearn.neighbors import KNeighborsRegressor</span><br><br><span class="hljs-comment"># 2.数据(特征工程)</span><br><span class="hljs-comment"># 分类</span><br><span class="hljs-comment"># x = [[0,2,3],[1,3,4],[3,5,6],[4,7,8],[2,3,4]]</span><br><span class="hljs-comment"># y = [0,0,1,1,0]</span><br>x = [[<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">2</span>],[<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>],[<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>],[<span class="hljs-number">3</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>]]<br>y = [<span class="hljs-number">0.1</span>,<span class="hljs-number">0.2</span>,<span class="hljs-number">0.3</span>,<span class="hljs-number">0.4</span>]<br><br><span class="hljs-comment"># 3.实例化</span><br><span class="hljs-comment"># model =KNeighborsClassifier(n_neighbors=3)</span><br>model =KNeighborsRegressor(n_neighbors=<span class="hljs-number">3</span>)<br><br><span class="hljs-comment"># 4.训练</span><br>model.fit(x,y)<br><br><span class="hljs-comment"># 5.预测</span><br><span class="hljs-built_in">print</span>(model.predict([[<span class="hljs-number">4</span>,<span class="hljs-number">4</span>,<span class="hljs-number">5</span>]]))<br></code></pre></td></tr></table></figure>
+<h2 id="距离度量方法"><a href="#距离度量方法" class="headerlink" title="距离度量方法"></a>距离度量方法</h2><p><strong>学习目标：</strong></p>
+<p>1.掌握欧氏距离的计算方法 </p>
+<p>2.掌握曼哈顿距离的计算方法</p>
+<p>3.了解切比雪夫距离的计算方法</p>
+<p>4.了解闵可夫斯基距离的计算方法</p>
+<h3 id="【掌握】欧式距离"><a href="#【掌握】欧式距离" class="headerlink" title="【掌握】欧式距离"></a>【掌握】欧式距离</h3>
+<h3 id="【掌握】曼哈顿距离"><a href="#【掌握】曼哈顿距离" class="headerlink" title="【掌握】曼哈顿距离"></a>【掌握】曼哈顿距离</h3>
+<h3 id="【了解】切比雪夫距离"><a href="#【了解】切比雪夫距离" class="headerlink" title="【了解】切比雪夫距离"></a>【了解】切比雪夫距离</h3>
+<h3 id="【了解】闵氏距离"><a href="#【了解】闵氏距离" class="headerlink" title="【了解】闵氏距离"></a>【了解】闵氏距离</h3><p>•闵可夫斯基距离 Minkowski Distance 闵氏距离，不是一种新的距离的度量方式。而是距离的组合 是对多个距离度量公式的概括性的表述</p>
+
+<h2 id="特征预处理"><a href="#特征预处理" class="headerlink" title="特征预处理"></a>特征预处理</h2><p><strong>学习目标：</strong></p>
+<p>1.知道为什么进行归一化、标准化</p>
+<p>2.能应用归一化API处理数据</p>
+<p>3.能应用标准化API处理数据</p>
+<p>4.使用KNN算法进行鸢尾花分类</p>
+<h3 id="【知道】为什么进行归一化、标准化"><a href="#【知道】为什么进行归一化、标准化" class="headerlink" title="【知道】为什么进行归一化、标准化"></a>【知道】为什么进行归一化、标准化</h3><p>特征的<strong>单位或者大小相差较大，或者某特征的方差相比其他的特征要大出几个数量级</strong>，<strong>容易影响（支配）目标结果</strong>，使得一些模型（算法）无法学习到其它的特征。</p>
+
+<h3 id="【掌握】归一化"><a href="#【掌握】归一化" class="headerlink" title="【掌握】归一化"></a>【掌握】归一化</h3><p>通过对原始数据进行变换把数据映射到【mi,mx】(默认为[0,1])之间</p>
+
+<p>数据归一化的API实现</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">sklearn.preprocessing.MinMaxScaler (feature_range=(0,1)… )<br></code></pre></td></tr></table></figure>
+<p> feature_range 缩放区间</p>
+<ul>
+<li>调用 fit_transform(X) 将特征进行归一化缩放</li>
+</ul>
+<p>归一化受到最大值与最小值的影响，这种方法容易受到异常数据的影响, 鲁棒性较差，适合传统精确小数据场景</p>
+<h3 id="【掌握】标准化"><a href="#【掌握】标准化" class="headerlink" title="【掌握】标准化"></a>【掌握】标准化</h3><p>通过对原始数据进行标准化，转换为均值为0标准差为1的标准正态分布的数据</p>
+
+<ul>
+<li>mean 为特征的平均值</li>
+<li>σ 为特征的标准差</li>
+</ul>
+<p>数据标准化的API实现</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">sklearn.preprocessing. StandardScaler()<br></code></pre></td></tr></table></figure>
+<p>调用 fit_transform(X) 将特征进行归一化缩放</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 1.导入工具包</span><br><span class="hljs-keyword">from</span> sklearn.preprocessing <span class="hljs-keyword">import</span> MinMaxScaler,StandardScaler<br><br><span class="hljs-comment"># 2.数据(只有特征)</span><br>x = [[<span class="hljs-number">90</span>, <span class="hljs-number">2</span>, <span class="hljs-number">10</span>, <span class="hljs-number">40</span>], [<span class="hljs-number">60</span>, <span class="hljs-number">4</span>, <span class="hljs-number">15</span>, <span class="hljs-number">45</span>], [<span class="hljs-number">75</span>, <span class="hljs-number">3</span>, <span class="hljs-number">13</span>, <span class="hljs-number">46</span>]]<br><br><span class="hljs-comment"># 3.实例化(归一化,标准化)</span><br><span class="hljs-comment"># process =MinMaxScaler()</span><br>process =StandardScaler()<br><br><span class="hljs-comment"># 4.fit_transform 处理1</span><br>data =process.fit_transform(x)<br><span class="hljs-comment"># print(data)</span><br><br><span class="hljs-built_in">print</span>(process.mean_)<br><span class="hljs-built_in">print</span>(process.var_)<br></code></pre></td></tr></table></figure>
+<p>对于标准化来说，如果出现异常点，由于具有一定数据量，少量的异常点对于平均值的影响并不大</p>
+<h3 id="【实操】利用KNN算法进行鸢尾花分类"><a href="#【实操】利用KNN算法进行鸢尾花分类" class="headerlink" title="【实操】利用KNN算法进行鸢尾花分类"></a>【实操】利用KNN算法进行鸢尾花分类</h3><p>鸢尾花Iris Dataset数据集是机器学习领域经典数据集，鸢尾花数据集包含了150条鸢尾花信息，每50条取自三个鸢尾花中之一：Versicolour、Setosa和Virginica</p>
+
+<p>每个花的特征用如下属性描述：</p>
+
+<p>代码实现：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 导入工具包</span><br><span class="hljs-keyword">from</span> sklearn.datasets <span class="hljs-keyword">import</span> load_iris          <span class="hljs-comment"># 加载鸢尾花测试集的.</span><br><span class="hljs-keyword">import</span> seaborn <span class="hljs-keyword">as</span> sns<br><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt<br><span class="hljs-keyword">from</span> sklearn.model_selection <span class="hljs-keyword">import</span> train_test_split    <span class="hljs-comment"># 分割训练集和测试集的</span><br><span class="hljs-keyword">from</span> sklearn.preprocessing <span class="hljs-keyword">import</span> StandardScaler        <span class="hljs-comment"># 数据标准化的</span><br><span class="hljs-keyword">from</span> sklearn.neighbors <span class="hljs-keyword">import</span> KNeighborsClassifier      <span class="hljs-comment"># KNN算法 分类对象</span><br><span class="hljs-keyword">from</span> sklearn.metrics <span class="hljs-keyword">import</span> accuracy_score              <span class="hljs-comment"># 模型评估的, 计算模型预测的准确率</span><br><br><br><span class="hljs-comment"># 1. 定义函数 dm01_loadiris(), 加载数据集.</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">dm01_loadiris</span>():<br>    <span class="hljs-comment"># 1. 加载数据集, 查看数据</span><br>    iris_data = load_iris()<br>    <span class="hljs-built_in">print</span>(iris_data)           <span class="hljs-comment"># 字典形式, 键: 属性名, 值: 数据.</span><br>    <span class="hljs-built_in">print</span>(iris_data.keys())<br><br>    <span class="hljs-comment"># 1.1 查看数据集</span><br>    <span class="hljs-built_in">print</span>(iris_data.data[:<span class="hljs-number">5</span>])<br>    <span class="hljs-comment"># 1.2 查看目标值.</span><br>    <span class="hljs-built_in">print</span>(iris_data.target)<br>    <span class="hljs-comment"># 1.3 查看目标值名字.</span><br>    <span class="hljs-built_in">print</span>(iris_data.target_names)<br>    <span class="hljs-comment"># 1.4 查看特征名.</span><br>    <span class="hljs-built_in">print</span>(iris_data.feature_names)<br>    <span class="hljs-comment"># 1.5 查看数据集的描述信息.</span><br>    <span class="hljs-built_in">print</span>(iris_data.DESCR)<br>    <span class="hljs-comment"># 1.6 查看数据文件路径</span><br>    <span class="hljs-built_in">print</span>(iris_data.filename)<br><br><span class="hljs-comment"># 2. 定义函数 dm02_showiris(), 显示鸢尾花数据.</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">dm02_showiris</span>():<br>    <span class="hljs-comment"># 1. 加载数据集, 查看数据</span><br>    iris_data = load_iris()<br>    <span class="hljs-comment"># 2. 数据展示</span><br>    <span class="hljs-comment"># 读取数据, 并设置 特征名为列名.</span><br>    iris_df = pd.DataFrame(iris_data.data, columns=iris_data.feature_names)<br>    <span class="hljs-comment"># print(iris_df.head(5))</span><br>    iris_df[<span class="hljs-string">&#x27;label&#x27;</span>] = iris_data.target<br><br>    <span class="hljs-comment"># 可视化, x=花瓣长度, y=花瓣宽度, data=iris的df对象, hue=颜色区分, fit_reg=False 不绘制拟合回归线.</span><br>    sns.lmplot(x=<span class="hljs-string">&#x27;petal length (cm)&#x27;</span>, y=<span class="hljs-string">&#x27;petal width (cm)&#x27;</span>, data=iris_df, hue=<span class="hljs-string">&#x27;label&#x27;</span>, fit_reg=<span class="hljs-literal">False</span>)<br>    plt.title(<span class="hljs-string">&#x27;iris data&#x27;</span>)<br>    plt.show()<br><br><br><span class="hljs-comment"># 3. 定义函数 dm03_train_test_split(), 实现: 数据集划分</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">dm03_train_test_split</span>():<br>    <span class="hljs-comment"># 1. 加载数据集, 查看数据</span><br>    iris_data = load_iris()<br>    <span class="hljs-comment"># 2. 划分数据集, 即: 特征工程(预处理-标准化)</span><br>    x_train, x_test, y_train, y_test = train_test_split(iris_data.data, iris_data.target, test_size=<span class="hljs-number">0.2</span>,<br>                                                        random_state=<span class="hljs-number">22</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;数据总数量: <span class="hljs-subst">&#123;<span class="hljs-built_in">len</span>(iris_data.data)&#125;</span>&#x27;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;训练集中的x-特征值: <span class="hljs-subst">&#123;<span class="hljs-built_in">len</span>(x_train)&#125;</span>&#x27;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;训练集中的y-目标值: <span class="hljs-subst">&#123;<span class="hljs-built_in">len</span>(y_train)&#125;</span>&#x27;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;测试集中的x-特征值: <span class="hljs-subst">&#123;<span class="hljs-built_in">len</span>(x_test)&#125;</span>&#x27;</span>)<br><br><span class="hljs-comment"># 4. 定义函数 dm04_模型训练和预测(), 实现: 模型训练和预测</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">dm04_model_train_and_predict</span>():<br>    <span class="hljs-comment"># 1. 加载数据集, 查看数据</span><br>    iris_data = load_iris()<br><br>    <span class="hljs-comment"># 2. 划分数据集, 即: 数据基本处理</span><br>    x_train, x_test, y_train, y_test = train_test_split(iris_data.data, iris_data.target, test_size=<span class="hljs-number">0.2</span>, random_state=<span class="hljs-number">22</span>)<br><br>    <span class="hljs-comment"># 3. 数据集预处理-数据标准化(即: 标准的正态分布的数据集)</span><br>    transfer = StandardScaler()<br>    <span class="hljs-comment"># fit_transform(): 适用于首次对数据进行标准化处理的情况，通常用于训练集, 能同时完成 fit() 和 transform()。</span><br>    x_train = transfer.fit_transform(x_train)<br>    <span class="hljs-comment"># transform(): 适用于对测试集进行标准化处理的情况，通常用于测试集或新的数据. 不需要重新计算统计量。</span><br>    x_test = transfer.transform(x_test)<br><br>    <span class="hljs-comment"># 4. 机器学习(模型训练)</span><br>    estimator = KNeighborsClassifier(n_neighbors=<span class="hljs-number">5</span>)<br>    estimator.fit(x_train, y_train)<br><br>    <span class="hljs-comment"># 5. 模型评估.</span><br>    <span class="hljs-comment"># 场景1: 对抽取出的测试集做预测.</span><br>    <span class="hljs-comment"># 5.1 模型评估, 对抽取出的测试集做预测.</span><br>    y_predict = estimator.predict(x_test)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;预测结果为: <span class="hljs-subst">&#123;y_predict&#125;</span>&#x27;</span>)<br><br>    <span class="hljs-comment"># 场景2: 对新的数据进行预测.</span><br>    <span class="hljs-comment"># 5.2 模型预测, 对测试集进行预测.</span><br>    <span class="hljs-comment"># 5.2.1 定义测试数据集.</span><br>    my_data = [[<span class="hljs-number">5.1</span>, <span class="hljs-number">3.5</span>, <span class="hljs-number">1.4</span>, <span class="hljs-number">0.2</span>]]<br>    <span class="hljs-comment"># 5.2.2 对测试数据进行-数据标准化.</span><br>    my_data = transfer.transform(my_data)<br>    <span class="hljs-comment"># 5.2.3 模型预测.</span><br>    my_predict = estimator.predict(my_data)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;预测结果为: <span class="hljs-subst">&#123;my_predict&#125;</span>&#x27;</span>)<br><br>    <span class="hljs-comment"># 5.2.4 模型预测概率, 返回每个类别的预测概率</span><br>    my_predict_proba = estimator.predict_proba(my_data)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;预测概率为: <span class="hljs-subst">&#123;my_predict_proba&#125;</span>&#x27;</span>)<br><br>    <span class="hljs-comment"># 6. 模型预估, 有两种方式, 均可.</span><br>    <span class="hljs-comment"># 6.1 模型预估, 方式1: 直接计算准确率, 100个样本中模型预测正确的个数.</span><br>    my_score = estimator.score(x_test, y_test)<br>    <span class="hljs-built_in">print</span>(my_score)  <span class="hljs-comment"># 0.9666666666666667</span><br><br>    <span class="hljs-comment"># 6.2 模型预估, 方式2: 采用预测值和真实值进行对比, 得到准确率.</span><br>    <span class="hljs-built_in">print</span>(accuracy_score(y_test, y_predict))<br><br><br><span class="hljs-comment"># 在main方法中测试.</span><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    <span class="hljs-comment"># 1. 调用函数 dm01_loadiris(), 加载数据集.</span><br>    <span class="hljs-comment"># dm01_loadiris()</span><br><br>    <span class="hljs-comment"># 2. 调用函数 dm02_showiris(), 显示鸢尾花数据.</span><br>    <span class="hljs-comment"># dm02_showiris()</span><br><br>    <span class="hljs-comment"># 3. 调用函数 dm03_train_test_split(), 查看: 数据集划分</span><br>    <span class="hljs-comment"># dm03_train_test_split()</span><br><br>    <span class="hljs-comment"># 4. 调用函数 dm04_模型训练和预测(), 实现: 模型训练和预测</span><br>    dm04_model_train_and_predict()<br></code></pre></td></tr></table></figure>
+<h2 id="超参数选择的方法"><a href="#超参数选择的方法" class="headerlink" title="超参数选择的方法"></a>超参数选择的方法</h2><p><strong>学习目标：</strong></p>
+<p>1.知道交叉验证是什么？</p>
+<p>2.知道网格搜索是什么？</p>
+<p>3.知道交叉验证网格搜索API函数用法</p>
+<p>4.能实践交叉验证网格搜索进行模型超参数调优</p>
+<p>5.利用KNN算法实现手写数字识别</p>
+<h3 id="【知道】交叉验证"><a href="#【知道】交叉验证" class="headerlink" title="【知道】交叉验证"></a>【知道】交叉验证</h3><p>交叉验证是一种数据集的分割方法，将训练集划分为 n 份，其中一份做验证集、其他n-1份做训练集集 </p>
+
+<p><strong>交叉验证法原理</strong>：将数据集划分为 cv=10 份：</p>
+<p>1.第一次：把第一份数据做验证集，其他数据做训练</p>
+<p>2.第二次：把第二份数据做验证集，其他数据做训练</p>
+<p>3…. 以此类推，总共训练10次，评估10次。</p>
+<p>4.使用训练集+验证集多次评估模型，取平均值做交叉验证为模型得分</p>
+<p>5.若k=5模型得分最好，再使用全部训练集(训练集+验证集) 对k=5模型再训练一边，再使用测试集对k=5模型做评估</p>
+
+<h3 id="【知道】网格搜索"><a href="#【知道】网格搜索" class="headerlink" title="【知道】网格搜索"></a>【知道】网格搜索</h3>
+
+<p>交叉验证网格搜索的API:</p>
+
+<p>交叉验证网格搜索在鸢尾花分类中的应用：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.datasets <span class="hljs-keyword">import</span> load_iris          <span class="hljs-comment"># 加载鸢尾花测试集的.</span><br><span class="hljs-keyword">from</span> sklearn.model_selection <span class="hljs-keyword">import</span> train_test_split, GridSearchCV    <span class="hljs-comment"># 分割训练集和测试集的, 网格搜索的</span><br><span class="hljs-keyword">from</span> sklearn.preprocessing <span class="hljs-keyword">import</span> StandardScaler        <span class="hljs-comment"># 数据标准化的</span><br><span class="hljs-keyword">from</span> sklearn.neighbors <span class="hljs-keyword">import</span> KNeighborsClassifier      <span class="hljs-comment"># KNN算法 分类对象</span><br><span class="hljs-keyword">from</span> sklearn.metrics <span class="hljs-keyword">import</span> accuracy_score              <span class="hljs-comment"># 模型评估的, 计算模型预测的准确率</span><br><br><br><span class="hljs-comment"># 1. 获取数据集.</span><br>iris_data = load_iris()<br><br><span class="hljs-comment"># 2. 数据基本处理-划分数据集.</span><br>x_train, x_test, y_train, y_test = train_test_split(iris_data.data, iris_data.target, test_size=<span class="hljs-number">0.2</span>, random_state=<span class="hljs-number">22</span>)<br><br><span class="hljs-comment"># 3. 数据集预处理-数据标准化.</span><br>transfer = StandardScaler()<br>x_train = transfer.fit_transform(x_train)<br>x_test = transfer.transform(x_test)<br><br><span class="hljs-comment"># 4. 模型训练.</span><br><span class="hljs-comment"># 4.1 创建估计器对象.</span><br>estimator = KNeighborsClassifier()<br><span class="hljs-comment"># 4.2 使用校验验证网格搜索.  指定参数范围.</span><br>param_grid = &#123;<span class="hljs-string">&quot;n_neighbors&quot;</span>: <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-number">10</span>)&#125;<br><span class="hljs-comment"># 4.3 具体的 网格搜索过程 + 交叉验证.</span><br><span class="hljs-comment"># 参1: 估计器对象, 参2: 参数范围, 参3: 交叉验证的折数.</span><br>estimator = GridSearchCV(estimator=estimator, param_grid=param_grid, cv=<span class="hljs-number">5</span>)<br><span class="hljs-comment"># 具体的模型训练过程.</span><br>estimator.fit(x_train, y_train)<br><br><br><span class="hljs-comment"># 4.4 交叉验证, 网格搜索结果查看.</span><br><span class="hljs-built_in">print</span>(estimator.best_score_)       <span class="hljs-comment"># 模型在交叉验证中, 所有参数组合中的最高平均测试得分</span><br><span class="hljs-built_in">print</span>(estimator.best_estimator_)   <span class="hljs-comment"># 最优的估计器对象.</span><br><span class="hljs-built_in">print</span>(estimator.cv_results_)       <span class="hljs-comment"># 模型在交叉验证中的结果.</span><br><span class="hljs-built_in">print</span>(estimator.best_params_)      <span class="hljs-comment"># 模型在交叉验证中的结果.</span><br><br><br><span class="hljs-comment"># 5. 得到最优模型后, 对模型重新预测.</span><br>estimator = KNeighborsClassifier(n_neighbors=<span class="hljs-number">6</span>)<br>estimator.fit(x_train, y_train)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;模型评估: <span class="hljs-subst">&#123;estimator.score(x_test, y_test)&#125;</span>&#x27;</span>)   <span class="hljs-comment"># 因为数据量和特征的问题, 该值可能小于上述的平均测试得分.</span><br></code></pre></td></tr></table></figure>
+<h3 id="利用KNN算法实现手写数字识别"><a href="#利用KNN算法实现手写数字识别" class="headerlink" title="利用KNN算法实现手写数字识别"></a>利用KNN算法实现手写数字识别</h3>
+<p>MNIST手写数字识别 是计算机视觉领域中 “hello world”级别的数据集</p>
+<ul>
+<li>1999年发布，成为分类算法基准测试的基础</li>
+<li>随着新的机器学习技术的出现，MNIST仍然是研究人员和学习者的可靠资源。</li>
+</ul>
+<p>本次案例中，我们的目标是从数万个手写图像的数据集中正确识别数字。</p>
+<h3 id="数据介绍"><a href="#数据介绍" class="headerlink" title="数据介绍"></a>数据介绍</h3><p>数据文件 train.csv 和 test.csv 包含从 0 到 9 的手绘数字的灰度图像。</p>
+<ul>
+<li><p>每个图像高 28 像素，宽28 像素，共784个像素。</p>
+</li>
+<li><p>每个像素取值范围[0,255]，取值越大意味着该像素颜色越深</p>
+</li>
+<li><p>训练数据集（train.csv）共785列。第一列为 “标签”，为该图片对应的手写数字。其余784列为该图像的像素值</p>
+</li>
+<li><p>训练集中的特征名称均有pixel前缀，后面的数字（[0,783])代表了像素的序号。</p>
+</li>
+</ul>
+<p>像素组成图像如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-number">000</span> 001 002 003 ... 026 027<br>028 029 030 031 ... 054 055<br>056 057 058 059 ... 082 083<br> | | | | ...... | |<br><span class="hljs-number">728</span> <span class="hljs-number">729</span> <span class="hljs-number">730</span> <span class="hljs-number">731</span> ... <span class="hljs-number">754</span> <span class="hljs-number">755</span><br><span class="hljs-number">756</span> <span class="hljs-number">757</span> <span class="hljs-number">758</span> <span class="hljs-number">759</span> ... <span class="hljs-number">782</span> <span class="hljs-number">783</span><br></code></pre></td></tr></table></figure>
+<p>数据集示例如下:<br></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt<br><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><span class="hljs-keyword">from</span> sklearn.model_selection <span class="hljs-keyword">import</span> train_test_split<br><span class="hljs-keyword">from</span> sklearn.neighbors <span class="hljs-keyword">import</span> KNeighborsClassifier<br><span class="hljs-keyword">import</span> joblib<br><span class="hljs-keyword">from</span> collections <span class="hljs-keyword">import</span> Counter<br><br><br><span class="hljs-comment"># 1. 显示图片.</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">show_digit</span>(<span class="hljs-params">idx</span>):<br>    <span class="hljs-comment"># 1.1 加载数据.</span><br>    data = pd.read_csv(<span class="hljs-string">&#x27;手写数字识别.csv&#x27;</span>)<br>    <span class="hljs-comment"># 1.2非法值校验.</span><br>    <span class="hljs-keyword">if</span> idx &lt; <span class="hljs-number">0</span> <span class="hljs-keyword">or</span> idx &gt; <span class="hljs-built_in">len</span>(data) - <span class="hljs-number">1</span>:<br>        <span class="hljs-keyword">return</span><br>    <span class="hljs-comment"># 1.3 打印数据基本信息</span><br>    x = data.iloc[:, <span class="hljs-number">1</span>:]<br>    y = data.iloc[:, <span class="hljs-number">0</span>]<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;数据基本信息: <span class="hljs-subst">&#123;x.shape&#125;</span>)&#x27;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;类别数据比例: <span class="hljs-subst">&#123;Counter(y)&#125;</span>&#x27;</span>)<br><br>    <span class="hljs-comment"># 显示图片</span><br>    <span class="hljs-comment"># 1.4 将数据形状修改为: 28*28</span><br>    digit = x.iloc[idx].values.reshape(<span class="hljs-number">28</span>, <span class="hljs-number">28</span>)<br>    <span class="hljs-comment"># 1.5 关闭坐标轴标签</span><br>    plt.axis(<span class="hljs-string">&#x27;off&#x27;</span>)<br>    <span class="hljs-comment"># 1.6 显示图像</span><br>    plt.imshow(digit, cmap=<span class="hljs-string">&#x27;gray&#x27;</span>)  <span class="hljs-comment"># 灰色显示</span><br>    plt.show()<br><br><br><span class="hljs-comment"># 2. 训练模型.</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">train_model</span>():<br>    <span class="hljs-comment"># 1. 加载数据.</span><br>    data = pd.read_csv(<span class="hljs-string">&#x27;手写数字识别.csv&#x27;</span>)<br>    x = data.iloc[:, <span class="hljs-number">1</span>:]<br>    y = data.iloc[:, <span class="hljs-number">0</span>]<br><br>    <span class="hljs-comment"># 2.数据预处理, 归一化.</span><br>    x = x / <span class="hljs-number">255</span><br><br>    <span class="hljs-comment"># 3. 分割训练集和测试集.</span><br>    <span class="hljs-comment"># stratify: 按照y的类别比例进行分割</span><br>    x_train, x_test, y_train, y_test = train_test_split(x, y, test_size=<span class="hljs-number">0.2</span>, stratify=y, random_state=<span class="hljs-number">21</span>)<br><br>    <span class="hljs-comment"># 4. 训练模型</span><br>    estimator = KNeighborsClassifier(n_neighbors=<span class="hljs-number">3</span>)<br>    estimator.fit(x_train, y_train)<br><br>    <span class="hljs-comment"># 5. 模型评估</span><br>    my_score = estimator.score(x_test, y_test)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;测试集准确率为: <span class="hljs-subst">&#123;my_score:<span class="hljs-number">.2</span>f&#125;</span>&#x27;</span>)<br><br>    <span class="hljs-comment"># 6. 模型保存.</span><br>    joblib.dump(estimator, <span class="hljs-string">&#x27;model/knn.pth&#x27;</span>)<br><br><span class="hljs-comment"># 3. 测试模型.</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">use_model</span>():<br>    <span class="hljs-comment"># 1. 读取图片</span><br>    img = plt.imread(<span class="hljs-string">&#x27;data/demo.png&#x27;</span>)   <span class="hljs-comment"># 灰度图, 28*28像素</span><br>    plt.imshow(img, cmap=<span class="hljs-string">&#x27;gray&#x27;</span>)<br>    plt.show()<br><br>    <span class="hljs-comment"># 2. 加载模型.</span><br>    estimator = joblib.load(<span class="hljs-string">&#x27;model/knn.pth&#x27;</span>)<br><br>    <span class="hljs-comment"># 3. 预测图片.</span><br>    img = img.reshape(<span class="hljs-number">1</span>, -<span class="hljs-number">1</span>)  <span class="hljs-comment"># 形状从: (28, 28) =&gt; (1, 784)</span><br>    <span class="hljs-comment"># print(img.shape)</span><br>    y_test = estimator.predict(img)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;您绘制的数字是: <span class="hljs-subst">&#123;y_test&#125;</span>&#x27;</span>)<br><br><span class="hljs-comment"># 在main函数中测试</span><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    <span class="hljs-comment"># 1. 调用函数, 查看图片.</span><br>    <span class="hljs-comment"># show_digit(0)</span><br>    <span class="hljs-comment"># show_digit(10)</span><br>    <span class="hljs-comment"># show_digit(100)</span><br><br>    <span class="hljs-comment"># 2. 训练模型.</span><br>    <span class="hljs-comment"># train_model()</span><br><br>    <span class="hljs-comment"># 3. 测试模型</span><br>    use_model()<br></code></pre></td></tr></table></figure>
+<h2 id="作业"><a href="#作业" class="headerlink" title="作业"></a>作业</h2><p>1.完成KNN算法部分的思维导图</p>
+<p>2.说明常见的距离度量方法</p>
+<p>3.说明特征预处理的方法</p>
+<p>4.编写KNN代码实现鸢尾花分类案例</p>
+<p>5.编写KNN代码实现手写数字识别（特征预处理，交叉验证网格搜索）</p>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2026/10/15/ml4/">← 下一篇 ml4</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/10/15/ml2/">机器学习ai助教 上一篇 →</a></div></div></div><div id="comments"><div id="giscus"></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="回到顶部" style="opacity: 0; display: none;">∧ </a><a class="i-index" id="to-index" onClick="tocControl.change()" title="文章目录"><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span></a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="切换主题"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">John Doe</a></h1><div id="description"><p></p></div><div id="social-links"><a class="social" target="_blank" rel="noopener" href="https://github.com/juicer0801"><i class="fab fa-github" alt="GitHub"></i></a></div></div><div id="aside-block"><div id="toc-div"><h1>目录</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#KNN%E7%AE%97%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">KNN算法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#KNN%E7%AE%97%E6%B3%95%E7%AE%80%E4%BB%8B"><span class="toc-number">1.1.</span> <span class="toc-text">KNN算法简介</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E3%80%90%E7%90%86%E8%A7%A3%E3%80%91KNN%E7%AE%97%E6%B3%95%E6%80%9D%E6%83%B3"><span class="toc-number">1.1.1.</span> <span class="toc-text">【理解】KNN算法思想</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E3%80%90%E7%9F%A5%E9%81%93%E3%80%91K%E5%80%BC%E7%9A%84%E9%80%89%E6%8B%A9"><span class="toc-number">1.1.2.</span> <span class="toc-text">【知道】K值的选择</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E3%80%90%E7%9F%A5%E9%81%93%E3%80%91KNN%E7%9A%84%E5%BA%94%E7%94%A8%E6%96%B9%E5%BC%8F"><span class="toc-number">1.1.3.</span> <span class="toc-text">【知道】KNN的应用方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#API%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.2.</span> <span class="toc-text">API介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E3%80%90%E5%AE%9E%E6%93%8D%E3%80%91%E5%88%86%E7%B1%BBAPI"><span class="toc-number">1.2.1.</span> <span class="toc-text">【实操】分类API</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E3%80%90%E5%AE%9E%E6%93%8D%E3%80%91%E5%9B%9E%E5%BD%92API"><span class="toc-number">1.2.2.</span> <span class="toc-text">【实操】回归API</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B7%9D%E7%A6%BB%E5%BA%A6%E9%87%8F%E6%96%B9%E6%B3%95"><span class="toc-number">1.3.</span> <span class="toc-text">距离度量方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E3%80%90%E6%8E%8C%E6%8F%A1%E3%80%91%E6%AC%A7%E5%BC%8F%E8%B7%9D%E7%A6%BB"><span class="toc-number">1.3.1.</span> <span class="toc-text">【掌握】欧式距离</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E3%80%90%E6%8E%8C%E6%8F%A1%E3%80%91%E6%9B%BC%E5%93%88%E9%A1%BF%E8%B7%9D%E7%A6%BB"><span class="toc-number">1.3.2.</span> <span class="toc-text">【掌握】曼哈顿距离</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E3%80%90%E4%BA%86%E8%A7%A3%E3%80%91%E5%88%87%E6%AF%94%E9%9B%AA%E5%A4%AB%E8%B7%9D%E7%A6%BB"><span class="toc-number">1.3.3.</span> <span class="toc-text">【了解】切比雪夫距离</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E3%80%90%E4%BA%86%E8%A7%A3%E3%80%91%E9%97%B5%E6%B0%8F%E8%B7%9D%E7%A6%BB"><span class="toc-number">1.3.4.</span> <span class="toc-text">【了解】闵氏距离</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%B9%E5%BE%81%E9%A2%84%E5%A4%84%E7%90%86"><span class="toc-number">1.4.</span> <span class="toc-text">特征预处理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E3%80%90%E7%9F%A5%E9%81%93%E3%80%91%E4%B8%BA%E4%BB%80%E4%B9%88%E8%BF%9B%E8%A1%8C%E5%BD%92%E4%B8%80%E5%8C%96%E3%80%81%E6%A0%87%E5%87%86%E5%8C%96"><span class="toc-number">1.4.1.</span> <span class="toc-text">【知道】为什么进行归一化、标准化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E3%80%90%E6%8E%8C%E6%8F%A1%E3%80%91%E5%BD%92%E4%B8%80%E5%8C%96"><span class="toc-number">1.4.2.</span> <span class="toc-text">【掌握】归一化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E3%80%90%E6%8E%8C%E6%8F%A1%E3%80%91%E6%A0%87%E5%87%86%E5%8C%96"><span class="toc-number">1.4.3.</span> <span class="toc-text">【掌握】标准化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E3%80%90%E5%AE%9E%E6%93%8D%E3%80%91%E5%88%A9%E7%94%A8KNN%E7%AE%97%E6%B3%95%E8%BF%9B%E8%A1%8C%E9%B8%A2%E5%B0%BE%E8%8A%B1%E5%88%86%E7%B1%BB"><span class="toc-number">1.4.4.</span> <span class="toc-text">【实操】利用KNN算法进行鸢尾花分类</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B6%85%E5%8F%82%E6%95%B0%E9%80%89%E6%8B%A9%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-number">1.5.</span> <span class="toc-text">超参数选择的方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E3%80%90%E7%9F%A5%E9%81%93%E3%80%91%E4%BA%A4%E5%8F%89%E9%AA%8C%E8%AF%81"><span class="toc-number">1.5.1.</span> <span class="toc-text">【知道】交叉验证</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E3%80%90%E7%9F%A5%E9%81%93%E3%80%91%E7%BD%91%E6%A0%BC%E6%90%9C%E7%B4%A2"><span class="toc-number">1.5.2.</span> <span class="toc-text">【知道】网格搜索</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8KNN%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0%E6%89%8B%E5%86%99%E6%95%B0%E5%AD%97%E8%AF%86%E5%88%AB"><span class="toc-number">1.5.3.</span> <span class="toc-text">利用KNN算法实现手写数字识别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.5.4.</span> <span class="toc-text">数据介绍</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%9C%E4%B8%9A"><span class="toc-number">1.6.</span> <span class="toc-text">作业</span></a></li></ol></li></ol></div></div><footer><nobr>构建自 <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> 使用主题 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> 主题作者 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>

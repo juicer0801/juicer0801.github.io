@@ -1,0 +1,775 @@
+<!DOCTYPE html><html lang="en" theme-mode="auto"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>机器学习ai助教 | Hexo</title><meta name="description" content="第1章 机器学习基础：超级详细教程（小白版） 🎯 目标：把你当完全的小白，从零开始讲清楚机器学习的核心概念 📖 参考资料：西瓜书第1章、《白话机器学习的数学》、黑马程序员教程、动手学机器学习 💡 阅读建议：不要急，慢慢看，每个概念都要理解清楚   📋 本章目录 什么是机器学习 AI、机器学习、深度学习的关系 机器学习的分类 机器学习的建模流程 特征工程入门 第一个机器学习程序 过拟合与欠拟">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机器学习ai助教">
+<meta property="og:url" content="http://example.com/2026/10/15/ml2/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="第1章 机器学习基础：超级详细教程（小白版） 🎯 目标：把你当完全的小白，从零开始讲清楚机器学习的核心概念 📖 参考资料：西瓜书第1章、《白话机器学习的数学》、黑马程序员教程、动手学机器学习 💡 阅读建议：不要急，慢慢看，每个概念都要理解清楚   📋 本章目录 什么是机器学习 AI、机器学习、深度学习的关系 机器学习的分类 机器学习的建模流程 特征工程入门 第一个机器学习程序 过拟合与欠拟">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-10-15T04:35:13.000Z">
+<meta property="article:modified_time" content="2026-10-15T08:20:17.215Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary"><link rel="canonical" href="http://example.com/2026/10/15/ml2/"><link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="preload" as="font" crossorigin="anonymous" href="/font/Bender.ttf"><link rel="preload" as="font" crossorigin="anonymous" href="/font/BenderLight.woff2"><link rel="preload" as="font" crossorigin="anonymous" href="/font/JetBrainsMono-Regular.woff2"><link rel="stylesheet" href="/css/arknights.css"><style>@font-face {
+  font-family: Bender;
+  src: local('Bender'), url("/font/Bender.ttf"), url("/font/Bender.otf");
+}
+@font-face {
+  font-family: BenderLight;
+  src: local('BenderLight'), url("/font/BenderLight.woff2") format('woff2');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}
+</style><meta name="page-config" content="{&quot;code_fold&quot;:null}"><script class="pjax-js">var config = {"root":"/","code_fold":15,"search":{"preload":true,"activeHolder":"键入以继续","blurHolder":"数据检索","noResult":"无 $0 相关数据"},"code":{"codeInfo":"$0 - $1 行","copy":"复制"}};
+var page_config = {
+  code_fold: null
+};
+function updatePageConfig() {
+  var newPageConfig = document.querySelector('meta[name="page-config"]');
+  if (newPageConfig) {
+    page_config = JSON.parse(newPageConfig.content);
+  }
+}
+document.addEventListener('pjax:complete', function() { updatePageConfig(); });
+updatePageConfig();</script><link type="text/css" rel="stylesheet" href="/lib/encrypt/hbe.style.css"><script src="//unpkg.com/mermaid@11.12.2/dist/mermaid.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.1/MathJax.js"></script><script>MathJax.Hub.Config({
+ menuSettings: {
+   zoom: "None"
+ },
+ showMathMenu: false,
+ jax: ["input/TeX","output/CommonHTML"],
+ extensions: ["tex2jax.js"],
+ TeX: {
+   extensions: ["AMSmath.js","AMSsymbols.js"],
+   equationNumbers: {
+     autoNumber: "AMS"
+   }
+ },
+ tex2jax: {
+   inlineMath: [["\\(", "\\)"]],
+   displayMath: [["\\[", "\\]"]]
+ }
+});</script><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lightgallery.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-zoom.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-thumbnail.css"><link type="text/css" rel="stylesheet" href="/lib/fontawesome/css/all.min.css"><script>if (window.localStorage.getItem('theme-mode') === 'light' || window.matchMedia('(prefers-color-scheme:light)').matches)
+ document.documentElement.setAttribute('theme-mode', 'light')
+if (window.localStorage.getItem('theme-mode') === 'dark' || window.matchMedia('(prefers-color-scheme:dark)').matches)
+ document.documentElement.setAttribute('theme-mode', 'dark')</script><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.woff2") format('woff2');
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><style>:root {
+ --dark-background: url('https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg');
+ --light-background: url('/img/bk.jpg');
+ --theme-encrypt-confirm: '确认'
+}</style><script defer src="/js/arknights.js"></script><script defer src="/js/search.js"></script><script defer src="https://vercount.one/js"></script><script defer type="module">import mermaid from '//unpkg.com/mermaid@11.12.2/dist/mermaid.esm.min.mjs';
+window.mermaid = mermaid;
+code.paintMermaid();
+</script><script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.1/MathJax.js"></script><script>MathJax.Hub.Config({
+  menuSettings: {
+    zoom: "None"
+  },
+  showMathMenu: false,
+  jax: ["input/TeX","output/CommonHTML"],
+  extensions: ["tex2jax.js"],
+  TeX: {
+    extensions: ["AMSmath.js","AMSsymbols.js"],
+    equationNumbers: {
+      autoNumber: "AMS"
+    }
+  },
+  tex2jax: {
+    inlineMath: [["\\(", "\\)"]],
+    displayMath: [["\\[", "\\]"]]
+  }
+});
+</script><script async src="//unpkg.com/lightgallery@2.7.1/lightgallery.min.js"></script><script async src="//unpkg.com/lightgallery@2.7.1/plugins/zoom/lg-zoom.min.js"></script><script async src="//unpkg.com/lightgallery@2.7.1/plugins/thumbnail/lg-thumbnail.min.js"></script><script async src="/lib/encrypt/hbe.js"></script><script async src="/js/pjax.js"></script><script class="pjax-js">reset= () => {document.querySelector('.lg-container')?.remove()
+lightGallery(document.getElementById('post-bg'), {
+  plugins: [lgZoom,lgThumbnail],
+  selector: '.item-img'})}</script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js','data-pjax','.vercount','meta[name=page-config]'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);document.addEventListener('pjax:success', _ => {
+ const script = document.createElement('script');
+ script.src = 'https://vercount.one/js';
+ document.head.appendChild(script);
+});reset()})</script><script class="pjax-js">reset= () => {window.giscusSettings = {
+ repo: 'juicer0801/juicer0801.github.io',
+ repoId: 'R_kgDOUcAR_w',
+ category: 'Announcements',
+ categoryId: 'DIC_kwDOUcAR_84DIlqM',
+ mapping: 'pathname',
+ strict: '0',
+ reactionsEnabled: '1',
+ emitMetadata: '0',
+ inputPosition: 'bottom',
+ lang: 'zh-CN',
+ crossorigin: 'anonymous' , loading: 'lazy'};window.giscusThemeConfig = { theme: 'preferred_color_scheme' };MathJax.Hub.Queue(["Typeset", MathJax.Hub]);document.querySelector('.lg-container')?.remove()
+const postBg = document.querySelector('#post-bg');
+if (postBg) lightGallery(postBg, {
+  plugins: [lgZoom,lgThumbnail],
+  selector: '.item-img'})}</script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js','data-pjax','.vercount','meta[name=page-config]'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);document.addEventListener('pjax:success', _ => {
+ const script = document.createElement('script');
+ script.src = 'https://vercount.one/js';
+ document.head.appendChild(script);
+});reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="数据检索" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/tags/"><span class="navItemTitle">Tags</span></a></li><li class="navItem"><a class="navBlock" href="/categories/"><span class="navItemTitle">Categories</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>机器学习ai助教</h1><div id="post-info"><span>文章发布时间: <div class="control"><time datetime="2026-10-15T04:35:13.000Z" id="date"> 2026-10-15</time></div></span><br><span>最后更新时间: <div class="control"><time datetime="2026-10-15T08:20:17.215Z" id="updated"> 2026-10-15</time></div></span><br><span>文章总字数: <div class="control">7.4k</div></span><br><span>预计阅读时间: <div class="control">30 分钟</div></span><br><span id="vercount_container_page_pv">页面浏览: <span class="control" id="vercount_value_page_pv">加载中...</span></span></div></div><hr><div id="post-content"><h1 id="第1章-机器学习基础：超级详细教程（小白版）"><a href="#第1章-机器学习基础：超级详细教程（小白版）" class="headerlink" title="第1章 机器学习基础：超级详细教程（小白版）"></a>第1章 机器学习基础：超级详细教程（小白版）</h1><blockquote>
+<p>🎯 目标：把你当完全的小白，从零开始讲清楚机器学习的核心概念</p>
+<p>📖 参考资料：西瓜书第1章、《白话机器学习的数学》、黑马程序员教程、动手学机器学习</p>
+<p>💡 阅读建议：不要急，慢慢看，每个概念都要理解清楚</p>
+</blockquote>
+<hr>
+<h2 id="📋-本章目录"><a href="#📋-本章目录" class="headerlink" title="📋 本章目录"></a>📋 本章目录</h2><ol>
+<li><a href="#1-什么是机器学习">什么是机器学习</a></li>
+<li><a href="#2-ai机器学习深度学习的关系">AI、机器学习、深度学习的关系</a></li>
+<li><a href="#3-机器学习的分类">机器学习的分类</a></li>
+<li><a href="#4-机器学习的建模流程">机器学习的建模流程</a></li>
+<li><a href="#5-特征工程入门">特征工程入门</a></li>
+<li><a href="#6-第一个机器学习程序">第一个机器学习程序</a></li>
+<li><a href="#7-过拟合与欠拟合">过拟合与欠拟合</a></li>
+<li><a href="#8-本章小结与作业">本章小结与作业</a></li>
+</ol>
+<hr>
+<h1 id="1-什么是机器学习"><a href="#1-什么是机器学习" class="headerlink" title="1. 什么是机器学习"></a>1. 什么是机器学习</h1><h2 id="1-1-从传统编程到机器学习"><a href="#1-1-从传统编程到机器学习" class="headerlink" title="1.1 从传统编程到机器学习"></a>1.1 从传统编程到机器学习</h2><h3 id="传统编程-vs-机器学习"><a href="#传统编程-vs-机器学习" class="headerlink" title="传统编程 vs 机器学习"></a>传统编程 vs 机器学习</h3><p><strong>传统编程（规则编程）：</strong><br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">规则 + 数据 → 答案<br></code></pre></td></tr></table></figure></p>
+<p><strong>机器学习：</strong><br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">答案 + 数据 → 规则（模型）<br></code></pre></td></tr></table></figure></p>
+<p><strong>具体例子：</strong></p>
+<p>假设我们要判断一封邮件是否是垃圾邮件。</p>
+<p><strong>传统编程思路：</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 人工制定规则</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">is_spam</span>(<span class="hljs-params">email</span>):<br>    <span class="hljs-keyword">if</span> <span class="hljs-string">&quot;免费&quot;</span> <span class="hljs-keyword">in</span> email <span class="hljs-keyword">and</span> <span class="hljs-string">&quot;中奖&quot;</span> <span class="hljs-keyword">in</span> email:<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span><br>    <span class="hljs-keyword">if</span> <span class="hljs-string">&quot;点击链接&quot;</span> <span class="hljs-keyword">in</span> email <span class="hljs-keyword">and</span> <span class="hljs-string">&quot;领取&quot;</span> <span class="hljs-keyword">in</span> email:<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span><br>    <span class="hljs-keyword">if</span> <span class="hljs-string">&quot;紧急&quot;</span> <span class="hljs-keyword">in</span> email <span class="hljs-keyword">and</span> <span class="hljs-string">&quot;账户&quot;</span> <span class="hljs-keyword">in</span> email:<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span><br>    <span class="hljs-comment"># ... 需要人工制定成百上千条规则</span><br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span><br></code></pre></td></tr></table></figure></p>
+<p><strong>问题：</strong></p>
+<ul>
+<li>规则太多，写不完</li>
+<li>骗子会换花样，规则要不断更新</li>
+<li>很难覆盖所有情况</li>
+</ul>
+<p><strong>机器学习思路：</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 给模型看大量已标注的邮件</span><br><span class="hljs-comment"># 训练数据：</span><br>emails = [<br>    (<span class="hljs-string">&quot;恭喜您中奖100万，点击链接领取&quot;</span>, <span class="hljs-string">&quot;垃圾邮件&quot;</span>),<br>    (<span class="hljs-string">&quot;明天下午3点开会，请准时参加&quot;</span>, <span class="hljs-string">&quot;正常邮件&quot;</span>),<br>    (<span class="hljs-string">&quot;您的账户异常，请立即验证&quot;</span>, <span class="hljs-string">&quot;垃圾邮件&quot;</span>),<br>    (<span class="hljs-string">&quot;周末一起吃饭吗？&quot;</span>, <span class="hljs-string">&quot;正常邮件&quot;</span>),<br>    <span class="hljs-comment"># ... 成千上万条</span><br>]<br><br><span class="hljs-comment"># 让模型自己学习规律</span><br>model.fit(emails)  <span class="hljs-comment"># 模型自动学会判断</span><br><br><span class="hljs-comment"># 预测新邮件</span><br>result = model.predict(<span class="hljs-string">&quot;免费赠送iPhone，点击领取&quot;</span>)<br><span class="hljs-comment"># 输出: &quot;垃圾邮件&quot;</span><br></code></pre></td></tr></table></figure></p>
+<p><strong>核心区别：</strong></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>方式</th>
+<th>输入</th>
+<th>输出</th>
+<th>谁制定规则</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>传统编程</td>
+<td>规则 + 数据</td>
+<td>答案</td>
+<td>人类</td>
+</tr>
+<tr>
+<td>机器学习</td>
+<td>答案 + 数据</td>
+<td>规则（模型）</td>
+<td>机器</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+<h2 id="1-2-机器学习的定义"><a href="#1-2-机器学习的定义" class="headerlink" title="1.2 机器学习的定义"></a>1.2 机器学习的定义</h2><h3 id="Tom-Mitchell的经典定义"><a href="#Tom-Mitchell的经典定义" class="headerlink" title="Tom Mitchell的经典定义"></a>Tom Mitchell的经典定义</h3><blockquote>
+<p>对于某类任务T和性能度量P，如果计算机程序在T上以P衡量的性能随着经验E而自我完善，那么我们称这个计算机程序在不断”学习”。</p>
+</blockquote>
+<p><strong>用人话说：</strong></p>
+<ul>
+<li><strong>任务T</strong>：你要做什么（比如：判断垃圾邮件）</li>
+<li><strong>性能P</strong>：怎么衡量做得好不好（比如：准确率）</li>
+<li><strong>经验E</strong>：训练数据（比如：大量已标注的邮件）</li>
+</ul>
+<p><strong>具体例子：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">任务T：判断邮件是否是垃圾邮件<br>性能P：准确率（正确判断的比例）<br>经验E：10000封已标注的邮件<br><br>模型看了越多邮件（经验E），准确率（性能P）越高<br>→ 模型在学习<br></code></pre></td></tr></table></figure>
+<h3 id="西瓜书中的定义"><a href="#西瓜书中的定义" class="headerlink" title="西瓜书中的定义"></a>西瓜书中的定义</h3><blockquote>
+<p>机器学习所研究的是怎样通过计算的手段，利用经验来改善系统自身的性能。</p>
+</blockquote>
+<p><strong>关键词：</strong></p>
+<ul>
+<li><strong>计算的手段</strong>：用计算机</li>
+<li><strong>经验</strong>：数据</li>
+<li><strong>改善性能</strong>：学得更好的模型</li>
+</ul>
+<hr>
+<h1 id="2-AI、机器学习、深度学习的关系"><a href="#2-AI、机器学习、深度学习的关系" class="headerlink" title="2. AI、机器学习、深度学习的关系"></a>2. AI、机器学习、深度学习的关系</h1><h2 id="2-1-三个概念是什么"><a href="#2-1-三个概念是什么" class="headerlink" title="2.1 三个概念是什么"></a>2.1 三个概念是什么</h2><h3 id="人工智能（Artificial-Intelligence-AI）"><a href="#人工智能（Artificial-Intelligence-AI）" class="headerlink" title="人工智能（Artificial Intelligence, AI）"></a>人工智能（Artificial Intelligence, AI）</h3><p><strong>定义：</strong> 让机器像人一样思考和行动</p>
+<p><strong>范围：</strong> 最大的概念，包含所有让机器变”聪明”的方法</p>
+<p><strong>例子：</strong></p>
+<ul>
+<li>下棋的AlphaGo</li>
+<li>语音助手Siri</li>
+<li>自动驾驶汽车</li>
+<li>垃圾邮件过滤</li>
+</ul>
+<h3 id="机器学习（Machine-Learning-ML）"><a href="#机器学习（Machine-Learning-ML）" class="headerlink" title="机器学习（Machine Learning, ML）"></a>机器学习（Machine Learning, ML）</h3><p><strong>定义：</strong> 让机器从数据中学习规律</p>
+<p><strong>范围：</strong> AI的子集，是实现AI的一种方法</p>
+<p><strong>核心思想：</strong> 不直接编程规则，而是让机器从数据中学习规则</p>
+<h3 id="深度学习（Deep-Learning-DL）"><a href="#深度学习（Deep-Learning-DL）" class="headerlink" title="深度学习（Deep Learning, DL）"></a>深度学习（Deep Learning, DL）</h3><p><strong>定义：</strong> 使用深层神经网络进行机器学习</p>
+<p><strong>范围：</strong> ML的子集，是机器学习的一种方法</p>
+<p><strong>核心思想：</strong> 用多层神经网络自动学习特征</p>
+<hr>
+<h2 id="2-2-三者的关系"><a href="#2-2-三者的关系" class="headerlink" title="2.2 三者的关系"></a>2.2 三者的关系</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">┌─────────────────────────────────────┐<br>│            人工智能 (AI)              │<br>│  ┌─────────────────────────────┐    │<br>│  │       机器学习 (ML)           │    │<br>│  │  ┌─────────────────────┐    │    │<br>│  │  │   深度学习 (DL)      │    │    │<br>│  │  │                     │    │    │<br>│  │  │  - 神经网络          │    │    │<br>│  │  │  - CNN              │    │    │<br>│  │  │  - RNN              │    │    │<br>│  │  │  - Transformer      │    │    │<br>│  │  └─────────────────────┘    │    │<br>│  │                              │    │<br>│  │  - 决策树                    │    │<br>│  │  - SVM                       │    │<br>│  │  - 随机森林                  │    │<br>│  │  - KNN                       │    │<br>│  └─────────────────────────────┘    │<br>│                                      │<br>│  - 专家系统                          │<br>│  - 规则引擎                          │<br>└─────────────────────────────────────┘<br></code></pre></td></tr></table></figure>
+<p><strong>具体例子：</strong></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>任务</th>
+<th>传统AI方法</th>
+<th>机器学习方法</th>
+<th>深度学习方法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>图像分类</td>
+<td>手工设计特征</td>
+<td>SVM + 手工特征</td>
+<td>CNN自动学习特征</td>
+</tr>
+<tr>
+<td>语音识别</td>
+<td>隐马尔可夫模型</td>
+<td>GMM + 手工特征</td>
+<td>RNN/Transformer</td>
+</tr>
+<tr>
+<td>文本分类</td>
+<td>规则匹配</td>
+<td>朴素贝叶斯</td>
+<td>BERT</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+<h2 id="2-3-什么时候用ML，什么时候用DL"><a href="#2-3-什么时候用ML，什么时候用DL" class="headerlink" title="2.3 什么时候用ML，什么时候用DL"></a>2.3 什么时候用ML，什么时候用DL</h2><h3 id="机器学习（传统ML）的优势"><a href="#机器学习（传统ML）的优势" class="headerlink" title="机器学习（传统ML）的优势"></a>机器学习（传统ML）的优势</h3><ol>
+<li><p><strong>数据量小时表现好</strong></p>
+<ul>
+<li>深度学习需要大量数据</li>
+<li>传统ML在小数据集上也能工作</li>
+</ul>
+</li>
+<li><p><strong>可解释性强</strong></p>
+<ul>
+<li>决策树可以画出规则</li>
+<li>深度学习是”黑盒”</li>
+</ul>
+</li>
+<li><p><strong>计算资源少</strong></p>
+<ul>
+<li>不需要GPU</li>
+<li>训练速度快</li>
+</ul>
+</li>
+<li><p><strong>特征工程灵活</strong></p>
+<ul>
+<li>可以融入领域知识</li>
+<li>针对性处理特征</li>
+</ul>
+</li>
+</ol>
+<h3 id="深度学习的优势"><a href="#深度学习的优势" class="headerlink" title="深度学习的优势"></a>深度学习的优势</h3><ol>
+<li><p><strong>自动学习特征</strong></p>
+<ul>
+<li>不需要手工设计特征</li>
+<li>端到端学习</li>
+</ul>
+</li>
+<li><p><strong>大数据时效果极好</strong></p>
+<ul>
+<li>数据越多，效果越好</li>
+<li>能学到复杂的模式</li>
+</ul>
+</li>
+<li><p><strong>适合非结构化数据</strong></p>
+<ul>
+<li>图像、音频、文本</li>
+<li>传统ML难以处理</li>
+</ul>
+</li>
+</ol>
+<h3 id="选择建议"><a href="#选择建议" class="headerlink" title="选择建议"></a>选择建议</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">数据量小 + 结构化数据（表格） → 传统ML（XGBoost、随机森林）<br>数据量大 + 非结构化数据（图像/文本） → 深度学习（CNN、Transformer）<br>需要可解释性 → 传统ML（决策树、线性模型）<br>追求极致性能 → 深度学习<br></code></pre></td></tr></table></figure>
+<hr>
+<h1 id="3-机器学习的分类"><a href="#3-机器学习的分类" class="headerlink" title="3. 机器学习的分类"></a>3. 机器学习的分类</h1><h2 id="3-1-按学习方式分类"><a href="#3-1-按学习方式分类" class="headerlink" title="3.1 按学习方式分类"></a>3.1 按学习方式分类</h2><h3 id="监督学习（Supervised-Learning）"><a href="#监督学习（Supervised-Learning）" class="headerlink" title="监督学习（Supervised Learning）"></a>监督学习（Supervised Learning）</h3><p><strong>定义：</strong> 训练数据有标签（有答案）</p>
+<p><strong>特点：</strong></p>
+<ul>
+<li>有特征X，有标签Y</li>
+<li>学习X→Y的映射关系</li>
+<li>可以预测新数据的标签</li>
+</ul>
+<p><strong>两种主要任务：</strong></p>
+<h4 id="分类（Classification）"><a href="#分类（Classification）" class="headerlink" title="分类（Classification）"></a>分类（Classification）</h4><ul>
+<li>标签是<strong>离散的</strong>（类别）</li>
+<li>例：判断邮件是”垃圾”还是”正常”</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 分类问题示例</span><br>X = [[<span class="hljs-number">25</span>, <span class="hljs-number">50000</span>], [<span class="hljs-number">45</span>, <span class="hljs-number">80000</span>], [<span class="hljs-number">22</span>, <span class="hljs-number">30000</span>], [<span class="hljs-number">50</span>, <span class="hljs-number">120000</span>]]  <span class="hljs-comment"># 特征：[年龄, 收入]</span><br>y = [<span class="hljs-string">&#x27;低&#x27;</span>, <span class="hljs-string">&#x27;高&#x27;</span>, <span class="hljs-string">&#x27;低&#x27;</span>, <span class="hljs-string">&#x27;高&#x27;</span>]  <span class="hljs-comment"># 标签：信用等级</span><br><br><span class="hljs-comment"># 模型学习后，可以预测新用户的信用等级</span><br>new_user = [[<span class="hljs-number">30</span>, <span class="hljs-number">60000</span>]]<br>prediction = model.predict(new_user)  <span class="hljs-comment"># 输出: &#x27;中&#x27; 或 &#x27;高&#x27;</span><br></code></pre></td></tr></table></figure>
+<h4 id="回归（Regression）"><a href="#回归（Regression）" class="headerlink" title="回归（Regression）"></a>回归（Regression）</h4><ul>
+<li>标签是<strong>连续的</strong>（数值）</li>
+<li>例：预测房价</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 回归问题示例</span><br>X = [[<span class="hljs-number">100</span>, <span class="hljs-number">3</span>, <span class="hljs-number">2</span>], [<span class="hljs-number">150</span>, <span class="hljs-number">4</span>, <span class="hljs-number">3</span>], [<span class="hljs-number">80</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>], [<span class="hljs-number">200</span>, <span class="hljs-number">5</span>, <span class="hljs-number">4</span>]]  <span class="hljs-comment"># 特征：[面积, 房间数, 楼层]</span><br>y = [<span class="hljs-number">500</span>, <span class="hljs-number">800</span>, <span class="hljs-number">400</span>, <span class="hljs-number">1200</span>]  <span class="hljs-comment"># 标签：房价（万元）</span><br><br><span class="hljs-comment"># 模型学习后，可以预测新房的价格</span><br>new_house = [[<span class="hljs-number">120</span>, <span class="hljs-number">3</span>, <span class="hljs-number">2</span>]]<br>prediction = model.predict(new_house)  <span class="hljs-comment"># 输出: 620.5（万元）</span><br></code></pre></td></tr></table></figure>
+<hr>
+<h3 id="无监督学习（Unsupervised-Learning）"><a href="#无监督学习（Unsupervised-Learning）" class="headerlink" title="无监督学习（Unsupervised Learning）"></a>无监督学习（Unsupervised Learning）</h3><p><strong>定义：</strong> 训练数据没有标签（没有答案）</p>
+<p><strong>特点：</strong></p>
+<ul>
+<li>只有特征X，没有标签Y</li>
+<li>发现数据中的结构或模式</li>
+<li>不能预测，只能发现</li>
+</ul>
+<p><strong>主要任务：</strong></p>
+<h4 id="聚类（Clustering）"><a href="#聚类（Clustering）" class="headerlink" title="聚类（Clustering）"></a>聚类（Clustering）</h4><ul>
+<li>把相似的样本分到一组</li>
+<li>例：用户分群</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 聚类问题示例</span><br>X = [<br>    [<span class="hljs-number">25</span>, <span class="hljs-number">50000</span>],   <span class="hljs-comment"># 用户1：年轻，收入中等</span><br>    [<span class="hljs-number">26</span>, <span class="hljs-number">48000</span>],   <span class="hljs-comment"># 用户2：年轻，收入中等（和用户1相似）</span><br>    [<span class="hljs-number">55</span>, <span class="hljs-number">150000</span>],  <span class="hljs-comment"># 用户3：中年，高收入</span><br>    [<span class="hljs-number">52</span>, <span class="hljs-number">140000</span>],  <span class="hljs-comment"># 用户4：中年，高收入（和用户3相似）</span><br>    [<span class="hljs-number">23</span>, <span class="hljs-number">30000</span>],   <span class="hljs-comment"># 用户5：年轻，低收入</span><br>]<br><br><span class="hljs-comment"># 聚类后，自动发现用户群体</span><br>clusters = [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>]  <span class="hljs-comment"># 用户1,2一组；用户3,4一组；用户5单独一组</span><br><br><span class="hljs-comment"># 解释：</span><br><span class="hljs-comment"># 群体0：年轻白领（25-26岁，收入5万左右）</span><br><span class="hljs-comment"># 群体1：中年精英（52-55岁，收入14-15万）</span><br><span class="hljs-comment"># 群体2：年轻学生（23岁，收入3万）</span><br></code></pre></td></tr></table></figure>
+<h4 id="降维（Dimensionality-Reduction）"><a href="#降维（Dimensionality-Reduction）" class="headerlink" title="降维（Dimensionality Reduction）"></a>降维（Dimensionality Reduction）</h4><ul>
+<li>减少特征数量，保留重要信息</li>
+<li>例：数据可视化</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 降维示例</span><br><span class="hljs-comment"># 原始数据有100个特征</span><br>X_high_dim = [[f1, f2, ..., f100], ...]  <span class="hljs-comment"># 100维</span><br><br><span class="hljs-comment"># 降维到2维，方便可视化</span><br>X_low_dim = pca.fit_transform(X_high_dim)  <span class="hljs-comment"># 2维</span><br><br><span class="hljs-comment"># 可以画在平面上</span><br>plt.scatter(X_low_dim[:, <span class="hljs-number">0</span>], X_low_dim[:, <span class="hljs-number">1</span>])<br></code></pre></td></tr></table></figure>
+<hr>
+<h3 id="半监督学习（Semi-supervised-Learning）"><a href="#半监督学习（Semi-supervised-Learning）" class="headerlink" title="半监督学习（Semi-supervised Learning）"></a>半监督学习（Semi-supervised Learning）</h3><p><strong>定义：</strong> 训练数据部分有标签，部分没有标签</p>
+<p><strong>特点：</strong></p>
+<ul>
+<li>有标签的数据少（标注成本高）</li>
+<li>无标签的数据多（容易获取）</li>
+<li>利用无标签数据提升模型</li>
+</ul>
+<p><strong>例子：</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 医疗图像分类</span><br><span class="hljs-comment"># 有标签：100张（医生标注，成本高）</span><br>labeled_data = [(image1, <span class="hljs-string">&quot;良性&quot;</span>), (image2, <span class="hljs-string">&quot;恶性&quot;</span>), ...]  <span class="hljs-comment"># 100张</span><br><br><span class="hljs-comment"># 无标签：10000张（医院数据，未标注）</span><br>unlabeled_data = [image101, image102, ...]  <span class="hljs-comment"># 10000张</span><br><br><span class="hljs-comment"># 半监督学习：同时利用两种数据</span><br>model.fit(labeled_data, unlabeled_data)<br></code></pre></td></tr></table></figure></p>
+<hr>
+<h3 id="强化学习（Reinforcement-Learning）"><a href="#强化学习（Reinforcement-Learning）" class="headerlink" title="强化学习（Reinforcement Learning）"></a>强化学习（Reinforcement Learning）</h3><p><strong>定义：</strong> 智能体通过与环境交互，学习最优策略</p>
+<p><strong>特点：</strong></p>
+<ul>
+<li>没有明确的训练数据</li>
+<li>通过试错学习</li>
+<li>获得奖励或惩罚</li>
+</ul>
+<p><strong>核心概念：</strong></p>
+<ul>
+<li><strong>智能体（Agent）</strong>：做决策的主体</li>
+<li><strong>环境（Environment）</strong>：智能体交互的对象</li>
+<li><strong>状态（State）</strong>：环境的当前情况</li>
+<li><strong>动作（Action）</strong>：智能体可以做的操作</li>
+<li><strong>奖励（Reward）</strong>：环境的反馈</li>
+</ul>
+<p><strong>例子：游戏AI</strong><br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">智能体：游戏角色<br>环境：游戏世界<br>状态：角色的位置、血量、敌人位置...<br>动作：上、下、左、右、攻击、跳跃<br>奖励：吃到金币+1，被打-1，通关+100<br><br>智能体通过不断尝试，学会最优策略<br></code></pre></td></tr></table></figure></p>
+<hr>
+<h2 id="3-2-四种学习方式对比"><a href="#3-2-四种学习方式对比" class="headerlink" title="3.2 四种学习方式对比"></a>3.2 四种学习方式对比</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>学习方式</th>
+<th>数据特点</th>
+<th>任务</th>
+<th>典型算法</th>
+<th>应用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>监督学习</td>
+<td>有标签</td>
+<td>分类、回归</td>
+<td>决策树、SVM、神经网络</td>
+<td>垃圾邮件检测、房价预测</td>
+</tr>
+<tr>
+<td>无监督学习</td>
+<td>无标签</td>
+<td>聚类、降维</td>
+<td>K-Means、PCA</td>
+<td>用户分群、数据压缩</td>
+</tr>
+<tr>
+<td>半监督学习</td>
+<td>部分有标签</td>
+<td>分类</td>
+<td>自训练、协同训练</td>
+<td>医疗图像、文本分类</td>
+</tr>
+<tr>
+<td>强化学习</td>
+<td>交互反馈</td>
+<td>决策</td>
+<td>Q-Learning、PPO</td>
+<td>游戏AI、机器人控制</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+<h1 id="4-机器学习的建模流程"><a href="#4-机器学习的建模流程" class="headerlink" title="4. 机器学习的建模流程"></a>4. 机器学习的建模流程</h1><h2 id="4-1-完整流程"><a href="#4-1-完整流程" class="headerlink" title="4.1 完整流程"></a>4.1 完整流程</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">┌─────────────┐<br>│  1.获取数据   │<br>└──────┬──────┘<br>       ↓<br>┌─────────────┐<br>│  2.数据处理   │  ← 清洗、转换<br>└──────┬──────┘<br>       ↓<br>┌─────────────┐<br>│  3.特征工程   │  ← 提取、选择、构造特征<br>└──────┬──────┘<br>       ↓<br>┌─────────────┐<br>│  4.模型训练   │  ← 用训练数据训练模型<br>└──────┬──────┘<br>       ↓<br>┌─────────────┐<br>│  5.模型评估   │  ← 用测试数据评估<br>└──────┬──────┘<br>       ↓<br>┌─────────────┐<br>│  6.模型优化   │  ← 调参、改进<br>└──────┬──────┘<br>       ↓<br>┌─────────────┐<br>│  7.部署上线   │  ← 应用到实际场景<br>└─────────────┘<br></code></pre></td></tr></table></figure>
+<hr>
+<h2 id="4-2-每一步详细讲解"><a href="#4-2-每一步详细讲解" class="headerlink" title="4.2 每一步详细讲解"></a>4.2 每一步详细讲解</h2><h3 id="第1步：获取数据"><a href="#第1步：获取数据" class="headerlink" title="第1步：获取数据"></a>第1步：获取数据</h3><p><strong>数据来源：</strong></p>
+<ul>
+<li>公开数据集（Kaggle、UCI）</li>
+<li>公司内部数据</li>
+<li>爬虫获取</li>
+<li>传感器采集</li>
+</ul>
+<p><strong>例子：</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 从sklearn加载内置数据集</span><br><span class="hljs-keyword">from</span> sklearn.datasets <span class="hljs-keyword">import</span> load_iris<br><br><span class="hljs-comment"># 加载鸢尾花数据集</span><br>iris = load_iris()<br>X = iris.data      <span class="hljs-comment"># 特征：花萼长度、花萼宽度、花瓣长度、花瓣宽度</span><br>y = iris.target    <span class="hljs-comment"># 标签：3种鸢尾花类别</span><br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;数据形状: <span class="hljs-subst">&#123;X.shape&#125;</span>&quot;</span>)  <span class="hljs-comment"># (150, 4) - 150个样本，4个特征</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;标签种类: <span class="hljs-subst">&#123;iris.target_names&#125;</span>&quot;</span>)  <span class="hljs-comment"># [&#x27;setosa&#x27; &#x27;versicolor&#x27; &#x27;virginica&#x27;]</span><br></code></pre></td></tr></table></figure></p>
+<hr>
+<h3 id="第2步：数据处理"><a href="#第2步：数据处理" class="headerlink" title="第2步：数据处理"></a>第2步：数据处理</h3><p><strong>常见操作：</strong></p>
+<ul>
+<li>处理缺失值</li>
+<li>处理异常值</li>
+<li>数据格式转换</li>
+</ul>
+<p><strong>例子：</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><br><span class="hljs-comment"># 假设我们有这样的数据</span><br>data = &#123;<br>    <span class="hljs-string">&#x27;age&#x27;</span>: [<span class="hljs-number">25</span>, <span class="hljs-number">30</span>, np.nan, <span class="hljs-number">45</span>, <span class="hljs-number">50</span>],      <span class="hljs-comment"># 有缺失值</span><br>    <span class="hljs-string">&#x27;income&#x27;</span>: [<span class="hljs-number">50000</span>, <span class="hljs-number">80000</span>, <span class="hljs-number">60000</span>, -<span class="hljs-number">1</span>, <span class="hljs-number">120000</span>],  <span class="hljs-comment"># 有异常值(-1)</span><br>    <span class="hljs-string">&#x27;score&#x27;</span>: [<span class="hljs-number">0.8</span>, <span class="hljs-number">0.9</span>, <span class="hljs-number">0.7</span>, <span class="hljs-number">0.85</span>, <span class="hljs-number">0.95</span>]<br>&#125;<br>df = pd.DataFrame(data)<br><br><span class="hljs-comment"># 1. 处理缺失值：用均值填充</span><br>df[<span class="hljs-string">&#x27;age&#x27;</span>] = df[<span class="hljs-string">&#x27;age&#x27;</span>].fillna(df[<span class="hljs-string">&#x27;age&#x27;</span>].mean())<br><br><span class="hljs-comment"># 2. 处理异常值：用中位数替换</span><br>median_income = df[df[<span class="hljs-string">&#x27;income&#x27;</span>] &gt; <span class="hljs-number">0</span>][<span class="hljs-string">&#x27;income&#x27;</span>].median()<br>df.loc[df[<span class="hljs-string">&#x27;income&#x27;</span>] &lt; <span class="hljs-number">0</span>, <span class="hljs-string">&#x27;income&#x27;</span>] = median_income<br><br><span class="hljs-built_in">print</span>(df)<br></code></pre></td></tr></table></figure></p>
+<hr>
+<h3 id="第3步：特征工程"><a href="#第3步：特征工程" class="headerlink" title="第3步：特征工程"></a>第3步：特征工程</h3><p><strong>这是最重要的一步！</strong></p>
+<blockquote>
+<p>“数据和特征决定了机器学习的上限，而模型和算法只是逼近这个上限。”</p>
+</blockquote>
+<p><strong>特征工程包括：</strong></p>
+<ol>
+<li><strong>特征提取</strong>：从原始数据提取有用特征</li>
+<li><strong>特征预处理</strong>：标准化、归一化</li>
+<li><strong>特征选择</strong>：选择最重要的特征</li>
+<li><strong>特征构造</strong>：组合现有特征创造新特征</li>
+</ol>
+<p><strong>例子（后面会详细讲）：</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.preprocessing <span class="hljs-keyword">import</span> StandardScaler<br><br><span class="hljs-comment"># 特征标准化</span><br>scaler = StandardScaler()<br>X_scaled = scaler.fit_transform(X)<br><br><span class="hljs-comment"># 标准化后，每个特征的均值为0，标准差为1</span><br></code></pre></td></tr></table></figure></p>
+<hr>
+<h3 id="第4步：模型训练"><a href="#第4步：模型训练" class="headerlink" title="第4步：模型训练"></a>第4步：模型训练</h3><p><strong>核心操作：</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 1. 划分训练集和测试集</span><br><span class="hljs-keyword">from</span> sklearn.model_selection <span class="hljs-keyword">import</span> train_test_split<br>X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=<span class="hljs-number">0.2</span>)<br><br><span class="hljs-comment"># 2. 选择模型</span><br><span class="hljs-keyword">from</span> sklearn.tree <span class="hljs-keyword">import</span> DecisionTreeClassifier<br>model = DecisionTreeClassifier()<br><br><span class="hljs-comment"># 3. 训练模型</span><br>model.fit(X_train, y_train)<br></code></pre></td></tr></table></figure></p>
+<hr>
+<h3 id="第5步：模型评估"><a href="#第5步：模型评估" class="headerlink" title="第5步：模型评估"></a>第5步：模型评估</h3><p><strong>评估指标：</strong></p>
+<ul>
+<li>分类：准确率、精确率、召回率、F1</li>
+<li>回归：MSE、RMSE、MAE、R²</li>
+</ul>
+<p><strong>例子：</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.metrics <span class="hljs-keyword">import</span> accuracy_score<br><br><span class="hljs-comment"># 预测</span><br>y_pred = model.predict(X_test)<br><br><span class="hljs-comment"># 计算准确率</span><br>accuracy = accuracy_score(y_test, y_pred)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;准确率: <span class="hljs-subst">&#123;accuracy:<span class="hljs-number">.4</span>f&#125;</span>&quot;</span>)  <span class="hljs-comment"># 例如: 0.95</span><br></code></pre></td></tr></table></figure></p>
+<hr>
+<h3 id="第6步：模型优化"><a href="#第6步：模型优化" class="headerlink" title="第6步：模型优化"></a>第6步：模型优化</h3><p><strong>方法：</strong></p>
+<ul>
+<li>超参数调优（网格搜索、随机搜索）</li>
+<li>特征工程改进</li>
+<li>尝试不同模型</li>
+<li>集成学习</li>
+</ul>
+<p><strong>例子：</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.model_selection <span class="hljs-keyword">import</span> GridSearchCV<br><br><span class="hljs-comment"># 定义参数网格</span><br>param_grid = &#123;<br>    <span class="hljs-string">&#x27;max_depth&#x27;</span>: [<span class="hljs-number">3</span>, <span class="hljs-number">5</span>, <span class="hljs-number">7</span>, <span class="hljs-number">10</span>],<br>    <span class="hljs-string">&#x27;min_samples_split&#x27;</span>: [<span class="hljs-number">2</span>, <span class="hljs-number">5</span>, <span class="hljs-number">10</span>]<br>&#125;<br><br><span class="hljs-comment"># 网格搜索</span><br>grid_search = GridSearchCV(model, param_grid, cv=<span class="hljs-number">5</span>)<br>grid_search.fit(X_train, y_train)<br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;最佳参数: <span class="hljs-subst">&#123;grid_search.best_params_&#125;</span>&quot;</span>)<br></code></pre></td></tr></table></figure></p>
+<hr>
+<h1 id="5-特征工程入门"><a href="#5-特征工程入门" class="headerlink" title="5. 特征工程入门"></a>5. 特征工程入门</h1><h2 id="5-1-什么是特征工程"><a href="#5-1-什么是特征工程" class="headerlink" title="5.1 什么是特征工程"></a>5.1 什么是特征工程</h2><p><strong>定义：</strong> 用专业背景知识和技巧处理数据，让机器学习算法效果最好</p>
+<p><strong>重要性：</strong></p>
+<ul>
+<li>特征工程决定了模型的上限</li>
+<li>好的特征 &gt; 复杂的模型</li>
+</ul>
+<hr>
+<h2 id="5-2-特征提取"><a href="#5-2-特征提取" class="headerlink" title="5.2 特征提取"></a>5.2 特征提取</h2><h3 id="字典特征提取"><a href="#字典特征提取" class="headerlink" title="字典特征提取"></a>字典特征提取</h3><p><strong>场景：</strong> 数据是字典格式，包含类别特征</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.feature_extraction <span class="hljs-keyword">import</span> DictVectorizer<br><br><span class="hljs-comment"># 原始数据：城市、温度、是否下雨</span><br>data = [<br>    &#123;<span class="hljs-string">&#x27;city&#x27;</span>: <span class="hljs-string">&#x27;北京&#x27;</span>, <span class="hljs-string">&#x27;temperature&#x27;</span>: <span class="hljs-number">30</span>, <span class="hljs-string">&#x27;rain&#x27;</span>: <span class="hljs-string">&#x27;yes&#x27;</span>&#125;,<br>    &#123;<span class="hljs-string">&#x27;city&#x27;</span>: <span class="hljs-string">&#x27;上海&#x27;</span>, <span class="hljs-string">&#x27;temperature&#x27;</span>: <span class="hljs-number">28</span>, <span class="hljs-string">&#x27;rain&#x27;</span>: <span class="hljs-string">&#x27;no&#x27;</span>&#125;,<br>    &#123;<span class="hljs-string">&#x27;city&#x27;</span>: <span class="hljs-string">&#x27;广州&#x27;</span>, <span class="hljs-string">&#x27;temperature&#x27;</span>: <span class="hljs-number">32</span>, <span class="hljs-string">&#x27;rain&#x27;</span>: <span class="hljs-string">&#x27;yes&#x27;</span>&#125;,<br>]<br><br><span class="hljs-comment"># 创建特征提取器</span><br>vec = DictVectorizer(sparse=<span class="hljs-literal">False</span>)<br>X = vec.fit_transform(data)<br><br><span class="hljs-built_in">print</span>(X)<br><span class="hljs-comment"># 输出:</span><br><span class="hljs-comment"># [[ 0.  1.  0. 30.  1.]   # 北京: city=北京, temp=30, rain=yes</span><br><span class="hljs-comment">#  [ 0.  0.  1. 28.  0.]   # 上海: city=上海, temp=28, rain=no</span><br><span class="hljs-comment">#  [ 1.  0.  0. 32.  1.]]  # 广州: city=广州, temp=32, rain=yes</span><br><br><span class="hljs-built_in">print</span>(vec.get_feature_names_out())<br><span class="hljs-comment"># 输出: [&#x27;city=广州&#x27; &#x27;city=北京&#x27; &#x27;city=上海&#x27; &#x27;temperature&#x27; &#x27;rain=yes&#x27;]</span><br></code></pre></td></tr></table></figure>
+<p><strong>解释：</strong></p>
+<ul>
+<li>类别特征（city）被转换成<strong>独热编码（One-Hot）</strong></li>
+<li>数值特征（temperature）保持不变</li>
+<li>布尔特征（rain）被转换成0/1</li>
+</ul>
+<hr>
+<h3 id="文本特征提取"><a href="#文本特征提取" class="headerlink" title="文本特征提取"></a>文本特征提取</h3><p><strong>场景：</strong> 数据是文本</p>
+<h4 id="词袋模型（CountVectorizer）"><a href="#词袋模型（CountVectorizer）" class="headerlink" title="词袋模型（CountVectorizer）"></a>词袋模型（CountVectorizer）</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.feature_extraction.text <span class="hljs-keyword">import</span> CountVectorizer<br><br><span class="hljs-comment"># 原始文本</span><br>texts = [<br>    <span class="hljs-string">&quot;我喜欢这部电影&quot;</span>,<br>    <span class="hljs-string">&quot;这部电影不好看&quot;</span>,<br>    <span class="hljs-string">&quot;我喜欢看小说&quot;</span>,<br>]<br><br><span class="hljs-comment"># 创建特征提取器</span><br>vec = CountVectorizer()<br>X = vec.fit_transform(texts)<br><br><span class="hljs-built_in">print</span>(vec.get_feature_names_out())<br><span class="hljs-comment"># 输出: [&#x27;不喜欢&#x27; &#x27;喜欢&#x27; &#x27;小说&#x27; &#x27;电影&#x27; &#x27;这部&#x27;]</span><br><br><span class="hljs-built_in">print</span>(X.toarray())<br><span class="hljs-comment"># 输出:</span><br><span class="hljs-comment"># [[0 1 0 1 1]   # &quot;我喜欢这部电影&quot;: 喜欢=1, 电影=1, 这部=1</span><br><span class="hljs-comment">#  [1 0 0 1 1]   # &quot;这部电影不好看&quot;: 不喜欢=1, 电影=1, 这部=1</span><br><span class="hljs-comment">#  [0 1 1 0 0]]  # &quot;我喜欢看小说&quot;: 喜欢=1, 小说=1</span><br></code></pre></td></tr></table></figure>
+<p><strong>解释：</strong></p>
+<ul>
+<li>每个词是一个特征</li>
+<li>值是词出现的次数</li>
+</ul>
+<h4 id="TF-IDF（TfidfVectorizer）"><a href="#TF-IDF（TfidfVectorizer）" class="headerlink" title="TF-IDF（TfidfVectorizer）"></a>TF-IDF（TfidfVectorizer）</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.feature_extraction.text <span class="hljs-keyword">import</span> TfidfVectorizer<br><br>texts = [<br>    <span class="hljs-string">&quot;机器学习是人工智能的一个分支&quot;</span>,<br>    <span class="hljs-string">&quot;深度学习是机器学习的一个子集&quot;</span>,<br>    <span class="hljs-string">&quot;人工智能正在改变世界&quot;</span>,<br>]<br><br>vec = TfidfVectorizer()<br>X = vec.fit_transform(texts)<br><br><span class="hljs-comment"># TF-IDF考虑了词的重要性</span><br><span class="hljs-comment"># - 在所有文档中都出现的词（如&quot;的&quot;）权重低</span><br><span class="hljs-comment"># - 只在某些文档中出现的词权重高</span><br></code></pre></td></tr></table></figure>
+<p><strong>TF-IDF公式：</strong></p>
+<script type="math/tex; mode=display">TF-IDF(t, d) = TF(t, d) \times IDF(t)</script><p>其中：</p>
+<ul>
+<li>$TF(t, d)$：词t在文档d中出现的频率</li>
+<li>$IDF(t) = \log\frac{N}{n_t}$：逆文档频率<ul>
+<li>$N$：总文档数</li>
+<li>$n_t$：包含词t的文档数</li>
+</ul>
+</li>
+</ul>
+<p><strong>具体例子：</strong><br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">假设有3个文档：<br>D1: &quot;机器学习是人工智能的一个分支&quot;<br>D2: &quot;深度学习是机器学习的一个子集&quot;<br>D3: &quot;人工智能正在改变世界&quot;<br><br>词&quot;机器学习&quot;：<br>- 在D1中出现1次，TF = 1/7<br>- 在D1和D2中出现，IDF = log(3/2) = 0.405<br>- TF-IDF = (1/7) × 0.405 = 0.058<br><br>词&quot;子集&quot;：<br>- 在D2中出现1次，TF = 1/8<br>- 只在D2中出现，IDF = log(3/1) = 1.099<br>- TF-IDF = (1/8) × 1.099 = 0.137<br><br>→ &quot;子集&quot;的TF-IDF更高，因为它更有区分度<br></code></pre></td></tr></table></figure></p>
+<hr>
+<h2 id="5-3-特征预处理"><a href="#5-3-特征预处理" class="headerlink" title="5.3 特征预处理"></a>5.3 特征预处理</h2><h3 id="归一化（Normalization）"><a href="#归一化（Normalization）" class="headerlink" title="归一化（Normalization）"></a>归一化（Normalization）</h3><p><strong>定义：</strong> 把数据缩放到[0, 1]区间</p>
+<p><strong>公式：</strong></p>
+<script type="math/tex; mode=display">x' = \frac{x - min}{max - min}</script><p><strong>例子：</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.preprocessing <span class="hljs-keyword">import</span> MinMaxScaler<br><br><span class="hljs-comment"># 原始数据</span><br>X = [[<span class="hljs-number">90</span>, <span class="hljs-number">2000</span>],<br>     [<span class="hljs-number">80</span>, <span class="hljs-number">1500</span>],<br>     [<span class="hljs-number">70</span>, <span class="hljs-number">1000</span>]]<br><br><span class="hljs-comment"># 归一化</span><br>scaler = MinMaxScaler()<br>X_scaled = scaler.fit_transform(X)<br><br><span class="hljs-built_in">print</span>(X_scaled)<br><span class="hljs-comment"># 输出:</span><br><span class="hljs-comment"># [[1.   1.  ]   # (90-70)/(90-70)=1, (2000-1000)/(2000-1000)=1</span><br><span class="hljs-comment">#  [0.5  0.5 ]   # (80-70)/(90-70)=0.5, (1500-1000)/(2000-1000)=0.5</span><br><span class="hljs-comment">#  [0.   0.  ]]  # (70-70)/(90-70)=0, (1000-1000)/(2000-1000)=0</span><br></code></pre></td></tr></table></figure></p>
+<p><strong>适用场景：</strong></p>
+<ul>
+<li>特征的量纲差异大（如年龄0-100，收入0-1000000）</li>
+<li>距离计算敏感的算法（KNN、K-Means）</li>
+</ul>
+<hr>
+<h3 id="标准化（Standardization）"><a href="#标准化（Standardization）" class="headerlink" title="标准化（Standardization）"></a>标准化（Standardization）</h3><p><strong>定义：</strong> 把数据转换成均值为0，标准差为1的分布</p>
+<p><strong>公式：</strong></p>
+<script type="math/tex; mode=display">x' = \frac{x - \mu}{\sigma}</script><p>其中：</p>
+<ul>
+<li>$\mu$：均值</li>
+<li>$\sigma$：标准差</li>
+</ul>
+<p><strong>例子：</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.preprocessing <span class="hljs-keyword">import</span> StandardScaler<br><br><span class="hljs-comment"># 原始数据</span><br>X = [[<span class="hljs-number">25</span>, <span class="hljs-number">50000</span>],<br>     [<span class="hljs-number">30</span>, <span class="hljs-number">60000</span>],<br>     [<span class="hljs-number">35</span>, <span class="hljs-number">70000</span>],<br>     [<span class="hljs-number">40</span>, <span class="hljs-number">80000</span>]]<br><br><span class="hljs-comment"># 标准化</span><br>scaler = StandardScaler()<br>X_scaled = scaler.fit_transform(X)<br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;标准化前 - 均值: <span class="hljs-subst">&#123;X.mean(axis=<span class="hljs-number">0</span>)&#125;</span>, 标准差: <span class="hljs-subst">&#123;X.std(axis=<span class="hljs-number">0</span>)&#125;</span>&quot;</span>)<br><span class="hljs-comment"># 均值: [32.5, 65000], 标准差: [5.59, 11180]</span><br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;标准化后 - 均值: <span class="hljs-subst">&#123;X_scaled.mean(axis=<span class="hljs-number">0</span>)&#125;</span>, 标准差: <span class="hljs-subst">&#123;X_scaled.std(axis=<span class="hljs-number">0</span>)&#125;</span>&quot;</span>)<br><span class="hljs-comment"># 均值: [0, 0], 标准差: [1, 1]</span><br><br><span class="hljs-built_in">print</span>(X_scaled)<br><span class="hljs-comment"># 输出:</span><br><span class="hljs-comment"># [[-1.34, -1.34],</span><br><span class="hljs-comment">#  [-0.45, -0.45],</span><br><span class="hljs-comment">#  [ 0.45,  0.45],</span><br><span class="hljs-comment">#  [ 1.34,  1.34]]</span><br></code></pre></td></tr></table></figure></p>
+<p><strong>适用场景：</strong></p>
+<ul>
+<li>大多数机器学习算法</li>
+<li>特别是基于梯度的算法（神经网络）</li>
+</ul>
+<hr>
+<h2 id="5-4-特征选择"><a href="#5-4-特征选择" class="headerlink" title="5.4 特征选择"></a>5.4 特征选择</h2><h3 id="过滤法（Filter）"><a href="#过滤法（Filter）" class="headerlink" title="过滤法（Filter）"></a>过滤法（Filter）</h3><p><strong>思想：</strong> 根据特征的统计特性选择特征</p>
+<p><strong>方法：</strong></p>
+<ul>
+<li>方差选择法：去掉方差小的特征</li>
+<li>相关系数法：选择和标签相关性高的特征</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.feature_selection <span class="hljs-keyword">import</span> VarianceThreshold<br><br><span class="hljs-comment"># 原始数据</span><br>X = [[<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>],<br>     [<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>],<br>     [<span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>],<br>     [<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>],<br>     [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>]]<br><br><span class="hljs-comment"># 去掉方差小于0.1的特征</span><br>selector = VarianceThreshold(threshold=<span class="hljs-number">0.1</span>)<br>X_selected = selector.fit_transform(X)<br><br><span class="hljs-built_in">print</span>(X_selected)<br><span class="hljs-comment"># 第1列全是0，方差=0，被去掉</span><br></code></pre></td></tr></table></figure>
+<hr>
+<h1 id="6-第一个机器学习程序"><a href="#6-第一个机器学习程序" class="headerlink" title="6. 第一个机器学习程序"></a>6. 第一个机器学习程序</h1><h2 id="6-1-鸢尾花分类"><a href="#6-1-鸢尾花分类" class="headerlink" title="6.1 鸢尾花分类"></a>6.1 鸢尾花分类</h2><p><strong>任务：</strong> 根据花的特征，判断是哪种鸢尾花</p>
+<p><strong>数据集：</strong> 鸢尾花数据集（Iris）</p>
+<ul>
+<li>150个样本</li>
+<li>4个特征：花萼长度、花萼宽度、花瓣长度、花瓣宽度</li>
+<li>3个类别：Setosa、Versicolour、Virginica</li>
+</ul>
+<hr>
+<h2 id="6-2-完整代码（逐行讲解）"><a href="#6-2-完整代码（逐行讲解）" class="headerlink" title="6.2 完整代码（逐行讲解）"></a>6.2 完整代码（逐行讲解）</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">鸢尾花分类 - 第一个机器学习程序</span><br><span class="hljs-string"></span><br><span class="hljs-string">任务：根据花的4个特征，预测是哪种鸢尾花</span><br><span class="hljs-string">数据集：sklearn内置的iris数据集</span><br><span class="hljs-string">算法：KNN（K近邻）</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><br><span class="hljs-comment"># ============================================</span><br><span class="hljs-comment"># 第1步：导入需要的库</span><br><span class="hljs-comment"># ============================================</span><br><br><span class="hljs-comment"># sklearn的数据集模块</span><br><span class="hljs-keyword">from</span> sklearn.datasets <span class="hljs-keyword">import</span> load_iris<br><span class="hljs-comment"># sklearn的模型划分模块</span><br><span class="hljs-keyword">from</span> sklearn.model_selection <span class="hljs-keyword">import</span> train_test_split<br><span class="hljs-comment"># sklearn的KNN分类器</span><br><span class="hljs-keyword">from</span> sklearn.neighbors <span class="hljs-keyword">import</span> KNeighborsClassifier<br><span class="hljs-comment"># sklearn的评估指标</span><br><span class="hljs-keyword">from</span> sklearn.metrics <span class="hljs-keyword">import</span> accuracy_score, classification_report<br><br><span class="hljs-comment"># ============================================</span><br><span class="hljs-comment"># 第2步：加载数据</span><br><span class="hljs-comment"># ============================================</span><br><br><span class="hljs-comment"># 加载鸢尾花数据集</span><br>iris = load_iris()<br><br><span class="hljs-comment"># 特征数据（150个样本，4个特征）</span><br>X = iris.data<br><span class="hljs-comment"># X的形状: (150, 4)</span><br><span class="hljs-comment"># 150个样本，每个样本4个特征：</span><br><span class="hljs-comment"># [花萼长度, 花萼宽度, 花瓣长度, 花瓣宽度]</span><br><br><span class="hljs-comment"># 标签数据（150个标签）</span><br>y = iris.target<br><span class="hljs-comment"># y的形状: (150,)</span><br><span class="hljs-comment"># 标签：0=Setosa, 1=Versicolour, 2=Virginica</span><br><br><span class="hljs-comment"># 查看数据</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;特征数据形状: <span class="hljs-subst">&#123;X.shape&#125;</span>&quot;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;标签数据形状: <span class="hljs-subst">&#123;y.shape&#125;</span>&quot;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;特征名称: <span class="hljs-subst">&#123;iris.feature_names&#125;</span>&quot;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;类别名称: <span class="hljs-subst">&#123;iris.target_names&#125;</span>&quot;</span>)<br><br><span class="hljs-comment"># 输出:</span><br><span class="hljs-comment"># 特征数据形状: (150, 4)</span><br><span class="hljs-comment"># 标签数据形状: (150,)</span><br><span class="hljs-comment"># 特征名称: [&#x27;sepal length (cm)&#x27;, &#x27;sepal width (cm)&#x27;, &#x27;petal length (cm)&#x27;, &#x27;petal width (cm)&#x27;]</span><br><span class="hljs-comment"># 类别名称: [&#x27;setosa&#x27; &#x27;versicolor&#x27; &#x27;virginica&#x27;]</span><br><br><span class="hljs-comment"># 查看前5个样本</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;\n前5个样本的特征:&quot;</span>)<br><span class="hljs-built_in">print</span>(X[:<span class="hljs-number">5</span>])<br><span class="hljs-comment"># [[5.1 3.5 1.4 0.2]   # 第1个样本</span><br><span class="hljs-comment">#  [4.9 3.  1.4 0.2]   # 第2个样本</span><br><span class="hljs-comment">#  [4.7 3.2 1.3 0.2]   # ...</span><br><span class="hljs-comment">#  [4.6 3.1 1.5 0.2]</span><br><span class="hljs-comment">#  [5.  3.6 1.4 0.2]]</span><br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;\n前5个样本的标签:&quot;</span>)<br><span class="hljs-built_in">print</span>(y[:<span class="hljs-number">5</span>])<br><span class="hljs-comment"># [0 0 0 0 0]  # 都是Setosa</span><br><br><span class="hljs-comment"># ============================================</span><br><span class="hljs-comment"># 第3步：划分训练集和测试集</span><br><span class="hljs-comment"># ============================================</span><br><br><span class="hljs-comment"># 为什么要划分？</span><br><span class="hljs-comment"># - 训练集：用来训练模型</span><br><span class="hljs-comment"># - 测试集：用来评估模型，模拟真实场景</span><br><span class="hljs-comment"># - 不能只用训练集评估，会过拟合</span><br><br><span class="hljs-comment"># train_test_split参数解释：</span><br><span class="hljs-comment"># X, y: 要划分的数据</span><br><span class="hljs-comment"># test_size=0.2: 测试集占20%（150×0.2=30个样本）</span><br><span class="hljs-comment"># random_state=42: 随机种子，保证每次划分结果一样</span><br>X_train, X_test, y_train, y_test = train_test_split(<br>    X, y, test_size=<span class="hljs-number">0.2</span>, random_state=<span class="hljs-number">42</span><br>)<br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;\n训练集大小: <span class="hljs-subst">&#123;X_train.shape[<span class="hljs-number">0</span>]&#125;</span> 个样本&quot;</span>)  <span class="hljs-comment"># 120</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;测试集大小: <span class="hljs-subst">&#123;X_test.shape[<span class="hljs-number">0</span>]&#125;</span> 个样本&quot;</span>)    <span class="hljs-comment"># 30</span><br><br><span class="hljs-comment"># ============================================</span><br><span class="hljs-comment"># 第4步：创建模型</span><br><span class="hljs-comment"># ============================================</span><br><br><span class="hljs-comment"># KNN分类器</span><br><span class="hljs-comment"># n_neighbors=5: K=5，找最近的5个邻居</span><br>model = KNeighborsClassifier(n_neighbors=<span class="hljs-number">5</span>)<br><br><span class="hljs-comment"># KNN的原理（后面会详细讲）：</span><br><span class="hljs-comment"># 1. 计算测试样本和所有训练样本的距离</span><br><span class="hljs-comment"># 2. 找到最近的K个训练样本</span><br><span class="hljs-comment"># 3. K个样本投票，票数多的类别作为预测结果</span><br><br><span class="hljs-comment"># ============================================</span><br><span class="hljs-comment"># 第5步：训练模型</span><br><span class="hljs-comment"># ============================================</span><br><br><span class="hljs-comment"># fit方法：用训练数据训练模型</span><br><span class="hljs-comment"># X_train: 训练集特征 (120, 4)</span><br><span class="hljs-comment"># y_train: 训练集标签 (120,)</span><br>model.fit(X_train, y_train)<br><br><span class="hljs-comment"># 对于KNN，训练只是记住所有训练数据</span><br><span class="hljs-comment"># 没有显式的学习过程</span><br><br><span class="hljs-comment"># ============================================</span><br><span class="hljs-comment"># 第6步：预测</span><br><span class="hljs-comment"># ============================================</span><br><br><span class="hljs-comment"># 在测试集上预测</span><br>y_pred = model.predict(X_test)<br><br><span class="hljs-comment"># X_test: 测试集特征 (30, 4)</span><br><span class="hljs-comment"># y_pred: 预测结果 (30,)</span><br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;\n预测结果: <span class="hljs-subst">&#123;y_pred&#125;</span>&quot;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;真实标签: <span class="hljs-subst">&#123;y_test&#125;</span>&quot;</span>)<br><br><span class="hljs-comment"># ============================================</span><br><span class="hljs-comment"># 第7步：评估模型</span><br><span class="hljs-comment"># ============================================</span><br><br><span class="hljs-comment"># 准确率：预测正确的比例</span><br>accuracy = accuracy_score(y_test, y_pred)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;\n准确率: <span class="hljs-subst">&#123;accuracy:<span class="hljs-number">.4</span>f&#125;</span>&quot;</span>)  <span class="hljs-comment"># 1.0000（100%）</span><br><br><span class="hljs-comment"># 详细评估报告</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;\n分类报告:&quot;</span>)<br><span class="hljs-built_in">print</span>(classification_report(y_test, y_pred, target_names=iris.target_names))<br><br><span class="hljs-comment"># 输出:</span><br><span class="hljs-comment">#               precision    recall  f1-score   support</span><br><span class="hljs-comment"># </span><br><span class="hljs-comment">#      setosa       1.00      1.00      1.00        10</span><br><span class="hljs-comment">#  versicolor       1.00      1.00      1.00        10</span><br><span class="hljs-comment">#   virginica       1.00      1.00      1.00        10</span><br><span class="hljs-comment"># </span><br><span class="hljs-comment">#     accuracy                           1.00        30</span><br><span class="hljs-comment">#    macro avg       1.00      1.00      1.00        30</span><br><span class="hljs-comment"># weighted avg       1.00      1.00      1.00        30</span><br><br><span class="hljs-comment"># ============================================</span><br><span class="hljs-comment"># 第8步：用模型预测新数据</span><br><span class="hljs-comment"># ============================================</span><br><br><span class="hljs-comment"># 假设我们采了一朵新花，测量了特征</span><br>new_flower = [[<span class="hljs-number">5.1</span>, <span class="hljs-number">3.5</span>, <span class="hljs-number">1.4</span>, <span class="hljs-number">0.2</span>]]  <span class="hljs-comment"># 特征：[花萼长, 花萼宽, 花瓣长, 花瓣宽]</span><br><br><span class="hljs-comment"># 预测</span><br>prediction = model.predict(new_flower)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;\n新花的预测类别: <span class="hljs-subst">&#123;prediction[<span class="hljs-number">0</span>]&#125;</span>&quot;</span>)  <span class="hljs-comment"># 0</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;对应的花种: <span class="hljs-subst">&#123;iris.target_names[prediction[<span class="hljs-number">0</span>]]&#125;</span>&quot;</span>)  <span class="hljs-comment"># setosa</span><br></code></pre></td></tr></table></figure>
+<hr>
+<h2 id="6-3-代码运行结果"><a href="#6-3-代码运行结果" class="headerlink" title="6.3 代码运行结果"></a>6.3 代码运行结果</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">特征数据形状: (150, 4)<br>标签数据形状: (150,)<br>特征名称: [&#x27;sepal length (cm)&#x27;, &#x27;sepal width (cm)&#x27;, &#x27;petal length (cm)&#x27;, &#x27;petal width (cm)&#x27;]<br>类别名称: [&#x27;setosa&#x27; &#x27;versicolor&#x27; &#x27;virginica&#x27;]<br><br>前5个样本的特征:<br>[[5.1 3.5 1.4 0.2]<br> [4.9 3.  1.4 0.2]<br> [4.7 3.2 1.3 0.2]<br> [4.6 3.1 1.5 0.2]<br> [5.  3.6 1.4 0.2]]<br><br>前5个样本的标签:<br>[0 0 0 0 0]<br><br>训练集大小: 120 个样本<br>测试集大小: 30 个样本<br><br>预测结果: [2 1 0 2 0 2 0 1 1 1 2 1 1 1 1 0 1 1 0 0 2 1 0 0 2 0 0 1 1 0]<br>真实标签: [2 1 0 2 0 2 0 1 1 1 2 1 1 1 1 0 1 1 0 0 2 1 0 0 2 0 0 1 1 0]<br><br>准确率: 1.0000<br><br>分类报告:<br>              precision    recall  f1-score   support<br><br>     setosa       1.00      1.00      1.00        10<br> versicolor       1.00      1.00      1.00        10<br>  virginica       1.00      1.00      1.00        10<br><br>    accuracy                           1.00        30<br>   macro avg       1.00      1.00      1.00        30<br>weighted avg       1.00      1.00      1.00        30<br><br>新花的预测类别: 0<br>对应的花种: setosa<br></code></pre></td></tr></table></figure>
+<hr>
+<h2 id="6-4-关键概念解释"><a href="#6-4-关键概念解释" class="headerlink" title="6.4 关键概念解释"></a>6.4 关键概念解释</h2><h3 id="什么是accuracy（准确率）？"><a href="#什么是accuracy（准确率）？" class="headerlink" title="什么是accuracy（准确率）？"></a>什么是accuracy（准确率）？</h3><script type="math/tex; mode=display">Accuracy = \frac{正确预测的样本数}{总样本数}</script><p><strong>具体例子：</strong><br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">测试集有30个样本<br>模型预测正确了30个<br>准确率 = 30 / 30 = 1.0 = 100%<br></code></pre></td></tr></table></figure></p>
+<h3 id="什么是precision、recall、f1-score？"><a href="#什么是precision、recall、f1-score？" class="headerlink" title="什么是precision、recall、f1-score？"></a>什么是precision、recall、f1-score？</h3><p><strong>混淆矩阵：</strong></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>预测正类</th>
+<th>预测负类</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>真实正类</td>
+<td>TP（真正）</td>
+<td>FN（假负）</td>
+</tr>
+<tr>
+<td>真实负类</td>
+<td>FP（假正）</td>
+<td>TN（真负）</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Precision（精确率）：</strong> 预测为正类的样本中，真正是正类的比例</p>
+<script type="math/tex; mode=display">Precision = \frac{TP}{TP + FP}</script><p><strong>Recall（召回率）：</strong> 真正是正类的样本中，被正确预测的比例</p>
+<script type="math/tex; mode=display">Recall = \frac{TP}{TP + FN}</script><p><strong>F1-Score：</strong> Precision和Recall的调和平均</p>
+<script type="math/tex; mode=display">F1 = \frac{2 \times Precision \times Recall}{Precision + Recall}</script><p><strong>具体例子：</strong><br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">假设我们要检测癌症（正类=癌症，负类=正常）<br><br>测试集有100个样本：<br>- 真正有癌症的：20个<br>- 真正正常的：80个<br><br>模型预测结果：<br>- 预测有癌症的：25个<br>- 预测正常的：75个<br><br>混淆矩阵：<br>              预测癌症    预测正常<br>真实癌症       18(TP)      2(FN)<br>真实正常        5(FP)     75(TN)<br><br>Precision = 18 / (18+5) = 18/23 = 0.783<br>→ 预测有癌症的25个人中，78.3%真的有癌症<br><br>Recall = 18 / (18+2) = 18/20 = 0.9<br>→ 真正有癌症的20个人中，90%被检测出来<br><br>F1 = 2 × 0.783 × 0.9 / (0.783 + 0.9) = 0.837<br></code></pre></td></tr></table></figure></p>
+<hr>
+<h1 id="7-过拟合与欠拟合"><a href="#7-过拟合与欠拟合" class="headerlink" title="7. 过拟合与欠拟合"></a>7. 过拟合与欠拟合</h1><h2 id="7-1-什么是过拟合和欠拟合"><a href="#7-1-什么是过拟合和欠拟合" class="headerlink" title="7.1 什么是过拟合和欠拟合"></a>7.1 什么是过拟合和欠拟合</h2><h3 id="欠拟合（Underfitting）"><a href="#欠拟合（Underfitting）" class="headerlink" title="欠拟合（Underfitting）"></a>欠拟合（Underfitting）</h3><p><strong>定义：</strong> 模型在训练集上表现差，在测试集上也差</p>
+<p><strong>原因：</strong> 模型太简单，没有学到数据的规律</p>
+<p><strong>比喻：</strong> 学生太笨，连课本都学不会，考试也不会</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">训练集准确率：60%<br>测试集准确率：55%<br>→ 两边都差，欠拟合<br></code></pre></td></tr></table></figure>
+<h3 id="过拟合（Overfitting）"><a href="#过拟合（Overfitting）" class="headerlink" title="过拟合（Overfitting）"></a>过拟合（Overfitting）</h3><p><strong>定义：</strong> 模型在训练集上表现好，在测试集上差</p>
+<p><strong>原因：</strong> 模型太复杂，把训练数据的噪声也学进去了</p>
+<p><strong>比喻：</strong> 学生死记硬背，课本上的题都会，但考试换个题就不会</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">训练集准确率：99%<br>测试集准确率：70%<br>→ 训练集好，测试集差，过拟合<br></code></pre></td></tr></table></figure>
+<h3 id="正常拟合"><a href="#正常拟合" class="headerlink" title="正常拟合"></a>正常拟合</h3><p><strong>定义：</strong> 模型在训练集和测试集上表现都还不错</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">训练集准确率：90%<br>测试集准确率：85%<br>→ 两边都不错，正常拟合<br></code></pre></td></tr></table></figure>
+<hr>
+<h2 id="7-2-可视化理解"><a href="#7-2-可视化理解" class="headerlink" title="7.2 可视化理解"></a>7.2 可视化理解</h2><p>假设我们要拟合一条曲线：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">欠拟合（模型太简单）：<br>用直线拟合曲线<br><br>    *<br>   * *<br>  *   *      ___<br> *     *   /<br>*       * /<br>         /<br>        /<br><br>→ 直线无法拟合曲线形状<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">正常拟合：<br>用合适的曲线<br><br>    *<br>   * *<br>  *   *   ___<br> *     * /   \<br>*       *     *<br>         *   *<br>          ***<br><br>→ 曲线很好地拟合了数据<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">过拟合（模型太复杂）：<br>用很复杂的曲线<br><br>    *<br>   * *<br>  *   *  /\/\<br> *     * /    \<br>*       *      *<br>         *    *<br>          ****<br><br>→ 曲线穿过了每个点，但形状很奇怪<br>→ 新数据来了就预测不准<br></code></pre></td></tr></table></figure>
+<hr>
+<h2 id="7-3-产生原因"><a href="#7-3-产生原因" class="headerlink" title="7.3 产生原因"></a>7.3 产生原因</h2><h3 id="欠拟合的原因"><a href="#欠拟合的原因" class="headerlink" title="欠拟合的原因"></a>欠拟合的原因</h3><ol>
+<li><p><strong>模型太简单</strong></p>
+<ul>
+<li>用线性模型拟合非线性数据</li>
+<li>决策树深度太浅</li>
+</ul>
+</li>
+<li><p><strong>特征不够</strong></p>
+<ul>
+<li>没有提取到有用的特征</li>
+<li>特征和标签关系不强</li>
+</ul>
+</li>
+<li><p><strong>训练不够</strong></p>
+<ul>
+<li>迭代次数太少</li>
+<li>学习率太小</li>
+</ul>
+</li>
+</ol>
+<h3 id="过拟合的原因"><a href="#过拟合的原因" class="headerlink" title="过拟合的原因"></a>过拟合的原因</h3><ol>
+<li><p><strong>模型太复杂</strong></p>
+<ul>
+<li>决策树太深</li>
+<li>神经网络层数太多</li>
+</ul>
+</li>
+<li><p><strong>数据太少</strong></p>
+<ul>
+<li>训练样本不够</li>
+<li>模型记住了每个样本</li>
+</ul>
+</li>
+<li><p><strong>噪声太多</strong></p>
+<ul>
+<li>数据有噪声</li>
+<li>模型把噪声也学进去了</li>
+</ul>
+</li>
+<li><p><strong>训练太久</strong></p>
+<ul>
+<li>迭代次数太多</li>
+<li>模型过度学习训练数据</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="7-4-解决方法"><a href="#7-4-解决方法" class="headerlink" title="7.4 解决方法"></a>7.4 解决方法</h2><h3 id="解决欠拟合"><a href="#解决欠拟合" class="headerlink" title="解决欠拟合"></a>解决欠拟合</h3><ol>
+<li><p><strong>增加模型复杂度</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 决策树：增加深度</span><br>model = DecisionTreeClassifier(max_depth=<span class="hljs-number">10</span>)  <span class="hljs-comment"># 原来是3</span><br><br><span class="hljs-comment"># 神经网络：增加层数</span><br>model = MLPClassifier(hidden_layer_sizes=(<span class="hljs-number">128</span>, <span class="hljs-number">64</span>, <span class="hljs-number">32</span>))  <span class="hljs-comment"># 原来是(64,)</span><br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>增加特征</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 特征组合</span><br>X[<span class="hljs-string">&#x27;feature_new&#x27;</span>] = X[<span class="hljs-string">&#x27;feature1&#x27;</span>] * X[<span class="hljs-string">&#x27;feature2&#x27;</span>]<br><br><span class="hljs-comment"># 多项式特征</span><br><span class="hljs-keyword">from</span> sklearn.preprocessing <span class="hljs-keyword">import</span> PolynomialFeatures<br>poly = PolynomialFeatures(degree=<span class="hljs-number">2</span>)<br>X_poly = poly.fit_transform(X)<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>减少正则化</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 减少正则化参数</span><br>model = LogisticRegression(C=<span class="hljs-number">10</span>)  <span class="hljs-comment"># C越大，正则化越弱</span><br></code></pre></td></tr></table></figure>
+</li>
+</ol>
+<hr>
+<h3 id="解决过拟合"><a href="#解决过拟合" class="headerlink" title="解决过拟合"></a>解决过拟合</h3><ol>
+<li><p><strong>增加数据</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 数据增强（图像）</span><br><span class="hljs-keyword">from</span> torchvision <span class="hljs-keyword">import</span> transforms<br><br>transform = transforms.Compose([<br>    transforms.RandomHorizontalFlip(),  <span class="hljs-comment"># 随机翻转</span><br>    transforms.RandomRotation(<span class="hljs-number">10</span>),      <span class="hljs-comment"># 随机旋转</span><br>])<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>减少模型复杂度</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 决策树：限制深度</span><br>model = DecisionTreeClassifier(max_depth=<span class="hljs-number">3</span>)<br><br><span class="hljs-comment"># 神经网络：减少层数</span><br>model = MLPClassifier(hidden_layer_sizes=(<span class="hljs-number">64</span>,))<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>正则化</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># L1正则化（Lasso）</span><br><span class="hljs-keyword">from</span> sklearn.linear_model <span class="hljs-keyword">import</span> Lasso<br>model = Lasso(alpha=<span class="hljs-number">0.1</span>)<br><br><span class="hljs-comment"># L2正则化（Ridge）</span><br><span class="hljs-keyword">from</span> sklearn.linear_model <span class="hljs-keyword">import</span> Ridge<br>model = Ridge(alpha=<span class="hljs-number">0.1</span>)<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>Dropout（神经网络）</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 随机丢弃一部分神经元</span><br><span class="hljs-keyword">import</span> torch.nn <span class="hljs-keyword">as</span> nn<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyModel</span>(nn.Module):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-built_in">super</span>().__init__()<br>        <span class="hljs-variable language_">self</span>.fc1 = nn.Linear(<span class="hljs-number">100</span>, <span class="hljs-number">64</span>)<br>        <span class="hljs-variable language_">self</span>.dropout = nn.Dropout(<span class="hljs-number">0.5</span>)  <span class="hljs-comment"># 丢弃50%</span><br>        <span class="hljs-variable language_">self</span>.fc2 = nn.Linear(<span class="hljs-number">64</span>, <span class="hljs-number">10</span>)<br></code></pre></td></tr></table></figure>
+</li>
+<li><p><strong>早停法（Early Stopping）</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 验证集误差不再下降时停止</span><br><span class="hljs-keyword">from</span> sklearn.neural_network <span class="hljs-keyword">import</span> MLPClassifier<br><br>model = MLPClassifier(<br>    early_stopping=<span class="hljs-literal">True</span>,      <span class="hljs-comment"># 开启早停</span><br>    validation_fraction=<span class="hljs-number">0.1</span>,  <span class="hljs-comment"># 10%作为验证集</span><br>    max_iter=<span class="hljs-number">1000</span>             <span class="hljs-comment"># 最大迭代次数</span><br>)<br></code></pre></td></tr></table></figure>
+</li>
+</ol>
+<hr>
+<h2 id="7-5-偏差-方差权衡"><a href="#7-5-偏差-方差权衡" class="headerlink" title="7.5 偏差-方差权衡"></a>7.5 偏差-方差权衡</h2><p><strong>偏差（Bias）：</strong> 模型预测值和真实值的差异</p>
+<ul>
+<li>高偏差 → 欠拟合</li>
+</ul>
+<p><strong>方差（Variance）：</strong> 模型预测值的波动程度</p>
+<ul>
+<li>高方差 → 过拟合</li>
+</ul>
+<p><strong>权衡：</strong><br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">模型复杂度 ↑<br>    ↓<br>偏差 ↓    方差 ↑<br>欠拟合 → 正常 → 过拟合<br></code></pre></td></tr></table></figure></p>
+<p><strong>目标：</strong> 找到偏差和方差的平衡点</p>
+<hr>
+<h1 id="8-本章小结与作业"><a href="#8-本章小结与作业" class="headerlink" title="8. 本章小结与作业"></a>8. 本章小结与作业</h1><h2 id="8-1-本章小结"><a href="#8-1-本章小结" class="headerlink" title="8.1 本章小结"></a>8.1 本章小结</h2><h3 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>机器学习</td>
+<td>让机器从数据中学习规律</td>
+</tr>
+<tr>
+<td>监督学习</td>
+<td>有标签的学习（分类、回归）</td>
+</tr>
+<tr>
+<td>无监督学习</td>
+<td>无标签的学习（聚类、降维）</td>
+</tr>
+<tr>
+<td>特征工程</td>
+<td>处理和选择特征，提升模型效果</td>
+</tr>
+<tr>
+<td>过拟合</td>
+<td>训练集好，测试集差</td>
+</tr>
+<tr>
+<td>欠拟合</td>
+<td>训练集差，测试集也差</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="建模流程"><a href="#建模流程" class="headerlink" title="建模流程"></a>建模流程</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">获取数据 → 数据处理 → 特征工程 → 模型训练 → 模型评估 → 模型优化<br></code></pre></td></tr></table></figure>
+<h3 id="关键代码"><a href="#关键代码" class="headerlink" title="关键代码"></a>关键代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 1. 加载数据</span><br><span class="hljs-keyword">from</span> sklearn.datasets <span class="hljs-keyword">import</span> load_iris<br>iris = load_iris()<br>X, y = iris.data, iris.target<br><br><span class="hljs-comment"># 2. 划分数据集</span><br><span class="hljs-keyword">from</span> sklearn.model_selection <span class="hljs-keyword">import</span> train_test_split<br>X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=<span class="hljs-number">0.2</span>)<br><br><span class="hljs-comment"># 3. 创建模型</span><br><span class="hljs-keyword">from</span> sklearn.neighbors <span class="hljs-keyword">import</span> KNeighborsClassifier<br>model = KNeighborsClassifier(n_neighbors=<span class="hljs-number">5</span>)<br><br><span class="hljs-comment"># 4. 训练模型</span><br>model.fit(X_train, y_train)<br><br><span class="hljs-comment"># 5. 预测和评估</span><br>y_pred = model.predict(X_test)<br><span class="hljs-keyword">from</span> sklearn.metrics <span class="hljs-keyword">import</span> accuracy_score<br>accuracy = accuracy_score(y_test, y_pred)<br></code></pre></td></tr></table></figure>
+<hr>
+<h2 id="8-2-作业"><a href="#8-2-作业" class="headerlink" title="8.2 作业"></a>8.2 作业</h2><h3 id="基础题"><a href="#基础题" class="headerlink" title="基础题"></a>基础题</h3><ol>
+<li><p><strong>说明有监督学习和无监督学习各自的特点及区别</strong></p>
+<p>提示：从数据特点、任务类型、典型算法等方面回答</p>
+</li>
+<li><p><strong>说明机器学习的建模流程</strong></p>
+<p>提示：按步骤说明，每步做什么</p>
+</li>
+<li><p><strong>谈一下你对特征工程的理解</strong></p>
+<p>提示：包括哪些操作？为什么重要？</p>
+</li>
+<li><p><strong>说明模型拟合问题及产生的原因</strong></p>
+<p>提示：什么是过拟合？什么是欠拟合？分别怎么解决？</p>
+</li>
+</ol>
+<h3 id="编程题"><a href="#编程题" class="headerlink" title="编程题"></a>编程题</h3><ol>
+<li><p><strong>用sklearn实现鸢尾花分类</strong></p>
+<ul>
+<li>使用DecisionTreeClassifier</li>
+<li>打印准确率</li>
+<li>打印分类报告</li>
+</ul>
+</li>
+<li><p><strong>特征预处理练习</strong></p>
+<ul>
+<li>对鸢尾花数据集进行标准化</li>
+<li>对鸢尾花数据集进行归一化</li>
+<li>比较两种方法的结果</li>
+</ul>
+</li>
+</ol>
+<h3 id="思考题"><a href="#思考题" class="headerlink" title="思考题"></a>思考题</h3><ol>
+<li><p><strong>为什么深度学习需要大量数据，而传统机器学习在小数据上也能工作？</strong></p>
+</li>
+<li><p><strong>如果你是医生，要用机器学习辅助诊断癌症，你会选择什么算法？为什么？</strong></p>
+<p>提示：考虑可解释性、数据量、准确性等因素</p>
+</li>
+</ol>
+<hr>
+<h2 id="8-3-下一章预告"><a href="#8-3-下一章预告" class="headerlink" title="8.3 下一章预告"></a>8.3 下一章预告</h2><p><strong>第2章：模型评估</strong></p>
+<ul>
+<li>损失函数（MSE、交叉熵）</li>
+<li>评估指标（准确率、精确率、召回率、F1、AUC）</li>
+<li>交叉验证</li>
+<li>超参数调优</li>
+</ul>
+<hr>
+<blockquote>
+<p>📝 <strong>学习建议：</strong> 本章是基础，概念较多，建议多读几遍，动手跑一遍代码。</p>
+<p>💬 <strong>有问题随时问我，我们一起讨论！</strong></p>
+</blockquote>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2026/10/15/ml3/">← 下一篇 KNN算法</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/10/15/ml1/">机器学习导论 上一篇 →</a></div></div></div><div id="comments"><div id="giscus"></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="回到顶部" style="opacity: 0; display: none;">∧ </a><a class="i-index" id="to-index" onClick="tocControl.change()" title="文章目录"><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span></a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="切换主题"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">John Doe</a></h1><div id="description"><p></p></div><div id="social-links"><a class="social" target="_blank" rel="noopener" href="https://github.com/juicer0801"><i class="fab fa-github" alt="GitHub"></i></a></div></div><div id="aside-block"><div id="toc-div"><h1>目录</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC1%E7%AB%A0-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80%EF%BC%9A%E8%B6%85%E7%BA%A7%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B%EF%BC%88%E5%B0%8F%E7%99%BD%E7%89%88%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">第1章 机器学习基础：超级详细教程（小白版）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%93%8B-%E6%9C%AC%E7%AB%A0%E7%9B%AE%E5%BD%95"><span class="toc-number">1.1.</span> <span class="toc-text">📋 本章目录</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AF%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0"><span class="toc-number">2.</span> <span class="toc-text">1. 什么是机器学习</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-%E4%BB%8E%E4%BC%A0%E7%BB%9F%E7%BC%96%E7%A8%8B%E5%88%B0%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0"><span class="toc-number">2.1.</span> <span class="toc-text">1.1 从传统编程到机器学习</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%A0%E7%BB%9F%E7%BC%96%E7%A8%8B-vs-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0"><span class="toc-number">2.1.1.</span> <span class="toc-text">传统编程 vs 机器学习</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-number">2.2.</span> <span class="toc-text">1.2 机器学习的定义</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Tom-Mitchell%E7%9A%84%E7%BB%8F%E5%85%B8%E5%AE%9A%E4%B9%89"><span class="toc-number">2.2.1.</span> <span class="toc-text">Tom Mitchell的经典定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A5%BF%E7%93%9C%E4%B9%A6%E4%B8%AD%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-number">2.2.2.</span> <span class="toc-text">西瓜书中的定义</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-AI%E3%80%81%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E3%80%81%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-number">3.</span> <span class="toc-text">2. AI、机器学习、深度学习的关系</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-%E4%B8%89%E4%B8%AA%E6%A6%82%E5%BF%B5%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">3.1.</span> <span class="toc-text">2.1 三个概念是什么</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%EF%BC%88Artificial-Intelligence-AI%EF%BC%89"><span class="toc-number">3.1.1.</span> <span class="toc-text">人工智能（Artificial Intelligence, AI）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88Machine-Learning-ML%EF%BC%89"><span class="toc-number">3.1.2.</span> <span class="toc-text">机器学习（Machine Learning, ML）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%EF%BC%88Deep-Learning-DL%EF%BC%89"><span class="toc-number">3.1.3.</span> <span class="toc-text">深度学习（Deep Learning, DL）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-%E4%B8%89%E8%80%85%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-number">3.2.</span> <span class="toc-text">2.2 三者的关系</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-3-%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E7%94%A8ML%EF%BC%8C%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E7%94%A8DL"><span class="toc-number">3.3.</span> <span class="toc-text">2.3 什么时候用ML，什么时候用DL</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BC%A0%E7%BB%9FML%EF%BC%89%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="toc-number">3.3.1.</span> <span class="toc-text">机器学习（传统ML）的优势</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="toc-number">3.3.2.</span> <span class="toc-text">深度学习的优势</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%89%E6%8B%A9%E5%BB%BA%E8%AE%AE"><span class="toc-number">3.3.3.</span> <span class="toc-text">选择建议</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-number">4.</span> <span class="toc-text">3. 机器学习的分类</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-%E6%8C%89%E5%AD%A6%E4%B9%A0%E6%96%B9%E5%BC%8F%E5%88%86%E7%B1%BB"><span class="toc-number">4.1.</span> <span class="toc-text">3.1 按学习方式分类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%EF%BC%88Supervised-Learning%EF%BC%89"><span class="toc-number">4.1.1.</span> <span class="toc-text">监督学习（Supervised Learning）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%86%E7%B1%BB%EF%BC%88Classification%EF%BC%89"><span class="toc-number">4.1.1.1.</span> <span class="toc-text">分类（Classification）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9B%9E%E5%BD%92%EF%BC%88Regression%EF%BC%89"><span class="toc-number">4.1.1.2.</span> <span class="toc-text">回归（Regression）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%97%A0%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%EF%BC%88Unsupervised-Learning%EF%BC%89"><span class="toc-number">4.1.2.</span> <span class="toc-text">无监督学习（Unsupervised Learning）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%81%9A%E7%B1%BB%EF%BC%88Clustering%EF%BC%89"><span class="toc-number">4.1.2.1.</span> <span class="toc-text">聚类（Clustering）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%99%8D%E7%BB%B4%EF%BC%88Dimensionality-Reduction%EF%BC%89"><span class="toc-number">4.1.2.2.</span> <span class="toc-text">降维（Dimensionality Reduction）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8A%E7%9B%91%E7%9D%A3%E5%AD%A6%E4%B9%A0%EF%BC%88Semi-supervised-Learning%EF%BC%89"><span class="toc-number">4.1.3.</span> <span class="toc-text">半监督学习（Semi-supervised Learning）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%EF%BC%88Reinforcement-Learning%EF%BC%89"><span class="toc-number">4.1.4.</span> <span class="toc-text">强化学习（Reinforcement Learning）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-%E5%9B%9B%E7%A7%8D%E5%AD%A6%E4%B9%A0%E6%96%B9%E5%BC%8F%E5%AF%B9%E6%AF%94"><span class="toc-number">4.2.</span> <span class="toc-text">3.2 四种学习方式对比</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%9A%84%E5%BB%BA%E6%A8%A1%E6%B5%81%E7%A8%8B"><span class="toc-number">5.</span> <span class="toc-text">4. 机器学习的建模流程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#4-1-%E5%AE%8C%E6%95%B4%E6%B5%81%E7%A8%8B"><span class="toc-number">5.1.</span> <span class="toc-text">4.1 完整流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-2-%E6%AF%8F%E4%B8%80%E6%AD%A5%E8%AF%A6%E7%BB%86%E8%AE%B2%E8%A7%A3"><span class="toc-number">5.2.</span> <span class="toc-text">4.2 每一步详细讲解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC1%E6%AD%A5%EF%BC%9A%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AE"><span class="toc-number">5.2.1.</span> <span class="toc-text">第1步：获取数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC2%E6%AD%A5%EF%BC%9A%E6%95%B0%E6%8D%AE%E5%A4%84%E7%90%86"><span class="toc-number">5.2.2.</span> <span class="toc-text">第2步：数据处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC3%E6%AD%A5%EF%BC%9A%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B"><span class="toc-number">5.2.3.</span> <span class="toc-text">第3步：特征工程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC4%E6%AD%A5%EF%BC%9A%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83"><span class="toc-number">5.2.4.</span> <span class="toc-text">第4步：模型训练</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC5%E6%AD%A5%EF%BC%9A%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0"><span class="toc-number">5.2.5.</span> <span class="toc-text">第5步：模型评估</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC6%E6%AD%A5%EF%BC%9A%E6%A8%A1%E5%9E%8B%E4%BC%98%E5%8C%96"><span class="toc-number">5.2.6.</span> <span class="toc-text">第6步：模型优化</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B%E5%85%A5%E9%97%A8"><span class="toc-number">6.</span> <span class="toc-text">5. 特征工程入门</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#5-1-%E4%BB%80%E4%B9%88%E6%98%AF%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B"><span class="toc-number">6.1.</span> <span class="toc-text">5.1 什么是特征工程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-2-%E7%89%B9%E5%BE%81%E6%8F%90%E5%8F%96"><span class="toc-number">6.2.</span> <span class="toc-text">5.2 特征提取</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E5%85%B8%E7%89%B9%E5%BE%81%E6%8F%90%E5%8F%96"><span class="toc-number">6.2.1.</span> <span class="toc-text">字典特征提取</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%87%E6%9C%AC%E7%89%B9%E5%BE%81%E6%8F%90%E5%8F%96"><span class="toc-number">6.2.2.</span> <span class="toc-text">文本特征提取</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AF%8D%E8%A2%8B%E6%A8%A1%E5%9E%8B%EF%BC%88CountVectorizer%EF%BC%89"><span class="toc-number">6.2.2.1.</span> <span class="toc-text">词袋模型（CountVectorizer）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TF-IDF%EF%BC%88TfidfVectorizer%EF%BC%89"><span class="toc-number">6.2.2.2.</span> <span class="toc-text">TF-IDF（TfidfVectorizer）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-3-%E7%89%B9%E5%BE%81%E9%A2%84%E5%A4%84%E7%90%86"><span class="toc-number">6.3.</span> <span class="toc-text">5.3 特征预处理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BD%92%E4%B8%80%E5%8C%96%EF%BC%88Normalization%EF%BC%89"><span class="toc-number">6.3.1.</span> <span class="toc-text">归一化（Normalization）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%87%E5%87%86%E5%8C%96%EF%BC%88Standardization%EF%BC%89"><span class="toc-number">6.3.2.</span> <span class="toc-text">标准化（Standardization）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-4-%E7%89%B9%E5%BE%81%E9%80%89%E6%8B%A9"><span class="toc-number">6.4.</span> <span class="toc-text">5.4 特征选择</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%87%E6%BB%A4%E6%B3%95%EF%BC%88Filter%EF%BC%89"><span class="toc-number">6.4.1.</span> <span class="toc-text">过滤法（Filter）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#6-%E7%AC%AC%E4%B8%80%E4%B8%AA%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%A8%8B%E5%BA%8F"><span class="toc-number">7.</span> <span class="toc-text">6. 第一个机器学习程序</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#6-1-%E9%B8%A2%E5%B0%BE%E8%8A%B1%E5%88%86%E7%B1%BB"><span class="toc-number">7.1.</span> <span class="toc-text">6.1 鸢尾花分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-2-%E5%AE%8C%E6%95%B4%E4%BB%A3%E7%A0%81%EF%BC%88%E9%80%90%E8%A1%8C%E8%AE%B2%E8%A7%A3%EF%BC%89"><span class="toc-number">7.2.</span> <span class="toc-text">6.2 完整代码（逐行讲解）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-3-%E4%BB%A3%E7%A0%81%E8%BF%90%E8%A1%8C%E7%BB%93%E6%9E%9C"><span class="toc-number">7.3.</span> <span class="toc-text">6.3 代码运行结果</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-4-%E5%85%B3%E9%94%AE%E6%A6%82%E5%BF%B5%E8%A7%A3%E9%87%8A"><span class="toc-number">7.4.</span> <span class="toc-text">6.4 关键概念解释</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFaccuracy%EF%BC%88%E5%87%86%E7%A1%AE%E7%8E%87%EF%BC%89%EF%BC%9F"><span class="toc-number">7.4.1.</span> <span class="toc-text">什么是accuracy（准确率）？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFprecision%E3%80%81recall%E3%80%81f1-score%EF%BC%9F"><span class="toc-number">7.4.2.</span> <span class="toc-text">什么是precision、recall、f1-score？</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#7-%E8%BF%87%E6%8B%9F%E5%90%88%E4%B8%8E%E6%AC%A0%E6%8B%9F%E5%90%88"><span class="toc-number">8.</span> <span class="toc-text">7. 过拟合与欠拟合</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#7-1-%E4%BB%80%E4%B9%88%E6%98%AF%E8%BF%87%E6%8B%9F%E5%90%88%E5%92%8C%E6%AC%A0%E6%8B%9F%E5%90%88"><span class="toc-number">8.1.</span> <span class="toc-text">7.1 什么是过拟合和欠拟合</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AC%A0%E6%8B%9F%E5%90%88%EF%BC%88Underfitting%EF%BC%89"><span class="toc-number">8.1.1.</span> <span class="toc-text">欠拟合（Underfitting）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%87%E6%8B%9F%E5%90%88%EF%BC%88Overfitting%EF%BC%89"><span class="toc-number">8.1.2.</span> <span class="toc-text">过拟合（Overfitting）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A3%E5%B8%B8%E6%8B%9F%E5%90%88"><span class="toc-number">8.1.3.</span> <span class="toc-text">正常拟合</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-2-%E5%8F%AF%E8%A7%86%E5%8C%96%E7%90%86%E8%A7%A3"><span class="toc-number">8.2.</span> <span class="toc-text">7.2 可视化理解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-3-%E4%BA%A7%E7%94%9F%E5%8E%9F%E5%9B%A0"><span class="toc-number">8.3.</span> <span class="toc-text">7.3 产生原因</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AC%A0%E6%8B%9F%E5%90%88%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="toc-number">8.3.1.</span> <span class="toc-text">欠拟合的原因</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%87%E6%8B%9F%E5%90%88%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="toc-number">8.3.2.</span> <span class="toc-text">过拟合的原因</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-4-%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="toc-number">8.4.</span> <span class="toc-text">7.4 解决方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E6%AC%A0%E6%8B%9F%E5%90%88"><span class="toc-number">8.4.1.</span> <span class="toc-text">解决欠拟合</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E8%BF%87%E6%8B%9F%E5%90%88"><span class="toc-number">8.4.2.</span> <span class="toc-text">解决过拟合</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-5-%E5%81%8F%E5%B7%AE-%E6%96%B9%E5%B7%AE%E6%9D%83%E8%A1%A1"><span class="toc-number">8.5.</span> <span class="toc-text">7.5 偏差-方差权衡</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#8-%E6%9C%AC%E7%AB%A0%E5%B0%8F%E7%BB%93%E4%B8%8E%E4%BD%9C%E4%B8%9A"><span class="toc-number">9.</span> <span class="toc-text">8. 本章小结与作业</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#8-1-%E6%9C%AC%E7%AB%A0%E5%B0%8F%E7%BB%93"><span class="toc-number">9.1.</span> <span class="toc-text">8.1 本章小结</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5"><span class="toc-number">9.1.1.</span> <span class="toc-text">核心概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BB%BA%E6%A8%A1%E6%B5%81%E7%A8%8B"><span class="toc-number">9.1.2.</span> <span class="toc-text">建模流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E4%BB%A3%E7%A0%81"><span class="toc-number">9.1.3.</span> <span class="toc-text">关键代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-2-%E4%BD%9C%E4%B8%9A"><span class="toc-number">9.2.</span> <span class="toc-text">8.2 作业</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E9%A2%98"><span class="toc-number">9.2.1.</span> <span class="toc-text">基础题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E7%A8%8B%E9%A2%98"><span class="toc-number">9.2.2.</span> <span class="toc-text">编程题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E9%A2%98"><span class="toc-number">9.2.3.</span> <span class="toc-text">思考题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-3-%E4%B8%8B%E4%B8%80%E7%AB%A0%E9%A2%84%E5%91%8A"><span class="toc-number">9.3.</span> <span class="toc-text">8.3 下一章预告</span></a></li></ol></li></ol></div></div><footer><nobr>构建自 <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> 使用主题 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> 主题作者 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>

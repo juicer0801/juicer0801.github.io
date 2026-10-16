@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en" theme-mode="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>健脑房第一节————ai记忆的基础实现 | Hexo</title><meta name="description" content="ai的使用逐渐普及，与工业革命机器代替劳动而出现的健身房一般，ai代替思考的当下我们应该有一个健脑房我的blog将会科普许多数字工作者当下该有的常识 本期将介绍ai记忆的保存问题（基础） 为什么你调用的ai记不住你说的话？ 如下是ds的流式输出代码答案其实很朴素：大模型 API 默认是无状态的。你看到的所有“记忆”，几乎都不是模型自己记住了，而是代码在每一轮请求里，把历史消息重新塞回去。这个过程，">
+<!DOCTYPE html><html lang="en" theme-mode="auto"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>健脑房第一节————ai记忆的基础实现 | Hexo</title><meta name="description" content="ai的使用逐渐普及，与工业革命机器代替劳动而出现的健身房一般，ai代替思考的当下我们应该有一个健脑房我的blog将会科普许多数字工作者当下该有的常识 本期将介绍ai记忆的保存问题（基础） 为什么你调用的ai记不住你说的话？ 如下是ds的流式输出代码答案其实很朴素：大模型 API 默认是无状态的。你看到的所有“记忆”，几乎都不是模型自己记住了，而是代码在每一轮请求里，把历史消息重新塞回去。这个过程，">
 <meta property="og:type" content="article">
 <meta property="og:title" content="健脑房第一节————ai记忆的基础实现">
 <meta property="og:url" content="http://example.com/2026/09/15/save_ai_memory/index.html">
@@ -20,7 +20,7 @@
   font-family: 'JetBrains Mono';
   src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
 }
-</style><meta name="page-config" content="{&quot;code_fold&quot;:null}"><script class="pjax-js">var config = {"root":"/","code_fold":15,"search":{"preload":false,"activeHolder":"Enter here","blurHolder":"Search","noResult":"Data \"$0\" not found"},"code":{"codeInfo":"$0 - $1 lines","copy":"copy"}};
+</style><meta name="page-config" content="{&quot;code_fold&quot;:null}"><script class="pjax-js">var config = {"root":"/","code_fold":15,"search":{"preload":true,"activeHolder":"键入以继续","blurHolder":"数据检索","noResult":"无 $0 相关数据"},"code":{"codeInfo":"$0 - $1 行","copy":"复制"}};
 var page_config = {
   code_fold: null
 };
@@ -31,9 +31,26 @@ function updatePageConfig() {
   }
 }
 document.addEventListener('pjax:complete', function() { updatePageConfig(); });
-updatePageConfig();</script><link type="text/css" rel="stylesheet" href="/lib/encrypt/hbe.style.css"><script src="//unpkg.com/mermaid@11.12.2/dist/mermaid.min.js"></script><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lightgallery.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-zoom.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-thumbnail.css"><link type="text/css" rel="stylesheet" href="/lib/fontawesome/css/all.min.css"><script>if (window.localStorage.getItem('theme-mode') === 'light')
+updatePageConfig();</script><link type="text/css" rel="stylesheet" href="/lib/encrypt/hbe.style.css"><script src="//unpkg.com/mermaid@11.12.2/dist/mermaid.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.1/MathJax.js"></script><script>MathJax.Hub.Config({
+ menuSettings: {
+   zoom: "None"
+ },
+ showMathMenu: false,
+ jax: ["input/TeX","output/CommonHTML"],
+ extensions: ["tex2jax.js"],
+ TeX: {
+   extensions: ["AMSmath.js","AMSsymbols.js"],
+   equationNumbers: {
+     autoNumber: "AMS"
+   }
+ },
+ tex2jax: {
+   inlineMath: [["\\(", "\\)"]],
+   displayMath: [["\\[", "\\]"]]
+ }
+});</script><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lightgallery.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-zoom.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-thumbnail.css"><link type="text/css" rel="stylesheet" href="/lib/fontawesome/css/all.min.css"><script>if (window.localStorage.getItem('theme-mode') === 'light' || window.matchMedia('(prefers-color-scheme:light)').matches)
  document.documentElement.setAttribute('theme-mode', 'light')
-if (window.localStorage.getItem('theme-mode') === 'dark')
+if (window.localStorage.getItem('theme-mode') === 'dark' || window.matchMedia('(prefers-color-scheme:dark)').matches)
  document.documentElement.setAttribute('theme-mode', 'dark')</script><style>@font-face {
  font-family: BenderLight;
  src: local('Bender'), url("/font/BenderLight.woff2") format('woff2');
@@ -44,10 +61,28 @@ if (window.localStorage.getItem('theme-mode') === 'dark')
 }</style><style>:root {
  --dark-background: url('https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg');
  --light-background: url('/img/bk.jpg');
- --theme-encrypt-confirm: 'confirm'
-}</style><script defer src="/js/arknights.js"></script><script defer src="/js/search.js"></script><script defer type="module">import mermaid from '//unpkg.com/mermaid@11.12.2/dist/mermaid.esm.min.mjs';
+ --theme-encrypt-confirm: '确认'
+}</style><script defer src="/js/arknights.js"></script><script defer src="/js/search.js"></script><script defer src="https://vercount.one/js"></script><script defer type="module">import mermaid from '//unpkg.com/mermaid@11.12.2/dist/mermaid.esm.min.mjs';
 window.mermaid = mermaid;
 code.paintMermaid();
+</script><script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.1/MathJax.js"></script><script>MathJax.Hub.Config({
+  menuSettings: {
+    zoom: "None"
+  },
+  showMathMenu: false,
+  jax: ["input/TeX","output/CommonHTML"],
+  extensions: ["tex2jax.js"],
+  TeX: {
+    extensions: ["AMSmath.js","AMSsymbols.js"],
+    equationNumbers: {
+      autoNumber: "AMS"
+    }
+  },
+  tex2jax: {
+    inlineMath: [["\\(", "\\)"]],
+    displayMath: [["\\[", "\\]"]]
+  }
+});
 </script><script async src="//unpkg.com/lightgallery@2.7.1/lightgallery.min.js"></script><script async src="//unpkg.com/lightgallery@2.7.1/plugins/zoom/lg-zoom.min.js"></script><script async src="//unpkg.com/lightgallery@2.7.1/plugins/thumbnail/lg-thumbnail.min.js"></script><script async src="/lib/encrypt/hbe.js"></script><script async src="/js/pjax.js"></script><script class="pjax-js">reset= () => {document.querySelector('.lg-container')?.remove()
 lightGallery(document.getElementById('post-bg'), {
   plugins: [lgZoom,lgThumbnail],
@@ -64,7 +99,22 @@ lightGallery(document.getElementById('post-bg'), {
    }
  }
 });
-document.addEventListener("pjax:complete", reset);reset()})</script><script class="pjax-js">reset= () => {document.querySelector('.lg-container')?.remove()
+document.addEventListener("pjax:complete", reset);document.addEventListener('pjax:success', _ => {
+ const script = document.createElement('script');
+ script.src = 'https://vercount.one/js';
+ document.head.appendChild(script);
+});reset()})</script><script class="pjax-js">reset= () => {window.giscusSettings = {
+ repo: 'juicer0801/juicer0801.github.io',
+ repoId: 'R_kgDOUcAR_w',
+ category: 'Announcements',
+ categoryId: 'DIC_kwDOUcAR_84DIlqM',
+ mapping: 'pathname',
+ strict: '0',
+ reactionsEnabled: '1',
+ emitMetadata: '0',
+ inputPosition: 'bottom',
+ lang: 'zh-CN',
+ crossorigin: 'anonymous' , loading: 'lazy'};window.giscusThemeConfig = { theme: 'preferred_color_scheme' };MathJax.Hub.Queue(["Typeset", MathJax.Hub]);document.querySelector('.lg-container')?.remove()
 const postBg = document.querySelector('#post-bg');
 if (postBg) lightGallery(postBg, {
   plugins: [lgZoom,lgThumbnail],
@@ -81,15 +131,19 @@ if (postBg) lightGallery(postBg, {
    }
  }
 });
-document.addEventListener("pjax:complete", reset);reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>健脑房第一节————ai记忆的基础实现</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2026-09-15T13:20:52.000Z" id="date"> 2026-09-15</time></div></span><br><span>Last Update: <div class="control"><time datetime="2026-09-17T15:18:51.017Z" id="updated"> 2026-09-17</time></div></span></div></div><hr><div id="post-content"><p>ai的使用逐渐普及，与工业革命机器代替劳动而出现的健身房一般，ai代替思考的当下我们应该有一个健脑房<br>我的blog将会科普许多数字工作者当下该有的常识</p>
+document.addEventListener("pjax:complete", reset);document.addEventListener('pjax:success', _ => {
+ const script = document.createElement('script');
+ script.src = 'https://vercount.one/js';
+ document.head.appendChild(script);
+});reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="数据检索" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/tags/"><span class="navItemTitle">Tags</span></a></li><li class="navItem"><a class="navBlock" href="/categories/"><span class="navItemTitle">Categories</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>健脑房第一节————ai记忆的基础实现</h1><div id="post-info"><span>文章发布时间: <div class="control"><time datetime="2026-09-15T13:20:52.000Z" id="date"> 2026-09-15</time></div></span><br><span>最后更新时间: <div class="control"><time datetime="2026-09-17T15:18:51.017Z" id="updated"> 2026-09-17</time></div></span><br><span>文章总字数: <div class="control">1.1k</div></span><br><span>预计阅读时间: <div class="control">4 分钟</div></span><br><span id="vercount_container_page_pv">页面浏览: <span class="control" id="vercount_value_page_pv">加载中...</span></span></div></div><hr><div id="post-content"><p>ai的使用逐渐普及，与工业革命机器代替劳动而出现的健身房一般，ai代替思考的当下我们应该有一个健脑房<br>我的blog将会科普许多数字工作者当下该有的常识</p>
 <p>本期将介绍ai记忆的保存问题（基础）</p>
 <p>为什么你调用的ai记不住你说的话？</p>
 <p>如下是ds的流式输出代码<br>答案其实很朴素：大模型 API 默认是无状态的。<br>你看到的所有“记忆”，几乎都不是模型自己记住了，而是代码在每一轮请求里，把历史消息重新塞回去。这个过程，像滚雪球。</p>
 <p>在网页版聊天框里，AI 好像有连续记忆。<br>但在代码层面，一次 AI 调用更像一个函数：</p>
-<p>text<br>response &#x3D; model(messages)<br>你传进去什么，它就基于什么回答。<br>除非你再次把历史传进去，否则它不知道上一轮发生了什么。</p>
+<p>text<br>response = model(messages)<br>你传进去什么，它就基于什么回答。<br>除非你再次把历史传进去，否则它不知道上一轮发生了什么。</p>
 <p>所以，所谓“AI记忆”，在大多数 API 场景里其实是：</p>
-<p>text<br>messages &#x3D; messages + [用户新消息, AI回复]<br>下一次请求 &#x3D; 把整个 messages 再发给模型</p>
-<p>假设最开始只有一个系统提示：<br>messages &#x3D; [<br>    {“role”: “system”, “content”: “你是一名严谨的技术助理。”}<br>]<br>用户问：“什么是向量数据库？”</p>
+<p>text<br>messages = messages + [用户新消息, AI回复]<br>下一次请求 = 把整个 messages 再发给模型</p>
+<p>假设最开始只有一个系统提示：<br>messages = [<br>    {“role”: “system”, “content”: “你是一名严谨的技术助理。”}<br>]<br>用户问：“什么是向量数据库？”</p>
 <p>代码把用户消息追加进去：<br>messages.append({“role”: “user”, “content”: “什么是向量数据库？”})<br>调用模型，得到回答。</p>
 <p>然后代码又把回答追加进去：<br>messages.append({“role”: “assistant”, “content”: answer})<br>下一轮，用户再问：“它和传统数据库有什么区别？”</p>
 <p>此时发给模型的 messages 已经包含：</p>
@@ -99,8 +153,8 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 <p>第二轮用户问题</p>
 <p>模型看到的不是“它”，而是完整的前情提要。<br>代码替模型记住了上下文。</p>
 <p>一个最小实现大概是这样：<br>from openai import OpenAI</p>
-<p>client &#x3D; OpenAI()</p>
-<p>messages &#x3D; [<br>    {“role”: “system”, “content”: “你是一名严谨的技术助理。”}<br>]</p>
+<p>client = OpenAI()</p>
+<p>messages = [<br>    {“role”: “system”, “content”: “你是一名严谨的技术助理。”}<br>]</p>
 <p>def chat(user_input):<br>    messages.append({“role”: “user”, “content”: user_input})</p>
 <pre><code>resp = client.chat.completions.create(
     model=&quot;gpt-4o-mini&quot;,
@@ -110,8 +164,7 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 answer = resp.choices[0].message.content
 messages.append({&quot;role&quot;: &quot;assistant&quot;, &quot;content&quot;: answer})
 return answer
-</code></pre>
-<p>messages 数组就是 AI 的短期记忆。<br>每一次 append，都是在滚雪球。</p>
+</code></pre><p>messages 数组就是 AI 的短期记忆。<br>每一次 append，都是在滚雪球。</p>
 <p>三、雪球越滚越大，问题也会出现<br>滚雪球式记忆简单有效，但它不是无限的。</p>
 <ol>
 <li><p>上下文窗口有限<br>模型一次能看的 token 有上限。<br>雪球滚太大，早期内容会被截断，或者直接报错。</p>
@@ -128,29 +181,32 @@ return answer
 <p>AI记忆不是模型能力，而是上下文工程。</p>
 <p>常见做法有几类：</p>
 <ol>
-<li>截断：只保留最近几轮<br>python<br>MAX_TURNS &#x3D; 10</li>
+<li>截断：只保留最近几轮<br>python<br>MAX_TURNS = 10</li>
 </ol>
-<p>def trim(messages):<br>    system &#x3D; messages[0]<br>    recent &#x3D; messages[-MAX_TURNS:]<br>    return [system] + recent</p>
-<ol start="2">
-<li><p>摘要：把旧雪球压成一句话<br>python<br>def trim_with_summary(messages):<br> if len(messages) &lt;&#x3D; 12:<br> return messages<br> system &#x3D; messages[0]<br> old &#x3D; messages[1:-10]<br> recent &#x3D; messages[-10:]</p>
-<p> summary &#x3D; summarize(old)  # 调模型或规则生成摘要</p>
-<p> return [<br> system,<br> {“role”: “system”, “content”: f”历史摘要：{summary}”},<br> *recent<br> ]</p>
+<p>def trim(messages):<br>    system = messages[0]<br>    recent = messages[-MAX_TURNS:]<br>    return [system] + recent</p>
+<ol>
+<li><p>摘要：把旧雪球压成一句话<br>python<br>def trim_with_summary(messages):<br> if len(messages) &lt;= 12:</p>
+<pre><code> return messages
+</code></pre><p> system = messages[0]<br> old = messages[1:-10]<br> recent = messages[-10:]</p>
+<p> summary = summarize(old)  # 调模型或规则生成摘要</p>
+<p> return [</p>
+<pre><code> system,
+ {&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: f&quot;历史摘要：{summary}&quot;},
+ *recent
+</code></pre><p> ]<br>这样既保留长期线索，又控制 token。</p>
+</li>
+<li><p>检索：长期记忆放仓库，按需取用<br>把知识、文档、历史记录存进向量数据库。<br>每次只检索最相关的几段，塞进当前提示。</p>
 </li>
 </ol>
-<p>这样既保留长期线索，又控制 token。</p>
-<ol start="3">
-<li>检索：长期记忆放仓库，按需取用<br>把知识、文档、历史记录存进向量数据库。<br>每次只检索最相关的几段，塞进当前提示。</li>
-</ol>
-<p>def build_messages(user_input):<br>    docs &#x3D; vector_db.search(user_input, top_k&#x3D;5)<br>    context &#x3D; “\n”.join(docs)</p>
+<p>def build_messages(user_input):<br>    docs = vector_db.search(user_input, top_k=5)<br>    context = “\n”.join(docs)</p>
 <pre><code>return [
     {&quot;role&quot;: &quot;system&quot;, &quot;content&quot;: &quot;根据以下资料回答：\n&quot; + context},
     {&quot;role&quot;: &quot;user&quot;, &quot;content&quot;: user_input}
 ]
-</code></pre>
-<p>这相当于：<br>雪球不把所有东西都粘上，而是需要哪块，就去仓库取哪块。</p>
-<ol start="4">
+</code></pre><p>这相当于：<br>雪球不把所有东西都粘上，而是需要哪块，就去仓库取哪块。</p>
+<ol>
 <li>结构化记忆：状态存数据库，不靠自然语言<br>用户偏好、任务进度、订单状态，最好存成字段：</li>
 </ol>
 <p>json<br>{<br>  “user_id”: “u123”,<br>  “preferred_language”: “中文”,<br>  “current_task”: “写博客”,<br>  “last_topic”: “AI记忆”<br>}</p>
 <p>我个人其实更认同一个结合体：<br>ai会记录并搭建个人的知识库，实现定制的检索手段</p>
-<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2026/09/17/mac-to-windows/">← Next mac_to_windows</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/09/15/hello-world/">Hello World Prev →</a></div></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="To Top" style="opacity: 0; display: none;">∧ </a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="Change Theme"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">John Doe</a></h1><div id="description"><p></p></div></div><div id="aside-block"></div><footer><nobr>Published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2026/09/17/mac-to-windows/">← 下一篇 mac_to_windows</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/09/15/hello-world/">Hello World 上一篇 →</a></div></div></div><div id="comments"><div id="giscus"></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="回到顶部" style="opacity: 0; display: none;">∧ </a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="切换主题"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">John Doe</a></h1><div id="description"><p></p></div><div id="social-links"><a class="social" target="_blank" rel="noopener" href="https://github.com/juicer0801"><i class="fab fa-github" alt="GitHub"></i></a></div></div><div id="aside-block"></div><footer><nobr>构建自 <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> 使用主题 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> 主题作者 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en" theme-mode="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>深度学习的数学 | Hexo</title><meta name="description" content="在解决3个及以上类别的分类的问题时，只需要将输出层的单元数增加到与类别数一致即可，而输出值将是一个元素数与类别数相同的向量 该书的主线并非严格数学证明，而是建立从神经单元到反向传播、再到卷积神经网络的因果计算直觉。其核心问题始终是：误差如何产生，梯度如何计算，参数如何更新。  一、数学基础与符号约定核心内容 深度学习的数学对象包括标量、向量、矩阵与张量。神经网络中的一层通常表示为： [z^{(l)">
+<!DOCTYPE html><html lang="en" theme-mode="auto"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>深度学习的数学 | Hexo</title><meta name="description" content="在解决3个及以上类别的分类的问题时，只需要将输出层的单元数增加到与类别数一致即可，而输出值将是一个元素数与类别数相同的向量 该书的主线并非严格数学证明，而是建立从神经单元到反向传播、再到卷积神经网络的因果计算直觉。其核心问题始终是：误差如何产生，梯度如何计算，参数如何更新。  一、数学基础与符号约定核心内容 深度学习的数学对象包括标量、向量、矩阵与张量。神经网络中的一层通常表示为： [z^{(l)">
 <meta property="og:type" content="article">
 <meta property="og:title" content="深度学习的数学">
 <meta property="og:url" content="http://example.com/2026/09/30/deeplearn14/index.html">
@@ -20,7 +20,7 @@
   font-family: 'JetBrains Mono';
   src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
 }
-</style><meta name="page-config" content="{&quot;code_fold&quot;:null}"><script class="pjax-js">var config = {"root":"/","code_fold":15,"search":{"preload":false,"activeHolder":"Enter here","blurHolder":"Search","noResult":"Data \"$0\" not found"},"code":{"codeInfo":"$0 - $1 lines","copy":"copy"}};
+</style><meta name="page-config" content="{&quot;code_fold&quot;:null}"><script class="pjax-js">var config = {"root":"/","code_fold":15,"search":{"preload":true,"activeHolder":"键入以继续","blurHolder":"数据检索","noResult":"无 $0 相关数据"},"code":{"codeInfo":"$0 - $1 行","copy":"复制"}};
 var page_config = {
   code_fold: null
 };
@@ -31,9 +31,26 @@ function updatePageConfig() {
   }
 }
 document.addEventListener('pjax:complete', function() { updatePageConfig(); });
-updatePageConfig();</script><link type="text/css" rel="stylesheet" href="/lib/encrypt/hbe.style.css"><script src="//unpkg.com/mermaid@11.12.2/dist/mermaid.min.js"></script><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lightgallery.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-zoom.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-thumbnail.css"><link type="text/css" rel="stylesheet" href="/lib/fontawesome/css/all.min.css"><script>if (window.localStorage.getItem('theme-mode') === 'light')
+updatePageConfig();</script><link type="text/css" rel="stylesheet" href="/lib/encrypt/hbe.style.css"><script src="//unpkg.com/mermaid@11.12.2/dist/mermaid.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.1/MathJax.js"></script><script>MathJax.Hub.Config({
+ menuSettings: {
+   zoom: "None"
+ },
+ showMathMenu: false,
+ jax: ["input/TeX","output/CommonHTML"],
+ extensions: ["tex2jax.js"],
+ TeX: {
+   extensions: ["AMSmath.js","AMSsymbols.js"],
+   equationNumbers: {
+     autoNumber: "AMS"
+   }
+ },
+ tex2jax: {
+   inlineMath: [["\\(", "\\)"]],
+   displayMath: [["\\[", "\\]"]]
+ }
+});</script><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lightgallery.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-zoom.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-thumbnail.css"><link type="text/css" rel="stylesheet" href="/lib/fontawesome/css/all.min.css"><script>if (window.localStorage.getItem('theme-mode') === 'light' || window.matchMedia('(prefers-color-scheme:light)').matches)
  document.documentElement.setAttribute('theme-mode', 'light')
-if (window.localStorage.getItem('theme-mode') === 'dark')
+if (window.localStorage.getItem('theme-mode') === 'dark' || window.matchMedia('(prefers-color-scheme:dark)').matches)
  document.documentElement.setAttribute('theme-mode', 'dark')</script><style>@font-face {
  font-family: BenderLight;
  src: local('Bender'), url("/font/BenderLight.woff2") format('woff2');
@@ -44,10 +61,28 @@ if (window.localStorage.getItem('theme-mode') === 'dark')
 }</style><style>:root {
  --dark-background: url('https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg');
  --light-background: url('/img/bk.jpg');
- --theme-encrypt-confirm: 'confirm'
-}</style><script defer src="/js/arknights.js"></script><script defer src="/js/search.js"></script><script defer type="module">import mermaid from '//unpkg.com/mermaid@11.12.2/dist/mermaid.esm.min.mjs';
+ --theme-encrypt-confirm: '确认'
+}</style><script defer src="/js/arknights.js"></script><script defer src="/js/search.js"></script><script defer src="https://vercount.one/js"></script><script defer type="module">import mermaid from '//unpkg.com/mermaid@11.12.2/dist/mermaid.esm.min.mjs';
 window.mermaid = mermaid;
 code.paintMermaid();
+</script><script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.1/MathJax.js"></script><script>MathJax.Hub.Config({
+  menuSettings: {
+    zoom: "None"
+  },
+  showMathMenu: false,
+  jax: ["input/TeX","output/CommonHTML"],
+  extensions: ["tex2jax.js"],
+  TeX: {
+    extensions: ["AMSmath.js","AMSsymbols.js"],
+    equationNumbers: {
+      autoNumber: "AMS"
+    }
+  },
+  tex2jax: {
+    inlineMath: [["\\(", "\\)"]],
+    displayMath: [["\\[", "\\]"]]
+  }
+});
 </script><script async src="//unpkg.com/lightgallery@2.7.1/lightgallery.min.js"></script><script async src="//unpkg.com/lightgallery@2.7.1/plugins/zoom/lg-zoom.min.js"></script><script async src="//unpkg.com/lightgallery@2.7.1/plugins/thumbnail/lg-thumbnail.min.js"></script><script async src="/lib/encrypt/hbe.js"></script><script async src="/js/pjax.js"></script><script class="pjax-js">reset= () => {document.querySelector('.lg-container')?.remove()
 lightGallery(document.getElementById('post-bg'), {
   plugins: [lgZoom,lgThumbnail],
@@ -64,7 +99,22 @@ lightGallery(document.getElementById('post-bg'), {
    }
  }
 });
-document.addEventListener("pjax:complete", reset);reset()})</script><script class="pjax-js">reset= () => {document.querySelector('.lg-container')?.remove()
+document.addEventListener("pjax:complete", reset);document.addEventListener('pjax:success', _ => {
+ const script = document.createElement('script');
+ script.src = 'https://vercount.one/js';
+ document.head.appendChild(script);
+});reset()})</script><script class="pjax-js">reset= () => {window.giscusSettings = {
+ repo: 'juicer0801/juicer0801.github.io',
+ repoId: 'R_kgDOUcAR_w',
+ category: 'Announcements',
+ categoryId: 'DIC_kwDOUcAR_84DIlqM',
+ mapping: 'pathname',
+ strict: '0',
+ reactionsEnabled: '1',
+ emitMetadata: '0',
+ inputPosition: 'bottom',
+ lang: 'zh-CN',
+ crossorigin: 'anonymous' , loading: 'lazy'};window.giscusThemeConfig = { theme: 'preferred_color_scheme' };MathJax.Hub.Queue(["Typeset", MathJax.Hub]);document.querySelector('.lg-container')?.remove()
 const postBg = document.querySelector('#post-bg');
 if (postBg) lightGallery(postBg, {
   plugins: [lgZoom,lgThumbnail],
@@ -81,15 +131,19 @@ if (postBg) lightGallery(postBg, {
    }
  }
 });
-document.addEventListener("pjax:complete", reset);reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>深度学习的数学</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2026-09-30T03:37:47.000Z" id="date"> 2026-09-30</time></div></span><br><span>Last Update: <div class="control"><time datetime="2026-10-04T02:46:43.654Z" id="updated"> 2026-10-04</time></div></span></div></div><hr><div id="post-content"><p>在解决3个及以上类别的分类的问题时，只需要将输出层的单元数增加到与类别数一致即可，而输出值将是一个元素数与类别数相同的向量</p>
+document.addEventListener("pjax:complete", reset);document.addEventListener('pjax:success', _ => {
+ const script = document.createElement('script');
+ script.src = 'https://vercount.one/js';
+ document.head.appendChild(script);
+});reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="数据检索" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/tags/"><span class="navItemTitle">Tags</span></a></li><li class="navItem"><a class="navBlock" href="/categories/"><span class="navItemTitle">Categories</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>深度学习的数学</h1><div id="post-info"><span>文章发布时间: <div class="control"><time datetime="2026-09-30T03:37:47.000Z" id="date"> 2026-09-30</time></div></span><br><span>最后更新时间: <div class="control"><time datetime="2026-10-04T02:46:43.654Z" id="updated"> 2026-10-04</time></div></span><br><span>文章总字数: <div class="control">4.3k</div></span><br><span>预计阅读时间: <div class="control">15 分钟</div></span><br><span id="vercount_container_page_pv">页面浏览: <span class="control" id="vercount_value_page_pv">加载中...</span></span></div></div><hr><div id="post-content"><p>在解决3个及以上类别的分类的问题时，只需要将输出层的单元数增加到与类别数一致即可，而输出值将是一个元素数与类别数相同的向量</p>
 <p>该书的主线并非严格数学证明，而是建立从神经单元到反向传播、再到卷积神经网络的因果计算直觉。其核心问题始终是：误差如何产生，梯度如何计算，参数如何更新。</p>
 <hr>
 <h2 id="一、数学基础与符号约定"><a href="#一、数学基础与符号约定" class="headerlink" title="一、数学基础与符号约定"></a>一、数学基础与符号约定</h2><p><strong>核心内容</strong></p>
 <p>深度学习的数学对象包括标量、向量、矩阵与张量。神经网络中的一层通常表示为：</p>
-<p>[<br>z^{(l)}&#x3D;W^{(l)}a^{(l-1)}+b^{(l)}<br>]</p>
-<p>[<br>a^{(l)}&#x3D;\sigma(z^{(l)})<br>]</p>
+<p>[<br>z^{(l)}=W^{(l)}a^{(l-1)}+b^{(l)}<br>]</p>
+<p>[<br>a^{(l)}=\sigma(z^{(l)})<br>]</p>
 <p>其中，(a^{(l-1)}) 为前一层激活值，(W^{(l)}) 为权重矩阵，(b^{(l)}) 为偏置向量，(z^{(l)}) 为加权输入，(\sigma) 为激活函数，(a^{(l)}) 为本层输出。</p>
-<p>矩阵乘法要求维度匹配：若第 (l-1) 层有 (n_{l-1}) 个神经元，第 (l) 层有 (n_l) 个神经元，则 (W^{(l)}) 的形状为 (n_l \times n_{l-1})。偏置 (b^{(l)}) 为 (n_l) 维向量。</p>
+<p>矩阵乘法要求维度匹配：若第 (l-1) 层有 (n<em>{l-1}) 个神经元，第 (l) 层有 (n_l) 个神经元，则 (W^{(l)}) 的形状为 (n_l \times n</em>{l-1})。偏置 (b^{(l)}) 为 (n_l) 维向量。</p>
 <p><strong>补充内容</strong></p>
 <p>需要掌握导数、偏导数、梯度、链式法则与雅可比矩阵的基本含义。梯度是多元函数对所有自变量偏导数构成的向量，指向函数增长最快的方向。梯度下降沿负梯度方向更新参数，本质是利用一阶局部线性近似最小化目标函数。</p>
 <p>计算图与自动微分是现代深度学习框架的基础。前向传播构建计算图，反向传播沿计算图反向应用链式法则。理解计算图有助于理解反向传播为何能够高效计算所有参数的偏导数。</p>
@@ -110,15 +164,15 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 <hr>
 <h2 id="三、前向传播"><a href="#三、前向传播" class="headerlink" title="三、前向传播"></a>三、前向传播</h2><p><strong>核心内容</strong></p>
 <p>前向传播是从输入层到输出层的逐层计算过程。每一层执行“矩阵乘法 + 向量加法 + 激活函数”的重复操作。向量化表达为：</p>
-<p>[<br>z^{(l)}&#x3D;W^{(l)}a^{(l-1)}+b^{(l)}<br>]</p>
-<p>[<br>a^{(l)}&#x3D;\sigma(z^{(l)})<br>]</p>
+<p>[<br>z^{(l)}=W^{(l)}a^{(l-1)}+b^{(l)}<br>]</p>
+<p>[<br>a^{(l)}=\sigma(z^{(l)})<br>]</p>
 <p>输出层根据任务类型选择不同激活函数。回归任务常用恒等函数，二分类常用 sigmoid，多分类常用 softmax。</p>
 <p><strong>补充内容</strong></p>
 <p>常见激活函数及其性质：</p>
 <ul>
 <li>sigmoid：输出范围 ((0,1))，导数最大值为 0.25，容易导致梯度消失。</li>
 <li>tanh：输出范围 ((-1,1))，零中心，但仍有饱和区。</li>
-<li>ReLU：(f(x)&#x3D;\max(0,x))，正区间导数为 1，缓解梯度消失，但负区间导数为 0，可能导致神经元死亡。</li>
+<li>ReLU：(f(x)=\max(0,x))，正区间导数为 1，缓解梯度消失，但负区间导数为 0，可能导致神经元死亡。</li>
 <li>Leaky ReLU、ELU 等：在负区间保留小梯度，缓解死亡问题。</li>
 </ul>
 <p><strong>易错点</strong></p>
@@ -129,13 +183,13 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 <h2 id="四、损失函数与目标函数"><a href="#四、损失函数与目标函数" class="headerlink" title="四、损失函数与目标函数"></a>四、损失函数与目标函数</h2><p><strong>核心内容</strong></p>
 <p>损失函数衡量单个样本预测值与真实值之间的差异。目标函数通常是所有训练样本损失的平均或总和，并可加入正则化项。</p>
 <p>均方误差常用于回归：</p>
-<p>[<br>J&#x3D;\frac{1}{2}\sum_i (y_i-\hat{y}_i)^2<br>]</p>
+<p>[<br>J=\frac{1}{2}\sum_i (y_i-\hat{y}_i)^2<br>]</p>
 <p>交叉熵常用于分类：</p>
-<p>[<br>J&#x3D;-\sum_i y_i\log \hat{y}_i<br>]</p>
+<p>[<br>J=-\sum_i y_i\log \hat{y}_i<br>]</p>
 <p>softmax 将实数向量转化为概率分布：</p>
-<p>[<br>\hat{y}_i&#x3D;\frac{\exp(z_i)}{\sum_j \exp(z_j)}<br>]</p>
+<p>[<br>\hat{y}_i=\frac{\exp(z_i)}{\sum_j \exp(z_j)}<br>]</p>
 <p>softmax 与交叉熵组合后，输出层对 (z) 的导数具有简洁形式：</p>
-<p>[<br>\frac{\partial J}{\partial z_i}&#x3D;\hat{y}_i-y_i<br>]</p>
+<p>[<br>\frac{\partial J}{\partial z_i}=\hat{y}_i-y_i<br>]</p>
 <p>这一形式极大简化了反向传播。</p>
 <p><strong>补充内容</strong></p>
 <p>交叉熵与 KL 散度密切相关。最小化交叉熵等价于最小化预测分布与真实分布之间的 KL 散度。正则化项常用 L2 范数或 L1 范数，分别倾向于使权重平滑或稀疏。通常不对偏置施加正则化。</p>
@@ -174,17 +228,17 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 <h2 id="六、反向传播"><a href="#六、反向传播" class="headerlink" title="六、反向传播"></a>六、反向传播</h2><p><strong>核心内容</strong></p>
 <p>反向传播是全书最核心的章节。其逻辑链条为：定义误差，构造目标函数，利用梯度下降更新参数，利用反向传播高效计算偏导数。</p>
 <p>定义第 (l) 层第 (j) 个神经元的德尔塔：</p>
-<p>[<br>\delta_j^{(l)}&#x3D;\frac{\partial J}{\partial z_j^{(l)}}<br>]</p>
+<p>[<br>\delta_j^{(l)}=\frac{\partial J}{\partial z_j^{(l)}}<br>]</p>
 <p>输出层德尔塔为：</p>
-<p>[<br>\delta_j^{(L)}&#x3D;\frac{\partial J}{\partial a_j^{(L)}}\sigma’(z_j^{(L)})<br>]</p>
+<p>[<br>\delta_j^{(L)}=\frac{\partial J}{\partial a_j^{(L)}}\sigma’(z_j^{(L)})<br>]</p>
 <p>递推关系为：</p>
-<p>[<br>\delta_j^{(l)}&#x3D;\left(\sum_k \delta_k^{(l+1)}w_{kj}^{(l+1)}\right)\sigma’(z_j^{(l)})<br>]</p>
+<p>[<br>\delta<em>j^{(l)}=\left(\sum_k \delta_k^{(l+1)}w</em>{kj}^{(l+1)}\right)\sigma’(z_j^{(l)})<br>]</p>
 <p>向量化形式为：</p>
-<p>[<br>\delta^{(l)}&#x3D;\left(W^{(l+1)}\right)^T\delta^{(l+1)}\odot \sigma’(z^{(l)})<br>]</p>
+<p>[<br>\delta^{(l)}=\left(W^{(l+1)}\right)^T\delta^{(l+1)}\odot \sigma’(z^{(l)})<br>]</p>
 <p>其中 (\odot) 表示逐元素乘法。</p>
 <p>参数梯度为：</p>
-<p>[<br>\frac{\partial J}{\partial W^{(l)}}&#x3D;\delta^{(l)}\left(a^{(l-1)}\right)^T<br>]</p>
-<p>[<br>\frac{\partial J}{\partial b^{(l)}}&#x3D;\delta^{(l)}<br>]</p>
+<p>[<br>\frac{\partial J}{\partial W^{(l)}}=\delta^{(l)}\left(a^{(l-1)}\right)^T<br>]</p>
+<p>[<br>\frac{\partial J}{\partial b^{(l)}}=\delta^{(l)}<br>]</p>
 <p><strong>补充内容</strong></p>
 <p>反向传播的计算顺序是从输出层向输入层逐层进行，但每一层的德尔塔在数学上依赖于更靠近输出层的那一层的德尔塔。计算图视角下，反向传播是链式法则的系统化应用。自动微分框架能够自动完成这一过程。</p>
 <p>梯度消失与梯度爆炸是深层网络的核心问题。sigmoid 导数最大为 0.25，多层连续相乘导致梯度指数衰减。权重过大或激活函数导数大于 1 则可能导致梯度指数增长。残差连接通过恒等路径缓解梯度消失。ReLU 及其变体在正区间保持导数为 1，也有助于训练深层网络。</p>
@@ -198,13 +252,13 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 <h2 id="七、卷积神经网络"><a href="#七、卷积神经网络" class="headerlink" title="七、卷积神经网络"></a>七、卷积神经网络</h2><p><strong>核心内容</strong></p>
 <p>卷积神经网络的核心结构为：卷积层、激活函数、池化层、全连接层。卷积层通过卷积核在输入上滑动，提取局部特征。卷积核是待学习参数，而非人工设计的固定算子。</p>
 <p>卷积操作可视为互相关操作。输出特征图尺寸通常为：</p>
-<p>[<br>\text{输出尺寸}&#x3D;\frac{\text{输入尺寸}+2\times \text{填充}-\text{卷积核尺寸}}{\text{步幅}}+1<br>]</p>
+<p>[<br>\text{输出尺寸}=\frac{\text{输入尺寸}+2\times \text{填充}-\text{卷积核尺寸}}{\text{步幅}}+1<br>]</p>
 <p>池化层用于缩小特征图，增强平移鲁棒性。最大池化选取局部最大值，平均池化取局部平均值。池化层没有可学习参数。</p>
 <p><strong>补充内容</strong></p>
 <p>卷积层具有局部连接与参数共享两大特性。参数共享显著减少参数量，并使网络具有平移等变性。多个卷积核产生多个通道，每个通道对应一种特征检测器。感受野随层数增加而扩大。</p>
 <p>全连接层可视为卷积核尺寸等于输入尺寸的卷积层。1×1 卷积用于改变通道数。全局平均池化可替代全连接层，减少参数并抑制过拟合。转置卷积用于上采样。残差连接通过跳跃连接缓解深层网络退化问题。</p>
 <p>卷积层反向传播与全连接层不同。由于卷积核在不同位置共享，其梯度是所有位置梯度的累加：</p>
-<p>[<br>\frac{\partial J}{\partial K}&#x3D;\sum_{\text{位置}}\delta_{\text{位置}}\otimes \text{对应输入块}<br>]</p>
+<p>[<br>\frac{\partial J}{\partial K}=\sum<em>{\text{位置}}\delta</em>{\text{位置}}\otimes \text{对应输入块}<br>]</p>
 <p>池化层反向传播时，最大池化仅将梯度传递给前向传播中最大值所在位置，其他位置梯度为零。</p>
 <p><strong>易错点</strong></p>
 <p>第一，误认为卷积核是人工设计的。在 CNN 中，卷积核是通过反向传播学习得到的权重。</p>
@@ -252,4 +306,4 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 <li>将优化器与模型结构、数据质量混为一谈。</li>
 </ol>
 <p>总体而言，该书的价值在于帮助读者建立“误差—梯度—参数更新”的因果直觉。若仅记忆公式形状，而不能解释每个符号在计算图中的位置与作用，则尚未真正掌握深度学习的数学基础。</p>
-<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2026/10/05/deeplearn15/">← Next 人工神经网络</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/09/30/deeplearn13/">经典代码学习 Prev →</a></div></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="To Top" style="opacity: 0; display: none;">∧ </a><a class="i-index" id="to-index" onClick="tocControl.change()" title="To Catalog"><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span></a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="Change Theme"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">John Doe</a></h1><div id="description"><p></p></div></div><div id="aside-block"><div id="toc-div"><h1>Catalog</h1><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%E4%B8%8E%E7%AC%A6%E5%8F%B7%E7%BA%A6%E5%AE%9A"><span class="toc-number">1.</span> <span class="toc-text">一、数学基础与符号约定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E7%A5%9E%E7%BB%8F%E5%8D%95%E5%85%83%E4%B8%8E%E6%84%9F%E7%9F%A5%E6%9C%BA"><span class="toc-number">2.</span> <span class="toc-text">二、神经单元与感知机</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%89%8D%E5%90%91%E4%BC%A0%E6%92%AD"><span class="toc-number">3.</span> <span class="toc-text">三、前向传播</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E4%B8%8E%E7%9B%AE%E6%A0%87%E5%87%BD%E6%95%B0"><span class="toc-number">4.</span> <span class="toc-text">四、损失函数与目标函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E4%B8%8E%E4%BC%98%E5%8C%96"><span class="toc-number">5.</span> <span class="toc-text">五、梯度下降与优化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD"><span class="toc-number">6.</span> <span class="toc-text">六、反向传播</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C"><span class="toc-number">7.</span> <span class="toc-text">七、卷积神经网络</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E8%AE%AD%E7%BB%83%E5%AE%9E%E8%B7%B5%E4%B8%8E%E6%95%B0%E5%80%BC%E7%A8%B3%E5%AE%9A"><span class="toc-number">8.</span> <span class="toc-text">八、训练实践与数值稳定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E5%85%A8%E4%B9%A6%E4%B8%BB%E7%BA%BF%E4%B8%8E%E5%B8%B8%E8%A7%81%E8%AF%AF%E5%8C%BA%E6%80%BB%E8%A7%88"><span class="toc-number">9.</span> <span class="toc-text">九、全书主线与常见误区总览</span></a></li></ol></div></div><footer><nobr>Published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2026/10/05/deeplearn15/">← 下一篇 人工神经网络</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/09/30/deeplearn13/">经典代码学习 上一篇 →</a></div></div></div><div id="comments"><div id="giscus"></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="回到顶部" style="opacity: 0; display: none;">∧ </a><a class="i-index" id="to-index" onClick="tocControl.change()" title="文章目录"><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span></a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="切换主题"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">John Doe</a></h1><div id="description"><p></p></div><div id="social-links"><a class="social" target="_blank" rel="noopener" href="https://github.com/juicer0801"><i class="fab fa-github" alt="GitHub"></i></a></div></div><div id="aside-block"><div id="toc-div"><h1>目录</h1><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%E4%B8%8E%E7%AC%A6%E5%8F%B7%E7%BA%A6%E5%AE%9A"><span class="toc-number">1.</span> <span class="toc-text">一、数学基础与符号约定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E7%A5%9E%E7%BB%8F%E5%8D%95%E5%85%83%E4%B8%8E%E6%84%9F%E7%9F%A5%E6%9C%BA"><span class="toc-number">2.</span> <span class="toc-text">二、神经单元与感知机</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%89%8D%E5%90%91%E4%BC%A0%E6%92%AD"><span class="toc-number">3.</span> <span class="toc-text">三、前向传播</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E4%B8%8E%E7%9B%AE%E6%A0%87%E5%87%BD%E6%95%B0"><span class="toc-number">4.</span> <span class="toc-text">四、损失函数与目标函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E4%B8%8E%E4%BC%98%E5%8C%96"><span class="toc-number">5.</span> <span class="toc-text">五、梯度下降与优化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD"><span class="toc-number">6.</span> <span class="toc-text">六、反向传播</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E5%8D%B7%E7%A7%AF%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C"><span class="toc-number">7.</span> <span class="toc-text">七、卷积神经网络</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E8%AE%AD%E7%BB%83%E5%AE%9E%E8%B7%B5%E4%B8%8E%E6%95%B0%E5%80%BC%E7%A8%B3%E5%AE%9A"><span class="toc-number">8.</span> <span class="toc-text">八、训练实践与数值稳定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E5%85%A8%E4%B9%A6%E4%B8%BB%E7%BA%BF%E4%B8%8E%E5%B8%B8%E8%A7%81%E8%AF%AF%E5%8C%BA%E6%80%BB%E8%A7%88"><span class="toc-number">9.</span> <span class="toc-text">九、全书主线与常见误区总览</span></a></li></ol></div></div><footer><nobr>构建自 <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> 使用主题 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> 主题作者 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>

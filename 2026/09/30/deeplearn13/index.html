@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en" theme-mode="dark"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>经典代码学习 | Hexo</title><meta name="description" content="用 XOR 异或问题，结构为 2 -&gt; 4 -&gt; 1，激活函数用 Sigmoid，损失用二元交叉熵。PyTorch 会自动完成反向传播，optimizer.step() 就是梯度下降。 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455">
+<!DOCTYPE html><html lang="en" theme-mode="auto"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>经典代码学习 | Hexo</title><meta name="description" content="用 XOR 异或问题，结构为 2 -&gt; 4 -&gt; 1，激活函数用 Sigmoid，损失用二元交叉熵。PyTorch 会自动完成反向传播，optimizer.step() 就是梯度下降。 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455">
 <meta property="og:type" content="article">
 <meta property="og:title" content="经典代码学习">
 <meta property="og:url" content="http://example.com/2026/09/30/deeplearn13/index.html">
@@ -20,7 +20,7 @@
   font-family: 'JetBrains Mono';
   src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
 }
-</style><meta name="page-config" content="{&quot;code_fold&quot;:null}"><script class="pjax-js">var config = {"root":"/","code_fold":15,"search":{"preload":false,"activeHolder":"Enter here","blurHolder":"Search","noResult":"Data \"$0\" not found"},"code":{"codeInfo":"$0 - $1 lines","copy":"copy"}};
+</style><meta name="page-config" content="{&quot;code_fold&quot;:null}"><script class="pjax-js">var config = {"root":"/","code_fold":15,"search":{"preload":true,"activeHolder":"键入以继续","blurHolder":"数据检索","noResult":"无 $0 相关数据"},"code":{"codeInfo":"$0 - $1 行","copy":"复制"}};
 var page_config = {
   code_fold: null
 };
@@ -31,9 +31,26 @@ function updatePageConfig() {
   }
 }
 document.addEventListener('pjax:complete', function() { updatePageConfig(); });
-updatePageConfig();</script><link type="text/css" rel="stylesheet" href="/lib/encrypt/hbe.style.css"><script src="//unpkg.com/mermaid@11.12.2/dist/mermaid.min.js"></script><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lightgallery.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-zoom.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-thumbnail.css"><link type="text/css" rel="stylesheet" href="/lib/fontawesome/css/all.min.css"><script>if (window.localStorage.getItem('theme-mode') === 'light')
+updatePageConfig();</script><link type="text/css" rel="stylesheet" href="/lib/encrypt/hbe.style.css"><script src="//unpkg.com/mermaid@11.12.2/dist/mermaid.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.1/MathJax.js"></script><script>MathJax.Hub.Config({
+ menuSettings: {
+   zoom: "None"
+ },
+ showMathMenu: false,
+ jax: ["input/TeX","output/CommonHTML"],
+ extensions: ["tex2jax.js"],
+ TeX: {
+   extensions: ["AMSmath.js","AMSsymbols.js"],
+   equationNumbers: {
+     autoNumber: "AMS"
+   }
+ },
+ tex2jax: {
+   inlineMath: [["\\(", "\\)"]],
+   displayMath: [["\\[", "\\]"]]
+ }
+});</script><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lightgallery.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-zoom.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-thumbnail.css"><link type="text/css" rel="stylesheet" href="/lib/fontawesome/css/all.min.css"><script>if (window.localStorage.getItem('theme-mode') === 'light' || window.matchMedia('(prefers-color-scheme:light)').matches)
  document.documentElement.setAttribute('theme-mode', 'light')
-if (window.localStorage.getItem('theme-mode') === 'dark')
+if (window.localStorage.getItem('theme-mode') === 'dark' || window.matchMedia('(prefers-color-scheme:dark)').matches)
  document.documentElement.setAttribute('theme-mode', 'dark')</script><style>@font-face {
  font-family: BenderLight;
  src: local('Bender'), url("/font/BenderLight.woff2") format('woff2');
@@ -44,10 +61,28 @@ if (window.localStorage.getItem('theme-mode') === 'dark')
 }</style><style>:root {
  --dark-background: url('https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg');
  --light-background: url('/img/bk.jpg');
- --theme-encrypt-confirm: 'confirm'
-}</style><script defer src="/js/arknights.js"></script><script defer src="/js/search.js"></script><script defer type="module">import mermaid from '//unpkg.com/mermaid@11.12.2/dist/mermaid.esm.min.mjs';
+ --theme-encrypt-confirm: '确认'
+}</style><script defer src="/js/arknights.js"></script><script defer src="/js/search.js"></script><script defer src="https://vercount.one/js"></script><script defer type="module">import mermaid from '//unpkg.com/mermaid@11.12.2/dist/mermaid.esm.min.mjs';
 window.mermaid = mermaid;
 code.paintMermaid();
+</script><script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.1/MathJax.js"></script><script>MathJax.Hub.Config({
+  menuSettings: {
+    zoom: "None"
+  },
+  showMathMenu: false,
+  jax: ["input/TeX","output/CommonHTML"],
+  extensions: ["tex2jax.js"],
+  TeX: {
+    extensions: ["AMSmath.js","AMSsymbols.js"],
+    equationNumbers: {
+      autoNumber: "AMS"
+    }
+  },
+  tex2jax: {
+    inlineMath: [["\\(", "\\)"]],
+    displayMath: [["\\[", "\\]"]]
+  }
+});
 </script><script async src="//unpkg.com/lightgallery@2.7.1/lightgallery.min.js"></script><script async src="//unpkg.com/lightgallery@2.7.1/plugins/zoom/lg-zoom.min.js"></script><script async src="//unpkg.com/lightgallery@2.7.1/plugins/thumbnail/lg-thumbnail.min.js"></script><script async src="/lib/encrypt/hbe.js"></script><script async src="/js/pjax.js"></script><script class="pjax-js">reset= () => {document.querySelector('.lg-container')?.remove()
 lightGallery(document.getElementById('post-bg'), {
   plugins: [lgZoom,lgThumbnail],
@@ -64,7 +99,22 @@ lightGallery(document.getElementById('post-bg'), {
    }
  }
 });
-document.addEventListener("pjax:complete", reset);reset()})</script><script class="pjax-js">reset= () => {document.querySelector('.lg-container')?.remove()
+document.addEventListener("pjax:complete", reset);document.addEventListener('pjax:success', _ => {
+ const script = document.createElement('script');
+ script.src = 'https://vercount.one/js';
+ document.head.appendChild(script);
+});reset()})</script><script class="pjax-js">reset= () => {window.giscusSettings = {
+ repo: 'juicer0801/juicer0801.github.io',
+ repoId: 'R_kgDOUcAR_w',
+ category: 'Announcements',
+ categoryId: 'DIC_kwDOUcAR_84DIlqM',
+ mapping: 'pathname',
+ strict: '0',
+ reactionsEnabled: '1',
+ emitMetadata: '0',
+ inputPosition: 'bottom',
+ lang: 'zh-CN',
+ crossorigin: 'anonymous' , loading: 'lazy'};window.giscusThemeConfig = { theme: 'preferred_color_scheme' };MathJax.Hub.Queue(["Typeset", MathJax.Hub]);document.querySelector('.lg-container')?.remove()
 const postBg = document.querySelector('#post-bg');
 if (postBg) lightGallery(postBg, {
   plugins: [lgZoom,lgThumbnail],
@@ -81,12 +131,14 @@ if (postBg) lightGallery(postBg, {
    }
  }
 });
-document.addEventListener("pjax:complete", reset);reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>经典代码学习</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2026-09-30T03:37:43.000Z" id="date"> 2026-09-30</time></div></span><br><span>Last Update: <div class="control"><time datetime="2026-10-03T13:55:33.155Z" id="updated"> 2026-10-03</time></div></span></div></div><hr><div id="post-content"><p>用 XOR 异或问题，结构为 <code>2 -&gt; 4 -&gt; 1</code>，激活函数用 Sigmoid，损失用二元交叉熵。PyTorch 会自动完成反向传播，<code>optimizer.step()</code> 就是梯度下降。</p>
+document.addEventListener("pjax:complete", reset);document.addEventListener('pjax:success', _ => {
+ const script = document.createElement('script');
+ script.src = 'https://vercount.one/js';
+ document.head.appendChild(script);
+});reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="数据检索" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/tags/"><span class="navItemTitle">Tags</span></a></li><li class="navItem"><a class="navBlock" href="/categories/"><span class="navItemTitle">Categories</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>经典代码学习</h1><div id="post-info"><span>文章发布时间: <div class="control"><time datetime="2026-09-30T03:37:43.000Z" id="date"> 2026-09-30</time></div></span><br><span>最后更新时间: <div class="control"><time datetime="2026-10-03T13:55:33.155Z" id="updated"> 2026-10-03</time></div></span><br><span>文章总字数: <div class="control">3.1k</div></span><br><span>预计阅读时间: <div class="control">13 分钟</div></span><br><span id="vercount_container_page_pv">页面浏览: <span class="control" id="vercount_value_page_pv">加载中...</span></span></div></div><hr><div id="post-content"><p>用 XOR 异或问题，结构为 <code>2 -&gt; 4 -&gt; 1</code>，激活函数用 Sigmoid，损失用二元交叉熵。PyTorch 会自动完成反向传播，<code>optimizer.step()</code> 就是梯度下降。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> torch<br><span class="hljs-keyword">import</span> torch.nn <span class="hljs-keyword">as</span> nn<br><span class="hljs-keyword">import</span> torch.optim <span class="hljs-keyword">as</span> optim<br><br><span class="hljs-comment"># ============================================================</span><br><span class="hljs-comment"># 1. 数据：XOR 异或问题</span><br><span class="hljs-comment"># ============================================================</span><br>X = torch.tensor([[<span class="hljs-number">0.</span>, <span class="hljs-number">0.</span>],<br>                  [<span class="hljs-number">0.</span>, <span class="hljs-number">1.</span>],<br>                  [<span class="hljs-number">1.</span>, <span class="hljs-number">0.</span>],<br>                  [<span class="hljs-number">1.</span>, <span class="hljs-number">1.</span>]], dtype=torch.float32)   <span class="hljs-comment"># (4, 2)</span><br><br>y = torch.tensor([[<span class="hljs-number">0.</span>],<br>                  [<span class="hljs-number">1.</span>],<br>                  [<span class="hljs-number">1.</span>],<br>                  [<span class="hljs-number">0.</span>]], dtype=torch.float32)       <span class="hljs-comment"># (4, 1)</span><br><br>torch.manual_seed(<span class="hljs-number">42</span>)<br><br><span class="hljs-comment"># ============================================================</span><br><span class="hljs-comment"># 2. 定义模型：显式写出 forward，对应“前向传播”</span><br><span class="hljs-comment"># ============================================================</span><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Net</span>(nn.Module):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-built_in">super</span>().__init__()<br>        <span class="hljs-variable language_">self</span>.fc1 = nn.Linear(<span class="hljs-number">2</span>, <span class="hljs-number">4</span>)   <span class="hljs-comment"># 输入层 -&gt; 隐藏层</span><br>        <span class="hljs-variable language_">self</span>.fc2 = nn.Linear(<span class="hljs-number">4</span>, <span class="hljs-number">1</span>)   <span class="hljs-comment"># 隐藏层 -&gt; 输出层</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">self, x</span>):<br>        x = torch.sigmoid(<span class="hljs-variable language_">self</span>.fc1(x))  <span class="hljs-comment"># 隐藏层激活</span><br>        x = torch.sigmoid(<span class="hljs-variable language_">self</span>.fc2(x))  <span class="hljs-comment"># 输出层激活</span><br>        <span class="hljs-keyword">return</span> x<br><br>model = Net()<br><br><span class="hljs-comment"># 损失函数：二元交叉熵</span><br>criterion = nn.BCELoss()<br><br><span class="hljs-comment"># 优化器：随机梯度下降 SGD</span><br>lr = <span class="hljs-number">0.5</span><br>optimizer = optim.SGD(model.parameters(), lr=lr)<br><br><span class="hljs-comment"># ============================================================</span><br><span class="hljs-comment"># 3. 训练：前向传播 -&gt; 反向传播 -&gt; 梯度下降</span><br><span class="hljs-comment"># ============================================================</span><br>epochs = <span class="hljs-number">20000</span><br><br><span class="hljs-keyword">for</span> epoch <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(epochs + <span class="hljs-number">1</span>):<br><br>    <span class="hljs-comment"># ---------- 3.1 前向传播 Forward ----------</span><br>    y_pred = model(X)                 <span class="hljs-comment"># 得到预测值</span><br>    loss = criterion(y_pred, y)       <span class="hljs-comment"># 计算损失</span><br><br>    <span class="hljs-comment"># ---------- 3.2 清空旧梯度 ----------</span><br>    optimizer.zero_grad()<br><br>    <span class="hljs-comment"># ---------- 3.3 反向传播 Backward ----------</span><br>    <span class="hljs-comment"># PyTorch 自动求导：计算所有参数的梯度，存入 p.grad</span><br>    loss.backward()<br><br>    <span class="hljs-comment"># ---------- 3.4 梯度下降 Gradient Descent ----------</span><br>    <span class="hljs-comment"># θ = θ - lr * grad，由优化器完成</span><br>    optimizer.step()<br><br>    <span class="hljs-comment"># ---------- 3.5 打印 ----------</span><br>    <span class="hljs-keyword">if</span> epoch % <span class="hljs-number">2000</span> == <span class="hljs-number">0</span>:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;epoch <span class="hljs-subst">&#123;epoch:6d&#125;</span>   loss = <span class="hljs-subst">&#123;loss.item():<span class="hljs-number">.6</span>f&#125;</span>&quot;</span>)<br><br><span class="hljs-comment"># ============================================================</span><br><span class="hljs-comment"># 4. 预测结果</span><br><span class="hljs-comment"># ============================================================</span><br><span class="hljs-keyword">with</span> torch.no_grad():<br>    pred = model(X)<br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;\n最终预测值（应接近 [0, 1, 1, 0]）：&quot;</span>)<br><span class="hljs-built_in">print</span>(pred.<span class="hljs-built_in">round</span>().flatten().tolist())<br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;\n原始输出：&quot;</span>)<br><span class="hljs-built_in">print</span>(pred.flatten().tolist())<br></code></pre></td></tr></table></figure>
-
 <p>如果你想更直观地看到“梯度下降”就是手动更新参数，可以把 <code>optimizer.step()</code> 替换为：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">with</span> torch.no_grad():<br>    <span class="hljs-keyword">for</span> p <span class="hljs-keyword">in</span> model.parameters():<br>        p -= lr * p.grad<br></code></pre></td></tr></table></figure>
-
 <p>对应关系：</p>
 <ul>
 <li><code>y_pred = model(X)</code>：前向传播</li>
@@ -97,7 +149,6 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 <p>下面逐行解释 PyTorch 版代码</p>
 <hr>
 <h3 id="1-导入库"><a href="#1-导入库" class="headerlink" title="1. 导入库"></a>1. 导入库</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> torch<br><span class="hljs-keyword">import</span> torch.nn <span class="hljs-keyword">as</span> nn<br><span class="hljs-keyword">import</span> torch.optim <span class="hljs-keyword">as</span> optim<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li><code>import torch</code>：导入 PyTorch 核心库，提供张量（Tensor）和自动求导机制。</li>
 <li><code>import torch.nn as nn</code>：导入神经网络模块，里面有 <code>Linear</code>、<code>BCELoss</code> 等层和损失函数。</li>
@@ -105,52 +156,45 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 </ul>
 <hr>
 <h3 id="2-准备数据"><a href="#2-准备数据" class="headerlink" title="2. 准备数据"></a>2. 准备数据</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">X = torch.tensor([[<span class="hljs-number">0.</span>, <span class="hljs-number">0.</span>],<br>                  [<span class="hljs-number">0.</span>, <span class="hljs-number">1.</span>],<br>                  [<span class="hljs-number">1.</span>, <span class="hljs-number">0.</span>],<br>                  [<span class="hljs-number">1.</span>, <span class="hljs-number">1.</span>]], dtype=torch.float32)   <span class="hljs-comment"># (4, 2)</span><br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>定义输入数据 <code>X</code>，形状是 <code>(4, 2)</code>，表示 4 个样本，每个样本有 2 个特征。</li>
 <li>这 4 个样本就是 XOR 问题的四种输入组合：<code>(0,0)</code>、<code>(0,1)</code>、<code>(1,0)</code>、<code>(1,1)</code>。</li>
 <li><code>dtype=torch.float32</code> 指定为 32 位浮点数，因为 PyTorch 默认神经网络计算使用 float32。</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">y = torch.tensor([[<span class="hljs-number">0.</span>],<br>                  [<span class="hljs-number">1.</span>],<br>                  [<span class="hljs-number">1.</span>],<br>                  [<span class="hljs-number">0.</span>]], dtype=torch.float32)       <span class="hljs-comment"># (4, 1)</span><br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>定义标签 <code>y</code>，形状 <code>(4, 1)</code>，对应 XOR 的输出：<code>0, 1, 1, 0</code>。</li>
 <li>注意这里用二维 <code>(4,1)</code> 而不是一维 <code>(4,)</code>，是为了和模型输出形状匹配。</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">torch.manual_seed(<span class="hljs-number">42</span>)<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>设置随机种子，保证每次运行结果可复现。</li>
 <li>因为后面 <code>nn.Linear</code> 初始化权重时会用到随机数。</li>
 </ul>
 <hr>
 <h3 id="3-定义模型"><a href="#3-定义模型" class="headerlink" title="3. 定义模型"></a>3. 定义模型</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Net</span>(nn.Module):<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>定义一个神经网络类 <code>Net</code>，继承自 <code>nn.Module</code>。</li>
 <li>所有 PyTorch 模型都要继承 <code>nn.Module</code>，这样才能使用自动求导、参数管理等功能。</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):<br>    <span class="hljs-built_in">super</span>().__init__()<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li><code>__init__</code> 是构造函数，初始化网络层。</li>
 <li><code>super().__init__()</code> 调用父类 <code>nn.Module</code> 的初始化，必须写。</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-variable language_">self</span>.fc1 = nn.Linear(<span class="hljs-number">2</span>, <span class="hljs-number">4</span>)   <span class="hljs-comment"># 输入层 -&gt; 隐藏层</span><br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>定义第一个全连接层 <code>fc1</code>，输入维度 2，输出维度 4。</li>
 <li>内部包含权重 <code>W1</code> 形状 <code>(4,2)</code> 和偏置 <code>b1</code> 形状 <code>(4,)</code>（PyTorch 中 <code>Linear</code> 的权重是 <code>(out_features, in_features)</code>）。</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-variable language_">self</span>.fc2 = nn.Linear(<span class="hljs-number">4</span>, <span class="hljs-number">1</span>)   <span class="hljs-comment"># 隐藏层 -&gt; 输出层</span><br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>定义第二个全连接层 <code>fc2</code>，输入 4，输出 1。</li>
 <li>权重形状 <code>(1,4)</code>，偏置形状 <code>(1,)</code>。</li>
 </ul>
 <p><code>nn.Linear</code> 是什么？</p>
 <p><code>nn.Linear(in_features, out_features)</code> 创建一个全连接层，它对输入做线性变换：</p>
-<p>[<br>y &#x3D; x W^T + b<br>]</p>
+<p>[<br>y = x W^T + b<br>]</p>
 <p>其中：</p>
 <ul>
 <li>输入 (x) 的形状是 <code>(batch_size, in_features)</code></li>
@@ -167,17 +211,16 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 <h3 id="2-权重和偏置的形状"><a href="#2-权重和偏置的形状" class="headerlink" title="2. 权重和偏置的形状"></a>2. 权重和偏置的形状</h3><ul>
 <li>权重 <code>W1</code>：形状 <code>(4, 2)</code>，即 <code>(out_features, in_features)</code>。<ul>
 <li>每一行对应一个隐藏神经元的 2 个权重。</li>
-<li>一共 4 行，所以有 (4 \times 2 &#x3D; 8) 个权重。</li>
+<li>一共 4 行，所以有 (4 \times 2 = 8) 个权重。</li>
 </ul>
 </li>
 <li>偏置 <code>b1</code>：形状 <code>(4,)</code>，即每个隐藏神经元一个偏置，共 4 个。</li>
 </ul>
-<p>总参数量：(8 + 4 &#x3D; 12)。</p>
+<p>总参数量：(8 + 4 = 12)。</p>
 <h3 id="3-前向传播计算"><a href="#3-前向传播计算" class="headerlink" title="3. 前向传播计算"></a>3. 前向传播计算</h3><p>假设输入 <code>X</code> 的形状是 <code>(4, 2)</code>（4 个样本，每个 2 个特征）：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">X = [[<span class="hljs-number">0</span>, <span class="hljs-number">0</span>],<br>     [<span class="hljs-number">0</span>, <span class="hljs-number">1</span>],<br>     [<span class="hljs-number">1</span>, <span class="hljs-number">0</span>],<br>     [<span class="hljs-number">1</span>, <span class="hljs-number">1</span>]]<br></code></pre></td></tr></table></figure>
-
 <p>经过 <code>fc1</code> 时，实际计算是：</p>
-<p>[<br>Z_1 &#x3D; X \cdot W_1^T + b_1<br>]</p>
+<p>[<br>Z_1 = X \cdot W_1^T + b_1<br>]</p>
 <p>维度变化：</p>
 <ul>
 <li><code>X</code>：<code>(4, 2)</code></li>
@@ -189,7 +232,7 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 </ul>
 <p>也就是说，每个样本从 2 维特征变成了 4 维隐藏表示。</p>
 <h3 id="4-举例说明"><a href="#4-举例说明" class="headerlink" title="4. 举例说明"></a>4. 举例说明</h3><p>假设 <code>W1</code> 和 <code>b1</code> 初始化后是某个具体值，对于第一个样本 <code>[0, 0]</code>：</p>
-<p>[<br>Z_1^{(1)} &#x3D; [0, 0] \cdot W_1^T + b_1 &#x3D; b_1<br>]</p>
+<p>[<br>Z_1^{(1)} = [0, 0] \cdot W_1^T + b_1 = b_1<br>]</p>
 <p>因为输入是 0，所以输出就是偏置。对于其他样本，输入非零，就会加上权重的贡献。</p>
 <p>之后会经过 <code>sigmoid</code> 激活函数，得到 <code>A1 = sigmoid(Z1)</code>，形状仍然是 <code>(4, 4)</code>。</p>
 <hr>
@@ -200,14 +243,14 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 <h3 id="2-权重和偏置的形状-1"><a href="#2-权重和偏置的形状-1" class="headerlink" title="2. 权重和偏置的形状"></a>2. 权重和偏置的形状</h3><ul>
 <li>权重 <code>W2</code>：形状 <code>(1, 4)</code>，即 <code>(out_features, in_features)</code>。<ul>
 <li>只有 1 行，对应输出神经元的 4 个权重。</li>
-<li>共 (1 \times 4 &#x3D; 4) 个权重。</li>
+<li>共 (1 \times 4 = 4) 个权重。</li>
 </ul>
 </li>
 <li>偏置 <code>b2</code>：形状 <code>(1,)</code>，即输出神经元一个偏置。</li>
 </ul>
-<p>总参数量：(4 + 1 &#x3D; 5)。</p>
+<p>总参数量：(4 + 1 = 5)。</p>
 <h3 id="3-前向传播计算-1"><a href="#3-前向传播计算-1" class="headerlink" title="3. 前向传播计算"></a>3. 前向传播计算</h3><p>输入是 <code>A1</code>，形状 <code>(4, 4)</code>（4 个样本，每个样本有 4 个隐藏特征）。</p>
-<p>[<br>Z_2 &#x3D; A_1 \cdot W_2^T + b_2<br>]</p>
+<p>[<br>Z_2 = A_1 \cdot W_2^T + b_2<br>]</p>
 <p>维度变化：</p>
 <ul>
 <li><code>A1</code>：<code>(4, 4)</code></li>
@@ -220,6 +263,7 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 <p>再经过 <code>sigmoid</code> 激活，得到 <code>A2 = sigmoid(Z2)</code>，形状 <code>(4, 1)</code>，就是每个样本的预测概率。</p>
 <hr>
 <h2 id="四、整个网络的数据流"><a href="#四、整个网络的数据流" class="headerlink" title="四、整个网络的数据流"></a>四、整个网络的数据流</h2><p>把两层连起来看：</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -228,7 +272,8 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 <th>形状变化</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>输入</td>
 <td><code>X</code></td>
 <td><code>(4, 2)</code></td>
@@ -258,14 +303,16 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 <td><code>A2</code></td>
 <td><code>(4, 1)</code></td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <ul>
 <li>输入 2 维，经过隐藏层扩展到 4 维，再压缩到 1 维输出。</li>
 <li>隐藏层的 4 个神经元提供了足够的非线性表达能力，使得网络可以拟合 XOR 这种线性不可分的问题。</li>
 </ul>
 <hr>
 <h2 id="五、为什么权重是-out-features-in-features-？"><a href="#五、为什么权重是-out-features-in-features-？" class="headerlink" title="五、为什么权重是 (out_features, in_features)？"></a>五、为什么权重是 <code>(out_features, in_features)</code>？</h2><p>这是 PyTorch 的设计约定。在数学上，线性变换通常写成：</p>
-<p>[<br>y &#x3D; xW + b<br>]</p>
+<p>[<br>y = xW + b<br>]</p>
 <p>其中 (x) 是行向量，(W) 是 <code>(in_features, out_features)</code>。但 PyTorch 为了高效计算，把权重存成 <code>(out_features, in_features)</code>，前向传播时用 <code>x @ W.T</code>。这样：</p>
 <ul>
 <li>对批量输入 <code>X</code> 形状 <code>(batch, in_features)</code>，<code>X @ W.T</code> 直接得到 <code>(batch, out_features)</code>。</li>
@@ -273,7 +320,8 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 </ul>
 <p>所以记住：<strong>PyTorch 中 <code>Linear</code> 的 <code>weight</code> 形状永远是 <code>(out_features, in_features)</code>，<code>bias</code> 形状是 <code>(out_features,)</code>。</strong></p>
 <hr>
-<h2 id="六、参数量小结"><a href="#六、参数量小结" class="headerlink" title="六、参数量小结"></a>六、参数量小结</h2><table>
+<h2 id="六、参数量小结"><a href="#六、参数量小结" class="headerlink" title="六、参数量小结"></a>六、参数量小结</h2><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>层</th>
@@ -284,13 +332,14 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 <th>参数量</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>fc1</td>
 <td>2</td>
 <td>4</td>
 <td>(4, 2)</td>
 <td>(4,)</td>
-<td>8 + 4 &#x3D; 12</td>
+<td>8 + 4 = 12</td>
 </tr>
 <tr>
 <td>fc2</td>
@@ -298,7 +347,7 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 <td>1</td>
 <td>(1, 4)</td>
 <td>(1,)</td>
-<td>4 + 1 &#x3D; 5</td>
+<td>4 + 1 = 5</td>
 </tr>
 <tr>
 <td>合计</td>
@@ -308,48 +357,43 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 <td></td>
 <td>17</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p>这个网络虽然小，但已经足够学习 XOR 问题。通过反向传播和梯度下降，这 17 个参数会被不断调整，最终使输出接近 <code>[0, 1, 1, 0]</code>。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">self, x</span>):<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li><code>forward</code> 方法定义前向传播的计算过程。</li>
 <li>当我们调用 <code>model(X)</code> 时，PyTorch 会自动调用 <code>forward(X)</code>。</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">x = torch.sigmoid(<span class="hljs-variable language_">self</span>.fc1(x))  <span class="hljs-comment"># 隐藏层激活</span><br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>先经过 <code>fc1</code> 做线性变换：<code>x @ W1.T + b1</code>。</li>
 <li>然后通过 <code>sigmoid</code> 激活函数，引入非线性。</li>
 <li>结果形状 <code>(4, 4)</code>：4 个样本，每个样本得到 4 个隐藏层神经元输出。</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">x = torch.sigmoid(<span class="hljs-variable language_">self</span>.fc2(x))  <span class="hljs-comment"># 输出层激活</span><br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>再经过 <code>fc2</code> 线性变换，得到 <code>(4, 1)</code>。</li>
 <li>最后用 <code>sigmoid</code> 把输出压缩到 <code>(0, 1)</code> 区间，表示概率。</li>
 <li>返回结果。</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">return</span> x<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>返回最终的预测值。</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">model = Net()<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>实例化模型，此时会初始化 <code>fc1</code> 和 <code>fc2</code> 的权重和偏置。</li>
 </ul>
 <hr>
 <h3 id="4-损失函数和优化器"><a href="#4-损失函数和优化器" class="headerlink" title="4. 损失函数和优化器"></a>4. 损失函数和优化器</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">criterion = nn.BCELoss()<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>定义损失函数为二元交叉熵损失（Binary Cross Entropy Loss）。</li>
 <li>因为输出层用了 <code>sigmoid</code>，输出是概率值，所以用 <code>BCELoss</code> 很合适。</li>
 <li>注意：<code>BCELoss</code> 要求输入已经是 <code>(0,1)</code> 之间的概率，且形状与标签一致。</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">lr = <span class="hljs-number">0.5</span><br>optimizer = optim.SGD(model.parameters(), lr=lr)<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li><code>lr = 0.5</code>：学习率，控制梯度下降的步长。</li>
 <li><code>optim.SGD</code>：随机梯度下降优化器。</li>
@@ -358,33 +402,28 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 </ul>
 <hr>
 <h3 id="5-训练循环"><a href="#5-训练循环" class="headerlink" title="5. 训练循环"></a>5. 训练循环</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">epochs = <span class="hljs-number">20000</span><br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>训练轮数，一共迭代 20000 次。</li>
 <li>因为数据量很小，需要较多轮才能收敛。</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">for</span> epoch <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(epochs + <span class="hljs-number">1</span>):<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>循环 <code>epochs + 1</code> 次，多一次是为了在最后打印第 20000 轮的结果。</li>
 <li><code>epoch</code> 从 0 到 20000。</li>
 </ul>
 <hr>
 <h4 id="5-1-前向传播"><a href="#5-1-前向传播" class="headerlink" title="5.1 前向传播"></a>5.1 前向传播</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">y_pred = model(X)                 <span class="hljs-comment"># 得到预测值</span><br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>调用模型，执行 <code>forward</code> 方法，得到预测输出 <code>y_pred</code>，形状 <code>(4,1)</code>。</li>
 <li>这就是前向传播。</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">loss = criterion(y_pred, y)       <span class="hljs-comment"># 计算损失</span><br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>用二元交叉熵计算预测值 <code>y_pred</code> 和真实标签 <code>y</code> 之间的损失。</li>
 <li><code>loss</code> 是一个标量张量，包含梯度信息。</li>
 </ul>
 <hr>
 <h4 id="5-2-清空旧梯度"><a href="#5-2-清空旧梯度" class="headerlink" title="5.2 清空旧梯度"></a>5.2 清空旧梯度</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">optimizer.zero_grad()<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>清空优化器中所有参数的梯度。</li>
 <li>因为 PyTorch 的梯度默认会累加，如果不清零，上一次的梯度会叠加到这一次，导致错误。</li>
@@ -392,7 +431,6 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 </ul>
 <hr>
 <h4 id="5-3-反向传播"><a href="#5-3-反向传播" class="headerlink" title="5.3 反向传播"></a>5.3 反向传播</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">loss.backward()<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>反向传播，自动计算损失对每个参数的梯度。</li>
 <li>PyTorch 会从 <code>loss</code> 开始，沿着计算图反向求导，把梯度存到每个参数的 <code>.grad</code> 属性中。</li>
@@ -400,7 +438,6 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 </ul>
 <hr>
 <h4 id="5-4-梯度下降"><a href="#5-4-梯度下降" class="headerlink" title="5.4 梯度下降"></a>5.4 梯度下降</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">optimizer.step()<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>根据优化器的规则更新参数。</li>
 <li>对于 SGD，更新公式是：<code>param = param - lr * param.grad</code>。</li>
@@ -408,7 +445,6 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 </ul>
 <hr>
 <h4 id="5-5-打印损失"><a href="#5-5-打印损失" class="headerlink" title="5.5 打印损失"></a>5.5 打印损失</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">if</span> epoch % <span class="hljs-number">2000</span> == <span class="hljs-number">0</span>:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;epoch <span class="hljs-subst">&#123;epoch:6d&#125;</span>   loss = <span class="hljs-subst">&#123;loss.item():<span class="hljs-number">.6</span>f&#125;</span>&quot;</span>)<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>每 2000 轮打印一次当前轮数和损失。</li>
 <li><code>loss.item()</code> 把标量张量转成 Python 浮点数，方便打印。</li>
@@ -416,14 +452,12 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 </ul>
 <hr>
 <h3 id="6-预测结果"><a href="#6-预测结果" class="headerlink" title="6. 预测结果"></a>6. 预测结果</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">with</span> torch.no_grad():<br>    pred = model(X)<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li><code>torch.no_grad()</code>：关闭梯度计算，节省内存，加快速度。</li>
 <li>因为预测阶段不需要反向传播，所以不需要计算梯度。</li>
 <li><code>pred = model(X)</code>：用训练好的模型对训练数据做前向传播，得到预测值。</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;\n最终预测值（应接近 [0, 1, 1, 0]）：&quot;</span>)<br><span class="hljs-built_in">print</span>(pred.<span class="hljs-built_in">round</span>().flatten().tolist())<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li><code>pred.round()</code>：把概率值四舍五入到 0 或 1。</li>
 <li><code>.flatten()</code>：把形状 <code>(4,1)</code> 展平成一维。</li>
@@ -431,14 +465,12 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 <li>期望输出接近 <code>[0, 1, 1, 0]</code>，说明模型学会了 XOR。</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;\n原始输出：&quot;</span>)<br><span class="hljs-built_in">print</span>(pred.flatten().tolist())<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li>打印原始的预测概率值，可以看到它们接近 0 或 1。</li>
 </ul>
 <hr>
 <h3 id="7-关于手动梯度下降的补充"><a href="#7-关于手动梯度下降的补充" class="headerlink" title="7. 关于手动梯度下降的补充"></a>7. 关于手动梯度下降的补充</h3><p>代码注释里提到，如果想更直观地看到梯度下降，可以把 <code>optimizer.step()</code> 替换为：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">with</span> torch.no_grad():<br>    <span class="hljs-keyword">for</span> p <span class="hljs-keyword">in</span> model.parameters():<br>        p -= lr * p.grad<br></code></pre></td></tr></table></figure>
-
 <ul>
 <li><code>with torch.no_grad()</code>：更新参数时不需要记录梯度。</li>
 <li><code>for p in model.parameters()</code>：遍历所有参数。</li>
@@ -446,7 +478,8 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 <li>这等价于 <code>optimizer.step()</code>，但更底层，能看清梯度下降的本质。</li>
 </ul>
 <hr>
-<h3 id="8-整体对应关系"><a href="#8-整体对应关系" class="headerlink" title="8. 整体对应关系"></a>8. 整体对应关系</h3><table>
+<h3 id="8-整体对应关系"><a href="#8-整体对应关系" class="headerlink" title="8. 整体对应关系"></a>8. 整体对应关系</h3><div class="table-container">
+<table>
 <thead>
 <tr>
 <th>步骤</th>
@@ -454,7 +487,8 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 <th>作用</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>前向传播</td>
 <td><code>y_pred = model(X)</code></td>
 <td>计算预测值</td>
@@ -484,6 +518,8 @@ document.addEventListener("pjax:complete", reset);reset()})</script><meta name="
 <td><code>with torch.no_grad(): pred = model(X)</code></td>
 <td>关闭梯度，得到最终输出</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p>这样，整个 PyTorch 训练流程就逐行解释完了。</p>
-<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2026/09/30/deeplearn14/">← Next 深度学习的数学</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/09/30/deeplearn12/">自动微分与反向传播 Prev →</a></div></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="To Top" style="opacity: 0; display: none;">∧ </a><a class="i-index" id="to-index" onClick="tocControl.change()" title="To Catalog"><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span></a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="Change Theme"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">John Doe</a></h1><div id="description"><p></p></div></div><div id="aside-block"><div id="toc-div"><h1>Catalog</h1><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%AF%BC%E5%85%A5%E5%BA%93"><span class="toc-number">1.</span> <span class="toc-text">1. 导入库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%87%86%E5%A4%87%E6%95%B0%E6%8D%AE"><span class="toc-number">2.</span> <span class="toc-text">2. 准备数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%AE%9A%E4%B9%89%E6%A8%A1%E5%9E%8B"><span class="toc-number">3.</span> <span class="toc-text">3. 定义模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E7%AC%AC%E4%B8%80%E5%B1%82%EF%BC%9Aself-fc1-nn-Linear-2-4"><span class="toc-number">4.</span> <span class="toc-text">二、第一层：self.fc1 &#x3D; nn.Linear(2, 4)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%8F%82%E6%95%B0%E5%90%AB%E4%B9%89"><span class="toc-number">4.1.</span> <span class="toc-text">1. 参数含义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%9D%83%E9%87%8D%E5%92%8C%E5%81%8F%E7%BD%AE%E7%9A%84%E5%BD%A2%E7%8A%B6"><span class="toc-number">4.2.</span> <span class="toc-text">2. 权重和偏置的形状</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%89%8D%E5%90%91%E4%BC%A0%E6%92%AD%E8%AE%A1%E7%AE%97"><span class="toc-number">4.3.</span> <span class="toc-text">3. 前向传播计算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E4%B8%BE%E4%BE%8B%E8%AF%B4%E6%98%8E"><span class="toc-number">4.4.</span> <span class="toc-text">4. 举例说明</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E7%AC%AC%E4%BA%8C%E5%B1%82%EF%BC%9Aself-fc2-nn-Linear-4-1"><span class="toc-number">5.</span> <span class="toc-text">三、第二层：self.fc2 &#x3D; nn.Linear(4, 1)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%8F%82%E6%95%B0%E5%90%AB%E4%B9%89-1"><span class="toc-number">5.1.</span> <span class="toc-text">1. 参数含义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%9D%83%E9%87%8D%E5%92%8C%E5%81%8F%E7%BD%AE%E7%9A%84%E5%BD%A2%E7%8A%B6-1"><span class="toc-number">5.2.</span> <span class="toc-text">2. 权重和偏置的形状</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%89%8D%E5%90%91%E4%BC%A0%E6%92%AD%E8%AE%A1%E7%AE%97-1"><span class="toc-number">5.3.</span> <span class="toc-text">3. 前向传播计算</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%95%B4%E4%B8%AA%E7%BD%91%E7%BB%9C%E7%9A%84%E6%95%B0%E6%8D%AE%E6%B5%81"><span class="toc-number">6.</span> <span class="toc-text">四、整个网络的数据流</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88%E6%9D%83%E9%87%8D%E6%98%AF-out-features-in-features-%EF%BC%9F"><span class="toc-number">7.</span> <span class="toc-text">五、为什么权重是 (out_features, in_features)？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E5%8F%82%E6%95%B0%E9%87%8F%E5%B0%8F%E7%BB%93"><span class="toc-number">8.</span> <span class="toc-text">六、参数量小结</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E4%BC%98%E5%8C%96%E5%99%A8"><span class="toc-number">8.1.</span> <span class="toc-text">4. 损失函数和优化器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E8%AE%AD%E7%BB%83%E5%BE%AA%E7%8E%AF"><span class="toc-number">8.2.</span> <span class="toc-text">5. 训练循环</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-1-%E5%89%8D%E5%90%91%E4%BC%A0%E6%92%AD"><span class="toc-number">8.2.1.</span> <span class="toc-text">5.1 前向传播</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-2-%E6%B8%85%E7%A9%BA%E6%97%A7%E6%A2%AF%E5%BA%A6"><span class="toc-number">8.2.2.</span> <span class="toc-text">5.2 清空旧梯度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-3-%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD"><span class="toc-number">8.2.3.</span> <span class="toc-text">5.3 反向传播</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-4-%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D"><span class="toc-number">8.2.4.</span> <span class="toc-text">5.4 梯度下降</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-5-%E6%89%93%E5%8D%B0%E6%8D%9F%E5%A4%B1"><span class="toc-number">8.2.5.</span> <span class="toc-text">5.5 打印损失</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E9%A2%84%E6%B5%8B%E7%BB%93%E6%9E%9C"><span class="toc-number">8.3.</span> <span class="toc-text">6. 预测结果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%E5%85%B3%E4%BA%8E%E6%89%8B%E5%8A%A8%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E7%9A%84%E8%A1%A5%E5%85%85"><span class="toc-number">8.4.</span> <span class="toc-text">7. 关于手动梯度下降的补充</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-%E6%95%B4%E4%BD%93%E5%AF%B9%E5%BA%94%E5%85%B3%E7%B3%BB"><span class="toc-number">8.5.</span> <span class="toc-text">8. 整体对应关系</span></a></li></ol></li></ol></div></div><footer><nobr>Published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2026/09/30/deeplearn14/">← 下一篇 深度学习的数学</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/09/30/deeplearn12/">自动微分与反向传播 上一篇 →</a></div></div></div><div id="comments"><div id="giscus"></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="回到顶部" style="opacity: 0; display: none;">∧ </a><a class="i-index" id="to-index" onClick="tocControl.change()" title="文章目录"><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span></a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="切换主题"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">John Doe</a></h1><div id="description"><p></p></div><div id="social-links"><a class="social" target="_blank" rel="noopener" href="https://github.com/juicer0801"><i class="fab fa-github" alt="GitHub"></i></a></div></div><div id="aside-block"><div id="toc-div"><h1>目录</h1><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%AF%BC%E5%85%A5%E5%BA%93"><span class="toc-number">1.</span> <span class="toc-text">1. 导入库</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%87%86%E5%A4%87%E6%95%B0%E6%8D%AE"><span class="toc-number">2.</span> <span class="toc-text">2. 准备数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%AE%9A%E4%B9%89%E6%A8%A1%E5%9E%8B"><span class="toc-number">3.</span> <span class="toc-text">3. 定义模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E7%AC%AC%E4%B8%80%E5%B1%82%EF%BC%9Aself-fc1-nn-Linear-2-4"><span class="toc-number">4.</span> <span class="toc-text">二、第一层：self.fc1 &#x3D; nn.Linear(2, 4)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%8F%82%E6%95%B0%E5%90%AB%E4%B9%89"><span class="toc-number">4.1.</span> <span class="toc-text">1. 参数含义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%9D%83%E9%87%8D%E5%92%8C%E5%81%8F%E7%BD%AE%E7%9A%84%E5%BD%A2%E7%8A%B6"><span class="toc-number">4.2.</span> <span class="toc-text">2. 权重和偏置的形状</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%89%8D%E5%90%91%E4%BC%A0%E6%92%AD%E8%AE%A1%E7%AE%97"><span class="toc-number">4.3.</span> <span class="toc-text">3. 前向传播计算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E4%B8%BE%E4%BE%8B%E8%AF%B4%E6%98%8E"><span class="toc-number">4.4.</span> <span class="toc-text">4. 举例说明</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E7%AC%AC%E4%BA%8C%E5%B1%82%EF%BC%9Aself-fc2-nn-Linear-4-1"><span class="toc-number">5.</span> <span class="toc-text">三、第二层：self.fc2 &#x3D; nn.Linear(4, 1)</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%8F%82%E6%95%B0%E5%90%AB%E4%B9%89-1"><span class="toc-number">5.1.</span> <span class="toc-text">1. 参数含义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%9D%83%E9%87%8D%E5%92%8C%E5%81%8F%E7%BD%AE%E7%9A%84%E5%BD%A2%E7%8A%B6-1"><span class="toc-number">5.2.</span> <span class="toc-text">2. 权重和偏置的形状</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%89%8D%E5%90%91%E4%BC%A0%E6%92%AD%E8%AE%A1%E7%AE%97-1"><span class="toc-number">5.3.</span> <span class="toc-text">3. 前向传播计算</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%95%B4%E4%B8%AA%E7%BD%91%E7%BB%9C%E7%9A%84%E6%95%B0%E6%8D%AE%E6%B5%81"><span class="toc-number">6.</span> <span class="toc-text">四、整个网络的数据流</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E4%B8%BA%E4%BB%80%E4%B9%88%E6%9D%83%E9%87%8D%E6%98%AF-out-features-in-features-%EF%BC%9F"><span class="toc-number">7.</span> <span class="toc-text">五、为什么权重是 (out_features, in_features)？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E5%8F%82%E6%95%B0%E9%87%8F%E5%B0%8F%E7%BB%93"><span class="toc-number">8.</span> <span class="toc-text">六、参数量小结</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0%E5%92%8C%E4%BC%98%E5%8C%96%E5%99%A8"><span class="toc-number">8.1.</span> <span class="toc-text">4. 损失函数和优化器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E8%AE%AD%E7%BB%83%E5%BE%AA%E7%8E%AF"><span class="toc-number">8.2.</span> <span class="toc-text">5. 训练循环</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#5-1-%E5%89%8D%E5%90%91%E4%BC%A0%E6%92%AD"><span class="toc-number">8.2.1.</span> <span class="toc-text">5.1 前向传播</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-2-%E6%B8%85%E7%A9%BA%E6%97%A7%E6%A2%AF%E5%BA%A6"><span class="toc-number">8.2.2.</span> <span class="toc-text">5.2 清空旧梯度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-3-%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD"><span class="toc-number">8.2.3.</span> <span class="toc-text">5.3 反向传播</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-4-%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D"><span class="toc-number">8.2.4.</span> <span class="toc-text">5.4 梯度下降</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#5-5-%E6%89%93%E5%8D%B0%E6%8D%9F%E5%A4%B1"><span class="toc-number">8.2.5.</span> <span class="toc-text">5.5 打印损失</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-%E9%A2%84%E6%B5%8B%E7%BB%93%E6%9E%9C"><span class="toc-number">8.3.</span> <span class="toc-text">6. 预测结果</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-%E5%85%B3%E4%BA%8E%E6%89%8B%E5%8A%A8%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E7%9A%84%E8%A1%A5%E5%85%85"><span class="toc-number">8.4.</span> <span class="toc-text">7. 关于手动梯度下降的补充</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-%E6%95%B4%E4%BD%93%E5%AF%B9%E5%BA%94%E5%85%B3%E7%B3%BB"><span class="toc-number">8.5.</span> <span class="toc-text">8. 整体对应关系</span></a></li></ol></li></ol></div></div><footer><nobr>构建自 <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> 使用主题 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> 主题作者 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>
