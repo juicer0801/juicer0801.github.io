@@ -1,10 +1,12 @@
-<!DOCTYPE html><html lang="en" theme-mode="auto"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>ml4 | Hexo</title><meta property="og:type" content="article">
-<meta property="og:title" content="ml4">
+<!DOCTYPE html><html lang="en" theme-mode="auto"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>KNN算法（ai篇） | Hexo</title><meta name="description" content="第2章 KNN算法（K-Nearest Neighbors） 学习目标：  理解KNN算法的核心思想 掌握距离度量方法（欧氏距离、曼哈顿距离等） 理解K值选择对结果的影响 掌握特征预处理（归一化、标准化） 能从零实现KNN分类器 掌握交叉验证和网格搜索    1. KNN算法思想1.1 什么是KNN？K-近邻算法（K Nearest Neighbor，简称KNN） 是一种基于实例的学习方法。 核心">
+<meta property="og:type" content="article">
+<meta property="og:title" content="KNN算法（ai篇）">
 <meta property="og:url" content="http://example.com/2026/10/15/ml4/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="第2章 KNN算法（K-Nearest Neighbors） 学习目标：  理解KNN算法的核心思想 掌握距离度量方法（欧氏距离、曼哈顿距离等） 理解K值选择对结果的影响 掌握特征预处理（归一化、标准化） 能从零实现KNN分类器 掌握交叉验证和网格搜索    1. KNN算法思想1.1 什么是KNN？K-近邻算法（K Nearest Neighbor，简称KNN） 是一种基于实例的学习方法。 核心">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2026-10-15T04:35:19.000Z">
-<meta property="article:modified_time" content="2026-10-15T04:35:19.619Z">
+<meta property="article:modified_time" content="2026-10-20T14:34:13.996Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary"><link rel="canonical" href="http://example.com/2026/10/15/ml4/"><link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="preload" as="font" crossorigin="anonymous" href="/font/Bender.ttf"><link rel="preload" as="font" crossorigin="anonymous" href="/font/BenderLight.woff2"><link rel="preload" as="font" crossorigin="anonymous" href="/font/JetBrainsMono-Regular.woff2"><link rel="stylesheet" href="/css/arknights.css"><style>@font-face {
   font-family: Bender;
@@ -133,4 +135,762 @@ document.addEventListener("pjax:complete", reset);document.addEventListener('pja
  const script = document.createElement('script');
  script.src = 'https://vercount.one/js';
  document.head.appendChild(script);
-});reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="数据检索" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/tags/"><span class="navItemTitle">Tags</span></a></li><li class="navItem"><a class="navBlock" href="/categories/"><span class="navItemTitle">Categories</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>ml4</h1><div id="post-info"><span>文章发布时间: <div class="control"><time datetime="2026-10-15T04:35:19.000Z" id="date"> 2026-10-15</time></div></span><br><span>最后更新时间: <div class="control"><time datetime="2026-10-15T04:35:19.619Z" id="updated"> 2026-10-15</time></div></span><br><span>预计阅读时间: <div class="control">1 分钟</div></span><br><span id="vercount_container_page_pv">页面浏览: <span class="control" id="vercount_value_page_pv">加载中...</span></span></div></div><hr><div id="post-content"><div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2026/10/15/ml5/">← 下一篇 ml5</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/10/15/ml3/">KNN算法 上一篇 →</a></div></div></div><div id="comments"><div id="giscus"></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="回到顶部" style="opacity: 0; display: none;">∧ </a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="切换主题"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">John Doe</a></h1><div id="description"><p></p></div><div id="social-links"><a class="social" target="_blank" rel="noopener" href="https://github.com/juicer0801"><i class="fab fa-github" alt="GitHub"></i></a></div></div><div id="aside-block"></div><footer><nobr>构建自 <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> 使用主题 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> 主题作者 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>
+});reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="数据检索" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/tags/"><span class="navItemTitle">Tags</span></a></li><li class="navItem"><a class="navBlock" href="/categories/"><span class="navItemTitle">Categories</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>KNN算法（ai篇）</h1><div id="post-info"><span>文章发布时间: <div class="control"><time datetime="2026-10-15T04:35:19.000Z" id="date"> 2026-10-15</time></div></span><br><span>最后更新时间: <div class="control"><time datetime="2026-10-20T14:34:13.996Z" id="updated"> 2026-10-20</time></div></span><br><span>文章总字数: <div class="control">10.1k</div></span><br><span>预计阅读时间: <div class="control">45 分钟</div></span><br><span id="vercount_container_page_pv">页面浏览: <span class="control" id="vercount_value_page_pv">加载中...</span></span></div></div><hr><div id="post-content"><h1 id="第2章-KNN算法（K-Nearest-Neighbors）"><a href="#第2章-KNN算法（K-Nearest-Neighbors）" class="headerlink" title="第2章 KNN算法（K-Nearest Neighbors）"></a>第2章 KNN算法（K-Nearest Neighbors）</h1><blockquote>
+<p><strong>学习目标：</strong></p>
+<ol>
+<li>理解KNN算法的核心思想</li>
+<li>掌握距离度量方法（欧氏距离、曼哈顿距离等）</li>
+<li>理解K值选择对结果的影响</li>
+<li>掌握特征预处理（归一化、标准化）</li>
+<li>能从零实现KNN分类器</li>
+<li>掌握交叉验证和网格搜索</li>
+</ol>
+</blockquote>
+<hr>
+<h1 id="1-KNN算法思想"><a href="#1-KNN算法思想" class="headerlink" title="1. KNN算法思想"></a>1. KNN算法思想</h1><h2 id="1-1-什么是KNN？"><a href="#1-1-什么是KNN？" class="headerlink" title="1.1 什么是KNN？"></a>1.1 什么是KNN？</h2><p><strong>K-近邻算法（K Nearest Neighbor，简称KNN）</strong> 是一种基于实例的学习方法。</p>
+<p><strong>核心思想：</strong> 如果一个样本在特征空间中的 k 个最相似的样本中的大多数属于某一个类别，则该样本也属于这个类别。</p>
+<p><strong>通俗理解：</strong></p>
+<blockquote>
+<p>想象你搬到了一个新小区，你不知道自己属于哪个”圈子”。于是你观察了离你家最近的5户邻居，发现其中4户都是”程序员圈”，1户是”设计师圈”。那么根据KNN的思想，你就属于”程序员圈”。</p>
+</blockquote>
+<h2 id="1-2-一个直观的例子：电影分类"><a href="#1-2-一个直观的例子：电影分类" class="headerlink" title="1.2 一个直观的例子：电影分类"></a>1.2 一个直观的例子：电影分类</h2><p>假设我们有以下电影数据，特征是”打斗镜头数”和”接吻镜头数”：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>电影</th>
+<th>打斗镜头数</th>
+<th>接吻镜头数</th>
+<th>类型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>电影A</td>
+<td>3</td>
+<td>104</td>
+<td>爱情片</td>
+</tr>
+<tr>
+<td>电影B</td>
+<td>2</td>
+<td>100</td>
+<td>爱情片</td>
+</tr>
+<tr>
+<td>电影C</td>
+<td>1</td>
+<td>81</td>
+<td>爱情片</td>
+</tr>
+<tr>
+<td>电影D</td>
+<td>101</td>
+<td>10</td>
+<td>动作片</td>
+</tr>
+<tr>
+<td>电影E</td>
+<td>99</td>
+<td>5</td>
+<td>动作片</td>
+</tr>
+<tr>
+<td>电影F</td>
+<td>98</td>
+<td>2</td>
+<td>动作片</td>
+</tr>
+<tr>
+<td><strong>未知电影</strong></td>
+<td><strong>18</strong></td>
+<td><strong>90</strong></td>
+<td><strong>?</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>现在有一部未知电影，打斗镜头18次，接吻镜头90次，请问它是什么类型？</p>
+<p><strong>KNN的判断过程：</strong></p>
+<ol>
+<li><strong>计算距离</strong>：计算未知电影与所有已知电影的距离</li>
+<li><strong>排序</strong>：按距离从小到大排序</li>
+<li><strong>取K个最近邻</strong>：假设K=3，取最近的3部电影</li>
+<li><strong>投票</strong>：看这3部电影属于哪个类别最多</li>
+</ol>
+<p><strong>具体计算（使用欧氏距离）：</strong></p>
+<p>假设未知电影为 (18, 90)，计算与各电影的距离：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">距离公式：d = √[(x1-x2)² + (y1-y2)²]<br><br>到电影A(3, 104)的距离：<br>d = √[(18-3)² + (90-104)²]<br>  = √[15² + (-14)²]<br>  = √[225 + 196]<br>  = √421<br>  ≈ 20.5<br><br>到电影B(2, 100)的距离：<br>d = √[(18-2)² + (90-100)²]<br>  = √[16² + (-10)²]<br>  = √[256 + 100]<br>  = √356<br>  ≈ 18.9<br><br>到电影C(1, 81)的距离：<br>d = √[(18-1)² + (90-81)²]<br>  = √[17² + 9²]<br>  = √[289 + 81]<br>  = √370<br>  ≈ 19.2<br><br>到电影D(101, 10)的距离：<br>d = √[(18-101)² + (90-10)²]<br>  = √[(-83)² + 80²]<br>  = √[6889 + 6400]<br>  = √13289<br>  ≈ 115.3<br><br>到电影E(99, 5)的距离：<br>d = √[(18-99)² + (90-5)²]<br>  = √[(-81)² + 85²]<br>  = √[6561 + 7225]<br>  = √13786<br>  ≈ 117.4<br><br>到电影F(98, 2)的距离：<br>d = √[(18-98)² + (90-2)²]<br>  = √[(-80)² + 88²]<br>  = √[6400 + 7744]<br>  = √14144<br>  ≈ 118.9<br></code></pre></td></tr></table></figure>
+<p><strong>按距离排序：</strong></p>
+<ol>
+<li>电影B：18.9（爱情片）</li>
+<li>电影C：19.2（爱情片）</li>
+<li>电影A：20.5（爱情片）</li>
+<li>电影D：115.3（动作片）</li>
+<li>电影E：117.4（动作片）</li>
+<li>电影F：118.9（动作片）</li>
+</ol>
+<p><strong>取K=3个最近邻：</strong></p>
+<ul>
+<li>电影B：爱情片</li>
+<li>电影C：爱情片</li>
+<li>电影A：爱情片</li>
+</ul>
+<p><strong>投票结果：</strong> 3个都是爱情片 → 未知电影是<strong>爱情片</strong>！</p>
+<h2 id="1-3-KNN的两种应用方式"><a href="#1-3-KNN的两种应用方式" class="headerlink" title="1.3 KNN的两种应用方式"></a>1.3 KNN的两种应用方式</h2><h3 id="分类问题"><a href="#分类问题" class="headerlink" title="分类问题"></a>分类问题</h3><ul>
+<li><strong>流程：</strong> 计算距离 → 排序 → 取K个最近邻 → 多数表决</li>
+<li><strong>输出：</strong> 类别标签</li>
+</ul>
+<h3 id="回归问题"><a href="#回归问题" class="headerlink" title="回归问题"></a>回归问题</h3><ul>
+<li><strong>流程：</strong> 计算距离 → 排序 → 取K个最近邻 → 计算平均值</li>
+<li><strong>输出：</strong> 连续值</li>
+</ul>
+<p><strong>例子：</strong> 假设K=3的最近邻的房价分别是 100万、120万、110万</p>
+<ul>
+<li>分类：看哪个类别最多</li>
+<li>回归：预测房价 = (100 + 120 + 110) / 3 = 110万</li>
+</ul>
+<hr>
+<h1 id="2-距离度量方法"><a href="#2-距离度量方法" class="headerlink" title="2. 距离度量方法"></a>2. 距离度量方法</h1><h2 id="2-1-欧氏距离（Euclidean-Distance）"><a href="#2-1-欧氏距离（Euclidean-Distance）" class="headerlink" title="2.1 欧氏距离（Euclidean Distance）"></a>2.1 欧氏距离（Euclidean Distance）</h2><p><strong>最常用的距离度量方法</strong>，就是我们熟悉的”直线距离”。</p>
+<p><strong>公式：</strong></p>
+<p>对于n维空间中的两个点 A(x₁, x₂, …, xₙ) 和 B(y₁, y₂, …, yₙ)：</p>
+<script type="math/tex; mode=display">d(A, B) = \sqrt{\sum_{i=1}^{n}(x_i - y_i)^2}</script><p><strong>二维情况：</strong></p>
+<script type="math/tex; mode=display">d = \sqrt{(x_1 - y_1)^2 + (x_2 - y_2)^2}</script><p><strong>具体例子：</strong><br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">点A = (1, 2)<br>点B = (4, 6)<br><br>d = √[(1-4)² + (2-6)²]<br>  = √[(-3)² + (-4)²]<br>  = √[9 + 16]<br>  = √25<br>  = 5<br></code></pre></td></tr></table></figure></p>
+<p><strong>Python实现：</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">euclidean_distance</span>(<span class="hljs-params">x1, x2</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    计算两个向量的欧氏距离</span><br><span class="hljs-string">    </span><br><span class="hljs-string">    参数:</span><br><span class="hljs-string">        x1: 第一个向量，numpy数组</span><br><span class="hljs-string">        x2: 第二个向量，numpy数组</span><br><span class="hljs-string">    </span><br><span class="hljs-string">    返回:</span><br><span class="hljs-string">        欧氏距离，浮点数</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    <span class="hljs-comment"># 将输入转换为numpy数组</span><br>    x1 = np.array(x1)<br>    x2 = np.array(x2)<br>    <br>    <span class="hljs-comment"># 计算差值的平方和，然后开方</span><br>    distance = np.sqrt(np.<span class="hljs-built_in">sum</span>((x1 - x2) ** <span class="hljs-number">2</span>))<br>    <br>    <span class="hljs-keyword">return</span> distance<br><br><span class="hljs-comment"># 测试</span><br>x1 = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>]<br>x2 = [<span class="hljs-number">4</span>, <span class="hljs-number">6</span>]<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;欧氏距离: <span class="hljs-subst">&#123;euclidean_distance(x1, x2)&#125;</span>&quot;</span>)  <span class="hljs-comment"># 输出: 5.0</span><br></code></pre></td></tr></table></figure></p>
+<p><strong>这行在做什么？</strong></p>
+<ul>
+<li><code>np.sum((x1 - x2) ** 2)</code>：计算每个维度差值的平方，然后求和</li>
+<li><code>np.sqrt(...)</code>：对平方和开方，得到欧氏距离</li>
+</ul>
+<h2 id="2-2-曼哈顿距离（Manhattan-Distance）"><a href="#2-2-曼哈顿距离（Manhattan-Distance）" class="headerlink" title="2.2 曼哈顿距离（Manhattan Distance）"></a>2.2 曼哈顿距离（Manhattan Distance）</h2><p><strong>也叫”城市街区距离”</strong>，想象你在城市中开车，只能沿着街道走，不能走直线。</p>
+<p><strong>公式：</strong></p>
+<script type="math/tex; mode=display">d(A, B) = \sum_{i=1}^{n}|x_i - y_i|</script><p><strong>具体例子：</strong><br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">点A = (1, 2)<br>点B = (4, 6)<br><br>d = |1-4| + |2-6|<br>  = |-3| + |-4|<br>  = 3 + 4<br>  = 7<br></code></pre></td></tr></table></figure></p>
+<p><strong>Python实现：</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">manhattan_distance</span>(<span class="hljs-params">x1, x2</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    计算两个向量的曼哈顿距离</span><br><span class="hljs-string">    </span><br><span class="hljs-string">    参数:</span><br><span class="hljs-string">        x1: 第一个向量，numpy数组</span><br><span class="hljs-string">        x2: 第二个向量，numpy数组</span><br><span class="hljs-string">    </span><br><span class="hljs-string">    返回:</span><br><span class="hljs-string">        曼哈顿距离，浮点数</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    x1 = np.array(x1)<br>    x2 = np.array(x2)<br>    <br>    <span class="hljs-comment"># 计算差值的绝对值之和</span><br>    distance = np.<span class="hljs-built_in">sum</span>(np.<span class="hljs-built_in">abs</span>(x1 - x2))<br>    <br>    <span class="hljs-keyword">return</span> distance<br><br><span class="hljs-comment"># 测试</span><br>x1 = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>]<br>x2 = [<span class="hljs-number">4</span>, <span class="hljs-number">6</span>]<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;曼哈顿距离: <span class="hljs-subst">&#123;manhattan_distance(x1, x2)&#125;</span>&quot;</span>)  <span class="hljs-comment"># 输出: 7</span><br></code></pre></td></tr></table></figure></p>
+<p><strong>这行在做什么？</strong></p>
+<ul>
+<li><code>np.abs(x1 - x2)</code>：计算每个维度差值的绝对值</li>
+<li><code>np.sum(...)</code>：对所有绝对值求和</li>
+</ul>
+<h2 id="2-3-切比雪夫距离（Chebyshev-Distance）"><a href="#2-3-切比雪夫距离（Chebyshev-Distance）" class="headerlink" title="2.3 切比雪夫距离（Chebyshev Distance）"></a>2.3 切比雪夫距离（Chebyshev Distance）</h2><p><strong>取各维度差值的最大值</strong>。</p>
+<p><strong>公式：</strong></p>
+<script type="math/tex; mode=display">d(A, B) = \max_{i}(|x_i - y_i|)</script><p><strong>具体例子：</strong><br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">点A = (1, 2)<br>点B = (4, 6)<br><br>d = max(|1-4|, |2-6|)<br>  = max(3, 4)<br>  = 4<br></code></pre></td></tr></table></figure></p>
+<p><strong>Python实现：</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">chebyshev_distance</span>(<span class="hljs-params">x1, x2</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    计算两个向量的切比雪夫距离</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    x1 = np.array(x1)<br>    x2 = np.array(x2)<br>    <br>    <span class="hljs-comment"># 取各维度差值绝对值的最大值</span><br>    distance = np.<span class="hljs-built_in">max</span>(np.<span class="hljs-built_in">abs</span>(x1 - x2))<br>    <br>    <span class="hljs-keyword">return</span> distance<br><br><span class="hljs-comment"># 测试</span><br>x1 = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>]<br>x2 = [<span class="hljs-number">4</span>, <span class="hljs-number">6</span>]<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;切比雪夫距离: <span class="hljs-subst">&#123;chebyshev_distance(x1, x2)&#125;</span>&quot;</span>)  <span class="hljs-comment"># 输出: 4</span><br></code></pre></td></tr></table></figure></p>
+<h2 id="2-4-闵可夫斯基距离（Minkowski-Distance）"><a href="#2-4-闵可夫斯基距离（Minkowski-Distance）" class="headerlink" title="2.4 闵可夫斯基距离（Minkowski Distance）"></a>2.4 闵可夫斯基距离（Minkowski Distance）</h2><p><strong>闵氏距离不是一个新的距离，而是对多个距离的概括！</strong></p>
+<p><strong>公式：</strong></p>
+<script type="math/tex; mode=display">d(A, B) = \left(\sum_{i=1}^{n}|x_i - y_i|^p\right)^{1/p}</script><p><strong>当p取不同值时：</strong></p>
+<ul>
+<li>p = 1：曼哈顿距离</li>
+<li>p = 2：欧氏距离</li>
+<li>p → ∞：切比雪夫距离</li>
+</ul>
+<p><strong>Python实现：</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">minkowski_distance</span>(<span class="hljs-params">x1, x2, p=<span class="hljs-number">2</span></span>):<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    计算两个向量的闵可夫斯基距离</span><br><span class="hljs-string">    </span><br><span class="hljs-string">    参数:</span><br><span class="hljs-string">        x1: 第一个向量</span><br><span class="hljs-string">        x2: 第二个向量</span><br><span class="hljs-string">        p: 参数，默认2（欧氏距离）</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    x1 = np.array(x1)<br>    x2 = np.array(x2)<br>    <br>    <span class="hljs-comment"># 闵可夫斯基距离公式</span><br>    distance = np.<span class="hljs-built_in">sum</span>(np.<span class="hljs-built_in">abs</span>(x1 - x2) ** p) ** (<span class="hljs-number">1</span> / p)<br>    <br>    <span class="hljs-keyword">return</span> distance<br><br><span class="hljs-comment"># 测试</span><br>x1 = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>]<br>x2 = [<span class="hljs-number">4</span>, <span class="hljs-number">6</span>]<br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;p=1 (曼哈顿): <span class="hljs-subst">&#123;minkowski_distance(x1, x2, p=<span class="hljs-number">1</span>)&#125;</span>&quot;</span>)  <span class="hljs-comment"># 输出: 7.0</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;p=2 (欧氏): <span class="hljs-subst">&#123;minkowski_distance(x1, x2, p=<span class="hljs-number">2</span>)&#125;</span>&quot;</span>)    <span class="hljs-comment"># 输出: 5.0</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;p=3: <span class="hljs-subst">&#123;minkowski_distance(x1, x2, p=<span class="hljs-number">3</span>)&#125;</span>&quot;</span>)           <span class="hljs-comment"># 输出: 4.497...</span><br></code></pre></td></tr></table></figure></p>
+<h2 id="2-5-距离度量方法对比"><a href="#2-5-距离度量方法对比" class="headerlink" title="2.5 距离度量方法对比"></a>2.5 距离度量方法对比</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>距离类型</th>
+<th>公式</th>
+<th>特点</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>欧氏距离</td>
+<td>√(Σ(xi-yi)²)</td>
+<td>直线距离，最常用</td>
+<td>连续特征，各维度尺度相近</td>
+</tr>
+<tr>
+<td>曼哈顿距离</td>
+<td>Σ\</td>
+<td>xi-yi\</td>
+<td></td>
+<td>城市街区距离</td>
+<td>高维数据，对异常值更鲁棒</td>
+</tr>
+<tr>
+<td>切比雪夫距离</td>
+<td>max(\</td>
+<td>xi-yi\</td>
+<td>)</td>
+<td>取最大差异</td>
+<td>只关心最大差异的场景</td>
+</tr>
+<tr>
+<td>闵可夫斯基距离</td>
+<td>(Σ\</td>
+<td>xi-yi\</td>
+<td>^p)^(1/p)</td>
+<td>通用公式</td>
+<td>p=1曼哈顿，p=2欧氏</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>选择建议：</strong></p>
+<ul>
+<li><strong>默认使用欧氏距离</strong>，大多数情况下效果不错</li>
+<li><strong>高维数据</strong>考虑曼哈顿距离</li>
+<li><strong>特征尺度差异大</strong>时，先做标准化再计算距离</li>
+</ul>
+<hr>
+<h1 id="3-K值选择"><a href="#3-K值选择" class="headerlink" title="3. K值选择"></a>3. K值选择</h1><h2 id="3-1-K值的影响"><a href="#3-1-K值的影响" class="headerlink" title="3.1 K值的影响"></a>3.1 K值的影响</h2><p><strong>K值太小（如K=1）：</strong></p>
+<ul>
+<li>模型复杂，容易过拟合</li>
+<li>对噪声敏感</li>
+<li>决策边界曲折</li>
+</ul>
+<p><strong>K值太大（如K=N，N为样本数）：</strong></p>
+<ul>
+<li>模型简单，容易欠拟合</li>
+<li>预测结果趋向于多数类</li>
+<li>决策边界平滑</li>
+</ul>
+<p><strong>经验法则：</strong></p>
+<ul>
+<li>K值通常取<strong>奇数</strong>，避免投票时出现平局</li>
+<li>常用K值：3, 5, 7, 9</li>
+<li>通过<strong>交叉验证</strong>选择最优K值</li>
+</ul>
+<h2 id="3-2-可视化理解K值的影响"><a href="#3-2-可视化理解K值的影响" class="headerlink" title="3.2 可视化理解K值的影响"></a>3.2 可视化理解K值的影响</h2><p>假设有以下二分类数据：</p>
+<ul>
+<li>红色圆点：类别0</li>
+<li>蓝色三角：类别1</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">K=1时：                    K=3时：                    K=5时：<br>┌─────────────┐           ┌─────────────┐           ┌─────────────┐<br>│  ○ △ ○ △ ○ │           │  ○ △ ○ △ ○ │           │  ○ △ ○ △ ○ │<br>│ △ ● △ ● △  │           │ △ ● △ ● △  │           │ △ ● △ ● △  │<br>│  ○ ○ ○ ○ ○ │           │  ○ ○ ○ ○ ○ │           │  ○ ○ ○ ○ ○ │<br>│ △ △ △ △ △  │           │ △ △ △ △ △  │           │ △ △ △ △ △  │<br>│  ○ ○ ○ ○ ○ │           │  ○ ○ ○ ○ ○ │           │  ○ ○ ○ ○ ○ │<br>└─────────────┘           └─────────────┘           └─────────────┘<br>决策边界曲折               决策边界较平滑             决策边界很平滑<br>容易过拟合                 相对平衡                   可能欠拟合<br></code></pre></td></tr></table></figure>
+<p><strong>● 是待预测点</strong></p>
+<ul>
+<li>K=1：最近的邻居是△，预测为类别1</li>
+<li>K=3：最近的3个邻居是2个○和1个△，预测为类别0</li>
+<li>K=5：最近的5个邻居是3个○和2个△，预测为类别0</li>
+</ul>
+<hr>
+<h1 id="4-特征预处理"><a href="#4-特征预处理" class="headerlink" title="4. 特征预处理"></a>4. 特征预处理</h1><h2 id="4-1-为什么要做特征预处理？"><a href="#4-1-为什么要做特征预处理？" class="headerlink" title="4.1 为什么要做特征预处理？"></a>4.1 为什么要做特征预处理？</h2><p><strong>问题：</strong> 当特征的单位或数值范围差异很大时，会”支配”距离计算。</p>
+<p><strong>例子：</strong> 假设我们要预测房价，有两个特征：</p>
+<ul>
+<li>房屋面积：50-200 平方米</li>
+<li>房间数：1-5 间</li>
+</ul>
+<p>如果不做预处理：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">房子A：面积100㎡，房间数3间 → (100, 3)<br>房子B：面积150㎡，房间数4间 → (150, 4)<br><br>欧氏距离 = √[(100-150)² + (3-4)²]<br>         = √[2500 + 1]<br>         = √2501<br>         ≈ 50.01<br></code></pre></td></tr></table></figure></p>
+<p><strong>问题：</strong> 距离主要由面积决定（50² = 2500），房间数的影响微乎其微（1² = 1）！</p>
+<p><strong>解决：</strong> 对特征进行标准化或归一化，让每个特征都在相似的尺度上。</p>
+<h2 id="4-2-归一化（Min-Max-Scaling）"><a href="#4-2-归一化（Min-Max-Scaling）" class="headerlink" title="4.2 归一化（Min-Max Scaling）"></a>4.2 归一化（Min-Max Scaling）</h2><p><strong>思想：</strong> 将数据映射到 [0, 1] 区间。</p>
+<p><strong>公式：</strong></p>
+<script type="math/tex; mode=display">x' = \frac{x - min}{max - min}</script><p><strong>具体例子：</strong><br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">原始数据：[[90, 2, 10], <br>           [60, 4, 15], <br>           [75, 3, 13]]<br><br>第1列（90, 60, 75）：<br>  min = 60, max = 90<br>  90 → (90-60)/(90-60) = 30/30 = 1.0<br>  60 → (60-60)/(90-60) = 0/30 = 0.0<br>  75 → (75-60)/(90-60) = 15/30 = 0.5<br><br>第2列（2, 4, 3）：<br>  min = 2, max = 4<br>  2 → (2-2)/(4-2) = 0/2 = 0.0<br>  4 → (4-2)/(4-2) = 2/2 = 1.0<br>  3 → (3-2)/(4-2) = 1/2 = 0.5<br><br>第3列（10, 15, 13）：<br>  min = 10, max = 15<br>  10 → (10-10)/(15-10) = 0/5 = 0.0<br>  15 → (15-10)/(15-10) = 5/5 = 1.0<br>  13 → (13-10)/(15-10) = 3/5 = 0.6<br><br>归一化后：[[1.0, 0.0, 0.0],<br>           [0.0, 1.0, 1.0],<br>           [0.5, 0.5, 0.6]]<br></code></pre></td></tr></table></figure></p>
+<p><strong>Python实现：</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">MinMaxScaler</span>:<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    归一化：将数据缩放到[0, 1]区间</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-variable language_">self</span>.min_ = <span class="hljs-literal">None</span>  <span class="hljs-comment"># 每个特征的最小值</span><br>        <span class="hljs-variable language_">self</span>.max_ = <span class="hljs-literal">None</span>  <span class="hljs-comment"># 每个特征的最大值</span><br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">fit</span>(<span class="hljs-params">self, X</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        计算每个特征的最小值和最大值</span><br><span class="hljs-string">        </span><br><span class="hljs-string">        参数:</span><br><span class="hljs-string">            X: 数据矩阵，形状 (n_samples, n_features)</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        X = np.array(X)<br>        <span class="hljs-comment"># 对每个特征（列）计算最小值和最大值</span><br>        <span class="hljs-variable language_">self</span>.min_ = np.<span class="hljs-built_in">min</span>(X, axis=<span class="hljs-number">0</span>)<br>        <span class="hljs-variable language_">self</span>.max_ = np.<span class="hljs-built_in">max</span>(X, axis=<span class="hljs-number">0</span>)<br>        <span class="hljs-keyword">return</span> <span class="hljs-variable language_">self</span><br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">transform</span>(<span class="hljs-params">self, X</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        对数据进行归一化</span><br><span class="hljs-string">        </span><br><span class="hljs-string">        参数:</span><br><span class="hljs-string">            X: 数据矩阵</span><br><span class="hljs-string">        </span><br><span class="hljs-string">        返回:</span><br><span class="hljs-string">            归一化后的数据</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        X = np.array(X)<br>        <span class="hljs-comment"># 归一化公式：(x - min) / (max - min)</span><br>        X_scaled = (X - <span class="hljs-variable language_">self</span>.min_) / (<span class="hljs-variable language_">self</span>.max_ - <span class="hljs-variable language_">self</span>.min_)<br>        <span class="hljs-keyword">return</span> X_scaled<br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">fit_transform</span>(<span class="hljs-params">self, X</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        拟合并转换数据（fit + transform）</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        <span class="hljs-variable language_">self</span>.fit(X)<br>        <span class="hljs-keyword">return</span> <span class="hljs-variable language_">self</span>.transform(X)<br><br><span class="hljs-comment"># 测试</span><br>X = [[<span class="hljs-number">90</span>, <span class="hljs-number">2</span>, <span class="hljs-number">10</span>], <br>     [<span class="hljs-number">60</span>, <span class="hljs-number">4</span>, <span class="hljs-number">15</span>], <br>     [<span class="hljs-number">75</span>, <span class="hljs-number">3</span>, <span class="hljs-number">13</span>]]<br><br>scaler = MinMaxScaler()<br>X_scaled = scaler.fit_transform(X)<br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;原始数据:&quot;</span>)<br><span class="hljs-built_in">print</span>(X)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;\n归一化后:&quot;</span>)<br><span class="hljs-built_in">print</span>(X_scaled)<br></code></pre></td></tr></table></figure></p>
+<p><strong>输出：</strong><br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">原始数据:<br>[[90, 2, 10], [60, 4, 15], [75, 3, 13]]<br><br>归一化后:<br>[[1.  0.  0. ]<br> [0.  1.  1. ]<br> [0.5 0.5 0.6]]<br></code></pre></td></tr></table></figure></p>
+<p><strong>这行在做什么？</strong></p>
+<ul>
+<li><code>np.min(X, axis=0)</code>：对每一列（特征）求最小值</li>
+<li><code>np.max(X, axis=0)</code>：对每一列（特征）求最大值</li>
+<li><code>(X - self.min_) / (self.max_ - self.min_)</code>：应用归一化公式</li>
+</ul>
+<p><strong>归一化的缺点：</strong></p>
+<ul>
+<li>容易受异常值影响</li>
+<li>如果最大值特别大，其他值都会被压缩到很小的区间</li>
+<li>适合<strong>传统精确小数据场景</strong></li>
+</ul>
+<h2 id="4-3-标准化（Standardization-Z-score-Normalization）"><a href="#4-3-标准化（Standardization-Z-score-Normalization）" class="headerlink" title="4.3 标准化（Standardization / Z-score Normalization）"></a>4.3 标准化（Standardization / Z-score Normalization）</h2><p><strong>思想：</strong> 将数据转换为均值为0、标准差为1的标准正态分布。</p>
+<p><strong>公式：</strong></p>
+<script type="math/tex; mode=display">x' = \frac{x - \mu}{\sigma}</script><p>其中：</p>
+<ul>
+<li>μ：特征的均值</li>
+<li>σ：特征的标准差</li>
+</ul>
+<p><strong>具体例子：</strong><br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">原始数据：[[90, 2, 10], <br>           [60, 4, 15], <br>           [75, 3, 13]]<br><br>第1列（90, 60, 75）：<br>  均值 μ = (90+60+75)/3 = 75<br>  标准差 σ = √[((90-75)² + (60-75)² + (75-75)²)/3] = √[(225+225+0)/3] = √150 ≈ 12.25<br>  <br>  90 → (90-75)/12.25 = 15/12.25 ≈ 1.22<br>  60 → (60-75)/12.25 = -15/12.25 ≈ -1.22<br>  75 → (75-75)/12.25 = 0/12.25 = 0<br><br>第2列（2, 4, 3）：<br>  均值 μ = (2+4+3)/3 = 3<br>  标准差 σ = √[((2-3)² + (4-3)² + (3-3)²)/3] = √[(1+1+0)/3] = √(2/3) ≈ 0.82<br>  <br>  2 → (2-3)/0.82 = -1/0.82 ≈ -1.22<br>  4 → (4-3)/0.82 = 1/0.82 ≈ 1.22<br>  3 → (3-3)/0.82 = 0/0.82 = 0<br><br>第3列（10, 15, 13）：<br>  均值 μ = (10+15+13)/3 = 12.67<br>  标准差 σ = √[((10-12.67)² + (15-12.67)² + (13-12.67)²)/3] ≈ 2.05<br>  <br>  10 → (10-12.67)/2.05 ≈ -1.30<br>  15 → (15-12.67)/2.05 ≈ 1.14<br>  13 → (13-12.67)/2.05 ≈ 0.16<br><br>标准化后：[[ 1.22, -1.22, -1.30],<br>            [-1.22,  1.22,  1.14],<br>            [ 0.00,  0.00,  0.16]]<br></code></pre></td></tr></table></figure></p>
+<p><strong>Python实现：</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">StandardScaler</span>:<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    标准化：将数据转换为均值为0，标准差为1的分布</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-variable language_">self</span>.mean_ = <span class="hljs-literal">None</span>  <span class="hljs-comment"># 每个特征的均值</span><br>        <span class="hljs-variable language_">self</span>.std_ = <span class="hljs-literal">None</span>   <span class="hljs-comment"># 每个特征的标准差</span><br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">fit</span>(<span class="hljs-params">self, X</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        计算每个特征的均值和标准差</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        X = np.array(X)<br>        <span class="hljs-comment"># 对每个特征（列）计算均值和标准差</span><br>        <span class="hljs-variable language_">self</span>.mean_ = np.mean(X, axis=<span class="hljs-number">0</span>)<br>        <span class="hljs-variable language_">self</span>.std_ = np.std(X, axis=<span class="hljs-number">0</span>)<br>        <span class="hljs-keyword">return</span> <span class="hljs-variable language_">self</span><br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">transform</span>(<span class="hljs-params">self, X</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        对数据进行标准化</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        X = np.array(X)<br>        <span class="hljs-comment"># 标准化公式：(x - mean) / std</span><br>        X_scaled = (X - <span class="hljs-variable language_">self</span>.mean_) / <span class="hljs-variable language_">self</span>.std_<br>        <span class="hljs-keyword">return</span> X_scaled<br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">fit_transform</span>(<span class="hljs-params">self, X</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        拟合并转换数据</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        <span class="hljs-variable language_">self</span>.fit(X)<br>        <span class="hljs-keyword">return</span> <span class="hljs-variable language_">self</span>.transform(X)<br><br><span class="hljs-comment"># 测试</span><br>X = [[<span class="hljs-number">90</span>, <span class="hljs-number">2</span>, <span class="hljs-number">10</span>], <br>     [<span class="hljs-number">60</span>, <span class="hljs-number">4</span>, <span class="hljs-number">15</span>], <br>     [<span class="hljs-number">75</span>, <span class="hljs-number">3</span>, <span class="hljs-number">13</span>]]<br><br>scaler = StandardScaler()<br>X_scaled = scaler.fit_transform(X)<br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;原始数据:&quot;</span>)<br><span class="hljs-built_in">print</span>(X)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;\n标准化后:&quot;</span>)<br><span class="hljs-built_in">print</span>(X_scaled)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;\n均值: <span class="hljs-subst">&#123;scaler.mean_&#125;</span>&quot;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;标准差: <span class="hljs-subst">&#123;scaler.std_&#125;</span>&quot;</span>)<br></code></pre></td></tr></table></figure></p>
+<p><strong>输出：</strong><br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">原始数据:<br>[[90, 2, 10], [60, 4, 15], [75, 3, 13]]<br><br>标准化后:<br>[[ 1.22474487 -1.22474487 -1.29777137]<br> [-1.22474487  1.22474487  1.13554995]<br> [ 0.          0.          0.16222142]]<br><br>均值: [75.          3.         12.66666667]<br>标准差: [12.24744871  0.81649658  2.05480467]<br></code></pre></td></tr></table></figure></p>
+<p><strong>这行在做什么？</strong></p>
+<ul>
+<li><code>np.mean(X, axis=0)</code>：对每一列求均值</li>
+<li><code>np.std(X, axis=0)</code>：对每一列求标准差</li>
+<li><code>(X - self.mean_) / self.std_</code>：应用标准化公式</li>
+</ul>
+<p><strong>标准化的优点：</strong></p>
+<ul>
+<li>对异常值不敏感（因为有足够的数据量）</li>
+<li>适合<strong>大数据量</strong>的场景</li>
+<li>是<strong>最常用的预处理方法</strong></li>
+</ul>
+<h2 id="4-4-归一化-vs-标准化"><a href="#4-4-归一化-vs-标准化" class="headerlink" title="4.4 归一化 vs 标准化"></a>4.4 归一化 vs 标准化</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>公式</th>
+<th>值域</th>
+<th>优点</th>
+<th>缺点</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>归一化</td>
+<td>(x-min)/(max-min)</td>
+<td>[0, 1]</td>
+<td>简单直观</td>
+<td>受异常值影响大</td>
+<td>小数据，精确场景</td>
+</tr>
+<tr>
+<td>标准化</td>
+<td>(x-μ)/σ</td>
+<td>(-∞, +∞)</td>
+<td>对异常值鲁棒</td>
+<td>值域无限制</td>
+<td>大数据，KNN等距离算法</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>选择建议：</strong></p>
+<ul>
+<li><strong>KNN、SVM、神经网络</strong>等基于距离的算法：<strong>必须做标准化</strong></li>
+<li><strong>决策树、随机森林</strong>等基于树的算法：<strong>不需要标准化</strong></li>
+<li><strong>不确定时</strong>：默认使用<strong>标准化</strong></li>
+</ul>
+<hr>
+<h1 id="5-从零实现KNN分类器"><a href="#5-从零实现KNN分类器" class="headerlink" title="5. 从零实现KNN分类器"></a>5. 从零实现KNN分类器</h1><p>现在我们来从零实现一个完整的KNN分类器！</p>
+<h2 id="5-1-完整代码"><a href="#5-1-完整代码" class="headerlink" title="5.1 完整代码"></a>5.1 完整代码</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">from</span> collections <span class="hljs-keyword">import</span> Counter<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">KNNClassifier</span>:<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    KNN分类器的从零实现</span><br><span class="hljs-string">    </span><br><span class="hljs-string">    参数:</span><br><span class="hljs-string">        k: 近邻数量，默认3</span><br><span class="hljs-string">        distance_metric: 距离度量方法，&#x27;euclidean&#x27;或&#x27;manhattan&#x27;</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, k=<span class="hljs-number">3</span>, distance_metric=<span class="hljs-string">&#x27;euclidean&#x27;</span></span>):<br>        <span class="hljs-variable language_">self</span>.k = k<br>        <span class="hljs-variable language_">self</span>.distance_metric = distance_metric<br>        <span class="hljs-variable language_">self</span>.X_train = <span class="hljs-literal">None</span>  <span class="hljs-comment"># 训练数据特征</span><br>        <span class="hljs-variable language_">self</span>.y_train = <span class="hljs-literal">None</span>  <span class="hljs-comment"># 训练数据标签</span><br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">fit</span>(<span class="hljs-params">self, X, y</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        训练模型（KNN的&quot;训练&quot;只是保存训练数据）</span><br><span class="hljs-string">        </span><br><span class="hljs-string">        参数:</span><br><span class="hljs-string">            X: 训练数据特征，形状 (n_samples, n_features)</span><br><span class="hljs-string">            y: 训练数据标签，形状 (n_samples,)</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        <span class="hljs-comment"># 将输入转换为numpy数组</span><br>        <span class="hljs-variable language_">self</span>.X_train = np.array(X)<br>        <span class="hljs-variable language_">self</span>.y_train = np.array(y)<br>        <br>        <span class="hljs-comment"># KNN没有真正的训练过程，只是保存数据</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-variable language_">self</span><br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">_compute_distance</span>(<span class="hljs-params">self, x1, x2</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        计算两个向量之间的距离</span><br><span class="hljs-string">        </span><br><span class="hljs-string">        参数:</span><br><span class="hljs-string">            x1: 第一个向量</span><br><span class="hljs-string">            x2: 第二个向量</span><br><span class="hljs-string">        </span><br><span class="hljs-string">        返回:</span><br><span class="hljs-string">            距离值</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        <span class="hljs-keyword">if</span> <span class="hljs-variable language_">self</span>.distance_metric == <span class="hljs-string">&#x27;euclidean&#x27;</span>:<br>            <span class="hljs-comment"># 欧氏距离：√(Σ(xi-yi)²)</span><br>            <span class="hljs-keyword">return</span> np.sqrt(np.<span class="hljs-built_in">sum</span>((x1 - x2) ** <span class="hljs-number">2</span>))<br>        <span class="hljs-keyword">elif</span> <span class="hljs-variable language_">self</span>.distance_metric == <span class="hljs-string">&#x27;manhattan&#x27;</span>:<br>            <span class="hljs-comment"># 曼哈顿距离：Σ|xi-yi|</span><br>            <span class="hljs-keyword">return</span> np.<span class="hljs-built_in">sum</span>(np.<span class="hljs-built_in">abs</span>(x1 - x2))<br>        <span class="hljs-keyword">else</span>:<br>            <span class="hljs-keyword">raise</span> ValueError(<span class="hljs-string">f&quot;不支持的距离度量: <span class="hljs-subst">&#123;self.distance_metric&#125;</span>&quot;</span>)<br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">_predict_one</span>(<span class="hljs-params">self, x</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        预测单个样本的类别</span><br><span class="hljs-string">        </span><br><span class="hljs-string">        参数:</span><br><span class="hljs-string">            x: 单个样本的特征，形状 (n_features,)</span><br><span class="hljs-string">        </span><br><span class="hljs-string">        返回:</span><br><span class="hljs-string">            预测的类别</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        <span class="hljs-comment"># 步骤1：计算x到所有训练样本的距离</span><br>        distances = []<br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(<span class="hljs-variable language_">self</span>.X_train)):<br>            x_train = <span class="hljs-variable language_">self</span>.X_train[i]<br>            distance = <span class="hljs-variable language_">self</span>._compute_distance(x, x_train)<br>            distances.append((distance, i))  <span class="hljs-comment"># 保存距离和索引</span><br>        <br>        <span class="hljs-comment"># 步骤2：按距离排序</span><br>        distances.sort(key=<span class="hljs-keyword">lambda</span> x: x[<span class="hljs-number">0</span>])  <span class="hljs-comment"># 按距离升序排序</span><br>        <br>        <span class="hljs-comment"># 步骤3：取K个最近邻的标签</span><br>        k_nearest_labels = []<br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-variable language_">self</span>.k):<br>            idx = distances[i][<span class="hljs-number">1</span>]  <span class="hljs-comment"># 获取第i近的训练样本索引</span><br>            label = <span class="hljs-variable language_">self</span>.y_train[idx]  <span class="hljs-comment"># 获取该样本的标签</span><br>            k_nearest_labels.append(label)<br>        <br>        <span class="hljs-comment"># 步骤4：多数表决</span><br>        <span class="hljs-comment"># Counter会统计每个标签出现的次数</span><br>        <span class="hljs-comment"># most_common(1)返回出现次数最多的标签</span><br>        counter = Counter(k_nearest_labels)<br>        predicted_label = counter.most_common(<span class="hljs-number">1</span>)[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>]<br>        <br>        <span class="hljs-keyword">return</span> predicted_label<br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">predict</span>(<span class="hljs-params">self, X</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        预测多个样本的类别</span><br><span class="hljs-string">        </span><br><span class="hljs-string">        参数:</span><br><span class="hljs-string">            X: 测试数据特征，形状 (n_samples, n_features)</span><br><span class="hljs-string">        </span><br><span class="hljs-string">        返回:</span><br><span class="hljs-string">            预测的标签数组，形状 (n_samples,)</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        X = np.array(X)<br>        predictions = []<br>        <br>        <span class="hljs-comment"># 对每个测试样本进行预测</span><br>        <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> X:<br>            prediction = <span class="hljs-variable language_">self</span>._predict_one(x)<br>            predictions.append(prediction)<br>        <br>        <span class="hljs-keyword">return</span> np.array(predictions)<br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">score</span>(<span class="hljs-params">self, X, y</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        计算准确率</span><br><span class="hljs-string">        </span><br><span class="hljs-string">        参数:</span><br><span class="hljs-string">            X: 测试数据特征</span><br><span class="hljs-string">            y: 真实标签</span><br><span class="hljs-string">        </span><br><span class="hljs-string">        返回:</span><br><span class="hljs-string">            准确率（0-1之间）</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        predictions = <span class="hljs-variable language_">self</span>.predict(X)<br>        accuracy = np.mean(predictions == y)<br>        <span class="hljs-keyword">return</span> accuracy<br></code></pre></td></tr></table></figure>
+<h2 id="5-2-逐行解析"><a href="#5-2-逐行解析" class="headerlink" title="5.2 逐行解析"></a>5.2 逐行解析</h2><h3 id="初始化方法-init"><a href="#初始化方法-init" class="headerlink" title="初始化方法 __init__"></a>初始化方法 <code>__init__</code></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, k=<span class="hljs-number">3</span>, distance_metric=<span class="hljs-string">&#x27;euclidean&#x27;</span></span>):<br>    <span class="hljs-variable language_">self</span>.k = k<br>    <span class="hljs-variable language_">self</span>.distance_metric = distance_metric<br>    <span class="hljs-variable language_">self</span>.X_train = <span class="hljs-literal">None</span><br>    <span class="hljs-variable language_">self</span>.y_train = <span class="hljs-literal">None</span><br></code></pre></td></tr></table></figure>
+<p><strong>这行在做什么？</strong></p>
+<ul>
+<li><code>k=3</code>：默认使用3个最近邻</li>
+<li><code>distance_metric=&#39;euclidean&#39;</code>：默认使用欧氏距离</li>
+<li><code>X_train</code> 和 <code>y_train</code>：用于保存训练数据</li>
+</ul>
+<p><strong>为什么初始化为None？</strong></p>
+<ul>
+<li>KNN的”训练”只是保存数据，不需要初始化参数</li>
+<li>在 <code>fit</code> 方法中才会赋值</li>
+</ul>
+<h3 id="训练方法-fit"><a href="#训练方法-fit" class="headerlink" title="训练方法 fit"></a>训练方法 <code>fit</code></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">fit</span>(<span class="hljs-params">self, X, y</span>):<br>    <span class="hljs-variable language_">self</span>.X_train = np.array(X)<br>    <span class="hljs-variable language_">self</span>.y_train = np.array(y)<br>    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">self</span><br></code></pre></td></tr></table></figure>
+<p><strong>这行在做什么？</strong></p>
+<ul>
+<li>将训练数据保存为numpy数组</li>
+<li>返回 <code>self</code> 支持链式调用（如 <code>model.fit(X, y).predict(X_test)</code>）</li>
+</ul>
+<p><strong>KNN的”训练”有什么特殊？</strong></p>
+<ul>
+<li>KNN是<strong>惰性学习（lazy learning）</strong></li>
+<li>训练阶段什么都不做，只是保存数据</li>
+<li>真正的计算在预测时进行</li>
+</ul>
+<h3 id="距离计算方法-compute-distance"><a href="#距离计算方法-compute-distance" class="headerlink" title="距离计算方法 _compute_distance"></a>距离计算方法 <code>_compute_distance</code></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">_compute_distance</span>(<span class="hljs-params">self, x1, x2</span>):<br>    <span class="hljs-keyword">if</span> <span class="hljs-variable language_">self</span>.distance_metric == <span class="hljs-string">&#x27;euclidean&#x27;</span>:<br>        <span class="hljs-keyword">return</span> np.sqrt(np.<span class="hljs-built_in">sum</span>((x1 - x2) ** <span class="hljs-number">2</span>))<br>    <span class="hljs-keyword">elif</span> <span class="hljs-variable language_">self</span>.distance_metric == <span class="hljs-string">&#x27;manhattan&#x27;</span>:<br>        <span class="hljs-keyword">return</span> np.<span class="hljs-built_in">sum</span>(np.<span class="hljs-built_in">abs</span>(x1 - x2))<br></code></pre></td></tr></table></figure>
+<p><strong>这行在做什么？</strong></p>
+<ul>
+<li>根据 <code>distance_metric</code> 选择不同的距离计算方法</li>
+<li>欧氏距离：先求差，再平方，再求和，最后开方</li>
+<li>曼哈顿距离：先求差，再取绝对值，再求和</li>
+</ul>
+<p><strong>具体例子：</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python">x1 = np.array([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>])<br>x2 = np.array([<span class="hljs-number">4</span>, <span class="hljs-number">6</span>])<br><br><span class="hljs-comment"># 欧氏距离</span><br>distance = np.sqrt(np.<span class="hljs-built_in">sum</span>((x1 - x2) ** <span class="hljs-number">2</span>))<br><span class="hljs-comment"># = np.sqrt(np.sum([-3, -4] ** 2))</span><br><span class="hljs-comment"># = np.sqrt(np.sum([9, 16]))</span><br><span class="hljs-comment"># = np.sqrt(25)</span><br><span class="hljs-comment"># = 5.0</span><br><br><span class="hljs-comment"># 曼哈顿距离</span><br>distance = np.<span class="hljs-built_in">sum</span>(np.<span class="hljs-built_in">abs</span>(x1 - x2))<br><span class="hljs-comment"># = np.sum(np.abs([-3, -4]))</span><br><span class="hljs-comment"># = np.sum([3, 4])</span><br><span class="hljs-comment"># = 7</span><br></code></pre></td></tr></table></figure></p>
+<h3 id="单样本预测方法-predict-one"><a href="#单样本预测方法-predict-one" class="headerlink" title="单样本预测方法 _predict_one"></a>单样本预测方法 <code>_predict_one</code></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">_predict_one</span>(<span class="hljs-params">self, x</span>):<br>    <span class="hljs-comment"># 步骤1：计算距离</span><br>    distances = []<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(<span class="hljs-variable language_">self</span>.X_train)):<br>        x_train = <span class="hljs-variable language_">self</span>.X_train[i]<br>        distance = <span class="hljs-variable language_">self</span>._compute_distance(x, x_train)<br>        distances.append((distance, i))<br></code></pre></td></tr></table></figure>
+<p><strong>这行在做什么？</strong></p>
+<ul>
+<li>遍历所有训练样本</li>
+<li>计算测试样本 <code>x</code> 到每个训练样本的距离</li>
+<li>将 <code>(距离, 索引)</code> 保存到列表中</li>
+</ul>
+<p><strong>具体例子：</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 假设训练数据有3个样本</span><br>X_train = [[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>], [<span class="hljs-number">4</span>, <span class="hljs-number">6</span>], [<span class="hljs-number">7</span>, <span class="hljs-number">8</span>]]<br>x = [<span class="hljs-number">3</span>, <span class="hljs-number">4</span>]  <span class="hljs-comment"># 测试样本</span><br><br><span class="hljs-comment"># 第1次循环：i=0</span><br>x_train = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>]<br>distance = euclidean_distance([<span class="hljs-number">3</span>, <span class="hljs-number">4</span>], [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>]) = <span class="hljs-number">2.83</span><br>distances = [(<span class="hljs-number">2.83</span>, <span class="hljs-number">0</span>)]<br><br><span class="hljs-comment"># 第2次循环：i=1</span><br>x_train = [<span class="hljs-number">4</span>, <span class="hljs-number">6</span>]<br>distance = euclidean_distance([<span class="hljs-number">3</span>, <span class="hljs-number">4</span>], [<span class="hljs-number">4</span>, <span class="hljs-number">6</span>]) = <span class="hljs-number">2.24</span><br>distances = [(<span class="hljs-number">2.83</span>, <span class="hljs-number">0</span>), (<span class="hljs-number">2.24</span>, <span class="hljs-number">1</span>)]<br><br><span class="hljs-comment"># 第3次循环：i=2</span><br>x_train = [<span class="hljs-number">7</span>, <span class="hljs-number">8</span>]<br>distance = euclidean_distance([<span class="hljs-number">3</span>, <span class="hljs-number">4</span>], [<span class="hljs-number">7</span>, <span class="hljs-number">8</span>]) = <span class="hljs-number">5.66</span><br>distances = [(<span class="hljs-number">2.83</span>, <span class="hljs-number">0</span>), (<span class="hljs-number">2.24</span>, <span class="hljs-number">1</span>), (<span class="hljs-number">5.66</span>, <span class="hljs-number">2</span>)]<br></code></pre></td></tr></table></figure></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 步骤2：按距离排序</span><br>distances.sort(key=<span class="hljs-keyword">lambda</span> x: x[<span class="hljs-number">0</span>])<br></code></pre></td></tr></table></figure>
+<p><strong>这行在做什么？</strong></p>
+<ul>
+<li>对 <code>distances</code> 列表按距离（第1个元素）升序排序</li>
+<li><code>key=lambda x: x[0]</code>：按元组的第1个元素排序</li>
+</ul>
+<p><strong>具体例子：</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 排序前</span><br>distances = [(<span class="hljs-number">5.66</span>, <span class="hljs-number">2</span>), (<span class="hljs-number">2.83</span>, <span class="hljs-number">0</span>), (<span class="hljs-number">2.24</span>, <span class="hljs-number">1</span>)]<br><br><span class="hljs-comment"># 排序后</span><br>distances = [(<span class="hljs-number">2.24</span>, <span class="hljs-number">1</span>), (<span class="hljs-number">2.83</span>, <span class="hljs-number">0</span>), (<span class="hljs-number">5.66</span>, <span class="hljs-number">2</span>)]<br></code></pre></td></tr></table></figure></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 步骤3：取K个最近邻的标签</span><br>k_nearest_labels = []<br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-variable language_">self</span>.k):<br>    idx = distances[i][<span class="hljs-number">1</span>]<br>    label = <span class="hljs-variable language_">self</span>.y_train[idx]<br>    k_nearest_labels.append(label)<br></code></pre></td></tr></table></figure>
+<p><strong>这行在做什么？</strong></p>
+<ul>
+<li>取前K个最近邻的索引</li>
+<li>根据索引获取对应的标签</li>
+<li>保存到 <code>k_nearest_labels</code> 列表</li>
+</ul>
+<p><strong>具体例子：</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 假设 k=2，y_train = [0, 1, 0]</span><br><span class="hljs-comment"># distances = [(2.83, 0), (2.83, 1), (5.66, 2)]</span><br><br><span class="hljs-comment"># 第1次循环：i=0</span><br>idx = distances[<span class="hljs-number">0</span>][<span class="hljs-number">1</span>] = <span class="hljs-number">0</span><br>label = y_train[<span class="hljs-number">0</span>] = <span class="hljs-number">0</span><br>k_nearest_labels = [<span class="hljs-number">0</span>]<br><br><span class="hljs-comment"># 第2次循环：i=1</span><br>idx = distances[<span class="hljs-number">1</span>][<span class="hljs-number">1</span>] = <span class="hljs-number">1</span><br>label = y_train[<span class="hljs-number">1</span>] = <span class="hljs-number">1</span><br>k_nearest_labels = [<span class="hljs-number">0</span>, <span class="hljs-number">1</span>]<br></code></pre></td></tr></table></figure></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 步骤4：多数表决</span><br>counter = Counter(k_nearest_labels)<br>predicted_label = counter.most_common(<span class="hljs-number">1</span>)[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>]<br><span class="hljs-keyword">return</span> predicted_label<br></code></pre></td></tr></table></figure>
+<p><strong>这行在做什么？</strong></p>
+<ul>
+<li><code>Counter(k_nearest_labels)</code>：统计每个标签出现的次数</li>
+<li><code>most_common(1)</code>：返回出现次数最多的1个元素</li>
+<li><code>[0][0]</code>：获取标签值</li>
+</ul>
+<p><strong>具体例子：</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python">k_nearest_labels = [<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>]  <span class="hljs-comment"># 3个最近邻的标签</span><br><br>counter = Counter([<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>])<br><span class="hljs-comment"># Counter(&#123;0: 2, 1: 1&#125;)  # 0出现2次，1出现1次</span><br><br>most_common = counter.most_common(<span class="hljs-number">1</span>)<br><span class="hljs-comment"># [(0, 2)]  # 最常见的元素是0，出现了2次</span><br><br>predicted_label = most_common[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>]<br><span class="hljs-comment"># = 0  # 预测为类别0</span><br></code></pre></td></tr></table></figure></p>
+<h3 id="多样本预测方法-predict"><a href="#多样本预测方法-predict" class="headerlink" title="多样本预测方法 predict"></a>多样本预测方法 <code>predict</code></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">predict</span>(<span class="hljs-params">self, X</span>):<br>    X = np.array(X)<br>    predictions = []<br>    <br>    <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> X:<br>        prediction = <span class="hljs-variable language_">self</span>._predict_one(x)<br>        predictions.append(prediction)<br>    <br>    <span class="hljs-keyword">return</span> np.array(predictions)<br></code></pre></td></tr></table></figure>
+<p><strong>这行在做什么？</strong></p>
+<ul>
+<li>遍历所有测试样本</li>
+<li>对每个样本调用 <code>_predict_one</code> 进行预测</li>
+<li>返回预测结果数组</li>
+</ul>
+<p><strong>形状变化：</strong><br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">输入 X: (n_samples, n_features)<br>  ↓<br>对每个样本预测<br>  ↓<br>输出 predictions: (n_samples,)<br></code></pre></td></tr></table></figure></p>
+<h3 id="评估方法-score"><a href="#评估方法-score" class="headerlink" title="评估方法 score"></a>评估方法 <code>score</code></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">score</span>(<span class="hljs-params">self, X, y</span>):<br>    predictions = <span class="hljs-variable language_">self</span>.predict(X)<br>    accuracy = np.mean(predictions == y)<br>    <span class="hljs-keyword">return</span> accuracy<br></code></pre></td></tr></table></figure>
+<p><strong>这行在做什么？</strong></p>
+<ul>
+<li><code>predictions == y</code>：逐个比较预测值和真实值，返回布尔数组</li>
+<li><code>np.mean(...)</code>：计算True的比例，即准确率</li>
+</ul>
+<p><strong>具体例子：</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python">predictions = [<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>]<br>y = [<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>]<br><br><span class="hljs-comment"># 比较</span><br>predictions == y<br><span class="hljs-comment"># [True, True, False, True, True]</span><br><br><span class="hljs-comment"># 计算准确率</span><br>np.mean([<span class="hljs-literal">True</span>, <span class="hljs-literal">True</span>, <span class="hljs-literal">False</span>, <span class="hljs-literal">True</span>, <span class="hljs-literal">True</span>])<br><span class="hljs-comment"># = 4/5</span><br><span class="hljs-comment"># = 0.8  # 80%准确率</span><br></code></pre></td></tr></table></figure></p>
+<h2 id="5-3-测试我们的KNN分类器"><a href="#5-3-测试我们的KNN分类器" class="headerlink" title="5.3 测试我们的KNN分类器"></a>5.3 测试我们的KNN分类器</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 创建简单的测试数据</span><br>X_train = [[<span class="hljs-number">0</span>, <span class="hljs-number">0</span>], [<span class="hljs-number">1</span>, <span class="hljs-number">1</span>], [<span class="hljs-number">2</span>, <span class="hljs-number">2</span>], [<span class="hljs-number">5</span>, <span class="hljs-number">5</span>], [<span class="hljs-number">6</span>, <span class="hljs-number">6</span>], [<span class="hljs-number">7</span>, <span class="hljs-number">7</span>]]<br>y_train = [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>]<br><br>X_test = [[<span class="hljs-number">1.5</span>, <span class="hljs-number">1.5</span>], [<span class="hljs-number">6.5</span>, <span class="hljs-number">6.5</span>]]<br>y_test = [<span class="hljs-number">0</span>, <span class="hljs-number">1</span>]<br><br><span class="hljs-comment"># 创建并训练模型</span><br>knn = KNNClassifier(k=<span class="hljs-number">3</span>)<br>knn.fit(X_train, y_train)<br><br><span class="hljs-comment"># 预测</span><br>predictions = knn.predict(X_test)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;预测结果: <span class="hljs-subst">&#123;predictions&#125;</span>&quot;</span>)  <span class="hljs-comment"># [0, 1]</span><br><br><span class="hljs-comment"># 评估</span><br>accuracy = knn.score(X_test, y_test)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;准确率: <span class="hljs-subst">&#123;accuracy&#125;</span>&quot;</span>)  <span class="hljs-comment"># 1.0</span><br></code></pre></td></tr></table></figure>
+<p><strong>输出：</strong><br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">预测结果: [0 1]<br>准确率: 1.0<br></code></pre></td></tr></table></figure></p>
+<p><strong>这行在做什么？</strong></p>
+<ul>
+<li><code>knn = KNNClassifier(k=3)</code>：创建KNN分类器，使用3个最近邻</li>
+<li><code>knn.fit(X_train, y_train)</code>：保存训练数据</li>
+<li><code>knn.predict(X_test)</code>：对测试数据进行预测</li>
+<li><code>knn.score(X_test, y_test)</code>：计算准确率</li>
+</ul>
+<p><strong>具体预测过程：</strong><br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">测试样本 [1.5, 1.5]：<br>  到 [0, 0] 的距离: 2.12<br>  到 [1, 1] 的距离: 0.71  ← 最近<br>  到 [2, 2] 的距离: 0.71  ← 最近<br>  到 [5, 5] 的距离: 4.95<br>  到 [6, 6] 的距离: 6.36<br>  到 [7, 7] 的距离: 7.78<br>  <br>  3个最近邻: [1,1](标签0), [2,2](标签0), [0,0](标签0)<br>  投票结果: 3个都是0 → 预测为0 ✓<br><br>测试样本 [6.5, 6.5]：<br>  类似地，3个最近邻都是标签1 → 预测为1 ✓<br></code></pre></td></tr></table></figure></p>
+<hr>
+<h1 id="6-使用sklearn的KNN-API"><a href="#6-使用sklearn的KNN-API" class="headerlink" title="6. 使用sklearn的KNN API"></a>6. 使用sklearn的KNN API</h1><h2 id="6-1-分类API"><a href="#6-1-分类API" class="headerlink" title="6.1 分类API"></a>6.1 分类API</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.neighbors <span class="hljs-keyword">import</span> KNeighborsClassifier<br><br><span class="hljs-comment"># 创建KNN分类器</span><br>knn = KNeighborsClassifier(n_neighbors=<span class="hljs-number">5</span>)  <span class="hljs-comment"># K=5</span><br><br><span class="hljs-comment"># 训练</span><br>knn.fit(X_train, y_train)<br><br><span class="hljs-comment"># 预测</span><br>predictions = knn.predict(X_test)<br><br><span class="hljs-comment"># 评估</span><br>accuracy = knn.score(X_test, y_test)<br></code></pre></td></tr></table></figure>
+<p><strong>参数说明：</strong></p>
+<ul>
+<li><code>n_neighbors</code>：K值，默认5</li>
+<li><code>weights</code>：权重方式<ul>
+<li><code>&#39;uniform&#39;</code>：所有邻居权重相同（默认）</li>
+<li><code>&#39;distance&#39;</code>：距离越近权重越大</li>
+</ul>
+</li>
+<li><code>metric</code>：距离度量<ul>
+<li><code>&#39;minkowski&#39;</code>：闵可夫斯基距离（默认）</li>
+<li><code>&#39;euclidean&#39;</code>：欧氏距离</li>
+<li><code>&#39;manhattan&#39;</code>：曼哈顿距离</li>
+</ul>
+</li>
+<li><code>p</code>：闵可夫斯基距离的参数，p=1曼哈顿，p=2欧氏</li>
+</ul>
+<h2 id="6-2-回归API"><a href="#6-2-回归API" class="headerlink" title="6.2 回归API"></a>6.2 回归API</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.neighbors <span class="hljs-keyword">import</span> KNeighborsRegressor<br><br><span class="hljs-comment"># 创建KNN回归器</span><br>knn_reg = KNeighborsRegressor(n_neighbors=<span class="hljs-number">5</span>)<br><br><span class="hljs-comment"># 训练</span><br>knn_reg.fit(X_train, y_train)<br><br><span class="hljs-comment"># 预测</span><br>predictions = knn_reg.predict(X_test)<br></code></pre></td></tr></table></figure>
+<p><strong>KNN回归的区别：</strong></p>
+<ul>
+<li>分类：多数表决</li>
+<li>回归：取K个最近邻的平均值</li>
+</ul>
+<h2 id="6-3-完整示例"><a href="#6-3-完整示例" class="headerlink" title="6.3 完整示例"></a>6.3 完整示例</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.neighbors <span class="hljs-keyword">import</span> KNeighborsClassifier<br><span class="hljs-keyword">from</span> sklearn.datasets <span class="hljs-keyword">import</span> load_iris<br><span class="hljs-keyword">from</span> sklearn.model_selection <span class="hljs-keyword">import</span> train_test_split<br><span class="hljs-keyword">from</span> sklearn.preprocessing <span class="hljs-keyword">import</span> StandardScaler<br><br><span class="hljs-comment"># 1. 加载数据</span><br>iris = load_iris()<br>X = iris.data<br>y = iris.target<br><br><span class="hljs-comment"># 2. 划分数据集</span><br>X_train, X_test, y_train, y_test = train_test_split(<br>    X, y, test_size=<span class="hljs-number">0.2</span>, random_state=<span class="hljs-number">42</span><br>)<br><br><span class="hljs-comment"># 3. 特征标准化</span><br>scaler = StandardScaler()<br>X_train_scaled = scaler.fit_transform(X_train)<br>X_test_scaled = scaler.transform(X_test)<br><br><span class="hljs-comment"># 4. 创建并训练模型</span><br>knn = KNeighborsClassifier(n_neighbors=<span class="hljs-number">5</span>)<br>knn.fit(X_train_scaled, y_train)<br><br><span class="hljs-comment"># 5. 预测和评估</span><br>predictions = knn.predict(X_test_scaled)<br>accuracy = knn.score(X_test_scaled, y_test)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;准确率: <span class="hljs-subst">&#123;accuracy:<span class="hljs-number">.4</span>f&#125;</span>&quot;</span>)  <span class="hljs-comment"># 约0.97</span><br></code></pre></td></tr></table></figure>
+<p><strong>这行在做什么？</strong></p>
+<ul>
+<li><code>StandardScaler()</code>：创建标准化器</li>
+<li><code>fit_transform(X_train)</code>：在训练集上拟合并转换</li>
+<li><code>transform(X_test)</code>：在测试集上转换（使用训练集的均值和标准差）</li>
+</ul>
+<p><strong>为什么要这样处理？</strong></p>
+<ul>
+<li>训练集：计算均值和标准差，然后转换</li>
+<li>测试集：使用训练集的均值和标准差转换</li>
+<li><strong>不能</strong>在测试集上重新计算均值和标准差！</li>
+</ul>
+<hr>
+<h1 id="7-鸢尾花分类完整案例"><a href="#7-鸢尾花分类完整案例" class="headerlink" title="7. 鸢尾花分类完整案例"></a>7. 鸢尾花分类完整案例</h1><h2 id="7-1-数据集介绍"><a href="#7-1-数据集介绍" class="headerlink" title="7.1 数据集介绍"></a>7.1 数据集介绍</h2><p><strong>鸢尾花数据集（Iris Dataset）</strong> 是机器学习领域最经典的数据集之一。</p>
+<ul>
+<li><strong>样本数：</strong> 150个</li>
+<li><strong>特征数：</strong> 4个<ul>
+<li>花萼长度（sepal length）</li>
+<li>花萼宽度（sepal width）</li>
+<li>花瓣长度（petal length）</li>
+<li>花瓣宽度（petal width）</li>
+</ul>
+</li>
+<li><strong>类别数：</strong> 3个<ul>
+<li>Setosa（山鸢尾）</li>
+<li>Versicolour（杂色鸢尾）</li>
+<li>Virginica（维吉尼亚鸢尾）</li>
+</ul>
+</li>
+</ul>
+<h2 id="7-2-完整代码"><a href="#7-2-完整代码" class="headerlink" title="7.2 完整代码"></a>7.2 完整代码</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 导入工具包</span><br><span class="hljs-keyword">from</span> sklearn.datasets <span class="hljs-keyword">import</span> load_iris          <span class="hljs-comment"># 加载鸢尾花数据集</span><br><span class="hljs-keyword">import</span> seaborn <span class="hljs-keyword">as</span> sns                            <span class="hljs-comment"># 可视化</span><br><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt                  <span class="hljs-comment"># 可视化</span><br><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd                              <span class="hljs-comment"># 数据处理</span><br><span class="hljs-keyword">from</span> sklearn.model_selection <span class="hljs-keyword">import</span> train_test_split    <span class="hljs-comment"># 划分数据集</span><br><span class="hljs-keyword">from</span> sklearn.preprocessing <span class="hljs-keyword">import</span> StandardScaler        <span class="hljs-comment"># 标准化</span><br><span class="hljs-keyword">from</span> sklearn.neighbors <span class="hljs-keyword">import</span> KNeighborsClassifier      <span class="hljs-comment"># KNN分类器</span><br><span class="hljs-keyword">from</span> sklearn.metrics <span class="hljs-keyword">import</span> accuracy_score              <span class="hljs-comment"># 准确率</span><br><br><span class="hljs-comment"># ========== 1. 加载数据集 ==========</span><br>iris_data = load_iris()<br><br><span class="hljs-comment"># 查看数据集结构</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;数据集的键:&quot;</span>, iris_data.keys())<br><span class="hljs-comment"># dict_keys([&#x27;data&#x27;, &#x27;target&#x27;, &#x27;frame&#x27;, &#x27;target_names&#x27;, &#x27;DESCR&#x27;, &#x27;feature_names&#x27;, &#x27;filename&#x27;, &#x27;data_module&#x27;])</span><br><br><span class="hljs-comment"># 查看特征数据（前5个样本）</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;\n特征数据（前5个）:&quot;</span>)<br><span class="hljs-built_in">print</span>(iris_data.data[:<span class="hljs-number">5</span>])<br><span class="hljs-comment"># [[5.1 3.5 1.4 0.2]</span><br><span class="hljs-comment">#  [4.9 3.  1.4 0.2]</span><br><span class="hljs-comment">#  [4.7 3.2 1.3 0.2]</span><br><span class="hljs-comment">#  [4.6 3.1 1.5 0.2]</span><br><span class="hljs-comment">#  [5.  3.6 1.4 0.2]]</span><br><br><span class="hljs-comment"># 查看目标值</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;\n目标值:&quot;</span>)<br><span class="hljs-built_in">print</span>(iris_data.target)<br><span class="hljs-comment"># [0 0 0 0 0 0 0 0 0 0 ... 1 1 1 1 1 ... 2 2 2 2 2]</span><br><br><span class="hljs-comment"># 查看目标值名称</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;\n目标值名称:&quot;</span>)<br><span class="hljs-built_in">print</span>(iris_data.target_names)<br><span class="hljs-comment"># [&#x27;setosa&#x27; &#x27;versicolor&#x27; &#x27;virginica&#x27;]</span><br><br><span class="hljs-comment"># 查看特征名称</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;\n特征名称:&quot;</span>)<br><span class="hljs-built_in">print</span>(iris_data.feature_names)<br><span class="hljs-comment"># [&#x27;sepal length (cm)&#x27;, &#x27;sepal width (cm)&#x27;, &#x27;petal length (cm)&#x27;, &#x27;petal width (cm)&#x27;]</span><br><br><span class="hljs-comment"># ========== 2. 数据可视化 ==========</span><br><span class="hljs-comment"># 将数据转换为DataFrame格式</span><br>iris_df = pd.DataFrame(iris_data.data, columns=iris_data.feature_names)<br>iris_df[<span class="hljs-string">&#x27;label&#x27;</span>] = iris_data.target<br><br><span class="hljs-comment"># 绘制散点图</span><br>sns.lmplot(<br>    x=<span class="hljs-string">&#x27;petal length (cm)&#x27;</span>, <br>    y=<span class="hljs-string">&#x27;petal width (cm)&#x27;</span>, <br>    data=iris_df, <br>    hue=<span class="hljs-string">&#x27;label&#x27;</span>,           <span class="hljs-comment"># 按类别着色</span><br>    fit_reg=<span class="hljs-literal">False</span>          <span class="hljs-comment"># 不绘制回归线</span><br>)<br>plt.title(<span class="hljs-string">&#x27;Iris Dataset&#x27;</span>)<br>plt.show()<br><br><span class="hljs-comment"># ========== 3. 划分数据集 ==========</span><br>x_train, x_test, y_train, y_test = train_test_split(<br>    iris_data.data,        <span class="hljs-comment"># 特征</span><br>    iris_data.target,      <span class="hljs-comment"># 标签</span><br>    test_size=<span class="hljs-number">0.2</span>,         <span class="hljs-comment"># 测试集占20%</span><br>    random_state=<span class="hljs-number">22</span>        <span class="hljs-comment"># 随机种子，保证可重复</span><br>)<br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;\n数据总数量: <span class="hljs-subst">&#123;<span class="hljs-built_in">len</span>(iris_data.data)&#125;</span>&#x27;</span>)        <span class="hljs-comment"># 150</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;训练集数量: <span class="hljs-subst">&#123;<span class="hljs-built_in">len</span>(x_train)&#125;</span>&#x27;</span>)                  <span class="hljs-comment"># 120</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;测试集数量: <span class="hljs-subst">&#123;<span class="hljs-built_in">len</span>(x_test)&#125;</span>&#x27;</span>)                   <span class="hljs-comment"># 30</span><br><br><span class="hljs-comment"># ========== 4. 特征标准化 ==========</span><br>transfer = StandardScaler()<br><br><span class="hljs-comment"># 对训练集进行拟合并转换</span><br>x_train_scaled = transfer.fit_transform(x_train)<br><br><span class="hljs-comment"># 对测试集进行转换（使用训练集的均值和标准差）</span><br>x_test_scaled = transfer.transform(x_test)<br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;\n标准化后训练集均值: <span class="hljs-subst">&#123;transfer.mean_&#125;</span>&#x27;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;标准化后训练集标准差: <span class="hljs-subst">&#123;transfer.scale_&#125;</span>&#x27;</span>)<br><br><span class="hljs-comment"># ========== 5. 模型训练 ==========</span><br>estimator = KNeighborsClassifier(n_neighbors=<span class="hljs-number">5</span>)<br>estimator.fit(x_train_scaled, y_train)<br><br><span class="hljs-comment"># ========== 6. 模型预测 ==========</span><br><span class="hljs-comment"># 对测试集进行预测</span><br>y_predict = estimator.predict(x_test_scaled)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;\n预测结果: <span class="hljs-subst">&#123;y_predict&#125;</span>&#x27;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;真实结果: <span class="hljs-subst">&#123;y_test&#125;</span>&#x27;</span>)<br><br><span class="hljs-comment"># ========== 7. 模型评估 ==========</span><br><span class="hljs-comment"># 方法1：使用score方法</span><br>score1 = estimator.score(x_test_scaled, y_test)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;\n准确率（score方法）: <span class="hljs-subst">&#123;score1:<span class="hljs-number">.4</span>f&#125;</span>&#x27;</span>)<br><br><span class="hljs-comment"># 方法2：使用accuracy_score</span><br>score2 = accuracy_score(y_test, y_predict)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;准确率（accuracy_score）: <span class="hljs-subst">&#123;score2:<span class="hljs-number">.4</span>f&#125;</span>&#x27;</span>)<br><br><span class="hljs-comment"># ========== 8. 对新数据进行预测 ==========</span><br><span class="hljs-comment"># 假设有一朵新的鸢尾花</span><br>new_flower = [[<span class="hljs-number">5.1</span>, <span class="hljs-number">3.5</span>, <span class="hljs-number">1.4</span>, <span class="hljs-number">0.2</span>]]<br><br><span class="hljs-comment"># 必须先进行标准化</span><br>new_flower_scaled = transfer.transform(new_flower)<br><br><span class="hljs-comment"># 预测</span><br>prediction = estimator.predict(new_flower_scaled)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;\n新花预测类别: <span class="hljs-subst">&#123;prediction[<span class="hljs-number">0</span>]&#125;</span>&#x27;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;新花预测名称: <span class="hljs-subst">&#123;iris_data.target_names[prediction[<span class="hljs-number">0</span>]]&#125;</span>&#x27;</span>)<br><br><span class="hljs-comment"># 预测概率</span><br>prob = estimator.predict_proba(new_flower_scaled)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;预测概率: <span class="hljs-subst">&#123;prob&#125;</span>&#x27;</span>)<br><span class="hljs-comment"># 例如: [[0.8 0.2 0. ]] 表示80%概率是类别0，20%概率是类别1，0%概率是类别2</span><br></code></pre></td></tr></table></figure>
+<p><strong>输出示例：</strong><br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">数据集的键: dict_keys([&#x27;data&#x27;, &#x27;target&#x27;, &#x27;frame&#x27;, &#x27;target_names&#x27;, &#x27;DESCR&#x27;, &#x27;feature_names&#x27;, &#x27;filename&#x27;, &#x27;data_module&#x27;])<br><br>特征数据（前5个）:<br>[[5.1 3.5 1.4 0.2]<br> [4.9 3.  1.4 0.2]<br> [4.7 3.2 1.3 0.2]<br> [4.6 3.1 1.5 0.2]<br> [5.  3.6 1.4 0.2]]<br><br>目标值:<br>[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2]<br><br>目标值名称:<br>[&#x27;setosa&#x27; &#x27;versicolor&#x27; &#x27;virginica&#x27;]<br><br>特征名称:<br>[&#x27;sepal length (cm)&#x27;, &#x27;sepal width (cm)&#x27;, &#x27;petal length (cm)&#x27;, &#x27;petal width (cm)&#x27;]<br><br>数据总数量: 150<br>训练集数量: 120<br>测试集数量: 30<br><br>标准化后训练集均值: [5.83333333 3.04166667 3.70833333 1.18333333]<br>标准化后训练集标准差: [0.82806612 0.43441096 1.76001287 0.75389882]<br><br>预测结果: [2 1 0 2 0 2 0 1 1 1 2 1 1 1 1 0 1 1 0 0 2 1 0 0 2 0 0 1 1 0]<br>真实结果: [2 1 0 2 0 2 0 1 1 1 2 1 1 1 1 0 1 1 0 0 2 1 0 0 2 0 0 1 1 0]<br><br>准确率（score方法）: 1.0000<br>准确率（accuracy_score）: 1.0000<br><br>新花预测类别: 0<br>新花预测名称: setosa<br>预测概率: [[1. 0. 0.]]<br></code></pre></td></tr></table></figure></p>
+<p><strong>这行在做什么？</strong></p>
+<ul>
+<li><code>train_test_split(..., test_size=0.2, random_state=22)</code>：将数据按8:2划分，random_state保证每次划分结果相同</li>
+<li><code>transfer.fit_transform(x_train)</code>：在训练集上计算均值和标准差，然后转换</li>
+<li><code>transfer.transform(x_test)</code>：使用训练集的均值和标准差转换测试集</li>
+<li><code>estimator.predict_proba(...)</code>：返回每个类别的预测概率</li>
+</ul>
+<hr>
+<h1 id="8-交叉验证和网格搜索"><a href="#8-交叉验证和网格搜索" class="headerlink" title="8. 交叉验证和网格搜索"></a>8. 交叉验证和网格搜索</h1><h2 id="8-1-交叉验证（Cross-Validation）"><a href="#8-1-交叉验证（Cross-Validation）" class="headerlink" title="8.1 交叉验证（Cross-Validation）"></a>8.1 交叉验证（Cross-Validation）</h2><p><strong>问题：</strong> 如何选择合适的K值？</p>
+<p><strong>简单方法：</strong> 将数据划分为训练集和验证集，在验证集上评估不同K值的效果。</p>
+<p><strong>问题：</strong> 这种划分方式依赖于特定的数据划分，结果不稳定。</p>
+<p><strong>解决方案：交叉验证</strong></p>
+<p><strong>K折交叉验证（K-Fold Cross-Validation）：</strong></p>
+<ol>
+<li>将训练集划分为K份（如K=5）</li>
+<li>第1次：第1份做验证集，其余4份做训练集</li>
+<li>第2次：第2份做验证集，其余4份做训练集</li>
+<li>…</li>
+<li>第K次：第K份做验证集，其余K-1份做训练集</li>
+<li>取K次评估的平均值作为模型得分</li>
+</ol>
+<p><strong>具体例子（5折交叉验证）：</strong><br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">原始训练集：[样本1, 样本2, ..., 样本100]<br><br>第1折：<br>  训练集：[样本21-100]  (80个)<br>  验证集：[样本1-20]    (20个)<br>  评估得分：0.85<br><br>第2折：<br>  训练集：[样本1-20, 样本41-100]  (80个)<br>  验证集：[样本21-40]              (20个)<br>  评估得分：0.87<br><br>第3折：<br>  训练集：[样本1-40, 样本61-100]  (80个)<br>  验证集：[样本41-60]              (20个)<br>  评估得分：0.86<br><br>第4折：<br>  训练集：[样本1-60, 样本81-100]  (80个)<br>  验证集：[样本61-80]              (20个)<br>  评估得分：0.88<br><br>第5折：<br>  训练集：[样本1-80]  (80个)<br>  验证集：[样本81-100] (20个)<br>  评估得分：0.84<br><br>平均得分：(0.85 + 0.87 + 0.86 + 0.88 + 0.84) / 5 = 0.86<br></code></pre></td></tr></table></figure></p>
+<h2 id="8-2-网格搜索（Grid-Search）"><a href="#8-2-网格搜索（Grid-Search）" class="headerlink" title="8.2 网格搜索（Grid Search）"></a>8.2 网格搜索（Grid Search）</h2><p><strong>网格搜索：</strong> 遍历所有可能的超参数组合，找到最优组合。</p>
+<p><strong>具体例子：</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 假设我们要选择K值</span><br>param_grid = &#123;<br>    <span class="hljs-string">&#x27;n_neighbors&#x27;</span>: [<span class="hljs-number">1</span>, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>, <span class="hljs-number">7</span>, <span class="hljs-number">9</span>]<br>&#125;<br><br><span class="hljs-comment"># 网格搜索会尝试所有5种K值</span><br><span class="hljs-comment"># 对每种K值进行5折交叉验证</span><br><span class="hljs-comment"># 总共训练 5 × 5 = 25 次</span><br><span class="hljs-comment"># 选择平均得分最高的K值</span><br></code></pre></td></tr></table></figure></p>
+<p><strong>多个超参数的情况：</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python">param_grid = &#123;<br>    <span class="hljs-string">&#x27;n_neighbors&#x27;</span>: [<span class="hljs-number">1</span>, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>, <span class="hljs-number">7</span>, <span class="hljs-number">9</span>],<br>    <span class="hljs-string">&#x27;weights&#x27;</span>: [<span class="hljs-string">&#x27;uniform&#x27;</span>, <span class="hljs-string">&#x27;distance&#x27;</span>],<br>    <span class="hljs-string">&#x27;metric&#x27;</span>: [<span class="hljs-string">&#x27;euclidean&#x27;</span>, <span class="hljs-string">&#x27;manhattan&#x27;</span>]<br>&#125;<br><br><span class="hljs-comment"># 总共有 5 × 2 × 2 = 20 种组合</span><br><span class="hljs-comment"># 每种组合进行5折交叉验证</span><br><span class="hljs-comment"># 总共训练 20 × 5 = 100 次</span><br></code></pre></td></tr></table></figure></p>
+<h2 id="8-3-交叉验证网格搜索API"><a href="#8-3-交叉验证网格搜索API" class="headerlink" title="8.3 交叉验证网格搜索API"></a>8.3 交叉验证网格搜索API</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.model_selection <span class="hljs-keyword">import</span> GridSearchCV<br><br><span class="hljs-comment"># 1. 创建模型</span><br>estimator = KNeighborsClassifier()<br><br><span class="hljs-comment"># 2. 定义参数网格</span><br>param_grid = &#123;<br>    <span class="hljs-string">&quot;n_neighbors&quot;</span>: <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-number">20</span>, <span class="hljs-number">2</span>)  <span class="hljs-comment"># [1, 3, 5, 7, 9, 11, 13, 15, 17, 19]</span><br>&#125;<br><br><span class="hljs-comment"># 3. 创建网格搜索对象</span><br>grid_search = GridSearchCV(<br>    estimator=estimator,      <span class="hljs-comment"># 模型</span><br>    param_grid=param_grid,    <span class="hljs-comment"># 参数网格</span><br>    cv=<span class="hljs-number">5</span>,                     <span class="hljs-comment"># 5折交叉验证</span><br>    scoring=<span class="hljs-string">&#x27;accuracy&#x27;</span>,       <span class="hljs-comment"># 评估指标</span><br>    n_jobs=-<span class="hljs-number">1</span>                 <span class="hljs-comment"># 使用所有CPU核心并行计算</span><br>)<br><br><span class="hljs-comment"># 4. 执行网格搜索</span><br>grid_search.fit(X_train, y_train)<br><br><span class="hljs-comment"># 5. 查看结果</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;最优参数: <span class="hljs-subst">&#123;grid_search.best_params_&#125;</span>&quot;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;最优得分: <span class="hljs-subst">&#123;grid_search.best_score_:<span class="hljs-number">.4</span>f&#125;</span>&quot;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;最优模型: <span class="hljs-subst">&#123;grid_search.best_estimator_&#125;</span>&quot;</span>)<br><br><span class="hljs-comment"># 6. 使用最优模型进行预测</span><br>best_model = grid_search.best_estimator_<br>predictions = best_model.predict(X_test)<br></code></pre></td></tr></table></figure>
+<p><strong>这行在做什么？</strong></p>
+<ul>
+<li><code>GridSearchCV(...)</code>：创建网格搜索对象</li>
+<li><code>cv=5</code>：5折交叉验证</li>
+<li><code>n_jobs=-1</code>：使用所有CPU核心并行计算，加速搜索</li>
+<li><code>best_params_</code>：最优参数</li>
+<li><code>best_score_</code>：交叉验证中的最高平均得分</li>
+<li><code>best_estimator_</code>：最优模型</li>
+</ul>
+<h2 id="8-4-完整示例：鸢尾花分类-网格搜索"><a href="#8-4-完整示例：鸢尾花分类-网格搜索" class="headerlink" title="8.4 完整示例：鸢尾花分类 + 网格搜索"></a>8.4 完整示例：鸢尾花分类 + 网格搜索</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.datasets <span class="hljs-keyword">import</span> load_iris<br><span class="hljs-keyword">from</span> sklearn.model_selection <span class="hljs-keyword">import</span> train_test_split, GridSearchCV<br><span class="hljs-keyword">from</span> sklearn.preprocessing <span class="hljs-keyword">import</span> StandardScaler<br><span class="hljs-keyword">from</span> sklearn.neighbors <span class="hljs-keyword">import</span> KNeighborsClassifier<br><br><span class="hljs-comment"># 1. 加载数据</span><br>iris = load_iris()<br>X = iris.data<br>y = iris.target<br><br><span class="hljs-comment"># 2. 划分数据集</span><br>X_train, X_test, y_train, y_test = train_test_split(<br>    X, y, test_size=<span class="hljs-number">0.2</span>, random_state=<span class="hljs-number">42</span><br>)<br><br><span class="hljs-comment"># 3. 特征标准化</span><br>scaler = StandardScaler()<br>X_train_scaled = scaler.fit_transform(X_train)<br>X_test_scaled = scaler.transform(X_test)<br><br><span class="hljs-comment"># 4. 创建模型</span><br>estimator = KNeighborsClassifier()<br><br><span class="hljs-comment"># 5. 定义参数网格</span><br>param_grid = &#123;<br>    <span class="hljs-string">&quot;n_neighbors&quot;</span>: <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-number">20</span>, <span class="hljs-number">2</span>),  <span class="hljs-comment"># 1, 3, 5, 7, 9, 11, 13, 15, 17, 19</span><br>    <span class="hljs-string">&quot;weights&quot;</span>: [<span class="hljs-string">&quot;uniform&quot;</span>, <span class="hljs-string">&quot;distance&quot;</span>],<br>    <span class="hljs-string">&quot;p&quot;</span>: [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>]  <span class="hljs-comment"># p=1曼哈顿距离，p=2欧氏距离</span><br>&#125;<br><br><span class="hljs-comment"># 6. 创建网格搜索对象</span><br>grid_search = GridSearchCV(<br>    estimator=estimator,<br>    param_grid=param_grid,<br>    cv=<span class="hljs-number">5</span>,              <span class="hljs-comment"># 5折交叉验证</span><br>    scoring=<span class="hljs-string">&#x27;accuracy&#x27;</span>,<br>    n_jobs=-<span class="hljs-number">1</span><br>)<br><br><span class="hljs-comment"># 7. 执行网格搜索</span><br>grid_search.fit(X_train_scaled, y_train)<br><br><span class="hljs-comment"># 8. 查看结果</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;最优参数: <span class="hljs-subst">&#123;grid_search.best_params_&#125;</span>&quot;</span>)<br><span class="hljs-comment"># 例如: &#123;&#x27;n_neighbors&#x27;: 5, &#x27;weights&#x27;: &#x27;uniform&#x27;, &#x27;p&#x27;: 2&#125;</span><br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;最优得分: <span class="hljs-subst">&#123;grid_search.best_score_:<span class="hljs-number">.4</span>f&#125;</span>&quot;</span>)<br><span class="hljs-comment"># 例如: 0.9750</span><br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;最优模型: <span class="hljs-subst">&#123;grid_search.best_estimator_&#125;</span>&quot;</span>)<br><span class="hljs-comment"># 例如: KNeighborsClassifier(n_neighbors=5)</span><br><br><span class="hljs-comment"># 9. 使用最优模型评估测试集</span><br>best_model = grid_search.best_estimator_<br>test_accuracy = best_model.score(X_test_scaled, y_test)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;测试集准确率: <span class="hljs-subst">&#123;test_accuracy:<span class="hljs-number">.4</span>f&#125;</span>&quot;</span>)<br><span class="hljs-comment"># 例如: 1.0000</span><br><br><span class="hljs-comment"># 10. 查看所有搜索结果</span><br>cv_results = grid_search.cv_results_<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;\n总共尝试了 <span class="hljs-subst">&#123;<span class="hljs-built_in">len</span>(cv_results[<span class="hljs-string">&#x27;params&#x27;</span>])&#125;</span> 种参数组合&quot;</span>)<br><span class="hljs-comment"># 10 × 2 × 2 = 40 种组合</span><br></code></pre></td></tr></table></figure>
+<p><strong>输出示例：</strong><br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">最优参数: &#123;&#x27;n_neighbors&#x27;: 5, &#x27;weights&#x27;: &#x27;uniform&#x27;, &#x27;p&#x27;: 2&#125;<br>最优得分: 0.9750<br>最优模型: KNeighborsClassifier(n_neighbors=5)<br>测试集准确率: 1.0000<br><br>总共尝试了 40 种参数组合<br></code></pre></td></tr></table></figure></p>
+<p><strong>这行在做什么？</strong></p>
+<ul>
+<li><code>param_grid</code>：定义了3个超参数的搜索范围<ul>
+<li><code>n_neighbors</code>：K值，从1到19的奇数</li>
+<li><code>weights</code>：权重方式，uniform（等权）或distance（距离加权）</li>
+<li><code>p</code>：闵可夫斯基距离的参数</li>
+</ul>
+</li>
+<li><code>cv=5</code>：5折交叉验证</li>
+<li><code>n_jobs=-1</code>：并行计算，加速搜索</li>
+</ul>
+<p><strong>网格搜索的优缺点：</strong></p>
+<ul>
+<li><strong>优点：</strong> 能找到最优参数组合</li>
+<li><strong>缺点：</strong> 计算量大，参数多时很慢</li>
+<li><strong>替代方案：</strong> 随机搜索（RandomizedSearchCV）、贝叶斯优化</li>
+</ul>
+<hr>
+<h1 id="9-KNN的优缺点"><a href="#9-KNN的优缺点" class="headerlink" title="9. KNN的优缺点"></a>9. KNN的优缺点</h1><h2 id="9-1-优点"><a href="#9-1-优点" class="headerlink" title="9.1 优点"></a>9.1 优点</h2><ol>
+<li><p><strong>简单易懂</strong></p>
+<ul>
+<li>算法思想直观，容易理解</li>
+<li>实现简单，不需要训练</li>
+</ul>
+</li>
+<li><p><strong>无需训练</strong></p>
+<ul>
+<li>惰性学习，训练阶段很快</li>
+<li>可以随时添加新数据</li>
+</ul>
+</li>
+<li><p><strong>适合多分类</strong></p>
+<ul>
+<li>天然支持多分类问题</li>
+<li>不需要像SVM那样做特殊处理</li>
+</ul>
+</li>
+<li><p><strong>非线性决策边界</strong></p>
+<ul>
+<li>可以处理非线性可分的数据</li>
+<li>决策边界灵活</li>
+</ul>
+</li>
+</ol>
+<h2 id="9-2-缺点"><a href="#9-2-缺点" class="headerlink" title="9.2 缺点"></a>9.2 缺点</h2><ol>
+<li><p><strong>预测慢</strong></p>
+<ul>
+<li>每次预测都要计算与所有训练样本的距离</li>
+<li>训练集大时很慢</li>
+</ul>
+</li>
+<li><p><strong>内存消耗大</strong></p>
+<ul>
+<li>需要保存所有训练数据</li>
+<li>不适合大数据集</li>
+</ul>
+</li>
+<li><p><strong>对特征尺度敏感</strong></p>
+<ul>
+<li>必须做特征标准化</li>
+<li>否则数值大的特征会主导距离计算</li>
+</ul>
+</li>
+<li><p><strong>对高维数据效果差</strong></p>
+<ul>
+<li>维度灾难（Curse of Dimensionality）</li>
+<li>高维空间中距离失去意义</li>
+</ul>
+</li>
+<li><p><strong>K值选择困难</strong></p>
+<ul>
+<li>K值对结果影响大</li>
+<li>需要通过交叉验证选择</li>
+</ul>
+</li>
+</ol>
+<h2 id="9-3-适用场景"><a href="#9-3-适用场景" class="headerlink" title="9.3 适用场景"></a>9.3 适用场景</h2><p><strong>适合：</strong></p>
+<ul>
+<li>小数据集</li>
+<li>低维特征</li>
+<li>多分类问题</li>
+<li>需要快速训练的场景</li>
+</ul>
+<p><strong>不适合：</strong></p>
+<ul>
+<li>大数据集</li>
+<li>高维特征（如文本、图像）</li>
+<li>需要快速预测的场景</li>
+<li>特征尺度差异大的场景（除非做标准化）</li>
+</ul>
+<hr>
+<h1 id="10-KNN-vs-深度学习"><a href="#10-KNN-vs-深度学习" class="headerlink" title="10. KNN vs 深度学习"></a>10. KNN vs 深度学习</h1><p>作为已经学过深度学习RNN的你，可能会问：KNN和深度学习有什么区别？</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>KNN</th>
+<th>深度学习（如RNN）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>学习方式</strong></td>
+<td>惰性学习，不训练</td>
+<td>主动学习，需要训练</td>
+</tr>
+<tr>
+<td><strong>模型复杂度</strong></td>
+<td>简单，无参数</td>
+<td>复杂，数百万参数</td>
+</tr>
+<tr>
+<td><strong>训练时间</strong></td>
+<td>几乎为0</td>
+<td>几小时到几天</td>
+</tr>
+<tr>
+<td><strong>预测时间</strong></td>
+<td>慢（计算所有距离）</td>
+<td>快（前向传播）</td>
+</tr>
+<tr>
+<td><strong>内存消耗</strong></td>
+<td>大（保存所有数据）</td>
+<td>小（只保存参数）</td>
+</tr>
+<tr>
+<td><strong>特征工程</strong></td>
+<td>必须做</td>
+<td>可以自动学习特征</td>
+</tr>
+<tr>
+<td><strong>数据量</strong></td>
+<td>小数据</td>
+<td>大数据</td>
+</tr>
+<tr>
+<td><strong>可解释性</strong></td>
+<td>高（可以看邻居）</td>
+<td>低（黑盒）</td>
+</tr>
+<tr>
+<td><strong>适用场景</strong></td>
+<td>小数据、低维</td>
+<td>大数据、高维</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>什么时候用KNN？</strong></p>
+<ul>
+<li>数据量小（&lt; 10万样本）</li>
+<li>特征维度低（&lt; 100维）</li>
+<li>需要快速原型验证</li>
+<li>需要可解释性</li>
+</ul>
+<p><strong>什么时候用深度学习？</strong></p>
+<ul>
+<li>数据量大（&gt; 10万样本）</li>
+<li>特征维度高（如文本、图像）</li>
+<li>需要自动学习特征</li>
+<li>追求最高性能</li>
+</ul>
+<hr>
+<h1 id="11-小结"><a href="#11-小结" class="headerlink" title="11. 小结"></a>11. 小结</h1><h2 id="11-1-核心概念"><a href="#11-1-核心概念" class="headerlink" title="11.1 核心概念"></a>11.1 核心概念</h2><ol>
+<li><p><strong>KNN算法思想</strong></p>
+<ul>
+<li>根据K个最近邻的多数表决进行分类</li>
+<li>根据K个最近邻的平均值进行回归</li>
+</ul>
+</li>
+<li><p><strong>距离度量</strong></p>
+<ul>
+<li>欧氏距离：直线距离，最常用</li>
+<li>曼哈顿距离：城市街区距离</li>
+<li>闵可夫斯基距离：通用公式</li>
+</ul>
+</li>
+<li><p><strong>K值选择</strong></p>
+<ul>
+<li>K太小：过拟合</li>
+<li>K太大：欠拟合</li>
+<li>通过交叉验证选择最优K</li>
+</ul>
+</li>
+<li><p><strong>特征预处理</strong></p>
+<ul>
+<li>归一化：映射到[0,1]</li>
+<li>标准化：转换为均值为0，标准差为1</li>
+<li>KNN必须做特征标准化</li>
+</ul>
+</li>
+<li><p><strong>交叉验证和网格搜索</strong></p>
+<ul>
+<li>交叉验证：评估模型稳定性</li>
+<li>网格搜索：寻找最优超参数</li>
+</ul>
+</li>
+</ol>
+<h2 id="11-2-完整流程"><a href="#11-2-完整流程" class="headerlink" title="11.2 完整流程"></a>11.2 完整流程</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">1. 加载数据<br>   ↓<br>2. 划分训练集和测试集<br>   ↓<br>3. 特征标准化（必须！）<br>   ↓<br>4. 创建KNN模型<br>   ↓<br>5. 交叉验证网格搜索（选择最优K值）<br>   ↓<br>6. 使用最优模型训练<br>   ↓<br>7. 在测试集上评估<br>   ↓<br>8. 对新数据进行预测<br></code></pre></td></tr></table></figure>
+<h2 id="11-3-关键代码"><a href="#11-3-关键代码" class="headerlink" title="11.3 关键代码"></a>11.3 关键代码</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 1. 导入工具包</span><br><span class="hljs-keyword">from</span> sklearn.neighbors <span class="hljs-keyword">import</span> KNeighborsClassifier<br><span class="hljs-keyword">from</span> sklearn.preprocessing <span class="hljs-keyword">import</span> StandardScaler<br><span class="hljs-keyword">from</span> sklearn.model_selection <span class="hljs-keyword">import</span> train_test_split, GridSearchCV<br><br><span class="hljs-comment"># 2. 划分数据集</span><br>X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=<span class="hljs-number">0.2</span>)<br><br><span class="hljs-comment"># 3. 特征标准化</span><br>scaler = StandardScaler()<br>X_train_scaled = scaler.fit_transform(X_train)<br>X_test_scaled = scaler.transform(X_test)<br><br><span class="hljs-comment"># 4. 网格搜索</span><br>param_grid = &#123;<span class="hljs-string">&quot;n_neighbors&quot;</span>: <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-number">20</span>, <span class="hljs-number">2</span>)&#125;<br>grid_search = GridSearchCV(KNeighborsClassifier(), param_grid, cv=<span class="hljs-number">5</span>)<br>grid_search.fit(X_train_scaled, y_train)<br><br><span class="hljs-comment"># 5. 使用最优模型</span><br>best_model = grid_search.best_estimator_<br>accuracy = best_model.score(X_test_scaled, y_test)<br></code></pre></td></tr></table></figure>
+<hr>
+<h1 id="12-作业"><a href="#12-作业" class="headerlink" title="12. 作业"></a>12. 作业</h1><h2 id="基础题"><a href="#基础题" class="headerlink" title="基础题"></a>基础题</h2><ol>
+<li><p><strong>简答题：</strong> 解释KNN算法的核心思想，用自己的话描述。</p>
+</li>
+<li><p><strong>计算题：</strong> 给定以下数据，使用KNN（K=3，欧氏距离）预测未知样本的类别：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">训练数据：<br>A(1, 2) → 类别0<br>B(2, 3) → 类别0<br>C(3, 4) → 类别1<br>D(6, 7) → 类别1<br>E(7, 8) → 类别1<br><br>未知样本：X(4, 5)<br></code></pre></td></tr></table></figure>
+<p>请计算X到各训练样本的距离，并给出预测结果。</p>
+</li>
+<li><p><strong>简答题：</strong> 为什么KNN算法必须做特征标准化？如果不做会怎样？</p>
+</li>
+<li><p><strong>简答题：</strong> 比较归一化和标准化的区别，分别适用于什么场景？</p>
+</li>
+</ol>
+<h2 id="编程题"><a href="#编程题" class="headerlink" title="编程题"></a>编程题</h2><ol>
+<li><p><strong>从零实现KNN：</strong> 不依赖sklearn，从零实现一个KNN分类器，要求：</p>
+<ul>
+<li>支持欧氏距离和曼哈顿距离</li>
+<li>支持分类和回归</li>
+<li>在鸢尾花数据集上测试</li>
+</ul>
+</li>
+<li><p><strong>鸢尾花分类：</strong> 使用sklearn的KNN API完成鸢尾花分类，要求：</p>
+<ul>
+<li>进行特征标准化</li>
+<li>使用网格搜索选择最优K值</li>
+<li>输出最优参数和准确率</li>
+</ul>
+</li>
+<li><p><strong>对比实验：</strong> 比较不同K值（1, 3, 5, 7, 9, 11）在鸢尾花数据集上的表现，绘制K值-准确率曲线。</p>
+</li>
+</ol>
+<h2 id="思考题"><a href="#思考题" class="headerlink" title="思考题"></a>思考题</h2><ol>
+<li><p><strong>思考题：</strong> KNN算法的”训练”阶段和”预测”阶段分别做了什么？为什么说KNN是”惰性学习”？</p>
+</li>
+<li><p><strong>思考题：</strong> 如果特征维度很高（如1000维），KNN会遇到什么问题？如何解决？</p>
+</li>
+<li><p><strong>思考题：</strong> 对比KNN和你在深度学习中学到的RNN，它们各自适合什么场景？为什么？</p>
+</li>
+</ol>
+<hr>
+<h1 id="附录：常见错误和解决方案"><a href="#附录：常见错误和解决方案" class="headerlink" title="附录：常见错误和解决方案"></a>附录：常见错误和解决方案</h1><h2 id="错误1：忘记做特征标准化"><a href="#错误1：忘记做特征标准化" class="headerlink" title="错误1：忘记做特征标准化"></a>错误1：忘记做特征标准化</h2><p><strong>错误代码：</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 错误：直接训练</span><br>knn = KNeighborsClassifier()<br>knn.fit(X_train, y_train)  <span class="hljs-comment"># 没有标准化！</span><br></code></pre></td></tr></table></figure></p>
+<p><strong>正确代码：</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 正确：先标准化</span><br>scaler = StandardScaler()<br>X_train_scaled = scaler.fit_transform(X_train)<br>X_test_scaled = scaler.transform(X_test)<br><br>knn = KNeighborsClassifier()<br>knn.fit(X_train_scaled, y_train)<br></code></pre></td></tr></table></figure></p>
+<h2 id="错误2：在测试集上fit"><a href="#错误2：在测试集上fit" class="headerlink" title="错误2：在测试集上fit"></a>错误2：在测试集上fit</h2><p><strong>错误代码：</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">scaler = StandardScaler()<br>X_train_scaled = scaler.fit_transform(X_train)<br>X_test_scaled = scaler.fit_transform(X_test)  <span class="hljs-comment"># 错误！重新计算了均值和标准差</span><br></code></pre></td></tr></table></figure></p>
+<p><strong>正确代码：</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">scaler = StandardScaler()<br>X_train_scaled = scaler.fit_transform(X_train)<br>X_test_scaled = scaler.transform(X_test)  <span class="hljs-comment"># 正确：使用训练集的均值和标准差</span><br></code></pre></td></tr></table></figure></p>
+<h2 id="错误3：K值选择为偶数"><a href="#错误3：K值选择为偶数" class="headerlink" title="错误3：K值选择为偶数"></a>错误3：K值选择为偶数</h2><p><strong>问题：</strong> K=4时可能出现2:2平局</p>
+<p><strong>解决：</strong> 选择奇数K值，如3, 5, 7</p>
+<h2 id="错误4：数据量太大"><a href="#错误4：数据量太大" class="headerlink" title="错误4：数据量太大"></a>错误4：数据量太大</h2><p><strong>问题：</strong> KNN预测时需要计算与所有训练样本的距离，数据量大时很慢</p>
+<p><strong>解决：</strong></p>
+<ul>
+<li>使用近似最近邻算法（如KD-Tree、Ball-Tree）</li>
+<li>降维（PCA）</li>
+<li>考虑其他算法（如决策树、SVM）</li>
+</ul>
+<hr>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2026/10/15/ml5/">← 下一篇 首次感到差异</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/10/15/ml3/">KNN算法 上一篇 →</a></div></div></div><div id="comments"><div id="giscus"></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="回到顶部" style="opacity: 0; display: none;">∧ </a><a class="i-index" id="to-index" onClick="tocControl.change()" title="文章目录"><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span></a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="切换主题"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">John Doe</a></h1><div id="description"><p></p></div><div id="social-links"><a class="social" target="_blank" rel="noopener" href="https://github.com/juicer0801"><i class="fab fa-github" alt="GitHub"></i></a></div></div><div id="aside-block"><div id="toc-div"><h1>目录</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC2%E7%AB%A0-KNN%E7%AE%97%E6%B3%95%EF%BC%88K-Nearest-Neighbors%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">第2章 KNN算法（K-Nearest Neighbors）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#1-KNN%E7%AE%97%E6%B3%95%E6%80%9D%E6%83%B3"><span class="toc-number">2.</span> <span class="toc-text">1. KNN算法思想</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-%E4%BB%80%E4%B9%88%E6%98%AFKNN%EF%BC%9F"><span class="toc-number">2.1.</span> <span class="toc-text">1.1 什么是KNN？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-%E4%B8%80%E4%B8%AA%E7%9B%B4%E8%A7%82%E7%9A%84%E4%BE%8B%E5%AD%90%EF%BC%9A%E7%94%B5%E5%BD%B1%E5%88%86%E7%B1%BB"><span class="toc-number">2.2.</span> <span class="toc-text">1.2 一个直观的例子：电影分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-3-KNN%E7%9A%84%E4%B8%A4%E7%A7%8D%E5%BA%94%E7%94%A8%E6%96%B9%E5%BC%8F"><span class="toc-number">2.3.</span> <span class="toc-text">1.3 KNN的两种应用方式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E7%B1%BB%E9%97%AE%E9%A2%98"><span class="toc-number">2.3.1.</span> <span class="toc-text">分类问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9E%E5%BD%92%E9%97%AE%E9%A2%98"><span class="toc-number">2.3.2.</span> <span class="toc-text">回归问题</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-%E8%B7%9D%E7%A6%BB%E5%BA%A6%E9%87%8F%E6%96%B9%E6%B3%95"><span class="toc-number">3.</span> <span class="toc-text">2. 距离度量方法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-%E6%AC%A7%E6%B0%8F%E8%B7%9D%E7%A6%BB%EF%BC%88Euclidean-Distance%EF%BC%89"><span class="toc-number">3.1.</span> <span class="toc-text">2.1 欧氏距离（Euclidean Distance）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-%E6%9B%BC%E5%93%88%E9%A1%BF%E8%B7%9D%E7%A6%BB%EF%BC%88Manhattan-Distance%EF%BC%89"><span class="toc-number">3.2.</span> <span class="toc-text">2.2 曼哈顿距离（Manhattan Distance）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-3-%E5%88%87%E6%AF%94%E9%9B%AA%E5%A4%AB%E8%B7%9D%E7%A6%BB%EF%BC%88Chebyshev-Distance%EF%BC%89"><span class="toc-number">3.3.</span> <span class="toc-text">2.3 切比雪夫距离（Chebyshev Distance）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-4-%E9%97%B5%E5%8F%AF%E5%A4%AB%E6%96%AF%E5%9F%BA%E8%B7%9D%E7%A6%BB%EF%BC%88Minkowski-Distance%EF%BC%89"><span class="toc-number">3.4.</span> <span class="toc-text">2.4 闵可夫斯基距离（Minkowski Distance）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-5-%E8%B7%9D%E7%A6%BB%E5%BA%A6%E9%87%8F%E6%96%B9%E6%B3%95%E5%AF%B9%E6%AF%94"><span class="toc-number">3.5.</span> <span class="toc-text">2.5 距离度量方法对比</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-K%E5%80%BC%E9%80%89%E6%8B%A9"><span class="toc-number">4.</span> <span class="toc-text">3. K值选择</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-K%E5%80%BC%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="toc-number">4.1.</span> <span class="toc-text">3.1 K值的影响</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-%E5%8F%AF%E8%A7%86%E5%8C%96%E7%90%86%E8%A7%A3K%E5%80%BC%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="toc-number">4.2.</span> <span class="toc-text">3.2 可视化理解K值的影响</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-%E7%89%B9%E5%BE%81%E9%A2%84%E5%A4%84%E7%90%86"><span class="toc-number">5.</span> <span class="toc-text">4. 特征预处理</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#4-1-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%81%9A%E7%89%B9%E5%BE%81%E9%A2%84%E5%A4%84%E7%90%86%EF%BC%9F"><span class="toc-number">5.1.</span> <span class="toc-text">4.1 为什么要做特征预处理？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-2-%E5%BD%92%E4%B8%80%E5%8C%96%EF%BC%88Min-Max-Scaling%EF%BC%89"><span class="toc-number">5.2.</span> <span class="toc-text">4.2 归一化（Min-Max Scaling）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-3-%E6%A0%87%E5%87%86%E5%8C%96%EF%BC%88Standardization-Z-score-Normalization%EF%BC%89"><span class="toc-number">5.3.</span> <span class="toc-text">4.3 标准化（Standardization &#x2F; Z-score Normalization）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-4-%E5%BD%92%E4%B8%80%E5%8C%96-vs-%E6%A0%87%E5%87%86%E5%8C%96"><span class="toc-number">5.4.</span> <span class="toc-text">4.4 归一化 vs 标准化</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#5-%E4%BB%8E%E9%9B%B6%E5%AE%9E%E7%8E%B0KNN%E5%88%86%E7%B1%BB%E5%99%A8"><span class="toc-number">6.</span> <span class="toc-text">5. 从零实现KNN分类器</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#5-1-%E5%AE%8C%E6%95%B4%E4%BB%A3%E7%A0%81"><span class="toc-number">6.1.</span> <span class="toc-text">5.1 完整代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-2-%E9%80%90%E8%A1%8C%E8%A7%A3%E6%9E%90"><span class="toc-number">6.2.</span> <span class="toc-text">5.2 逐行解析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96%E6%96%B9%E6%B3%95-init"><span class="toc-number">6.2.1.</span> <span class="toc-text">初始化方法 __init__</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%AD%E7%BB%83%E6%96%B9%E6%B3%95-fit"><span class="toc-number">6.2.2.</span> <span class="toc-text">训练方法 fit</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%B7%9D%E7%A6%BB%E8%AE%A1%E7%AE%97%E6%96%B9%E6%B3%95-compute-distance"><span class="toc-number">6.2.3.</span> <span class="toc-text">距离计算方法 _compute_distance</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%95%E6%A0%B7%E6%9C%AC%E9%A2%84%E6%B5%8B%E6%96%B9%E6%B3%95-predict-one"><span class="toc-number">6.2.4.</span> <span class="toc-text">单样本预测方法 _predict_one</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E6%A0%B7%E6%9C%AC%E9%A2%84%E6%B5%8B%E6%96%B9%E6%B3%95-predict"><span class="toc-number">6.2.5.</span> <span class="toc-text">多样本预测方法 predict</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%84%E4%BC%B0%E6%96%B9%E6%B3%95-score"><span class="toc-number">6.2.6.</span> <span class="toc-text">评估方法 score</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-3-%E6%B5%8B%E8%AF%95%E6%88%91%E4%BB%AC%E7%9A%84KNN%E5%88%86%E7%B1%BB%E5%99%A8"><span class="toc-number">6.3.</span> <span class="toc-text">5.3 测试我们的KNN分类器</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#6-%E4%BD%BF%E7%94%A8sklearn%E7%9A%84KNN-API"><span class="toc-number">7.</span> <span class="toc-text">6. 使用sklearn的KNN API</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#6-1-%E5%88%86%E7%B1%BBAPI"><span class="toc-number">7.1.</span> <span class="toc-text">6.1 分类API</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-2-%E5%9B%9E%E5%BD%92API"><span class="toc-number">7.2.</span> <span class="toc-text">6.2 回归API</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-3-%E5%AE%8C%E6%95%B4%E7%A4%BA%E4%BE%8B"><span class="toc-number">7.3.</span> <span class="toc-text">6.3 完整示例</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#7-%E9%B8%A2%E5%B0%BE%E8%8A%B1%E5%88%86%E7%B1%BB%E5%AE%8C%E6%95%B4%E6%A1%88%E4%BE%8B"><span class="toc-number">8.</span> <span class="toc-text">7. 鸢尾花分类完整案例</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#7-1-%E6%95%B0%E6%8D%AE%E9%9B%86%E4%BB%8B%E7%BB%8D"><span class="toc-number">8.1.</span> <span class="toc-text">7.1 数据集介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-2-%E5%AE%8C%E6%95%B4%E4%BB%A3%E7%A0%81"><span class="toc-number">8.2.</span> <span class="toc-text">7.2 完整代码</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#8-%E4%BA%A4%E5%8F%89%E9%AA%8C%E8%AF%81%E5%92%8C%E7%BD%91%E6%A0%BC%E6%90%9C%E7%B4%A2"><span class="toc-number">9.</span> <span class="toc-text">8. 交叉验证和网格搜索</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#8-1-%E4%BA%A4%E5%8F%89%E9%AA%8C%E8%AF%81%EF%BC%88Cross-Validation%EF%BC%89"><span class="toc-number">9.1.</span> <span class="toc-text">8.1 交叉验证（Cross-Validation）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-2-%E7%BD%91%E6%A0%BC%E6%90%9C%E7%B4%A2%EF%BC%88Grid-Search%EF%BC%89"><span class="toc-number">9.2.</span> <span class="toc-text">8.2 网格搜索（Grid Search）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-3-%E4%BA%A4%E5%8F%89%E9%AA%8C%E8%AF%81%E7%BD%91%E6%A0%BC%E6%90%9C%E7%B4%A2API"><span class="toc-number">9.3.</span> <span class="toc-text">8.3 交叉验证网格搜索API</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-4-%E5%AE%8C%E6%95%B4%E7%A4%BA%E4%BE%8B%EF%BC%9A%E9%B8%A2%E5%B0%BE%E8%8A%B1%E5%88%86%E7%B1%BB-%E7%BD%91%E6%A0%BC%E6%90%9C%E7%B4%A2"><span class="toc-number">9.4.</span> <span class="toc-text">8.4 完整示例：鸢尾花分类 + 网格搜索</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#9-KNN%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-number">10.</span> <span class="toc-text">9. KNN的优缺点</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#9-1-%E4%BC%98%E7%82%B9"><span class="toc-number">10.1.</span> <span class="toc-text">9.1 优点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-2-%E7%BC%BA%E7%82%B9"><span class="toc-number">10.2.</span> <span class="toc-text">9.2 缺点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-3-%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">10.3.</span> <span class="toc-text">9.3 适用场景</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#10-KNN-vs-%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0"><span class="toc-number">11.</span> <span class="toc-text">10. KNN vs 深度学习</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#11-%E5%B0%8F%E7%BB%93"><span class="toc-number">12.</span> <span class="toc-text">11. 小结</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#11-1-%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5"><span class="toc-number">12.1.</span> <span class="toc-text">11.1 核心概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-2-%E5%AE%8C%E6%95%B4%E6%B5%81%E7%A8%8B"><span class="toc-number">12.2.</span> <span class="toc-text">11.2 完整流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-3-%E5%85%B3%E9%94%AE%E4%BB%A3%E7%A0%81"><span class="toc-number">12.3.</span> <span class="toc-text">11.3 关键代码</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#12-%E4%BD%9C%E4%B8%9A"><span class="toc-number">13.</span> <span class="toc-text">12. 作业</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E9%A2%98"><span class="toc-number">13.1.</span> <span class="toc-text">基础题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E7%A8%8B%E9%A2%98"><span class="toc-number">13.2.</span> <span class="toc-text">编程题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E9%A2%98"><span class="toc-number">13.3.</span> <span class="toc-text">思考题</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%99%84%E5%BD%95%EF%BC%9A%E5%B8%B8%E8%A7%81%E9%94%99%E8%AF%AF%E5%92%8C%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="toc-number">14.</span> <span class="toc-text">附录：常见错误和解决方案</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%94%99%E8%AF%AF1%EF%BC%9A%E5%BF%98%E8%AE%B0%E5%81%9A%E7%89%B9%E5%BE%81%E6%A0%87%E5%87%86%E5%8C%96"><span class="toc-number">14.1.</span> <span class="toc-text">错误1：忘记做特征标准化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%94%99%E8%AF%AF2%EF%BC%9A%E5%9C%A8%E6%B5%8B%E8%AF%95%E9%9B%86%E4%B8%8Afit"><span class="toc-number">14.2.</span> <span class="toc-text">错误2：在测试集上fit</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%94%99%E8%AF%AF3%EF%BC%9AK%E5%80%BC%E9%80%89%E6%8B%A9%E4%B8%BA%E5%81%B6%E6%95%B0"><span class="toc-number">14.3.</span> <span class="toc-text">错误3：K值选择为偶数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%94%99%E8%AF%AF4%EF%BC%9A%E6%95%B0%E6%8D%AE%E9%87%8F%E5%A4%AA%E5%A4%A7"><span class="toc-number">14.4.</span> <span class="toc-text">错误4：数据量太大</span></a></li></ol></li></ol></div></div><footer><nobr>构建自 <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> 使用主题 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> 主题作者 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>

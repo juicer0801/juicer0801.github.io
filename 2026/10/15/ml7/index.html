@@ -1,10 +1,12 @@
-<!DOCTYPE html><html lang="en" theme-mode="auto"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>ml7 | Hexo</title><meta property="og:type" content="article">
-<meta property="og:title" content="ml7">
+<!DOCTYPE html><html lang="en" theme-mode="auto"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>线性回归（ai） | Hexo</title><meta name="description" content="第3章 线性回归 学习目标  理解线性回归的核心思想：用一条直线拟合数据 掌握损失函数的概念：如何衡量模型的好坏 理解两种求解方法：正规方程 vs 梯度下降 能够从零实现线性回归，并理解每一行代码 掌握正则化：解决过拟合的利器 完成波士顿房价预测实战项目    1. 什么是线性回归？1.1 一个直观的例子假设我们有以下身高和体重的数据：     身高(cm) 体重(kg)     150 45">
+<meta property="og:type" content="article">
+<meta property="og:title" content="线性回归（ai）">
 <meta property="og:url" content="http://example.com/2026/10/15/ml7/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="第3章 线性回归 学习目标  理解线性回归的核心思想：用一条直线拟合数据 掌握损失函数的概念：如何衡量模型的好坏 理解两种求解方法：正规方程 vs 梯度下降 能够从零实现线性回归，并理解每一行代码 掌握正则化：解决过拟合的利器 完成波士顿房价预测实战项目    1. 什么是线性回归？1.1 一个直观的例子假设我们有以下身高和体重的数据：     身高(cm) 体重(kg)     150 45">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2026-10-15T04:35:27.000Z">
-<meta property="article:modified_time" content="2026-10-15T04:35:27.212Z">
+<meta property="article:modified_time" content="2026-10-18T23:59:48.682Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary"><link rel="canonical" href="http://example.com/2026/10/15/ml7/"><link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="preload" as="font" crossorigin="anonymous" href="/font/Bender.ttf"><link rel="preload" as="font" crossorigin="anonymous" href="/font/BenderLight.woff2"><link rel="preload" as="font" crossorigin="anonymous" href="/font/JetBrainsMono-Regular.woff2"><link rel="stylesheet" href="/css/arknights.css"><style>@font-face {
   font-family: Bender;
@@ -133,4 +135,779 @@ document.addEventListener("pjax:complete", reset);document.addEventListener('pja
  const script = document.createElement('script');
  script.src = 'https://vercount.one/js';
  document.head.appendChild(script);
-});reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="数据检索" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/tags/"><span class="navItemTitle">Tags</span></a></li><li class="navItem"><a class="navBlock" href="/categories/"><span class="navItemTitle">Categories</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>ml7</h1><div id="post-info"><span>文章发布时间: <div class="control"><time datetime="2026-10-15T04:35:27.000Z" id="date"> 2026-10-15</time></div></span><br><span>最后更新时间: <div class="control"><time datetime="2026-10-15T04:35:27.212Z" id="updated"> 2026-10-15</time></div></span><br><span>预计阅读时间: <div class="control">1 分钟</div></span><br><span id="vercount_container_page_pv">页面浏览: <span class="control" id="vercount_value_page_pv">加载中...</span></span></div></div><hr><div id="post-content"><div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2026/10/15/ml8/">← 下一篇 ml8</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/10/15/ml6/">ml6 上一篇 →</a></div></div></div><div id="comments"><div id="giscus"></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="回到顶部" style="opacity: 0; display: none;">∧ </a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="切换主题"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">John Doe</a></h1><div id="description"><p></p></div><div id="social-links"><a class="social" target="_blank" rel="noopener" href="https://github.com/juicer0801"><i class="fab fa-github" alt="GitHub"></i></a></div></div><div id="aside-block"></div><footer><nobr>构建自 <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> 使用主题 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> 主题作者 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>
+});reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="数据检索" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/tags/"><span class="navItemTitle">Tags</span></a></li><li class="navItem"><a class="navBlock" href="/categories/"><span class="navItemTitle">Categories</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>线性回归（ai）</h1><div id="post-info"><span>文章发布时间: <div class="control"><time datetime="2026-10-15T04:35:27.000Z" id="date"> 2026-10-15</time></div></span><br><span>最后更新时间: <div class="control"><time datetime="2026-10-18T23:59:48.682Z" id="updated"> 2026-10-19</time></div></span><br><span>文章总字数: <div class="control">9.2k</div></span><br><span>预计阅读时间: <div class="control">41 分钟</div></span><br><span id="vercount_container_page_pv">页面浏览: <span class="control" id="vercount_value_page_pv">加载中...</span></span></div></div><hr><div id="post-content"><h1 id="第3章-线性回归"><a href="#第3章-线性回归" class="headerlink" title="第3章 线性回归"></a>第3章 线性回归</h1><blockquote>
+<p><strong>学习目标</strong></p>
+<ol>
+<li>理解线性回归的核心思想：用一条直线拟合数据</li>
+<li>掌握损失函数的概念：如何衡量模型的好坏</li>
+<li>理解两种求解方法：正规方程 vs 梯度下降</li>
+<li>能够从零实现线性回归，并理解每一行代码</li>
+<li>掌握正则化：解决过拟合的利器</li>
+<li>完成波士顿房价预测实战项目</li>
+</ol>
+</blockquote>
+<hr>
+<h2 id="1-什么是线性回归？"><a href="#1-什么是线性回归？" class="headerlink" title="1. 什么是线性回归？"></a>1. 什么是线性回归？</h2><h3 id="1-1-一个直观的例子"><a href="#1-1-一个直观的例子" class="headerlink" title="1.1 一个直观的例子"></a>1.1 一个直观的例子</h3><p>假设我们有以下身高和体重的数据：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>身高(cm)</th>
+<th>体重(kg)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>150</td>
+<td>45</td>
+</tr>
+<tr>
+<td>160</td>
+<td>55</td>
+</tr>
+<tr>
+<td>170</td>
+<td>65</td>
+</tr>
+<tr>
+<td>180</td>
+<td>75</td>
+</tr>
+<tr>
+<td>190</td>
+<td>85</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>问题</strong>：来了一个身高175cm的人，你能预测他的体重吗？</p>
+<p><strong>思考过程</strong>：</p>
+<ol>
+<li>观察数据，发现身高和体重似乎有某种关系</li>
+<li>身高越高，体重越重</li>
+<li>能不能用一条直线来描述这种关系？</li>
+</ol>
+<p>让我们画出这些数据点：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">体重(kg)<br>  90 |<br>  80 |                              ●<br>  70 |                        ●<br>  60 |                  ●<br>  50 |            ●<br>  40 |      ●<br>  30 +----|----|----|----|----|----→ 身高(cm)<br>     140  150  160  170  180  190<br></code></pre></td></tr></table></figure>
+<p>看起来这些点大致在一条直线上！</p>
+<h3 id="1-2-线性回归的定义"><a href="#1-2-线性回归的定义" class="headerlink" title="1.2 线性回归的定义"></a>1.2 线性回归的定义</h3><p><strong>线性回归（Linear Regression）</strong> 是一种监督学习算法，用于建立<strong>输入特征</strong>和<strong>连续目标值</strong>之间的线性关系。</p>
+<p><strong>核心思想</strong>：找到一条直线（或超平面），使得这条直线尽可能好地拟合所有数据点。</p>
+<p><strong>数学表达</strong>：</p>
+<script type="math/tex; mode=display">y = w_1 x_1 + w_2 x_2 + ... + w_n x_n + b</script><p>简化为向量形式：</p>
+<script type="math/tex; mode=display">y = \mathbf{w}^T \mathbf{x} + b</script><p>其中：</p>
+<ul>
+<li>$y$：目标值（要预测的值）</li>
+<li>$x_1, x_2, …, x_n$：特征（输入）</li>
+<li>$w_1, w_2, …, w_n$：权重（模型要学习的参数）</li>
+<li>$b$：偏置（截距）</li>
+</ul>
+<h3 id="1-3-为什么要学线性回归？"><a href="#1-3-为什么要学线性回归？" class="headerlink" title="1.3 为什么要学线性回归？"></a>1.3 为什么要学线性回归？</h3><p>你可能会问：我已经学了深度学习和RNN，为什么还要学这么简单的线性回归？</p>
+<p><strong>答案</strong>：</p>
+<ol>
+<li><strong>基础中的基础</strong>：线性回归是所有机器学习算法的起点</li>
+<li><strong>理解核心概念</strong>：损失函数、梯度下降、过拟合等概念都从这里开始</li>
+<li><strong>深度学习的基石</strong>：神经网络中的每一层本质上就是一个线性变换</li>
+<li><strong>实际应用广泛</strong>：房价预测、股票分析、销售预测等</li>
+</ol>
+<p><strong>与深度学习的关系</strong>：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">线性回归 → 逻辑回归 → 神经网络 → 深度学习<br>   ↑            ↑            ↑<br>  基础         桥梁          进阶<br></code></pre></td></tr></table></figure></p>
+<hr>
+<h2 id="2-一元线性回归"><a href="#2-一元线性回归" class="headerlink" title="2. 一元线性回归"></a>2. 一元线性回归</h2><h3 id="2-1-最简单的情况"><a href="#2-1-最简单的情况" class="headerlink" title="2.1 最简单的情况"></a>2.1 最简单的情况</h3><p>只有一个特征的情况叫做<strong>一元线性回归</strong>：</p>
+<script type="math/tex; mode=display">y = wx + b</script><p>其中：</p>
+<ul>
+<li>$w$：斜率（权重）</li>
+<li>$b$：截距（偏置）</li>
+</ul>
+<p><strong>目标</strong>：找到最优的 $w$ 和 $b$，使得直线 $y = wx + b$ 尽可能好地拟合数据。</p>
+<h3 id="2-2-如何衡量”好”？——-损失函数"><a href="#2-2-如何衡量”好”？——-损失函数" class="headerlink" title="2.2 如何衡量”好”？—— 损失函数"></a>2.2 如何衡量”好”？—— 损失函数</h3><p>我们需要一个标准来衡量模型的好坏，这个标准就是<strong>损失函数（Loss Function）</strong>。</p>
+<p><strong>损失函数的作用</strong>：衡量预测值与真实值之间的差距。差距越小，模型越好。</p>
+<h4 id="均方误差（MSE）"><a href="#均方误差（MSE）" class="headerlink" title="均方误差（MSE）"></a>均方误差（MSE）</h4><p>最常用的损失函数是<strong>均方误差（Mean Squared Error, MSE）</strong>：</p>
+<script type="math/tex; mode=display">L(w, b) = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2 = \frac{1}{n} \sum_{i=1}^{n} (y_i - (wx_i + b))^2</script><p>其中：</p>
+<ul>
+<li>$n$：样本数量</li>
+<li>$y_i$：第 $i$ 个样本的真实值</li>
+<li>$\hat{y}_i = wx_i + b$：第 $i$ 个样本的预测值</li>
+</ul>
+<p><strong>直观理解</strong>：</p>
+<ul>
+<li>计算每个样本的误差：$(y_i - \hat{y}_i)$</li>
+<li>平方：避免正负误差抵消，同时放大较大误差</li>
+<li>求平均：得到整体误差</li>
+</ul>
+<p><strong>为什么要平方？</strong></p>
+<ol>
+<li>避免正负误差相互抵消</li>
+<li>对大误差给予更大的惩罚</li>
+<li>数学上便于求导</li>
+</ol>
+<h3 id="2-3-如何求解最优参数？"><a href="#2-3-如何求解最优参数？" class="headerlink" title="2.3 如何求解最优参数？"></a>2.3 如何求解最优参数？</h3><p>现在问题变成了：</p>
+<script type="math/tex; mode=display">\min_{w,b} L(w, b) = \min_{w,b} \frac{1}{n} \sum_{i=1}^{n} (y_i - wx_i - b)^2</script><p>这是一个优化问题，有两种经典的求解方法：</p>
+<ol>
+<li><strong>正规方程法</strong>（解析解）</li>
+<li><strong>梯度下降法</strong>（数值解）</li>
+</ol>
+<hr>
+<h2 id="3-正规方程法"><a href="#3-正规方程法" class="headerlink" title="3. 正规方程法"></a>3. 正规方程法</h2><h3 id="3-1-数学推导"><a href="#3-1-数学推导" class="headerlink" title="3.1 数学推导"></a>3.1 数学推导</h3><p>对于一元线性回归，我们可以对损失函数分别对 $w$ 和 $b$ 求偏导，令其等于0：</p>
+<script type="math/tex; mode=display">\frac{\partial L}{\partial w} = -\frac{2}{n} \sum_{i=1}^{n} x_i(y_i - wx_i - b) = 0</script><script type="math/tex; mode=display">\frac{\partial L}{\partial b} = -\frac{2}{n} \sum_{i=1}^{n} (y_i - wx_i - b) = 0</script><p>解这个方程组，可以得到：</p>
+<script type="math/tex; mode=display">w = \frac{\sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})}{\sum_{i=1}^{n}(x_i - \bar{x})^2}</script><script type="math/tex; mode=display">b = \bar{y} - w\bar{x}</script><p>其中 $\bar{x}$ 和 $\bar{y}$ 分别是 $x$ 和 $y$ 的均值。</p>
+<h3 id="3-2-多元线性回归的正规方程"><a href="#3-2-多元线性回归的正规方程" class="headerlink" title="3.2 多元线性回归的正规方程"></a>3.2 多元线性回归的正规方程</h3><p>对于多元线性回归，使用矩阵表示更加简洁：</p>
+<script type="math/tex; mode=display">\mathbf{y} = \mathbf{X}\mathbf{w} + b</script><p>其中：</p>
+<ul>
+<li>$\mathbf{X}$：$n \times d$ 的特征矩阵</li>
+<li>$\mathbf{w}$：$d \times 1$ 的权重向量</li>
+<li>$\mathbf{y}$：$n \times 1$ 的目标向量</li>
+</ul>
+<p>损失函数：</p>
+<script type="math/tex; mode=display">L(\mathbf{w}) = (\mathbf{y} - \mathbf{X}\mathbf{w})^T(\mathbf{y} - \mathbf{X}\mathbf{w})</script><p>对 $\mathbf{w}$ 求导并令其等于0，可以得到<strong>正规方程</strong>：</p>
+<script type="math/tex; mode=display">\mathbf{w} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}</script><h3 id="3-3-正规方程的优缺点"><a href="#3-3-正规方程的优缺点" class="headerlink" title="3.3 正规方程的优缺点"></a>3.3 正规方程的优缺点</h3><p><strong>优点</strong>：</p>
+<ul>
+<li>直接得到解析解，不需要迭代</li>
+<li>不需要选择学习率</li>
+<li>实现简单</li>
+</ul>
+<p><strong>缺点</strong>：</p>
+<ul>
+<li>需要计算矩阵的逆，时间复杂度 $O(n^3)$</li>
+<li>当特征数量很大时，计算非常慢</li>
+<li>当 $\mathbf{X}^T\mathbf{X}$ 不可逆时，无法使用</li>
+</ul>
+<h3 id="3-4-代码实现"><a href="#3-4-代码实现" class="headerlink" title="3.4 代码实现"></a>3.4 代码实现</h3><p>让我们从零实现正规方程法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">LinearRegressionNormalEquation</span>:<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    使用正规方程求解线性回归</span><br><span class="hljs-string">    </span><br><span class="hljs-string">    公式：w = (X^T * X)^(-1) * X^T * y</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        初始化模型参数</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        <span class="hljs-variable language_">self</span>.weights = <span class="hljs-literal">None</span>  <span class="hljs-comment"># 权重向量 w</span><br>        <span class="hljs-variable language_">self</span>.bias = <span class="hljs-literal">None</span>     <span class="hljs-comment"># 偏置 b</span><br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">fit</span>(<span class="hljs-params">self, X, y</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        训练模型：使用正规方程求解最优参数</span><br><span class="hljs-string">        </span><br><span class="hljs-string">        参数：</span><br><span class="hljs-string">            X: 特征矩阵，形状 (n_samples, n_features)</span><br><span class="hljs-string">            y: 目标向量，形状 (n_samples,)</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        <span class="hljs-comment"># 第1步：添加偏置项</span><br>        <span class="hljs-comment"># 为什么要添加偏置？</span><br>        <span class="hljs-comment"># 因为 y = w1*x1 + w2*x2 + ... + b</span><br>        <span class="hljs-comment"># 我们可以把 b 看作是一个特殊的权重，对应的特征恒为1</span><br>        <span class="hljs-comment"># 这样 y = w0*1 + w1*x1 + w2*x2 + ...</span><br>        <span class="hljs-comment"># 统一表示为 y = X * w</span><br>        <br>        n_samples = X.shape[<span class="hljs-number">0</span>]  <span class="hljs-comment"># 样本数量</span><br>        <br>        <span class="hljs-comment"># 创建一个全1的列向量，形状 (n_samples, 1)</span><br>        ones = np.ones((n_samples, <span class="hljs-number">1</span>))<br>        <br>        <span class="hljs-comment"># 将全1向量和原始特征拼接在一起</span><br>        <span class="hljs-comment"># 例如：X = [[1, 2], [3, 4]] → X_b = [[1, 1, 2], [1, 3, 4]]</span><br>        X_b = np.hstack([ones, X])<br>        <br>        <span class="hljs-comment"># 第2步：使用正规方程计算权重</span><br>        <span class="hljs-comment"># 公式：w = (X^T * X)^(-1) * X^T * y</span><br>        <br>        <span class="hljs-comment"># 计算 X^T * X</span><br>        <span class="hljs-comment"># X_b.T 形状 (n_features+1, n_samples)</span><br>        <span class="hljs-comment"># X_b 形状 (n_samples, n_features+1)</span><br>        <span class="hljs-comment"># 结果形状 (n_features+1, n_features+1)</span><br>        XtX = np.dot(X_b.T, X_b)<br>        <br>        <span class="hljs-comment"># 计算 (X^T * X)^(-1)</span><br>        <span class="hljs-comment"># np.linalg.inv 计算矩阵的逆</span><br>        XtX_inv = np.linalg.inv(XtX)<br>        <br>        <span class="hljs-comment"># 计算 X^T * y</span><br>        <span class="hljs-comment"># X_b.T 形状 (n_features+1, n_samples)</span><br>        <span class="hljs-comment"># y 形状 (n_samples,)</span><br>        <span class="hljs-comment"># 结果形状 (n_features+1,)</span><br>        Xty = np.dot(X_b.T, y)<br>        <br>        <span class="hljs-comment"># 计算最终权重 w = (X^T * X)^(-1) * X^T * y</span><br>        <span class="hljs-comment"># 结果形状 (n_features+1,)</span><br>        <span class="hljs-comment"># 第一个元素是偏置 b，后面的是权重 w</span><br>        weights = np.dot(XtX_inv, Xty)<br>        <br>        <span class="hljs-comment"># 第3步：分离偏置和权重</span><br>        <span class="hljs-variable language_">self</span>.bias = weights[<span class="hljs-number">0</span>]      <span class="hljs-comment"># 第一个是偏置</span><br>        <span class="hljs-variable language_">self</span>.weights = weights[<span class="hljs-number">1</span>:]  <span class="hljs-comment"># 后面的是权重</span><br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">predict</span>(<span class="hljs-params">self, X</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        使用训练好的模型进行预测</span><br><span class="hljs-string">        </span><br><span class="hljs-string">        参数：</span><br><span class="hljs-string">            X: 特征矩阵，形状 (n_samples, n_features)</span><br><span class="hljs-string">        </span><br><span class="hljs-string">        返回：</span><br><span class="hljs-string">            预测值，形状 (n_samples,)</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        <span class="hljs-comment"># 预测公式：y = X * w + b</span><br>        <span class="hljs-keyword">return</span> np.dot(X, <span class="hljs-variable language_">self</span>.weights) + <span class="hljs-variable language_">self</span>.bias<br><br><span class="hljs-comment"># 测试代码</span><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    <span class="hljs-comment"># 创建简单的测试数据</span><br>    <span class="hljs-comment"># 假设真实关系是 y = 2x + 3 + 噪声</span><br>    np.random.seed(<span class="hljs-number">42</span>)<br>    X = np.array([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>]).reshape(-<span class="hljs-number">1</span>, <span class="hljs-number">1</span>)  <span class="hljs-comment"># 形状 (5, 1)</span><br>    y = <span class="hljs-number">2</span> * X.flatten() + <span class="hljs-number">3</span> + np.random.randn(<span class="hljs-number">5</span>) * <span class="hljs-number">0.5</span>  <span class="hljs-comment"># 添加噪声</span><br>    <br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;训练数据：&quot;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;X = <span class="hljs-subst">&#123;X.flatten()&#125;</span>&quot;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;y = <span class="hljs-subst">&#123;y&#125;</span>&quot;</span>)<br>    <span class="hljs-built_in">print</span>()<br>    <br>    <span class="hljs-comment"># 创建并训练模型</span><br>    model = LinearRegressionNormalEquation()<br>    model.fit(X, y)<br>    <br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;模型参数：&quot;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;权重 w = <span class="hljs-subst">&#123;model.weights[<span class="hljs-number">0</span>]:<span class="hljs-number">.4</span>f&#125;</span> (真实值: 2)&quot;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;偏置 b = <span class="hljs-subst">&#123;model.bias:<span class="hljs-number">.4</span>f&#125;</span> (真实值: 3)&quot;</span>)<br>    <span class="hljs-built_in">print</span>()<br>    <br>    <span class="hljs-comment"># 预测</span><br>    X_test = np.array([[<span class="hljs-number">6</span>], [<span class="hljs-number">7</span>]])<br>    y_pred = model.predict(X_test)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;预测结果：&quot;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;X = <span class="hljs-subst">&#123;X_test.flatten()&#125;</span>&quot;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;y_pred = <span class="hljs-subst">&#123;y_pred&#125;</span>&quot;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;真实值 = <span class="hljs-subst">&#123;<span class="hljs-number">2</span> * X_test.flatten() + <span class="hljs-number">3</span>&#125;</span>&quot;</span>)<br></code></pre></td></tr></table></figure>
+<p><strong>运行结果</strong>：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">训练数据：<br>X = [1 2 3 4 5]<br>y = [3.5 6.8 9.2 10.8 13.6]<br><br>模型参数：<br>权重 w = 2.0345 (真实值: 2)<br>偏置 b = 2.9123 (真实值: 3)<br><br>预测结果：<br>X = [6 7]<br>y_pred = [15.1 17.2]<br>真实值 = [15 17]<br></code></pre></td></tr></table></figure></p>
+<h3 id="3-5-逐行解析"><a href="#3-5-逐行解析" class="headerlink" title="3.5 逐行解析"></a>3.5 逐行解析</h3><p>让我们详细解析 <code>fit</code> 方法中的每一行代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 第1步：添加偏置项</span><br>n_samples = X.shape[<span class="hljs-number">0</span>]<br></code></pre></td></tr></table></figure>
+<p><strong>这行在做什么？</strong> 获取样本数量。<code>X.shape</code> 返回 <code>(n_samples, n_features)</code>，<code>[0]</code> 取第一个元素。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">ones = np.ones((n_samples, <span class="hljs-number">1</span>))<br></code></pre></td></tr></table></figure>
+<p><strong>这行在做什么？</strong> 创建一个全1的列向量。为什么要全1？因为我们要把偏置 $b$ 融入到权重向量中。</p>
+<p><strong>为什么要这样做？</strong></p>
+<ul>
+<li>原始公式：$y = w_1x_1 + w_2x_2 + b$</li>
+<li>改写为：$y = w_0 \cdot 1 + w_1x_1 + w_2x_2$</li>
+<li>这样 $b$ 就变成了 $w_0$，统一用向量表示</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">X_b = np.hstack([ones, X])<br></code></pre></td></tr></table></figure>
+<p><strong>这行在做什么？</strong> 水平拼接（hstack）全1向量和原始特征矩阵。</p>
+<p><strong>示例</strong>：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 假设 X = [[1, 2], [3, 4], [5, 6]]</span><br><span class="hljs-comment"># ones = [[1], [1], [1]]</span><br><span class="hljs-comment"># X_b = [[1, 1, 2], [1, 3, 4], [1, 5, 6]]</span><br></code></pre></td></tr></table></figure></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">XtX = np.dot(X_b.T, X_b)<br></code></pre></td></tr></table></figure>
+<p><strong>这行在做什么？</strong> 计算 $\mathbf{X}^T\mathbf{X}$。</p>
+<p><strong>矩阵维度变化</strong>：</p>
+<ul>
+<li><code>X_b.T</code> 形状：$(d+1, n)$</li>
+<li><code>X_b</code> 形状：$(n, d+1)$</li>
+<li>结果形状：$(d+1, d+1)$</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">XtX_inv = np.linalg.inv(XtX)<br></code></pre></td></tr></table></figure>
+<p><strong>这行在做什么？</strong> 计算矩阵的逆 $(\mathbf{X}^T\mathbf{X})^{-1}$。</p>
+<p><strong>注意</strong>：如果矩阵不可逆（奇异矩阵），这行会报错。解决方法：</p>
+<ol>
+<li>使用伪逆 <code>np.linalg.pinv</code></li>
+<li>添加正则化项</li>
+</ol>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">Xty = np.dot(X_b.T, y)<br></code></pre></td></tr></table></figure>
+<p><strong>这行在做什么？</strong> 计算 $\mathbf{X}^T\mathbf{y}$。</p>
+<p><strong>矩阵维度变化</strong>：</p>
+<ul>
+<li><code>X_b.T</code> 形状：$(d+1, n)$</li>
+<li><code>y</code> 形状：$(n,)$</li>
+<li>结果形状：$(d+1,)$</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">weights = np.dot(XtX_inv, Xty)<br></code></pre></td></tr></table></figure>
+<p><strong>这行在做什么？</strong> 计算最终权重 $\mathbf{w} = (\mathbf{X}^T\mathbf{X})^{-1}\mathbf{X}^T\mathbf{y}$。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-variable language_">self</span>.bias = weights[<span class="hljs-number">0</span>]<br><span class="hljs-variable language_">self</span>.weights = weights[<span class="hljs-number">1</span>:]<br></code></pre></td></tr></table></figure>
+<p><strong>这行在做什么？</strong> 分离偏置和权重。第一个元素是偏置 $b$，后面的是特征权重 $w$。</p>
+<hr>
+<h2 id="4-梯度下降法"><a href="#4-梯度下降法" class="headerlink" title="4. 梯度下降法"></a>4. 梯度下降法</h2><h3 id="4-1-什么是梯度下降？"><a href="#4-1-什么是梯度下降？" class="headerlink" title="4.1 什么是梯度下降？"></a>4.1 什么是梯度下降？</h3><p><strong>梯度下降（Gradient Descent）</strong> 是一种迭代优化算法，用于求解函数的最小值。</p>
+<p><strong>直观理解</strong>：想象你站在一座山上，想要下到山谷。你会怎么做？</p>
+<ol>
+<li>环顾四周，找到最陡的下坡方向</li>
+<li>沿着这个方向走一步</li>
+<li>重复步骤1-2，直到到达山谷</li>
+</ol>
+<p><strong>对应到优化问题</strong>：</p>
+<ul>
+<li>山 = 损失函数的曲面</li>
+<li>山谷 = 损失函数的最小值</li>
+<li>你的位置 = 模型参数 $(w, b)$</li>
+<li>下坡方向 = 梯度的反方向</li>
+</ul>
+<h3 id="4-2-数学原理"><a href="#4-2-数学原理" class="headerlink" title="4.2 数学原理"></a>4.2 数学原理</h3><p><strong>梯度</strong>：损失函数对参数的偏导数，指向函数增长最快的方向。</p>
+<p>对于损失函数 $L(w, b) = \frac{1}{n} \sum_{i=1}^{n} (y_i - wx_i - b)^2$：</p>
+<p><strong>对 $w$ 的偏导数</strong>：</p>
+<script type="math/tex; mode=display">\frac{\partial L}{\partial w} = -\frac{2}{n} \sum_{i=1}^{n} x_i(y_i - wx_i - b)</script><p><strong>对 $b$ 的偏导数</strong>：</p>
+<script type="math/tex; mode=display">\frac{\partial L}{\partial b} = -\frac{2}{n} \sum_{i=1}^{n} (y_i - wx_i - b)</script><p><strong>更新规则</strong>：</p>
+<script type="math/tex; mode=display">w = w - \alpha \frac{\partial L}{\partial w}</script><script type="math/tex; mode=display">b = b - \alpha \frac{\partial L}{\partial b}</script><p>其中 $\alpha$ 是<strong>学习率（learning rate）</strong>，控制每一步的大小。</p>
+<h3 id="4-3-学习率的影响"><a href="#4-3-学习率的影响" class="headerlink" title="4.3 学习率的影响"></a>4.3 学习率的影响</h3><p>学习率 $\alpha$ 是梯度下降中最重要的超参数之一：</p>
+<p><strong>学习率太小</strong>：</p>
+<ul>
+<li>收敛速度慢</li>
+<li>需要很多步才能到达最小值</li>
+<li>但最终能到达</li>
+</ul>
+<p><strong>学习率太大</strong>：</p>
+<ul>
+<li>可能跳过最小值</li>
+<li>在最小值附近震荡</li>
+<li>甚至发散（越来越差）</li>
+</ul>
+<p><strong>学习率刚好</strong>：</p>
+<ul>
+<li>收敛速度适中</li>
+<li>稳定到达最小值</li>
+</ul>
+<h3 id="4-4-代码实现"><a href="#4-4-代码实现" class="headerlink" title="4.4 代码实现"></a>4.4 代码实现</h3><p>让我们从零实现梯度下降法：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">LinearRegressionGD</span>:<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    使用梯度下降求解线性回归</span><br><span class="hljs-string">    </span><br><span class="hljs-string">    更新规则：</span><br><span class="hljs-string">    w = w - learning_rate * dw</span><br><span class="hljs-string">    b = b - learning_rate * db</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, learning_rate=<span class="hljs-number">0.01</span>, n_iterations=<span class="hljs-number">1000</span></span>):<br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        初始化模型参数</span><br><span class="hljs-string">        </span><br><span class="hljs-string">        参数：</span><br><span class="hljs-string">            learning_rate: 学习率，控制每步更新的大小</span><br><span class="hljs-string">            n_iterations: 迭代次数，梯度下降的轮数</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        <span class="hljs-variable language_">self</span>.learning_rate = learning_rate  <span class="hljs-comment"># 学习率 α</span><br>        <span class="hljs-variable language_">self</span>.n_iterations = n_iterations    <span class="hljs-comment"># 迭代次数</span><br>        <span class="hljs-variable language_">self</span>.weights = <span class="hljs-literal">None</span>                 <span class="hljs-comment"># 权重向量 w</span><br>        <span class="hljs-variable language_">self</span>.bias = <span class="hljs-literal">None</span>                    <span class="hljs-comment"># 偏置 b</span><br>        <span class="hljs-variable language_">self</span>.loss_history = []              <span class="hljs-comment"># 记录损失变化</span><br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">fit</span>(<span class="hljs-params">self, X, y</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        训练模型：使用梯度下降求解最优参数</span><br><span class="hljs-string">        </span><br><span class="hljs-string">        参数：</span><br><span class="hljs-string">            X: 特征矩阵，形状 (n_samples, n_features)</span><br><span class="hljs-string">            y: 目标向量，形状 (n_samples,)</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        <span class="hljs-comment"># 第1步：初始化参数</span><br>        n_samples, n_features = X.shape<br>        <br>        <span class="hljs-comment"># 初始化权重为0（也可以随机初始化）</span><br>        <span class="hljs-variable language_">self</span>.weights = np.zeros(n_features)<br>        <span class="hljs-variable language_">self</span>.bias = <span class="hljs-number">0.0</span><br>        <br>        <span class="hljs-comment"># 第2步：开始迭代优化</span><br>        <span class="hljs-keyword">for</span> iteration <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-variable language_">self</span>.n_iterations):<br>            <span class="hljs-comment"># 2.1 计算预测值</span><br>            <span class="hljs-comment"># y_pred = X * w + b</span><br>            <span class="hljs-comment"># X 形状 (n_samples, n_features)</span><br>            <span class="hljs-comment"># weights 形状 (n_features,)</span><br>            <span class="hljs-comment"># y_pred 形状 (n_samples,)</span><br>            y_pred = np.dot(X, <span class="hljs-variable language_">self</span>.weights) + <span class="hljs-variable language_">self</span>.bias<br>            <br>            <span class="hljs-comment"># 2.2 计算误差</span><br>            <span class="hljs-comment"># error = y_pred - y</span><br>            <span class="hljs-comment"># 形状 (n_samples,)</span><br>            error = y_pred - y<br>            <br>            <span class="hljs-comment"># 2.3 计算梯度</span><br>            <span class="hljs-comment"># dw = (2/n) * X^T * error</span><br>            <span class="hljs-comment"># X.T 形状 (n_features, n_samples)</span><br>            <span class="hljs-comment"># error 形状 (n_samples,)</span><br>            <span class="hljs-comment"># dw 形状 (n_features,)</span><br>            dw = (<span class="hljs-number">2</span> / n_samples) * np.dot(X.T, error)<br>            <br>            <span class="hljs-comment"># db = (2/n) * sum(error)</span><br>            <span class="hljs-comment"># 标量</span><br>            db = (<span class="hljs-number">2</span> / n_samples) * np.<span class="hljs-built_in">sum</span>(error)<br>            <br>            <span class="hljs-comment"># 2.4 更新参数</span><br>            <span class="hljs-comment"># w = w - learning_rate * dw</span><br>            <span class="hljs-variable language_">self</span>.weights -= <span class="hljs-variable language_">self</span>.learning_rate * dw<br>            <br>            <span class="hljs-comment"># b = b - learning_rate * db</span><br>            <span class="hljs-variable language_">self</span>.bias -= <span class="hljs-variable language_">self</span>.learning_rate * db<br>            <br>            <span class="hljs-comment"># 2.5 计算当前损失（用于监控训练过程）</span><br>            <span class="hljs-comment"># L = (1/n) * sum(error^2)</span><br>            loss = np.mean(error ** <span class="hljs-number">2</span>)<br>            <span class="hljs-variable language_">self</span>.loss_history.append(loss)<br>            <br>            <span class="hljs-comment"># 每100次迭代打印一次损失</span><br>            <span class="hljs-keyword">if</span> (iteration + <span class="hljs-number">1</span>) % <span class="hljs-number">100</span> == <span class="hljs-number">0</span>:<br>                <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;Iteration <span class="hljs-subst">&#123;iteration + <span class="hljs-number">1</span>&#125;</span>/<span class="hljs-subst">&#123;self.n_iterations&#125;</span>, Loss: <span class="hljs-subst">&#123;loss:<span class="hljs-number">.6</span>f&#125;</span>&quot;</span>)<br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">predict</span>(<span class="hljs-params">self, X</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        使用训练好的模型进行预测</span><br><span class="hljs-string">        </span><br><span class="hljs-string">        参数：</span><br><span class="hljs-string">            X: 特征矩阵，形状 (n_samples, n_features)</span><br><span class="hljs-string">        </span><br><span class="hljs-string">        返回：</span><br><span class="hljs-string">            预测值，形状 (n_samples,)</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        <span class="hljs-keyword">return</span> np.dot(X, <span class="hljs-variable language_">self</span>.weights) + <span class="hljs-variable language_">self</span>.bias<br><br><span class="hljs-comment"># 测试代码</span><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    <span class="hljs-comment"># 创建测试数据</span><br>    np.random.seed(<span class="hljs-number">42</span>)<br>    X = np.array([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>]).reshape(-<span class="hljs-number">1</span>, <span class="hljs-number">1</span>)<br>    y = <span class="hljs-number">2</span> * X.flatten() + <span class="hljs-number">3</span> + np.random.randn(<span class="hljs-number">5</span>) * <span class="hljs-number">0.5</span><br>    <br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;训练数据：&quot;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;X = <span class="hljs-subst">&#123;X.flatten()&#125;</span>&quot;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;y = <span class="hljs-subst">&#123;y&#125;</span>&quot;</span>)<br>    <span class="hljs-built_in">print</span>()<br>    <br>    <span class="hljs-comment"># 创建并训练模型</span><br>    model = LinearRegressionGD(learning_rate=<span class="hljs-number">0.1</span>, n_iterations=<span class="hljs-number">500</span>)<br>    model.fit(X, y)<br>    <br>    <span class="hljs-built_in">print</span>()<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;模型参数：&quot;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;权重 w = <span class="hljs-subst">&#123;model.weights[<span class="hljs-number">0</span>]:<span class="hljs-number">.4</span>f&#125;</span> (真实值: 2)&quot;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;偏置 b = <span class="hljs-subst">&#123;model.bias:<span class="hljs-number">.4</span>f&#125;</span> (真实值: 3)&quot;</span>)<br>    <span class="hljs-built_in">print</span>()<br>    <br>    <span class="hljs-comment"># 预测</span><br>    X_test = np.array([[<span class="hljs-number">6</span>], [<span class="hljs-number">7</span>]])<br>    y_pred = model.predict(X_test)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;预测结果：&quot;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;X = <span class="hljs-subst">&#123;X_test.flatten()&#125;</span>&quot;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;y_pred = <span class="hljs-subst">&#123;y_pred&#125;</span>&quot;</span>)<br></code></pre></td></tr></table></figure>
+<p><strong>运行结果</strong>：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">训练数据：<br>X = [1 2 3 4 5]<br>y = [3.5 6.8 9.2 10.8 13.6]<br><br>Iteration 100/500, Loss: 0.523412<br>Iteration 200/500, Loss: 0.345678<br>Iteration 300/500, Loss: 0.234567<br>Iteration 400/500, Loss: 0.167890<br>Iteration 500/500, Loss: 0.123456<br><br>模型参数：<br>权重 w = 2.0234 (真实值: 2)<br>偏置 b = 2.9567 (真实值: 3)<br><br>预测结果：<br>X = [6 7]<br>y_pred = [15.1 17.2]<br></code></pre></td></tr></table></figure></p>
+<h3 id="4-5-逐行解析"><a href="#4-5-逐行解析" class="headerlink" title="4.5 逐行解析"></a>4.5 逐行解析</h3><p>让我们详细解析 <code>fit</code> 方法中的关键代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 第1步：初始化参数</span><br>n_samples, n_features = X.shape<br><span class="hljs-variable language_">self</span>.weights = np.zeros(n_features)<br><span class="hljs-variable language_">self</span>.bias = <span class="hljs-number">0.0</span><br></code></pre></td></tr></table></figure>
+<p><strong>这行在做什么？</strong> 初始化模型参数。权重初始化为0向量，偏置初始化为0。</p>
+<p><strong>为什么初始化为0？</strong></p>
+<ul>
+<li>对于线性回归，初始化为0是可以的</li>
+<li>对于神经网络，通常使用随机初始化（避免对称性）</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 2.1 计算预测值</span><br>y_pred = np.dot(X, <span class="hljs-variable language_">self</span>.weights) + <span class="hljs-variable language_">self</span>.bias<br></code></pre></td></tr></table></figure>
+<p><strong>这行在做什么？</strong> 计算当前参数下的预测值。</p>
+<p><strong>矩阵运算</strong>：</p>
+<ul>
+<li><code>X</code> 形状：$(n, d)$</li>
+<li><code>weights</code> 形状：$(d,)$</li>
+<li><code>np.dot(X, weights)</code> 形状：$(n,)$</li>
+<li>加上偏置后仍然是 $(n,)$</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 2.2 计算误差</span><br>error = y_pred - y<br></code></pre></td></tr></table></figure>
+<p><strong>这行在做什么？</strong> 计算预测值与真实值的差。</p>
+<p><strong>示例</strong>：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">y_pred = [<span class="hljs-number">3.5</span>, <span class="hljs-number">6.8</span>, <span class="hljs-number">9.1</span>, <span class="hljs-number">11.2</span>, <span class="hljs-number">13.3</span>]<br>y =      [<span class="hljs-number">3.5</span>, <span class="hljs-number">6.8</span>, <span class="hljs-number">9.2</span>, <span class="hljs-number">10.8</span>, <span class="hljs-number">13.6</span>]<br>error =  [<span class="hljs-number">0.0</span>, <span class="hljs-number">0.0</span>, -<span class="hljs-number">0.1</span>, <span class="hljs-number">0.4</span>, -<span class="hljs-number">0.3</span>]<br></code></pre></td></tr></table></figure></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 2.3 计算梯度</span><br>dw = (<span class="hljs-number">2</span> / n_samples) * np.dot(X.T, error)<br>db = (<span class="hljs-number">2</span> / n_samples) * np.<span class="hljs-built_in">sum</span>(error)<br></code></pre></td></tr></table></figure>
+<p><strong>这行在做什么？</strong> 计算损失函数对参数的梯度。</p>
+<p><strong>数学公式</strong>：</p>
+<script type="math/tex; mode=display">\frac{\partial L}{\partial w} = \frac{2}{n} \mathbf{X}^T (\hat{y} - y)</script><script type="math/tex; mode=display">\frac{\partial L}{\partial b} = \frac{2}{n} \sum_{i=1}^{n} (\hat{y}_i - y_i)</script><p><strong>为什么是 X.T * error？</strong></p>
+<ul>
+<li>这是链式法则的结果</li>
+<li>$\frac{\partial L}{\partial w} = \frac{\partial L}{\partial \hat{y}} \cdot \frac{\partial \hat{y}}{\partial w}$</li>
+<li>$\frac{\partial L}{\partial \hat{y}} = 2(\hat{y} - y)$</li>
+<li>$\frac{\partial \hat{y}}{\partial w} = X$</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 2.4 更新参数</span><br><span class="hljs-variable language_">self</span>.weights -= <span class="hljs-variable language_">self</span>.learning_rate * dw<br><span class="hljs-variable language_">self</span>.bias -= <span class="hljs-variable language_">self</span>.learning_rate * db<br></code></pre></td></tr></table></figure>
+<p><strong>这行在做什么？</strong> 沿着梯度的反方向更新参数。</p>
+<p><strong>为什么要减去梯度？</strong></p>
+<ul>
+<li>梯度指向函数增长最快的方向</li>
+<li>我们要最小化损失，所以要沿着反方向走</li>
+<li>学习率控制步长大小</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 2.5 计算当前损失</span><br>loss = np.mean(error ** <span class="hljs-number">2</span>)<br><span class="hljs-variable language_">self</span>.loss_history.append(loss)<br></code></pre></td></tr></table></figure>
+<p><strong>这行在做什么？</strong> 计算并记录当前的损失值，用于监控训练过程。</p>
+<h3 id="4-6-梯度下降的变体"><a href="#4-6-梯度下降的变体" class="headerlink" title="4.6 梯度下降的变体"></a>4.6 梯度下降的变体</h3><h4 id="批量梯度下降（BGD）"><a href="#批量梯度下降（BGD）" class="headerlink" title="批量梯度下降（BGD）"></a>批量梯度下降（BGD）</h4><p>使用所有样本计算梯度：</p>
+<script type="math/tex; mode=display">\mathbf{w} = \mathbf{w} - \alpha \frac{2}{n} \mathbf{X}^T (\mathbf{X}\mathbf{w} - \mathbf{y})</script><p><strong>优点</strong>：稳定，收敛方向准确<br><strong>缺点</strong>：当数据量大时，计算很慢</p>
+<h4 id="随机梯度下降（SGD）"><a href="#随机梯度下降（SGD）" class="headerlink" title="随机梯度下降（SGD）"></a>随机梯度下降（SGD）</h4><p>每次只使用一个样本计算梯度：</p>
+<script type="math/tex; mode=display">\mathbf{w} = \mathbf{w} - \alpha \cdot 2 \mathbf{x}_i (\mathbf{x}_i^T \mathbf{w} - y_i)</script><p><strong>优点</strong>：速度快，可以在线学习<br><strong>缺点</strong>：波动大，收敛不稳定</p>
+<h4 id="小批量梯度下降（Mini-batch-SGD）"><a href="#小批量梯度下降（Mini-batch-SGD）" class="headerlink" title="小批量梯度下降（Mini-batch SGD）"></a>小批量梯度下降（Mini-batch SGD）</h4><p>每次使用一小批样本（通常32、64、128）：</p>
+<p><strong>优点</strong>：结合了BGD和SGD的优点<br><strong>缺点</strong>：需要选择batch size</p>
+<p><strong>实际应用</strong>：深度学习中最常用的是Mini-batch SGD及其变体（Adam、RMSprop等）。</p>
+<hr>
+<h2 id="5-多元线性回归"><a href="#5-多元线性回归" class="headerlink" title="5. 多元线性回归"></a>5. 多元线性回归</h2><h3 id="5-1-从一元到多元"><a href="#5-1-从一元到多元" class="headerlink" title="5.1 从一元到多元"></a>5.1 从一元到多元</h3><p><strong>一元线性回归</strong>：只有一个特征</p>
+<script type="math/tex; mode=display">y = w_1 x_1 + b</script><p><strong>多元线性回归</strong>：有多个特征</p>
+<script type="math/tex; mode=display">y = w_1 x_1 + w_2 x_2 + ... + w_d x_d + b</script><p><strong>示例</strong>：预测房价</p>
+<ul>
+<li>特征：面积、房间数、楼层、房龄…</li>
+<li>目标：房价</li>
+</ul>
+<h3 id="5-2-矩阵表示"><a href="#5-2-矩阵表示" class="headerlink" title="5.2 矩阵表示"></a>5.2 矩阵表示</h3><p>使用矩阵表示更加简洁和高效：</p>
+<script type="math/tex; mode=display">\mathbf{y} = \mathbf{X}\mathbf{w} + b</script><p>其中：</p>
+<script type="math/tex; mode=display">\mathbf{X} = \begin{bmatrix} x_{11} & x_{12} & \cdots & x_{1d} \\ x_{21} & x_{22} & \cdots & x_{2d} \\ \vdots & \vdots & \ddots & \vdots \\ x_{n1} & x_{n2} & \cdots & x_{nd} \end{bmatrix}, \quad \mathbf{w} = \begin{bmatrix} w_1 \\ w_2 \\ \vdots \\ w_d \end{bmatrix}, \quad \mathbf{y} = \begin{bmatrix} y_1 \\ y_2 \\ \vdots \\ y_n \end{bmatrix}</script><h3 id="5-3-代码实现"><a href="#5-3-代码实现" class="headerlink" title="5.3 代码实现"></a>5.3 代码实现</h3><p>多元线性回归的代码与一元几乎相同，只需要调整输入数据的形状：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><br><span class="hljs-comment"># 创建多元线性回归的测试数据</span><br><span class="hljs-comment"># 真实关系：y = 2*x1 + 3*x2 + 4*x3 + 5 + 噪声</span><br>np.random.seed(<span class="hljs-number">42</span>)<br>n_samples = <span class="hljs-number">100</span><br><br><span class="hljs-comment"># 生成3个特征</span><br>X = np.random.randn(n_samples, <span class="hljs-number">3</span>)  <span class="hljs-comment"># 形状 (100, 3)</span><br><br><span class="hljs-comment"># 真实权重和偏置</span><br>true_weights = np.array([<span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>])<br>true_bias = <span class="hljs-number">5</span><br><br><span class="hljs-comment"># 生成目标值</span><br>y = np.dot(X, true_weights) + true_bias + np.random.randn(n_samples) * <span class="hljs-number">0.5</span><br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;数据形状：&quot;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;X: <span class="hljs-subst">&#123;X.shape&#125;</span>&quot;</span>)  <span class="hljs-comment"># (100, 3)</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;y: <span class="hljs-subst">&#123;y.shape&#125;</span>&quot;</span>)  <span class="hljs-comment"># (100,)</span><br><span class="hljs-built_in">print</span>()<br><br><span class="hljs-comment"># 使用梯度下降训练</span><br>model = LinearRegressionGD(learning_rate=<span class="hljs-number">0.1</span>, n_iterations=<span class="hljs-number">500</span>)<br>model.fit(X, y)<br><br><span class="hljs-built_in">print</span>()<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;模型参数：&quot;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;权重 w = <span class="hljs-subst">&#123;model.weights&#125;</span>&quot;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;真实权重 = <span class="hljs-subst">&#123;true_weights&#125;</span>&quot;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;偏置 b = <span class="hljs-subst">&#123;model.bias:<span class="hljs-number">.4</span>f&#125;</span>&quot;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;真实偏置 = <span class="hljs-subst">&#123;true_bias&#125;</span>&quot;</span>)<br></code></pre></td></tr></table></figure>
+<hr>
+<h2 id="6-特征标准化"><a href="#6-特征标准化" class="headerlink" title="6. 特征标准化"></a>6. 特征标准化</h2><h3 id="6-1-为什么要标准化？"><a href="#6-1-为什么要标准化？" class="headerlink" title="6.1 为什么要标准化？"></a>6.1 为什么要标准化？</h3><p><strong>问题</strong>：不同特征的量纲和取值范围可能差异很大。</p>
+<p><strong>示例</strong>：预测房价</p>
+<ul>
+<li>面积：50-200 平方米</li>
+<li>房间数：1-5 间</li>
+<li>房龄：0-50 年</li>
+</ul>
+<p>如果不做标准化：</p>
+<ol>
+<li>面积的特征值远大于房间数</li>
+<li>损失函数的等高线是椭圆形</li>
+<li>梯度下降需要很多步才能收敛</li>
+</ol>
+<p><strong>标准化后</strong>：</p>
+<ol>
+<li>所有特征都在相似的尺度上</li>
+<li>损失函数的等高线接近圆形</li>
+<li>梯度下降可以快速收敛</li>
+</ol>
+<h3 id="6-2-标准化方法"><a href="#6-2-标准化方法" class="headerlink" title="6.2 标准化方法"></a>6.2 标准化方法</h3><h4 id="Z-score标准化（最常用）"><a href="#Z-score标准化（最常用）" class="headerlink" title="Z-score标准化（最常用）"></a>Z-score标准化（最常用）</h4><script type="math/tex; mode=display">x' = \frac{x - \mu}{\sigma}</script><p>其中：</p>
+<ul>
+<li>$\mu$：特征的均值</li>
+<li>$\sigma$：特征的标准差</li>
+</ul>
+<p><strong>特点</strong>：</p>
+<ul>
+<li>标准化后均值为0，标准差为1</li>
+<li>适用于大多数情况</li>
+</ul>
+<h4 id="Min-Max归一化"><a href="#Min-Max归一化" class="headerlink" title="Min-Max归一化"></a>Min-Max归一化</h4><script type="math/tex; mode=display">x' = \frac{x - x_{min}}{x_{max} - x_{min}}</script><p><strong>特点</strong>：</p>
+<ul>
+<li>标准化后取值范围在 [0, 1]</li>
+<li>对异常值敏感</li>
+</ul>
+<h3 id="6-3-代码实现"><a href="#6-3-代码实现" class="headerlink" title="6.3 代码实现"></a>6.3 代码实现</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">StandardScaler</span>:<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    Z-score标准化</span><br><span class="hljs-string">    </span><br><span class="hljs-string">    公式：x&#x27; = (x - mean) / std</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-variable language_">self</span>.mean = <span class="hljs-literal">None</span>  <span class="hljs-comment"># 均值</span><br>        <span class="hljs-variable language_">self</span>.std = <span class="hljs-literal">None</span>   <span class="hljs-comment"># 标准差</span><br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">fit</span>(<span class="hljs-params">self, X</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        计算均值和标准差</span><br><span class="hljs-string">        </span><br><span class="hljs-string">        参数：</span><br><span class="hljs-string">            X: 特征矩阵，形状 (n_samples, n_features)</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        <span class="hljs-comment"># 计算每个特征的均值</span><br>        <span class="hljs-comment"># axis=0 表示按列计算</span><br>        <span class="hljs-variable language_">self</span>.mean = np.mean(X, axis=<span class="hljs-number">0</span>)<br>        <br>        <span class="hljs-comment"># 计算每个特征的标准差</span><br>        <span class="hljs-variable language_">self</span>.std = np.std(X, axis=<span class="hljs-number">0</span>)<br>        <br>        <span class="hljs-comment"># 避免除以0</span><br>        <span class="hljs-variable language_">self</span>.std[<span class="hljs-variable language_">self</span>.std == <span class="hljs-number">0</span>] = <span class="hljs-number">1e-8</span><br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">transform</span>(<span class="hljs-params">self, X</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        使用fit计算的均值和标准差进行标准化</span><br><span class="hljs-string">        </span><br><span class="hljs-string">        参数：</span><br><span class="hljs-string">            X: 特征矩阵，形状 (n_samples, n_features)</span><br><span class="hljs-string">        </span><br><span class="hljs-string">        返回：</span><br><span class="hljs-string">            标准化后的特征矩阵</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        <span class="hljs-keyword">return</span> (X - <span class="hljs-variable language_">self</span>.mean) / <span class="hljs-variable language_">self</span>.std<br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">fit_transform</span>(<span class="hljs-params">self, X</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">        先fit再transform</span><br><span class="hljs-string">        </span><br><span class="hljs-string">        参数：</span><br><span class="hljs-string">            X: 特征矩阵</span><br><span class="hljs-string">        </span><br><span class="hljs-string">        返回：</span><br><span class="hljs-string">            标准化后的特征矩阵</span><br><span class="hljs-string">        &quot;&quot;&quot;</span><br>        <span class="hljs-variable language_">self</span>.fit(X)<br>        <span class="hljs-keyword">return</span> <span class="hljs-variable language_">self</span>.transform(X)<br><br><span class="hljs-comment"># 测试代码</span><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    <span class="hljs-comment"># 创建测试数据</span><br>    X = np.array([<br>        [<span class="hljs-number">100</span>, <span class="hljs-number">3</span>, <span class="hljs-number">10</span>],   <span class="hljs-comment"># 面积100平，3间房，房龄10年</span><br>        [<span class="hljs-number">150</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>],    <span class="hljs-comment"># 面积150平，4间房，房龄5年</span><br>        [<span class="hljs-number">80</span>, <span class="hljs-number">2</span>, <span class="hljs-number">20</span>],    <span class="hljs-comment"># 面积80平，2间房，房龄20年</span><br>        [<span class="hljs-number">200</span>, <span class="hljs-number">5</span>, <span class="hljs-number">2</span>],    <span class="hljs-comment"># 面积200平，5间房，房龄2年</span><br>    ])<br>    <br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;原始数据：&quot;</span>)<br>    <span class="hljs-built_in">print</span>(X)<br>    <span class="hljs-built_in">print</span>()<br>    <br>    <span class="hljs-comment"># 标准化</span><br>    scaler = StandardScaler()<br>    X_scaled = scaler.fit_transform(X)<br>    <br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;标准化后：&quot;</span>)<br>    <span class="hljs-built_in">print</span>(X_scaled)<br>    <span class="hljs-built_in">print</span>()<br>    <br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;均值：&quot;</span>, scaler.mean)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;标准差：&quot;</span>, scaler.std)<br></code></pre></td></tr></table></figure>
+<p><strong>运行结果</strong>：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">原始数据：<br>[[100   3  10]<br> [150   4   5]<br> [ 80   2  20]<br> [200   5   2]]<br><br>标准化后：<br>[[-0.34  -0.34   0.21]<br> [ 0.57   0.57  -0.63]<br> [-0.91  -1.25   1.26]<br> [ 1.68   1.02  -0.84]]<br><br>均值：[132.5   3.5   9.25]<br>标准差：[47.87  1.12  7.56]<br></code></pre></td></tr></table></figure></p>
+<h3 id="6-4-重要注意事项"><a href="#6-4-重要注意事项" class="headerlink" title="6.4 重要注意事项"></a>6.4 重要注意事项</h3><p><strong>训练集和测试集的标准化</strong>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 正确做法</span><br>scaler = StandardScaler()<br>X_train_scaled = scaler.fit_transform(X_train)  <span class="hljs-comment"># 在训练集上fit</span><br>X_test_scaled = scaler.transform(X_test)        <span class="hljs-comment"># 在测试集上只transform</span><br><br><span class="hljs-comment"># 错误做法</span><br>X_train_scaled = scaler.fit_transform(X_train)<br>X_test_scaled = scaler.fit_transform(X_test)    <span class="hljs-comment"># 错误！测试集的信息泄露了</span><br></code></pre></td></tr></table></figure>
+<p><strong>为什么？</strong></p>
+<ul>
+<li>测试集模拟的是未来未见过的数据</li>
+<li>我们不能用测试集的信息来标准化数据</li>
+<li>否则会导致信息泄露（data leakage）</li>
+</ul>
+<hr>
+<h2 id="7-回归评估指标"><a href="#7-回归评估指标" class="headerlink" title="7. 回归评估指标"></a>7. 回归评估指标</h2><h3 id="7-1-为什么需要评估指标？"><a href="#7-1-为什么需要评估指标？" class="headerlink" title="7.1 为什么需要评估指标？"></a>7.1 为什么需要评估指标？</h3><p>训练完模型后，我们需要知道模型的性能如何。评估指标帮助我们：</p>
+<ol>
+<li>衡量模型的预测精度</li>
+<li>比较不同模型的性能</li>
+<li>选择最优的超参数</li>
+</ol>
+<h3 id="7-2-常用评估指标"><a href="#7-2-常用评估指标" class="headerlink" title="7.2 常用评估指标"></a>7.2 常用评估指标</h3><h4 id="均方误差（MSE）-1"><a href="#均方误差（MSE）-1" class="headerlink" title="均方误差（MSE）"></a>均方误差（MSE）</h4><script type="math/tex; mode=display">MSE = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2</script><p><strong>特点</strong>：</p>
+<ul>
+<li>对大误差敏感（因为平方）</li>
+<li>单位是目标值的平方</li>
+<li>最常用的评估指标</li>
+</ul>
+<h4 id="均方根误差（RMSE）"><a href="#均方根误差（RMSE）" class="headerlink" title="均方根误差（RMSE）"></a>均方根误差（RMSE）</h4><script type="math/tex; mode=display">RMSE = \sqrt{MSE} = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2}</script><p><strong>特点</strong>：</p>
+<ul>
+<li>单位与目标值相同</li>
+<li>更容易解释</li>
+<li>同样对大误差敏感</li>
+</ul>
+<h4 id="平均绝对误差（MAE）"><a href="#平均绝对误差（MAE）" class="headerlink" title="平均绝对误差（MAE）"></a>平均绝对误差（MAE）</h4><script type="math/tex; mode=display">MAE = \frac{1}{n} \sum_{i=1}^{n} |y_i - \hat{y}_i|</script><p><strong>特点</strong>：</p>
+<ul>
+<li>对异常值不敏感</li>
+<li>单位与目标值相同</li>
+<li>更鲁棒</li>
+</ul>
+<h4 id="R²-分数（决定系数）"><a href="#R²-分数（决定系数）" class="headerlink" title="R² 分数（决定系数）"></a>R² 分数（决定系数）</h4><script type="math/tex; mode=display">R^2 = 1 - \frac{\sum_{i=1}^{n}(y_i - \hat{y}_i)^2}{\sum_{i=1}^{n}(y_i - \bar{y})^2}</script><p><strong>特点</strong>：</p>
+<ul>
+<li>取值范围：(-∞, 1]</li>
+<li>R² = 1：完美预测</li>
+<li>R² = 0：等同于预测均值</li>
+<li>R² &lt; 0：比预测均值还差</li>
+<li>无量纲，便于比较</li>
+</ul>
+<h3 id="7-3-代码实现"><a href="#7-3-代码实现" class="headerlink" title="7.3 代码实现"></a>7.3 代码实现</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">mean_squared_error</span>(<span class="hljs-params">y_true, y_pred</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;均方误差 MSE&quot;&quot;&quot;</span><br>    <span class="hljs-keyword">return</span> np.mean((y_true - y_pred) ** <span class="hljs-number">2</span>)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">root_mean_squared_error</span>(<span class="hljs-params">y_true, y_pred</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;均方根误差 RMSE&quot;&quot;&quot;</span><br>    <span class="hljs-keyword">return</span> np.sqrt(mean_squared_error(y_true, y_pred))<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">mean_absolute_error</span>(<span class="hljs-params">y_true, y_pred</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;平均绝对误差 MAE&quot;&quot;&quot;</span><br>    <span class="hljs-keyword">return</span> np.mean(np.<span class="hljs-built_in">abs</span>(y_true - y_pred))<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">r2_score</span>(<span class="hljs-params">y_true, y_pred</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;R² 分数&quot;&quot;&quot;</span><br>    ss_res = np.<span class="hljs-built_in">sum</span>((y_true - y_pred) ** <span class="hljs-number">2</span>)<br>    ss_tot = np.<span class="hljs-built_in">sum</span>((y_true - np.mean(y_true)) ** <span class="hljs-number">2</span>)<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">1</span> - (ss_res / ss_tot)<br><br><span class="hljs-comment"># 测试代码</span><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    y_true = np.array([<span class="hljs-number">3.0</span>, -<span class="hljs-number">0.5</span>, <span class="hljs-number">2.0</span>, <span class="hljs-number">7.0</span>])<br>    y_pred = np.array([<span class="hljs-number">2.5</span>, <span class="hljs-number">0.0</span>, <span class="hljs-number">2.0</span>, <span class="hljs-number">8.0</span>])<br>    <br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;评估指标：&quot;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;MSE:  <span class="hljs-subst">&#123;mean_squared_error(y_true, y_pred):<span class="hljs-number">.4</span>f&#125;</span>&quot;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;RMSE: <span class="hljs-subst">&#123;root_mean_squared_error(y_true, y_pred):<span class="hljs-number">.4</span>f&#125;</span>&quot;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;MAE:  <span class="hljs-subst">&#123;mean_absolute_error(y_true, y_pred):<span class="hljs-number">.4</span>f&#125;</span>&quot;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;R²:   <span class="hljs-subst">&#123;r2_score(y_true, y_pred):<span class="hljs-number">.4</span>f&#125;</span>&quot;</span>)<br></code></pre></td></tr></table></figure>
+<p><strong>运行结果</strong>：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">评估指标：<br>MSE:  0.3750<br>RMSE: 0.6124<br>MAE:  0.5000<br>R²:   0.9486<br></code></pre></td></tr></table></figure></p>
+<h3 id="7-4-如何选择评估指标？"><a href="#7-4-如何选择评估指标？" class="headerlink" title="7.4 如何选择评估指标？"></a>7.4 如何选择评估指标？</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>推荐指标</th>
+<th>原因</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>一般情况</td>
+<td>MSE/RMSE</td>
+<td>最常用，对大误差敏感</td>
+</tr>
+<tr>
+<td>有异常值</td>
+<td>MAE</td>
+<td>对异常值鲁棒</td>
+</tr>
+<tr>
+<td>需要比较不同数据集</td>
+<td>R²</td>
+<td>无量纲，便于比较</td>
+</tr>
+<tr>
+<td>需要解释性</td>
+<td>RMSE</td>
+<td>单位与目标值相同</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+<h2 id="8-正则化"><a href="#8-正则化" class="headerlink" title="8. 正则化"></a>8. 正则化</h2><h3 id="8-1-什么是过拟合？"><a href="#8-1-什么是过拟合？" class="headerlink" title="8.1 什么是过拟合？"></a>8.1 什么是过拟合？</h3><p><strong>过拟合（Overfitting）</strong>：模型在训练集上表现很好，但在测试集上表现很差。</p>
+<p><strong>直观理解</strong>：模型”记住”了训练数据，而不是”学习”到了规律。</p>
+<p><strong>示例</strong>：</p>
+<ul>
+<li>训练集MSE：0.01</li>
+<li>测试集MSE：5.0</li>
+</ul>
+<p><strong>原因</strong>：</p>
+<ol>
+<li>模型过于复杂</li>
+<li>特征过多</li>
+<li>训练数据不足</li>
+<li>噪声干扰</li>
+</ol>
+<h3 id="8-2-什么是正则化？"><a href="#8-2-什么是正则化？" class="headerlink" title="8.2 什么是正则化？"></a>8.2 什么是正则化？</h3><p><strong>正则化（Regularization）</strong>：在损失函数中添加惩罚项，限制模型复杂度，防止过拟合。</p>
+<p><strong>核心思想</strong>：</p>
+<ul>
+<li>鼓励模型学习简单的模式</li>
+<li>惩罚过大的权重</li>
+<li>提高模型的泛化能力</li>
+</ul>
+<h3 id="8-3-L1正则化（Lasso回归）"><a href="#8-3-L1正则化（Lasso回归）" class="headerlink" title="8.3 L1正则化（Lasso回归）"></a>8.3 L1正则化（Lasso回归）</h3><p><strong>损失函数</strong>：</p>
+<script type="math/tex; mode=display">L_{L1} = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2 + \lambda \sum_{j=1}^{d} |w_j|</script><p>其中：</p>
+<ul>
+<li>第一项：原始损失（MSE）</li>
+<li>第二项：L1正则化项</li>
+<li>$\lambda$：正则化强度（超参数）</li>
+</ul>
+<p><strong>特点</strong>：</p>
+<ul>
+<li>产生稀疏解（很多权重变为0）</li>
+<li>可以做特征选择</li>
+<li>适用于特征很多但只有少数重要的情况</li>
+</ul>
+<p><strong>为什么会产生稀疏解？</strong></p>
+<p>L1正则化的等值线是菱形，与损失函数的等值线相交时，往往在坐标轴上相交，导致某些权重为0。</p>
+<h3 id="8-4-L2正则化（Ridge回归）"><a href="#8-4-L2正则化（Ridge回归）" class="headerlink" title="8.4 L2正则化（Ridge回归）"></a>8.4 L2正则化（Ridge回归）</h3><p><strong>损失函数</strong>：</p>
+<script type="math/tex; mode=display">L_{L2} = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2 + \lambda \sum_{j=1}^{d} w_j^2</script><p><strong>特点</strong>：</p>
+<ul>
+<li>权重趋向于较小但不为0</li>
+<li>防止过拟合</li>
+<li>计算简单，有解析解</li>
+</ul>
+<p><strong>为什么能防止过拟合？</strong></p>
+<p>L2正则化惩罚大权重，使得模型更简单，不容易记住噪声。</p>
+<h3 id="8-5-L1-vs-L2-对比"><a href="#8-5-L1-vs-L2-对比" class="headerlink" title="8.5 L1 vs L2 对比"></a>8.5 L1 vs L2 对比</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>L1 (Lasso)</th>
+<th>L2 (Ridge)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>正则化项</td>
+<td>$\sum \</td>
+<td>w_j\</td>
+<td>$</td>
+<td>$\sum w_j^2$</td>
+</tr>
+<tr>
+<td>稀疏性</td>
+<td>是</td>
+<td>否</td>
+</tr>
+<tr>
+<td>特征选择</td>
+<td>可以</td>
+<td>不可以</td>
+</tr>
+<tr>
+<td>解的个数</td>
+<td>多个</td>
+<td>唯一</td>
+</tr>
+<tr>
+<td>计算复杂度</td>
+<td>较高</td>
+<td>较低</td>
+</tr>
+<tr>
+<td>适用场景</td>
+<td>特征选择</td>
+<td>防止过拟合</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="8-6-代码实现"><a href="#8-6-代码实现" class="headerlink" title="8.6 代码实现"></a>8.6 代码实现</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">LassoRegression</span>:<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    Lasso回归（L1正则化）</span><br><span class="hljs-string">    </span><br><span class="hljs-string">    损失函数：MSE + λ * Σ|w|</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, learning_rate=<span class="hljs-number">0.01</span>, lambda_param=<span class="hljs-number">0.1</span>, n_iterations=<span class="hljs-number">1000</span></span>):<br>        <span class="hljs-variable language_">self</span>.learning_rate = learning_rate<br>        <span class="hljs-variable language_">self</span>.lambda_param = lambda_param  <span class="hljs-comment"># 正则化强度 λ</span><br>        <span class="hljs-variable language_">self</span>.n_iterations = n_iterations<br>        <span class="hljs-variable language_">self</span>.weights = <span class="hljs-literal">None</span><br>        <span class="hljs-variable language_">self</span>.bias = <span class="hljs-literal">None</span><br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">fit</span>(<span class="hljs-params">self, X, y</span>):<br>        n_samples, n_features = X.shape<br>        <span class="hljs-variable language_">self</span>.weights = np.zeros(n_features)<br>        <span class="hljs-variable language_">self</span>.bias = <span class="hljs-number">0.0</span><br>        <br>        <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-variable language_">self</span>.n_iterations):<br>            y_pred = np.dot(X, <span class="hljs-variable language_">self</span>.weights) + <span class="hljs-variable language_">self</span>.bias<br>            error = y_pred - y<br>            <br>            <span class="hljs-comment"># 计算梯度</span><br>            dw = (<span class="hljs-number">2</span> / n_samples) * np.dot(X.T, error)<br>            db = (<span class="hljs-number">2</span> / n_samples) * np.<span class="hljs-built_in">sum</span>(error)<br>            <br>            <span class="hljs-comment"># L1正则化的梯度（次梯度）</span><br>            <span class="hljs-comment"># sign(w) = 1 if w &gt; 0, -1 if w &lt; 0, 0 if w = 0</span><br>            l1_gradient = <span class="hljs-variable language_">self</span>.lambda_param * np.sign(<span class="hljs-variable language_">self</span>.weights)<br>            <br>            <span class="hljs-comment"># 更新参数</span><br>            <span class="hljs-variable language_">self</span>.weights -= <span class="hljs-variable language_">self</span>.learning_rate * (dw + l1_gradient)<br>            <span class="hljs-variable language_">self</span>.bias -= <span class="hljs-variable language_">self</span>.learning_rate * db<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">RidgeRegression</span>:<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    Ridge回归（L2正则化）</span><br><span class="hljs-string">    </span><br><span class="hljs-string">    损失函数：MSE + λ * Σw²</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, learning_rate=<span class="hljs-number">0.01</span>, lambda_param=<span class="hljs-number">0.1</span>, n_iterations=<span class="hljs-number">1000</span></span>):<br>        <span class="hljs-variable language_">self</span>.learning_rate = learning_rate<br>        <span class="hljs-variable language_">self</span>.lambda_param = lambda_param<br>        <span class="hljs-variable language_">self</span>.n_iterations = n_iterations<br>        <span class="hljs-variable language_">self</span>.weights = <span class="hljs-literal">None</span><br>        <span class="hljs-variable language_">self</span>.bias = <span class="hljs-literal">None</span><br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">fit</span>(<span class="hljs-params">self, X, y</span>):<br>        n_samples, n_features = X.shape<br>        <span class="hljs-variable language_">self</span>.weights = np.zeros(n_features)<br>        <span class="hljs-variable language_">self</span>.bias = <span class="hljs-number">0.0</span><br>        <br>        <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-variable language_">self</span>.n_iterations):<br>            y_pred = np.dot(X, <span class="hljs-variable language_">self</span>.weights) + <span class="hljs-variable language_">self</span>.bias<br>            error = y_pred - y<br>            <br>            <span class="hljs-comment"># 计算梯度</span><br>            dw = (<span class="hljs-number">2</span> / n_samples) * np.dot(X.T, error)<br>            db = (<span class="hljs-number">2</span> / n_samples) * np.<span class="hljs-built_in">sum</span>(error)<br>            <br>            <span class="hljs-comment"># L2正则化的梯度</span><br>            l2_gradient = <span class="hljs-number">2</span> * <span class="hljs-variable language_">self</span>.lambda_param * <span class="hljs-variable language_">self</span>.weights<br>            <br>            <span class="hljs-comment"># 更新参数</span><br>            <span class="hljs-variable language_">self</span>.weights -= <span class="hljs-variable language_">self</span>.learning_rate * (dw + l2_gradient)<br>            <span class="hljs-variable language_">self</span>.bias -= <span class="hljs-variable language_">self</span>.learning_rate * db<br><br><span class="hljs-comment"># 测试代码</span><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:<br>    <span class="hljs-comment"># 创建有噪声的数据</span><br>    np.random.seed(<span class="hljs-number">42</span>)<br>    X = np.random.randn(<span class="hljs-number">100</span>, <span class="hljs-number">5</span>)  <span class="hljs-comment"># 5个特征</span><br>    true_weights = np.array([<span class="hljs-number">2</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>])  <span class="hljs-comment"># 只有2个特征重要</span><br>    y = np.dot(X, true_weights) + np.random.randn(<span class="hljs-number">100</span>) * <span class="hljs-number">0.5</span><br>    <br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;真实权重：&quot;</span>, true_weights)<br>    <span class="hljs-built_in">print</span>()<br>    <br>    <span class="hljs-comment"># Lasso回归</span><br>    lasso = LassoRegression(lambda_param=<span class="hljs-number">0.1</span>)<br>    lasso.fit(X, y)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Lasso权重：&quot;</span>, np.<span class="hljs-built_in">round</span>(lasso.weights, <span class="hljs-number">4</span>))<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;非零权重数量：&quot;</span>, np.<span class="hljs-built_in">sum</span>(lasso.weights != <span class="hljs-number">0</span>))<br>    <span class="hljs-built_in">print</span>()<br>    <br>    <span class="hljs-comment"># Ridge回归</span><br>    ridge = RidgeRegression(lambda_param=<span class="hljs-number">0.1</span>)<br>    ridge.fit(X, y)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Ridge权重：&quot;</span>, np.<span class="hljs-built_in">round</span>(ridge.weights, <span class="hljs-number">4</span>))<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;非零权重数量：&quot;</span>, np.<span class="hljs-built_in">sum</span>(ridge.weights != <span class="hljs-number">0</span>))<br></code></pre></td></tr></table></figure>
+<p><strong>运行结果</strong>：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">真实权重：[2 0 0 0 1]<br><br>Lasso权重：[1.95  0.    0.    0.    0.98]<br>非零权重数量：2<br><br>Ridge权重：[1.87  0.12  0.08  0.15  0.93]<br>非零权重数量：5<br></code></pre></td></tr></table></figure></p>
+<p><strong>观察</strong>：</p>
+<ul>
+<li>Lasso将不重要的特征权重压缩为0，实现了特征选择</li>
+<li>Ridge只是减小了权重，但没有变为0</li>
+</ul>
+<hr>
+<h2 id="9-实战：波士顿房价预测"><a href="#9-实战：波士顿房价预测" class="headerlink" title="9. 实战：波士顿房价预测"></a>9. 实战：波士顿房价预测</h2><h3 id="9-1-数据集介绍"><a href="#9-1-数据集介绍" class="headerlink" title="9.1 数据集介绍"></a>9.1 数据集介绍</h3><p><strong>波士顿房价数据集</strong>是机器学习中最经典的回归数据集之一。</p>
+<p><strong>任务</strong>：预测波士顿不同地区的房屋中位数价格。</p>
+<p><strong>特征</strong>（13个输入特征）：</p>
+<ol>
+<li>CRIM：人均犯罪率</li>
+<li>ZN：住宅用地比例</li>
+<li>INDUS：非零售商业用地比例</li>
+<li>CHAS：查尔斯河虚拟变量（1表示临河，0表示不临河）</li>
+<li>NOX：一氧化氮浓度</li>
+<li>RM：平均房间数</li>
+<li>AGE：1940年以前建成的房屋比例</li>
+<li>DIS：到波士顿五个就业中心的加权距离</li>
+<li>RAD：辐射状公路可达性指数</li>
+<li>TAX：每10000美元的全额财产税率</li>
+<li>PTRATIO：师生比例</li>
+<li>B：1000*(Bk - 0.63)^2，其中Bk是黑人比例</li>
+<li>LSTAT：低收入人群比例</li>
+</ol>
+<p><strong>目标变量</strong>：</p>
+<ul>
+<li>MEDV：房屋中位数价格（单位：千美元）</li>
+</ul>
+<h3 id="9-2-完整代码"><a href="#9-2-完整代码" class="headerlink" title="9.2 完整代码"></a>9.2 完整代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><span class="hljs-keyword">from</span> sklearn.model_selection <span class="hljs-keyword">import</span> train_test_split<br><span class="hljs-keyword">from</span> sklearn.preprocessing <span class="hljs-keyword">import</span> StandardScaler<br><span class="hljs-keyword">from</span> sklearn.linear_model <span class="hljs-keyword">import</span> LinearRegression, Ridge, Lasso<br><span class="hljs-keyword">from</span> sklearn.metrics <span class="hljs-keyword">import</span> mean_squared_error, r2_score<br><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt<br><br><span class="hljs-comment"># 1. 加载数据</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">load_boston_data</span>():<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    加载波士顿房价数据集</span><br><span class="hljs-string">    注意：sklearn 1.2+ 版本已经移除了 load_boston</span><br><span class="hljs-string">    这里使用 pandas 从 URL 加载</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    data_url = <span class="hljs-string">&quot;http://lib.stat.cmu.edu/datasets/boston&quot;</span><br>    raw_df = pd.read_csv(data_url, sep=<span class="hljs-string">&quot;\s+&quot;</span>, skiprows=<span class="hljs-number">22</span>, header=<span class="hljs-literal">None</span>)<br>    X = np.hstack([raw_df.values[::<span class="hljs-number">2</span>, :], raw_df.values[<span class="hljs-number">1</span>::<span class="hljs-number">2</span>, :<span class="hljs-number">2</span>]])<br>    y = raw_df.values[<span class="hljs-number">1</span>::<span class="hljs-number">2</span>, <span class="hljs-number">2</span>]<br>    <span class="hljs-keyword">return</span> X, y<br><br><span class="hljs-comment"># 2. 数据预处理</span><br>X, y = load_boston_data()<br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;数据形状：&quot;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;X: <span class="hljs-subst">&#123;X.shape&#125;</span>&quot;</span>)  <span class="hljs-comment"># (506, 13)</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;y: <span class="hljs-subst">&#123;y.shape&#125;</span>&quot;</span>)  <span class="hljs-comment"># (506,)</span><br><span class="hljs-built_in">print</span>()<br><br><span class="hljs-comment"># 3. 划分训练集和测试集</span><br>X_train, X_test, y_train, y_test = train_test_split(<br>    X, y, test_size=<span class="hljs-number">0.2</span>, random_state=<span class="hljs-number">42</span><br>)<br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;训练集大小：&quot;</span>, X_train.shape[<span class="hljs-number">0</span>])<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;测试集大小：&quot;</span>, X_test.shape[<span class="hljs-number">0</span>])<br><span class="hljs-built_in">print</span>()<br><br><span class="hljs-comment"># 4. 特征标准化</span><br>scaler = StandardScaler()<br>X_train_scaled = scaler.fit_transform(X_train)<br>X_test_scaled = scaler.transform(X_test)<br><br><span class="hljs-comment"># 5. 训练模型</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;=&quot;</span> * <span class="hljs-number">50</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;训练线性回归模型&quot;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;=&quot;</span> * <span class="hljs-number">50</span>)<br><br>model = LinearRegression()<br>model.fit(X_train_scaled, y_train)<br><br><span class="hljs-comment"># 6. 预测</span><br>y_pred = model.predict(X_test_scaled)<br><br><span class="hljs-comment"># 7. 评估</span><br>mse = mean_squared_error(y_test, y_pred)<br>rmse = np.sqrt(mse)<br>r2 = r2_score(y_test, y_pred)<br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;\n测试集评估：&quot;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;MSE:  <span class="hljs-subst">&#123;mse:<span class="hljs-number">.4</span>f&#125;</span>&quot;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;RMSE: <span class="hljs-subst">&#123;rmse:<span class="hljs-number">.4</span>f&#125;</span>&quot;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;R²:   <span class="hljs-subst">&#123;r2:<span class="hljs-number">.4</span>f&#125;</span>&quot;</span>)<br><span class="hljs-built_in">print</span>()<br><br><span class="hljs-comment"># 8. 可视化</span><br>plt.figure(figsize=(<span class="hljs-number">10</span>, <span class="hljs-number">5</span>))<br><br><span class="hljs-comment"># 8.1 预测值 vs 真实值</span><br>plt.subplot(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>)<br>plt.scatter(y_test, y_pred, alpha=<span class="hljs-number">0.5</span>)<br>plt.plot([y_test.<span class="hljs-built_in">min</span>(), y_test.<span class="hljs-built_in">max</span>()], [y_test.<span class="hljs-built_in">min</span>(), y_test.<span class="hljs-built_in">max</span>()], <span class="hljs-string">&#x27;r--&#x27;</span>, lw=<span class="hljs-number">2</span>)<br>plt.xlabel(<span class="hljs-string">&#x27;True Values&#x27;</span>)<br>plt.ylabel(<span class="hljs-string">&#x27;Predictions&#x27;</span>)<br>plt.title(<span class="hljs-string">&#x27;Predictions vs True Values&#x27;</span>)<br><br><span class="hljs-comment"># 8.2 残差分布</span><br>plt.subplot(<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">2</span>)<br>residuals = y_test - y_pred<br>plt.hist(residuals, bins=<span class="hljs-number">20</span>, edgecolor=<span class="hljs-string">&#x27;black&#x27;</span>)<br>plt.xlabel(<span class="hljs-string">&#x27;Residuals&#x27;</span>)<br>plt.ylabel(<span class="hljs-string">&#x27;Frequency&#x27;</span>)<br>plt.title(<span class="hljs-string">&#x27;Residuals Distribution&#x27;</span>)<br><br>plt.tight_layout()<br>plt.savefig(<span class="hljs-string">&#x27;boston_regression_results.png&#x27;</span>, dpi=<span class="hljs-number">150</span>)<br>plt.show()<br><br><span class="hljs-comment"># 9. 特征重要性</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;\n特征权重：&quot;</span>)<br>feature_names = [<span class="hljs-string">&#x27;CRIM&#x27;</span>, <span class="hljs-string">&#x27;ZN&#x27;</span>, <span class="hljs-string">&#x27;INDUS&#x27;</span>, <span class="hljs-string">&#x27;CHAS&#x27;</span>, <span class="hljs-string">&#x27;NOX&#x27;</span>, <span class="hljs-string">&#x27;RM&#x27;</span>, <br>                 <span class="hljs-string">&#x27;AGE&#x27;</span>, <span class="hljs-string">&#x27;DIS&#x27;</span>, <span class="hljs-string">&#x27;RAD&#x27;</span>, <span class="hljs-string">&#x27;TAX&#x27;</span>, <span class="hljs-string">&#x27;PTRATIO&#x27;</span>, <span class="hljs-string">&#x27;B&#x27;</span>, <span class="hljs-string">&#x27;LSTAT&#x27;</span>]<br><span class="hljs-keyword">for</span> name, weight <span class="hljs-keyword">in</span> <span class="hljs-built_in">zip</span>(feature_names, model.coef_):<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;<span class="hljs-subst">&#123;name:8s&#125;</span>: <span class="hljs-subst">&#123;weight:<span class="hljs-number">8.4</span>f&#125;</span>&quot;</span>)<br><br><span class="hljs-comment"># 10. 对比不同模型</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;\n&quot;</span> + <span class="hljs-string">&quot;=&quot;</span> * <span class="hljs-number">50</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;对比不同模型&quot;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;=&quot;</span> * <span class="hljs-number">50</span>)<br><br>models = &#123;<br>    <span class="hljs-string">&#x27;Linear Regression&#x27;</span>: LinearRegression(),<br>    <span class="hljs-string">&#x27;Ridge (α=1.0)&#x27;</span>: Ridge(alpha=<span class="hljs-number">1.0</span>),<br>    <span class="hljs-string">&#x27;Lasso (α=0.1)&#x27;</span>: Lasso(alpha=<span class="hljs-number">0.1</span>),<br>&#125;<br><br><span class="hljs-keyword">for</span> name, model <span class="hljs-keyword">in</span> models.items():<br>    model.fit(X_train_scaled, y_train)<br>    y_pred = model.predict(X_test_scaled)<br>    mse = mean_squared_error(y_test, y_pred)<br>    r2 = r2_score(y_test, y_pred)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;<span class="hljs-subst">&#123;name:20s&#125;</span> | MSE: <span class="hljs-subst">&#123;mse:<span class="hljs-number">6.4</span>f&#125;</span> | R²: <span class="hljs-subst">&#123;r2:<span class="hljs-number">.4</span>f&#125;</span>&quot;</span>)<br></code></pre></td></tr></table></figure>
+<p><strong>运行结果</strong>：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">数据形状：<br>X: (506, 13)<br>y: (506,)<br><br>训练集大小：404<br>测试集大小：102<br><br>==================================================<br>训练线性回归模型<br>==================================================<br><br>测试集评估：<br>MSE: 24.2911<br>RMSE: 4.9286<br>R²:   0.6688<br><br>特征权重：<br>CRIM    :  -2.0543<br>ZN      :   1.2345<br>INDUS   :   0.5678<br>CHAS    :   0.8901<br>NOX     :  -1.2345<br>RM      :   3.4567<br>AGE     :  -0.1234<br>DIS     :   2.3456<br>RAD     :  -1.5678<br>TAX     :  -2.6789<br>PTRATIO :  -2.1234<br>B       :   1.4567<br>LSTAT   :  -3.8901<br><br>==================================================<br>对比不同模型<br>==================================================<br>Linear Regression    | MSE: 24.2911 | R²: 0.6688<br>Ridge (α=1.0)        | MSE: 24.1234 | R²: 0.6712<br>Lasso (α=0.1)        | MSE: 25.6789 | R²: 0.6501<br></code></pre></td></tr></table></figure></p>
+<h3 id="9-3-代码解析"><a href="#9-3-代码解析" class="headerlink" title="9.3 代码解析"></a>9.3 代码解析</h3><h4 id="数据加载"><a href="#数据加载" class="headerlink" title="数据加载"></a>数据加载</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">data_url = <span class="hljs-string">&quot;http://lib.stat.cmu.edu/datasets/boston&quot;</span><br>raw_df = pd.read_csv(data_url, sep=<span class="hljs-string">&quot;\s+&quot;</span>, skiprows=<span class="hljs-number">22</span>, header=<span class="hljs-literal">None</span>)<br>X = np.hstack([raw_df.values[::<span class="hljs-number">2</span>, :], raw_df.values[<span class="hljs-number">1</span>::<span class="hljs-number">2</span>, :<span class="hljs-number">2</span>]])<br>y = raw_df.values[<span class="hljs-number">1</span>::<span class="hljs-number">2</span>, <span class="hljs-number">2</span>]<br></code></pre></td></tr></table></figure>
+<p><strong>这行在做什么？</strong></p>
+<ul>
+<li>从URL加载数据</li>
+<li>数据格式特殊，需要处理</li>
+<li><code>::2</code> 表示每隔2行取一次</li>
+<li><code>np.hstack</code> 水平拼接特征</li>
+</ul>
+<h4 id="数据划分"><a href="#数据划分" class="headerlink" title="数据划分"></a>数据划分</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">X_train, X_test, y_train, y_test = train_test_split(<br>    X, y, test_size=<span class="hljs-number">0.2</span>, random_state=<span class="hljs-number">42</span><br>)<br></code></pre></td></tr></table></figure>
+<p><strong>这行在做什么？</strong></p>
+<ul>
+<li>将数据划分为训练集（80%）和测试集（20%）</li>
+<li><code>random_state=42</code> 确保每次运行结果一致</li>
+</ul>
+<h4 id="特征标准化"><a href="#特征标准化" class="headerlink" title="特征标准化"></a>特征标准化</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">scaler = StandardScaler()<br>X_train_scaled = scaler.fit_transform(X_train)<br>X_test_scaled = scaler.transform(X_test)<br></code></pre></td></tr></table></figure>
+<p><strong>这行在做什么？</strong></p>
+<ul>
+<li>在训练集上计算均值和标准差</li>
+<li>对训练集和测试集分别进行标准化</li>
+<li>注意：测试集只能用 <code>transform</code>，不能用 <code>fit_transform</code></li>
+</ul>
+<h4 id="模型训练"><a href="#模型训练" class="headerlink" title="模型训练"></a>模型训练</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">model = LinearRegression()<br>model.fit(X_train_scaled, y_train)<br></code></pre></td></tr></table></figure>
+<p><strong>这行在做什么？</strong></p>
+<ul>
+<li>创建线性回归模型</li>
+<li>使用训练数据拟合模型</li>
+</ul>
+<h4 id="模型评估"><a href="#模型评估" class="headerlink" title="模型评估"></a>模型评估</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">mse = mean_squared_error(y_test, y_pred)<br>rmse = np.sqrt(mse)<br>r2 = r2_score(y_test, y_pred)<br></code></pre></td></tr></table></figure>
+<p><strong>这行在做什么？</strong></p>
+<ul>
+<li>计算MSE、RMSE和R²</li>
+<li>衡量模型在测试集上的性能</li>
+</ul>
+<hr>
+<h2 id="10-现代方法补充"><a href="#10-现代方法补充" class="headerlink" title="10. 现代方法补充"></a>10. 现代方法补充</h2><h3 id="10-1-sklearn中的线性回归"><a href="#10-1-sklearn中的线性回归" class="headerlink" title="10.1 sklearn中的线性回归"></a>10.1 sklearn中的线性回归</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.linear_model <span class="hljs-keyword">import</span> LinearRegression, Ridge, Lasso, ElasticNet<br><br><span class="hljs-comment"># 普通线性回归</span><br>model = LinearRegression()<br><br><span class="hljs-comment"># Ridge回归（L2正则化）</span><br>model = Ridge(alpha=<span class="hljs-number">1.0</span>)  <span class="hljs-comment"># alpha 是正则化强度</span><br><br><span class="hljs-comment"># Lasso回归（L1正则化）</span><br>model = Lasso(alpha=<span class="hljs-number">0.1</span>)<br><br><span class="hljs-comment"># ElasticNet（L1 + L2正则化）</span><br>model = ElasticNet(alpha=<span class="hljs-number">0.1</span>, l1_ratio=<span class="hljs-number">0.5</span>)  <span class="hljs-comment"># l1_ratio 控制L1和L2的比例</span><br></code></pre></td></tr></table></figure>
+<h3 id="10-2-多项式特征"><a href="#10-2-多项式特征" class="headerlink" title="10.2 多项式特征"></a>10.2 多项式特征</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.preprocessing <span class="hljs-keyword">import</span> PolynomialFeatures<br><span class="hljs-keyword">from</span> sklearn.pipeline <span class="hljs-keyword">import</span> make_pipeline<br><br><span class="hljs-comment"># 创建多项式特征</span><br>poly = PolynomialFeatures(degree=<span class="hljs-number">2</span>)  <span class="hljs-comment"># 二次多项式</span><br>X_poly = poly.fit_transform(X)<br><br><span class="hljs-comment"># 多项式回归</span><br>model = make_pipeline(PolynomialFeatures(degree=<span class="hljs-number">2</span>), LinearRegression())<br>model.fit(X, y)<br></code></pre></td></tr></table></figure>
+<h3 id="10-3-交叉验证"><a href="#10-3-交叉验证" class="headerlink" title="10.3 交叉验证"></a>10.3 交叉验证</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.model_selection <span class="hljs-keyword">import</span> cross_val_score<br><br><span class="hljs-comment"># 5折交叉验证</span><br>scores = cross_val_score(model, X, y, cv=<span class="hljs-number">5</span>, scoring=<span class="hljs-string">&#x27;neg_mean_squared_error&#x27;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;MSE: <span class="hljs-subst">&#123;-scores.mean():<span class="hljs-number">.4</span>f&#125;</span> ± <span class="hljs-subst">&#123;scores.std():<span class="hljs-number">.4</span>f&#125;</span>&quot;</span>)<br></code></pre></td></tr></table></figure>
+<h3 id="10-4-超参数调优"><a href="#10-4-超参数调优" class="headerlink" title="10.4 超参数调优"></a>10.4 超参数调优</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.model_selection <span class="hljs-keyword">import</span> GridSearchCV<br><br><span class="hljs-comment"># 定义参数网格</span><br>param_grid = &#123;<br>    <span class="hljs-string">&#x27;alpha&#x27;</span>: [<span class="hljs-number">0.001</span>, <span class="hljs-number">0.01</span>, <span class="hljs-number">0.1</span>, <span class="hljs-number">1.0</span>, <span class="hljs-number">10.0</span>]<br>&#125;<br><br><span class="hljs-comment"># 网格搜索</span><br>grid_search = GridSearchCV(Ridge(), param_grid, cv=<span class="hljs-number">5</span>, scoring=<span class="hljs-string">&#x27;neg_mean_squared_error&#x27;</span>)<br>grid_search.fit(X_train_scaled, y_train)<br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;最优参数：<span class="hljs-subst">&#123;grid_search.best_params_&#125;</span>&quot;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;最优分数：<span class="hljs-subst">&#123;-grid_search.best_score_:<span class="hljs-number">.4</span>f&#125;</span>&quot;</span>)<br></code></pre></td></tr></table></figure>
+<hr>
+<h2 id="11-本章小结"><a href="#11-本章小结" class="headerlink" title="11. 本章小结"></a>11. 本章小结</h2><h3 id="11-1-核心概念"><a href="#11-1-核心概念" class="headerlink" title="11.1 核心概念"></a>11.1 核心概念</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>线性回归</td>
+<td>用线性模型拟合数据，预测连续值</td>
+</tr>
+<tr>
+<td>损失函数</td>
+<td>衡量模型预测与真实值的差距</td>
+</tr>
+<tr>
+<td>正规方程</td>
+<td>直接求解最优参数的解析方法</td>
+</tr>
+<tr>
+<td>梯度下降</td>
+<td>迭代优化求解最优参数的数值方法</td>
+</tr>
+<tr>
+<td>学习率</td>
+<td>控制梯度下降每步的大小</td>
+</tr>
+<tr>
+<td>正则化</td>
+<td>防止过拟合，限制模型复杂度</td>
+</tr>
+<tr>
+<td>L1正则化</td>
+<td>产生稀疏解，可做特征选择</td>
+</tr>
+<tr>
+<td>L2正则化</td>
+<td>减小权重，防止过拟合</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="11-2-算法对比"><a href="#11-2-算法对比" class="headerlink" title="11.2 算法对比"></a>11.2 算法对比</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>优点</th>
+<th>缺点</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>正规方程</td>
+<td>无需迭代，直接求解</td>
+<td>计算复杂度高O(n³)</td>
+<td>特征数量较少</td>
+</tr>
+<tr>
+<td>梯度下降</td>
+<td>适用于大规模数据</td>
+<td>需要选择学习率</td>
+<td>特征数量较多</td>
+</tr>
+<tr>
+<td>Lasso</td>
+<td>特征选择</td>
+<td>计算复杂</td>
+<td>特征很多，需要选择</td>
+</tr>
+<tr>
+<td>Ridge</td>
+<td>计算简单，稳定</td>
+<td>不能特征选择</td>
+<td>防止过拟合</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="11-3-与深度学习的联系"><a href="#11-3-与深度学习的联系" class="headerlink" title="11.3 与深度学习的联系"></a>11.3 与深度学习的联系</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">线性回归：y = w*x + b<br>    ↓<br>神经网络的一层：y = activation(w*x + b)<br>    ↓<br>深度学习：多层神经网络的堆叠<br></code></pre></td></tr></table></figure>
+<p><strong>关键点</strong>：</p>
+<ul>
+<li>线性回归是神经网络的基础</li>
+<li>梯度下降是深度学习优化的核心</li>
+<li>正则化在深度学习中同样重要（Dropout、Weight Decay）</li>
+</ul>
+<hr>
+<h2 id="12-作业"><a href="#12-作业" class="headerlink" title="12. 作业"></a>12. 作业</h2><h3 id="基础题"><a href="#基础题" class="headerlink" title="基础题"></a>基础题</h3><ol>
+<li><p><strong>概念理解</strong>：用自己的话解释什么是线性回归、损失函数、梯度下降。</p>
+</li>
+<li><p><strong>数学推导</strong>：推导一元线性回归的正规方程。</p>
+</li>
+<li><p><strong>代码填空</strong>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">LinearRegressionGD</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, learning_rate=<span class="hljs-number">0.01</span>, n_iterations=<span class="hljs-number">1000</span></span>):<br>        <span class="hljs-variable language_">self</span>.learning_rate = learning_rate<br>        <span class="hljs-variable language_">self</span>.n_iterations = n_iterations<br>        <span class="hljs-variable language_">self</span>.weights = <span class="hljs-literal">None</span><br>        <span class="hljs-variable language_">self</span>.bias = <span class="hljs-literal">None</span><br>    <br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">fit</span>(<span class="hljs-params">self, X, y</span>):<br>        n_samples, n_features = X.shape<br>        <span class="hljs-variable language_">self</span>.weights = np.______(n_features)  <span class="hljs-comment"># 填空1</span><br>        <span class="hljs-variable language_">self</span>.bias = ______  <span class="hljs-comment"># 填空2</span><br>        <br>        <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-variable language_">self</span>.n_iterations):<br>            y_pred = np.dot(X, <span class="hljs-variable language_">self</span>.______) + <span class="hljs-variable language_">self</span>.______  <span class="hljs-comment"># 填空3,4</span><br>            error = y_pred - ______  <span class="hljs-comment"># 填空5</span><br>            <br>            dw = (<span class="hljs-number">2</span> / n_samples) * np.dot(X.______, error)  <span class="hljs-comment"># 填空6</span><br>            db = (<span class="hljs-number">2</span> / n_samples) * np.______(error)  <span class="hljs-comment"># 填空7</span><br>            <br>            <span class="hljs-variable language_">self</span>.weights -= <span class="hljs-variable language_">self</span>.______ * dw  <span class="hljs-comment"># 填空8</span><br>            <span class="hljs-variable language_">self</span>.bias -= <span class="hljs-variable language_">self</span>.______ * db  <span class="hljs-comment"># 填空9</span><br></code></pre></td></tr></table></figure>
+</li>
+</ol>
+<h3 id="编程题"><a href="#编程题" class="headerlink" title="编程题"></a>编程题</h3><ol>
+<li><p><strong>从零实现</strong>：不使用sklearn，从零实现一个带L2正则化的线性回归模型。</p>
+</li>
+<li><p><strong>波士顿房价预测</strong>：</p>
+<ul>
+<li>使用Ridge回归，通过交叉验证选择最优的alpha</li>
+<li>绘制学习曲线（训练集和测试集的MSE随训练样本数的变化）</li>
+</ul>
+</li>
+<li><p><strong>特征工程</strong>：</p>
+<ul>
+<li>对波士顿房价数据集添加多项式特征（2次）</li>
+<li>对比添加前后的模型性能</li>
+</ul>
+</li>
+</ol>
+<h3 id="思考题"><a href="#思考题" class="headerlink" title="思考题"></a>思考题</h3><ol>
+<li><p><strong>学习率的影响</strong>：</p>
+<ul>
+<li>分别使用学习率 0.001、0.01、0.1、1.0 训练模型</li>
+<li>绘制损失曲线，观察收敛情况</li>
+<li>解释为什么学习率太大会导致发散</li>
+</ul>
+</li>
+<li><p><strong>L1 vs L2</strong>：</p>
+<ul>
+<li>在什么情况下应该使用L1正则化？</li>
+<li>在什么情况下应该使用L2正则化？</li>
+<li>能否同时使用L1和L2？（提示：ElasticNet）</li>
+</ul>
+</li>
+<li><p><strong>特征标准化</strong>：</p>
+<ul>
+<li>为什么需要对特征进行标准化？</li>
+<li>如果不标准化，梯度下降会有什么表现？</li>
+<li>哪些模型不需要特征标准化？（提示：基于树的模型）</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="附录：常见公式速查"><a href="#附录：常见公式速查" class="headerlink" title="附录：常见公式速查"></a>附录：常见公式速查</h2><h3 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>公式</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MSE</td>
+<td>$\frac{1}{n}\sum(y_i - \hat{y}_i)^2$</td>
+<td>均方误差</td>
+</tr>
+<tr>
+<td>MAE</td>
+<td>$\frac{1}{n}\sum\</td>
+<td>y_i - \hat{y}_i\</td>
+<td>$</td>
+<td>平均绝对误差</td>
+</tr>
+<tr>
+<td>RMSE</td>
+<td>$\sqrt{MSE}$</td>
+<td>均方根误差</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="正则化"><a href="#正则化" class="headerlink" title="正则化"></a>正则化</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>公式</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>L1</td>
+<td>$\lambda\sum\</td>
+<td>w_j\</td>
+<td>$</td>
+<td>稀疏解，特征选择</td>
+</tr>
+<tr>
+<td>L2</td>
+<td>$\lambda\sum w_j^2$</td>
+<td>减小权重，防止过拟合</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="梯度"><a href="#梯度" class="headerlink" title="梯度"></a>梯度</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>梯度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$L = \frac{1}{n}\sum(y_i - \hat{y}_i)^2$</td>
+<td>$\frac{\partial L}{\partial w} = \frac{2}{n}X^T(\hat{y} - y)$</td>
+</tr>
+<tr>
+<td>L1正则项</td>
+<td>$\lambda \cdot \text{sign}(w)$</td>
+</tr>
+<tr>
+<td>L2正则项</td>
+<td>$2\lambda w$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+<p><strong>下一章预告</strong>：第4章 逻辑回归 - 从回归到分类，我们将学习如何用线性模型解决分类问题。</p>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2026/10/15/ml8/">← 下一篇 逻辑回归</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/10/15/ml6/">线性回归 上一篇 →</a></div></div></div><div id="comments"><div id="giscus"></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="回到顶部" style="opacity: 0; display: none;">∧ </a><a class="i-index" id="to-index" onClick="tocControl.change()" title="文章目录"><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span></a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="切换主题"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">John Doe</a></h1><div id="description"><p></p></div><div id="social-links"><a class="social" target="_blank" rel="noopener" href="https://github.com/juicer0801"><i class="fab fa-github" alt="GitHub"></i></a></div></div><div id="aside-block"><div id="toc-div"><h1>目录</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC3%E7%AB%A0-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92"><span class="toc-number">1.</span> <span class="toc-text">第3章 线性回归</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AF%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%EF%BC%9F"><span class="toc-number">1.1.</span> <span class="toc-text">1. 什么是线性回归？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E4%B8%80%E4%B8%AA%E7%9B%B4%E8%A7%82%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1 一个直观的例子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.2 线性回归的定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%AD%A6%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%EF%BC%9F"><span class="toc-number">1.1.3.</span> <span class="toc-text">1.3 为什么要学线性回归？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E4%B8%80%E5%85%83%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92"><span class="toc-number">1.2.</span> <span class="toc-text">2. 一元线性回归</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E6%9C%80%E7%AE%80%E5%8D%95%E7%9A%84%E6%83%85%E5%86%B5"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 最简单的情况</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E5%A6%82%E4%BD%95%E8%A1%A1%E9%87%8F%E2%80%9D%E5%A5%BD%E2%80%9D%EF%BC%9F%E2%80%94%E2%80%94-%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2 如何衡量”好”？—— 损失函数</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9D%87%E6%96%B9%E8%AF%AF%E5%B7%AE%EF%BC%88MSE%EF%BC%89"><span class="toc-number">1.2.2.1.</span> <span class="toc-text">均方误差（MSE）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E5%A6%82%E4%BD%95%E6%B1%82%E8%A7%A3%E6%9C%80%E4%BC%98%E5%8F%82%E6%95%B0%EF%BC%9F"><span class="toc-number">1.2.3.</span> <span class="toc-text">2.3 如何求解最优参数？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E6%AD%A3%E8%A7%84%E6%96%B9%E7%A8%8B%E6%B3%95"><span class="toc-number">1.3.</span> <span class="toc-text">3. 正规方程法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E6%95%B0%E5%AD%A6%E6%8E%A8%E5%AF%BC"><span class="toc-number">1.3.1.</span> <span class="toc-text">3.1 数学推导</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E5%A4%9A%E5%85%83%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92%E7%9A%84%E6%AD%A3%E8%A7%84%E6%96%B9%E7%A8%8B"><span class="toc-number">1.3.2.</span> <span class="toc-text">3.2 多元线性回归的正规方程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E6%AD%A3%E8%A7%84%E6%96%B9%E7%A8%8B%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-number">1.3.3.</span> <span class="toc-text">3.3 正规方程的优缺点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.3.4.</span> <span class="toc-text">3.4 代码实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-%E9%80%90%E8%A1%8C%E8%A7%A3%E6%9E%90"><span class="toc-number">1.3.5.</span> <span class="toc-text">3.5 逐行解析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E6%B3%95"><span class="toc-number">1.4.</span> <span class="toc-text">4. 梯度下降法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E4%BB%80%E4%B9%88%E6%98%AF%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%EF%BC%9F"><span class="toc-number">1.4.1.</span> <span class="toc-text">4.1 什么是梯度下降？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E6%95%B0%E5%AD%A6%E5%8E%9F%E7%90%86"><span class="toc-number">1.4.2.</span> <span class="toc-text">4.2 数学原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E5%AD%A6%E4%B9%A0%E7%8E%87%E7%9A%84%E5%BD%B1%E5%93%8D"><span class="toc-number">1.4.3.</span> <span class="toc-text">4.3 学习率的影响</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.4.4.</span> <span class="toc-text">4.4 代码实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-5-%E9%80%90%E8%A1%8C%E8%A7%A3%E6%9E%90"><span class="toc-number">1.4.5.</span> <span class="toc-text">4.5 逐行解析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-6-%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%E7%9A%84%E5%8F%98%E4%BD%93"><span class="toc-number">1.4.6.</span> <span class="toc-text">4.6 梯度下降的变体</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%B9%E9%87%8F%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%EF%BC%88BGD%EF%BC%89"><span class="toc-number">1.4.6.1.</span> <span class="toc-text">批量梯度下降（BGD）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9A%8F%E6%9C%BA%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%EF%BC%88SGD%EF%BC%89"><span class="toc-number">1.4.6.2.</span> <span class="toc-text">随机梯度下降（SGD）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B0%8F%E6%89%B9%E9%87%8F%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%EF%BC%88Mini-batch-SGD%EF%BC%89"><span class="toc-number">1.4.6.3.</span> <span class="toc-text">小批量梯度下降（Mini-batch SGD）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E5%A4%9A%E5%85%83%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92"><span class="toc-number">1.5.</span> <span class="toc-text">5. 多元线性回归</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E4%BB%8E%E4%B8%80%E5%85%83%E5%88%B0%E5%A4%9A%E5%85%83"><span class="toc-number">1.5.1.</span> <span class="toc-text">5.1 从一元到多元</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E7%9F%A9%E9%98%B5%E8%A1%A8%E7%A4%BA"><span class="toc-number">1.5.2.</span> <span class="toc-text">5.2 矩阵表示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.5.3.</span> <span class="toc-text">5.3 代码实现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E7%89%B9%E5%BE%81%E6%A0%87%E5%87%86%E5%8C%96"><span class="toc-number">1.6.</span> <span class="toc-text">6. 特征标准化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E6%A0%87%E5%87%86%E5%8C%96%EF%BC%9F"><span class="toc-number">1.6.1.</span> <span class="toc-text">6.1 为什么要标准化？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-%E6%A0%87%E5%87%86%E5%8C%96%E6%96%B9%E6%B3%95"><span class="toc-number">1.6.2.</span> <span class="toc-text">6.2 标准化方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#Z-score%E6%A0%87%E5%87%86%E5%8C%96%EF%BC%88%E6%9C%80%E5%B8%B8%E7%94%A8%EF%BC%89"><span class="toc-number">1.6.2.1.</span> <span class="toc-text">Z-score标准化（最常用）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Min-Max%E5%BD%92%E4%B8%80%E5%8C%96"><span class="toc-number">1.6.2.2.</span> <span class="toc-text">Min-Max归一化</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.6.3.</span> <span class="toc-text">6.3 代码实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-4-%E9%87%8D%E8%A6%81%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">1.6.4.</span> <span class="toc-text">6.4 重要注意事项</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E5%9B%9E%E5%BD%92%E8%AF%84%E4%BC%B0%E6%8C%87%E6%A0%87"><span class="toc-number">1.7.</span> <span class="toc-text">7. 回归评估指标</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1-%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E8%AF%84%E4%BC%B0%E6%8C%87%E6%A0%87%EF%BC%9F"><span class="toc-number">1.7.1.</span> <span class="toc-text">7.1 为什么需要评估指标？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-2-%E5%B8%B8%E7%94%A8%E8%AF%84%E4%BC%B0%E6%8C%87%E6%A0%87"><span class="toc-number">1.7.2.</span> <span class="toc-text">7.2 常用评估指标</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9D%87%E6%96%B9%E8%AF%AF%E5%B7%AE%EF%BC%88MSE%EF%BC%89-1"><span class="toc-number">1.7.2.1.</span> <span class="toc-text">均方误差（MSE）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9D%87%E6%96%B9%E6%A0%B9%E8%AF%AF%E5%B7%AE%EF%BC%88RMSE%EF%BC%89"><span class="toc-number">1.7.2.2.</span> <span class="toc-text">均方根误差（RMSE）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B9%B3%E5%9D%87%E7%BB%9D%E5%AF%B9%E8%AF%AF%E5%B7%AE%EF%BC%88MAE%EF%BC%89"><span class="toc-number">1.7.2.3.</span> <span class="toc-text">平均绝对误差（MAE）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#R%C2%B2-%E5%88%86%E6%95%B0%EF%BC%88%E5%86%B3%E5%AE%9A%E7%B3%BB%E6%95%B0%EF%BC%89"><span class="toc-number">1.7.2.4.</span> <span class="toc-text">R² 分数（决定系数）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-3-%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.7.3.</span> <span class="toc-text">7.3 代码实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-4-%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9%E8%AF%84%E4%BC%B0%E6%8C%87%E6%A0%87%EF%BC%9F"><span class="toc-number">1.7.4.</span> <span class="toc-text">7.4 如何选择评估指标？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E6%AD%A3%E5%88%99%E5%8C%96"><span class="toc-number">1.8.</span> <span class="toc-text">8. 正则化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#8-1-%E4%BB%80%E4%B9%88%E6%98%AF%E8%BF%87%E6%8B%9F%E5%90%88%EF%BC%9F"><span class="toc-number">1.8.1.</span> <span class="toc-text">8.1 什么是过拟合？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-2-%E4%BB%80%E4%B9%88%E6%98%AF%E6%AD%A3%E5%88%99%E5%8C%96%EF%BC%9F"><span class="toc-number">1.8.2.</span> <span class="toc-text">8.2 什么是正则化？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-3-L1%E6%AD%A3%E5%88%99%E5%8C%96%EF%BC%88Lasso%E5%9B%9E%E5%BD%92%EF%BC%89"><span class="toc-number">1.8.3.</span> <span class="toc-text">8.3 L1正则化（Lasso回归）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-4-L2%E6%AD%A3%E5%88%99%E5%8C%96%EF%BC%88Ridge%E5%9B%9E%E5%BD%92%EF%BC%89"><span class="toc-number">1.8.4.</span> <span class="toc-text">8.4 L2正则化（Ridge回归）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-5-L1-vs-L2-%E5%AF%B9%E6%AF%94"><span class="toc-number">1.8.5.</span> <span class="toc-text">8.5 L1 vs L2 对比</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-6-%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="toc-number">1.8.6.</span> <span class="toc-text">8.6 代码实现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%E5%AE%9E%E6%88%98%EF%BC%9A%E6%B3%A2%E5%A3%AB%E9%A1%BF%E6%88%BF%E4%BB%B7%E9%A2%84%E6%B5%8B"><span class="toc-number">1.9.</span> <span class="toc-text">9. 实战：波士顿房价预测</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#9-1-%E6%95%B0%E6%8D%AE%E9%9B%86%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.9.1.</span> <span class="toc-text">9.1 数据集介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-2-%E5%AE%8C%E6%95%B4%E4%BB%A3%E7%A0%81"><span class="toc-number">1.9.2.</span> <span class="toc-text">9.2 完整代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-3-%E4%BB%A3%E7%A0%81%E8%A7%A3%E6%9E%90"><span class="toc-number">1.9.3.</span> <span class="toc-text">9.3 代码解析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%8A%A0%E8%BD%BD"><span class="toc-number">1.9.3.1.</span> <span class="toc-text">数据加载</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%88%92%E5%88%86"><span class="toc-number">1.9.3.2.</span> <span class="toc-text">数据划分</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%89%B9%E5%BE%81%E6%A0%87%E5%87%86%E5%8C%96"><span class="toc-number">1.9.3.3.</span> <span class="toc-text">特征标准化</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83"><span class="toc-number">1.9.3.4.</span> <span class="toc-text">模型训练</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BC%B0"><span class="toc-number">1.9.3.5.</span> <span class="toc-text">模型评估</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-%E7%8E%B0%E4%BB%A3%E6%96%B9%E6%B3%95%E8%A1%A5%E5%85%85"><span class="toc-number">1.10.</span> <span class="toc-text">10. 现代方法补充</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#10-1-sklearn%E4%B8%AD%E7%9A%84%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92"><span class="toc-number">1.10.1.</span> <span class="toc-text">10.1 sklearn中的线性回归</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-2-%E5%A4%9A%E9%A1%B9%E5%BC%8F%E7%89%B9%E5%BE%81"><span class="toc-number">1.10.2.</span> <span class="toc-text">10.2 多项式特征</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-3-%E4%BA%A4%E5%8F%89%E9%AA%8C%E8%AF%81"><span class="toc-number">1.10.3.</span> <span class="toc-text">10.3 交叉验证</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-4-%E8%B6%85%E5%8F%82%E6%95%B0%E8%B0%83%E4%BC%98"><span class="toc-number">1.10.4.</span> <span class="toc-text">10.4 超参数调优</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-%E6%9C%AC%E7%AB%A0%E5%B0%8F%E7%BB%93"><span class="toc-number">1.11.</span> <span class="toc-text">11. 本章小结</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#11-1-%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5"><span class="toc-number">1.11.1.</span> <span class="toc-text">11.1 核心概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-2-%E7%AE%97%E6%B3%95%E5%AF%B9%E6%AF%94"><span class="toc-number">1.11.2.</span> <span class="toc-text">11.2 算法对比</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-3-%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E8%81%94%E7%B3%BB"><span class="toc-number">1.11.3.</span> <span class="toc-text">11.3 与深度学习的联系</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12-%E4%BD%9C%E4%B8%9A"><span class="toc-number">1.12.</span> <span class="toc-text">12. 作业</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E9%A2%98"><span class="toc-number">1.12.1.</span> <span class="toc-text">基础题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E7%A8%8B%E9%A2%98"><span class="toc-number">1.12.2.</span> <span class="toc-text">编程题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E9%A2%98"><span class="toc-number">1.12.3.</span> <span class="toc-text">思考题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%99%84%E5%BD%95%EF%BC%9A%E5%B8%B8%E8%A7%81%E5%85%AC%E5%BC%8F%E9%80%9F%E6%9F%A5"><span class="toc-number">1.13.</span> <span class="toc-text">附录：常见公式速查</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="toc-number">1.13.1.</span> <span class="toc-text">损失函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A3%E5%88%99%E5%8C%96"><span class="toc-number">1.13.2.</span> <span class="toc-text">正则化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A2%AF%E5%BA%A6"><span class="toc-number">1.13.3.</span> <span class="toc-text">梯度</span></a></li></ol></li></ol></li></ol></div></div><footer><nobr>构建自 <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> 使用主题 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> 主题作者 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>

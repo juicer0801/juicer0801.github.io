@@ -1,10 +1,12 @@
-<!DOCTYPE html><html lang="en" theme-mode="auto"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>ml5 | Hexo</title><meta property="og:type" content="article">
-<meta property="og:title" content="ml5">
+<!DOCTYPE html><html lang="en" theme-mode="auto"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>首次感到差异 | Hexo</title><meta name="description" content="为什么 sklearn 一行 fit 就能训练，而 PyTorch 要自己搭图和写循环？引子如果你是从深度学习入门、最近才开始接触 scikit-learn，大概率会被同一个反差冲击到。 在 PyTorch 里，训练一个模型意味着：定义一个继承 nn.Module 的类、在 __init__ 里声明各层、实现 forward、再手写训练循环（loss、optimizer、backward、zero">
+<meta property="og:type" content="article">
+<meta property="og:title" content="首次感到差异">
 <meta property="og:url" content="http://example.com/2026/10/15/ml5/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="为什么 sklearn 一行 fit 就能训练，而 PyTorch 要自己搭图和写循环？引子如果你是从深度学习入门、最近才开始接触 scikit-learn，大概率会被同一个反差冲击到。 在 PyTorch 里，训练一个模型意味着：定义一个继承 nn.Module 的类、在 __init__ 里声明各层、实现 forward、再手写训练循环（loss、optimizer、backward、zero">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2026-10-15T04:35:21.000Z">
-<meta property="article:modified_time" content="2026-10-15T04:35:21.766Z">
+<meta property="article:modified_time" content="2026-10-17T08:10:45.189Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary"><link rel="canonical" href="http://example.com/2026/10/15/ml5/"><link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="preload" as="font" crossorigin="anonymous" href="/font/Bender.ttf"><link rel="preload" as="font" crossorigin="anonymous" href="/font/BenderLight.woff2"><link rel="preload" as="font" crossorigin="anonymous" href="/font/JetBrainsMono-Regular.woff2"><link rel="stylesheet" href="/css/arknights.css"><style>@font-face {
   font-family: Bender;
@@ -133,4 +135,126 @@ document.addEventListener("pjax:complete", reset);document.addEventListener('pja
  const script = document.createElement('script');
  script.src = 'https://vercount.one/js';
  document.head.appendChild(script);
-});reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="数据检索" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/tags/"><span class="navItemTitle">Tags</span></a></li><li class="navItem"><a class="navBlock" href="/categories/"><span class="navItemTitle">Categories</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>ml5</h1><div id="post-info"><span>文章发布时间: <div class="control"><time datetime="2026-10-15T04:35:21.000Z" id="date"> 2026-10-15</time></div></span><br><span>最后更新时间: <div class="control"><time datetime="2026-10-15T04:35:21.766Z" id="updated"> 2026-10-15</time></div></span><br><span>预计阅读时间: <div class="control">1 分钟</div></span><br><span id="vercount_container_page_pv">页面浏览: <span class="control" id="vercount_value_page_pv">加载中...</span></span></div></div><hr><div id="post-content"><div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2026/10/15/ml6/">← 下一篇 ml6</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/10/15/ml4/">ml4 上一篇 →</a></div></div></div><div id="comments"><div id="giscus"></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="回到顶部" style="opacity: 0; display: none;">∧ </a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="切换主题"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">John Doe</a></h1><div id="description"><p></p></div><div id="social-links"><a class="social" target="_blank" rel="noopener" href="https://github.com/juicer0801"><i class="fab fa-github" alt="GitHub"></i></a></div></div><div id="aside-block"></div><footer><nobr>构建自 <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> 使用主题 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> 主题作者 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>
+});reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="数据检索" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/tags/"><span class="navItemTitle">Tags</span></a></li><li class="navItem"><a class="navBlock" href="/categories/"><span class="navItemTitle">Categories</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>首次感到差异</h1><div id="post-info"><span>文章发布时间: <div class="control"><time datetime="2026-10-15T04:35:21.000Z" id="date"> 2026-10-15</time></div></span><br><span>最后更新时间: <div class="control"><time datetime="2026-10-17T08:10:45.189Z" id="updated"> 2026-10-17</time></div></span><br><span>文章总字数: <div class="control">1.9k</div></span><br><span>预计阅读时间: <div class="control">7 分钟</div></span><br><span id="vercount_container_page_pv">页面浏览: <span class="control" id="vercount_value_page_pv">加载中...</span></span></div></div><hr><div id="post-content"><h1 id="为什么-sklearn-一行-fit-就能训练，而-PyTorch-要自己搭图和写循环？"><a href="#为什么-sklearn-一行-fit-就能训练，而-PyTorch-要自己搭图和写循环？" class="headerlink" title="为什么 sklearn 一行 fit 就能训练，而 PyTorch 要自己搭图和写循环？"></a>为什么 sklearn 一行 <code>fit</code> 就能训练，而 PyTorch 要自己搭图和写循环？</h1><h2 id="引子"><a href="#引子" class="headerlink" title="引子"></a>引子</h2><p>如果你是从深度学习入门、最近才开始接触 scikit-learn，大概率会被同一个反差冲击到。</p>
+<p>在 PyTorch 里，训练一个模型意味着：定义一个继承 <code>nn.Module</code> 的类、在 <code>__init__</code> 里声明各层、实现 <code>forward</code>、再手写训练循环（loss、optimizer、backward、zero_grad）。</p>
+<p>而在 sklearn 里：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">estimator = KNeighborsClassifier(n_neighbors=<span class="hljs-number">3</span>)<br>estimator.fit(x_train, y_train)<br></code></pre></td></tr></table></figure>
+<p>两行结束。</p>
+<p>这个差异常被解读为”两个领域的风格不同”，但它背后其实是一个明确的设计问题：<strong>训练流程的控制权归谁</strong>。本文从这个问题出发，梳理两者的差异，并说明为什么近年深度学习又开始重新长出 <code>fit</code> 风格的 API。</p>
+<hr>
+<h2 id="一、sklearn-的-fit-封装了什么"><a href="#一、sklearn-的-fit-封装了什么" class="headerlink" title="一、sklearn 的 fit 封装了什么"></a>一、sklearn 的 <code>fit</code> 封装了什么</h2><p>先澄清一个常见误解：<code>KNeighborsClassifier(n_neighbors=3)</code> 这一行并不是”训练”，它只是构建了一个<strong>配置对象</strong>——把超参数存进 <code>self</code>，此时模型中不存在任何学到的参数。</p>
+<p>真正的工作在 <code>fit</code> 里。而 <code>fit</code> 能用一个方法概括一切，前提是<strong>算法流程是固定的</strong>。以 KNN 为例，它是惰性学习，<code>fit</code> 内部几乎只是把训练数据存起来：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">fit</span>(<span class="hljs-params">self, X, y</span>):<br>    <span class="hljs-variable language_">self</span>._fit_X = X<br>    <span class="hljs-variable language_">self</span>._y = y<br>    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">self</span><br></code></pre></td></tr></table></figure>
+<p>即便换成有参数的模型（<code>LogisticRegression</code>、<code>SVC</code>），其优化算法（L-BFGS、SMO、坐标下降）同样是<strong>写死在框架源码里</strong>的，用户能改的只有超参数（<code>C</code>、<code>kernel</code>、<code>max_iter</code>）。</p>
+<p>这就是 sklearn 统一 API（<code>fit / predict / transform / score</code>）成立的前提：<strong>模型结构是常量，变化的只有超参数</strong>。正因如此，”训练”才可以被完整地封装成一个黑盒方法。</p>
+<hr>
+<h2 id="二、深度学习为什么必须自己搭图"><a href="#二、深度学习为什么必须自己搭图" class="headerlink" title="二、深度学习为什么必须自己搭图"></a>二、深度学习为什么必须自己搭图</h2><p>神经网络不符合上述前提。它不是一个”算法 + 若干超参数”的组合，而是一张<strong>由用户自由组合的计算图</strong>。CNN、RNN、Transformer、残差连接、自定义 attention——不存在统一的”结构模板”。</p>
+<p>因此框架只能提供<strong>积木</strong>（<code>nn.Linear</code>、<code>nn.Conv2d</code>、<code>nn.Module</code>），由你拼出前向传播。继承 <code>nn.Module</code> 的目的不是”训练模型”，而是<strong>描述计算图</strong>。</p>
+<p>这里有一个值得注意的对称性：PyTorch 的 <code>forward()</code> 也是<strong>你写、框架调用</strong>的。所以两个世界都存在”框架调用用户代码”这一层。区别在于用户交出去的东西不同：</p>
+<ul>
+<li><strong>sklearn</strong>：你交出去的是<strong>超参数</strong>，算法逻辑在框架里；</li>
+<li><strong>PyTorch</strong>：你交出去的是<strong>计算逻辑本身</strong>，框架只负责张量运算与自动求导。</li>
+</ul>
+<p>另一处细节差异在实例化时刻：<code>nn.Linear(10, 3)</code> 实例化时权重就已随机初始化，而 sklearn 估计器在实例化时不持有任何参数。换句话说，<strong>PyTorch 的实例化 = 声明结构 + 立即分配参数张量；sklearn 的实例化 = 声明”用什么算法 + 什么超参数”</strong>。</p>
+<hr>
+<h2 id="三、本质差异：控制反转的方向"><a href="#三、本质差异：控制反转的方向" class="headerlink" title="三、本质差异：控制反转的方向"></a>三、本质差异：控制反转的方向</h2><p>把上述观察归纳成一句话：<strong>两边差别在于控制流归谁。</strong></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>sklearn</th>
+<th>PyTorch</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>用户定义什么</td>
+<td>超参数</td>
+<td>网络结构 + 前向传播</td>
+</tr>
+<tr>
+<td>训练流程</td>
+<td>框架固定，封装进 <code>fit</code></td>
+<td>用户显式编写训练循环</td>
+</tr>
+<tr>
+<td>控制流</td>
+<td>框架拥有（你调 <code>fit</code>，框架接管）</td>
+<td>用户拥有（框架退化为基础设施）</td>
+</tr>
+<tr>
+<td>可学习参数</td>
+<td>少，结构固定</td>
+<td>多，结构由用户决定</td>
+</tr>
+<tr>
+<td>抽象单位</td>
+<td>“模型”</td>
+<td>“层 / 计算图”</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>sklearn 是<strong>框架控制反转</strong>：你调用 <code>fit</code>，流程主权交给框架。PyTorch 是<strong>用户控制流程</strong>：框架只提供 <code>Tensor</code> 与 <code>autograd</code>，流程主权在你手上。</p>
+<p>这解释了为什么深度学习要手写训练循环——不是做不到封装，而是<strong>控制权被有意保留给使用者</strong>。损失函数、优化器、学习率调度、梯度裁剪、混合精度、分布式策略，乃至 GAN 的对抗训练、强化学习的 rollout，差异极大，一个统一的 <code>fit()</code> 无法覆盖。</p>
+<hr>
+<h2 id="四、抽象层次是一条连续谱"><a href="#四、抽象层次是一条连续谱" class="headerlink" title="四、抽象层次是一条连续谱"></a>四、抽象层次是一条连续谱</h2><p>把两个世界对立起来是简化说法。更准确的图景是：<strong>抽象层次是一条连续谱，不是阵营对立</strong>。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">高抽象   sklearn fit/predict   ←→   Keras / Lightning / HF Trainer<br>             ↑                                ↑<br>        结构固定、流程标准              任务标准化后封装出现<br>             ↓                                ↓<br>低抽象   自定义 estimator/核/Pipeline ←→ 原生 nn.Module + 训练循环<br></code></pre></td></tr></table></figure>
+<p>决定默认抽象层的因素，是<strong>“结构本身是否为创新点”</strong>：</p>
+<ul>
+<li>传统机器学习：算法结构是已知常量，创新点在特征工程与超参数 → 默认高抽象；</li>
+<li>深度学习：网络结构本身就是研究变量 → 默认低抽象。</li>
+</ul>
+<p>但两个方向都能往对面走。sklearn 提供 <code>BaseEstimator</code> / <code>TransformerMixin</code>，允许你写自定义估计器，角色上对标 <code>nn.Module</code>；传统 ML 也有丰富的”构建”手段——<code>Pipeline</code> 组合预处理、<code>SVC(kernel=my_kernel)</code> 自定义核、XGBoost 传入自定义目标函数、<code>statsmodels</code> 的公式化建模、<code>pgmpy</code> 手动定义贝叶斯网结构。所谓”传统 ML 不能构建”，只是默认结构封闭而已。</p>
+<hr>
+<h2 id="五、fit-在深度学习中的回归"><a href="#五、fit-在深度学习中的回归" class="headerlink" title="五、fit 在深度学习中的回归"></a>五、<code>fit</code> 在深度学习中的回归</h2><p>一旦任务标准化，<code>fit</code> 风格的高层封装必然出现。近年的谱系大致如下：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>层级</th>
+<th>代表</th>
+<th>简化程度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>全封装</td>
+<td>Keras 3 <code>Sequential</code></td>
+<td><code>model.fit(X, y, epochs=10)</code>，loss 都有默认值</td>
+</tr>
+<tr>
+<td>训练器封装</td>
+<td>PyTorch Lightning <code>Trainer</code></td>
+<td>只写 <code>training_step</code>，循环/多卡/混合精度全接管</td>
+</tr>
+<tr>
+<td>任务封装</td>
+<td>HF <code>Trainer</code></td>
+<td>微调 BERT 只需数行</td>
+</tr>
+<tr>
+<td>一行式</td>
+<td>fastai <code>learn.fit_one_cycle(5)</code></td>
+<td>内置学习率调度与迁移学习套路</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>其中两个案例尤其值得注意。</p>
+<p>其一是 <strong>Keras 3</strong>：同一套 <code>fit</code> API 可以运行在 JAX / TensorFlow / PyTorch 三个后端之上。”<code>fit</code> 式体验”与”底层框架”彻底解耦。</p>
+<p>其二是 <strong>skorch</strong>：它直接把 PyTorch 模型包装成 sklearn 估计器。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> skorch <span class="hljs-keyword">import</span> NeuralNetClassifier<br>net = NeuralNetClassifier(MyModule, max_epochs=<span class="hljs-number">10</span>, lr=<span class="hljs-number">0.1</span>)<br>net.fit(X_train, y_train)      <span class="hljs-comment"># sklearn 风格</span><br>net.predict(X_test)<br></code></pre></td></tr></table></figure>
+<p>它甚至能直接塞进 <code>GridSearchCV</code> 与 <code>Pipeline</code>。这是前文所说”两边往对面走”最极致的体现：<strong>PyTorch 的自由搭图与 sklearn 的控制反转，共存于同一行代码</strong>。</p>
+<p>需要强调的是，高层封装的”简单”建立在<strong>任务标准化</strong>之上。一旦涉及自定义 loss（多任务加权、对比学习）、训练流程本身是研究对象（GAN、RL、课程学习）、非常规数据流（图、稀疏、流式），或需要精细控制梯度（梯度累积、二阶优化），封装就开始漏风。此时 Lightning 让你覆写 <code>training_step</code> 与 <code>configure_optimizers</code>，Keras 让你写 <code>train_step</code>——<strong>封装逐级让位</strong>。高层 API 并非取代低层，而是”默认走高层，遇到例外往下钻”。</p>
+<hr>
+<h2 id="六、如何选择抽象层"><a href="#六、如何选择抽象层" class="headerlink" title="六、如何选择抽象层"></a>六、如何选择抽象层</h2><p>判断依据不是”深度学习 vs 机器学习”，而是<strong>创新点是否位于训练流程之中</strong>：</p>
+<ul>
+<li>创新点在<strong>数据或结构</strong>，训练流程标准 → 使用 <code>fit</code> 式 API，把节省的时间投入模型设计；</li>
+<li>创新点在<strong>训练过程</strong> → 显式编写训练循环，高级 API 反而成为束缚。</li>
+</ul>
+<hr>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>sklearn 的一行 <code>fit</code> 与 Lightning 的 <code>Trainer.fit</code>，本质上是同一个东西：<strong>把控制流从用户手中收回</strong>。二者的区别只在于收回的时机——前者收得早，因为算法天然固定；后者收得晚，需要等任务标准化之后才敢收。</p>
+<p>因此，<code>fit</code> 在深度学习中的回归并不矛盾，它恰恰说明：<strong>抽象层次是任务成熟度的函数</strong>。任务越标准，封装越深；任务越前沿，控制权越需要留给使用者。理解这一点，比记住”哪个框架更简单”更有价值。</p>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2026/10/15/ml6/">← 下一篇 线性回归</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/10/15/ml4/">KNN算法（ai篇） 上一篇 →</a></div></div></div><div id="comments"><div id="giscus"></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="回到顶部" style="opacity: 0; display: none;">∧ </a><a class="i-index" id="to-index" onClick="tocControl.change()" title="文章目录"><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span></a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="切换主题"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">John Doe</a></h1><div id="description"><p></p></div><div id="social-links"><a class="social" target="_blank" rel="noopener" href="https://github.com/juicer0801"><i class="fab fa-github" alt="GitHub"></i></a></div></div><div id="aside-block"><div id="toc-div"><h1>目录</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88-sklearn-%E4%B8%80%E8%A1%8C-fit-%E5%B0%B1%E8%83%BD%E8%AE%AD%E7%BB%83%EF%BC%8C%E8%80%8C-PyTorch-%E8%A6%81%E8%87%AA%E5%B7%B1%E6%90%AD%E5%9B%BE%E5%92%8C%E5%86%99%E5%BE%AA%E7%8E%AF%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">为什么 sklearn 一行 fit 就能训练，而 PyTorch 要自己搭图和写循环？</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BC%95%E5%AD%90"><span class="toc-number">1.1.</span> <span class="toc-text">引子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81sklearn-%E7%9A%84-fit-%E5%B0%81%E8%A3%85%E4%BA%86%E4%BB%80%E4%B9%88"><span class="toc-number">1.2.</span> <span class="toc-text">一、sklearn 的 fit 封装了什么</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%BA%E4%BB%80%E4%B9%88%E5%BF%85%E9%A1%BB%E8%87%AA%E5%B7%B1%E6%90%AD%E5%9B%BE"><span class="toc-number">1.3.</span> <span class="toc-text">二、深度学习为什么必须自己搭图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%9C%AC%E8%B4%A8%E5%B7%AE%E5%BC%82%EF%BC%9A%E6%8E%A7%E5%88%B6%E5%8F%8D%E8%BD%AC%E7%9A%84%E6%96%B9%E5%90%91"><span class="toc-number">1.4.</span> <span class="toc-text">三、本质差异：控制反转的方向</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%8A%BD%E8%B1%A1%E5%B1%82%E6%AC%A1%E6%98%AF%E4%B8%80%E6%9D%A1%E8%BF%9E%E7%BB%AD%E8%B0%B1"><span class="toc-number">1.5.</span> <span class="toc-text">四、抽象层次是一条连续谱</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81fit-%E5%9C%A8%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E5%9B%9E%E5%BD%92"><span class="toc-number">1.6.</span> <span class="toc-text">五、fit 在深度学习中的回归</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9%E6%8A%BD%E8%B1%A1%E5%B1%82"><span class="toc-number">1.7.</span> <span class="toc-text">六、如何选择抽象层</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%93%E8%AF%AD"><span class="toc-number">1.8.</span> <span class="toc-text">结语</span></a></li></ol></li></ol></div></div><footer><nobr>构建自 <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> 使用主题 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> 主题作者 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>
