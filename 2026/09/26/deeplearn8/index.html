@@ -6,7 +6,7 @@
 <meta property="og:description" content="第 5 节：线性代数，深度学习的地基上一节把数据预处理过了一遍，你可能已经发现，不管怎么处理，最后数据都变成了张量。模型里所有的运算，本质上都是张量之间的运算。 这一节讲线性代数。从深度学习用到的角度讲。请参照李沐《动手学深度学习》2.3 节，按会补充一些他没展开、实际写代码时又经常碰到的东西。 后面不管看什么模型——全连接、卷积、注意力——底层全是这些。  5.1 标量标量就是单独的一个数， 3">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2026-09-26T11:35:09.000Z">
-<meta property="article:modified_time" content="2026-09-29T12:38:35.218Z">
+<meta property="article:modified_time" content="2026-10-25T13:25:59.677Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary"><link rel="canonical" href="http://example.com/2026/09/26/deeplearn8/"><link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="preload" as="font" crossorigin="anonymous" href="/font/Bender.ttf"><link rel="preload" as="font" crossorigin="anonymous" href="/font/BenderLight.woff2"><link rel="preload" as="font" crossorigin="anonymous" href="/font/JetBrainsMono-Regular.woff2"><link rel="stylesheet" href="/css/arknights.css"><style>@font-face {
   font-family: Bender;
@@ -135,7 +135,7 @@ document.addEventListener("pjax:complete", reset);document.addEventListener('pja
  const script = document.createElement('script');
  script.src = 'https://vercount.one/js';
  document.head.appendChild(script);
-});reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/tags/"><span class="navItemTitle">Tags</span></a></li><li class="navItem"><a class="navBlock" href="/categories/"><span class="navItemTitle">Categories</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>线性代数（基本需求）</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2026-09-26T11:35:09.000Z" id="date"> 2026-09-26</time></div></span><br><span>Last Update: <div class="control"><time datetime="2026-09-29T12:38:35.218Z" id="updated"> 2026-09-29</time></div></span><br><span>Word Count: <div class="control">4.2k</div></span><br><span>Read Time: <div class="control">17 min</div></span><br><span id="vercount_container_page_pv">Page View: <span class="control" id="vercount_value_page_pv">loading...</span></span></div></div><hr><div id="post-content"><h1 id="第-5-节：线性代数，深度学习的地基"><a href="#第-5-节：线性代数，深度学习的地基" class="headerlink" title="第 5 节：线性代数，深度学习的地基"></a>第 5 节：线性代数，深度学习的地基</h1><p>上一节把数据预处理过了一遍，你可能已经发现，不管怎么处理，最后数据都变成了张量。模型里所有的运算，本质上都是张量之间的运算。</p>
+});reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/tags/"><span class="navItemTitle">Tags</span></a></li><li class="navItem"><a class="navBlock" href="/categories/"><span class="navItemTitle">Categories</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>线性代数（基本需求）</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2026-09-26T11:35:09.000Z" id="date"> 2026-09-26</time></div></span><br><span>Last Update: <div class="control"><time datetime="2026-10-25T13:25:59.677Z" id="updated"> 2026-10-25</time></div></span><br><span>Word Count: <div class="control">4.1k</div></span><br><span>Read Time: <div class="control">17 min</div></span><br><span id="vercount_container_page_pv">Page View: <span class="control" id="vercount_value_page_pv">loading...</span></span></div></div><hr><div id="post-content"><h1 id="第-5-节：线性代数，深度学习的地基"><a href="#第-5-节：线性代数，深度学习的地基" class="headerlink" title="第 5 节：线性代数，深度学习的地基"></a>第 5 节：线性代数，深度学习的地基</h1><p>上一节把数据预处理过了一遍，你可能已经发现，不管怎么处理，最后数据都变成了张量。模型里所有的运算，本质上都是张量之间的运算。</p>
 <p>这一节讲线性代数。从深度学习用到的角度讲。请参照李沐《动手学深度学习》2.3 节，按会补充一些他没展开、实际写代码时又经常碰到的东西。</p>
 <p>后面不管看什么模型——全连接、卷积、注意力——底层全是这些。</p>
 <hr>
@@ -155,13 +155,13 @@ document.addEventListener("pjax:complete", reset);document.addEventListener('pja
 <p>在深度学习里，一个样本通常就是一个向量。比如一张 28×28 的灰度图，展平之后是 784 维向量。一段文本用词袋表示，可能是几千维向量。</p>
 <hr>
 <h2 id="5-3-矩阵"><a href="#5-3-矩阵" class="headerlink" title="5.3 矩阵"></a>5.3 矩阵</h2><p>矩阵是一张二维表，有行有列。</p>
-<p>矩阵是具有2轴的张量<br>m行n列的矩阵，其形状为mxn 或者（m，n），当m = n时，它被称为方阵,对称矩阵是方阵的一种，A == (A^T)</p>
+<p>矩阵是具有2轴的张量<br>m行n列的矩阵，其形状为mxn 或者（m，n），当m = n时，它被称为方阵,对称矩阵是方阵的一种，A == <script type="math/tex">A^T</script></p>
 <p>同样创建矩阵时也可指定行与列（轴0与轴1）<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">A = torch.arange(<span class="hljs-number">20</span>).reshape(<span class="hljs-number">5</span>,<span class="hljs-number">4</span>)<br>A<br></code></pre></td></tr></table></figure></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">A = torch.tensor([[<span class="hljs-number">1.0</span>, <span class="hljs-number">2.0</span>, <span class="hljs-number">3.0</span>],<br>                  [<span class="hljs-number">4.0</span>, <span class="hljs-number">5.0</span>, <span class="hljs-number">6.0</span>]])<br><span class="hljs-built_in">print</span>(A.shape)   <span class="hljs-comment"># torch.Size([2, 3])</span><br></code></pre></td></tr></table></figure>
 <p>这个矩阵有 2 行 3 列。访问元素用 <code>A[i, j]</code>，第 i 行第 j 列：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(A[<span class="hljs-number">0</span>, <span class="hljs-number">1</span>])   <span class="hljs-comment"># tensor(2.)</span><br></code></pre></td></tr></table></figure>
 <p>如果没有给出标量元素的话，可以使用矩阵A的小写字母索引下标a<sub>ij</sub>来引用[A]<sub>ij</sub>,为了简单表示，必要时会将<strong>逗号</strong>插入单独的索引中a<sub>2,3j</sub>和[A]<sub>2i-1,3</sub></p>
-<p>矩阵的转置是行列互换，记作 (A^T)：</p>
+<p>矩阵的转置是行列互换，记作 <script type="math/tex">A^T</script>：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(A.T)<br><span class="hljs-comment"># tensor([[1., 4.],</span><br><span class="hljs-comment">#         [2., 5.],</span><br><span class="hljs-comment">#         [3., 6.]])</span><br><span class="hljs-built_in">print</span>(A.T.shape)   <span class="hljs-comment"># torch.Size([3, 2])</span><br></code></pre></td></tr></table></figure>
 <p>矩阵在深度学习里的意义：<strong>一批样本。</strong> 比如一个 batch 有 32 个样本，每个样本是 784 维向量，那这一批数据就是 32×784 的矩阵。每一行是一个样本。</p>
 <hr>
@@ -191,7 +191,7 @@ document.addEventListener("pjax:complete", reset);document.addEventListener('pja
 <h3 id="广播"><a href="#广播" class="headerlink" title="广播"></a>广播</h3><p>不同形状的张量运算时，PyTorch 会自动广播。规则上一节讲过：从右往左比，对应维度要么相等，要么其中一个是 1，要么一方没有那个维度。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python">A = torch.tensor([[<span class="hljs-number">1.0</span>, <span class="hljs-number">2.0</span>],<br>                  [<span class="hljs-number">3.0</span>, <span class="hljs-number">4.0</span>]])   <span class="hljs-comment"># (2, 2)</span><br>b = torch.tensor([<span class="hljs-number">10.0</span>, <span class="hljs-number">20.0</span>])   <span class="hljs-comment"># (2,)</span><br><br><span class="hljs-built_in">print</span>(A + b)<br><span class="hljs-comment"># tensor([[11., 22.],</span><br><span class="hljs-comment">#         [13., 24.]])</span><br></code></pre></td></tr></table></figure>
 <p><code>b</code> 被广播成了 <code>[[10, 20], [10, 20]]</code>。</p>
-<h3 id="哈达玛积"><a href="#哈达玛积" class="headerlink" title="哈达玛积"></a>哈达玛积</h3><p>按元素乘有个正式名字，叫哈达玛积（Hadamard product），记作 (A \odot B)。深度学习里用得很频繁，比如门控机制、注意力权重，都是按元素乘。<br>示例：</p>
+<h3 id="哈达玛积"><a href="#哈达玛积" class="headerlink" title="哈达玛积"></a>哈达玛积</h3><p>按元素乘有个正式名字，叫哈达玛积（Hadamard product），记作 <script type="math/tex">A \odot B</script>。深度学习里用得很频繁，比如门控机制、注意力权重，都是按元素乘。<br>示例：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">A = torch.tensor([[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>], [<span class="hljs-number">3</span>, <span class="hljs-number">4</span>]])<br>B = torch.tensor([[<span class="hljs-number">5</span>, <span class="hljs-number">6</span>], [<span class="hljs-number">7</span>, <span class="hljs-number">8</span>]])<br>C = A * B  <span class="hljs-comment"># [[5, 12], [21, 32]]</span><br></code></pre></td></tr></table></figure>
 <hr>
 <h2 id="5-6-降维"><a href="#5-6-降维" class="headerlink" title="5.6 降维"></a>5.6 降维</h2><p>降维就是沿某个轴做聚合，让那个轴消失</p>
@@ -214,69 +214,80 @@ document.addEventListener("pjax:complete", reset);document.addEventListener('pja
 <p>我自己的记法是：<strong>axis=0 是往下缩压，把每一列的数加起来。axis=1 是往右压缩，把每一行的数加起来。</strong></p>
 <hr>
 <h2 id="5-7-点积"><a href="#5-7-点积" class="headerlink" title="5.7 点积"></a>5.7 点积</h2><p>点积（dot product）是两个向量之间的运算，结果是一个标量。</p>
-<p>给定两个向量 (\mathbf{x}, \mathbf{y} \in \mathbb{R}^n)，它们的点积是：</p>
-<p>[<br>\mathbf{x}^\top \mathbf{y} = \sum_{i=1}^{n} x_i y_i<br>]</p>
-<p>对应位置相乘，再全部加起来。</p>
+<p>给定两个向量 <script type="math/tex">\mathbf{x}, \mathbf{y} \in \mathbb{R}^n</script>，它们的点积是：</p>
+<script type="math/tex; mode=display">
+\mathbf{x}^\top \mathbf{y} = \sum_{i=1}^{n} x_i y_i</script><p>对应位置相乘，再全部加起来。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">x = torch.tensor([<span class="hljs-number">1.0</span>, <span class="hljs-number">2.0</span>, <span class="hljs-number">3.0</span>])<br>y = torch.tensor([<span class="hljs-number">4.0</span>, <span class="hljs-number">5.0</span>, <span class="hljs-number">6.0</span>])<br><br><span class="hljs-built_in">print</span>(torch.dot(x, y))   <span class="hljs-comment"># tensor(32.)  1*4 + 2*5 + 3*6 = 32</span><br></code></pre></td></tr></table></figure>
 <p>点积衡量两个向量的“相似程度”。如果两个向量方向接近，点积大；如果垂直，点积为 0；如果方向相反，点积为负。</p>
-<p>在深度学习里，点积无处不在。全连接层的计算本质上就是输入向量和权重向量的点积。注意力机制里的 query 和 key 做相似度计算，也是点积。在很多场景都很有用(\boldsymbol{(\boldsymbol{x})}^\mathrm{T}\boldsymbol{y}=\sum<em>{i=1}^{d}(\boldsymbol{x})_iy_i。)例如，给定一组由向量$\boldsymbol{(\boldsymbol{x})}\in\mathbb{R}^{d}$表示的值，和一组由向量$\boldsymbol{(\boldsymbol{w})}\in\mathbb{R}^{d}$表示的权重(\boldsymbol{(\boldsymbol{x})}^\mathrm{T}\boldsymbol{y}=\sum</em>{i=1}^{d}(\boldsymbol{x})<em>iy_i。)$\boldsymbol{(\boldsymbol{x})}$中的值根据权重$\boldsymbol{(\boldsymbol{w})}$的加权和可以表示为点积$\boldsymbol{(\boldsymbol{x})}^\mathrm{T}\boldsymbol{(\boldsymbol{w})}$(\boldsymbol{(\boldsymbol{x})}^\mathrm{T}\boldsymbol{y}=\sum</em>{i=1}^{d}(\boldsymbol{x})<em>iy_i。)当权重为非负且和为1，即$\left(\sum</em>{i=1}^{d}(\boldsymbol{w})<em>i=1\right)$时，点积表示加权平均（(\boldsymbol{w})eighted average）(\boldsymbol{(\boldsymbol{x})}^\mathrm{T}\boldsymbol{y}=\sum</em>{i=1}^{d}(\boldsymbol{x})<em>iy_i。)将两个向量规范化得到单位长度后，点积表示它们夹角的余弦(\boldsymbol{(\boldsymbol{x})}^\mathrm{T}\boldsymbol{y}=\sum</em>{i=1}^{d}(\boldsymbol{x})<em>iy_i。)本节后面的内容将正式介绍长度（length）的概念(\boldsymbol{(\boldsymbol{x})}^\mathrm{T}\boldsymbol{y}=\sum</em>{i=1}^{d}(\boldsymbol{x})_iy_i。)</p>
-<h2 id="5-8-矩阵-向量积"><a href="#5-8-矩阵-向量积" class="headerlink" title="5.8 矩阵-向量积"></a>5.8 矩阵-向量积</h2><p>矩阵 (A \in \mathbb{R}^{m \times n}) 和向量 (\mathbf{x} \in \mathbb{R}^n) 相乘，得到一个 (m) 维向量。</p>
-<p>[<br>A\mathbf{x} = \begin{bmatrix} \mathbf{a}_1^\top \ \mathbf{a}_2^\top \ \vdots \ \mathbf{a}_m^\top \end{bmatrix} \mathbf{x} = \begin{bmatrix} \mathbf{a}_1^\top \mathbf{x} \ \mathbf{a}_2^\top \mathbf{x} \ \vdots \ \mathbf{a}_m^\top \mathbf{x} \end{bmatrix}<br>]</p>
-<p>在代码中使用张量表示矩阵 - 向量积，我们使用 mv 函数。当我们为矩阵 A 和向量 x 调用<code>torch.mv(A, x)</code>时，会执行矩阵 - 向量积。注意，A 的列维数（沿轴 1 的长度）必须与 x 的维数（其长度）相同。</p>
+<p>按你的格式如下：</p>
+<p>在深度学习中，点积无处不在。全连接层的计算本质上就是输入向量和权重向量的点积。注意力机制里的 query 和 key 做相似度计算，也是点积。在很多场景都很有用</p>
+<script type="math/tex; mode=display">
+\boldsymbol{x}^{\mathrm{T}}\boldsymbol{y}
+=\sum_{i=1}^{d}\boldsymbol{x}_i y_i.</script><p>例如，给定一组由向量 <script type="math/tex">\boldsymbol{x}\in\mathbb{R}^{d}</script> 表示的值，和一组由向量 <script type="math/tex">\boldsymbol{w}\in\mathbb{R}^{d}</script> 表示的权重，<script type="math/tex">\boldsymbol{x}</script> 中的值根据权重 <script type="math/tex">\boldsymbol{w}</script> 的加权和可以表示为点积 <script type="math/tex">\boldsymbol{x}^{\mathrm{T}}\boldsymbol{w}</script>。当权重为非负且和为 1，即</p>
+<script type="math/tex; mode=display">
+\sum_{i=1}^{d}w_i=1</script><p>时，点积表示加权平均（weighted average）。将两个向量规范化得到单位长度后，点积表示它们夹角的余弦。本节后面的内容将正式介绍长度（length）的概念。</p>
+<h2 id="5-8-矩阵-向量积"><a href="#5-8-矩阵-向量积" class="headerlink" title="5.8 矩阵-向量积"></a>5.8 矩阵-向量积</h2><p>矩阵 <script type="math/tex">A \in \mathbb{R}^{m \times n}</script> 和向量 <script type="math/tex">\mathbf{x} \in \mathbb{R}^n</script> 相乘，得到一个 <script type="math/tex">m</script> 维向量。</p>
+<script type="math/tex; mode=display">
+A\mathbf{x} = \begin{bmatrix} \mathbf{a}_1^\top \\ \mathbf{a}_2^\top \\ \vdots \\ \mathbf{a}_m^\top \end{bmatrix} \mathbf{x} = \begin{bmatrix} \mathbf{a}_1^\top \mathbf{x} \\ \mathbf{a}_2^\top \mathbf{x} \\ \vdots \\ \mathbf{a}_m^\top \mathbf{x} \end{bmatrix}</script><p>在代码中使用张量表示矩阵 - 向量积，我们使用 mv 函数。当我们为矩阵 A 和向量 x 调用<code>torch.mv(A, x)</code>时，会执行矩阵 - 向量积。注意，A 的列维数（沿轴 1 的长度）必须与 x 的维数（其长度）相同。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">A.shape, x.shape, torch.mv(A, x)<br></code></pre></td></tr></table></figure>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">(torch.Size([5, 4]), torch.Size([4]), tensor([ 14.,  38.,  62.,  86., 110.]))<br></code></pre></td></tr></table></figure>
 <p>每个输出元素是矩阵对应行和向量的点积。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">A = torch.tensor([[<span class="hljs-number">1.0</span>, <span class="hljs-number">2.0</span>],<br>                  [<span class="hljs-number">3.0</span>, <span class="hljs-number">4.0</span>],<br>                  [<span class="hljs-number">5.0</span>, <span class="hljs-number">6.0</span>]])   <span class="hljs-comment"># (3, 2)</span><br>x = torch.tensor([<span class="hljs-number">1.0</span>, <span class="hljs-number">1.0</span>])     <span class="hljs-comment"># (2,)</span><br><br><span class="hljs-built_in">print</span>(A @ x)   <span class="hljs-comment"># tensor([ 3.,  7., 11.])</span><br></code></pre></td></tr></table></figure>
 <p>全连接层 <code>nn.Linear(in_features, out_features)</code> 原理同上：输入向量乘以权重矩阵，再加上偏置向量。</p>
 <hr>
-<h2 id="5-9-矩阵-矩阵乘法"><a href="#5-9-矩阵-矩阵乘法" class="headerlink" title="5.9 矩阵-矩阵乘法"></a>5.9 矩阵-矩阵乘法</h2><p>矩阵 (A \in \mathbb{R}^{m \times n}) 和矩阵 (B \in \mathbb{R}^{n \times p}) 相乘，得到 (C \in \mathbb{R}^{m \times p})。</p>
+<h2 id="5-9-矩阵-矩阵乘法"><a href="#5-9-矩阵-矩阵乘法" class="headerlink" title="5.9 矩阵-矩阵乘法"></a>5.9 矩阵-矩阵乘法</h2><p>矩阵 <script type="math/tex">A \in \mathbb{R}^{m \times n}</script> 和矩阵 <script type="math/tex">B \in \mathbb{R}^{n \times p}</script> 相乘，得到 <script type="math/tex">C \in \mathbb{R}^{m \times p}</script>。</p>
 <p>[<br>C<em>{ij} = \sum</em>{k=1}^{n} A<em>{ik} B</em>{kj}<br>]</p>
 <p><code>C</code> 的第 i 行第 j 列，是 <code>A</code> 的第 i 行和 <code>B</code> 的第 j 列的点积。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python">A = torch.tensor([[<span class="hljs-number">1.0</span>, <span class="hljs-number">2.0</span>],<br>                  [<span class="hljs-number">3.0</span>, <span class="hljs-number">4.0</span>]])   <span class="hljs-comment"># (2, 2)</span><br>B = torch.tensor([[<span class="hljs-number">5.0</span>, <span class="hljs-number">6.0</span>],<br>                  [<span class="hljs-number">7.0</span>, <span class="hljs-number">8.0</span>]])   <span class="hljs-comment"># (2, 2)</span><br><br><span class="hljs-built_in">print</span>(A @ B)<br><span class="hljs-comment"># tensor([[19., 22.],</span><br><span class="hljs-comment">#         [43., 50.]])</span><br></code></pre></td></tr></table></figure>
-<p>矩阵乘法不满足交换律，(AB \neq BA) 。但它满足结合律，((AB)C = A(BC))。</p>
+<p>矩阵乘法不满足交换律，<script type="math/tex">AB \neq BA</script> 。但它满足结合律，<script type="math/tex">(AB)C = A(BC)</script>。</p>
 <p>矩阵乘法的形状规则：<strong>前一个的列数必须等于后一个的行数。</strong> 结果形状是 <code>(前一个的行数, 后一个的列数)</code>。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">(<span class="hljs-number">3</span>, <span class="hljs-number">4</span>) @ (<span class="hljs-number">4</span>, <span class="hljs-number">5</span>) → (<span class="hljs-number">3</span>, <span class="hljs-number">5</span>)   <span class="hljs-comment"># OK</span><br>(<span class="hljs-number">3</span>, <span class="hljs-number">4</span>) @ (<span class="hljs-number">3</span>, <span class="hljs-number">5</span>)             <span class="hljs-comment"># 报错，4 != 3</span><br></code></pre></td></tr></table></figure>
 <p>矩阵乘法在深度学习里的意义：<strong>批量变换。</strong> 一批数据 <code>(batch, in_features)</code> 经过权重矩阵 <code>(in_features, out_features)</code>，得到 <code>(batch, out_features)</code>。一个矩阵乘法就处理了整个 batch。</p>
 <hr>
 <h2 id="5-10-范数"><a href="#5-10-范数" class="headerlink" title="5.10 范数"></a>5.10 范数</h2><p>范数（norm）衡量向量的大小。你可以把它理解成“向量的长度”。</p>
-<h3 id="L2-范数"><a href="#L2-范数" class="headerlink" title="L2 范数"></a>L2 范数</h3><h3 id="2-3-10-范数"><a href="#2-3-10-范数" class="headerlink" title="2.3.10 范数"></a>2.3.10 范数</h3><h2 id="李沐大神说"><a href="#李沐大神说" class="headerlink" title="李沐大神说"></a>李沐大神说</h2><p>在线性代数中，向量范数是将向量映射到标量的函数$f$。给定任意向量$\boldsymbol{(\boldsymbol{x})}$，向量范数具有一些性质。第一个性质是：如果我们按常数因子$\alpha$缩放向量的所有元素，其范数也会按相同常数因子的绝对值缩放：</p>
-<script type="math/tex; mode=display">f(\alpha \boldsymbol{\(\boldsymbol{x}\)})=|\alpha| f(\boldsymbol{\(\boldsymbol{x}\)}) \tag{2.10}</script><p>第二个性质是熟悉的三角不等式：</p>
-<script type="math/tex; mode=display">f(\boldsymbol{\(\boldsymbol{x}\)}+\boldsymbol{y}) \leqslant f(\boldsymbol{\(\boldsymbol{x}\)})+f(\boldsymbol{y}) \tag{2.11}</script><p>第三个性质简单地说就是范数必须是非负的：</p>
-<script type="math/tex; mode=display">f(\boldsymbol{\(\boldsymbol{x}\)}) \geqslant 0 \tag{2.12}</script><p>这是有道理的，因为在大多数情况下，任何数的最小的大小是0。最后一个性质要求范数最小为0，当且仅当向量全由0组成：</p>
-<script type="math/tex; mode=display">\forall i,[\boldsymbol{\(\boldsymbol{x}\)}]_i=0 \Leftrightarrow f(\boldsymbol{\(\boldsymbol{x}\)})=0 \tag{2.13}</script><p>范数很像距离的度量。欧几里得距离和毕达哥拉斯定理中的非负性概念以及三角不等式可能会给出一些启发。在代码中，我们可以按如下方式计算向量的$L_2$范数：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">u = torch.tensor([3.0, -4.0])<br>torch.norm(u)<br></code></pre></td></tr></table></figure><br><code>tensor(5.)</code></p>
+<h3 id="L2-范数"><a href="#L2-范数" class="headerlink" title="L2 范数"></a>L2 范数</h3><h3 id="2-3-10-范数"><a href="#2-3-10-范数" class="headerlink" title="2.3.10 范数"></a>2.3.10 范数</h3><h2 id="李沐大神说"><a href="#李沐大神说" class="headerlink" title="李沐大神说"></a>李沐大神说</h2><p>在线性代数中，向量范数是将向量映射到标量的函数$f$。给定任意向量$\boldsymbol{<script type="math/tex">\boldsymbol{x}</script>}$，向量范数具有一些性质。第一个性质是：如果我们按常数因子$\alpha$缩放向量的所有元素，其范数也会按相同常数因子的绝对值缩放：</p>
+<script type="math/tex; mode=display">
+f(\alpha \boldsymbol{$$\boldsymbol{x}$$})=|\alpha| f(\boldsymbol{$$\boldsymbol{x}$$}) \tag{2.10}</script><p>第二个性质是熟悉的三角不等式：</p>
+<script type="math/tex; mode=display">
+f(\boldsymbol{$$\boldsymbol{x}$$}+\boldsymbol{y}) \leqslant f(\boldsymbol{$$\boldsymbol{x}$$})+f(\boldsymbol{y}) \tag{2.11}</script><p>第三个性质简单地说就是范数必须是非负的：</p>
+<script type="math/tex; mode=display">
+f(\boldsymbol{$$\boldsymbol{x}$$}) \geqslant 0 \tag{2.12}</script><p>这是有道理的，因为在大多数情况下，任何数的最小的大小是0。最后一个性质要求范数最小为0，当且仅当向量全由0组成：</p>
+<script type="math/tex; mode=display">
+\forall i,[\boldsymbol{$$\boldsymbol{x}$$}]_i=0 \Leftrightarrow f(\boldsymbol{$$\boldsymbol{x}$$})=0 \tag{2.13}</script><p>范数很像距离的度量。欧几里得距离和毕达哥拉斯定理中的非负性概念以及三角不等式可能会给出一些启发。在代码中，我们可以按如下方式计算向量的$L_2$范数：<br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">u = torch.tensor([3.0, -4.0])<br>torch.norm(u)<br></code></pre></td></tr></table></figure><br><code>tensor(5.)</code></p>
 <p>深度学习中经常使用$L_2$范数的平方，也会经常遇到$L_1$范数，它表示为向量元素的绝对值之和：</p>
-<script type="math/tex; mode=display">\|\boldsymbol{\(\boldsymbol{x}\)}\|_1=\sum_{i=1}^n |\(\boldsymbol{x}\)_i| \tag{2.15}</script><p>与$L_2$范数相比，$L_1$范数受异常值的影响较小。为了计算$L_1$范数，我们将绝对值函数和按</p>
+<script type="math/tex; mode=display">
+\|\boldsymbol{$$\boldsymbol{x}$$}\|_1=\sum_{i=1}^n |$$\boldsymbol{x}$$_i| \tag{2.15}</script><p>与$L_2$范数相比，$L_1$范数受异常值的影响较小。为了计算$L_1$范数，我们将绝对值函数和按</p>
 <p>最常用的是 L2 范数，也叫欧几里得范数：</p>
-<p>[<br>|\mathbf{x}|<em>2 = \sqrt{\sum</em>{i=1}^{n} x_i^2}<br>]</p>
-<p>就是每个元素平方，加起来，再开根号。</p>
+<script type="math/tex; mode=display">
+\|\mathbf{x}\|_2 = \sqrt{\sum_{i=1}^{n} x_i^2}</script><p>就是每个元素平方，加起来，再开根号。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">x = torch.tensor([<span class="hljs-number">3.0</span>, <span class="hljs-number">4.0</span>])<br><span class="hljs-built_in">print</span>(torch.norm(x))   <span class="hljs-comment"># tensor(5.)  因为 sqrt(9+16)=5</span><br></code></pre></td></tr></table></figure>
 <p>L2 范数在深度学习里最常见的用途是<strong>权重衰减</strong>（weight decay），也叫 L2 正则化。它在损失函数里加上权重的 L2 范数，惩罚过大的权重，防止过拟合。</p>
 <h3 id="L1-范数"><a href="#L1-范数" class="headerlink" title="L1 范数"></a>L1 范数</h3><p>L1 范数：</p>
-<p>[<br>|\mathbf{x}|<em>1 = \sum</em>{i=1}^{n} |x_i|<br>]</p>
-<p>每个元素取绝对值相加。</p>
+<script type="math/tex; mode=display">
+\|\mathbf{x}\|_1 = \sum_{i=1}^{n} |x_i|</script><p>每个元素取绝对值相加。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">x = torch.tensor([<span class="hljs-number">3.0</span>, -<span class="hljs-number">4.0</span>])<br><span class="hljs-built_in">print</span>(torch.norm(x, p=<span class="hljs-number">1</span>))   <span class="hljs-comment"># tensor(7.)</span><br></code></pre></td></tr></table></figure>
-<p>L1 范数也用于正则化，叫 L1 正则化。与(L_2)范数相比，(L_1)范数受异常值的影响较小。</p>
+<p>L1 范数也用于正则化，叫 L1 正则化。与<script type="math/tex">L_2</script>范数相比，<script type="math/tex">L_1</script>范数受异常值的影响较小。</p>
 <h3 id="Lp-范数"><a href="#Lp-范数" class="headerlink" title="Lp 范数"></a>Lp 范数</h3><p>更一般地，Lp 范数定义为：</p>
-<p>[<br>|\mathbf{x}|<em>p = \left( \sum</em>{i=1}^{n} |x_i|^p \right)^{1/p}<br>]</p>
-<p>L1 和 L2 是 p=1 和 p=2 的特例。</p>
+<script type="math/tex; mode=display">
+\|\mathbf{x}\|_p = \left( \sum_{i=1}^{n} |x_i|^p \right)^{1/p}</script><p>L1 和 L2 是 p=1 和 p=2 的特例。</p>
 <h3 id="Frobenius-范数"><a href="#Frobenius-范数" class="headerlink" title="Frobenius 范数"></a>Frobenius 范数</h3><p>矩阵的范数叫 Frobenius 范数，就是所有元素平方和开根号：</p>
-<p>[<br>|A|<em>F = \sqrt{\sum</em>{i,j} A_{ij}^2}<br>]</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">A = torch.tensor([[<span class="hljs-number">1.0</span>, <span class="hljs-number">2.0</span>],<br>                  [<span class="hljs-number">3.0</span>, <span class="hljs-number">4.0</span>]])<br><span class="hljs-built_in">print</span>(torch.norm(A))   <span class="hljs-comment"># tensor(5.4772)  sqrt(1+4+9+16)</span><br></code></pre></td></tr></table></figure>
+<script type="math/tex; mode=display">
+\|A\|_F = \sqrt{\sum_{i,j} A_{ij}^2}</script><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">A = torch.tensor([[<span class="hljs-number">1.0</span>, <span class="hljs-number">2.0</span>],<br>                  [<span class="hljs-number">3.0</span>, <span class="hljs-number">4.0</span>]])<br><span class="hljs-built_in">print</span>(torch.norm(A))   <span class="hljs-comment"># tensor(5.4772)  sqrt(1+4+9+16)</span><br></code></pre></td></tr></table></figure>
 <h3 id="范数的性质"><a href="#范数的性质" class="headerlink" title="范数的性质"></a>范数的性质</h3><p>范数满足三条性质：</p>
 <ul>
-<li>非负性：(|\mathbf{x}| \geq 0)，且 (|\mathbf{x}| = 0) 当且仅当 (\mathbf{x} = \mathbf{0})</li>
-<li>齐次性：(|\alpha \mathbf{x}| = |\alpha| |\mathbf{x}|)</li>
-<li>三角不等式：(|\mathbf{x} + \mathbf{y}| \leq |\mathbf{x}| + |\mathbf{y}|)</li>
+<li>非负性：<script type="math/tex">\|\mathbf{x}\| \geq 0</script>，且 <script type="math/tex">\|\mathbf{x}\| = 0</script> 当且仅当 <script type="math/tex">\mathbf{x} = \mathbf{0}</script></li>
+<li>齐次性：<script type="math/tex">\|\alpha \mathbf{x}\| = |\alpha| \|\mathbf{x}\|</script></li>
+<li>三角不等式：<script type="math/tex">\|\mathbf{x} + \mathbf{y}\| \leq \|\mathbf{x}\| + \|\mathbf{y}\|</script></li>
 </ul>
 <p>这三条是范数的定义性质。任何满足这三条的函数都可以叫范数。</p>
 <hr>
 <h2 id="5-11-特殊矩阵"><a href="#5-11-特殊矩阵" class="headerlink" title="5.11 特殊矩阵"></a>5.11 特殊矩阵</h2><p>有几个特殊矩阵，看到要知道是什么。</p>
-<p><strong>对称矩阵</strong>：(A = A^\top)，转置等于自己。</p>
-<p><strong>单位矩阵</strong>：对角线是 1，其他是 0，记作 (I)。任何矩阵乘单位矩阵都不变：(AI = IA = A)。</p>
+<p><strong>对称矩阵</strong>：<script type="math/tex">A = A^\top</script>，转置等于自己。</p>
+<p><strong>单位矩阵</strong>：对角线是 1，其他是 0，记作 <script type="math/tex">I</script>。任何矩阵乘单位矩阵都不变：<script type="math/tex">AI = IA = A</script>。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">I = torch.eye(<span class="hljs-number">3</span>)<br><span class="hljs-built_in">print</span>(I)<br><span class="hljs-comment"># tensor([[1., 0., 0.],</span><br><span class="hljs-comment">#         [0., 1., 0.],</span><br><span class="hljs-comment">#         [0., 0., 1.]])</span><br></code></pre></td></tr></table></figure>
 <p><strong>对角矩阵</strong>：除了对角线，其他都是 0。</p>
-<p><strong>正交矩阵</strong>：(A^\top A = I)，转置就是逆矩阵。正交矩阵保持向量长度不变，只旋转方向。</p>
-<p><strong>正定矩阵</strong>：对所有非零向量 (\mathbf{x})，都有 (\mathbf{x}^\top A \mathbf{x} &gt; 0)。协方差矩阵就是正定的。</p>
+<p><strong>正交矩阵</strong>：<script type="math/tex">A^\top A = I</script>，转置就是逆矩阵。正交矩阵保持向量长度不变，只旋转方向。</p>
+<p><strong>正定矩阵</strong>：对所有非零向量 <script type="math/tex">\mathbf{x}</script>，都有 <script type="math/tex">\mathbf{x}^\top A \mathbf{x} > 0</script>。协方差矩阵就是正定的。</p>
 <hr>
 <h2 id="本节小结"><a href="#本节小结" class="headerlink" title="本节小结"></a>本节小结</h2><p>有了理解深度学习模型的数学基础。</p>
 <ul>

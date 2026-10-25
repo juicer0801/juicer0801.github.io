@@ -58,7 +58,7 @@
 <meta property="og:image" content="http://example.com/2026/10/15/ml9/image-20230905171420720.png">
 <meta property="og:image" content="http://example.com/2026/10/15/ml9/20.png">
 <meta property="article:published_time" content="2026-10-15T04:35:31.000Z">
-<meta property="article:modified_time" content="2026-10-22T16:02:15.009Z">
+<meta property="article:modified_time" content="2026-10-25T13:25:57.761Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2026/10/15/ml9/01.png"><link rel="canonical" href="http://example.com/2026/10/15/ml9/"><link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="preload" as="font" crossorigin="anonymous" href="/font/Bender.ttf"><link rel="preload" as="font" crossorigin="anonymous" href="/font/BenderLight.woff2"><link rel="preload" as="font" crossorigin="anonymous" href="/font/JetBrainsMono-Regular.woff2"><link rel="stylesheet" href="/css/arknights.css"><style>@font-face {
@@ -188,7 +188,7 @@ document.addEventListener("pjax:complete", reset);document.addEventListener('pja
  const script = document.createElement('script');
  script.src = 'https://vercount.one/js';
  document.head.appendChild(script);
-});reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/tags/"><span class="navItemTitle">Tags</span></a></li><li class="navItem"><a class="navBlock" href="/categories/"><span class="navItemTitle">Categories</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>决策树</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2026-10-15T04:35:31.000Z" id="date"> 2026-10-15</time></div></span><br><span>Last Update: <div class="control"><time datetime="2026-10-22T16:02:15.009Z" id="updated"> 2026-10-23</time></div></span><br><span>Word Count: <div class="control">8.2k</div></span><br><span>Read Time: <div class="control">31 min</div></span><br><span id="vercount_container_page_pv">Page View: <span class="control" id="vercount_value_page_pv">loading...</span></span></div></div><hr><div id="post-content"><h1 id="决策树"><a href="#决策树" class="headerlink" title="决策树"></a>决策树</h1><h2 id="决策树简介"><a href="#决策树简介" class="headerlink" title="决策树简介"></a>决策树简介</h2><p><strong>学习目标</strong></p>
+});reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/tags/"><span class="navItemTitle">Tags</span></a></li><li class="navItem"><a class="navBlock" href="/categories/"><span class="navItemTitle">Categories</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>决策树</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2026-10-15T04:35:31.000Z" id="date"> 2026-10-15</time></div></span><br><span>Last Update: <div class="control"><time datetime="2026-10-25T13:25:57.761Z" id="updated"> 2026-10-25</time></div></span><br><span>Word Count: <div class="control">8.2k</div></span><br><span>Read Time: <div class="control">31 min</div></span><br><span id="vercount_container_page_pv">Page View: <span class="control" id="vercount_value_page_pv">loading...</span></span></div></div><hr><div id="post-content"><h1 id="决策树"><a href="#决策树" class="headerlink" title="决策树"></a>决策树</h1><h2 id="决策树简介"><a href="#决策树简介" class="headerlink" title="决策树简介"></a>决策树简介</h2><p><strong>学习目标</strong></p>
 <p>1.理解决策树算法的基本思想</p>
 <p>2.知道构建决策树的步骤</p>
 <hr>
@@ -229,19 +229,16 @@ document.addEventListener("pjax:complete", reset);document.addEventListener('pja
 H = -\sum_{i=1}^{k}p_i\log(p_i)</script class='item-img' data-src='/2026/10/15/ml9/Snipaste_2026-10-20_17-33-26.png'><img src="/2026/10/15/ml9/Snipaste_2026-10-20_17-33-26.png" class="" title="Hexo 博客封面示例">
 <img src="/2026/10/15/ml9/Snipaste_2026-10-20_17-33-26.png" class="" title="Hexo 博客封面示例">
 <p>例子1：假如有三个类别，分别占比为：{1/3,1/3,1/3}，信息熵计算结果为：</p>
-<p>$H=-\frac{1}{3}\log(\frac{1}{3})-\frac{1}{3}\log(\frac{1}{3})-\frac{1}{3}\log(\frac{1}{3})=1.0986$</p>
-<p>例子2：假如有三个类别，分别占比为：{1/10,2/10,7/10}，信息熵计算结果为：</p>
-<p>$H=-\frac{1}{10}\log(\frac{1}{10})-\frac{2}{10}\log(\frac{2}{10})-\frac{7}{10}\log(\frac{7}{10})=0.8018$</p>
-<p>熵越大，表示整个系统不确定性越大，越随机，反之确定性越强。</p>
+<script type="math/tex; mode=display">H=-\frac{1}{3}\log(\frac{1}{3})-\frac{1}{3}\log(\frac{1}{3})-\frac{1}{3}\log(\frac{1}{3})=1.0986</script><p>例子2：假如有三个类别，分别占比为：{1/10,2/10,7/10}，信息熵计算结果为：</p>
+<script type="math/tex; mode=display">H=-\frac{1}{10}\log(\frac{1}{10})-\frac{2}{10}\log(\frac{2}{10})-\frac{7}{10}\log(\frac{7}{10})=0.8018</script><p>熵越大，表示整个系统不确定性越大，越随机，反之确定性越强。</p>
 <p>例子3：假如有三个类别，分别占比为：{1,0,0}，信息熵计算结果为：</p>
-<p>$H=-1\log(1)=0$</p>
-<h3 id="【理解】信息增益"><a href="#【理解】信息增益" class="headerlink" title="【理解】信息增益"></a>【理解】信息增益</h3><p>定义</p>
+<script type="math/tex; mode=display">H=-1\log(1)=0</script><h3 id="【理解】信息增益"><a href="#【理解】信息增益" class="headerlink" title="【理解】信息增益"></a>【理解】信息增益</h3><p>定义</p>
 <p>特征$A$对训练数据集D的信息增益$g(D,A)$，定义为集合$D$的熵$H(D)$与特征A给定条件下D的熵$H(D|A)$之差。即</p class='item-img' data-src='/2026/10/15/ml9/Snipaste_2026-10-20_17-48-57.png'><img src="/2026/10/15/ml9/Snipaste_2026-10-20_17-48-57.png" class="" title="Hexo 博客封面示例">
 <script type="math/tex; mode=display">
 \large
 g(D,A)=H(D)-H(D|A)</script><p>根据信息增益选择特征方法是：对训练数据集D，计算其每个特征的信息增益，并比较它们的大小，并选择信息增益最大的特征进行划分。<strong>表示由于特征$A$而使得对数据D的分类不确定性减少的程度。</strong></p>
 <p>算法：</p>
-<p>设训练数据集为D，$\mid D\mid$表示其样本个数。设有$K$个类$C<em>k$，$k=1,2,\cdots,K$，$\mid C_k\mid$为属于类$C_k$的样本个数，$\sum\limits</em>{k=1}^{K}=\mid{D}\mid$。设特征A有$n$个不同取值${a<em>1, a_2, \cdots,a_n}$，根据特征A的取值将D划分为$n$个子集$D_1, D_2, \cdots,D_n$，$\mid D_i\mid$为$D_i$样本个数，$\sum\limits</em>{i=1}^n\mid D<em>i\mid=\mid D\mid$。子集中属于类$C_k$的样本集合为$D</em>{ik}$，即$D<em>{ik}=D_i\bigcap C_k$，$\mid D</em>{ik}\mid$为$D_{ik}$的样本个数。信息增益算法如下：</p>
+<p>设训练数据集为D，<script type="math/tex">\mid D\mid</script>表示其样本个数。设有<script type="math/tex">K</script>个类<script type="math/tex">C_k</script>，<script type="math/tex">k=1,2,\cdots,K</script>，<script type="math/tex">\mid C_k\mid</script>为属于类<script type="math/tex">C_k</script>的样本个数，<script type="math/tex">\sum\limits_{k=1}^{K}=\mid{D}\mid</script>。设特征A有<script type="math/tex">n</script>个不同取值<script type="math/tex">\{a_1, a_2, \cdots,a_n\}</script>，根据特征A的取值将D划分为<script type="math/tex">n</script>个子集<script type="math/tex">D_1, D_2, \cdots,D_n</script>，<script type="math/tex">\mid D_i\mid</script>为<script type="math/tex">D_i</script>样本个数，<script type="math/tex">\sum\limits_{i=1}^n\mid D_i\mid=\mid D\mid</script>。子集中属于类<script type="math/tex">C_k</script>的样本集合为<script type="math/tex">D_{ik}</script>，即<script type="math/tex">D_{ik}=D_i\bigcap C_k</script>，<script type="math/tex">\mid D_{ik}\mid</script>为<script type="math/tex">D_{ik}</script>的样本个数。信息增益算法如下：</p>
 <p>α的条件熵：<br>（只考虑α的熵）<br class='item-img' data-src='/2026/10/15/ml9/Snipaste_2026-10-20_18-00-02.png'><img src="/2026/10/15/ml9/Snipaste_2026-10-20_18-00-02.png" class="" title="Hexo 博客封面示例"></p>
 <p>β的条件熵：<br>（只考虑β的熵）<br class='item-img' data-src='/2026/10/15/ml9/Snipaste_2026-10-20_17-48-57.png'><img src="/2026/10/15/ml9/Snipaste_2026-10-20_17-48-57.png" class="" title="Hexo 博客封面示例"></p>
 <p>条件熵：<br class='item-img' data-src='/2026/10/15/ml9/Snipaste_2026-10-20_18-03-23.png'><img src="/2026/10/15/ml9/Snipaste_2026-10-20_18-03-23.png" class="" title="Hexo 博客封面示例"></p>
@@ -256,8 +253,7 @@ g(D,A)=H(D)-H(D|A)</script><p>根据信息增益选择特征方法是：对训�
 <li><p>(1) 计算数据集D的经验熵$H(D)$</p>
 </li>
 </ul>
-<p>  $H(D)=-\sum\limits_{k=1}^{K}\frac{\mid C_k\mid}{\mid D\mid}\log_2\frac{\mid C_k\mid}{\mid D\mid}$</p>
-<ul>
+<script type="math/tex; mode=display">H(D)=-\sum\limits_{k=1}^{K}\frac{\mid C_k\mid}{\mid D\mid}\log_2\frac{\mid C_k\mid}{\mid D\mid}</script><ul>
 <li>(2) 计算特征A对数据集D的经验条件熵$H(D\mid A)$</li>
 </ul>
 <p>  $H(D\mid A)=\sum\limits<em>{i=1}^{n}\frac{\mid D_i\mid}{\mid D\mid}H(D_i)=-\sum\limits</em>{i=1}^{n}\frac{\mid D<em>i\mid}{\mid D\mid}\sum</em>\limits{k=1}^{K}\frac{\mid D<em>{ik}\mid}{\mid D_i\mid}\log_2\frac{\mid D</em>{ik}\mid}{\mid D_i\mid}$</p>
