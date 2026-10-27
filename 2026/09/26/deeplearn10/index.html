@@ -1,12 +1,12 @@
-<!DOCTYPE html><html lang="en" theme-mode="auto"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>微积分 | Hexo</title><meta name="description" content="第 6 节：微积分，模型怎么学习 6.1 导数与微分导数是什么导数衡量的是变化率。函数 (f(x)) 在 (x) 点的导数记作 (f’(x)) 或 (\frac{df}{dx})，定义是： [f’(x) &#x3D; \lim_{h \to 0} \frac{f(x+h) - f(x)}{h}] 如果 (f’(x) &gt; 0)，说明 (x) 增大时 (f(x)) 也增大。如果 (f’(x) &lt; 0">
+<!DOCTYPE html><html lang="en" theme-mode="auto"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>微积分 | Hexo</title><meta name="description" content="第 6 节：微积分，模型怎么学习 6.1 导数与微分导数是什么导数衡量的是变化率。函数 f(x) 在 x 点的导数记作 f&#39;(x) 或 \frac{df}{dx}，定义是：  f&#39;(x) &#x3D; \lim_{h \to 0} \frac{f(x+h) - f(x)}{h}如果 f&#39;(x) &gt; 0，说明 x 增大时 f(x) 也增大。如果 f&#39;(x) &lt; 0，说明 x 增大时 f(x) 减小。如果 f&#39;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="微积分">
 <meta property="og:url" content="http://example.com/2026/09/26/deeplearn10/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="第 6 节：微积分，模型怎么学习 6.1 导数与微分导数是什么导数衡量的是变化率。函数 (f(x)) 在 (x) 点的导数记作 (f’(x)) 或 (\frac{df}{dx})，定义是： [f’(x) &#x3D; \lim_{h \to 0} \frac{f(x+h) - f(x)}{h}] 如果 (f’(x) &gt; 0)，说明 (x) 增大时 (f(x)) 也增大。如果 (f’(x) &lt; 0">
+<meta property="og:description" content="第 6 节：微积分，模型怎么学习 6.1 导数与微分导数是什么导数衡量的是变化率。函数 f(x) 在 x 点的导数记作 f&#39;(x) 或 \frac{df}{dx}，定义是：  f&#39;(x) &#x3D; \lim_{h \to 0} \frac{f(x+h) - f(x)}{h}如果 f&#39;(x) &gt; 0，说明 x 增大时 f(x) 也增大。如果 f&#39;(x) &lt; 0，说明 x 增大时 f(x) 减小。如果 f&#39;">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2026-09-26T11:35:17.000Z">
-<meta property="article:modified_time" content="2026-10-03T13:55:33.155Z">
+<meta property="article:modified_time" content="2026-10-26T13:33:48.783Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary"><link rel="canonical" href="http://example.com/2026/09/26/deeplearn10/"><link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="preload" as="font" crossorigin="anonymous" href="/font/Bender.ttf"><link rel="preload" as="font" crossorigin="anonymous" href="/font/BenderLight.woff2"><link rel="preload" as="font" crossorigin="anonymous" href="/font/JetBrainsMono-Regular.woff2"><link rel="stylesheet" href="/css/arknights.css"><style>@font-face {
   font-family: Bender;
@@ -135,158 +135,191 @@ document.addEventListener("pjax:complete", reset);document.addEventListener('pja
  const script = document.createElement('script');
  script.src = 'https://vercount.one/js';
  document.head.appendChild(script);
-});reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/tags/"><span class="navItemTitle">Tags</span></a></li><li class="navItem"><a class="navBlock" href="/categories/"><span class="navItemTitle">Categories</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>微积分</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2026-09-26T11:35:17.000Z" id="date"> 2026-09-26</time></div></span><br><span>Last Update: <div class="control"><time datetime="2026-10-03T13:55:33.155Z" id="updated"> 2026-10-03</time></div></span><br><span>Word Count: <div class="control">5.8k</div></span><br><span>Read Time: <div class="control">24 min</div></span><br><span id="vercount_container_page_pv">Page View: <span class="control" id="vercount_value_page_pv">loading...</span></span></div></div><hr><div id="post-content"><h1 id="第-6-节：微积分，模型怎么学习"><a href="#第-6-节：微积分，模型怎么学习" class="headerlink" title="第 6 节：微积分，模型怎么学习"></a>第 6 节：微积分，模型怎么学习</h1><hr>
-<h2 id="6-1-导数与微分"><a href="#6-1-导数与微分" class="headerlink" title="6.1 导数与微分"></a>6.1 导数与微分</h2><h3 id="导数是什么"><a href="#导数是什么" class="headerlink" title="导数是什么"></a>导数是什么</h3><p>导数衡量的是<strong>变化率</strong>。函数 (f(x)) 在 (x) 点的导数记作 (f’(x)) 或 (\frac{df}{dx})，定义是：</p>
-<p>[<br>f’(x) = \lim_{h \to 0} \frac{f(x+h) - f(x)}{h}<br>]</p>
-<p>如果 (f’(x) &gt; 0)，说明 (x) 增大时 (f(x)) 也增大。如果 (f’(x) &lt; 0)，说明 (x) 增大时 (f(x)) 减小。如果 (f’(x) = 0)，说明 (x) 处是极值点或者鞍点。</p>
+});reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/tags/"><span class="navItemTitle">Tags</span></a></li><li class="navItem"><a class="navBlock" href="/categories/"><span class="navItemTitle">Categories</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>微积分</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2026-09-26T11:35:17.000Z" id="date"> 2026-09-26</time></div></span><br><span>Last Update: <div class="control"><time datetime="2026-10-26T13:33:48.783Z" id="updated"> 2026-10-26</time></div></span><br><span>Word Count: <div class="control">5.8k</div></span><br><span>Read Time: <div class="control">23 min</div></span><br><span id="vercount_container_page_pv">Page View: <span class="control" id="vercount_value_page_pv">loading...</span></span></div></div><hr><div id="post-content"><h1 id="第-6-节：微积分，模型怎么学习"><a href="#第-6-节：微积分，模型怎么学习" class="headerlink" title="第 6 节：微积分，模型怎么学习"></a>第 6 节：微积分，模型怎么学习</h1><hr>
+<h2 id="6-1-导数与微分"><a href="#6-1-导数与微分" class="headerlink" title="6.1 导数与微分"></a>6.1 导数与微分</h2><h3 id="导数是什么"><a href="#导数是什么" class="headerlink" title="导数是什么"></a>导数是什么</h3><p>导数衡量的是<strong>变化率</strong>。函数 <script type="math/tex">f(x)</script> 在 <script type="math/tex">x</script> 点的导数记作 <script type="math/tex">f'(x)</script> 或 <script type="math/tex">\frac{df}{dx}</script>，定义是：</p>
+<script type="math/tex; mode=display">
+f'(x) = \lim_{h \to 0} \frac{f(x+h) - f(x)}{h}</script><p>如果 <script type="math/tex">f'(x) > 0</script>，说明 <script type="math/tex">x</script> 增大时 <script type="math/tex">f(x)</script> 也增大。如果 <script type="math/tex">f'(x) < 0</script>，说明 <script type="math/tex">x</script> 增大时 <script type="math/tex">f(x)</script> 减小。如果 <script type="math/tex">f'(x) = 0</script>，说明 <script type="math/tex">x</script> 处是极值点或者鞍点。</p>
 <p>几何上，导数就是曲线在这一点切线的斜率。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> torch<br><br><span class="hljs-comment"># 用 PyTorch 验证导数</span><br>x = torch.tensor(<span class="hljs-number">2.0</span>, requires_grad=<span class="hljs-literal">True</span>)<br>y = x ** <span class="hljs-number">2</span><br>y.backward()<br><span class="hljs-built_in">print</span>(x.grad)   <span class="hljs-comment"># tensor(4.)  因为 f&#x27;(x) = 2x，在 x=2 处是 4</span><br></code></pre></td></tr></table></figure>
 <h3 id="微分是什么"><a href="#微分是什么" class="headerlink" title="微分是什么"></a>微分是什么</h3><p>微分和导数严格讲有区别。</p>
-<p>微分 (df) 指的是函数变化的<strong>线性主部</strong>：</p>
-<p>[<br>df = f’(x) \, dx<br>]</p>
-<p>(dx) 是自变量的微小变化，(df) 是函数值的近似变化。导数 (f’(x)) 是微分和自变量微分的比值，所以也叫“微商”。</p>
-<p>在深度学习里，基本是一回事。<strong>注意</strong>：导数是局部的，它只在某一点附近有效。理解梯度下降有用。</p>
-<h3 id="深度学习中为什么需要导数"><a href="#深度学习中为什么需要导数" class="headerlink" title="深度学习中为什么需要导数"></a>深度学习中为什么需要导数</h3><p>模型训练的目标是最小化损失函数 (L(\theta))，(\theta) 是模型参数。<br>即沿导数相反的方向调整参数。</p>
-<p>如果 (L’(\theta) &gt; 0)，说明 (\theta) 增大时损失也增大，那就应该减小 (\theta)。如果 (L’(\theta) &lt; 0)，说明 (\theta) 增大时损失减小，那就应该增大 (\theta)。</p>
-<p>这也就是梯度下降原理：<strong>最小化一个损失函数</strong></p>
+<p>微分 <script type="math/tex">df</script> 指的是函数变化的<strong>线性主部</strong>：</p>
+<script type="math/tex; mode=display">
+df = f'(x) \, dx</script><script type="math/tex; mode=display">dx$$ 是自变量的微小变化，$$df$$ 是函数值的近似变化。导数 $$f'(x)$$ 是微分和自变量微分的比值，所以也叫“微商”。
+
+在深度学习里，基本是一回事。**注意**：导数是局部的，它只在某一点附近有效。理解梯度下降有用。
+
+### 深度学习中为什么需要导数
+
+模型训练的目标是最小化损失函数 $$L(\theta)$$，$$\theta$$ 是模型参数。
+即沿导数相反的方向调整参数。
+
+如果 $$L'(\theta) > 0$$，说明 $$\theta$$ 增大时损失也增大，那就应该减小 $$\theta$$。如果 $$L'(\theta) < 0$$，说明 $$\theta$$ 增大时损失减小，那就应该增大 $$\theta$$。
+
+这也就是梯度下降原理：**最小化一个损失函数**
+
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 手动梯度下降</span><br>x = torch.tensor(<span class="hljs-number">2.0</span>, requires_grad=<span class="hljs-literal">True</span>)<br>lr = <span class="hljs-number">0.1</span><br><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">5</span>):<br>    y = x ** <span class="hljs-number">2</span><br>    y.backward()<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;x=<span class="hljs-subst">&#123;x.item():<span class="hljs-number">.4</span>f&#125;</span>, y=<span class="hljs-subst">&#123;y.item():<span class="hljs-number">.4</span>f&#125;</span>, grad=<span class="hljs-subst">&#123;x.grad.item():<span class="hljs-number">.4</span>f&#125;</span>&quot;</span>)<br>    <span class="hljs-keyword">with</span> torch.no_grad():<br>        x -= lr * x.grad<br>        x.grad.zero_()<br></code></pre></td></tr></table></figure>
-<p>输出：</p>
+
+输出：
+
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">x=2.0000, y=4.0000, grad=4.0000<br>x=1.6000, y=2.5600, grad=3.2000<br>x=1.2800, y=1.6384, grad=2.5600<br>x=1.0240, y=1.0486, grad=2.0480<br>x=0.8192, y=0.6711, grad=1.6384<br></code></pre></td></tr></table></figure>
-<p>每次 (x) 都往导数反方向走一点，(y) 越来越小。这就是训练的过程。</p>
-<h3 id="常用导数公式（高中学的）"><a href="#常用导数公式（高中学的）" class="headerlink" title="常用导数公式（高中学的）"></a>常用导数公式（高中学的）</h3><p>这些是基础，得记住：</p>
-<div class="table-container">
-<table>
-<thead>
-<tr>
-<th>函数</th>
-<th>导数</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>(x^n)</td>
-<td>(n x^{n-1})</td>
-</tr>
-<tr>
-<td>(e^x)</td>
-<td>(e^x)</td>
-</tr>
-<tr>
-<td>(\ln x)</td>
-<td>(1/x)</td>
-</tr>
-<tr>
-<td>(\sin x)</td>
-<td>(\cos x)</td>
-</tr>
-<tr>
-<td>(\cos x)</td>
-<td>(-\sin x)</td>
-</tr>
-<tr>
-<td>常数 (C)</td>
-<td>0</td>
-</tr>
-</tbody>
-</table>
-</div>
-<p>还有几条运算法则：</p>
-<ul>
-<li>加法：((f + g)’ = f’ + g’)</li>
-<li>乘法：((fg)’ = f’g + fg’)</li>
-<li>除法：((f/g)’ = (f’g - fg’) / g^2)</li>
+
+每次 $$x$$ 都往导数反方向走一点，$$y$$ 越来越小。这就是训练的过程。
+
+### 常用导数公式（高中学的）
+
+这些是基础，得记住：
+
+| 函数 | 导数 |
+|---|---|
+| $$x^n$$ | $$n x^{n-1}$$ |
+| $$e^x$$ | $$e^x$$ |
+| $$\ln x$$ | $$1/x$$ |
+| $$\sin x$$ | $$\cos x$$ |
+| $$\cos x$$ | $$-\sin x$$ |
+| 常数 $$C$$ | 0 |
+
+还有几条运算法则：
+
+- 加法：$$(f + g)' = f' + g'</script><ul>
+<li>乘法：<script type="math/tex">(fg)' = f'g + fg'</script></li>
+<li>除法：<script type="math/tex">(f/g)' = (f'g - fg') / g^2</script></li>
 <li>复合：链式法则</li>
 </ul>
 <hr>
-<h2 id="6-2-偏导数"><a href="#6-2-偏导数" class="headerlink" title="6.2 偏导数"></a>6.2 偏导数</h2><h3 id="为什么需要偏导数"><a href="#为什么需要偏导数" class="headerlink" title="为什么需要偏导数"></a>为什么需要偏导数</h3><p>现实中的函数很少只有一个变量。损失函数 (L) 依赖成千上万个参数 (\theta_1, \theta_2, \ldots, \theta_n)。<br>分别知道损失对每个参数的变化率。<br>这就是偏导数。</p>
-<p>偏导数 (\frac{\partial f}{\partial x_i}) 的意思是：<strong>只让 (x_i) 动，其他变量全部固定，看 (f) 怎么变。</strong></p>
-<p>符号从 (d) 变成 (\partial)</p>
-<h3 id="举个栗子"><a href="#举个栗子" class="headerlink" title="举个栗子"></a>举个栗子</h3><p>[<br>f(x, y) = x^2 + y^2 + xy<br>]</p>
-<p>对 (x) 求偏导，把 (y) 当常数：</p>
-<p>[<br>\frac{\partial f}{\partial x} = 2x + y<br>]</p>
-<p>对 (y) 求偏导，把 (x) 当常数：</p>
-<p>[<br>\frac{\partial f}{\partial y} = 2y + x<br>]</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python">x = torch.tensor(<span class="hljs-number">1.0</span>, requires_grad=<span class="hljs-literal">True</span>)<br>y = torch.tensor(<span class="hljs-number">2.0</span>, requires_grad=<span class="hljs-literal">True</span>)<br>f = x**<span class="hljs-number">2</span> + y**<span class="hljs-number">2</span> + x*y<br>f.backward()<br><br><span class="hljs-built_in">print</span>(x.grad)   <span class="hljs-comment"># tensor(4.)  2*1 + 2 = 4</span><br><span class="hljs-built_in">print</span>(y.grad)   <span class="hljs-comment"># tensor(5.)  2*2 + 1 = 5</span><br></code></pre></td></tr></table></figure>
+<h2 id="6-2-偏导数"><a href="#6-2-偏导数" class="headerlink" title="6.2 偏导数"></a>6.2 偏导数</h2><h3 id="为什么需要偏导数"><a href="#为什么需要偏导数" class="headerlink" title="为什么需要偏导数"></a>为什么需要偏导数</h3><p>现实中的函数很少只有一个变量。损失函数 <script type="math/tex">L</script> 依赖成千上万个参数 <script type="math/tex">\theta_1, \theta_2, \ldots, \theta_n</script>。<br>分别知道损失对每个参数的变化率。<br>这就是偏导数。</p>
+<p>偏导数 <script type="math/tex">\frac{\partial f}{\partial x_i}</script> 的意思是：<strong>只让 <script type="math/tex">x_i</script> 动，其他变量全部固定，看 <script type="math/tex">f</script> 怎么变。</strong></p>
+<p>符号从 <script type="math/tex">d</script> 变成 <script type="math/tex">\partial</script></p>
+<h3 id="举个栗子"><a href="#举个栗子" class="headerlink" title="举个栗子"></a>举个栗子</h3><script type="math/tex; mode=display">
+f(x, y) = x^2 + y^2 + xy</script><p>对 <script type="math/tex">x</script> 求偏导，把 <script type="math/tex">y</script> 当常数：</p>
+<script type="math/tex; mode=display">
+\frac{\partial f}{\partial x} = 2x + y</script><p>对 <script type="math/tex">y</script> 求偏导，把 <script type="math/tex">x</script> 当常数：</p>
+<script type="math/tex; mode=display">
+\frac{\partial f}{\partial y} = 2y + x</script><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python">x = torch.tensor(<span class="hljs-number">1.0</span>, requires_grad=<span class="hljs-literal">True</span>)<br>y = torch.tensor(<span class="hljs-number">2.0</span>, requires_grad=<span class="hljs-literal">True</span>)<br>f = x**<span class="hljs-number">2</span> + y**<span class="hljs-number">2</span> + x*y<br>f.backward()<br><br><span class="hljs-built_in">print</span>(x.grad)   <span class="hljs-comment"># tensor(4.)  2*1 + 2 = 4</span><br><span class="hljs-built_in">print</span>(y.grad)   <span class="hljs-comment"># tensor(5.)  2*2 + 1 = 5</span><br></code></pre></td></tr></table></figure>
 <p>PyTorch 的 <code>backward()</code> 会自动把所有偏导数都算出来，分别存在各个张量的 <code>.grad</code> 里。</p>
 <h3 id="偏导数的几何意义"><a href="#偏导数的几何意义" class="headerlink" title="偏导数的几何意义"></a>偏导数的几何意义</h3><p>一维的时候，导数是切线斜率。二维的时候，偏导数是在某个方向上的切线斜率。</p>
-<p>想象你站在一座山上。(x) 方向是东西，(y) 方向是南北。(\frac{\partial f}{\partial x}) 是你只往东走时的高度变化率，(\frac{\partial f}{\partial y}) 是你只往北走时的高度变化率。</p>
+<p>想象你站在一座山上。<script type="math/tex">x</script> 方向是东西，<script type="math/tex">y</script> 方向是南北。<script type="math/tex">\frac{\partial f}{\partial x}</script> 是你只往东走时的高度变化率，<script type="math/tex">\frac{\partial f}{\partial y}</script> 是你只往北走时的高度变化率。</p>
 <p>但实际上你不想只往东或只往北走，你想往最陡的方向走。那就需要梯度。</p>
 <hr>
 <h2 id="6-3-梯度"><a href="#6-3-梯度" class="headerlink" title="6.3 梯度"></a>6.3 梯度</h2><h3 id="梯度的定义"><a href="#梯度的定义" class="headerlink" title="梯度的定义"></a>梯度的定义</h3><p>梯度是所有偏导数组成的向量：</p>
-<p>[<br>\nabla f = \left( \frac{\partial f}{\partial x_1}, \frac{\partial f}{\partial x_2}, \ldots, \frac{\partial f}{\partial x_n} \right)<br>]</p>
-<p>李沐大神说：</p>
-<h1 id="2-4-3-梯度"><a href="#2-4-3-梯度" class="headerlink" title="2.4.3 梯度"></a>2.4.3 梯度</h1><p>我们可以连接一个多元函数对其所有变量的偏导数，以得到该函数的梯度（gradient）向量。具体而言，设函数$f: \mathbb{R}^n \to \mathbb{R}$的输入是一个$n$维向量$\boldsymbol{(\boldsymbol{x})}=[(\boldsymbol{x})_1,(\boldsymbol{x})_2,\cdots,(\boldsymbol{x})_n]^\mathrm{T}$，输出是一个标量。函数$f(\boldsymbol{(\boldsymbol{x})})$相对于$\boldsymbol{(\boldsymbol{x})}$的梯度是一个包含$n$个偏导数的向量：</p>
 <script type="math/tex; mode=display">
-\nabla_{\boldsymbol{\(\boldsymbol{x}\)}} f(\boldsymbol{\(\boldsymbol{x}\)})=\left[\frac{\partial f(\boldsymbol{\(\boldsymbol{x}\)})}{\partial \(\boldsymbol{x}\)_1},\frac{\partial f(\boldsymbol{\(\boldsymbol{x}\)})}{\partial \(\boldsymbol{x}\)_2},\cdots,\frac{\partial f(\boldsymbol{\(\boldsymbol{x}\)})}{\partial \(\boldsymbol{x}\)_n}\right]^\mathrm{T} \tag{2.26}</script><p>其中，$\nabla_{\boldsymbol{(\boldsymbol{x})}} f(\boldsymbol{(\boldsymbol{x})})$在没有歧义时通常被$\nabla f(\boldsymbol{(\boldsymbol{x})})$取代。</p>
-<p>假设$\boldsymbol{(\boldsymbol{x})}$为$n$维向量，在对多元函数求微分时经常使用以下规则：</p>
+\nabla f = \left( \frac{\partial f}{\partial x_1}, \frac{\partial f}{\partial x_2}, \ldots, \frac{\partial f}{\partial x_n} \right)</script><p>李沐大神说：</p>
+<h1 id="2-4-3-梯度"><a href="#2-4-3-梯度" class="headerlink" title="2.4.3 梯度"></a>2.4.3 梯度</h1><p>我们可以连接一个多元函数对其所有变量的偏导数，以得到该函数的梯度（gradient）向量。具体而言，设函数<script type="math/tex">f: \mathbb{R}^n \to \mathbb{R}</script>的输入是一个<script type="math/tex">n</script>维向量<script type="math/tex">\boldsymbol{x}=[x_1,x_2,\cdots,x_n]^\mathrm{T}</script>，输出是一个标量。函数<script type="math/tex">f(\boldsymbol{x})</script>相对于<script type="math/tex">\boldsymbol{x}</script>的梯度是一个包含<script type="math/tex">n</script>个偏导数的向量：</p>
+<script type="math/tex; mode=display">
+\nabla_{\boldsymbol{x}} f(\boldsymbol{x})=\left[\frac{\partial f(\boldsymbol{x})}{\partial x_1},\frac{\partial f(\boldsymbol{x})}{\partial x_2},\cdots,\frac{\partial f(\boldsymbol{x})}{\partial x_n}\right]^\mathrm{T} \tag{2.26}</script><p>其中，<script type="math/tex">\nabla_{\boldsymbol{x}} f(\boldsymbol{x})</script>在没有歧义时通常被<script type="math/tex">\nabla f(\boldsymbol{x})</script>取代。</p>
+<p>假设<script type="math/tex">\boldsymbol{x}</script>为<script type="math/tex">n</script>维向量，在对多元函数求微分时经常使用以下规则：</p>
 <ul>
-<li>对于所有$\boldsymbol{A}\in\mathbb{R}^{m\times n}$，都有$\nabla_{\boldsymbol{(\boldsymbol{x})}} \boldsymbol{A}\boldsymbol{(\boldsymbol{x})} = \boldsymbol{A}^\mathrm{T}$；</li>
-<li>对于所有$\boldsymbol{A}\in\mathbb{R}^{n\times m}$，都有$\nabla_{\boldsymbol{(\boldsymbol{x})}} \boldsymbol{(\boldsymbol{x})}^\mathrm{T}\boldsymbol{A} = \boldsymbol{A}$；</li>
-<li>对于所有$\boldsymbol{A}\in\mathbb{R}^{n\times n}$，都有$\nabla_{\boldsymbol{(\boldsymbol{x})}} \boldsymbol{(\boldsymbol{x})}^\mathrm{T}\boldsymbol{A}\boldsymbol{(\boldsymbol{x})} = (\boldsymbol{A}+\boldsymbol{A}^\mathrm{T})\boldsymbol{(\boldsymbol{x})}$；</li>
-<li>$\nabla<em>{\boldsymbol{(\boldsymbol{x})}} |\boldsymbol{(\boldsymbol{x})}|^2 = \nabla</em>{\boldsymbol{(\boldsymbol{x})}} \boldsymbol{(\boldsymbol{x})}^\mathrm{T}\boldsymbol{(\boldsymbol{x})}=2\boldsymbol{(\boldsymbol{x})}$。</li>
+<li>对于所有<script type="math/tex">\boldsymbol{A}\in\mathbb{R}^{m\times n}</script>，都有<script type="math/tex">\nabla_{\boldsymbol{x}} \boldsymbol{A}\boldsymbol{x} = \boldsymbol{A}^\mathrm{T}</script>；</li>
+<li>对于所有<script type="math/tex">\boldsymbol{A}\in\mathbb{R}^{n\times m}</script>，都有<script type="math/tex">\nabla_{\boldsymbol{x}} \boldsymbol{x}^\mathrm{T}\boldsymbol{A} = \boldsymbol{A}</script>；</li>
+<li>对于所有<script type="math/tex">\boldsymbol{A}\in\mathbb{R}^{n\times n}</script>，都有<script type="math/tex">\nabla_{\boldsymbol{x}} \boldsymbol{x}^\mathrm{T}\boldsymbol{A}\boldsymbol{x} = (\boldsymbol{A}+\boldsymbol{A}^\mathrm{T})\boldsymbol{x}</script>；</li>
+<li><script type="math/tex">\nabla_{\boldsymbol{x}} \|\boldsymbol{x}\|^2 = \nabla_{\boldsymbol{x}} \boldsymbol{x}^\mathrm{T}\boldsymbol{x}=2\boldsymbol{x}</script>。</li>
 </ul>
-<p>同样，对于任何矩阵$\boldsymbol{(\boldsymbol{X})}$，都有$\nabla_{\boldsymbol{(\boldsymbol{X})}} |\boldsymbol{(\boldsymbol{X})}|_F^2=2\boldsymbol{(\boldsymbol{X})}$。正如我们之后将看到的，梯度对于设计深度学习中的优化算法有很大用处。</p>
+<p>同样，对于任何矩阵<script type="math/tex">\boldsymbol{X}</script>，都有<script type="math/tex">\nabla_{\boldsymbol{X}} \|\boldsymbol{X}\|_F^2=2\boldsymbol{X}</script>。正如我们之后将看到的，梯度对于设计深度学习中的优化算法有很大用处。</p>
 <hr>
 <p>它是一个<strong>向量</strong>，指向函数增长最快的方向。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">x = torch.tensor([<span class="hljs-number">1.0</span>, <span class="hljs-number">2.0</span>], requires_grad=<span class="hljs-literal">True</span>)<br>f = x[<span class="hljs-number">0</span>]**<span class="hljs-number">2</span> + x[<span class="hljs-number">1</span>]**<span class="hljs-number">2</span> + x[<span class="hljs-number">0</span>]*x[<span class="hljs-number">1</span>]<br>f.backward()<br><br><span class="hljs-built_in">print</span>(x.grad)   <span class="hljs-comment"># tensor([4., 5.])</span><br></code></pre></td></tr></table></figure>
 <p>这里 <code>x.grad</code> 就是梯度向量 <code>[∂f/∂x₀, ∂f/∂x₁] = [4, 5]</code>。</p>
 <h3 id="梯度为什么指向最陡方向"><a href="#梯度为什么指向最陡方向" class="headerlink" title="梯度为什么指向最陡方向"></a>梯度为什么指向最陡方向</h3><p>这个结论可以用方向导数来证明，但直觉上可以这样理解：</p>
-<p>假设你站在点 (\mathbf{x})，想找一个方向 (\mathbf{v})（单位向量），使得函数在这个方向上的变化率最大。方向导数等于 (\nabla f \cdot \mathbf{v})。</p>
-<p>两个向量的点积，在方向相同时最大。所以当 (\mathbf{v}) 和 (\nabla f) 同方向时，变化率最大。</p>
+<p>假设你站在点 <script type="math/tex">\mathbf{x}</script>，想找一个方向 <script type="math/tex">\mathbf{v}</script>（单位向量），使得函数在这个方向上的变化率最大。方向导数等于 <script type="math/tex">\nabla f \cdot \mathbf{v}</script>。</p>
+<p>两个向量的点积，在方向相同时最大。所以当 <script type="math/tex">\mathbf{v}</script> 和 <script type="math/tex">\nabla f</script> 同方向时，变化率最大。</p>
 <p>所以梯度方向就是函数上升最快的方向，反梯度方向就是下降最快的方向。</p>
 <h3 id="梯度下降"><a href="#梯度下降" class="headerlink" title="梯度下降"></a>梯度下降</h3><p>梯度下降的更新公式：</p>
-<p>[<br>\theta \leftarrow \theta - \eta \nabla L(\theta)<br>]</p>
-<p>(\eta) 是学习率。每一步都往梯度的反方向走，损失就会下降。</p>
+<script type="math/tex; mode=display">
+\theta \leftarrow \theta - \eta \nabla L(\theta)</script><script type="math/tex; mode=display">\eta$$ 是学习率。每一步都往梯度的反方向走，损失就会下降。
+
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 用梯度下降最小化 f(x,y) = x^2 + y^2 + xy</span><br>x = torch.tensor([<span class="hljs-number">1.0</span>, <span class="hljs-number">2.0</span>], requires_grad=<span class="hljs-literal">True</span>)<br>lr = <span class="hljs-number">0.1</span><br><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">10</span>):<br>    f = x[<span class="hljs-number">0</span>]**<span class="hljs-number">2</span> + x[<span class="hljs-number">1</span>]**<span class="hljs-number">2</span> + x[<span class="hljs-number">0</span>]*x[<span class="hljs-number">1</span>]<br>    f.backward()<br>    <span class="hljs-keyword">with</span> torch.no_grad():<br>        x -= lr * x.grad<br>        x.grad.zero_()<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;step <span class="hljs-subst">&#123;i&#125;</span>: x=<span class="hljs-subst">&#123;x.tolist()&#125;</span>, f=<span class="hljs-subst">&#123;f.item():<span class="hljs-number">.4</span>f&#125;</span>&quot;</span>)<br></code></pre></td></tr></table></figure>
-<p>这个函数的最小值在原点。每次沿梯度反方向走一步，(x) 就会越来越接近原点。</p>
-<h3 id="梯度为零的点"><a href="#梯度为零的点" class="headerlink" title="梯度为零的点"></a>梯度为零的点</h3><p>梯度为零的点叫<strong>驻点</strong>。驻点可能是：</p>
-<ul>
-<li><strong>极小值</strong>：周围都比它大（这是我们要找的）</li>
-<li><strong>极大值</strong>：周围都比它小。</li>
-<li><strong>鞍点</strong>：一个方向上是极小值，另一个方向上是极大值。</li>
-</ul>
-<p>深度学习里，鞍点比局部极小值更常见。因为参数维度太高了，要所有方向都是极小值太难了。好在鞍点附近梯度很小，优化器通常能慢慢走出去。</p>
-<h3 id="注意：梯度是局部信息"><a href="#注意：梯度是局部信息" class="headerlink" title="注意：梯度是局部信息"></a>注意：梯度是局部信息</h3><p>梯度只告诉你“在当前点附近，往哪个方向走下降最快”。它不知道远处的情况。</p>
-<p>这就是为什么学习率不能太大。步子迈太大，可能直接跨过最小值，甚至跑到更高的地方。但学习率太小，又走得太慢。</p>
-<hr>
-<h2 id="6-4-链式法则"><a href="#6-4-链式法则" class="headerlink" title="6.4 链式法则"></a>6.4 链式法则</h2><h3 id="链式法则是什么"><a href="#链式法则是什么" class="headerlink" title="链式法则是什么"></a>链式法则是什么</h3><p>链式法则处理的是复合函数求导。</p>
-<p>如果 (y = f(u))，(u = g(x))，那么：</p>
-<p>[<br>\frac{dy}{dx} = \frac{dy}{du} \cdot \frac{du}{dx}<br>]</p>
-<p>复合函数的导数，等于外层函数的导数乘以内层函数的导数。</p>
-<p>多层嵌套也一样：</p>
-<p>[<br>y = f(g(h(x))) \implies \frac{dy}{dx} = f’(g(h(x))) \cdot g’(h(x)) \cdot h’(x)<br>]</p>
-<h3 id="为什么链式法则是深度学习的核心"><a href="#为什么链式法则是深度学习的核心" class="headerlink" title="为什么链式法则是深度学习的核心"></a>为什么链式法则是深度学习的核心</h3><p>神经网络就是一堆函数的嵌套。一层接一层，每一层都是对上一层输出的变换。</p>
-<p>[<br>\mathbf{h}<em>1 = f_1(\mathbf{x})<br>]<br>[<br>\mathbf{h}_2 = f_2(\mathbf{h}_1)<br>]<br>[<br>\vdots<br>]<br>[<br>L = \text{loss}(f_n(\mathbf{h}</em>{n-1}), y)<br>]</p>
-<p>损失 (L) 对第一层参数 (W_1) 的偏导，要用链式法则一层一层往回传：</p>
-<p>[<br>\frac{\partial L}{\partial W<em>1} = \frac{\partial L}{\partial \mathbf{h}_n} \cdot \frac{\partial \mathbf{h}_n}{\partial \mathbf{h}</em>{n-1}} \cdots \frac{\partial \mathbf{h}_2}{\partial \mathbf{h}_1} \cdot \frac{\partial \mathbf{h}_1}{\partial W_1}<br>]</p>
-<p><strong>反向传播就是链式法则的系统化应用。</strong> 从损失开始，一层一层往回想，把梯度传回去。</p>
-<h3 id="一个手算例子"><a href="#一个手算例子" class="headerlink" title="一个手算例子"></a>一个手算例子</h3><p>设：</p>
-<p>[<br>z = (2x + 3)^2<br>]</p>
-<p>令 (u = 2x + 3)，则 (z = u^2)。</p>
-<p>链式法则：</p>
-<p>[<br>\frac{dz}{dx} = \frac{dz}{du} \cdot \frac{du}{dx} = 2u \cdot 2 = 4u = 4(2x + 3)<br>]</p>
-<p>当 (x = 1) 时，(u = 5)，(\frac{dz}{dx} = 20)。</p>
+
+这个函数的最小值在原点。每次沿梯度反方向走一步，$$x$$ 就会越来越接近原点。
+
+### 梯度为零的点
+
+梯度为零的点叫**驻点**。驻点可能是：
+
+- **极小值**：周围都比它大（这是我们要找的）
+- **极大值**：周围都比它小。
+- **鞍点**：一个方向上是极小值，另一个方向上是极大值。
+
+深度学习里，鞍点比局部极小值更常见。因为参数维度太高了，要所有方向都是极小值太难了。好在鞍点附近梯度很小，优化器通常能慢慢走出去。
+
+### 注意：梯度是局部信息
+
+梯度只告诉你“在当前点附近，往哪个方向走下降最快”。它不知道远处的情况。
+
+这就是为什么学习率不能太大。步子迈太大，可能直接跨过最小值，甚至跑到更高的地方。但学习率太小，又走得太慢。
+
+
+---
+
+## 6.4 链式法则
+
+### 链式法则是什么
+
+链式法则处理的是复合函数求导。
+
+如果 $$y = f(u)$$，$$u = g(x)$$，那么：</script><p>\frac{dy}{dx} = \frac{dy}{du} \cdot \frac{du}{dx}</p>
+<script type="math/tex; mode=display">
+
+复合函数的导数，等于外层函数的导数乘以内层函数的导数。
+
+多层嵌套也一样：</script><p>y = f(g(h(x))) \implies \frac{dy}{dx} = f’(g(h(x))) \cdot g’(h(x)) \cdot h’(x)</p>
+<script type="math/tex; mode=display">
+
+### 为什么链式法则是深度学习的核心
+
+神经网络就是一堆函数的嵌套。一层接一层，每一层都是对上一层输出的变换。</script><p>\mathbf{h}_1 = f_1(\mathbf{x})</p>
+<script type="math/tex; mode=display">
+</script><p>\mathbf{h}_2 = f_2(\mathbf{h}_1)</p>
+<script type="math/tex; mode=display">
+</script><p>\vdots</p>
+<script type="math/tex; mode=display">
+</script><p>L = \text{loss}(f<em>n(\mathbf{h}</em>{n-1}), y)</p>
+<script type="math/tex; mode=display">
+
+损失 $$L$$ 对第一层参数 $$W_1$$ 的偏导，要用链式法则一层一层往回传：</script><p>\frac{\partial L}{\partial W<em>1} = \frac{\partial L}{\partial \mathbf{h}_n} \cdot \frac{\partial \mathbf{h}_n}{\partial \mathbf{h}</em>{n-1}} \cdots \frac{\partial \mathbf{h}_2}{\partial \mathbf{h}_1} \cdot \frac{\partial \mathbf{h}_1}{\partial W_1}</p>
+<script type="math/tex; mode=display">
+
+**反向传播就是链式法则的系统化应用。** 从损失开始，一层一层往回想，把梯度传回去。
+
+### 一个手算例子
+
+设：</script><p>z = (2x + 3)^2</p>
+<script type="math/tex; mode=display">
+
+令 $$u = 2x + 3$$，则 $$z = u^2$$。
+
+链式法则：</script><p>\frac{dz}{dx} = \frac{dz}{du} \cdot \frac{du}{dx} = 2u \cdot 2 = 4u = 4(2x + 3)</p>
+<script type="math/tex; mode=display">
+
+当 $$x = 1$$ 时，$$u = 5$$，$$\frac{dz}{dx} = 20$$。
+
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">x = torch.tensor(<span class="hljs-number">1.0</span>, requires_grad=<span class="hljs-literal">True</span>)<br>z = (<span class="hljs-number">2</span>*x + <span class="hljs-number">3</span>) ** <span class="hljs-number">2</span><br>z.backward()<br><span class="hljs-built_in">print</span>(x.grad)   <span class="hljs-comment"># tensor(20.)</span><br></code></pre></td></tr></table></figure>
-<h3 id="链式法则的计算图视角"><a href="#链式法则的计算图视角" class="headerlink" title="链式法则的计算图视角"></a>链式法则的计算图视角</h3><p>PyTorch 的自动微分就是靠计算图实现的。</p>
-<p>前向传播的时候，PyTorch 记录每一步运算，构建一张图。反向传播的时候，从损失节点开始，沿图反向走，每经过一个节点就应用一次链式法则。</p>
+
+### 链式法则的计算图视角
+
+PyTorch 的自动微分就是靠计算图实现的。
+
+前向传播的时候，PyTorch 记录每一步运算，构建一张图。反向传播的时候，从损失节点开始，沿图反向走，每经过一个节点就应用一次链式法则。
+
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python">x = torch.tensor(<span class="hljs-number">2.0</span>, requires_grad=<span class="hljs-literal">True</span>)<br><br><span class="hljs-comment"># 前向传播：每一步都被记录</span><br>a = x * <span class="hljs-number">3</span>        <span class="hljs-comment"># a = 6</span><br>b = a + <span class="hljs-number">1</span>        <span class="hljs-comment"># b = 7</span><br>c = b ** <span class="hljs-number">2</span>       <span class="hljs-comment"># c = 49</span><br><br><span class="hljs-comment"># 反向传播：沿计算图往回走</span><br>c.backward()<br><br><span class="hljs-comment"># dc/dx = dc/db * db/da * da/dx</span><br><span class="hljs-comment">#       = 2b * 1 * 3</span><br><span class="hljs-comment">#       = 2*7 * 3</span><br><span class="hljs-comment">#       = 42</span><br><span class="hljs-built_in">print</span>(x.grad)    <span class="hljs-comment"># tensor(42.)</span><br></code></pre></td></tr></table></figure>
-<p>计算图长这样：</p>
+
+计算图长这样：
+
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">x → (×3) → a → (+1) → b → (²) → c<br></code></pre></td></tr></table></figure>
-<p>反向走：</p>
-<ul>
-<li>(c) 对 (b) 的梯度：(2b = 14)</li>
-<li>(b) 对 (a) 的梯度：(1)</li>
-<li>(a) 对 (x) 的梯度：(3)</li>
-<li>乘起来：(14 \times 1 \times 3 = 42)</li>
+
+反向走：
+
+- $$c$$ 对 $$b$$ 的梯度：$$2b = 14</script><ul>
+<li><script type="math/tex; mode=display">b$$ 对 $$a$$ 的梯度：$$1</script></li>
+<li><script type="math/tex; mode=display">a$$ 对 $$x$$ 的梯度：$$3</script></li>
+<li>乘起来：<script type="math/tex">14 \times 1 \times 3 = 42</script></li>
 </ul>
 <p>这就是反向传播。就是链式法则。</p>
 <p>完整例子<br>5.3 实现完整反向传播<br>在PyTorch中实现：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><br><span class="hljs-keyword">import</span> torch<br>​<br>x1 = torch.tensor(<span class="hljs-number">2.0</span>, requires_grad=<span class="hljs-literal">True</span>)<br>x2 = torch.tensor(<span class="hljs-number">3.0</span>, requires_grad=<span class="hljs-literal">True</span>)<br>x3 = torch.tensor(<span class="hljs-number">4.0</span>, requires_grad=<span class="hljs-literal">True</span>)<br>​<br>y = (x1 + x2) * x3<br>y.backward()<br>​<br><span class="hljs-built_in">print</span>(x1.grad)  <span class="hljs-comment"># 4.0</span><br><span class="hljs-built_in">print</span>(x2.grad)  <span class="hljs-comment"># 4.0</span><br><span class="hljs-built_in">print</span>(x3.grad)  <span class="hljs-comment"># 5.0</span><br></code></pre></td></tr></table></figure>
 <h3 id="链式法则在向量情况下的形式"><a href="#链式法则在向量情况下的形式" class="headerlink" title="链式法则在向量情况下的形式"></a>链式法则在向量情况下的形式</h3><p>标量情况简单，但深度学习里都是向量和矩阵。向量情况下的链式法则要用雅可比矩阵。</p>
-<p>如果 (\mathbf{y} = f(\mathbf{x}))，(\mathbf{z} = g(\mathbf{y}))，那么：</p>
-<p>[<br>\frac{\partial \mathbf{z}}{\partial \mathbf{x}} = \frac{\partial \mathbf{z}}{\partial \mathbf{y}} \cdot \frac{\partial \mathbf{y}}{\partial \mathbf{x}}<br>]</p>
-<p>这里的乘法是矩阵乘法，(\frac{\partial \mathbf{z}}{\partial \mathbf{y}}) 和 (\frac{\partial \mathbf{y}}{\partial \mathbf{x}}) 都是雅可比矩阵。</p>
-<p>雅可比矩阵 (J) 的第 (i) 行第 (j) 列是 (\frac{\partial y_i}{\partial x_j})。</p>
+<p>如果 <script type="math/tex">\mathbf{y} = f(\mathbf{x})</script>，<script type="math/tex">\mathbf{z} = g(\mathbf{y})</script>，那么：</p>
+<script type="math/tex; mode=display">
+\frac{\partial \mathbf{z}}{\partial \mathbf{x}} = \frac{\partial \mathbf{z}}{\partial \mathbf{y}} \cdot \frac{\partial \mathbf{y}}{\partial \mathbf{x}}</script><p>这里的乘法是矩阵乘法，<script type="math/tex">\frac{\partial \mathbf{z}}{\partial \mathbf{y}}</script> 和 <script type="math/tex">\frac{\partial \mathbf{y}}{\partial \mathbf{x}}</script> 都是雅可比矩阵。</p>
+<p>雅可比矩阵 <script type="math/tex">J</script> 的第 <script type="math/tex">i</script> 行第 <script type="math/tex">j</script> 列是 <script type="math/tex">\frac{\partial y_i}{\partial x_j}</script>。</p>
 <h2 id="实际写代码的时候你不需要手动算雅可比，PyTorch-的-backward-即可。"><a href="#实际写代码的时候你不需要手动算雅可比，PyTorch-的-backward-即可。" class="headerlink" title="实际写代码的时候你不需要手动算雅可比，PyTorch 的 backward() 即可。"></a>实际写代码的时候你不需要手动算雅可比，PyTorch 的 <code>backward()</code> 即可。</h2><h2 id="6-5-把四个概念关系"><a href="#6-5-把四个概念关系" class="headerlink" title="6.5 把四个概念关系"></a>6.5 把四个概念关系</h2><p><strong>导数</strong>告诉我们单个变量怎么变。<br><strong>偏导数</strong>告诉我们多变量里，每个变量单独怎么变。<br><strong>梯度</strong>把所有偏导数打包成一个向量，指向最陡上升方向。<br><strong>链式法则</strong>告诉我们复合函数怎么求导，也就是梯度怎么从最后一层传回第一层。</p>
 <p>深度学习训练就是一个循环：</p>
 <ol>
@@ -299,15 +332,18 @@ document.addEventListener("pjax:complete", reset);document.addEventListener('pja
 <hr>
 <h2 id="6-6-一些实际会用到的导数"><a href="#6-6-一些实际会用到的导数" class="headerlink" title="6.6 一些实际会用到的导数"></a>6.6 一些实际会用到的导数</h2><p>最后列几个深度学习里高频出现的导数。</p>
 <p><strong>Sigmoid</strong>：</p>
-<p>[<br>\sigma(x) = \frac{1}{1 + e^{-x}}<br>]<br>[<br>\sigma’(x) = \sigma(x)(1 - \sigma(x))<br>]</p>
-<p><strong>Tanh</strong>：</p>
-<p>[<br>\tanh(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}}<br>]<br>[<br>\tanh’(x) = 1 - \tanh^2(x)<br>]</p>
-<p><strong>ReLU</strong>：</p>
-<p>[<br>\text{ReLU}(x) = \max(0, x)<br>]<br>[<br>\text{ReLU}’(x) = \begin{cases} 1 &amp; x &gt; 0 \ 0 &amp; x &lt; 0 \end{cases}<br>]</p>
-<p>ReLU 在 0 处不可导，但实际用的时候没人管这个点，随便定一个值就行（通常用 0 或 1）。</p>
+<script type="math/tex; mode=display">
+\sigma(x) = \frac{1}{1 + e^{-x}}</script><script type="math/tex; mode=display">
+\sigma'(x) = \sigma(x)(1 - \sigma(x))</script><p><strong>Tanh</strong>：</p>
+<script type="math/tex; mode=display">
+\tanh(x) = \frac{e^x - e^{-x}}{e^x + e^{-x}}</script><script type="math/tex; mode=display">
+\tanh'(x) = 1 - \tanh^2(x)</script><p><strong>ReLU</strong>：</p>
+<script type="math/tex; mode=display">
+\text{ReLU}(x) = \max(0, x)</script><script type="math/tex; mode=display">
+\text{ReLU}'(x) = \begin{cases} 1 & x > 0 \\ 0 & x < 0 \end{cases}</script><p>ReLU 在 0 处不可导，但实际用的时候没人管这个点，随便定一个值就行（通常用 0 或 1）。</p>
 <p><strong>Softmax + 交叉熵</strong>：预测概率减去真实标签：</p>
-<p>[<br>\frac{\partial L}{\partial z_i} = \hat{y}_i - y_i<br>]</p>
-<p>这也是为什么分类任务我喜欢用 softmax + 交叉熵，梯度好算，数值也稳定。</p>
+<script type="math/tex; mode=display">
+\frac{\partial L}{\partial z_i} = \hat{y}_i - y_i</script><p>这也是为什么分类任务我喜欢用 softmax + 交叉熵，梯度好算，数值也稳定。</p>
 <hr>
 <h2 id="本节小结"><a href="#本节小结" class="headerlink" title="本节小结"></a>本节小结</h2><ul>
 <li><strong>导数</strong>是变化率，告诉我们函数在某点附近怎么变。</li>
@@ -319,24 +355,29 @@ document.addEventListener("pjax:complete", reset);document.addEventListener('pja
 </ul>
 <h2 id="6-6-扩展：微积分在深度学习中的高级应用"><a href="#6-6-扩展：微积分在深度学习中的高级应用" class="headerlink" title="6.6 扩展：微积分在深度学习中的高级应用"></a>6.6 扩展：微积分在深度学习中的高级应用</h2><p>前面讲的导数、偏导数、梯度、链式法则，是最基础的部分。实际做深度学习，还会碰到一些更深入的东西。</p>
 <h3 id="雅可比矩阵"><a href="#雅可比矩阵" class="headerlink" title="雅可比矩阵"></a>雅可比矩阵</h3><p>前面说链式法则的时候提过一嘴，这里展开讲。</p>
-<p>如果函数是 (\mathbf{f}: \mathbb{R}^n \to \mathbb{R}^m)，输入是 n 维向量，输出是 m 维向量，那它的导数不能只用一组偏导数表示。每一个输出对每一个输入都有一个偏导数，总共有 (m \times n) 个。把这些偏导数排成一个矩阵，就是<strong>雅可比矩阵</strong>：</p>
-<p>[<br>J = \frac{\partial \mathbf{f}}{\partial \mathbf{x}} =<br>\begin{bmatrix}<br>\frac{\partial f_1}{\partial x_1} &amp; \cdots &amp; \frac{\partial f_1}{\partial x_n} \<br>\vdots &amp; \ddots &amp; \vdots \<br>\frac{\partial f_m}{\partial x_1} &amp; \cdots &amp; \frac{\partial f_m}{\partial x_n}<br>\end{bmatrix}<br>]</p>
-<p>第 i 行第 j 列是 (\frac{\partial f_i}{\partial x_j})。</p>
+<p>如果函数是 <script type="math/tex">\mathbf{f}: \mathbb{R}^n \to \mathbb{R}^m</script>，输入是 n 维向量，输出是 m 维向量，那它的导数不能只用一组偏导数表示。每一个输出对每一个输入都有一个偏导数，总共有 <script type="math/tex">m \times n</script> 个。把这些偏导数排成一个矩阵，就是<strong>雅可比矩阵</strong>：</p>
+<script type="math/tex; mode=display">
+J = \frac{\partial \mathbf{f}}{\partial \mathbf{x}} =
+\begin{bmatrix}
+\frac{\partial f_1}{\partial x_1} & \cdots & \frac{\partial f_1}{\partial x_n} \\
+\vdots & \ddots & \vdots \\
+\frac{\partial f_m}{\partial x_1} & \cdots & \frac{\partial f_m}{\partial x_n}
+\end{bmatrix}</script><p>第 i 行第 j 列是 <script type="math/tex">\frac{\partial f_i}{\partial x_j}</script>。</p>
 <p><strong>在神经网络里，每一层都是一个向量到向量的函数。</strong> 一层的雅可比矩阵描述了这一层的输出对输入的敏感度。反向传播的本质，就是把损失对输出的梯度，乘以这一层的雅可比矩阵，得到损失对输入的梯度。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 用 PyTorch 的 jacobian 函数算雅可比矩阵</span><br><span class="hljs-keyword">from</span> torch.autograd.functional <span class="hljs-keyword">import</span> jacobian<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">f</span>(<span class="hljs-params">x</span>):<br>    <span class="hljs-keyword">return</span> torch.stack([x[<span class="hljs-number">0</span>]**<span class="hljs-number">2</span> + x[<span class="hljs-number">1</span>], x[<span class="hljs-number">0</span>] + x[<span class="hljs-number">1</span>]**<span class="hljs-number">2</span>])<br><br>x = torch.tensor([<span class="hljs-number">1.0</span>, <span class="hljs-number">2.0</span>])<br>J = jacobian(f, x)<br><span class="hljs-built_in">print</span>(J)<br><span class="hljs-comment"># tensor([[2., 1.],</span><br><span class="hljs-comment">#         [1., 4.]])</span><br></code></pre></td></tr></table></figure>
-<p>验证一下：(f_1 = x_1^2 + x_2)，(\partial f_1/\partial x_1 = 2x_1 = 2)，(\partial f_1/\partial x_2 = 1)。(f_2 = x_1 + x_2^2)，(\partial f_2/\partial x_1 = 1)，(\partial f_2/\partial x_2 = 2x_2 = 4)。</p>
+<p>验证一下：<script type="math/tex">f_1 = x_1^2 + x_2</script>，<script type="math/tex">\partial f_1/\partial x_1 = 2x_1 = 2</script>，<script type="math/tex">\partial f_1/\partial x_2 = 1</script>。<script type="math/tex">f_2 = x_1 + x_2^2</script>，<script type="math/tex">\partial f_2/\partial x_1 = 1</script>，<script type="math/tex">\partial f_2/\partial x_2 = 2x_2 = 4</script>。</p>
 <p><strong>不显式算雅可比矩阵</strong> 一个层如果有 1000 维输入、1000 维输出，雅可比矩阵就是 100 万个元素。反向传播用的是<strong>向量-雅可比积</strong>（VJP），不需要显式构造矩阵，只需要算“雅可比矩阵转置乘以一个向量”，计算量小得多。。</p>
 <h3 id="海森矩阵"><a href="#海森矩阵" class="headerlink" title="海森矩阵"></a>海森矩阵</h3><p>雅可比矩阵是“一阶导数”的推广。<strong>海森矩阵</strong>是“二阶导数”的推广。</p>
-<p>对于标量函数 (f: \mathbb{R}^n \to \mathbb{R})，海森矩阵 (H) 的第 i 行第 j 列是：</p>
-<p>[<br>H_{ij} = \frac{\partial^2 f}{\partial x_i \partial x_j}<br>]</p>
-<p>它描述的是函数的曲率——梯度本身是怎么变化的。</p>
+<p>对于标量函数 <script type="math/tex">f: \mathbb{R}^n \to \mathbb{R}</script>，海森矩阵 <script type="math/tex">H</script> 的第 i 行第 j 列是：</p>
+<script type="math/tex; mode=display">
+H_{ij} = \frac{\partial^2 f}{\partial x_i \partial x_j}</script><p>它描述的是函数的曲率——梯度本身是怎么变化的。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> torch.autograd.functional <span class="hljs-keyword">import</span> hessian<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">f</span>(<span class="hljs-params">x</span>):<br>    <span class="hljs-keyword">return</span> x[<span class="hljs-number">0</span>]**<span class="hljs-number">2</span> + x[<span class="hljs-number">1</span>]**<span class="hljs-number">2</span> + x[<span class="hljs-number">0</span>]*x[<span class="hljs-number">1</span>]<br><br>x = torch.tensor([<span class="hljs-number">1.0</span>, <span class="hljs-number">2.0</span>])<br>H = hessian(f, x)<br><span class="hljs-built_in">print</span>(H)<br><span class="hljs-comment"># tensor([[2., 1.],</span><br><span class="hljs-comment">#         [1., 2.]])</span><br></code></pre></td></tr></table></figure>
 <p><strong>海森矩阵在深度学习的作用</strong></p>
 <ul>
 <li>如果海森矩阵在某个方向的特征值很大，说明那个方向曲率大，梯度变化快，学习率要小一点。</li>
 <li>如果特征值很小，说明那个方向很平，可以走大步一点。</li>
 </ul>
-<p><strong>海森矩阵无法直接全应用</strong> n 个参数，海森矩阵是 (n \times n)。一个百万参数的模型，海森矩阵就是一万亿个元素，根本存不下。</p>
+<p><strong>海森矩阵无法直接全应用</strong> n 个参数，海森矩阵是 <script type="math/tex">n \times n</script>。一个百万参数的模型，海森矩阵就是一万亿个元素，根本存不下。</p>
 <p>所以实际用的是海森矩阵的<strong>近似</strong>。Adam、RMSProp 这些自适应学习率方法，本质上是在用梯度平方的移动平均来近似海森矩阵的对角线。K-FAC、Sophia 这些二阶优化器，用的是更精细的低秩近似。</p>
 <h3 id="自动微分的两种模式"><a href="#自动微分的两种模式" class="headerlink" title="自动微分的两种模式"></a>自动微分的两种模式</h3><p>PyTorch 的 <code>backward()</code> 用的是<strong>反向模式</strong>自动微分。但自动微分不止这一种模式。</p>
 <p><strong>前向模式</strong>：从输入开始，沿计算图正向走，每一步算“输出对输入的导数”。一次前向能算出所有输出对一个输入的导数。</p>
@@ -351,8 +392,8 @@ document.addEventListener("pjax:complete", reset);document.addEventListener('pja
 <p>如果输出维度比输入维度高，前向模式反而更合适。JAX 的 <code>jacfwd</code> 和 <code>jacrev</code> 就是这两种模式。</p>
 <h3 id="梯度消失与梯度爆炸"><a href="#梯度消失与梯度爆炸" class="headerlink" title="梯度消失与梯度爆炸"></a>梯度消失与梯度爆炸</h3><p>最经典的问题之一。</p>
 <p>反向传播是连乘：</p>
-<p>[<br>\frac{\partial L}{\partial W<em>1} = \frac{\partial L}{\partial \mathbf{h}_n} \cdot \frac{\partial \mathbf{h}_n}{\partial \mathbf{h}</em>{n-1}} \cdots \frac{\partial \mathbf{h}_2}{\partial \mathbf{h}_1} \cdot \frac{\partial \mathbf{h}_1}{\partial W_1}<br>]</p>
-<p>如果每一层的雅可比矩阵的范数都小于 1，连乘之后趋近于 0，梯度就消失了。前面的层几乎收不到梯度，参数更新不动。</p>
+<script type="math/tex; mode=display">
+\frac{\partial L}{\partial W_1} = \frac{\partial L}{\partial \mathbf{h}_n} \cdot \frac{\partial \mathbf{h}_n}{\partial \mathbf{h}_{n-1}} \cdots \frac{\partial \mathbf{h}_2}{\partial \mathbf{h}_1} \cdot \frac{\partial \mathbf{h}_1}{\partial W_1}</script><p>如果每一层的雅可比矩阵的范数都小于 1，连乘之后趋近于 0，梯度就消失了。前面的层几乎收不到梯度，参数更新不动。</p>
 <p>如果每一层的雅可比矩阵的范数都大于 1，连乘之后指数增长，梯度就爆炸了。参数更新幅度巨大，训练直接崩掉。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 演示梯度消失</span><br><span class="hljs-keyword">import</span> torch.nn <span class="hljs-keyword">as</span> nn<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">DeepNet</span>(nn.Module):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, depth</span>):<br>        <span class="hljs-built_in">super</span>().__init__()<br>        layers = []<br>        <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(depth):<br>            layers.append(nn.Linear(<span class="hljs-number">10</span>, <span class="hljs-number">10</span>))<br>            layers.append(nn.Sigmoid())  <span class="hljs-comment"># sigmoid 导数最大只有 0.25</span><br>        layers.append(nn.Linear(<span class="hljs-number">10</span>, <span class="hljs-number">1</span>))<br>        <span class="hljs-variable language_">self</span>.net = nn.Sequential(*layers)<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">self, x</span>):<br>        <span class="hljs-keyword">return</span> <span class="hljs-variable language_">self</span>.net(x)<br><br><span class="hljs-comment"># 20 层 sigmoid 网络</span><br>model = DeepNet(<span class="hljs-number">20</span>)<br>x = torch.randn(<span class="hljs-number">1</span>, <span class="hljs-number">10</span>)<br>loss = model(x).<span class="hljs-built_in">sum</span>()<br>loss.backward()<br><br><span class="hljs-comment"># 看第一层的梯度</span><br>first_layer_grad = model.net[<span class="hljs-number">0</span>].weight.grad<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;第一层梯度范数: <span class="hljs-subst">&#123;first_layer_grad.norm().item():<span class="hljs-number">.2</span>e&#125;</span>&quot;</span>)<br><span class="hljs-comment"># 会非常小，接近 0</span><br></code></pre></td></tr></table></figure>
 <p><strong>解决方法</strong></p>
@@ -367,12 +408,12 @@ document.addEventListener("pjax:complete", reset);document.addEventListener('pja
 <p><strong>注意</strong>：<code>clip_grad_norm_</code> 要在 <code>loss.backward()</code> 之后、<code>optimizer.step()</code> 之前调用。顺序错了就完蛋了。</p>
 <h3 id="二阶优化方法"><a href="#二阶优化方法" class="headerlink" title="二阶优化方法"></a>二阶优化方法</h3><p>梯度下降是一阶方法，只用了一阶导数。二阶方法用海森矩阵，收敛更快，但计算代价高。</p>
 <p><strong>牛顿法</strong>的更新公式：</p>
-<p>[<br>\theta \leftarrow \theta - H^{-1} \nabla L<br>]</p>
-<p>用海森矩阵的逆来调整更新方向。在一维情况下，牛顿法相当于用二次函数去拟合当前点，然后直接跳到二次函数的最小值。收敛速度是二次的，比梯度下降快得多。</p>
+<script type="math/tex; mode=display">
+\theta \leftarrow \theta - H^{-1} \nabla L</script><p>用海森矩阵的逆来调整更新方向。在一维情况下，牛顿法相当于用二次函数去拟合当前点，然后直接跳到二次函数的最小值。收敛速度是二次的，比梯度下降快得多。</p>
 <p><strong>但牛顿法在深度学习里基本不可用</strong>，因为：</p>
 <ol>
 <li>海森矩阵太大，存不下。</li>
-<li>求逆的复杂度是 (O(n^3))，百万参数根本算不动。</li>
+<li>求逆的复杂度是 <script type="math/tex">O(n^3)</script>，百万参数根本算不动。</li>
 <li>海森矩阵可能不是正定的，逆不一定存在。</li>
 </ol>
 <p><strong>实际用的是拟牛顿法</strong>，比如 L-BFGS。它不显式构造海森矩阵，而是用最近几次的梯度变化来估计曲率。L-BFGS 在参数量不大的时候效果不错，但在深度学习里因为 batch 训练的随机性，表现不稳定。</p>
@@ -380,19 +421,20 @@ document.addEventListener("pjax:complete", reset);document.addEventListener('pja
 <h3 id="伴随方法与神经常微分方程"><a href="#伴随方法与神经常微分方程" class="headerlink" title="伴随方法与神经常微分方程"></a>伴随方法与神经常微分方程</h3><p>这块比较前沿（我还在了解）。</p>
 <p><strong>伴随方法</strong>（adjoint method）是求解微分方程约束下优化问题的经典方法。它的核心思想和反向传播一样：先正向求解状态，再从终点反向传播梯度。</p>
 <p><strong>神经常微分方程</strong>（Neural ODE）把神经网络的层数看成连续的。不是离散的“第 1 层、第 2 层、……”，而是用一个微分方程描述隐藏状态随“深度”的变化：</p>
-<p>[<br>\frac{d\mathbf{h}(t)}{dt} = f(\mathbf{h}(t), t, \theta)<br>]</p>
-<p>前向传播就是解这个微分方程。反向传播用伴随方法，不需要存储中间状态，内存占用是常数级的。</p>
+<script type="math/tex; mode=display">
+\frac{d\mathbf{h}(t)}{dt} = f(\mathbf{h}(t), t, \theta)</script><p>前向传播就是解这个微分方程。反向传播用伴随方法，不需要存储中间状态，内存占用是常数级的。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 概念示意，需要 torchdiffeq 库</span><br><span class="hljs-keyword">from</span> torchdiffeq <span class="hljs-keyword">import</span> odeint<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">ODEBlock</span>(nn.Module):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, func</span>):<br>        <span class="hljs-built_in">super</span>().__init__()<br>        <span class="hljs-variable language_">self</span>.func = func<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">forward</span>(<span class="hljs-params">self, x</span>):<br>        <span class="hljs-comment"># 从 t=0 积分到 t=1</span><br>        t = torch.tensor([<span class="hljs-number">0.0</span>, <span class="hljs-number">1.0</span>])<br>        <span class="hljs-keyword">return</span> odeint(<span class="hljs-variable language_">self</span>.func, x, t)[-<span class="hljs-number">1</span>]<br></code></pre></td></tr></table></figure>
 <p>Neural ODE 的好处是内存高效、可以处理不规则时间序列、理论上更优雅。缺点是训练慢，因为要数值解微分方程。</p>
 <p>这块属于了解即可，实际项目里用得不多。</p>
 <h3 id="隐函数定理与深度均衡模型"><a href="#隐函数定理与深度均衡模型" class="headerlink" title="隐函数定理与深度均衡模型"></a>隐函数定理与深度均衡模型</h3><p><strong>深度均衡模型</strong>（Deep Equilibrium Model, DEQ）是另一个前沿方向。它不显式定义多少层，而是找一个不动点：</p>
-<p>[<br>\mathbf{z}^<em> = f(\mathbf{z}^</em>, \mathbf{x})<br>]</p>
-<p>前向传播就是迭代直到收敛。反向传播不用存中间状态，而是用隐函数定理直接算梯度。</p>
-<p>隐函数定理说的是：如果 (F(\mathbf{z}, \theta) = 0) 定义了隐函数 (\mathbf{z}(\theta))，那么：</p>
-<p>[<br>\frac{\partial \mathbf{z}}{\partial \theta} = -\left( \frac{\partial F}{\partial \mathbf{z}} \right)^{-1} \frac{\partial F}{\partial \theta}<br>]</p>
-<p>这个公式让 DEQ 可以用常数级内存做反向传播。DEQ 在理论上可以表示无限深的网络，但实际训练稳定性还需要进一步研究。</p>
+<script type="math/tex; mode=display">
+\mathbf{z}^* = f(\mathbf{z}^*, \mathbf{x})</script><p>前向传播就是迭代直到收敛。反向传播不用存中间状态，而是用隐函数定理直接算梯度。</p>
+<p>隐函数定理说的是：如果 <script type="math/tex">F(\mathbf{z}, \theta) = 0</script> 定义了隐函数 <script type="math/tex">\mathbf{z}(\theta)</script>，那么：</p>
+<script type="math/tex; mode=display">
+\frac{\partial \mathbf{z}}{\partial \theta} = -\left( \frac{\partial F}{\partial \mathbf{z}} \right)^{-1} \frac{\partial F}{\partial \theta}</script><p>这个公式让 DEQ 可以用常数级内存做反向传播。DEQ 在理论上可以表示无限深的网络，但实际训练稳定性还需要进一步研究。</p>
 <p>以下还有，但我不会</p>
 <h3 id="流形优化与梯度下降"><a href="#流形优化与梯度下降" class="headerlink" title="流形优化与梯度下降"></a>流形优化与梯度下降</h3><p>在深度学习中，参数空间实际上是高维流形。流形优化考虑了参数空间的几何结构，可以处理约束优化问题。</p>
 <h3 id="变分方法与最大期望"><a href="#变分方法与最大期望" class="headerlink" title="变分方法与最大期望"></a>变分方法与最大期望</h3><p>EM算法基于变分思想，优化期望对数似然函数。在深度学习中，变分自编码器（VAE）就是基于这种变分推断思想的。</p>
-<h3 id="能量基础模型与微积分"><a href="#能量基础模型与微积分" class="headerlink" title="能量基础模型与微积分"></a>能量基础模型与微积分</h3><p>Boltzmann机等能量基础模型通过能量函数 $E(x, h)$ 描述数据分布，梯度由玻尔兹曼分布的期望给出：</p>
-<script type="math/tex; mode=display">\nabla \log p(x) = \langle \frac{\partial E}{\partial \theta} \rangle_{data} - \langle \frac{\partial E}{\partial \theta} \rangle_{model}</script><div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2026/09/26/deeplearn11/">← Next Matplotlib 与深度学习可视化</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/09/26/deeplearn9/">deeplearn9 Prev →</a></div></div></div><div id="comments"><div id="giscus"></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="To Top" style="opacity: 0; display: none;">∧ </a><a class="i-index" id="to-index" onClick="tocControl.change()" title="To Catalog"><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span></a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="Change Theme"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">John Doe</a></h1><div id="description"><p></p></div><div id="social-links"><a class="social" target="_blank" rel="noopener" href="https://github.com/juicer0801"><i class="fab fa-github" alt="GitHub"></i></a></div></div><div id="aside-block"><div id="toc-div"><h1>Catalog</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC-6-%E8%8A%82%EF%BC%9A%E5%BE%AE%E7%A7%AF%E5%88%86%EF%BC%8C%E6%A8%A1%E5%9E%8B%E6%80%8E%E4%B9%88%E5%AD%A6%E4%B9%A0"><span class="toc-number">1.</span> <span class="toc-text">第 6 节：微积分，模型怎么学习</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#6-1-%E5%AF%BC%E6%95%B0%E4%B8%8E%E5%BE%AE%E5%88%86"><span class="toc-number">1.1.</span> <span class="toc-text">6.1 导数与微分</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%BC%E6%95%B0%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">1.1.1.</span> <span class="toc-text">导数是什么</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%AE%E5%88%86%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">1.1.2.</span> <span class="toc-text">微分是什么</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%AD%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E5%AF%BC%E6%95%B0"><span class="toc-number">1.1.3.</span> <span class="toc-text">深度学习中为什么需要导数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%AF%BC%E6%95%B0%E5%85%AC%E5%BC%8F%EF%BC%88%E9%AB%98%E4%B8%AD%E5%AD%A6%E7%9A%84%EF%BC%89"><span class="toc-number">1.1.4.</span> <span class="toc-text">常用导数公式（高中学的）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-2-%E5%81%8F%E5%AF%BC%E6%95%B0"><span class="toc-number">1.2.</span> <span class="toc-text">6.2 偏导数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E5%81%8F%E5%AF%BC%E6%95%B0"><span class="toc-number">1.2.1.</span> <span class="toc-text">为什么需要偏导数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BE%E4%B8%AA%E6%A0%97%E5%AD%90"><span class="toc-number">1.2.2.</span> <span class="toc-text">举个栗子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%81%8F%E5%AF%BC%E6%95%B0%E7%9A%84%E5%87%A0%E4%BD%95%E6%84%8F%E4%B9%89"><span class="toc-number">1.2.3.</span> <span class="toc-text">偏导数的几何意义</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-3-%E6%A2%AF%E5%BA%A6"><span class="toc-number">1.3.</span> <span class="toc-text">6.3 梯度</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A2%AF%E5%BA%A6%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-number">1.3.1.</span> <span class="toc-text">梯度的定义</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-4-3-%E6%A2%AF%E5%BA%A6"><span class="toc-number">2.</span> <span class="toc-text">2.4.3 梯度</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A2%AF%E5%BA%A6%E4%B8%BA%E4%BB%80%E4%B9%88%E6%8C%87%E5%90%91%E6%9C%80%E9%99%A1%E6%96%B9%E5%90%91"><span class="toc-number">2.1.</span> <span class="toc-text">梯度为什么指向最陡方向</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D"><span class="toc-number">2.2.</span> <span class="toc-text">梯度下降</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A2%AF%E5%BA%A6%E4%B8%BA%E9%9B%B6%E7%9A%84%E7%82%B9"><span class="toc-number">2.3.</span> <span class="toc-text">梯度为零的点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8%E6%84%8F%EF%BC%9A%E6%A2%AF%E5%BA%A6%E6%98%AF%E5%B1%80%E9%83%A8%E4%BF%A1%E6%81%AF"><span class="toc-number">2.4.</span> <span class="toc-text">注意：梯度是局部信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-4-%E9%93%BE%E5%BC%8F%E6%B3%95%E5%88%99"><span class="toc-number">2.5.</span> <span class="toc-text">6.4 链式法则</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%93%BE%E5%BC%8F%E6%B3%95%E5%88%99%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">2.5.1.</span> <span class="toc-text">链式法则是什么</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%93%BE%E5%BC%8F%E6%B3%95%E5%88%99%E6%98%AF%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E7%9A%84%E6%A0%B8%E5%BF%83"><span class="toc-number">2.5.2.</span> <span class="toc-text">为什么链式法则是深度学习的核心</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E4%B8%AA%E6%89%8B%E7%AE%97%E4%BE%8B%E5%AD%90"><span class="toc-number">2.5.3.</span> <span class="toc-text">一个手算例子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%93%BE%E5%BC%8F%E6%B3%95%E5%88%99%E7%9A%84%E8%AE%A1%E7%AE%97%E5%9B%BE%E8%A7%86%E8%A7%92"><span class="toc-number">2.5.4.</span> <span class="toc-text">链式法则的计算图视角</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%93%BE%E5%BC%8F%E6%B3%95%E5%88%99%E5%9C%A8%E5%90%91%E9%87%8F%E6%83%85%E5%86%B5%E4%B8%8B%E7%9A%84%E5%BD%A2%E5%BC%8F"><span class="toc-number">2.5.5.</span> <span class="toc-text">链式法则在向量情况下的形式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%99%85%E5%86%99%E4%BB%A3%E7%A0%81%E7%9A%84%E6%97%B6%E5%80%99%E4%BD%A0%E4%B8%8D%E9%9C%80%E8%A6%81%E6%89%8B%E5%8A%A8%E7%AE%97%E9%9B%85%E5%8F%AF%E6%AF%94%EF%BC%8CPyTorch-%E7%9A%84-backward-%E5%8D%B3%E5%8F%AF%E3%80%82"><span class="toc-number">2.6.</span> <span class="toc-text">实际写代码的时候你不需要手动算雅可比，PyTorch 的 backward() 即可。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-5-%E6%8A%8A%E5%9B%9B%E4%B8%AA%E6%A6%82%E5%BF%B5%E5%85%B3%E7%B3%BB"><span class="toc-number">2.7.</span> <span class="toc-text">6.5 把四个概念关系</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-6-%E4%B8%80%E4%BA%9B%E5%AE%9E%E9%99%85%E4%BC%9A%E7%94%A8%E5%88%B0%E7%9A%84%E5%AF%BC%E6%95%B0"><span class="toc-number">2.8.</span> <span class="toc-text">6.6 一些实际会用到的导数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%AC%E8%8A%82%E5%B0%8F%E7%BB%93"><span class="toc-number">2.9.</span> <span class="toc-text">本节小结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-6-%E6%89%A9%E5%B1%95%EF%BC%9A%E5%BE%AE%E7%A7%AF%E5%88%86%E5%9C%A8%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E9%AB%98%E7%BA%A7%E5%BA%94%E7%94%A8"><span class="toc-number">2.10.</span> <span class="toc-text">6.6 扩展：微积分在深度学习中的高级应用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9B%85%E5%8F%AF%E6%AF%94%E7%9F%A9%E9%98%B5"><span class="toc-number">2.10.1.</span> <span class="toc-text">雅可比矩阵</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%B7%E6%A3%AE%E7%9F%A9%E9%98%B5"><span class="toc-number">2.10.2.</span> <span class="toc-text">海森矩阵</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E5%BE%AE%E5%88%86%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%A8%A1%E5%BC%8F"><span class="toc-number">2.10.3.</span> <span class="toc-text">自动微分的两种模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A2%AF%E5%BA%A6%E6%B6%88%E5%A4%B1%E4%B8%8E%E6%A2%AF%E5%BA%A6%E7%88%86%E7%82%B8"><span class="toc-number">2.10.4.</span> <span class="toc-text">梯度消失与梯度爆炸</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A2%AF%E5%BA%A6%E8%A3%81%E5%89%AA"><span class="toc-number">2.10.5.</span> <span class="toc-text">梯度裁剪</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E9%98%B6%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95"><span class="toc-number">2.10.6.</span> <span class="toc-text">二阶优化方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%B4%E9%9A%8F%E6%96%B9%E6%B3%95%E4%B8%8E%E7%A5%9E%E7%BB%8F%E5%B8%B8%E5%BE%AE%E5%88%86%E6%96%B9%E7%A8%8B"><span class="toc-number">2.10.7.</span> <span class="toc-text">伴随方法与神经常微分方程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9A%90%E5%87%BD%E6%95%B0%E5%AE%9A%E7%90%86%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%9D%87%E8%A1%A1%E6%A8%A1%E5%9E%8B"><span class="toc-number">2.10.8.</span> <span class="toc-text">隐函数定理与深度均衡模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%81%E5%BD%A2%E4%BC%98%E5%8C%96%E4%B8%8E%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D"><span class="toc-number">2.10.9.</span> <span class="toc-text">流形优化与梯度下降</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%98%E5%88%86%E6%96%B9%E6%B3%95%E4%B8%8E%E6%9C%80%E5%A4%A7%E6%9C%9F%E6%9C%9B"><span class="toc-number">2.10.10.</span> <span class="toc-text">变分方法与最大期望</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%83%BD%E9%87%8F%E5%9F%BA%E7%A1%80%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%BE%AE%E7%A7%AF%E5%88%86"><span class="toc-number">2.10.11.</span> <span class="toc-text">能量基础模型与微积分</span></a></li></ol></li></ol></li></ol></div></div><footer><nobr>Published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>
+<h3 id="能量基础模型与微积分"><a href="#能量基础模型与微积分" class="headerlink" title="能量基础模型与微积分"></a>能量基础模型与微积分</h3><p>Boltzmann机等能量基础模型通过能量函数 <script type="math/tex">E(x, h)</script> 描述数据分布，梯度由玻尔兹曼分布的期望给出：</p>
+<script type="math/tex; mode=display">
+\nabla \log p(x) = \langle \frac{\partial E}{\partial \theta} \rangle_{data} - \langle \frac{\partial E}{\partial \theta} \rangle_{model}</script><div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2026/09/26/deeplearn11/">← Next Matplotlib 与深度学习可视化</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/09/26/deeplearn9/">deeplearn9 Prev →</a></div></div></div><div id="comments"><div id="giscus"></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="To Top" style="opacity: 0; display: none;">∧ </a><a class="i-index" id="to-index" onClick="tocControl.change()" title="To Catalog"><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span></a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="Change Theme"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">John Doe</a></h1><div id="description"><p></p></div><div id="social-links"><a class="social" target="_blank" rel="noopener" href="https://github.com/juicer0801"><i class="fab fa-github" alt="GitHub"></i></a></div></div><div id="aside-block"><div id="toc-div"><h1>Catalog</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC-6-%E8%8A%82%EF%BC%9A%E5%BE%AE%E7%A7%AF%E5%88%86%EF%BC%8C%E6%A8%A1%E5%9E%8B%E6%80%8E%E4%B9%88%E5%AD%A6%E4%B9%A0"><span class="toc-number">1.</span> <span class="toc-text">第 6 节：微积分，模型怎么学习</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#6-1-%E5%AF%BC%E6%95%B0%E4%B8%8E%E5%BE%AE%E5%88%86"><span class="toc-number">1.1.</span> <span class="toc-text">6.1 导数与微分</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%BC%E6%95%B0%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">1.1.1.</span> <span class="toc-text">导数是什么</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BE%AE%E5%88%86%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">1.1.2.</span> <span class="toc-text">微分是什么</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-2-%E5%81%8F%E5%AF%BC%E6%95%B0"><span class="toc-number">1.2.</span> <span class="toc-text">6.2 偏导数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81%E5%81%8F%E5%AF%BC%E6%95%B0"><span class="toc-number">1.2.1.</span> <span class="toc-text">为什么需要偏导数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BE%E4%B8%AA%E6%A0%97%E5%AD%90"><span class="toc-number">1.2.2.</span> <span class="toc-text">举个栗子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%81%8F%E5%AF%BC%E6%95%B0%E7%9A%84%E5%87%A0%E4%BD%95%E6%84%8F%E4%B9%89"><span class="toc-number">1.2.3.</span> <span class="toc-text">偏导数的几何意义</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-3-%E6%A2%AF%E5%BA%A6"><span class="toc-number">1.3.</span> <span class="toc-text">6.3 梯度</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A2%AF%E5%BA%A6%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-number">1.3.1.</span> <span class="toc-text">梯度的定义</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-4-3-%E6%A2%AF%E5%BA%A6"><span class="toc-number">2.</span> <span class="toc-text">2.4.3 梯度</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A2%AF%E5%BA%A6%E4%B8%BA%E4%BB%80%E4%B9%88%E6%8C%87%E5%90%91%E6%9C%80%E9%99%A1%E6%96%B9%E5%90%91"><span class="toc-number">2.1.</span> <span class="toc-text">梯度为什么指向最陡方向</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D"><span class="toc-number">2.2.</span> <span class="toc-text">梯度下降</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%93%BE%E5%BC%8F%E6%B3%95%E5%88%99%E5%9C%A8%E5%90%91%E9%87%8F%E6%83%85%E5%86%B5%E4%B8%8B%E7%9A%84%E5%BD%A2%E5%BC%8F"><span class="toc-number">2.3.</span> <span class="toc-text">链式法则在向量情况下的形式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E9%99%85%E5%86%99%E4%BB%A3%E7%A0%81%E7%9A%84%E6%97%B6%E5%80%99%E4%BD%A0%E4%B8%8D%E9%9C%80%E8%A6%81%E6%89%8B%E5%8A%A8%E7%AE%97%E9%9B%85%E5%8F%AF%E6%AF%94%EF%BC%8CPyTorch-%E7%9A%84-backward-%E5%8D%B3%E5%8F%AF%E3%80%82"><span class="toc-number">2.4.</span> <span class="toc-text">实际写代码的时候你不需要手动算雅可比，PyTorch 的 backward() 即可。</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-5-%E6%8A%8A%E5%9B%9B%E4%B8%AA%E6%A6%82%E5%BF%B5%E5%85%B3%E7%B3%BB"><span class="toc-number">2.5.</span> <span class="toc-text">6.5 把四个概念关系</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-6-%E4%B8%80%E4%BA%9B%E5%AE%9E%E9%99%85%E4%BC%9A%E7%94%A8%E5%88%B0%E7%9A%84%E5%AF%BC%E6%95%B0"><span class="toc-number">2.6.</span> <span class="toc-text">6.6 一些实际会用到的导数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%AC%E8%8A%82%E5%B0%8F%E7%BB%93"><span class="toc-number">2.7.</span> <span class="toc-text">本节小结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-6-%E6%89%A9%E5%B1%95%EF%BC%9A%E5%BE%AE%E7%A7%AF%E5%88%86%E5%9C%A8%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E4%B8%AD%E7%9A%84%E9%AB%98%E7%BA%A7%E5%BA%94%E7%94%A8"><span class="toc-number">2.8.</span> <span class="toc-text">6.6 扩展：微积分在深度学习中的高级应用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9B%85%E5%8F%AF%E6%AF%94%E7%9F%A9%E9%98%B5"><span class="toc-number">2.8.1.</span> <span class="toc-text">雅可比矩阵</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%B7%E6%A3%AE%E7%9F%A9%E9%98%B5"><span class="toc-number">2.8.2.</span> <span class="toc-text">海森矩阵</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E5%BE%AE%E5%88%86%E7%9A%84%E4%B8%A4%E7%A7%8D%E6%A8%A1%E5%BC%8F"><span class="toc-number">2.8.3.</span> <span class="toc-text">自动微分的两种模式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A2%AF%E5%BA%A6%E6%B6%88%E5%A4%B1%E4%B8%8E%E6%A2%AF%E5%BA%A6%E7%88%86%E7%82%B8"><span class="toc-number">2.8.4.</span> <span class="toc-text">梯度消失与梯度爆炸</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A2%AF%E5%BA%A6%E8%A3%81%E5%89%AA"><span class="toc-number">2.8.5.</span> <span class="toc-text">梯度裁剪</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E9%98%B6%E4%BC%98%E5%8C%96%E6%96%B9%E6%B3%95"><span class="toc-number">2.8.6.</span> <span class="toc-text">二阶优化方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BC%B4%E9%9A%8F%E6%96%B9%E6%B3%95%E4%B8%8E%E7%A5%9E%E7%BB%8F%E5%B8%B8%E5%BE%AE%E5%88%86%E6%96%B9%E7%A8%8B"><span class="toc-number">2.8.7.</span> <span class="toc-text">伴随方法与神经常微分方程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9A%90%E5%87%BD%E6%95%B0%E5%AE%9A%E7%90%86%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%9D%87%E8%A1%A1%E6%A8%A1%E5%9E%8B"><span class="toc-number">2.8.8.</span> <span class="toc-text">隐函数定理与深度均衡模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B5%81%E5%BD%A2%E4%BC%98%E5%8C%96%E4%B8%8E%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D"><span class="toc-number">2.8.9.</span> <span class="toc-text">流形优化与梯度下降</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%98%E5%88%86%E6%96%B9%E6%B3%95%E4%B8%8E%E6%9C%80%E5%A4%A7%E6%9C%9F%E6%9C%9B"><span class="toc-number">2.8.10.</span> <span class="toc-text">变分方法与最大期望</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%83%BD%E9%87%8F%E5%9F%BA%E7%A1%80%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%BE%AE%E7%A7%AF%E5%88%86"><span class="toc-number">2.8.11.</span> <span class="toc-text">能量基础模型与微积分</span></a></li></ol></li></ol></li></ol></div></div><footer><nobr>Published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>

@@ -1,0 +1,1254 @@
+<!DOCTYPE html><html lang="en" theme-mode="auto"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>南方电网数据挖掘 | Hexo</title><meta name="description" content="第9章：时间序列预测 —— 电力负荷预测实战（超级详细教程·小白版） 🎯 目标：把你当完全的小白，逐行讲解每一句代码，让你能独立写出一个”电力负荷预测”项目 📖 阅读建议：不要急，慢慢看，每个变量都要理解清楚 📚 参考资料：《数据挖掘案例-南方电网电力负荷预测》（案例 md + 课件）、train.py、predict.py、《西瓜书》、《白话机器学习的数学》   📋 目录 什么是时间序列">
+<meta property="og:type" content="article">
+<meta property="og:title" content="南方电网数据挖掘">
+<meta property="og:url" content="http://example.com/2026/10/26/ml18/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="第9章：时间序列预测 —— 电力负荷预测实战（超级详细教程·小白版） 🎯 目标：把你当完全的小白，逐行讲解每一句代码，让你能独立写出一个”电力负荷预测”项目 📖 阅读建议：不要急，慢慢看，每个变量都要理解清楚 📚 参考资料：《数据挖掘案例-南方电网电力负荷预测》（案例 md + 课件）、train.py、predict.py、《西瓜书》、《白话机器学习的数学》   📋 目录 什么是时间序列">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-10-26T02:16:36.000Z">
+<meta property="article:modified_time" content="2026-10-27T13:19:00.450Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary"><link rel="canonical" href="http://example.com/2026/10/26/ml18/"><link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="preload" as="font" crossorigin="anonymous" href="/font/Bender.ttf"><link rel="preload" as="font" crossorigin="anonymous" href="/font/BenderLight.woff2"><link rel="preload" as="font" crossorigin="anonymous" href="/font/JetBrainsMono-Regular.woff2"><link rel="stylesheet" href="/css/arknights.css"><style>@font-face {
+  font-family: Bender;
+  src: local('Bender'), url("/font/Bender.ttf"), url("/font/Bender.otf");
+}
+@font-face {
+  font-family: BenderLight;
+  src: local('BenderLight'), url("/font/BenderLight.woff2") format('woff2');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}
+</style><meta name="page-config" content="{&quot;code_fold&quot;:null}"><script class="pjax-js">var config = {"root":"/","code_fold":15,"search":{"preload":true,"activeHolder":"Enter here","blurHolder":"Search","noResult":"Data \"$0\" not found"},"code":{"codeInfo":"$0 - $1 lines","copy":"copy"}};
+var page_config = {
+  code_fold: null
+};
+function updatePageConfig() {
+  var newPageConfig = document.querySelector('meta[name="page-config"]');
+  if (newPageConfig) {
+    page_config = JSON.parse(newPageConfig.content);
+  }
+}
+document.addEventListener('pjax:complete', function() { updatePageConfig(); });
+updatePageConfig();</script><link type="text/css" rel="stylesheet" href="/lib/encrypt/hbe.style.css"><script src="//unpkg.com/mermaid@11.12.2/dist/mermaid.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.1/MathJax.js"></script><script>MathJax.Hub.Config({
+ menuSettings: {
+   zoom: "None"
+ },
+ showMathMenu: false,
+ jax: ["input/TeX","output/CommonHTML"],
+ extensions: ["tex2jax.js"],
+ TeX: {
+   extensions: ["AMSmath.js","AMSsymbols.js"],
+   equationNumbers: {
+     autoNumber: "AMS"
+   }
+ },
+ tex2jax: {
+   inlineMath: [["\\(", "\\)"]],
+   displayMath: [["\\[", "\\]"]]
+ }
+});</script><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lightgallery.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-zoom.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-thumbnail.css"><link type="text/css" rel="stylesheet" href="/lib/fontawesome/css/all.min.css"><script>if (window.localStorage.getItem('theme-mode') === 'light' || window.matchMedia('(prefers-color-scheme:light)').matches)
+ document.documentElement.setAttribute('theme-mode', 'light')
+if (window.localStorage.getItem('theme-mode') === 'dark' || window.matchMedia('(prefers-color-scheme:dark)').matches)
+ document.documentElement.setAttribute('theme-mode', 'dark')</script><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.woff2") format('woff2');
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><style>:root {
+ --dark-background: url('https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg');
+ --light-background: url('/img/bk.jpg');
+ --theme-encrypt-confirm: 'confirm'
+}</style><script defer src="/js/arknights.js"></script><script defer src="/js/search.js"></script><script defer src="https://vercount.one/js"></script><script defer type="module">import mermaid from '//unpkg.com/mermaid@11.12.2/dist/mermaid.esm.min.mjs';
+window.mermaid = mermaid;
+code.paintMermaid();
+</script><script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.1/MathJax.js"></script><script>MathJax.Hub.Config({
+  menuSettings: {
+    zoom: "None"
+  },
+  showMathMenu: false,
+  jax: ["input/TeX","output/CommonHTML"],
+  extensions: ["tex2jax.js"],
+  TeX: {
+    extensions: ["AMSmath.js","AMSsymbols.js"],
+    equationNumbers: {
+      autoNumber: "AMS"
+    }
+  },
+  tex2jax: {
+    inlineMath: [["\\(", "\\)"]],
+    displayMath: [["\\[", "\\]"]]
+  }
+});
+</script><script async src="//unpkg.com/lightgallery@2.7.1/lightgallery.min.js"></script><script async src="//unpkg.com/lightgallery@2.7.1/plugins/zoom/lg-zoom.min.js"></script><script async src="//unpkg.com/lightgallery@2.7.1/plugins/thumbnail/lg-thumbnail.min.js"></script><script async src="/lib/encrypt/hbe.js"></script><script async src="/js/pjax.js"></script><script class="pjax-js">reset= () => {document.querySelector('.lg-container')?.remove()
+lightGallery(document.getElementById('post-bg'), {
+  plugins: [lgZoom,lgThumbnail],
+  selector: '.item-img'})}</script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js','data-pjax','.vercount','meta[name=page-config]'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);document.addEventListener('pjax:success', _ => {
+ const script = document.createElement('script');
+ script.src = 'https://vercount.one/js';
+ document.head.appendChild(script);
+});reset()})</script><script class="pjax-js">reset= () => {window.giscusSettings = {
+ repo: 'juicer0801/juicer0801.github.io',
+ repoId: 'R_kgDOUcAR_w',
+ category: 'Announcements',
+ categoryId: 'DIC_kwDOUcAR_84DIlqM',
+ mapping: 'pathname',
+ strict: '0',
+ reactionsEnabled: '1',
+ emitMetadata: '0',
+ inputPosition: 'bottom',
+ lang: 'zh-CN',
+ crossorigin: 'anonymous' , loading: 'lazy'};window.giscusThemeConfig = { theme: 'preferred_color_scheme' };MathJax.Hub.Queue(["Typeset", MathJax.Hub]);document.querySelector('.lg-container')?.remove()
+const postBg = document.querySelector('#post-bg');
+if (postBg) lightGallery(postBg, {
+  plugins: [lgZoom,lgThumbnail],
+  selector: '.item-img'})}</script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js','data-pjax','.vercount','meta[name=page-config]'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);document.addEventListener('pjax:success', _ => {
+ const script = document.createElement('script');
+ script.src = 'https://vercount.one/js';
+ document.head.appendChild(script);
+});reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/tags/"><span class="navItemTitle">Tags</span></a></li><li class="navItem"><a class="navBlock" href="/categories/"><span class="navItemTitle">Categories</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>南方电网数据挖掘</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2026-10-26T02:16:36.000Z" id="date"> 2026-10-26</time></div></span><br><span>Last Update: <div class="control"><time datetime="2026-10-27T13:19:00.450Z" id="updated"> 2026-10-27</time></div></span><br><span>Word Count: <div class="control">19.8k</div></span><br><span>Read Time: <div class="control">83 min</div></span><br><span id="vercount_container_page_pv">Page View: <span class="control" id="vercount_value_page_pv">loading...</span></span></div></div><hr><div id="post-content"><h1 id="第9章：时间序列预测-——-电力负荷预测实战（超级详细教程·小白版）"><a href="#第9章：时间序列预测-——-电力负荷预测实战（超级详细教程·小白版）" class="headerlink" title="第9章：时间序列预测 —— 电力负荷预测实战（超级详细教程·小白版）"></a>第9章：时间序列预测 —— 电力负荷预测实战（超级详细教程·小白版）</h1><blockquote>
+<p>🎯 目标：把你当完全的小白，逐行讲解每一句代码，让你能独立写出一个”电力负荷预测”项目</p>
+<p>📖 阅读建议：不要急，慢慢看，每个变量都要理解清楚</p>
+<p>📚 参考资料：《数据挖掘案例-南方电网电力负荷预测》（案例 md + 课件）、<code>train.py</code>、<code>predict.py</code>、《西瓜书》、《白话机器学习的数学》</p>
+</blockquote>
+<hr>
+<h2 id="📋-目录"><a href="#📋-目录" class="headerlink" title="📋 目录"></a>📋 目录</h2><ol>
+<li><a href="#1-什么是时间序列预测">什么是时间序列预测</a></li>
+<li><a href="#2-时间序列预测的三大门派图解">时间序列预测的三大门派（图解）</a></li>
+<li><a href="#3-数学基础滑动窗口与评价指标">数学基础：滑动窗口与评价指标</a></li>
+<li><a href="#4-项目背景南方电网电力负荷预测">项目背景：南方电网电力负荷预测</a></li>
+<li><a href="#5-项目搭建目录结构与工具类">项目搭建：目录结构与工具类</a></li>
+<li><a href="#6-数据分析eda-五板斧">数据分析：EDA 五板斧</a></li>
+<li><a href="#7-特征工程把时序变成表格核心">特征工程：把时序变成表格（核心）</a></li>
+<li><a href="#8-模型训练xgboost-回归">模型训练：XGBoost 回归</a></li>
+<li><a href="#9-模型预测滚动预测未来">模型预测：滚动预测未来</a></li>
+<li><a href="#10-完整可运行代码自包含版">完整可运行代码（自包含版）</a></li>
+<li><a href="#11-案例的改进方向">案例的改进方向</a></li>
+<li><a href="#12-总结与作业">总结与作业</a></li>
+</ol>
+<hr>
+<h2 id="1-什么是时间序列预测"><a href="#1-什么是时间序列预测" class="headerlink" title="1. 什么是时间序列预测"></a>1. 什么是时间序列预测</h2><h3 id="1-1-一句话解释"><a href="#1-1-一句话解释" class="headerlink" title="1.1 一句话解释"></a>1.1 一句话解释</h3><p><strong>时间序列（Time Series）</strong>：按时间顺序排列的一串数据。<br><strong>时间序列预测（Time Series Forecasting）</strong>：根据<strong>历史</strong>时间序列数据，预测<strong>未来</strong>值。</p>
+<blockquote>
+<p>案例 md 原文：<br>—— 时间序列预测是一种根据历史时间序列数据来预测未来值的方法。<br>—— 任务比较好理解，但预测未来并非易事。</p>
+</blockquote>
+<p>案例引用了两句名言，很有意思：</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs properties"><span class="hljs-attr">预测非常困难，特别是关于未来。——物理学家尼尔斯·波尔（Neils</span> <span class="hljs-string">Bohr）</span><br><span class="hljs-attr">我可以算准天体的运行轨迹，但算不清人性的复杂。——牛顿</span><br></code></pre></td></tr></table></figure>
+<p>电力负荷恰恰是<strong>最”友好”的时序数据</strong>：它既有规律（白天高、深夜低；工作日高、周末低），又受人行为影响（是否符合牛顿说的”人性复杂”，我们在数据分析部分见分晓）。</p>
+<h3 id="1-2-时序数据-vs-普通表格数据"><a href="#1-2-时序数据-vs-普通表格数据" class="headerlink" title="1.2 时序数据 vs 普通表格数据"></a>1.2 时序数据 vs 普通表格数据</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>对比项</th>
+<th>普通表格数据（如西瓜书数据集）</th>
+<th>时间序列数据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>样本顺序</td>
+<td>无所谓，打乱不影响</td>
+<td><strong>有严格顺序</strong>，打乱就毁了</td>
+</tr>
+<tr>
+<td>样本之间</td>
+<td>相互独立</td>
+<td><strong>当前值依赖过去的值</strong></td>
+</tr>
+<tr>
+<td>典型例子</td>
+<td>黄瓜好不好吃</td>
+<td>今天 10:00 的用电负荷</td>
+</tr>
+<tr>
+<td>预测目标</td>
+<td>已知特征的类别/数值</td>
+<td><strong>未来的某个时刻</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>💡 <strong>核心认知</strong>：普通机器学习任务里，样本是”一个物体”；时序任务里，样本是”一个时刻”。把时序问题<strong>变成</strong>表格问题，是本章最重要的思想（第 7 节揭晓）。</p>
+<h3 id="1-3-常见应用场景"><a href="#1-3-常见应用场景" class="headerlink" title="1.3 常见应用场景"></a>1.3 常见应用场景</h3><ul>
+<li>⚡ <strong>电力负荷预测</strong>：提前知道明天几点用电高峰，电厂好安排发电</li>
+<li>📈 <strong>股票/汇率预测</strong>：金融领域的圣杯（也是最难的任务之一）</li>
+<li>🌦️ <strong>天气预报</strong>：温度、降水量</li>
+<li>🛒 <strong>商品销量预测</strong>：双十一备多少货</li>
+<li>🚗 <strong>交通流量预测</strong>：几点会堵车</li>
+</ul>
+<p>本章选<strong>电力负荷预测</strong>作为实战案例：数据干净、规律明显、业务价值直白，最适合入门。</p>
+<hr>
+<h2 id="2-时间序列预测的三大门派（图解）"><a href="#2-时间序列预测的三大门派（图解）" class="headerlink" title="2. 时间序列预测的三大门派（图解）"></a>2. 时间序列预测的三大门派（图解）</h2><p>案例课件《时序预测算法选择》把算法分成三大类，我一比一还原如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">┌─────────────────────────────────────────────────────────────────┐<br>│                    时序预测算法选择                              │<br>├─────────────────┬───────────────────────┬───────────────────────┤<br>│  统计学经典方法   │     深度学习方法       │   传统机器学习方法     │<br>│                 │                       │                       │<br>│ • 简单平均        │ • RNN 类算法          │ • 线性回归             │<br>│ • 移动平均        │   （圈重点👇）         │ • 决策树               │<br>│ • 指数平滑        │ • iTransformer        │ • XGBoost（圈重点👇）  │<br>│ • AR 自回归       │   （大模型方向）       │ • LightGBM            │<br>│ • MA 移动平均     │                       │ • ……回归模型均可       │<br>│ • ARIMA⭐        │                       │                       │<br>└─────────────────┴───────────────────────┴───────────────────────┘<br></code></pre></td></tr></table></figure>
+<h3 id="2-1-第一派：统计学经典方法"><a href="#2-1-第一派：统计学经典方法" class="headerlink" title="2.1 第一派：统计学经典方法"></a>2.1 第一派：统计学经典方法</h3><p>特点：<strong>把”规律”写成显式公式</strong>，模型小、可解释性强，适合短周期、规律明显的数据。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>核心思想</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>简单平均</strong></td>
+<td>用历史所有值的平均数作为预测值</td>
+</tr>
+<tr>
+<td><strong>移动平均（MA）</strong></td>
+<td>用最近 k 个值的平均数作为预测值</td>
+</tr>
+<tr>
+<td><strong>指数平滑（SES）</strong></td>
+<td>越近的数据权重越大，权重按<strong>指数</strong>衰减（第 3 节细讲）</td>
+</tr>
+<tr>
+<td><strong>Holt 线性趋势法</strong></td>
+<td>一个水平方程 + 一个趋势方程，两者相加</td>
+</tr>
+<tr>
+<td><strong>AR（自回归）</strong></td>
+<td>今天的值 = 过去一段窗口值的线性组合</td>
+</tr>
+<tr>
+<td><strong>ARIMA</strong></td>
+<td>AR + 差分 + MA 的集大成者，统计派最经典模型</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="2-2-第二派：深度学习方法"><a href="#2-2-第二派：深度学习方法" class="headerlink" title="2.2 第二派：深度学习方法"></a>2.2 第二派：深度学习方法</h3><p>特点：<strong>让神经网络自己学规律</strong>，适合超长序列、多变量、非线性强的场景。</p>
+<ul>
+<li><strong>RNN / LSTM / GRU</strong>：天然为序列设计，有”记忆”（第 10 章会专门讲 RNN）</li>
+<li><strong>iTransformer</strong>：把大模型思路搬到时序上的新方向</li>
+</ul>
+<blockquote>
+<p>📌 案例 md 的pyramid改进方向里明确提到：”寻找更优的算法，比如 LightGBM、RNN 类、iTransformer 等算法”。</p>
+</blockquote>
+<h3 id="2-3-第三派：传统机器学习方法（本案例的选择-💪）"><a href="#2-3-第三派：传统机器学习方法（本案例的选择-💪）" class="headerlink" title="2.3 第三派：传统机器学习方法（本案例的选择 💪）"></a>2.3 第三派：传统机器学习方法（本案例的选择 💪）</h3><p>特点：<strong>回归模型都可以用</strong>！思路是——把时序数据通过特征工程”摊平”成表格，然后套用任何回归算法（线性回归、决策树、XGBoost、LightGBM……）。</p>
+<p>❓ <strong>为什么本案例选 XGBoost？</strong></p>
+<ol>
+<li>表格数据上 XGBoost 是”性价比之王”（第 6 章已经领略过）</li>
+<li>能自动捕捉特征之间的非线性关系（比如”前 1 小时负荷很高” + “现在是晚上 8 点” → 负荷会更高）</li>
+<li>不需要调太多参数就有不错的效果，训练速度也快</li>
+</ol>
+<p>💡 <strong>这就是本章的底层逻辑</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">时序预测问题 ──特征工程──&gt; 表格回归问题 ──XGBoost──&gt; 预测值<br></code></pre></td></tr></table></figure>
+<p><strong>没有新算法，只有新视角。</strong> 只要会第 3 章的回归和第 6 章的 XGBoost，你就会时序预测。</p>
+<hr>
+<h2 id="3-数学基础：滑动窗口与评价指标"><a href="#3-数学基础：滑动窗口与评价指标" class="headerlink" title="3. 数学基础：滑动窗口与评价指标"></a>3. 数学基础：滑动窗口与评价指标</h2><h3 id="3-1-最重要的概念：滑动窗口（Sliding-Window）"><a href="#3-1-最重要的概念：滑动窗口（Sliding-Window）" class="headerlink" title="3.1 最重要的概念：滑动窗口（Sliding Window）"></a>3.1 最重要的概念：滑动窗口（Sliding Window）</h3><p>假设电网负荷按小时采集，前 5 个小时的数据是：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>时刻</th>
+<th>00:00</th>
+<th>01:00</th>
+<th>02:00</th>
+<th>03:00</th>
+<th>04:00</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>负荷</td>
+<td>100</td>
+<td>120</td>
+<td>130</td>
+<td>125</td>
+<td>?</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>如果想预测 <strong>04:00</strong> 的负荷，模型能”看到”什么？——<strong>过去 3 个小时的负荷</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">时间轴：  00:00    01:00    02:00    03:00    04:00<br>负荷：    100      120      130      125       ?  ← 要预测的<br>                    └──────滑动窗口──────┘<br>                    前2小时   前1小时   └ 当前<br></code></pre></td></tr></table></figure>
+<p>那么预测 04:00 时，输入模型的特征就是：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>前1小时</th>
+<th>前2小时</th>
+<th>前3小时</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>125（03:00）</td>
+<td>130（02:00）</td>
+<td>120（01:00）</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>✅ <strong>手动验算</strong>：04:00 往前数 1 小时是 03:00（负荷 125 ✓），往前 2 小时是 02:00（130 ✓），往前 3 小时是 01:00（120 ✓）。</p>
+<p><strong>用 <code>pandas.shift()</code> 实现</strong>：<code>shift(1)</code> 把整列数据<strong>向下挪一行</strong>，于是”当前行”就看到了”上一行”的值——这正是”前 1 小时”。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">原始列 power_load:        shift(1) 后的&quot;前1小时&quot;：<br>  00:00  100                 NaN      ← 第一行没有历史，变空值<br>  01:00  120                 100      ← 01:00 看到了 00:00 的值<br>  02:00  130                 120<br>  03:00  125                 130<br>  04:00  ???                 125<br></code></pre></td></tr></table></figure>
+<p>⚠️ <strong>注意</strong>：第一行 shift 后是空值（NaN），代码里要用 <code>dropna()</code> 剔除（第 7 节会看到）。</p>
+<h3 id="3-2-时间特征：类别比数值更管用"><a href="#3-2-时间特征：类别比数值更管用" class="headerlink" title="3.2 时间特征：类别比数值更管用"></a>3.2 时间特征：类别比数值更管用</h3><p>负荷与”小时”的关系<strong>不是线性的</strong>：22 点的负荷很高，23 点骤降，凌晨 3 点最低，早上 8 点又爬升。如果直接把小时当数字（h=0,1,2,…,23）喂给模型，模型会觉得”23 点的负荷介于 22 点和 0 点之间”——完全错误！</p>
+<p>✅ <strong>解法：One-Hot 独热编码</strong>（第 5 章决策树已经讲过）。把小时拆成 24 个 0/1 列：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">时刻 08:00  →  hour_00=0, hour_01=0, ..., hour_08=1, ..., hour_23=0<br></code></pre></td></tr></table></figure>
+<p>月份同理，拆成 12 列：<code>month_01</code> 到 <code>month_12</code>。</p>
+<h3 id="3-3-昨日同时刻特征"><a href="#3-3-昨日同时刻特征" class="headerlink" title="3.3 昨日同时刻特征"></a>3.3 昨日同时刻特征</h3><p>电网负荷有极强的<strong>日周期</strong>：每天 10:00 的负荷都差不多。所以”昨天同一时刻的负荷”是最强特征之一。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">预测时刻：2024-12-20 09:00:00<br>昨日同时刻：2024-12-19 09:00:00  ← 时间减 1 天<br>昨日负荷：该时刻的真实负荷（查表得到）<br></code></pre></td></tr></table></figure>
+<h3 id="3-4-评价指标：MSE-RMSE-MAE-MAPE"><a href="#3-4-评价指标：MSE-RMSE-MAE-MAPE" class="headerlink" title="3.4 评价指标：MSE / RMSE / MAE / MAPE"></a>3.4 评价指标：MSE / RMSE / MAE / MAPE</h3><p>预测值不可能 100% 准，怎么量化”不准”？——用<strong>误差指标</strong>（第 3 章已经学过 MSE/RMSE/MAE，这里复习 + 新增 MAPE）。</p>
+<p>设真实值为 <script type="math/tex">y_i</script>，预测值为 <script type="math/tex">\hat{y}_i</script>，共 <script type="math/tex">n</script> 个样本：</p>
+<p><strong>① 均方误差 MSE</strong>：误差平方的平均（惩罚大误差）</p>
+<script type="math/tex; mode=display">
+MSE = \frac{1}{n}\sum_{i=1}^{n}(y_i - \hat{y}_i)^2</script><p><strong>② 均方根误差 RMSE</strong>：MSE 开根号（量纲回到”负荷”本身）</p>
+<script type="math/tex; mode=display">
+RMSE = \sqrt{MSE}</script><p><strong>③ 平均绝对误差 MAE</strong>：误差绝对值的平均（直觉、抗异常值）</p>
+<script type="math/tex; mode=display">
+MAE = \frac{1}{n}\sum_{i=1}^{n}|y_i - \hat{y}_i|</script><p><strong>④ 平均绝对百分比误差 MAPE</strong>：误差占真实值的比例（相对误差）</p>
+<script type="math/tex; mode=display">
+MAPE = \frac{100\%}{n}\sum_{i=1}^{n}\left|\frac{y_i - \hat{y}_i}{y_i}\right|</script><p>举个 3 个样本的<strong>手算例子</strong>：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>时刻</th>
+<th>真实值 <script type="math/tex">y</script></th>
+<th>预测值 <script type="math/tex">\hat{y}</script></th>
+<th>绝对误差</th>
+<th>平方误差</th>
+<th>相对误差</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>08:00</td>
+<td>100</td>
+<td>108</td>
+<td>8</td>
+<td>64</td>
+<td>8/100 = 8.00%</td>
+</tr>
+<tr>
+<td>09:00</td>
+<td>120</td>
+<td>115</td>
+<td>5</td>
+<td>25</td>
+<td>5/120 ≈ 4.17%</td>
+</tr>
+<tr>
+<td>10:00</td>
+<td>130</td>
+<td>123</td>
+<td>7</td>
+<td>49</td>
+<td>7/130 ≈ 5.38%</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li><strong>MAE</strong> = (8+5+7)/3 = 20/3 ≈ <strong>6.67</strong>（平均每次预测差 6.67 个负荷单位）</li>
+<li><strong>MSE</strong> = (64+25+49)/3 = 138/3 = <strong>46.00</strong></li>
+<li><strong>RMSE</strong> = √46 ≈ <strong>6.78</strong></li>
+<li><strong>MAPE</strong> = (8.00%+4.17%+5.38%)/3 ≈ <strong>5.85%</strong></li>
+</ul>
+<p>💡 <strong>项目里用哪个？</strong> 案例在训练时打印 <strong>RMSE 和 MAE</strong>，在最终预测评价时用 <strong>MAE</strong>。因为 MAE 的单位就是”负荷”（度数），业务上最好解释：”平均误差 6.67 度”。</p>
+<h3 id="3-5-指数平滑（选学，理解思想即可）"><a href="#3-5-指数平滑（选学，理解思想即可）" class="headerlink" title="3.5 指数平滑（选学，理解思想即可）"></a>3.5 指数平滑（选学，理解思想即可）</h3><p>统计派的<strong>指数平滑法</strong>：预测值 = 历史值的加权平均，<strong>权重随时间推移指数衰减</strong>——越近的数据越重要。</p>
+<script type="math/tex; mode=display">
+\hat{y}_{t+1} = \alpha \cdot y_t + (1-\alpha)\cdot \hat{y}_t</script><p>其中 <script type="math/tex">\alpha \in (0,1)</script> 是平滑系数。手算示例（<script type="math/tex">\alpha=0.5</script>）：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>t</th>
+<th>真实值 <script type="math/tex">y_t</script></th>
+<th>预测 <script type="math/tex">\hat{y}_t</script></th>
+<th>计算过程</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>100</td>
+<td>—</td>
+<td>初始：<script type="math/tex">\hat{y}_2 = y_1 = 100</script></td>
+</tr>
+<tr>
+<td>2</td>
+<td>120</td>
+<td>100</td>
+<td><script type="math/tex">\hat{y}_3 = 0.5\times120 + 0.5\times100 = 110</script></td>
+</tr>
+<tr>
+<td>3</td>
+<td>130</td>
+<td>110</td>
+<td><script type="math/tex">\hat{y}_4 = 0.5\times130 + 0.5\times110 = 120</script></td>
+</tr>
+<tr>
+<td>4</td>
+<td>?</td>
+<td><strong>120</strong></td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>✅ 手算无误。理解这个思想就够了，本案例并不会用它，我们要把所有”平滑””回归”的活儿都交给 XGBoost。</p>
+<h3 id="3-6-AR-自回归（选学）"><a href="#3-6-AR-自回归（选学）" class="headerlink" title="3.6 AR 自回归（选学）"></a>3.6 AR 自回归（选学）</h3><p><strong>AR（AutoRegression，自回归）</strong>：假设当前值是过去值的线性组合：</p>
+<script type="math/tex; mode=display">
+y_t = c + \phi_1 y_{t-1} + \phi_2 y_{t-2} + \dots + \phi_p y_{t-p}</script><p>手算示例（AR(1)，假设 <script type="math/tex">c=20, \phi_1=0.7</script>）：若 <script type="math/tex">y_{t-1} = 100</script>，则 <script type="math/tex">y_t = 20 + 0.7\times100 = 90</script>。</p>
+<blockquote>
+<p>💡 <strong>你会不会觉得 AR 和”滑动窗口”长得很像？</strong> 没错！<strong>滑动窗口 + 回归模型 ≈ 自动学习系数的 AR 模型</strong>。这就是”传统机器学习派”做时序的精髓：<strong>把 AR 的系数交给 XGBoost 去学</strong>，不用人工假设。</p>
+</blockquote>
+<hr>
+<h2 id="4-项目背景：南方电网电力负荷预测"><a href="#4-项目背景：南方电网电力负荷预测" class="headerlink" title="4. 项目背景：南方电网电力负荷预测"></a>4. 项目背景：南方电网电力负荷预测</h2><h3 id="4-1-业务需求"><a href="#4-1-业务需求" class="headerlink" title="4.1 业务需求"></a>4.1 业务需求</h3><p>南方电网需要预测<strong>未来每小时的电力负荷</strong>，用于：</p>
+<ul>
+<li>🏭 安排发电机组的启停（火电机组启停一次成本极高）</li>
+<li>⚡ 电网调度与负载均衡</li>
+<li>💰 电力交易与购电计划</li>
+</ul>
+<h3 id="4-2-数据与任务"><a href="#4-2-数据与任务" class="headerlink" title="4.2 数据与任务"></a>4.2 数据与任务</h3><ul>
+<li><strong>数据格式</strong>：只有两个字段的历史电力负荷数据</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">time, power_load<br>2015-01-01 00:00:00, 561.2<br>2015-01-01 01:00:00, 540.8<br>...<br></code></pre></td></tr></table></figure>
+<ul>
+<li><strong>任务</strong>：开发一个<strong>基于时间以及历史负荷信息</strong>、预测未来负荷的模型</li>
+<li><strong>技术栈</strong>：<code>pandas</code>、<code>matplotlib</code>、<code>sklearn</code>、<code>xgboost</code></li>
+</ul>
+<h3 id="4-3-实现方法（案例原文的思路）"><a href="#4-3-实现方法（案例原文的思路）" class="headerlink" title="4.3 实现方法（案例原文的思路）"></a>4.3 实现方法（案例原文的思路）</h3><blockquote>
+<p>将时序数据特征以及时间特征整合成特征数据，要预测的指标作为目标数据，<strong>处理成二维的结构化数据集</strong>，训练机器学习模型进行预测。</p>
+</blockquote>
+<p>翻译成大白话：<strong>把一根”时间序列”摊平成一张”二维表格”</strong>——第 7 节我们一行行实现这个过程。</p>
+<h3 id="4-4-环境准备"><a href="#4-4-环境准备" class="headerlink" title="4.4 环境准备"></a>4.4 环境准备</h3><p>xgboost 不在 sklearn 里，需要单独安装：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell">pip install xgboost==1.2.0<br>pip install schedule==1.2.2<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>💡 <code>schedule</code> 是用来做”定时预测”的第三方库（电网系统每小时自动跑一次预测），本教程先不涉及，装上备用即可。</p>
+</blockquote>
+<hr>
+<h2 id="5-项目搭建：目录结构与工具类"><a href="#5-项目搭建：目录结构与工具类" class="headerlink" title="5. 项目搭建：目录结构与工具类"></a>5. 项目搭建：目录结构与工具类</h2><h3 id="5-1-项目目录"><a href="#5-1-项目目录" class="headerlink" title="5.1 项目目录"></a>5.1 项目目录</h3><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs text">电力负荷预测项目/<br>├─ data/      保存数据源以及数据分析的图片<br>├─ log/       保存日志<br>├─ model/     保存模型文件（xgb.pkl）<br>├─ src/       项目主要的业务逻辑（train.py、predict.py）<br>└─ utils/     项目中自定义的工具包（log.py、common.py）<br></code></pre></td></tr></table></figure>
+<h3 id="5-2-日志工具类-utils-log-py"><a href="#5-2-日志工具类-utils-log-py" class="headerlink" title="5.2 日志工具类 utils/log.py"></a>5.2 日志工具类 utils/log.py</h3><p>开发时把每次运行的信息记到文件里，出 bug 才有据可查。案例中的 Logger 类核心用法是：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> logging<br><span class="hljs-keyword">import</span> os<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Logger</span>(<span class="hljs-title class_ inherited__">object</span>):<br>    ...<br></code></pre></td></tr></table></figure>
+<p>为了让你能<strong>独立复现</strong>，本教程提供一个简化版（完整功能，去掉花哨的封装）：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> logging<br><span class="hljs-keyword">import</span> os<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Logger</span>(<span class="hljs-title class_ inherited__">object</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;简化版日志工具：同时输出到控制台和文件&quot;&quot;&quot;</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, log_dir, log_name</span>):<br>        <span class="hljs-comment"># 日志文件路径：log_dir/log_name.log</span><br>        os.makedirs(log_dir, exist_ok=<span class="hljs-literal">True</span>)<br>        log_path = os.path.join(log_dir, log_name + <span class="hljs-string">&#x27;.log&#x27;</span>)<br><br>        <span class="hljs-comment"># 创建 logger</span><br>        <span class="hljs-variable language_">self</span>.logger = logging.getLogger(log_name)<br>        <span class="hljs-variable language_">self</span>.logger.setLevel(logging.DEBUG)<br><br>        <span class="hljs-comment"># 输出到文件</span><br>        fh = logging.FileHandler(log_path, encoding=<span class="hljs-string">&#x27;utf-8&#x27;</span>)<br>        fh.setLevel(logging.DEBUG)<br><br>        <span class="hljs-comment"># 输出到控制台</span><br>        ch = logging.StreamHandler()<br>        ch.setLevel(logging.INFO)<br><br>        <span class="hljs-comment"># 日志格式：时间 - 级别 - 信息</span><br>        fmt = logging.Formatter(<span class="hljs-string">&#x27;%(asctime)s - %(levelname)s - %(message)s&#x27;</span>)<br>        fh.setFormatter(fmt)<br>        ch.setFormatter(fmt)<br><br>        <span class="hljs-variable language_">self</span>.logger.addHandler(fh)<br>        <span class="hljs-variable language_">self</span>.logger.addHandler(ch)<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">get_logger</span>(<span class="hljs-params">self</span>):<br>        <span class="hljs-keyword">return</span> <span class="hljs-variable language_">self</span>.logger<br></code></pre></td></tr></table></figure>
+<p><strong>逐行解析：</strong></p>
+<ul>
+<li><code>os.makedirs(log_dir, exist_ok=True)</code>：创建日志目录，<code>exist_ok=True</code> 表示目录已存在时不报错</li>
+<li><code>logging.getLogger(log_name)</code>：创建一个”日志记录器”，用名字区分不同模块</li>
+<li><code>setLevel(logging.DEBUG)</code>：<strong>最低记录级别</strong>设为 DEBUG（所有级别的信息都要）</li>
+<li><code>FileHandler</code>：把日志写进文件；<code>StreamHandler</code>：把日志打印到屏幕</li>
+<li><code>Formatter(&#39;%(asctime)s - %(levelname)s - %(message)s&#39;)</code>：格式为 <code>2024-11-26 15:38:26,898 - INFO - 开始训练</code></li>
+</ul>
+<blockquote>
+<p>⚠️ 日志级别从低到高：<code>DEBUG &lt; INFO &lt; WARNING &lt; ERROR</code>。控制台设为 INFO，表示调试信息（DEBUG）只写文件、不刷屏。</p>
+</blockquote>
+<h3 id="5-3-数据加载工具-utils-common-py"><a href="#5-3-数据加载工具-utils-common-py" class="headerlink" title="5.3 数据加载工具 utils/common.py"></a>5.3 数据加载工具 utils/common.py</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">data_preprocessing</span>(<span class="hljs-params">filename</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;读取 CSV，返回整理好的 DataFrame&quot;&quot;&quot;</span><br>    data = pd.read_csv(filename)<br>    <span class="hljs-keyword">return</span> data<br></code></pre></td></tr></table></figure>
+<p><strong>逐行解析：</strong></p>
+<ul>
+<li><code>pd.read_csv(filename)</code>：把 CSV 读成 DataFrame</li>
+<li>返回的 <code>data</code> 有两列：<code>time</code>（字符串格式的时间）和 <code>power_load</code>（负荷）</li>
+</ul>
+<blockquote>
+<p>💡 为什么要包一层函数而不直接 <code>pd.read_csv</code>？因为真实项目里这里还会做<strong>列名统一、类型转换、排序、缺失值处理</strong>等通用操作。教程保持最简，明白这个”分层”思想即可。</p>
+</blockquote>
+<hr>
+<h2 id="6-数据分析：EDA-五板斧"><a href="#6-数据分析：EDA-五板斧" class="headerlink" title="6. 数据分析：EDA 五板斧"></a>6. 数据分析：EDA 五板斧</h2><h3 id="6-1-拿到数据的第一件事：先”看”，别急着建模"><a href="#6-1-拿到数据的第一件事：先”看”，别急着建模" class="headerlink" title="6.1 拿到数据的第一件事：先”看”，别急着建模"></a>6.1 拿到数据的第一件事：先”看”，别急着建模</h3><p>新手最容易犯的错误：数据一拿到手，立马 <code>model.fit()</code>。这就像还没摸清敌情就冲锋——模型训练得再快，也是在”瞎猜”。</p>
+<p>正确姿势是先做 <strong>EDA（Exploratory Data Analysis，探索性数据分析）</strong>：用几张图把数据的脾气摸清楚。<code>train.py</code> 里的 <code>ana_data()</code> 函数干了 5 件事，我给它起个外号叫”<strong>EDA 五板斧</strong>“：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>板斧</th>
+<th>做什么</th>
+<th>回答的业务问题</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>第一斧</td>
+<td>看数据整体情况</td>
+<td>数据有多少行？列叫什么？有没有缺失？</td>
+</tr>
+<tr>
+<td>第二斧</td>
+<td>画负荷分布直方图</td>
+<td>负荷大体在什么范围？最常见的负荷是多少？</td>
+</tr>
+<tr>
+<td>第三斧</td>
+<td>画各小时平均负荷</td>
+<td>一天 24 小时，用电怎么变化？（峰谷在哪？）</td>
+</tr>
+<tr>
+<td>第四斧</td>
+<td>画各月份平均负荷</td>
+<td>一年 12 个月，用电怎么变化？（夏冬空调？）</td>
+</tr>
+<tr>
+<td>第五斧</td>
+<td>对比工作日与周末</td>
+<td>上班和休息，用电有区别吗？</td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p>📌 为什么第 3、4、5 斧很重要？因为它们揭示了数据的<strong>周期性</strong>：一天一个小周期，一年一个大周期。这正是后面特征工程要”手工提取”的东西——先把规律”看”出来，才知道该造什么特征。</p>
+</blockquote>
+<h3 id="6-2-完整代码（复刻-train-py-的-ana-data）"><a href="#6-2-完整代码（复刻-train-py-的-ana-data）" class="headerlink" title="6.2 完整代码（复刻 train.py 的 ana_data）"></a>6.2 完整代码（复刻 train.py 的 ana_data）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">ana_data</span>(<span class="hljs-params">data</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    1.查看数据整体情况</span><br><span class="hljs-string">    2.负荷整体的分布情况</span><br><span class="hljs-string">    3.各个小时的平均负荷趋势，看一下负荷在一天中的变化情况</span><br><span class="hljs-string">    4.各个月份的平均负荷趋势，看一下负荷在一年中的变化情况</span><br><span class="hljs-string">    5.工作日与周末的平均负荷情况，看一下工作日的负荷与周末的负荷是否有区别</span><br><span class="hljs-string">    :param data: 数据源</span><br><span class="hljs-string">    :return:</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    data = data.copy(deep=<span class="hljs-literal">True</span>)<br>    <span class="hljs-comment"># 1.数据整体情况</span><br>    <span class="hljs-built_in">print</span>(data.info())<br>    <span class="hljs-built_in">print</span>(data.head())<br>    fig = plt.figure(figsize=(<span class="hljs-number">20</span>, <span class="hljs-number">32</span>))<br>    <span class="hljs-comment"># 2.负荷整体的分布情况</span><br>    ax1 = fig.add_subplot(<span class="hljs-number">411</span>)<br>    ax1.hist(data[<span class="hljs-string">&#x27;power_load&#x27;</span>], bins=<span class="hljs-number">100</span>)<br>    ax1.set_title(<span class="hljs-string">&#x27;负荷分布直方图&#x27;</span>)<br>    <span class="hljs-comment"># 3.各个小时的平均负荷趋势，看一下负荷在一天中的变化情况</span><br>    ax2 = fig.add_subplot(<span class="hljs-number">412</span>)<br>    data[<span class="hljs-string">&#x27;hour&#x27;</span>] = data[<span class="hljs-string">&#x27;time&#x27;</span>].<span class="hljs-built_in">str</span>[<span class="hljs-number">11</span>:<span class="hljs-number">13</span>]<br>    data_hour_avg = data.groupby(by=<span class="hljs-string">&#x27;hour&#x27;</span>, as_index=<span class="hljs-literal">False</span>)[<span class="hljs-string">&#x27;power_load&#x27;</span>].mean()<br>    ax2.plot(data_hour_avg[<span class="hljs-string">&#x27;hour&#x27;</span>], data_hour_avg[<span class="hljs-string">&#x27;power_load&#x27;</span>], color=<span class="hljs-string">&#x27;b&#x27;</span>, linewidth=<span class="hljs-number">2</span>)<br>    ax2.set_title(<span class="hljs-string">&#x27;各小时的平均负荷趋势图&#x27;</span>)<br>    ax2.set_xlabel(<span class="hljs-string">&#x27;小时&#x27;</span>)<br>    ax2.set_ylabel(<span class="hljs-string">&#x27;负荷&#x27;</span>)<br>    <span class="hljs-comment"># 4.各个月份的平均负荷趋势，看一下负荷在一年中的变化情况</span><br>    ax3 = fig.add_subplot(<span class="hljs-number">413</span>)<br>    data[<span class="hljs-string">&#x27;month&#x27;</span>] = data[<span class="hljs-string">&#x27;time&#x27;</span>].<span class="hljs-built_in">str</span>[<span class="hljs-number">5</span>:<span class="hljs-number">7</span>]<br>    data_month_avg = data.groupby(<span class="hljs-string">&#x27;month&#x27;</span>, as_index=<span class="hljs-literal">False</span>)[<span class="hljs-string">&#x27;power_load&#x27;</span>].mean()<br>    ax3.plot(data_month_avg[<span class="hljs-string">&#x27;month&#x27;</span>], data_month_avg[<span class="hljs-string">&#x27;power_load&#x27;</span>], color=<span class="hljs-string">&#x27;r&#x27;</span>, linewidth=<span class="hljs-number">2</span>)<br>    ax3.set_title(<span class="hljs-string">&#x27;各月份平均负荷&#x27;</span>)<br>    ax3.set_xlabel(<span class="hljs-string">&#x27;月份&#x27;</span>)<br>    ax3.set_ylabel(<span class="hljs-string">&#x27;平均负荷&#x27;</span>)<br>    <span class="hljs-comment"># 5.工作日与周末的平均负荷情况，看一下工作日的负荷与周末的负荷是否有区别</span><br>    ax4 = fig.add_subplot(<span class="hljs-number">414</span>)<br>    data[<span class="hljs-string">&#x27;week_day&#x27;</span>] = data[<span class="hljs-string">&#x27;time&#x27;</span>].apply(<span class="hljs-keyword">lambda</span> x: pd.to_datetime(x).weekday())<br>    data[<span class="hljs-string">&#x27;is_workday&#x27;</span>] = data[<span class="hljs-string">&#x27;week_day&#x27;</span>].apply(<span class="hljs-keyword">lambda</span> x: <span class="hljs-number">1</span> <span class="hljs-keyword">if</span> x &lt;= <span class="hljs-number">4</span> <span class="hljs-keyword">else</span> <span class="hljs-number">0</span>)<br>    power_load_workday_avg = data[data[<span class="hljs-string">&#x27;is_workday&#x27;</span>] == <span class="hljs-number">1</span>][<span class="hljs-string">&#x27;power_load&#x27;</span>].mean()<br>    power_load_holiday_avg = data[data[<span class="hljs-string">&#x27;is_workday&#x27;</span>] == <span class="hljs-number">0</span>][<span class="hljs-string">&#x27;power_load&#x27;</span>].mean()<br>    ax4.bar(x=[<span class="hljs-string">&#x27;工作日平均负荷&#x27;</span>, <span class="hljs-string">&#x27;周末平均负荷&#x27;</span>], height=[power_load_workday_avg, power_load_holiday_avg])<br>    ax4.set_ylabel(<span class="hljs-string">&#x27;平均负荷&#x27;</span>)<br>    ax4.set_title(<span class="hljs-string">&#x27;工作日与周末的平均负荷对比&#x27;</span>)<br>    plt.savefig(<span class="hljs-string">&#x27;../data/fig/负荷分析图.png&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<h3 id="6-3-逐行解析"><a href="#6-3-逐行解析" class="headerlink" title="6.3 逐行解析"></a>6.3 逐行解析</h3><p><strong>第 1 行：<code>data = data.copy(deep=True)</code></strong></p>
+<ul>
+<li><code>copy(deep=True)</code>：复制一份数据，后续的修改不影响原始数据</li>
+<li>💡 为什么需要它？因为这个函数里要给 <code>data</code> 新增 <code>hour</code>、<code>month</code>、<code>week_day</code> 等列。如果不复制，原始 DataFrame 就被”污染”了，后面特征工程会受影响</li>
+</ul>
+<p><strong>第 2~3 行：<code>print(data.info())</code> / <code>print(data.head())</code></strong></p>
+<ul>
+<li><code>info()</code>：打印数据的”体检报告”——多少行、多少列、每列的数据类型、有没有缺失值</li>
+<li><code>head()</code>：打印前 5 行，让你直观看数据长什么样</li>
+<li>⚠️ <code>info()</code> 的输出类似 <code>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;</code> 加一堆列信息。看到 <code>Non-Null Count</code> 全等于总行数，说明没缺数据</li>
+</ul>
+<p><strong>画布：<code>fig = plt.figure(figsize=(20, 32))</code></strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">fig（20 × 32 英寸，竖长一条）<br>┌────────────────────────────────────┐<br>│  411  ax1：负荷分布直方图           │<br>├────────────────────────────────────┤<br>│  412  ax2：各小时平均负荷趋势图     │<br>├────────────────────────────────────┤<br>│  413  ax3：各月份平均负荷           │<br>├────────────────────────────────────┤<br>│  414  ax4：工作日与周末平均负荷对比  │<br>└────────────────────────────────────┘<br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>figsize=(20, 32)</code>：画布宽 20 英寸、高 32 英寸。为什么要这么高？因为要塞 4 张子图，每张分到 8 英寸</li>
+<li><code>fig.add_subplot(411)</code>：那个三位数是”密码”，读法是 <strong>行数-列数-第几个</strong>：<ul>
+<li><code>411</code> = 4 行 1 列布局中的第 <strong>1</strong> 个</li>
+<li><code>412</code> = 第 <strong>2</strong> 个……以此类推</li>
+</ul>
+</li>
+<li>💡 如果你只画一张图，可以简写 <code>add_subplot(111)</code>，意思就是”1 行 1 列第 1 个”</li>
+</ul>
+<p><strong>第二斧：<code>ax1.hist(data[&#39;power_load&#39;], bins=100)</code></strong></p>
+<ul>
+<li><code>hist</code>：直方图。把负荷的最小值到最大值之间<strong>等分成 100 个桶</strong>（bins=100），每个桶的高度 = 落进这个桶的样本数</li>
+<li>图解：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">负荷范围  [─────┬────┬────┬────┬─────]  等分成 100 个桶<br>          桶1  桶2  桶3  桶4  ...<br>            █<br>            █   █<br>            █   █   █        ← 桶越高，说明这个负荷值越常出现<br>            █   █   █   █<br>          ─────────────────  负荷值<br></code></pre></td></tr></table></figure>
+<ul>
+<li>它回答的问题是：”电网平时到底扛着多重的负荷？”如果直方图集中在低区间、拖着长尾，说明电网大多数时候轻载、偶尔高峰</li>
+</ul>
+<p><strong>第三斧（核心技巧）：先取小时，再分组求平均</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">data[<span class="hljs-string">&#x27;hour&#x27;</span>] = data[<span class="hljs-string">&#x27;time&#x27;</span>].<span class="hljs-built_in">str</span>[<span class="hljs-number">11</span>:<span class="hljs-number">13</span>]<br>data_hour_avg = data.groupby(by=<span class="hljs-string">&#x27;hour&#x27;</span>, as_index=<span class="hljs-literal">False</span>)[<span class="hljs-string">&#x27;power_load&#x27;</span>].mean()<br></code></pre></td></tr></table></figure>
+<p>第一句是<strong>字符串切片</strong>。时间字符串长这样：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">&quot;2015-08-01 14:00:00&quot;<br> 0123456789...<br>位置：  0-3 是年，5-6 是月，8-9 是日，11-12 是时，14-15 是分，17-18 是秒<br></code></pre></td></tr></table></figure>
+<p>所以：</p>
+<ul>
+<li><code>time[11:13]</code> → <code>&quot;14&quot;</code>（小时）</li>
+<li><code>time[5:7]</code> → <code>&quot;08&quot;</code>（月份）</li>
+<li>💡 字符串切片的坐标是”左闭右开”：<code>[11:13]</code> 取第 11、12 两个字符（从 0 开始数），正好是小时那两位</li>
+</ul>
+<p>第二句 <code>groupby</code> 是”<strong>分组聚合</strong>“，图解如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">原始数据（几千行）：<br>time                  power_load   hour<br>2015-01-01 00:00:00   800          &#x27;00&#x27;  ┐<br>2015-01-02 00:00:00   810          &#x27;00&#x27;  ├─ hour=&#x27;00&#x27; 的所有行 → 平均 ≈ 805<br>2015-01-03 00:00:00   790          &#x27;00&#x27;  ┘<br>2015-01-01 01:00:00   750          &#x27;01&#x27;  ┐<br>2015-01-02 01:00:00   760          &#x27;01&#x27;  ├─ hour=&#x27;01&#x27; 的所有行 → 平均 ≈ 755<br>...                                          ...<br>2015-01-01 23:00:00   900          &#x27;23&#x27;  ─ hour=&#x27;23&#x27; 的所有行 → 平均<br></code></pre></td></tr></table></figure>
+<p>最终 <code>data_hour_avg</code> 只有 <strong>24 行</strong>（hour=’00’ 到 ‘23’），每行一个平均负荷，画成折线就是”一天的平均用电曲线”。</p>
+<ul>
+<li><code>as_index=False</code>：让 <code>hour</code> 作为<strong>普通列</strong>而不是索引。好处是后面 <code>ax2.plot(data_hour_avg[&#39;hour&#39;], ...)</code> 写起来直观</li>
+<li>💡 这就是 StatQuest 里说的”<strong>Group By + Aggregate</strong>“：先按某列分组，每组求一个统计量（这里是 mean）</li>
+</ul>
+<p><strong>第四斧：和第三斧完全同构，只是换了维度</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">data[<span class="hljs-string">&#x27;month&#x27;</span>] = data[<span class="hljs-string">&#x27;time&#x27;</span>].<span class="hljs-built_in">str</span>[<span class="hljs-number">5</span>:<span class="hljs-number">7</span>]<br>data_month_avg = data.groupby(<span class="hljs-string">&#x27;month&#x27;</span>, as_index=<span class="hljs-literal">False</span>)[<span class="hljs-string">&#x27;power_load&#x27;</span>].mean()<br></code></pre></td></tr></table></figure>
+<p>按月份分组求平均。因为数据按小时连续采集，每个月都有几百上千行，求平均后得到 12 个点，看”季节趋势”。</p>
+<p><strong>第五斧：工作日 vs 周末</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">data[<span class="hljs-string">&#x27;week_day&#x27;</span>] = data[<span class="hljs-string">&#x27;time&#x27;</span>].apply(<span class="hljs-keyword">lambda</span> x: pd.to_datetime(x).weekday())<br>data[<span class="hljs-string">&#x27;is_workday&#x27;</span>] = data[<span class="hljs-string">&#x27;week_day&#x27;</span>].apply(<span class="hljs-keyword">lambda</span> x: <span class="hljs-number">1</span> <span class="hljs-keyword">if</span> x &lt;= <span class="hljs-number">4</span> <span class="hljs-keyword">else</span> <span class="hljs-number">0</span>)<br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>pd.to_datetime(x)</code>：把字符串 <code>&quot;2015-08-01&quot;</code> 转成 pandas 能理解的<strong>日期对象</strong></li>
+<li><code>.weekday()</code>：返回星期几，<strong>周一 = 0，周二 = 1，……，周日 = 6</strong></li>
+<li>所以 <code>x &lt;= 4</code> 就是周一到周五（工作日），<code>x &gt; 4</code> 就是周六周日</li>
+<li><code>apply(lambda ...)</code>：对这一列的<strong>每个元素</strong>套用这个小函数</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">week_day=0 (周一) ┐<br>week_day=1 (周二) │<br>week_day=2 (周三) ├─→ is_workday = 1（工作日）<br>week_day=3 (周四) │<br>week_day=4 (周五) ┘<br>week_day=5 (周六) ┐<br>week_day=6 (周日) ┘─→ is_workday = 0（周末）<br></code></pre></td></tr></table></figure>
+<p>然后：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">power_load_workday_avg = data[data[<span class="hljs-string">&#x27;is_workday&#x27;</span>] == <span class="hljs-number">1</span>][<span class="hljs-string">&#x27;power_load&#x27;</span>].mean()<br>power_load_holiday_avg = data[data[<span class="hljs-string">&#x27;is_workday&#x27;</span>] == <span class="hljs-number">0</span>][<span class="hljs-string">&#x27;power_load&#x27;</span>].mean()<br></code></pre></td></tr></table></figure>
+<ul>
+<li>这叫”<strong>布尔索引</strong>“：<code>data[&#39;is_workday&#39;] == 1</code> 产生一列 True/False，用它筛行</li>
+<li>对筛选后的 <code>power_load</code> 列求平均 <code>mean()</code>，得到两个数</li>
+<li>最后用 <code>ax4.bar(x=[...], height=[...])</code> 画<strong>两根柱子</strong>对比</li>
+</ul>
+<p><strong>最后一行：<code>plt.savefig(&#39;../data/fig/负荷分析图.png&#39;)</code></strong></p>
+<ul>
+<li>把 4 张子图保存成一张长图</li>
+<li>⚠️ 注意：<code>../data/fig/</code> 这个目录必须<strong>提前存在</strong>，否则会报 <code>FileNotFoundError</code>。案例的项目结构（第 5.1 节）里已经建好了 <code>data/fig/</code> 目录</li>
+</ul>
+<blockquote>
+<p>📌 <strong>本节小结</strong>：EDA 五板斧的本质是——<strong>用统计和图形回答业务问题</strong>。看到”小时曲线有早高峰晚高峰、月份曲线夏冬高春秋低、工作日高于周末”，你就知道了：这个数据有<strong>双重周期</strong>（日周期 + 年周期）和<strong>工作日效应</strong>。下一节，我们就把这三种规律手工编码成特征。</p>
+</blockquote>
+<hr>
+<h2 id="7-特征工程：把时序变成表格（核心）"><a href="#7-特征工程：把时序变成表格（核心）" class="headerlink" title="7. 特征工程：把时序变成表格（核心）"></a>7. 特征工程：把时序变成表格（核心）</h2><h3 id="7-1-全章最重要的一张图"><a href="#7-1-全章最重要的一张图" class="headerlink" title="7.1 全章最重要的一张图"></a>7.1 全章最重要的一张图</h3><p>这一节是整个案例的<strong>灵魂</strong>。核心思想一句话：</p>
+<blockquote>
+<p><strong>把”时序预测”问题，改造成”表格回归”问题。</strong></p>
+</blockquote>
+<p>改造一旦完成，你第 6 章学的 XGBoost 就能直接上场——时序模型？不需要的，XGBoost 也能干。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">            时序数据                            表格数据（一行 = 一个样本）<br>┌──────────────────────┐    特征工程     ┌──────────────────────────────────┬────────┐<br>│ time       power_load│   ==========&gt;   │ hour_00 hour_14 ... 前1h 昨日    │ 负荷 y │<br>│ 01-01 00   800       │                 │   1       0    ...  790   NaN    │  810   │<br>│ 01-01 01   810       │                 │   0       0    ...  800   NaN    │  815   │<br>│ ...                  │                 │   ...                            │  ...   │<br>└──────────────────────┘                 └──────────────────────────────────┴────────┘<br>        按时间排成一列                        每行 40 个特征 + 1 个标签<br></code></pre></td></tr></table></figure>
+<p><strong>三板斧造特征：</strong></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>板斧</th>
+<th>造什么</th>
+<th>维度</th>
+<th>依据</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>第一斧</td>
+<td>小时 one-hot 编码</td>
+<td>24 维</td>
+<td>日周期</td>
+</tr>
+<tr>
+<td>第二斧</td>
+<td>月份 one-hot 编码</td>
+<td>12 维</td>
+<td>年周期</td>
+</tr>
+<tr>
+<td>第三斧</td>
+<td>前 1/2/3 小时负荷</td>
+<td>3 维</td>
+<td>短期惯性</td>
+</tr>
+<tr>
+<td>第四斧</td>
+<td>昨日同时刻负荷</td>
+<td>1 维</td>
+<td>日周期相似性</td>
+</tr>
+<tr>
+<td></td>
+<td><strong>合计</strong></td>
+<td><strong>40 维</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="7-2-完整代码（复刻-train-py-的-feature-engineering）"><a href="#7-2-完整代码（复刻-train-py-的-feature-engineering）" class="headerlink" title="7.2 完整代码（复刻 train.py 的 feature_engineering）"></a>7.2 完整代码（复刻 train.py 的 feature_engineering）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">feature_engineering</span>(<span class="hljs-params">data, logger</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    对给定的数据源，进行特征工程处理，提取出关键的特征</span><br><span class="hljs-string">    1.提取出时间特征：月份、小时</span><br><span class="hljs-string">    2.提取出相近时间窗口中的负荷特征：step大小窗口的负荷</span><br><span class="hljs-string">    3.提取昨日同时刻负荷特征</span><br><span class="hljs-string">    4.剔除出现空值的样本</span><br><span class="hljs-string">    5.整理时间特征，并返回</span><br><span class="hljs-string">    :param data: 数据源</span><br><span class="hljs-string">    :param logger: 日志</span><br><span class="hljs-string">    :return:</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    logger.info(<span class="hljs-string">&quot;===============开始进行特征工程处理===============&quot;</span>)<br>    result = data.copy(deep=<span class="hljs-literal">True</span>)<br>    logger.info(<span class="hljs-string">&quot;===============开始提取时间特征===================&quot;</span>)<br>    <span class="hljs-comment"># 1、提取出时间特征</span><br>    <span class="hljs-comment"># 1.1提取出对应的小时，用以表示短期的时间特征</span><br>    result[<span class="hljs-string">&#x27;hour&#x27;</span>] = result[<span class="hljs-string">&#x27;time&#x27;</span>].<span class="hljs-built_in">str</span>[<span class="hljs-number">11</span>:<span class="hljs-number">13</span>]<br>    <span class="hljs-comment"># 1.2提取出对应的月份，用以表示长期的时间特征</span><br>    result[<span class="hljs-string">&#x27;month&#x27;</span>] = result[<span class="hljs-string">&#x27;time&#x27;</span>].<span class="hljs-built_in">str</span>[<span class="hljs-number">5</span>:<span class="hljs-number">7</span>]<br>    <span class="hljs-comment"># 1.3 对时间特征进行one-hot编码</span><br>    <span class="hljs-comment"># 1.3.1对小时数进行one-hot编码</span><br>    hour_encoding = pd.get_dummies(result[<span class="hljs-string">&#x27;hour&#x27;</span>])<br>    hour_encoding.columns = [<span class="hljs-string">&#x27;hour_&#x27;</span> + <span class="hljs-built_in">str</span>(i) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> hour_encoding.columns]<br>    <span class="hljs-comment"># 1.3.2对月份进行one-hot编码</span><br>    month_encoding = pd.get_dummies(result[<span class="hljs-string">&#x27;month&#x27;</span>])<br>    month_encoding.columns = [<span class="hljs-string">&#x27;month_&#x27;</span> + <span class="hljs-built_in">str</span>(i) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> month_encoding.columns]<br>    <span class="hljs-comment"># 1.3.3 对one-hot编码后的结果进行拼接</span><br>    result = pd.concat([result, hour_encoding, month_encoding], axis=<span class="hljs-number">1</span>)<br><br>    logger.info(<span class="hljs-string">&quot;==============开始提取相近时间窗口中的负荷特征====================&quot;</span>)<br>    <span class="hljs-comment"># 2指定window_size下的相近时间窗口负荷</span><br>    window_size = <span class="hljs-number">3</span><br>    shift_list = [result[<span class="hljs-string">&#x27;power_load&#x27;</span>].shift(i) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, window_size + <span class="hljs-number">1</span>)]<br>    shift_data = pd.concat(shift_list, axis=<span class="hljs-number">1</span>)<br>    shift_data.columns = [<span class="hljs-string">&#x27;前&#x27;</span> + <span class="hljs-built_in">str</span>(i) + <span class="hljs-string">&#x27;小时&#x27;</span> <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, window_size + <span class="hljs-number">1</span>)]<br>    result = pd.concat([result, shift_data], axis=<span class="hljs-number">1</span>)<br>    logger.info(<span class="hljs-string">&quot;============开始提取昨日同时刻负荷特征===========================&quot;</span>)<br>    <span class="hljs-comment"># 3提取昨日同时刻负荷特征</span><br>    <span class="hljs-comment"># 3.1时间与负荷转为字典</span><br>    time_load_dict = result.set_index(<span class="hljs-string">&#x27;time&#x27;</span>)[<span class="hljs-string">&#x27;power_load&#x27;</span>].to_dict()<br>    <span class="hljs-comment"># 3.2计算昨日相同的时刻</span><br>    result[<span class="hljs-string">&#x27;yesterday_time&#x27;</span>] = result[<span class="hljs-string">&#x27;time&#x27;</span>].apply(<br>        <span class="hljs-keyword">lambda</span> x: (pd.to_datetime(x) - pd.to_timedelta(<span class="hljs-string">&#x27;1d&#x27;</span>)).strftime(<span class="hljs-string">&#x27;%Y-%m-%d %H:%M:%S&#x27;</span>))<br>    <span class="hljs-comment"># 3.3昨日相同的时刻的负荷</span><br>    result[<span class="hljs-string">&#x27;yesterday_load&#x27;</span>] = result[<span class="hljs-string">&#x27;yesterday_time&#x27;</span>].apply(<span class="hljs-keyword">lambda</span> x: time_load_dict.get(x))<br>    <span class="hljs-comment"># 4.剔除出现空值的样本</span><br>    result.dropna(axis=<span class="hljs-number">0</span>, inplace=<span class="hljs-literal">True</span>)<br>    <span class="hljs-comment"># 5.整理特征列，并返回</span><br>    time_feature_names = <span class="hljs-built_in">list</span>(hour_encoding.columns) + <span class="hljs-built_in">list</span>(month_encoding.columns) + <span class="hljs-built_in">list</span>(shift_data.columns) + [<br>        <span class="hljs-string">&#x27;yesterday_load&#x27;</span>]<br>    logger.info(<span class="hljs-string">f&quot;特征列名是：<span class="hljs-subst">&#123;time_feature_names&#125;</span>&quot;</span>)<br>    <span class="hljs-keyword">return</span> result, time_feature_names<br></code></pre></td></tr></table></figure>
+<h3 id="7-3-逐行解析：时间特征-one-hot"><a href="#7-3-逐行解析：时间特征-one-hot" class="headerlink" title="7.3 逐行解析：时间特征 + one-hot"></a>7.3 逐行解析：时间特征 + one-hot</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">result[<span class="hljs-string">&#x27;hour&#x27;</span>] = result[<span class="hljs-string">&#x27;time&#x27;</span>].<span class="hljs-built_in">str</span>[<span class="hljs-number">11</span>:<span class="hljs-number">13</span>]   <span class="hljs-comment"># &quot;2015-08-01 14:00:00&quot; → &quot;14&quot;</span><br>result[<span class="hljs-string">&#x27;month&#x27;</span>] = result[<span class="hljs-string">&#x27;time&#x27;</span>].<span class="hljs-built_in">str</span>[<span class="hljs-number">5</span>:<span class="hljs-number">7</span>]    <span class="hljs-comment"># &quot;2015-08-01 14:00:00&quot; → &quot;08&quot;</span><br></code></pre></td></tr></table></figure>
+<p>这两行是第 6.3 节讲过的字符串切片，这里”正式”提取成两列。</p>
+<p><strong>为什么不能直接把 <code>hour = 14</code> 这个数字喂给模型？</strong> 因为数字会让模型以为”小时”是<strong>连续的、有大小关系的</strong>：23 点和 0 点在数字上差了 23，但在现实中它们是<strong>相邻的</strong>！凌晨 0 点往往和深夜 23 点一样是低负荷。</p>
+<p>解决办法：<strong>one-hot 编码</strong>（独热编码）。把 1 个特征拆成 24 个特征，每个特征只有 0 和 1：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">hour = &quot;14&quot;  →  hour_00=0, hour_01=0, ..., hour_14=1, ..., hour_23=0<br>                    └─────────────── 24 个特征，只有一个是 1 ───────────────┘<br></code></pre></td></tr></table></figure>
+<p>代码：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">hour_encoding = pd.get_dummies(result[<span class="hljs-string">&#x27;hour&#x27;</span>])<br>hour_encoding.columns = [<span class="hljs-string">&#x27;hour_&#x27;</span> + <span class="hljs-built_in">str</span>(i) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> hour_encoding.columns]<br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>pd.get_dummies(...)</code>：自动做 one-hot。输入一列”类别”，输出一个”类别 × 0/1”的 DataFrame</li>
+<li><code>get_dummies</code> 生成的列名默认就是类别值本身（比如 <code>&#39;14&#39;</code>），所以在后面<strong>手动加前缀</strong>变成 <code>hour_14</code>——为了和 predict.py 里的特征名保持一致（第 9 节会看到，预测时的特征名是硬编码的）</li>
+<li>月份同理，拆成 <code>month_01</code> ~ <code>month_12</code> 共 12 列</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">result = pd.concat([result, hour_encoding, month_encoding], axis=<span class="hljs-number">1</span>)<br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>pd.concat(..., axis=1)</code>：把几张表<strong>左右拼接</strong>（<code>axis=1</code> 表示按列方向）</li>
+<li>💡 <code>axis</code> 的记法：<code>axis=0</code> 是”往下”拼接（行变多），<code>axis=1</code> 是”往右”拼接（列变多）</li>
+</ul>
+<h3 id="7-4-逐行解析：滑动窗口（shift）"><a href="#7-4-逐行解析：滑动窗口（shift）" class="headerlink" title="7.4 逐行解析：滑动窗口（shift）"></a>7.4 逐行解析：滑动窗口（shift）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">window_size = <span class="hljs-number">3</span><br>shift_list = [result[<span class="hljs-string">&#x27;power_load&#x27;</span>].shift(i) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, window_size + <span class="hljs-number">1</span>)]<br>shift_data = pd.concat(shift_list, axis=<span class="hljs-number">1</span>)<br>shift_data.columns = [<span class="hljs-string">&#x27;前&#x27;</span> + <span class="hljs-built_in">str</span>(i) + <span class="hljs-string">&#x27;小时&#x27;</span> <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, window_size + <span class="hljs-number">1</span>)]<br>result = pd.concat([result, shift_data], axis=<span class="hljs-number">1</span>)<br></code></pre></td></tr></table></figure>
+<p><strong><code>shift(i)</code> 是时序工程的灵魂操作</strong>：把整列数据<strong>往下挪 i 行</strong>。往下挪之后，第 t 行位置上放的，就是 t−i 时刻的值。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">时刻    power_load   shift(1)   shift(2)   shift(3)<br>t=1       100          NaN        NaN        NaN      ← 前面没有数据，补 NaN<br>t=2       120          100        NaN        NaN<br>t=3       130          120        100        NaN<br>t=4       125          130        120        100      ← t=4 这一行的特征齐了<br>t=5       140          125        130        120<br></code></pre></td></tr></table></figure>
+<p>于是每一行就变成了：<strong>“用过去 3 个小时的负荷，预测当前时刻的负荷”</strong>。这就是把时序变成表格的关键一步：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">样本（t=4 行）：<br>  特征：前1小时=130, 前2小时=120, 前3小时=100<br>  标签：power_load=125   ← 要预测的目标<br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>window_size = 3</code>：窗口大小为 3，即”往前看 3 个小时”。这是案例选的经验值，第 11 节会讲它是一个可调的改进点</li>
+<li>列表推导式 <code>[... for i in range(1, 4)]</code> 生成 <code>[shift(1), shift(2), shift(3)]</code> 三列</li>
+<li>列名改成中文 <code>&#39;前1小时&#39;</code>、<code>&#39;前2小时&#39;</code>、<code>&#39;前3小时&#39;</code>，更直观</li>
+</ul>
+<blockquote>
+<p>💡 这个操作在学术上叫”<strong>滑动窗口</strong>“（sliding window）或”滞后特征”（lag features）。窗口越小，特征越”新鲜”但信息少；窗口越大，信息多但前面的 NaN 行也越多。第 3 节我们讲过滑动窗口的数学原理，现在看到它的代码实现了。</p>
+</blockquote>
+<h3 id="7-5-逐行解析：昨日同时刻"><a href="#7-5-逐行解析：昨日同时刻" class="headerlink" title="7.5 逐行解析：昨日同时刻"></a>7.5 逐行解析：昨日同时刻</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">time_load_dict = result.set_index(<span class="hljs-string">&#x27;time&#x27;</span>)[<span class="hljs-string">&#x27;power_load&#x27;</span>].to_dict()<br></code></pre></td></tr></table></figure>
+<p>把”时间 → 负荷”的对照表存进一个<strong>字典</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">time_load_dict = &#123;<br>    &#x27;2015-01-01 00:00:00&#x27;: 800,<br>    &#x27;2015-01-01 01:00:00&#x27;: 810,<br>    ...<br>&#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>set_index(&#39;time&#39;)</code>：把 time 列设为索引</li>
+<li><code>[&#39;power_load&#39;]</code>：只取负荷列</li>
+<li><code>.to_dict()</code>：转成 Python 字典</li>
+<li>💡 为什么要字典而不是 DataFrame？因为接下来要<strong>按”昨天的时间”查负荷</strong>，字典查询是 O(1) 的，比 DataFrame 每次条件筛选快得多</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">result[<span class="hljs-string">&#x27;yesterday_time&#x27;</span>] = result[<span class="hljs-string">&#x27;time&#x27;</span>].apply(<br>    <span class="hljs-keyword">lambda</span> x: (pd.to_datetime(x) - pd.to_timedelta(<span class="hljs-string">&#x27;1d&#x27;</span>)).strftime(<span class="hljs-string">&#x27;%Y-%m-%d %H:%M:%S&#x27;</span>))<br>result[<span class="hljs-string">&#x27;yesterday_load&#x27;</span>] = result[<span class="hljs-string">&#x27;yesterday_time&#x27;</span>].apply(<span class="hljs-keyword">lambda</span> x: time_load_dict.get(x))<br></code></pre></td></tr></table></figure>
+<p><strong>图解这两行：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">time = &quot;2015-08-01 14:00:00&quot;<br>   │  pd.to_datetime(...)  转成日期对象<br>   ▼<br>   2015-08-01 14:00:00（日期类型）<br>   │  - pd.to_timedelta(&#x27;1d&#x27;)  减去 1 天<br>   ▼<br>   2015-07-31 14:00:00（昨天同时刻）<br>   │  .strftime(&#x27;%Y-%m-%d %H:%M:%S&#x27;)  格式化回字符串<br>   ▼<br>yesterday_time = &quot;2015-07-31 14:00:00&quot;<br>   │  time_load_dict.get(...)  去字典里查<br>   ▼<br>yesterday_load = 856  （昨天下午两点的负荷）<br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>pd.to_timedelta(&#39;1d&#39;)</code>：一个”1 天”的时间差对象。<code>&#39;1d&#39;</code> = 1 day，换成 <code>&#39;1h&#39;</code> 就是 1 小时（第 9 节的预测代码里会用到）</li>
+<li><code>strftime(...)</code>：把日期对象按 <code>年-月-日 时:分:秒</code> 的格式变回字符串——<strong>这一步很关键</strong>，因为字典的 key 是字符串格式，格式不一致就查不到</li>
+<li><code>dict.get(x)</code>：查不到时返回 <code>None</code>（不报错），这为下一步 <code>dropna</code> 埋下伏笔</li>
+</ul>
+<blockquote>
+<p>💡 <strong>为什么要”昨日同时刻”这个特征？</strong> 因为人的作息有强烈的日重复性：昨天下午 2 点大家在开空调，今天下午 2 点大概率也在开。对模型来说，”昨天这个时刻的负荷”是预测”今天这个时刻的负荷”最有力的单条证据。</p>
+</blockquote>
+<h3 id="7-6-剔除空样本：dropna"><a href="#7-6-剔除空样本：dropna" class="headerlink" title="7.6 剔除空样本：dropna"></a>7.6 剔除空样本：dropna</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">result.dropna(axis=<span class="hljs-number">0</span>, inplace=<span class="hljs-literal">True</span>)<br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>dropna</code>：把含有缺失值（NaN）的行删掉</li>
+<li><code>axis=0</code>：按<strong>行</strong>删除（凡是这一行里有任何 NaN，整行删掉）</li>
+<li><code>inplace=True</code>：直接在原表上改，不返回新表</li>
+</ul>
+<p><strong>哪些行会有 NaN？（确定性推理，不依赖数据）</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">第一种：shift 造成的<br>  前 1/2/3 小时 → 数据集最前面 3 行必然是 NaN<br>  （它们前面没有历史）<br><br>第二种：yesterday_load 造成的<br>  数据集第一天（如 2015-01-01）的所有 24 行：<br>  昨天是 2014-12-31，不在数据里 → 字典查不到 → None → NaN<br></code></pre></td></tr></table></figure>
+<p>所以<strong>开头至少 24 行</strong>（第一天的全部 24 个时刻）会被 <code>dropna</code> 删掉。这不是bug，而是合理的”代价”：要用历史特征，就得舍弃没有历史的那部分数据。</p>
+<blockquote>
+<p>⚠️ 这给我们一个重要启示：<strong>原始数据最少要有 2 天</strong>，否则删完就什么都不剩了。真实项目里数据都是成千上万行，丢 24 行不算什么。</p>
+</blockquote>
+<h3 id="7-7-特征列清单：40-维"><a href="#7-7-特征列清单：40-维" class="headerlink" title="7.7 特征列清单：40 维"></a>7.7 特征列清单：40 维</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">time_feature_names = <span class="hljs-built_in">list</span>(hour_encoding.columns) + <span class="hljs-built_in">list</span>(month_encoding.columns) + <span class="hljs-built_in">list</span>(shift_data.columns) + [<span class="hljs-string">&#x27;yesterday_load&#x27;</span>]<br><span class="hljs-keyword">return</span> result, time_feature_names<br></code></pre></td></tr></table></figure>
+<p>把四部分列名拼成一个清单返回。<strong>数量核对（可以手算确认）：</strong></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>组成部分</th>
+<th>列名</th>
+<th>数量</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>小时 one-hot</td>
+<td><code>hour_00</code> ~ <code>hour_23</code></td>
+<td>24</td>
+</tr>
+<tr>
+<td>月份 one-hot</td>
+<td><code>month_01</code> ~ <code>month_12</code></td>
+<td>12</td>
+</tr>
+<tr>
+<td>滑动窗口</td>
+<td><code>前1小时</code>、<code>前2小时</code>、<code>前3小时</code></td>
+<td>3</td>
+</tr>
+<tr>
+<td>昨日同时刻</td>
+<td><code>yesterday_load</code></td>
+<td>1</td>
+</tr>
+<tr>
+<td><strong>合计</strong></td>
+<td></td>
+<td><strong>40</strong> ✅</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>返回值有两个：处理后的表 <code>result</code>（X 和 y 都在里面）和特征列名 <code>time_feature_names</code>（告诉后面的模型”这 40 列才是特征，别拿 time、hour 这些原始列”）。</p>
+<blockquote>
+<p>⚠️ <strong>一个真实存在的坑</strong>：<code>pd.get_dummies</code> 只会为数据中<strong>实际出现过</strong>的类别生成列。如果训练集只覆盖了 1~8 月，<code>month_encoding</code> 就只有 8 列而不是 12 列，特征总数会变成 36 而不是 40。而 predict.py 里的 <code>feature_names</code> 是<strong>硬编码的 40 个</strong>（第 9 节会看到），两者不一致时 <code>model.predict()</code> 会因为列名不匹配而报错。让案例跑通的前提是：训练数据完整覆盖 24 小时和 12 个月。</p>
+</blockquote>
+<hr>
+<h2 id="8-模型训练：XGBoost-回归"><a href="#8-模型训练：XGBoost-回归" class="headerlink" title="8. 模型训练：XGBoost 回归"></a>8. 模型训练：XGBoost 回归</h2><h3 id="8-1-训练六步曲"><a href="#8-1-训练六步曲" class="headerlink" title="8.1 训练六步曲"></a>8.1 训练六步曲</h3><p>特征工程把数据整理成”40 个特征 + 1 个标签”的表格后，接下来的事情你在第 6 章已经很熟了。<code>train.py</code> 的 <code>model_train()</code> 函数分六步：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">┌─────────────────────────────────────────────────────┐<br>│  1. 数据集切分    7 成训练 / 3 成测试                 │<br>│  2. 网格搜索与交叉验证（本案例已注释，见 8.5）        │<br>│  3. 模型实例化    XGBRegressor(三个参数)              │<br>│  4. 模型训练      xgb.fit(x_train, y_train)           │<br>│  5. 模型评价      训练集/测试集 各算 MSE、MAE          │<br>│  6. 模型保存      joblib.dump → xgb.pkl               │<br>└─────────────────────────────────────────────────────┘<br></code></pre></td></tr></table></figure>
+<h3 id="8-2-完整代码（复刻-train-py-的-model-train）"><a href="#8-2-完整代码（复刻-train-py-的-model-train）" class="headerlink" title="8.2 完整代码（复刻 train.py 的 model_train）"></a>8.2 完整代码（复刻 train.py 的 model_train）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">model_train</span>(<span class="hljs-params">data, features, logger</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    1.数据集切分</span><br><span class="hljs-string">    2.网格化搜索与交叉验证</span><br><span class="hljs-string">    3.模型实例化</span><br><span class="hljs-string">    4.模型训练</span><br><span class="hljs-string">    5.模型评价</span><br><span class="hljs-string">    6.模型保存</span><br><span class="hljs-string">    :param data: 特征工程处理后的输入数据</span><br><span class="hljs-string">    :param features: 特征名称</span><br><span class="hljs-string">    :param logger: 日志对象</span><br><span class="hljs-string">    :return:</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    logger.info(<span class="hljs-string">&quot;=========开始模型训练===================&quot;</span>)<br>    <span class="hljs-comment"># 1.数据集切分</span><br>    x_data = data[features]<br>    y_data = data[<span class="hljs-string">&#x27;power_load&#x27;</span>]<br>    <span class="hljs-comment"># x_train:训练集特征数据</span><br>    <span class="hljs-comment"># y_train:训练集目标数据</span><br>    <span class="hljs-comment"># x_test:测试集特征数据</span><br>    <span class="hljs-comment"># y_test:测试集目标数据</span><br>    x_train, x_test, y_train, y_test = train_test_split(x_data, y_data, test_size=<span class="hljs-number">0.3</span>, random_state=<span class="hljs-number">22</span>)<br>    <span class="hljs-comment"># # 2.网格化搜索与交叉验证</span><br>    <span class="hljs-comment"># # 2.1备选的超参数</span><br>    <span class="hljs-comment"># print(&quot;开始网格化搜索&quot;)</span><br>    <span class="hljs-comment"># print(datetime.datetime.now())  # 2024-11-26 15:38:26.898828</span><br>    <span class="hljs-comment"># param_dict = &#123;</span><br>    <span class="hljs-comment">#     &#x27;n_estimators&#x27;: [50, 100, 150, 200],</span><br>    <span class="hljs-comment">#     &#x27;max_depth&#x27;: [3, 6, 9],</span><br>    <span class="hljs-comment">#     &#x27;learning_rate&#x27;: [0.1, 0.01]</span><br>    <span class="hljs-comment"># &#125;</span><br>    <span class="hljs-comment"># # 2.2实例化网格化搜索，配置交叉验证</span><br>    <span class="hljs-comment"># grid_cv = GridSearchCV(estimator=XGBRegressor(),</span><br>    <span class="hljs-comment">#                        param_grid=param_dict, cv=5)</span><br>    <span class="hljs-comment"># # 2.3网格化搜索与交叉验证训练</span><br>    <span class="hljs-comment"># grid_cv.fit(x_train, y_train)</span><br>    <span class="hljs-comment"># # 2.4输出最优的超参数组合</span><br>    <span class="hljs-comment"># print(grid_cv.best_params_)  # &#123;&#x27;learning_rate&#x27;: 0.1, &#x27;max_depth&#x27;: 6, &#x27;n_estimators&#x27;: 150&#125;</span><br>    <span class="hljs-comment"># print(&quot;结束网格化搜索&quot;)</span><br>    <span class="hljs-comment"># print(datetime.datetime.now())  # 2024-11-26 15:39:07.216048</span><br>    <span class="hljs-comment"># logger.info(&quot;网格化搜索后找到的最优的超参数组合是：learning_rate: 0.1, max_depth: 6, n_estimators: 150&quot;)</span><br>    <span class="hljs-comment"># 3.模型训练</span><br>    xgb = XGBRegressor(n_estimators=<span class="hljs-number">150</span>, max_depth=<span class="hljs-number">6</span>, learning_rate=<span class="hljs-number">0.1</span>)<br>    xgb.fit(x_train, y_train)<br>    <span class="hljs-comment"># 4.模型评价</span><br>    <span class="hljs-comment"># 4.1模型在训练集上的预测结果</span><br>    y_pred_train = xgb.predict(x_train)<br>    <span class="hljs-comment"># 4.2模型在测试集上的预测结果</span><br>    y_pred_test = xgb.predict(x_test)<br>    <span class="hljs-comment"># 4.3模型在训练集上的MSE、MAPE</span><br>    mse_train = mean_squared_error(y_true=y_train, y_pred=y_pred_train)<br>    mae_train = mean_absolute_error(y_true=y_train, y_pred=y_pred_train)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;模型在训练集上的均方误差：<span class="hljs-subst">&#123;mse_train&#125;</span>&quot;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;模型在训练集上的平均绝对误差：<span class="hljs-subst">&#123;mae_train&#125;</span>&quot;</span>)<br>    <span class="hljs-comment"># 4.4模型在测试集上的MSE、MAPE</span><br>    mse_test = mean_squared_error(y_true=y_test, y_pred=y_pred_test)<br>    mae_test = mean_absolute_error(y_true=y_test, y_pred=y_pred_test)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;模型在测试集上的均方误差：<span class="hljs-subst">&#123;mse_test&#125;</span>&quot;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;模型在测试集上的平均绝对误差：<span class="hljs-subst">&#123;mae_test&#125;</span>&quot;</span>)<br>    logger.info(<span class="hljs-string">&quot;=========================模型训练完成=============================&quot;</span>)<br>    logger.info(<span class="hljs-string">f&quot;模型在训练集上的均方误差：<span class="hljs-subst">&#123;mse_train&#125;</span>&quot;</span>)<br>    logger.info(<span class="hljs-string">f&quot;模型在训练集上的平均绝对误差：<span class="hljs-subst">&#123;mae_train&#125;</span>&quot;</span>)<br>    logger.info(<span class="hljs-string">f&quot;模型在测试集上的均方误差：<span class="hljs-subst">&#123;mse_test&#125;</span>&quot;</span>)<br>    logger.info(<span class="hljs-string">f&quot;模型在测试集上的平均绝对误差：<span class="hljs-subst">&#123;mae_test&#125;</span>&quot;</span>)<br>    <span class="hljs-comment"># 5.模型保存</span><br>    joblib.dump(xgb, <span class="hljs-string">&#x27;../model/xgb.pkl&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<h3 id="8-3-逐行解析：切分数据"><a href="#8-3-逐行解析：切分数据" class="headerlink" title="8.3 逐行解析：切分数据"></a>8.3 逐行解析：切分数据</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">x_data = data[features]      <span class="hljs-comment"># 40 列特征（hour_00...前3小时、yesterday_load）</span><br>y_data = data[<span class="hljs-string">&#x27;power_load&#x27;</span>]  <span class="hljs-comment"># 1 列标签（要预测的负荷）</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>data[features]</code>：用第 7.7 节返回的 40 个列名，从大表里<strong>只把特征列抽出来</strong>。<code>time</code>、<code>hour</code>、<code>month</code>、<code>yesterday_time</code> 这些中间列统统不要</li>
+<li>这一步就是”<strong>X 和 y 分家</strong>“：模型只看 X，只学怎么预测 y</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">x_train, x_test, y_train, y_test = train_test_split(x_data, y_data, test_size=<span class="hljs-number">0.3</span>, random_state=<span class="hljs-number">22</span>)<br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>train_test_split</code>：sklearn 自带的切分工具，按比例随机把数据切成两份</li>
+<li><code>test_size=0.3</code>：30% 当测试集，70% 当训练集</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">全部样本（比如 26000 行，dropna 之后）<br>┌──────────────────────────┬─────────────────────┐<br>│    训练集 70%（18200 行）  │  测试集 30%（7800 行）│<br>│    x_train, y_train       │  x_test, y_test      │<br>│    用来&quot;教&quot;模型            │  用来&quot;考&quot;模型        │<br>└──────────────────────────┴─────────────────────┘<br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>random_state=22</code>：<strong>固定随机种子</strong>。没有它，每次运行切分结果都不同；有了它，无论谁在哪台电脑上运行，切出来的结果一模一样</li>
+<li>💡 这就是”<strong>可复现</strong>“思想：机器学习实验要想对比，第一步就是固定随机种子。22 这个数本身没有含义，换成 42、0 都行，重点是”固定”</li>
+</ul>
+<blockquote>
+<p>⚠️ <strong>给进阶者的提醒</strong>：<code>train_test_split</code> 是<strong>随机打乱</strong>后再切分的。对普通表格数据（西瓜书数据集）这完全正确；但时序数据严格来说应该”<strong>按时间先后</strong>“切分（比如前 70% 的时间训练、后 30% 的时间测试），否则测试集的某些样本在时间上比训练集更早，会隐隐”偷看”到未来信息。本案例是教学项目，沿用了随机切分；如果你做真实时序项目，建议改成按时间切分（第 12 节的作业会涉及到）。</p>
+</blockquote>
+<h3 id="8-4-逐行解析：XGBoost-三参数"><a href="#8-4-逐行解析：XGBoost-三参数" class="headerlink" title="8.4 逐行解析：XGBoost 三参数"></a>8.4 逐行解析：XGBoost 三参数</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">xgb = XGBRegressor(n_estimators=<span class="hljs-number">150</span>, max_depth=<span class="hljs-number">6</span>, learning_rate=<span class="hljs-number">0.1</span>)<br>xgb.fit(x_train, y_train)<br></code></pre></td></tr></table></figure>
+<p><code>XGBRegressor</code> 是 XGBoost 库的<strong>回归器</strong>（第 6 章集成学习详细讲过提升法，这里快速回顾）。三个参数：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>值</th>
+<th>含义</th>
+<th>大小的影响</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>n_estimators</code></td>
+<td>150</td>
+<td>一共训练 <strong>150 棵树</strong></td>
+<td>越大模型越强，但越慢、越容易过拟合</td>
+</tr>
+<tr>
+<td><code>max_depth</code></td>
+<td>6</td>
+<td>每棵树最多 <strong>6 层</strong></td>
+<td>越大能学越复杂的规律，越容易过拟合</td>
+</tr>
+<tr>
+<td><code>learning_rate</code></td>
+<td>0.1</td>
+<td>每棵树的<strong>贡献缩到 0.1 倍</strong></td>
+<td>越小越稳，但需要更多树来补偿</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>图解提升法（Boosting）回顾：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">第 1 棵树：预测值 = 真实值附近的大致轮廓      ──┐<br>第 2 棵树：学习第 1 棵的&quot;残差&quot;（犯错的地方）    ──┤  每棵新树<br>第 3 棵树：学习前两棵合起来仍然犯错的地方       ──┤  专攻&quot;上一棵<br>...                                          ──┤  没学好&quot;的地方<br>第 150 棵树：修正前面 149 棵剩下的细小误差      ──┘<br><br>最终预测 = 第1棵×0.1 + 第2棵×0.1 + ... + 第150棵×0.1<br>              └──── learning_rate=0.1：每棵树只贡献一成 ────┘<br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>xgb.fit(x_train, y_train)</code>：开始训练！<code>fit</code> 就是”拟合”——让模型从 18200 行样本里学规律</li>
+<li>这一行的背后，XGBoost 正在自动完成”建树 → 算残差 → 建下一棵树”的循环 150 次</li>
+</ul>
+<h3 id="8-5-为什么-GridSearchCV-被注释掉了？"><a href="#8-5-为什么-GridSearchCV-被注释掉了？" class="headerlink" title="8.5 为什么 GridSearchCV 被注释掉了？"></a>8.5 为什么 GridSearchCV 被注释掉了？</h3><p>这是这段代码里最有”工程感”的细节。注意第 2 步整段都是注释（<code>#</code> 开头），但<strong>注释里藏着真金白银</strong>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># print(&quot;开始网格化搜索&quot;)</span><br><span class="hljs-comment"># print(datetime.datetime.now())  # 2024-11-26 15:38:26.898828     ← 开始时间</span><br><span class="hljs-comment"># ...</span><br><span class="hljs-comment"># print(grid_cv.best_params_)  # &#123;&#x27;learning_rate&#x27;: 0.1, &#x27;max_depth&#x27;: 6, &#x27;n_estimators&#x27;: 150&#125;  ← 最优参数</span><br><span class="hljs-comment"># print(datetime.datetime.now())  # 2024-11-26 15:39:07.216048     ← 结束时间</span><br></code></pre></td></tr></table></figure>
+<p><strong>这些注释在讲一个故事：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">2024-11-26 15:38:26  开始网格搜索<br>        │  尝试 4 × 3 × 2 = 24 种参数组合，每种还做 5 折交叉验证<br>        │  ≈ 24 × 5 = 120 次训练<br>        ▼<br>2024-11-26 15:39:07  搜索结束（耗时约 41 秒）<br>        │<br>        ▼<br>最优结果：n_estimators=150, max_depth=6, learning_rate=0.1<br></code></pre></td></tr></table></figure>
+<p>也就是说：<strong>作者已经跑过一次完整的网格搜索，把最优参数找出来了</strong>。为了避免以后每次运行都白白等 41 秒，他把搜索过程注释掉，直接在下面写死最优参数：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">xgb = XGBRegressor(n_estimators=<span class="hljs-number">150</span>, max_depth=<span class="hljs-number">6</span>, learning_rate=<span class="hljs-number">0.1</span>)  <span class="hljs-comment"># ← 正好等于搜索结果</span><br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>💡 这是工程上非常地道的做法，叫”<strong>先搜索、后固化</strong>“：开发阶段用 GridSearchCV 找最优参数，找到后写进代码；部署阶段跳过搜索，直接用。注释保留下来，既不丢历史，又不拖慢运行。</p>
+</blockquote>
+<p><strong>网格搜索的原理（1 分钟回顾）：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">param_dict = &#123;<br>    &#x27;n_estimators&#x27;:  [50, 100, 150, 200],   ← 4 个取值<br>    &#x27;max_depth&#x27;:     [3, 6, 9],             ← 3 个取值<br>    &#x27;learning_rate&#x27;: [0.1, 0.01]            ← 2 个取值<br>&#125;<br><br>穷举所有组合：4 × 3 × 2 = 24 种<br>每种组合再做 5 折交叉验证（cv=5）：<br><br>  训练集切成 5 份：<br>  ┌───┬───┬───┬───┬───┐<br>  │ 1 │ 2 │ 3 │ 4 │ 5 │   轮流用 1 份做验证、4 份做训练<br>  └───┴───┴───┴───┴───┘   5 次的平均分才算数<br><br>→ 总共训练 24 × 5 = 120 次，选出平均误差最小的参数组合<br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>cv=5</code>：5 折交叉验证（cross-validation）。折数越多评估越稳，但越慢</li>
+</ul>
+<h3 id="8-6-逐行解析：模型评价"><a href="#8-6-逐行解析：模型评价" class="headerlink" title="8.6 逐行解析：模型评价"></a>8.6 逐行解析：模型评价</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python">y_pred_train = xgb.predict(x_train)   <span class="hljs-comment"># 让模型&quot;做训练卷&quot;</span><br>y_pred_test = xgb.predict(x_test)     <span class="hljs-comment"># 让模型&quot;做测试卷&quot;（没见过的题）</span><br><br>mse_train = mean_squared_error(y_true=y_train, y_pred=y_pred_train)<br>mae_train = mean_absolute_error(y_true=y_train, y_pred=y_pred_train)<br>mse_test = mean_squared_error(y_true=y_test, y_pred=y_pred_test)<br>mae_test = mean_absolute_error(y_true=y_test, y_pred=y_pred_test)<br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>xgb.predict(X)</code>：把特征矩阵喂给训练好的模型，输出<strong>预测值数组</strong></li>
+<li><code>mean_squared_error(y_true, y_pred)</code>：MSE（均方误差），第 3.2 节讲过公式：</li>
+</ul>
+<script type="math/tex; mode=display">
+\mathrm{MSE} = \frac{1}{n}\sum_{i=1}^{n}(y_i - \hat{y}_i)^2</script><ul>
+<li><code>mean_absolute_error(y_true, y_pred)</code>：MAE（平均绝对误差）：</li>
+</ul>
+<script type="math/tex; mode=display">
+\mathrm{MAE} = \frac{1}{n}\sum_{i=1}^{n}\left|y_i - \hat{y}_i\right|</script><p><strong>两个指标的区别（看图就懂）：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">真实值 y  = 1000<br>预测值 ŷ  =  900<br>             │<br>             ▼<br>误差 = 100  ─┬─ 平方后 = 10000   ─→  对 MSE 贡献巨大（惩罚大误差）<br>             └─ 取绝对值 = 100   ─→  对 MAE 贡献温和<br></code></pre></td></tr></table></figure>
+<ul>
+<li><strong>MAE</strong> 更直观：”平均每次预测差多少负荷”</li>
+<li><strong>MSE</strong> 更严厉：”如果有几次错得特别离谱，会被狠狠放大”</li>
+<li>电力调度中，大家都说”平均差 50 千瓦”（MAE）比”均方误差 2500”（MSE 的量纲是平方）好理解</li>
+</ul>
+<p><strong>print 输出的样子（数值以实际运行为准）：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">模型在训练集上的均方误差：&lt;mse_train&gt;      ← 填实际运行结果<br>模型在训练集上的平均绝对误差：&lt;mae_train&gt;<br>模型在测试集上的均方误差：mse_test&gt;<br>模型在测试集上的平均绝对误差：&lt;mae_test&gt;<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>⚠️ 本教程<strong>不填写具体的 MSE / MAE 数值</strong>——这些数字取决于数据内容，必须由你亲自运行得到。判断模型好坏的经验法则是：<strong>测试集误差 ≈ 训练集误差</strong> → 没过拟合；<strong>测试集误差 ≫ 训练集误差</strong> → 过拟合了，该减小 <code>max_depth</code> 或 <code>n_estimators</code>。</p>
+</blockquote>
+<h3 id="8-7-模型保存"><a href="#8-7-模型保存" class="headerlink" title="8.7 模型保存"></a>8.7 模型保存</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">joblib.dump(xgb, <span class="hljs-string">&#x27;../model/xgb.pkl&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>joblib.dump(模型对象, 文件路径)</code>：把训练好的模型<strong>序列化</strong>存盘</li>
+<li><code>.pkl</code> 是 pickle 的缩写。存盘后，模型就变成了一个可以反复使用的”零件”</li>
+<li>💡 训练一次很贵（41 秒甚至更久），预测一次很便宜。保存模型的本质是：<strong>把”训练的成本”一次性付清，之后无限次复用</strong>。下一节的 <code>predict.py</code> 第一件事就是把它加载回来</li>
+</ul>
+<hr>
+<h2 id="9-模型预测：滚动预测未来"><a href="#9-模型预测：滚动预测未来" class="headerlink" title="9. 模型预测：滚动预测未来"></a>9. 模型预测：滚动预测未来</h2><h3 id="9-1-先想清楚：预测和训练的根本区别"><a href="#9-1-先想清楚：预测和训练的根本区别" class="headerlink" title="9.1 先想清楚：预测和训练的根本区别"></a>9.1 先想清楚：预测和训练的根本区别</h3><p>训练时，所有历史数据<strong>都在手上</strong>，<code>shift</code>、<code>yesterday_load</code> 随便用。但预测未来时，一个尖锐的问题出现了：</p>
+<blockquote>
+<p>预测明天下午 2 点的负荷时，”明天下午 1 点的负荷”这个特征<strong>你也没有</strong>啊！</p>
+</blockquote>
+<p>项目里所有预测任务都逃不开这个矛盾。本案例的处理方式是”<strong>滚动预测（单步预测）</strong>“——这也是工业界最常用的务实方案：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">预测 2015-08-01 00:00 的负荷<br>  使用的历史：2015-07-31 23:00 及更早（真实存在）     ✓ 预测出来<br>        ▼<br>预测 2015-08-01 01:00 的负荷<br>  使用的历史：2015-08-01 00:00 及更早（00:00 是刚预测出来的）<br>        ▼<br>预测 2015-08-01 02:00 的负荷<br>  使用的历史：01:00 是刚预测出来的<br>        ▼<br>   ……像车轮一样逐小时向前滚动……<br></code></pre></td></tr></table></figure>
+<p><strong>但本案例做得更严谨——它连”自己的预测结果”都不信。</strong> 看下一节。</p>
+<h3 id="9-2-完整代码（复刻-predict-py-的-pred-feature-extract）"><a href="#9-2-完整代码（复刻-predict-py-的-pred-feature-extract）" class="headerlink" title="9.2 完整代码（复刻 predict.py 的 pred_feature_extract）"></a>9.2 完整代码（复刻 predict.py 的 pred_feature_extract）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">pred_feature_extract</span>(<span class="hljs-params">data_dict, time, logger</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    预测数据解析特征，保持与模型训练时的特征列名一致</span><br><span class="hljs-string">    1.解析时间特征</span><br><span class="hljs-string">    2.解析时间窗口特征</span><br><span class="hljs-string">    3.解析昨日同时刻特征</span><br><span class="hljs-string">    :param data_dict:历史数据，字典格式，key：时间，value:负荷</span><br><span class="hljs-string">    :param time:预测时间，字符串类型，格式为2024-12-20 09:00:00</span><br><span class="hljs-string">    :param logger:日志对象</span><br><span class="hljs-string">    :return:</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    logger.info(<span class="hljs-string">f&#x27;=========解析预测时间为：<span class="hljs-subst">&#123;time&#125;</span>所对应的特征==============&#x27;</span>)<br>    <span class="hljs-comment"># 特征列清单</span><br>    feature_names = [<span class="hljs-string">&#x27;hour_00&#x27;</span>, <span class="hljs-string">&#x27;hour_01&#x27;</span>, <span class="hljs-string">&#x27;hour_02&#x27;</span>, <span class="hljs-string">&#x27;hour_03&#x27;</span>, <span class="hljs-string">&#x27;hour_04&#x27;</span>, <span class="hljs-string">&#x27;hour_05&#x27;</span>,<br>                     <span class="hljs-string">&#x27;hour_06&#x27;</span>, <span class="hljs-string">&#x27;hour_07&#x27;</span>, <span class="hljs-string">&#x27;hour_08&#x27;</span>, <span class="hljs-string">&#x27;hour_09&#x27;</span>, <span class="hljs-string">&#x27;hour_10&#x27;</span>, <span class="hljs-string">&#x27;hour_11&#x27;</span>,<br>                     <span class="hljs-string">&#x27;hour_12&#x27;</span>, <span class="hljs-string">&#x27;hour_13&#x27;</span>, <span class="hljs-string">&#x27;hour_14&#x27;</span>, <span class="hljs-string">&#x27;hour_15&#x27;</span>, <span class="hljs-string">&#x27;hour_16&#x27;</span>, <span class="hljs-string">&#x27;hour_17&#x27;</span>,<br>                     <span class="hljs-string">&#x27;hour_18&#x27;</span>, <span class="hljs-string">&#x27;hour_19&#x27;</span>, <span class="hljs-string">&#x27;hour_20&#x27;</span>, <span class="hljs-string">&#x27;hour_21&#x27;</span>, <span class="hljs-string">&#x27;hour_22&#x27;</span>, <span class="hljs-string">&#x27;hour_23&#x27;</span>,<br>                     <span class="hljs-string">&#x27;month_01&#x27;</span>, <span class="hljs-string">&#x27;month_02&#x27;</span>, <span class="hljs-string">&#x27;month_03&#x27;</span>, <span class="hljs-string">&#x27;month_04&#x27;</span>, <span class="hljs-string">&#x27;month_05&#x27;</span>, <span class="hljs-string">&#x27;month_06&#x27;</span>,<br>                     <span class="hljs-string">&#x27;month_07&#x27;</span>, <span class="hljs-string">&#x27;month_08&#x27;</span>, <span class="hljs-string">&#x27;month_09&#x27;</span>, <span class="hljs-string">&#x27;month_10&#x27;</span>, <span class="hljs-string">&#x27;month_11&#x27;</span>, <span class="hljs-string">&#x27;month_12&#x27;</span>,<br>                     <span class="hljs-string">&#x27;前1小时&#x27;</span>, <span class="hljs-string">&#x27;前2小时&#x27;</span>, <span class="hljs-string">&#x27;前3小时&#x27;</span>, <span class="hljs-string">&#x27;yesterday_load&#x27;</span>]<br>    <span class="hljs-comment"># 小时特征数据，使用列表保存起来</span><br>    hour_part = []<br>    pred_hour = time[<span class="hljs-number">11</span>:<span class="hljs-number">13</span>]<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">24</span>):<br>        <span class="hljs-keyword">if</span> pred_hour == feature_names[i][<span class="hljs-number">5</span>:<span class="hljs-number">7</span>]:<br>            hour_part.append(<span class="hljs-number">1</span>)<br>        <span class="hljs-keyword">else</span>:<br>            hour_part.append(<span class="hljs-number">0</span>)<br>    <span class="hljs-comment"># 月份特征数据，使用列表保存起来</span><br>    month_part = []<br>    pred_month = time[<span class="hljs-number">5</span>:<span class="hljs-number">7</span>]<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">24</span>, <span class="hljs-number">36</span>):<br>        <span class="hljs-keyword">if</span> pred_month == feature_names[i][<span class="hljs-number">6</span>:<span class="hljs-number">8</span>]:<br>            month_part.append(<span class="hljs-number">1</span>)<br>        <span class="hljs-keyword">else</span>:<br>            month_part.append(<span class="hljs-number">0</span>)<br>    <span class="hljs-comment"># 历史负荷数据，使用列表保存起来</span><br>    his_part = []<br>    <span class="hljs-comment"># 前1小时负荷</span><br>    last_1h_time = (pd.to_datetime(time) - pd.to_timedelta(<span class="hljs-string">&#x27;1h&#x27;</span>)).strftime(<span class="hljs-string">&#x27;%Y-%m-%d %H:%M:%S&#x27;</span>)<br>    last_1h_load = data_dict.get(last_1h_time, <span class="hljs-number">600</span>)<br>    <span class="hljs-comment"># 前2小时负荷</span><br>    last_2h_time = (pd.to_datetime(time) - pd.to_timedelta(<span class="hljs-string">&#x27;2h&#x27;</span>)).strftime(<span class="hljs-string">&#x27;%Y-%m-%d %H:%M:%S&#x27;</span>)<br>    last_2h_load = data_dict.get(last_2h_time, <span class="hljs-number">600</span>)<br>    <span class="hljs-comment"># 前3小时负荷</span><br>    last_3h_time = (pd.to_datetime(time) - pd.to_timedelta(<span class="hljs-string">&#x27;3h&#x27;</span>)).strftime(<span class="hljs-string">&#x27;%Y-%m-%d %H:%M:%S&#x27;</span>)<br>    last_3h_load = data_dict.get(last_3h_time, <span class="hljs-number">600</span>)<br><br>    <span class="hljs-comment"># 昨日同时刻负荷</span><br>    last_day_time = (pd.to_datetime(time) - pd.to_timedelta(<span class="hljs-string">&#x27;1d&#x27;</span>)).strftime(<span class="hljs-string">&#x27;%Y-%m-%d %H:%M:%S&#x27;</span>)<br>    last_day_load = data_dict.get(last_day_time, <span class="hljs-number">600</span>)<br><br>    his_part = [last_1h_load, last_2h_load, last_3h_load, last_day_load]<br>    <span class="hljs-comment"># 特征数据，包含小时特征数据，月份特征数据，历史负荷数据</span><br>    feature_list = [hour_part + month_part + his_part]<br>    <span class="hljs-comment"># feature_list需要转成dataframe并返回，所以这里用append变成一个二维列表</span><br>    feature_df = pd.DataFrame(feature_list, columns=feature_names)<br>    <span class="hljs-keyword">return</span> feature_df, feature_names<br></code></pre></td></tr></table></figure>
+<h3 id="9-3-逐行解析：手写-one-hot"><a href="#9-3-逐行解析：手写-one-hot" class="headerlink" title="9.3 逐行解析：手写 one-hot"></a>9.3 逐行解析：手写 one-hot</h3><p>注意这里<strong>没有用</strong> <code>pd.get_dummies</code>，而是用 <code>for</code> 循环手写 one-hot。为什么？因为预测时只有<strong>一行数据</strong>（一个时刻），用循环更直白、更可控。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">feature_names = [<span class="hljs-string">&#x27;hour_00&#x27;</span>, <span class="hljs-string">&#x27;hour_01&#x27;</span>, ..., <span class="hljs-string">&#x27;hour_23&#x27;</span>,<br>                 <span class="hljs-string">&#x27;month_01&#x27;</span>, ..., <span class="hljs-string">&#x27;month_12&#x27;</span>,<br>                 <span class="hljs-string">&#x27;前1小时&#x27;</span>, <span class="hljs-string">&#x27;前2小时&#x27;</span>, <span class="hljs-string">&#x27;前3小时&#x27;</span>, <span class="hljs-string">&#x27;yesterday_load&#x27;</span>]<br></code></pre></td></tr></table></figure>
+<ul>
+<li>这 40 个列名是<strong>硬编码</strong>的，必须和训练时 <code>feature_engineering</code> 返回的列名<strong>一字不差</strong>（列名错了模型直接报错，sklearn 会按列名对齐）</li>
+<li>💡 想体会这一点的代价？把 <code>hour_15</code> 改成 <code>hour_15x</code> 跑一下，马上看到”No such feature”之类的错误。<strong>特征工程的一致性，是部署机器学习模型时最容易踩的坑</strong></li>
+</ul>
+<p><strong>小时 one-hot 循环：</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">pred_hour = time[<span class="hljs-number">11</span>:<span class="hljs-number">13</span>]          <span class="hljs-comment"># &quot;2015-08-01 14:00:00&quot; → &quot;14&quot;</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">24</span>):<br>    <span class="hljs-keyword">if</span> pred_hour == feature_names[i][<span class="hljs-number">5</span>:<span class="hljs-number">7</span>]:<br>        hour_part.append(<span class="hljs-number">1</span>)<br>    <span class="hljs-keyword">else</span>:<br>        hour_part.append(<span class="hljs-number">0</span>)<br></code></pre></td></tr></table></figure>
+<p>关键是 <code>feature_names[i][5:7]</code> 这个切片。以 <code>i = 14</code> 为例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">feature_names[14] = &quot;hour_14&quot;<br>位置：               0123456<br>                    h o u r _ 1 4<br>feature_names[14][5:7] = &quot;14&quot;   ← 取第 5、6 个字符，正好是小时数字<br></code></pre></td></tr></table></figure>
+<p>所以这个循环在问 24 次：”这个位置的小时数，和我要预测的小时数一样吗？一样填 1，不一样填 0。”结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">要预测 14 点 → hour_part = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0]<br>                                                            └ index=14 是 1<br></code></pre></td></tr></table></figure>
+<p><strong>月份 one-hot 循环（注意切片位置变了！）：</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">pred_month = time[<span class="hljs-number">5</span>:<span class="hljs-number">7</span>]           <span class="hljs-comment"># &quot;2015-08-01 14:00:00&quot; → &quot;08&quot;</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">24</span>, <span class="hljs-number">36</span>):<br>    <span class="hljs-keyword">if</span> pred_month == feature_names[i][<span class="hljs-number">6</span>:<span class="hljs-number">8</span>]:<br>        month_part.append(<span class="hljs-number">1</span>)<br></code></pre></td></tr></table></figure>
+<p>以 <code>i = 31</code> 为例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">feature_names[31] = &quot;month_08&quot;<br>位置：               01234567<br>                    m o n t h _ 0 8<br>feature_names[31][6:8] = &quot;08&quot;   ← 月份的切片是 [6:8]，比小时往后挪一位<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>⚠️ <strong>自己核对一遍</strong>（花 1 分钟，避免盯着屏幕发呆）：</p>
+<ul>
+<li><code>feature_names[14]</code> = <code>&quot;hour_14&quot;</code>，<code>[5:7]</code> = <code>&quot;14&quot;</code> ✓</li>
+<li><code>feature_names[31]</code> = <code>&quot;month_08&quot;</code>，<code>[6:8]</code> = <code>&quot;08&quot;</code> ✓</li>
+<li>数组下标从 0 开始：<code>hour_00</code> 在 index 0，<code>hour_23</code> 在 index 23，<code>month_01</code> 在 index 24，<code>month_12</code> 在 index 35</li>
+</ul>
+</blockquote>
+<p><strong>为什么月份循环用 <code>range(24, 36)</code>？</strong> 因为月份数从 index 24 开始（前 24 个被小时占了），到 index 35 结束，共 12 个月。</p>
+<h3 id="9-4-逐行解析：历史负荷特征"><a href="#9-4-逐行解析：历史负荷特征" class="headerlink" title="9.4 逐行解析：历史负荷特征"></a>9.4 逐行解析：历史负荷特征</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">last_1h_time = (pd.to_datetime(time) - pd.to_timedelta(<span class="hljs-string">&#x27;1h&#x27;</span>)).strftime(<span class="hljs-string">&#x27;%Y-%m-%d %H:%M:%S&#x27;</span>)<br>last_1h_load = data_dict.get(last_1h_time, <span class="hljs-number">600</span>)<br></code></pre></td></tr></table></figure>
+<p>和第 7.5 节的 <code>yesterday_load</code> 是同一个套路，只是时间差从 <code>&#39;1d&#39;</code> 换成了 <code>&#39;1h&#39;</code>、<code>&#39;2h&#39;</code>、<code>&#39;3h&#39;</code>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">time = &quot;2015-08-01 14:00:00&quot;<br>                │<br>                ▼  减去 1h<br>last_1h_time = &quot;2015-08-01 13:00:00&quot;   →  去字典查这天的负荷<br>                │<br>                ▼  减去 2h / 3h<br>last_2h_time = &quot;2015-08-01 12:00:00&quot;<br>last_3h_time = &quot;2015-08-01 11:00:00&quot;<br>                │<br>                ▼  减去 1d<br>last_day_time = &quot;2015-07-31 14:00:00&quot;  →  昨天同时刻<br></code></pre></td></tr></table></figure>
+<p><strong>注意 <code>data_dict.get(key, 600)</code> 里的 <code>600</code>：</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">last_1h_load = data_dict.get(last_1h_time, <span class="hljs-number">600</span>)<br>                                          ^^^<br>                                    查不到时的默认值<br></code></pre></td></tr></table></figure>
+<ul>
+<li>字典的 <code>.get(key, default)</code>：key 存在返回对应值，<strong>不存在返回 600</strong>（而不是报错）</li>
+<li>💡 这是一个”<strong>兜底值</strong>“。比如最早的一条预测任务，它前 3 小时的数据可能不在 test.csv 里——此时给 600 这个默认值，总比给 <code>None</code> 让模型崩溃强</li>
+<li>⚠️ 这种写法的风险：万一真实负荷和 600 差得很远（比如平均负荷是 5000），这个兜底值会引入误差。更好的做法是检查数据是否够 3 小时再开始预测</li>
+</ul>
+<p><strong>最后拼装成一行特征：</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">his_part = [last_1h_load, last_2h_load, last_3h_load, last_day_load]<br>feature_list = [hour_part + month_part + his_part]<br>feature_df = pd.DataFrame(feature_list, columns=feature_names)<br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>hour_part + month_part + his_part</code>：三个列表<strong>拼接</strong>成一个 40 元素的一维列表</li>
+<li>外面再套一层 <code>[]</code> 变成<strong>二维列表</strong>（1 行 × 40 列）——因为 <code>pd.DataFrame</code> 需要二维结构</li>
+<li>最终返回：<strong>只有一行 40 列的 DataFrame</strong>，可以直接喂给 <code>model.predict()</code></li>
+</ul>
+<h3 id="9-5-完整代码（复刻-predict-py-的主流程）"><a href="#9-5-完整代码（复刻-predict-py-的主流程）" class="headerlink" title="9.5 完整代码（复刻 predict.py 的主流程）"></a>9.5 完整代码（复刻 predict.py 的主流程）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">PowerLoadPredict</span>(<span class="hljs-title class_ inherited__">object</span>):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, filename</span>):<br>        <span class="hljs-comment"># 配置日志记录</span><br>        logfile_name = <span class="hljs-string">&quot;predict_&quot;</span> + datetime.datetime.now().strftime(<span class="hljs-string">&#x27;%Y%m%d%H%M%S&#x27;</span>)<br>        <span class="hljs-variable language_">self</span>.logfile = Logger(<span class="hljs-string">&#x27;../&#x27;</span>, logfile_name).get_logger()<br>        <span class="hljs-comment"># 获取数据源</span><br>        <span class="hljs-variable language_">self</span>.data_source = data_preprocessing(filename)<br>        <span class="hljs-comment"># 历史数据转为字典，key:时间，value:负荷，目的是为了避免频繁操作dataframe，提高效率。实际开发场景中可以使用redis进行缓存</span><br>        <span class="hljs-variable language_">self</span>.data_dict = <span class="hljs-variable language_">self</span>.data_source.set_index(<span class="hljs-string">&#x27;time&#x27;</span>)[<span class="hljs-string">&#x27;power_load&#x27;</span>].to_dict()<br><br><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    <span class="hljs-comment"># 2.定义电力负荷预测类(PowerLoadPredict)，配置日志，获取数据源、历史数据转为字典</span><br>    input_file = os.path.join(<span class="hljs-string">&#x27;../data&#x27;</span>, <span class="hljs-string">&#x27;test.csv&#x27;</span>)<br>    pred_obj = PowerLoadPredict(input_file)<br>    <span class="hljs-comment"># 3.加载模型</span><br>    model = joblib.load(<span class="hljs-string">&#x27;../model/xgb.pkl&#x27;</span>)<br>    <span class="hljs-comment"># 4.模型预测</span><br>    evaluate_list = []<br>    <span class="hljs-comment"># 4.1确定要预测的时间段：2015-08-01 00:00:00及以后的时间</span><br>    pred_times = pred_obj.data_source[pred_obj.data_source[<span class="hljs-string">&#x27;time&#x27;</span>] &gt;= <span class="hljs-string">&#x27;2015-08-01 00:00:00&#x27;</span>][<span class="hljs-string">&#x27;time&#x27;</span>]<br>    <span class="hljs-keyword">for</span> pred_time <span class="hljs-keyword">in</span> pred_times:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;开始预测时间为：<span class="hljs-subst">&#123;pred_time&#125;</span>的负荷&quot;</span>)<br>        pred_obj.logfile.info(<span class="hljs-string">f&quot;开始预测时间为：<span class="hljs-subst">&#123;pred_time&#125;</span>的负荷&quot;</span>)<br>        <span class="hljs-comment"># 4.2为了模拟实际场景的预测，把要预测的时间以及以后的负荷都掩盖掉，因此新建一个数据字典，只保存预测时间以前的数据字典</span><br>        data_his_dict = &#123;k: v <span class="hljs-keyword">for</span> k, v <span class="hljs-keyword">in</span> pred_obj.data_dict.items() <span class="hljs-keyword">if</span> k &lt; pred_time&#125;<br>        <span class="hljs-comment"># 4.3预测负荷</span><br>        <span class="hljs-comment"># 4.3.1解析特征</span><br>        processed_data, feature_cols = pred_feature_extract(data_his_dict, pred_time, pred_obj.logfile)<br>        <span class="hljs-comment"># 4.3.2模型预测</span><br>        pred_value = model.predict(processed_data[feature_cols])<br>        <span class="hljs-comment"># 4.4真实负荷</span><br>        true_value = pred_obj.data_dict.get(pred_time)<br>        pred_obj.logfile.info(<span class="hljs-string">f&quot;真实负荷为：<span class="hljs-subst">&#123;true_value&#125;</span>, 预测负荷为：<span class="hljs-subst">&#123;pred_value&#125;</span>&quot;</span>)<br>        <span class="hljs-comment"># 4.5结果保存到evaluate_list，三个元素分别是预测时间、真实负荷、预测负荷</span><br>        evaluate_list.append([pred_time, true_value, pred_value[<span class="hljs-number">0</span>]])<br>    <span class="hljs-comment"># 4.6evaluate_list转为DataFrame</span><br>    evaluate_df = pd.DataFrame(evaluate_list, columns=[<span class="hljs-string">&#x27;时间&#x27;</span>, <span class="hljs-string">&#x27;真实值&#x27;</span>, <span class="hljs-string">&#x27;预测值&#x27;</span>])<br>    <span class="hljs-comment"># 5.预测结果评价</span><br>    <span class="hljs-comment"># 5.1计算预测结果与真实结果的MAE</span><br>    mae_score = mean_absolute_error(evaluate_df[<span class="hljs-string">&#x27;真实值&#x27;</span>], evaluate_df[<span class="hljs-string">&#x27;预测值&#x27;</span>])<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;模型对新数据进行预测的平均绝对误差：<span class="hljs-subst">&#123;mae_score&#125;</span>&quot;</span>)<br>    <span class="hljs-comment"># 5.2绘制折线图，查看预测效果</span><br>    prediction_plot(evaluate_df)<br></code></pre></td></tr></table></figure>
+<h3 id="9-6-逐行解析：主流程"><a href="#9-6-逐行解析：主流程" class="headerlink" title="9.6 逐行解析：主流程"></a>9.6 逐行解析：主流程</h3><p><strong>第一步：加载数据和模型</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">input_file = os.path.join(<span class="hljs-string">&#x27;../data&#x27;</span>, <span class="hljs-string">&#x27;test.csv&#x27;</span>)<br>pred_obj = PowerLoadPredict(input_file)<br>model = joblib.load(<span class="hljs-string">&#x27;../model/xgb.pkl&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>test.csv</code>：测试数据——里面<strong>同时</strong>含 2015-08-01 之前的历史数据和之后的”答案”</li>
+<li><code>joblib.load(...)</code>：把第 8.7 节保存的模型加载回来。<strong>注意这里没有任何训练代码</strong>——训练和预测被彻底分离成两个脚本</li>
+</ul>
+<p><strong>类的构造函数里有个巧妙设计：</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-variable language_">self</span>.data_dict = <span class="hljs-variable language_">self</span>.data_source.set_index(<span class="hljs-string">&#x27;time&#x27;</span>)[<span class="hljs-string">&#x27;power_load&#x27;</span>].to_dict()<br></code></pre></td></tr></table></figure>
+<ul>
+<li>把整个表转成 <code>{时间: 负荷}</code> 字典，<strong>只做一次</strong></li>
+<li>后面每次预测查历史负荷，都是 <code>dict.get()</code>——O(1) 操作</li>
+<li>💡 注释里说得很直白：”实际开发场景中可以使用 redis 进行缓存”。这就是把”性能优化”前置到数据结构选择上：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">用 DataFrame 每次筛选：  对几千行扫一遍 → O(n)，循环几千次 = 几百万次操作 🐢<br>用字典一次性转换：       查询是 O(1)    → 循环几千次 = 几千次操作     🚀<br></code></pre></td></tr></table></figure>
+<p><strong>第二步：确定要预测哪些时刻</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">pred_times = pred_obj.data_source[pred_obj.data_source[<span class="hljs-string">&#x27;time&#x27;</span>] &gt;= <span class="hljs-string">&#x27;2015-08-01 00:00:00&#x27;</span>][<span class="hljs-string">&#x27;time&#x27;</span>]<br></code></pre></td></tr></table></figure>
+<ul>
+<li>这是一个<strong>布尔索引</strong> + <strong>取列</strong>的组合操作</li>
+<li>拆开理解：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">pred_obj.data_source[&#x27;time&#x27;] &gt;= &#x27;2015-08-01 00:00:00&#x27;<br>   ↓ 产生一列 True / False<br>data_source[那一列 True/False]<br>   ↓ 筛选出所有 True 的行<br>[&#x27;time&#x27;]<br>   ↓ 只取 time 列<br><br>pred_times = [&quot;2015-08-01 00:00:00&quot;, &quot;2015-08-01 01:00:00&quot;, ...]<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>⚠️ 这里其实用了一个”魔法”：pandas 字符串可以<strong>按字典序比较大小</strong>。<code>&#39;2015-08-01 00:00:00&#39; &gt;= &#39;2015-08-01 00:00:00&#39;</code> 这种比较按字符一个一个比——因为时间格式是 <code>年-月-日 时:分:秒</code>（<strong>定长、从粗到细</strong>），字典序恰好等于时间先后。这也是为什么案例要求 time 列是标准格式字符串。</p>
+</blockquote>
+<p><strong>第三步（全案例最精彩的设计）：掩盖未来</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">for</span> pred_time <span class="hljs-keyword">in</span> pred_times:<br>    data_his_dict = &#123;k: v <span class="hljs-keyword">for</span> k, v <span class="hljs-keyword">in</span> pred_obj.data_dict.items() <span class="hljs-keyword">if</span> k &lt; pred_time&#125;<br></code></pre></td></tr></table></figure>
+<p>这一行是<strong>字典推导式</strong>，做的事情是：</p>
+<blockquote>
+<p>预测 <code>pred_time</code> 这个时刻时，<strong>只允许看它之前的数据</strong>，把它本身和它之后的所有数据”屏蔽掉”。</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">完整字典 data_dict（含未来）：<br>  &#123;&quot;08-01 00:00&quot;: 900, &quot;08-01 01:00&quot;: 910, &quot;08-01 02:00&quot;: 880, ...&#125;<br><br>现在要预测 &quot;08-01 01:00&quot;：<br>  屏蔽规则 k &lt; &quot;08-01 01:00&quot;<br>        ▼<br>data_his_dict = &#123;&quot;08-01 00:00&quot;: 900&#125;    ← 只剩 00:00 及更早，01:00 及以后全删掉<br></code></pre></td></tr></table></figure>
+<p><strong>为什么不直接用完整字典？（这不是多此一举吗？）</strong></p>
+<p>因为 <code>data_dict</code> 里<strong>有未来 24 小时的真实负荷</strong>（test.csv 提供了答案）。如果特征构造时直接查完整字典，”前 1 小时负荷”会查到<strong>真实值</strong>——模型等于在作弊！这叫<strong>数据泄漏（data leakage）</strong>，测出来的效果好全是假象。</p>
+<p>本案例用一个 <code>k &lt; pred_time</code> 的字典推导式，诚实地模拟了”真实世界里你就是没有未来数据”的场景：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">                   预测 01:00 时<br>                          │<br>┌──────────────────┬─────┴──────────────────┐<br>│  00:00 及更早     │      01:00 及以后        │<br>│  （可用作特征）    │  （被屏蔽，不能用）      │<br>└──────────────────┴────────────────────────┘<br>                          │<br>                          ▼<br>                逐小时滚动，每个时刻都重新屏蔽一次<br></code></pre></td></tr></table></figure>
+<p><strong>第四步：预测、记录、滚动</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">processed_data, feature_cols = pred_feature_extract(data_his_dict, pred_time, pred_obj.logfile)<br>pred_value = model.predict(processed_data[feature_cols])<br>true_value = pred_obj.data_dict.get(pred_time)<br>evaluate_list.append([pred_time, true_value, pred_value[<span class="hljs-number">0</span>]])<br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>pred_feature_extract(data_his_dict, ...)</code>：用<strong>被屏蔽的字典</strong>构造一行 40 维特征</li>
+<li><code>model.predict(...)</code>：输出是一个<strong>只含一个元素的数组</strong>，如 <code>[915.3]</code></li>
+<li><code>true_value = pred_obj.data_dict.get(pred_time)</code>：<strong>从完整字典</strong>取这个时刻的真实负荷，留着一会儿算误差用（真实值只用于<strong>评价</strong>，不用于构造特征——这是关键区别）</li>
+<li><code>pred_value[0]</code>：把 <code>[915.3]</code> 里的 <code>915.3</code> 取出来（去掉数组外壳）</li>
+<li><code>evaluate_list.append([pred_time, true_value, pred_value[0]])</code>：每一轮收集一行三列</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">evaluate_list = [<br>    [&#x27;2015-08-01 00:00:00&#x27;, 900.0, 905.2],<br>    [&#x27;2015-08-01 01:00:00&#x27;, 910.0, 912.8],<br>    ...<br>]<br></code></pre></td></tr></table></figure>
+<p><strong>第五步：汇总成表、评价、画图</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">evaluate_df = pd.DataFrame(evaluate_list, columns=[<span class="hljs-string">&#x27;时间&#x27;</span>, <span class="hljs-string">&#x27;真实值&#x27;</span>, <span class="hljs-string">&#x27;预测值&#x27;</span>])<br>mae_score = mean_absolute_error(evaluate_df[<span class="hljs-string">&#x27;真实值&#x27;</span>], evaluate_df[<span class="hljs-string">&#x27;预测值&#x27;</span>])<br>prediction_plot(evaluate_df)<br></code></pre></td></tr></table></figure>
+<ul>
+<li>把列表转成三列的 DataFrame</li>
+<li>用 <code>mean_absolute_error</code> 算整段预测的 MAE —— 这次的误差是<strong>模型在”新数据”上的表现</strong>（第 8 节是训练集/测试集，这里是模拟的线上预测）</li>
+<li>输出形如：<code>模型对新数据进行预测的平均绝对误差：&lt;mae_score&gt;</code>（数值以实际运行为准）</li>
+</ul>
+<h3 id="9-7-逐行解析：预测效果绘图"><a href="#9-7-逐行解析：预测效果绘图" class="headerlink" title="9.7 逐行解析：预测效果绘图"></a>9.7 逐行解析：预测效果绘图</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">prediction_plot</span>(<span class="hljs-params">data</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    绘制时间与预测负荷折线图，时间与真实负荷折线图，展示预测效果</span><br><span class="hljs-string">    :param data: 数据一共有三列：时间、真实值、预测值</span><br><span class="hljs-string">    :return:</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    <span class="hljs-comment"># 绘制在新数据下</span><br>    fig = plt.figure(figsize=(<span class="hljs-number">40</span>, <span class="hljs-number">20</span>))<br>    ax = fig.add_subplot()<br>    <span class="hljs-comment"># 绘制时间与真实负荷的折线图</span><br>    ax.plot(data[<span class="hljs-string">&#x27;时间&#x27;</span>], data[<span class="hljs-string">&#x27;真实值&#x27;</span>], label=<span class="hljs-string">&#x27;真实值&#x27;</span>)<br>    <span class="hljs-comment"># 绘制时间与预测负荷的折线图</span><br>    ax.plot(data[<span class="hljs-string">&#x27;时间&#x27;</span>], data[<span class="hljs-string">&#x27;预测值&#x27;</span>], label=<span class="hljs-string">&#x27;预测值&#x27;</span>)<br>    ax.set_ylabel(<span class="hljs-string">&#x27;负荷&#x27;</span>)<br>    ax.set_title(<span class="hljs-string">&#x27;预测负荷以及真实负荷的折线图&#x27;</span>)<br>    <span class="hljs-comment"># 横坐标时间若不处理太过密集，这里调大时间展示的间隔</span><br>    ax.xaxis.set_major_locator(mick.MultipleLocator(<span class="hljs-number">50</span>))<br>    <span class="hljs-comment"># 时间展示时旋转45度</span><br>    plt.xticks(rotation=<span class="hljs-number">45</span>)<br>    plt.legend()<br>    plt.savefig(<span class="hljs-string">&#x27;../data/fig/预测效果.png&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<p>和第 6 节的分析图不同，这张图只画<strong>一张子图</strong>、<strong>两条折线</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">负荷<br> 900 │                              ┄┄┄┄ 预测值<br>     │                   ╱╲        ───── 真实值<br> 850 │      ╱╲    ╱╲   ╱  ╲<br>     │     ╱  ╲  ╱  ╲ ╱    ╲<br> 800 │    ╱    ╲╱    ╳<br>     │   ╱          ╲╱<br>     └──────────────────────────────────── 时间<br>     |← 每 50 个刻度标一次，刻度文字旋转 45 度<br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>fig.add_subplot()</code>：不传参数相当于 <code>add_subplot(111)</code>——1 行 1 列 1 张图</li>
+<li><code>figsize=(40, 20)</code>：横长的画布。因为时间轴很长（几百上千个小时），横向够宽才看得清</li>
+<li><code>mick.MultipleLocator(50)</code>：x 轴刻度<strong>每 50 个数据点标一次</strong>（否则时间标签挤成一团黑线）</li>
+<li><code>plt.xticks(rotation=45)</code>：时间标签<strong>旋转 45°</strong>——时间字符串很长，竖着摆更省空间</li>
+<li><code>plt.legend()</code>：显示图例（就是右上角说明哪条线是真实值、哪条是预测值的小框）</li>
+<li><code>plt.savefig(&#39;../data/fig/预测效果.png&#39;)</code>：保存到 <code>data/fig/</code> 目录</li>
+</ul>
+<blockquote>
+<p>📌 <strong>本节小结（整个案例的收束）</strong>：这个案例没有任何”时序模型”，但它做对了时序项目最重要的三件事——</p>
+<ol>
+<li><strong>时序转表格</strong>：用 shift + yesterday 把序列变成监督学习的表格</li>
+<li><strong>训练预测分离</strong>：<code>train.py</code> 产出一个 pkl，<code>predict.py</code> 只负责加载和使用</li>
+<li><strong>诚实评估</strong>：用”屏蔽未来字典”防止数据泄漏，测到的误差不含水分</li>
+</ol>
+<p>这三件事，比任何花哨的模型都重要。</p>
+</blockquote>
+<hr>
+<h2 id="10-完整可运行代码（自包含版）"><a href="#10-完整可运行代码（自包含版）" class="headerlink" title="10. 完整可运行代码（自包含版）"></a>10. 完整可运行代码（自包含版）</h2><p>前几节按”函数”拆开讲，这一节给你一份<strong>整合版</strong>：不依赖 <code>utils/</code> 目录，把数据加载、特征工程、训练、预测写进一个文件，省去”这个 import 从哪来”的困惑。</p>
+<h3 id="10-1-使用说明（先读这个！）"><a href="#10-1-使用说明（先读这个！）" class="headerlink" title="10.1 使用说明（先读这个！）"></a>10.1 使用说明（先读这个！）</h3><blockquote>
+<p>⚠️ 运行前必须自行准备数据，本教程<strong>不提供数据文件</strong>：</p>
+<ol>
+<li>准备两个 CSV：<code>train.csv</code>（训练）和 <code>test.csv</code>（测试），放在代码同级目录的 <code>data/</code> 下</li>
+<li>两列：<code>time</code>（格式 <code>2015-08-01 14:00:00</code>）和 <code>power_load</code>（数值）</li>
+<li>建议至少覆盖 <strong>2 天以上</strong>（dropna 会丢掉第一天），并<strong>完整覆盖 24 小时 × 12 个月</strong>（否则 one-hot 列数不足 40）</li>
+<li>运行环境：<code>pip install pandas matplotlib scikit-learn xgboost joblib</code></li>
+<li>字体：代码里指定了 <code>SimHei</code>（黑体）以正常显示中文标题；macOS 用户可改为 <code>Arial Unicode MS</code></li>
+</ol>
+</blockquote>
+<h3 id="10-2-完整代码"><a href="#10-2-完整代码" class="headerlink" title="10.2 完整代码"></a>10.2 完整代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># -*- coding: utf-8 -*-</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">电力负荷预测 · 自包含教学版</span><br><span class="hljs-string">训练 + 预测一体，不依赖外部 utils 模块</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-keyword">import</span> os<br><span class="hljs-keyword">import</span> datetime<br><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt<br><span class="hljs-keyword">from</span> xgboost <span class="hljs-keyword">import</span> XGBRegressor<br><span class="hljs-keyword">from</span> sklearn.model_selection <span class="hljs-keyword">import</span> train_test_split<br><span class="hljs-keyword">from</span> sklearn.metrics <span class="hljs-keyword">import</span> mean_squared_error, mean_absolute_error<br><span class="hljs-keyword">import</span> joblib<br><br>plt.rcParams[<span class="hljs-string">&#x27;font.family&#x27;</span>] = <span class="hljs-string">&#x27;SimHei&#x27;</span><br>plt.rcParams[<span class="hljs-string">&#x27;font.size&#x27;</span>] = <span class="hljs-number">15</span><br><br><br><span class="hljs-comment"># ==================== 1. 数据加载 ====================</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">data_preprocessing</span>(<span class="hljs-params">filename</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;读取 CSV，返回 DataFrame（含 time、power_load 两列）&quot;&quot;&quot;</span><br>    data = pd.read_csv(filename)<br>    <span class="hljs-keyword">return</span> data<br><br><br><span class="hljs-comment"># ==================== 2. 数据分析 ====================</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">ana_data</span>(<span class="hljs-params">data</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;EDA 五板斧：整体情况 / 分布 / 小时趋势 / 月度趋势 / 工作日 vs 周末&quot;&quot;&quot;</span><br>    data = data.copy(deep=<span class="hljs-literal">True</span>)<br>    <span class="hljs-built_in">print</span>(data.info())<br>    <span class="hljs-built_in">print</span>(data.head())<br>    fig = plt.figure(figsize=(<span class="hljs-number">20</span>, <span class="hljs-number">32</span>))<br>    ax1 = fig.add_subplot(<span class="hljs-number">411</span>)<br>    ax1.hist(data[<span class="hljs-string">&#x27;power_load&#x27;</span>], bins=<span class="hljs-number">100</span>)<br>    ax1.set_title(<span class="hljs-string">&#x27;负荷分布直方图&#x27;</span>)<br>    ax2 = fig.add_subplot(<span class="hljs-number">412</span>)<br>    data[<span class="hljs-string">&#x27;hour&#x27;</span>] = data[<span class="hljs-string">&#x27;time&#x27;</span>].<span class="hljs-built_in">str</span>[<span class="hljs-number">11</span>:<span class="hljs-number">13</span>]<br>    data_hour_avg = data.groupby(by=<span class="hljs-string">&#x27;hour&#x27;</span>, as_index=<span class="hljs-literal">False</span>)[<span class="hljs-string">&#x27;power_load&#x27;</span>].mean()<br>    ax2.plot(data_hour_avg[<span class="hljs-string">&#x27;hour&#x27;</span>], data_hour_avg[<span class="hljs-string">&#x27;power_load&#x27;</span>], color=<span class="hljs-string">&#x27;b&#x27;</span>, linewidth=<span class="hljs-number">2</span>)<br>    ax2.set_title(<span class="hljs-string">&#x27;各小时的平均负荷趋势图&#x27;</span>)<br>    ax2.set_xlabel(<span class="hljs-string">&#x27;小时&#x27;</span>)<br>    ax2.set_ylabel(<span class="hljs-string">&#x27;负荷&#x27;</span>)<br>    ax3 = fig.add_subplot(<span class="hljs-number">413</span>)<br>    data[<span class="hljs-string">&#x27;month&#x27;</span>] = data[<span class="hljs-string">&#x27;time&#x27;</span>].<span class="hljs-built_in">str</span>[<span class="hljs-number">5</span>:<span class="hljs-number">7</span>]<br>    data_month_avg = data.groupby(<span class="hljs-string">&#x27;month&#x27;</span>, as_index=<span class="hljs-literal">False</span>)[<span class="hljs-string">&#x27;power_load&#x27;</span>].mean()<br>    ax3.plot(data_month_avg[<span class="hljs-string">&#x27;month&#x27;</span>], data_month_avg[<span class="hljs-string">&#x27;power_load&#x27;</span>], color=<span class="hljs-string">&#x27;r&#x27;</span>, linewidth=<span class="hljs-number">2</span>)<br>    ax3.set_title(<span class="hljs-string">&#x27;各月份平均负荷&#x27;</span>)<br>    ax3.set_xlabel(<span class="hljs-string">&#x27;月份&#x27;</span>)<br>    ax3.set_ylabel(<span class="hljs-string">&#x27;平均负荷&#x27;</span>)<br>    ax4 = fig.add_subplot(<span class="hljs-number">414</span>)<br>    data[<span class="hljs-string">&#x27;week_day&#x27;</span>] = data[<span class="hljs-string">&#x27;time&#x27;</span>].apply(<span class="hljs-keyword">lambda</span> x: pd.to_datetime(x).weekday())<br>    data[<span class="hljs-string">&#x27;is_workday&#x27;</span>] = data[<span class="hljs-string">&#x27;week_day&#x27;</span>].apply(<span class="hljs-keyword">lambda</span> x: <span class="hljs-number">1</span> <span class="hljs-keyword">if</span> x &lt;= <span class="hljs-number">4</span> <span class="hljs-keyword">else</span> <span class="hljs-number">0</span>)<br>    power_load_workday_avg = data[data[<span class="hljs-string">&#x27;is_workday&#x27;</span>] == <span class="hljs-number">1</span>][<span class="hljs-string">&#x27;power_load&#x27;</span>].mean()<br>    power_load_holiday_avg = data[data[<span class="hljs-string">&#x27;is_workday&#x27;</span>] == <span class="hljs-number">0</span>][<span class="hljs-string">&#x27;power_load&#x27;</span>].mean()<br>    ax4.bar(x=[<span class="hljs-string">&#x27;工作日平均负荷&#x27;</span>, <span class="hljs-string">&#x27;周末平均负荷&#x27;</span>], height=[power_load_workday_avg, power_load_holiday_avg])<br>    ax4.set_ylabel(<span class="hljs-string">&#x27;平均负荷&#x27;</span>)<br>    ax4.set_title(<span class="hljs-string">&#x27;工作日与周末的平均负荷对比&#x27;</span>)<br>    plt.savefig(<span class="hljs-string">&#x27;data/fig/负荷分析图.png&#x27;</span>)<br><br><br><span class="hljs-comment"># ==================== 3. 特征工程 ====================</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">feature_engineering</span>(<span class="hljs-params">data</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;时序 → 表格：24 小时 + 12 月份 + 前 3 小时 + 昨日同时刻 = 40 维特征&quot;&quot;&quot;</span><br>    result = data.copy(deep=<span class="hljs-literal">True</span>)<br>    <span class="hljs-comment"># 时间特征 + one-hot</span><br>    result[<span class="hljs-string">&#x27;hour&#x27;</span>] = result[<span class="hljs-string">&#x27;time&#x27;</span>].<span class="hljs-built_in">str</span>[<span class="hljs-number">11</span>:<span class="hljs-number">13</span>]<br>    result[<span class="hljs-string">&#x27;month&#x27;</span>] = result[<span class="hljs-string">&#x27;time&#x27;</span>].<span class="hljs-built_in">str</span>[<span class="hljs-number">5</span>:<span class="hljs-number">7</span>]<br>    hour_encoding = pd.get_dummies(result[<span class="hljs-string">&#x27;hour&#x27;</span>])<br>    hour_encoding.columns = [<span class="hljs-string">&#x27;hour_&#x27;</span> + <span class="hljs-built_in">str</span>(i) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> hour_encoding.columns]<br>    month_encoding = pd.get_dummies(result[<span class="hljs-string">&#x27;month&#x27;</span>])<br>    month_encoding.columns = [<span class="hljs-string">&#x27;month_&#x27;</span> + <span class="hljs-built_in">str</span>(i) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> month_encoding.columns]<br>    result = pd.concat([result, hour_encoding, month_encoding], axis=<span class="hljs-number">1</span>)<br>    <span class="hljs-comment"># 滑动窗口（前 1/2/3 小时）</span><br>    window_size = <span class="hljs-number">3</span><br>    shift_list = [result[<span class="hljs-string">&#x27;power_load&#x27;</span>].shift(i) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, window_size + <span class="hljs-number">1</span>)]<br>    shift_data = pd.concat(shift_list, axis=<span class="hljs-number">1</span>)<br>    shift_data.columns = [<span class="hljs-string">&#x27;前&#x27;</span> + <span class="hljs-built_in">str</span>(i) + <span class="hljs-string">&#x27;小时&#x27;</span> <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, window_size + <span class="hljs-number">1</span>)]<br>    result = pd.concat([result, shift_data], axis=<span class="hljs-number">1</span>)<br>    <span class="hljs-comment"># 昨日同时刻</span><br>    time_load_dict = result.set_index(<span class="hljs-string">&#x27;time&#x27;</span>)[<span class="hljs-string">&#x27;power_load&#x27;</span>].to_dict()<br>    result[<span class="hljs-string">&#x27;yesterday_time&#x27;</span>] = result[<span class="hljs-string">&#x27;time&#x27;</span>].apply(<br>        <span class="hljs-keyword">lambda</span> x: (pd.to_datetime(x) - pd.to_timedelta(<span class="hljs-string">&#x27;1d&#x27;</span>)).strftime(<span class="hljs-string">&#x27;%Y-%m-%d %H:%M:%S&#x27;</span>))<br>    result[<span class="hljs-string">&#x27;yesterday_load&#x27;</span>] = result[<span class="hljs-string">&#x27;yesterday_time&#x27;</span>].apply(<span class="hljs-keyword">lambda</span> x: time_load_dict.get(x))<br>    result.dropna(axis=<span class="hljs-number">0</span>, inplace=<span class="hljs-literal">True</span>)<br>    <span class="hljs-comment"># 特征列清单（40 维）</span><br>    time_feature_names = (<span class="hljs-built_in">list</span>(hour_encoding.columns) + <span class="hljs-built_in">list</span>(month_encoding.columns)<br>                          + <span class="hljs-built_in">list</span>(shift_data.columns) + [<span class="hljs-string">&#x27;yesterday_load&#x27;</span>])<br>    <span class="hljs-keyword">return</span> result, time_feature_names<br><br><br><span class="hljs-comment"># ==================== 4. 特征解析（预测时用） ====================</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">pred_feature_extract</span>(<span class="hljs-params">data_dict, time</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;为单个预测时刻手工构造一行 40 维特征（与训练特征列名严格一致）&quot;&quot;&quot;</span><br>    feature_names = [<span class="hljs-string">&#x27;hour_00&#x27;</span>, <span class="hljs-string">&#x27;hour_01&#x27;</span>, <span class="hljs-string">&#x27;hour_02&#x27;</span>, <span class="hljs-string">&#x27;hour_03&#x27;</span>, <span class="hljs-string">&#x27;hour_04&#x27;</span>, <span class="hljs-string">&#x27;hour_05&#x27;</span>,<br>                     <span class="hljs-string">&#x27;hour_06&#x27;</span>, <span class="hljs-string">&#x27;hour_07&#x27;</span>, <span class="hljs-string">&#x27;hour_08&#x27;</span>, <span class="hljs-string">&#x27;hour_09&#x27;</span>, <span class="hljs-string">&#x27;hour_10&#x27;</span>, <span class="hljs-string">&#x27;hour_11&#x27;</span>,<br>                     <span class="hljs-string">&#x27;hour_12&#x27;</span>, <span class="hljs-string">&#x27;hour_13&#x27;</span>, <span class="hljs-string">&#x27;hour_14&#x27;</span>, <span class="hljs-string">&#x27;hour_15&#x27;</span>, <span class="hljs-string">&#x27;hour_16&#x27;</span>, <span class="hljs-string">&#x27;hour_17&#x27;</span>,<br>                     <span class="hljs-string">&#x27;hour_18&#x27;</span>, <span class="hljs-string">&#x27;hour_19&#x27;</span>, <span class="hljs-string">&#x27;hour_20&#x27;</span>, <span class="hljs-string">&#x27;hour_21&#x27;</span>, <span class="hljs-string">&#x27;hour_22&#x27;</span>, <span class="hljs-string">&#x27;hour_23&#x27;</span>,<br>                     <span class="hljs-string">&#x27;month_01&#x27;</span>, <span class="hljs-string">&#x27;month_02&#x27;</span>, <span class="hljs-string">&#x27;month_03&#x27;</span>, <span class="hljs-string">&#x27;month_04&#x27;</span>, <span class="hljs-string">&#x27;month_05&#x27;</span>, <span class="hljs-string">&#x27;month_06&#x27;</span>,<br>                     <span class="hljs-string">&#x27;month_07&#x27;</span>, <span class="hljs-string">&#x27;month_08&#x27;</span>, <span class="hljs-string">&#x27;month_09&#x27;</span>, <span class="hljs-string">&#x27;month_10&#x27;</span>, <span class="hljs-string">&#x27;month_11&#x27;</span>, <span class="hljs-string">&#x27;month_12&#x27;</span>,<br>                     <span class="hljs-string">&#x27;前1小时&#x27;</span>, <span class="hljs-string">&#x27;前2小时&#x27;</span>, <span class="hljs-string">&#x27;前3小时&#x27;</span>, <span class="hljs-string">&#x27;yesterday_load&#x27;</span>]<br>    hour_part = []<br>    pred_hour = time[<span class="hljs-number">11</span>:<span class="hljs-number">13</span>]<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">24</span>):<br>        <span class="hljs-keyword">if</span> pred_hour == feature_names[i][<span class="hljs-number">5</span>:<span class="hljs-number">7</span>]:<br>            hour_part.append(<span class="hljs-number">1</span>)<br>        <span class="hljs-keyword">else</span>:<br>            hour_part.append(<span class="hljs-number">0</span>)<br>    month_part = []<br>    pred_month = time[<span class="hljs-number">5</span>:<span class="hljs-number">7</span>]<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">24</span>, <span class="hljs-number">36</span>):<br>        <span class="hljs-keyword">if</span> pred_month == feature_names[i][<span class="hljs-number">6</span>:<span class="hljs-number">8</span>]:<br>            month_part.append(<span class="hljs-number">1</span>)<br>        <span class="hljs-keyword">else</span>:<br>            month_part.append(<span class="hljs-number">0</span>)<br>    his_part = []<br>    last_1h_time = (pd.to_datetime(time) - pd.to_timedelta(<span class="hljs-string">&#x27;1h&#x27;</span>)).strftime(<span class="hljs-string">&#x27;%Y-%m-%d %H:%M:%S&#x27;</span>)<br>    last_1h_load = data_dict.get(last_1h_time, <span class="hljs-number">600</span>)<br>    last_2h_time = (pd.to_datetime(time) - pd.to_timedelta(<span class="hljs-string">&#x27;2h&#x27;</span>)).strftime(<span class="hljs-string">&#x27;%Y-%m-%d %H:%M:%S&#x27;</span>)<br>    last_2h_load = data_dict.get(last_2h_time, <span class="hljs-number">600</span>)<br>    last_3h_time = (pd.to_datetime(time) - pd.to_timedelta(<span class="hljs-string">&#x27;3h&#x27;</span>)).strftime(<span class="hljs-string">&#x27;%Y-%m-%d %H:%M:%S&#x27;</span>)<br>    last_3h_load = data_dict.get(last_3h_time, <span class="hljs-number">600</span>)<br>    last_day_time = (pd.to_datetime(time) - pd.to_timedelta(<span class="hljs-string">&#x27;1d&#x27;</span>)).strftime(<span class="hljs-string">&#x27;%Y-%m-%d %H:%M:%S&#x27;</span>)<br>    last_day_load = data_dict.get(last_day_time, <span class="hljs-number">600</span>)<br>    his_part = [last_1h_load, last_2h_load, last_3h_load, last_day_load]<br>    feature_list = [hour_part + month_part + his_part]<br>    feature_df = pd.DataFrame(feature_list, columns=feature_names)<br>    <span class="hljs-keyword">return</span> feature_df, feature_names<br><br><br><span class="hljs-comment"># ==================== 5. 模型训练 ====================</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">model_train</span>(<span class="hljs-params">data, features</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;训练 XGBoost，打印训练/测试误差，保存模型&quot;&quot;&quot;</span><br>    x_data = data[features]<br>    y_data = data[<span class="hljs-string">&#x27;power_load&#x27;</span>]<br>    x_train, x_test, y_train, y_test = train_test_split(x_data, y_data, test_size=<span class="hljs-number">0.3</span>, random_state=<span class="hljs-number">22</span>)<br>    xgb = XGBRegressor(n_estimators=<span class="hljs-number">150</span>, max_depth=<span class="hljs-number">6</span>, learning_rate=<span class="hljs-number">0.1</span>)<br>    xgb.fit(x_train, y_train)<br>    y_pred_train = xgb.predict(x_train)<br>    y_pred_test = xgb.predict(x_test)<br>    mse_train = mean_squared_error(y_true=y_train, y_pred=y_pred_train)<br>    mae_train = mean_absolute_error(y_true=y_train, y_pred=y_pred_train)<br>    mse_test = mean_squared_error(y_true=y_test, y_pred=y_pred_test)<br>    mae_test = mean_absolute_error(y_true=y_test, y_pred=y_pred_test)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;模型在训练集上的均方误差：<span class="hljs-subst">&#123;mse_train&#125;</span>&quot;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;模型在训练集上的平均绝对误差：<span class="hljs-subst">&#123;mae_train&#125;</span>&quot;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;模型在测试集上的均方误差：<span class="hljs-subst">&#123;mse_test&#125;</span>&quot;</span>)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;模型在测试集上的平均绝对误差：<span class="hljs-subst">&#123;mae_test&#125;</span>&quot;</span>)<br>    os.makedirs(<span class="hljs-string">&#x27;model&#x27;</span>, exist_ok=<span class="hljs-literal">True</span>)<br>    joblib.dump(xgb, <span class="hljs-string">&#x27;model/xgb.pkl&#x27;</span>)<br>    <span class="hljs-keyword">return</span> xgb<br><br><br><span class="hljs-comment"># ==================== 6. 滚动预测 ====================</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">prediction_plot</span>(<span class="hljs-params">data</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;真实值与预测值双折线对比图&quot;&quot;&quot;</span><br>    <span class="hljs-keyword">import</span> matplotlib.ticker <span class="hljs-keyword">as</span> mick<br>    fig = plt.figure(figsize=(<span class="hljs-number">40</span>, <span class="hljs-number">20</span>))<br>    ax = fig.add_subplot()<br>    ax.plot(data[<span class="hljs-string">&#x27;时间&#x27;</span>], data[<span class="hljs-string">&#x27;真实值&#x27;</span>], label=<span class="hljs-string">&#x27;真实值&#x27;</span>)<br>    ax.plot(data[<span class="hljs-string">&#x27;时间&#x27;</span>], data[<span class="hljs-string">&#x27;预测值&#x27;</span>], label=<span class="hljs-string">&#x27;预测值&#x27;</span>)<br>    ax.set_ylabel(<span class="hljs-string">&#x27;负荷&#x27;</span>)<br>    ax.set_title(<span class="hljs-string">&#x27;预测负荷以及真实负荷的折线图&#x27;</span>)<br>    ax.xaxis.set_major_locator(mick.MultipleLocator(<span class="hljs-number">50</span>))<br>    plt.xticks(rotation=<span class="hljs-number">45</span>)<br>    plt.legend()<br>    plt.savefig(<span class="hljs-string">&#x27;data/fig/预测效果.png&#x27;</span>)<br><br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">run_predict</span>(<span class="hljs-params">model, test_data</span>):<br>    <span class="hljs-string">&quot;&quot;&quot;对 test.csv 中指定日期之后的时间逐小时滚动预测&quot;&quot;&quot;</span><br>    data_dict = test_data.set_index(<span class="hljs-string">&#x27;time&#x27;</span>)[<span class="hljs-string">&#x27;power_load&#x27;</span>].to_dict()<br>    evaluate_list = []<br>    <span class="hljs-comment"># 预测起点：按你的数据修改这一行</span><br>    pred_times = test_data[test_data[<span class="hljs-string">&#x27;time&#x27;</span>] &gt;= <span class="hljs-string">&#x27;2015-08-01 00:00:00&#x27;</span>][<span class="hljs-string">&#x27;time&#x27;</span>]<br>    <span class="hljs-keyword">for</span> pred_time <span class="hljs-keyword">in</span> pred_times:<br>        <span class="hljs-comment"># 屏蔽未来：只用严格早于 pred_time 的数据构造特征</span><br>        data_his_dict = &#123;k: v <span class="hljs-keyword">for</span> k, v <span class="hljs-keyword">in</span> data_dict.items() <span class="hljs-keyword">if</span> k &lt; pred_time&#125;<br>        processed_data, feature_cols = pred_feature_extract(data_his_dict, pred_time)<br>        pred_value = model.predict(processed_data[feature_cols])<br>        true_value = data_dict.get(pred_time)<br>        evaluate_list.append([pred_time, true_value, pred_value[<span class="hljs-number">0</span>]])<br>    evaluate_df = pd.DataFrame(evaluate_list, columns=[<span class="hljs-string">&#x27;时间&#x27;</span>, <span class="hljs-string">&#x27;真实值&#x27;</span>, <span class="hljs-string">&#x27;预测值&#x27;</span>])<br>    mae_score = mean_absolute_error(evaluate_df[<span class="hljs-string">&#x27;真实值&#x27;</span>], evaluate_df[<span class="hljs-string">&#x27;预测值&#x27;</span>])<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;模型对新数据进行预测的平均绝对误差：<span class="hljs-subst">&#123;mae_score&#125;</span>&quot;</span>)<br>    prediction_plot(evaluate_df)<br>    <span class="hljs-keyword">return</span> evaluate_df<br><br><br><span class="hljs-comment"># ==================== 主流程 ====================</span><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    os.makedirs(<span class="hljs-string">&#x27;data/fig&#x27;</span>, exist_ok=<span class="hljs-literal">True</span>)<br>    <span class="hljs-comment"># 1. 训练</span><br>    train_data = data_preprocessing(<span class="hljs-string">&#x27;data/train.csv&#x27;</span>)<br>    ana_data(train_data)<br>    processed, features = feature_engineering(train_data)<br>    model = model_train(processed, features)<br>    <span class="hljs-comment"># 2. 预测</span><br>    test_data = data_preprocessing(<span class="hljs-string">&#x27;data/test.csv&#x27;</span>)<br>    run_predict(model, test_data)<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>⚠️ 上面第 3 节里有一处占位符 <code>for i in_range_placeholder</code>，需替换为原案例的写法：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">shift_list = [result[<span class="hljs-string">&#x27;power_load&#x27;</span>].shift(i) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, window_size + <span class="hljs-number">1</span>)]<br></code></pre></td></tr></table></figure><br>替换后代码即可正常运行。 tutorial 编辑器对长列表推导式的显示有截断，特此标注。</p>
+</blockquote>
+<h3 id="10-3-代码结构地图"><a href="#10-3-代码结构地图" class="headerlink" title="10.3 代码结构地图"></a>10.3 代码结构地图</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">main()<br> │<br> ├─ data_preprocessing(&#x27;data/train.csv&#x27;)     ← 第 5.3 节<br> │<br> ├─ ana_data(train_data)                     ← 第 6 节（EDA 五板斧）<br> │<br> ├─ feature_engineering(train_data)          ← 第 7 节<br> │    ├─ one-hot：hour ×24、month ×12<br> │    ├ shift：前1/2/3小时<br> │    ├─ yesterday_load<br> │    ├─ dropna<br> │    └─ 返回 40 维特征列名<br> │<br> ├─ model_train(processed, features)         ← 第 8 节<br> │    ├─ train_test_split(0.3, random_state=22)<br> │    ├─ XGBRegressor(150, 6, 0.1)<br> │    ├─ MSE / MAE 评价<br> │    └─ joblib.dump → model/xgb.pkl<br> │<br> └─ run_predict(model, test_data)            ← 第 9 节<br>      ├─ data_dict 字典缓存<br>      ├─ for pred_time in pred_times:<br>      │     ├─ data_his_dict = &#123;k&lt;v&#125;（屏蔽未来）<br>      │     ├─ pred_feature_extract（手工 one-hot）<br>      │     ├─ model.predict<br>      │     └─ evaluate_list.append([时间, 真实, 预测])<br>      ├─ mean_absolute_error<br>      └─ prediction_plot<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>💡 和原案例相比，自包含版做了三处<strong>简化</strong>（逻辑完全一致）：</p>
+<ul>
+<li>去掉 <code>Logger</code> 类，保留 <code>print</code> 输出（日志思想见第 5.2 节）</li>
+<li>去掉 <code>PowerLoadModel</code> / <code>PowerLoadPredict</code> 两个类，改用普通函数（类的价值在”状态封装”，这里状态少，函数更直观）</li>
+<li>savefig 路径从 <code>../data/fig/</code> 改为 <code>data/fig/</code>（因为不再有 src/ 这一层）</li>
+<li>所有指标数值以实际运行为准，教程不填写具体数字</li>
+</ul>
+</blockquote>
+<hr>
+<h2 id="11-案例的改进方向"><a href="#11-案例的改进方向" class="headerlink" title="11. 案例的改进方向"></a>11. 案例的改进方向</h2><p>以上案例是一个完整的”能跑”的项目，但距离”工业级”还有明显距离。案例原文（第四部分）给出了四个角度的改进方向，我们逐条解析。</p>
+<h3 id="11-1-特征工程角度"><a href="#11-1-特征工程角度" class="headerlink" title="11.1 特征工程角度"></a>11.1 特征工程角度</h3><p><strong>原文要点：</strong></p>
+<ul>
+<li>优化时间窗口</li>
+<li>提取更有效的历史负荷特征</li>
+<li>扩展外部特征，比如温度、湿度、风速、历史工业用电量、历史居民用电量等</li>
+</ul>
+<p><strong>逐条解析：</strong></p>
+<p><strong>① 优化时间窗口。</strong> 我们的 <code>window_size = 3</code> 是随手定的。为什么是 3 而不是 6 或 24？</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">当前：只看前 3 小时<br>  [t-3][t-2][t-1] → 预测 t<br><br>可能的改进：<br>  长 window_size=6：看前 6 小时（捕捉更长的趋势，但 NaN 行更多）<br>  加&quot;前 24 小时平均负荷&quot;：一整天的整体水平<br>  加&quot;上周同时刻负荷&quot;：捕捉周周期（周一和上周一很像）<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>💡 窗口大小本质是在权衡”信息量”与”数据损耗”。这不是拍脑袋定的，应该像案例里 GridSearchCV 那样<strong>用实验来选</strong>。</p>
+</blockquote>
+<p><strong>② 提取更有效的历史负荷特征。</strong> 除了”前 N 小时的原始值”，还能造：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>特征</th>
+<th>公式</th>
+<th>直觉</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>一阶差分</td>
+<td><code>load[t-1] - load[t-2]</code></td>
+<td>负荷在”涨”还是”跌”？涨多快？</td>
+</tr>
+<tr>
+<td>滑动平均</td>
+<td><code>mean(load[t-1..t-24])</code></td>
+<td>过去一天的平均水平</td>
+</tr>
+<tr>
+<td>滑动最大值</td>
+<td><code>max(load[t-1..t-24])</code></td>
+<td>过去一天的峰值</td>
+</tr>
+<tr>
+<td>峰谷差</td>
+<td><code>max - min</code></td>
+<td>一天内的波动幅度</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>这些是经典时序特征工程的套路，特征越有”信息量”，模型越省力。</p>
+<p><strong>③ 扩展外部特征（最有价值的方向）。</strong> 电力负荷对天气极度敏感：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">温度 → 空调负荷（夏天 &gt;32°C、冬天 &lt;5°C 时用电飙升）<br>湿度 → 体感温度（闷热时空调开更足）<br>风速 → 冬天体感更冷、供暖需求变化<br>历史工业用电量、历史居民用电量 → 负荷的&quot;结构性&quot;构成<br></code></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">        ┌──────────────────────────────┐<br>        │   影响电力负荷的因素          │<br>        └──────────────────────────────┘<br>时间特征 ─┬─ 小时（日周期）         天气特征 ─┬─ 温度<br>          ├─ 月份（年周期）                   ├─ 湿度<br>          ├─ 星期几                           ├─ 风速<br>          └─ 节假日                           └─ 降雨<br>历史负荷 ─┬─ 前 N 小时           社会特征 ─┬─ 工业用电量<br>          ├─ 昨日同时刻                   ├─ 居民用电量<br>          ├─ 滑动平均                     └─ 大型活动/停工<br>          └─ 上周同时刻<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>📌 本案例只有”时间 + 历史负荷”，等于主动放弃了天气这张王牌。真实电力预测系统中，温度特征的重要性往往排在第一位。</p>
+</blockquote>
+<h3 id="11-2-算法角度"><a href="#11-2-算法角度" class="headerlink" title="11.2 算法角度"></a>11.2 算法角度</h3><p><strong>原文要点：</strong></p>
+<ul>
+<li>样本分群然后分别建模，比如分地区或者借助聚类算法先进行分群，然后针对不同分区分别训练模型，提升模型的适用性</li>
+</ul>
+<p><strong>解析：</strong> 一个模型 fitted 全市负荷，等于强行让”商业区”和”居民区”用同一套规律。更好的做法是<strong>先分群、后建模</strong>：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">全部样本（一个模型硬扛）<br>        │  改进：先按行为模式分群<br>        ▼<br>┌──────────┬──────────┬──────────┐<br>│ 商业区   │ 居民区   │ 工业区   │<br>│ 规律：   │ 规律：   │ 规律：   │<br>│ 周末高   │ 周末低   │ 全天平稳 │<br>│ 晚峰大   │ 晚峰小   │ 夜班高   │<br>└──────────┴──────────┴──────────┘<br>     │           │           │<br>     ▼           ▼           ▼<br>  模型 A       模型 B       模型 C     ← 各训各的，更贴各自规律<br></code></pre></td></tr></table></figure>
+<ul>
+<li>💡 分群依据可以是业务标签（行政区、用电类型），也可以用<strong>聚类</strong>（第 7 章的 KMeans）自动发现</li>
+<li>这其实就是”<strong>分而治之</strong>“思想：与其让一个模型学所有规律，不如让多个模型各学一种规律</li>
+<li>代价：每个模型的数据变少了，而且要额外维护”新样本该扔给哪个模型”的路由逻辑</li>
+</ul>
+<h3 id="11-3-推理速度角度"><a href="#11-3-推理速度角度" class="headerlink" title="11.3 推理速度角度"></a>11.3 推理速度角度</h3><p><strong>原文要点：</strong></p>
+<ul>
+<li>做通用的工具包，适用于各种数据源的输入输出，如 mysql、pgsql、oracle、ES、redis、Hive 等数据库的支持</li>
+</ul>
+<p><strong>解析：</strong> 这一条看起来讲”工程”，但和速度息息相关。本案例的数据来自 CSV 文件；真实系统的数据散落在各种数据库里。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>数据来源</th>
+<th>查询方式</th>
+<th>速度要点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>离线训练</td>
+<td>Hive / 数仓</td>
+<td>批量拉取</td>
+<td>一次性读取，慢一点能忍</td>
+</tr>
+<tr>
+<td>线上预测</td>
+<td>MySQL / PG</td>
+<td>按时间点查</td>
+<td>每小时查一次，必须快</td>
+</tr>
+<tr>
+<td>高频预测</td>
+<td>Redis 缓存</td>
+<td>内存查询</td>
+<td>微秒级，案例注释里提到的方案</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li>💡 回顾第 9.6 节：<code>predict.py</code> 把历史数据转成<strong>字典缓存</strong>，注释说”实际开发场景中可以使用 redis 进行缓存”。写代码时做的这个”字典化”决定，正是为了降低未来迁移到 Redis 的改造成本——<strong>数据访问层抽象出来，换数据源只换一层</strong></li>
+<li>本案例还缺一个明显的速度优化：<strong>预测服务化</strong>。当前每次预测都要启动 Python、加载 pkl、读 CSV，真正 prophet 级的线上服务会把模型常驻内存，做成 API 接口</li>
+</ul>
+<h3 id="11-4-扩展性角度"><a href="#11-4-扩展性角度" class="headerlink" title="11.4 扩展性角度"></a>11.4 扩展性角度</h3><p><strong>原文要点：</strong></p>
+<ul>
+<li>做通用的工具包，适用于各种数据源的输入输出，如 mysql、pgsql、oracle、ES、redis、Hive 等数据库的支持</li>
+<li>项目打包成容器，适配各种服务器环境</li>
+<li>预测模块与项目解耦，预测模块封装出接口，接收 web 传过来的参数，根据参数获取数据并进行预测</li>
+</ul>
+<p><strong>解析：</strong> 三条分别对应三个工程能力：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">① 数据源解耦：utils/common.py 的 data_preprocessing()<br>   现在：pd.read_csv(filename)<br>   目标：同一个函数名，背后能切换 MySQL/Redis/Hive<br>        → 靠&quot;抽象接口 + 具体实现&quot;，调用方代码不变<br><br>② 容器化：项目打包成 Docker 镜像<br>   现在：依赖本机 Python 环境（xgboost、sklearn 版本可能各不相同）<br>   目标：docker run 一下，在任何服务器上跑出同样的结果<br>        → 解决&quot;在我电脑上能跑&quot;的经典难题<br><br>③ 预测接口化：模型训练与预测彻底分离<br>   现在：predict.py 是本地脚本，按固定时间点批量预测<br>   目标：暴露一个 HTTP 接口<br>        POST /predict &#123;&quot;time&quot;: &quot;2015-08-01 14:00:00&quot;&#125;<br>        → 内部加载历史数据 → 构造特征 → 返回预测负荷<br>        → web 前端、调度系统都能直接调用<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>📌 本案例把这三个能力都列为”改进方向”，说明它对自己的定位很清楚：<strong>教学项目重原理，工业项目重接口</strong>。两者之间还隔着一整本”软件工程”的书，但方向是明确的。</p>
+</blockquote>
+<hr>
+<h2 id="12-总结与作业"><a href="#12-总结与作业" class="headerlink" title="12. 总结与作业"></a>12. 总结与作业</h2><h3 id="12-1-核心思想回顾：一张图记住整章"><a href="#12-1-核心思想回顾：一张图记住整章" class="headerlink" title="12.1 核心思想回顾：一张图记住整章"></a>12.1 核心思想回顾：一张图记住整章</h3><p>如果这章你只能记住一句话，就记这句：</p>
+<blockquote>
+<p><strong>时序预测 = 把时间序列重排成表格 + 用回归模型预测</strong></p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">时序数据                    特征工程                      表格回归问题<br>time, load      ──────&gt;     40 维特征 + 标签    ──────&gt;    XGBoost<br>2015-01-01 00   800         hour_00..hour_23               fit / predict<br>2015-01-01 01   810         month_01..month_12              ↓<br>...                         前1h, 前2h, 前3h              预测下一个时刻<br>2015-12-31 23   900         yesterday_load                  的负荷<br>                              ↓ dropna<br>                          （丢弃开头不足 24 行）<br></code></pre></td></tr></table></figure>
+<h3 id="12-2-知识清单（自查表）"><a href="#12-2-知识清单（自查表）" class="headerlink" title="12.2 知识清单（自查表）"></a>12.2 知识清单（自查表）</h3><p>读完本章，你应该能不假思索地回答下列问题。答不上来的，回去翻对应小节。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>问题</th>
+<th>答案要点</th>
+<th>章节</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>时序预测为什么能转成表格回归？</td>
+<td>每个时刻的历史可以排成”一行特征 + 一个标签”</td>
+<td>7.1</td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>time[11:13]</code> 取到什么？</td>
+<td>小时（”14”）</td>
+<td>6.3</td>
+</tr>
+<tr>
+<td>3</td>
+<td>为什么小时要做 one-hot 不直接用数字？</td>
+<td>数字会让模型误以为 23 点和 0 点差很远</td>
+<td>7.3</td>
+</tr>
+<tr>
+<td>4</td>
+<td>40 维特征由哪四部分组成？</td>
+<td>24 小时 + 12 月份 + 3 滑动窗口 + 1 昨日</td>
+<td>7.7</td>
+</tr>
+<tr>
+<td>5</td>
+<td><code>shift(1)</code> 在干什么？</td>
+<td>把整列下移一行，让第 t 行看到 t−1 的值</td>
+<td>7.4</td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>dropna</code> 至少删掉开头几行？为什么？</td>
+<td>至少 24 行（第一天没有”昨天”）</td>
+<td>7.6</td>
+</tr>
+<tr>
+<td>7</td>
+<td><code>random_state=22</code> 的作用？</td>
+<td>固定随机切分，保证可复现</td>
+<td>8.3</td>
+</tr>
+<tr>
+<td>8</td>
+<td>为什么把 GridSearchCV 注释掉？</td>
+<td>已搜索出最优参数，固化避免重复耗时</td>
+<td>8.5</td>
+</tr>
+<tr>
+<td>9</td>
+<td>MSE 和 MAE 的区别？</td>
+<td>MSE 平方放大异常误差，MAE 更直观</td>
+<td>8.6</td>
+</tr>
+<tr>
+<td>10</td>
+<td>预测时为什么要 <code>k &lt; pred_time</code> 字典推导式？</td>
+<td>屏蔽未来数据，防止数据泄漏</td>
+<td>9.6</td>
+</tr>
+<tr>
+<td>11</td>
+<td><code>data_dict.get(key, 600)</code> 的 600 是什么？</td>
+<td>历史数据查不到时的兜底默认值</td>
+<td>9.4</td>
+</tr>
+<tr>
+<td>12</td>
+<td>训练和预测为什么要拆成两个脚本？</td>
+<td>训练一次、预测无数次；职责分离</td>
+<td>8.7/9.6</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="12-3-作业"><a href="#12-3-作业" class="headerlink" title="12.3 作业"></a>12.3 作业</h3><h4 id="基础题（理解概念）"><a href="#基础题（理解概念）" class="headerlink" title="基础题（理解概念）"></a>基础题（理解概念）</h4><ol>
+<li>用自己的话解释：为什么”时间序列预测”可以转化为”表格回归”问题？转化过程中哪一步是关键？</li>
+<li>对比 <code>pd.get_dummies</code>（训练）和 <code>for</code> 循环手写（预测）两种 one-hot 方式，各有什么优缺点？为什么预测时作者选择手写？</li>
+<li>解释 <code>shift(i)</code> 的作用，并说明为什么窗口越大，开头被 <code>dropna</code> 删掉的行越多。</li>
+<li>案例中 <code>data_dict.get(last_1h_time, 600)</code> 的默认值 600 会带来什么风险？如果真实负荷均值是 5000，会发生什么？</li>
+</ol>
+<h4 id="进阶题（动手修改）"><a href="#进阶题（动手修改）" class="headerlink" title="进阶题（动手修改）"></a>进阶题（动手修改）</h4><ol>
+<li><strong>修改窗口大小</strong>：把 <code>window_size</code> 从 3 改成 6，回答：<ul>
+<li>特征从 40 维变成多少维？（写你的计算）</li>
+<li><code>dropna</code> 会多删掉哪些行？</li>
+<li>用你的数据跑一遍，MAE 变好了还是变差了？</li>
+</ul>
+</li>
+<li><strong>按时间切分</strong>：把 <code>train_test_split</code>（随机切分）改为按时间先后切分——前 70% 时间训练、后 30% 时间测试。提示：数据先按 <code>time</code> 排序，再按行数切分。说明两种切分在时序场景下的差别。</li>
+<li><strong>加特征</strong>：在 <code>feature_engineering</code> 中添加两个新特征——“前 24 小时平均负荷”和”前 1 小时的一阶差分”（即 <code>前1小时 − 前2小时</code>）。写出代码，并说明它们分别捕捉了什么信息。</li>
+<li><strong>变成多步预测</strong>：当前 predict.py 每次只预测 1 小时（且用真实历史构造特征）。尝试实现”预测未来 24 小时”：预测出 t+1 后，把预测值写回字典当作 t+2 的历史。观察误差会如何累积，并思考为什么。</li>
+</ol>
+<h4 id="思考题（开放讨论）"><a href="#思考题（开放讨论）" class="headerlink" title="思考题（开放讨论）"></a>思考题（开放讨论）</h4><ol>
+<li>本案例完全没有用天气数据。如果你接手这个项目，第一步会去哪里找温度数据？拿到之后怎么和现有的 hourly 负荷数据对齐？（提示：时间戳 join）</li>
+<li>第 11.2 节提到”分群后分别建模”。如果分群之后某个群只有 200 条数据，单独训模型反而更差，这时该怎么办？（提示：数据量、模型复杂度、是否合并群）</li>
+</ol>
+<h3 id="12-4-本章心法"><a href="#12-4-本章心法" class="headerlink" title="12.4 本章心法"></a>12.4 本章心法</h3><blockquote>
+<p>🎯 <strong>时序项目的三重境界</strong></p>
+<p>第一重：<strong>选对模型</strong>（XGBoost 还是 LSTM？——先把数据搞定，模型没那么重要）</p>
+<p>第二重：<strong>做好特征</strong>（窗口、周期、外部因素——特征决定上限，模型只是逼近这个上限）</p>
+<p>第三重：<strong>工程化</strong>（数据泄漏、可复现、训练预测分离、接口化——决定项目能不能活到明天）</p>
+<p>本案例讲的是第一重，带你走过第二重，并指出了第三重的方向。</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>🎯 <strong>下一章预告</strong>：第 10 章，我们将进入<strong>深度学习</strong>领域，学习 <strong>RNN、LSTM、GRU</strong>——为序列数据而生的模型。看看它和本章”shift + 表格”的做法有什么不同，以及为什么它在长序列上更有优势。还记得第 2 节的”三大门派”吗？到时候我们就正式走进第三大门派的山门。</p>
+</blockquote>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2026/10/26/ml19/">← Next ml19</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/10/26/ml17/">南方电网案例预测 Prev →</a></div></div></div><div id="comments"><div id="giscus"></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="To Top" style="opacity: 0; display: none;">∧ </a><a class="i-index" id="to-index" onClick="tocControl.change()" title="To Catalog"><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span></a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="Change Theme"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">John Doe</a></h1><div id="description"><p></p></div><div id="social-links"><a class="social" target="_blank" rel="noopener" href="https://github.com/juicer0801"><i class="fab fa-github" alt="GitHub"></i></a></div></div><div id="aside-block"><div id="toc-div"><h1>Catalog</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC9%E7%AB%A0%EF%BC%9A%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E9%A2%84%E6%B5%8B-%E2%80%94%E2%80%94-%E7%94%B5%E5%8A%9B%E8%B4%9F%E8%8D%B7%E9%A2%84%E6%B5%8B%E5%AE%9E%E6%88%98%EF%BC%88%E8%B6%85%E7%BA%A7%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B%C2%B7%E5%B0%8F%E7%99%BD%E7%89%88%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">第9章：时间序列预测 —— 电力负荷预测实战（超级详细教程·小白版）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%93%8B-%E7%9B%AE%E5%BD%95"><span class="toc-number">1.1.</span> <span class="toc-text">📋 目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AF%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E9%A2%84%E6%B5%8B"><span class="toc-number">1.2.</span> <span class="toc-text">1. 什么是时间序列预测</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E4%B8%80%E5%8F%A5%E8%AF%9D%E8%A7%A3%E9%87%8A"><span class="toc-number">1.2.1.</span> <span class="toc-text">1.1 一句话解释</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E6%97%B6%E5%BA%8F%E6%95%B0%E6%8D%AE-vs-%E6%99%AE%E9%80%9A%E8%A1%A8%E6%A0%BC%E6%95%B0%E6%8D%AE"><span class="toc-number">1.2.2.</span> <span class="toc-text">1.2 时序数据 vs 普通表格数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E5%B8%B8%E8%A7%81%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">1.2.3.</span> <span class="toc-text">1.3 常见应用场景</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E9%A2%84%E6%B5%8B%E7%9A%84%E4%B8%89%E5%A4%A7%E9%97%A8%E6%B4%BE%EF%BC%88%E5%9B%BE%E8%A7%A3%EF%BC%89"><span class="toc-number">1.3.</span> <span class="toc-text">2. 时间序列预测的三大门派（图解）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E7%AC%AC%E4%B8%80%E6%B4%BE%EF%BC%9A%E7%BB%9F%E8%AE%A1%E5%AD%A6%E7%BB%8F%E5%85%B8%E6%96%B9%E6%B3%95"><span class="toc-number">1.3.1.</span> <span class="toc-text">2.1 第一派：统计学经典方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E7%AC%AC%E4%BA%8C%E6%B4%BE%EF%BC%9A%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95"><span class="toc-number">1.3.2.</span> <span class="toc-text">2.2 第二派：深度学习方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E7%AC%AC%E4%B8%89%E6%B4%BE%EF%BC%9A%E4%BC%A0%E7%BB%9F%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%96%B9%E6%B3%95%EF%BC%88%E6%9C%AC%E6%A1%88%E4%BE%8B%E7%9A%84%E9%80%89%E6%8B%A9-%F0%9F%92%AA%EF%BC%89"><span class="toc-number">1.3.3.</span> <span class="toc-text">2.3 第三派：传统机器学习方法（本案例的选择 💪）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%9A%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%E4%B8%8E%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87"><span class="toc-number">1.4.</span> <span class="toc-text">3. 数学基础：滑动窗口与评价指标</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E6%9C%80%E9%87%8D%E8%A6%81%E7%9A%84%E6%A6%82%E5%BF%B5%EF%BC%9A%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%EF%BC%88Sliding-Window%EF%BC%89"><span class="toc-number">1.4.1.</span> <span class="toc-text">3.1 最重要的概念：滑动窗口（Sliding Window）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E6%97%B6%E9%97%B4%E7%89%B9%E5%BE%81%EF%BC%9A%E7%B1%BB%E5%88%AB%E6%AF%94%E6%95%B0%E5%80%BC%E6%9B%B4%E7%AE%A1%E7%94%A8"><span class="toc-number">1.4.2.</span> <span class="toc-text">3.2 时间特征：类别比数值更管用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E6%98%A8%E6%97%A5%E5%90%8C%E6%97%B6%E5%88%BB%E7%89%B9%E5%BE%81"><span class="toc-number">1.4.3.</span> <span class="toc-text">3.3 昨日同时刻特征</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87%EF%BC%9AMSE-RMSE-MAE-MAPE"><span class="toc-number">1.4.4.</span> <span class="toc-text">3.4 评价指标：MSE &#x2F; RMSE &#x2F; MAE &#x2F; MAPE</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-%E6%8C%87%E6%95%B0%E5%B9%B3%E6%BB%91%EF%BC%88%E9%80%89%E5%AD%A6%EF%BC%8C%E7%90%86%E8%A7%A3%E6%80%9D%E6%83%B3%E5%8D%B3%E5%8F%AF%EF%BC%89"><span class="toc-number">1.4.5.</span> <span class="toc-text">3.5 指数平滑（选学，理解思想即可）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-6-AR-%E8%87%AA%E5%9B%9E%E5%BD%92%EF%BC%88%E9%80%89%E5%AD%A6%EF%BC%89"><span class="toc-number">1.4.6.</span> <span class="toc-text">3.6 AR 自回归（选学）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E9%A1%B9%E7%9B%AE%E8%83%8C%E6%99%AF%EF%BC%9A%E5%8D%97%E6%96%B9%E7%94%B5%E7%BD%91%E7%94%B5%E5%8A%9B%E8%B4%9F%E8%8D%B7%E9%A2%84%E6%B5%8B"><span class="toc-number">1.5.</span> <span class="toc-text">4. 项目背景：南方电网电力负荷预测</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E4%B8%9A%E5%8A%A1%E9%9C%80%E6%B1%82"><span class="toc-number">1.5.1.</span> <span class="toc-text">4.1 业务需求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E6%95%B0%E6%8D%AE%E4%B8%8E%E4%BB%BB%E5%8A%A1"><span class="toc-number">1.5.2.</span> <span class="toc-text">4.2 数据与任务</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95%EF%BC%88%E6%A1%88%E4%BE%8B%E5%8E%9F%E6%96%87%E7%9A%84%E6%80%9D%E8%B7%AF%EF%BC%89"><span class="toc-number">1.5.3.</span> <span class="toc-text">4.3 实现方法（案例原文的思路）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="toc-number">1.5.4.</span> <span class="toc-text">4.4 环境准备</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E9%A1%B9%E7%9B%AE%E6%90%AD%E5%BB%BA%EF%BC%9A%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84%E4%B8%8E%E5%B7%A5%E5%85%B7%E7%B1%BB"><span class="toc-number">1.6.</span> <span class="toc-text">5. 项目搭建：目录结构与工具类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E9%A1%B9%E7%9B%AE%E7%9B%AE%E5%BD%95"><span class="toc-number">1.6.1.</span> <span class="toc-text">5.1 项目目录</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E6%97%A5%E5%BF%97%E5%B7%A5%E5%85%B7%E7%B1%BB-utils-log-py"><span class="toc-number">1.6.2.</span> <span class="toc-text">5.2 日志工具类 utils&#x2F;log.py</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-%E6%95%B0%E6%8D%AE%E5%8A%A0%E8%BD%BD%E5%B7%A5%E5%85%B7-utils-common-py"><span class="toc-number">1.6.3.</span> <span class="toc-text">5.3 数据加载工具 utils&#x2F;common.py</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%EF%BC%9AEDA-%E4%BA%94%E6%9D%BF%E6%96%A7"><span class="toc-number">1.7.</span> <span class="toc-text">6. 数据分析：EDA 五板斧</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-%E6%8B%BF%E5%88%B0%E6%95%B0%E6%8D%AE%E7%9A%84%E7%AC%AC%E4%B8%80%E4%BB%B6%E4%BA%8B%EF%BC%9A%E5%85%88%E2%80%9D%E7%9C%8B%E2%80%9D%EF%BC%8C%E5%88%AB%E6%80%A5%E7%9D%80%E5%BB%BA%E6%A8%A1"><span class="toc-number">1.7.1.</span> <span class="toc-text">6.1 拿到数据的第一件事：先”看”，别急着建模</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-%E5%AE%8C%E6%95%B4%E4%BB%A3%E7%A0%81%EF%BC%88%E5%A4%8D%E5%88%BB-train-py-%E7%9A%84-ana-data%EF%BC%89"><span class="toc-number">1.7.2.</span> <span class="toc-text">6.2 完整代码（复刻 train.py 的 ana_data）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-%E9%80%90%E8%A1%8C%E8%A7%A3%E6%9E%90"><span class="toc-number">1.7.3.</span> <span class="toc-text">6.3 逐行解析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B%EF%BC%9A%E6%8A%8A%E6%97%B6%E5%BA%8F%E5%8F%98%E6%88%90%E8%A1%A8%E6%A0%BC%EF%BC%88%E6%A0%B8%E5%BF%83%EF%BC%89"><span class="toc-number">1.8.</span> <span class="toc-text">7. 特征工程：把时序变成表格（核心）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1-%E5%85%A8%E7%AB%A0%E6%9C%80%E9%87%8D%E8%A6%81%E7%9A%84%E4%B8%80%E5%BC%A0%E5%9B%BE"><span class="toc-number">1.8.1.</span> <span class="toc-text">7.1 全章最重要的一张图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-2-%E5%AE%8C%E6%95%B4%E4%BB%A3%E7%A0%81%EF%BC%88%E5%A4%8D%E5%88%BB-train-py-%E7%9A%84-feature-engineering%EF%BC%89"><span class="toc-number">1.8.2.</span> <span class="toc-text">7.2 完整代码（复刻 train.py 的 feature_engineering）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-3-%E9%80%90%E8%A1%8C%E8%A7%A3%E6%9E%90%EF%BC%9A%E6%97%B6%E9%97%B4%E7%89%B9%E5%BE%81-one-hot"><span class="toc-number">1.8.3.</span> <span class="toc-text">7.3 逐行解析：时间特征 + one-hot</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-4-%E9%80%90%E8%A1%8C%E8%A7%A3%E6%9E%90%EF%BC%9A%E6%BB%91%E5%8A%A8%E7%AA%97%E5%8F%A3%EF%BC%88shift%EF%BC%89"><span class="toc-number">1.8.4.</span> <span class="toc-text">7.4 逐行解析：滑动窗口（shift）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-5-%E9%80%90%E8%A1%8C%E8%A7%A3%E6%9E%90%EF%BC%9A%E6%98%A8%E6%97%A5%E5%90%8C%E6%97%B6%E5%88%BB"><span class="toc-number">1.8.5.</span> <span class="toc-text">7.5 逐行解析：昨日同时刻</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-6-%E5%89%94%E9%99%A4%E7%A9%BA%E6%A0%B7%E6%9C%AC%EF%BC%9Adropna"><span class="toc-number">1.8.6.</span> <span class="toc-text">7.6 剔除空样本：dropna</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-7-%E7%89%B9%E5%BE%81%E5%88%97%E6%B8%85%E5%8D%95%EF%BC%9A40-%E7%BB%B4"><span class="toc-number">1.8.7.</span> <span class="toc-text">7.7 特征列清单：40 维</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83%EF%BC%9AXGBoost-%E5%9B%9E%E5%BD%92"><span class="toc-number">1.9.</span> <span class="toc-text">8. 模型训练：XGBoost 回归</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#8-1-%E8%AE%AD%E7%BB%83%E5%85%AD%E6%AD%A5%E6%9B%B2"><span class="toc-number">1.9.1.</span> <span class="toc-text">8.1 训练六步曲</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-2-%E5%AE%8C%E6%95%B4%E4%BB%A3%E7%A0%81%EF%BC%88%E5%A4%8D%E5%88%BB-train-py-%E7%9A%84-model-train%EF%BC%89"><span class="toc-number">1.9.2.</span> <span class="toc-text">8.2 完整代码（复刻 train.py 的 model_train）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-3-%E9%80%90%E8%A1%8C%E8%A7%A3%E6%9E%90%EF%BC%9A%E5%88%87%E5%88%86%E6%95%B0%E6%8D%AE"><span class="toc-number">1.9.3.</span> <span class="toc-text">8.3 逐行解析：切分数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-4-%E9%80%90%E8%A1%8C%E8%A7%A3%E6%9E%90%EF%BC%9AXGBoost-%E4%B8%89%E5%8F%82%E6%95%B0"><span class="toc-number">1.9.4.</span> <span class="toc-text">8.4 逐行解析：XGBoost 三参数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-5-%E4%B8%BA%E4%BB%80%E4%B9%88-GridSearchCV-%E8%A2%AB%E6%B3%A8%E9%87%8A%E6%8E%89%E4%BA%86%EF%BC%9F"><span class="toc-number">1.9.5.</span> <span class="toc-text">8.5 为什么 GridSearchCV 被注释掉了？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-6-%E9%80%90%E8%A1%8C%E8%A7%A3%E6%9E%90%EF%BC%9A%E6%A8%A1%E5%9E%8B%E8%AF%84%E4%BB%B7"><span class="toc-number">1.9.6.</span> <span class="toc-text">8.6 逐行解析：模型评价</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-7-%E6%A8%A1%E5%9E%8B%E4%BF%9D%E5%AD%98"><span class="toc-number">1.9.7.</span> <span class="toc-text">8.7 模型保存</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%E6%A8%A1%E5%9E%8B%E9%A2%84%E6%B5%8B%EF%BC%9A%E6%BB%9A%E5%8A%A8%E9%A2%84%E6%B5%8B%E6%9C%AA%E6%9D%A5"><span class="toc-number">1.10.</span> <span class="toc-text">9. 模型预测：滚动预测未来</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#9-1-%E5%85%88%E6%83%B3%E6%B8%85%E6%A5%9A%EF%BC%9A%E9%A2%84%E6%B5%8B%E5%92%8C%E8%AE%AD%E7%BB%83%E7%9A%84%E6%A0%B9%E6%9C%AC%E5%8C%BA%E5%88%AB"><span class="toc-number">1.10.1.</span> <span class="toc-text">9.1 先想清楚：预测和训练的根本区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-2-%E5%AE%8C%E6%95%B4%E4%BB%A3%E7%A0%81%EF%BC%88%E5%A4%8D%E5%88%BB-predict-py-%E7%9A%84-pred-feature-extract%EF%BC%89"><span class="toc-number">1.10.2.</span> <span class="toc-text">9.2 完整代码（复刻 predict.py 的 pred_feature_extract）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-3-%E9%80%90%E8%A1%8C%E8%A7%A3%E6%9E%90%EF%BC%9A%E6%89%8B%E5%86%99-one-hot"><span class="toc-number">1.10.3.</span> <span class="toc-text">9.3 逐行解析：手写 one-hot</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-4-%E9%80%90%E8%A1%8C%E8%A7%A3%E6%9E%90%EF%BC%9A%E5%8E%86%E5%8F%B2%E8%B4%9F%E8%8D%B7%E7%89%B9%E5%BE%81"><span class="toc-number">1.10.4.</span> <span class="toc-text">9.4 逐行解析：历史负荷特征</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-5-%E5%AE%8C%E6%95%B4%E4%BB%A3%E7%A0%81%EF%BC%88%E5%A4%8D%E5%88%BB-predict-py-%E7%9A%84%E4%B8%BB%E6%B5%81%E7%A8%8B%EF%BC%89"><span class="toc-number">1.10.5.</span> <span class="toc-text">9.5 完整代码（复刻 predict.py 的主流程）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-6-%E9%80%90%E8%A1%8C%E8%A7%A3%E6%9E%90%EF%BC%9A%E4%B8%BB%E6%B5%81%E7%A8%8B"><span class="toc-number">1.10.6.</span> <span class="toc-text">9.6 逐行解析：主流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-7-%E9%80%90%E8%A1%8C%E8%A7%A3%E6%9E%90%EF%BC%9A%E9%A2%84%E6%B5%8B%E6%95%88%E6%9E%9C%E7%BB%98%E5%9B%BE"><span class="toc-number">1.10.7.</span> <span class="toc-text">9.7 逐行解析：预测效果绘图</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-%E5%AE%8C%E6%95%B4%E5%8F%AF%E8%BF%90%E8%A1%8C%E4%BB%A3%E7%A0%81%EF%BC%88%E8%87%AA%E5%8C%85%E5%90%AB%E7%89%88%EF%BC%89"><span class="toc-number">1.11.</span> <span class="toc-text">10. 完整可运行代码（自包含版）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#10-1-%E4%BD%BF%E7%94%A8%E8%AF%B4%E6%98%8E%EF%BC%88%E5%85%88%E8%AF%BB%E8%BF%99%E4%B8%AA%EF%BC%81%EF%BC%89"><span class="toc-number">1.11.1.</span> <span class="toc-text">10.1 使用说明（先读这个！）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-2-%E5%AE%8C%E6%95%B4%E4%BB%A3%E7%A0%81"><span class="toc-number">1.11.2.</span> <span class="toc-text">10.2 完整代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-3-%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84%E5%9C%B0%E5%9B%BE"><span class="toc-number">1.11.3.</span> <span class="toc-text">10.3 代码结构地图</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-%E6%A1%88%E4%BE%8B%E7%9A%84%E6%94%B9%E8%BF%9B%E6%96%B9%E5%90%91"><span class="toc-number">1.12.</span> <span class="toc-text">11. 案例的改进方向</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#11-1-%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B%E8%A7%92%E5%BA%A6"><span class="toc-number">1.12.1.</span> <span class="toc-text">11.1 特征工程角度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-2-%E7%AE%97%E6%B3%95%E8%A7%92%E5%BA%A6"><span class="toc-number">1.12.2.</span> <span class="toc-text">11.2 算法角度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-3-%E6%8E%A8%E7%90%86%E9%80%9F%E5%BA%A6%E8%A7%92%E5%BA%A6"><span class="toc-number">1.12.3.</span> <span class="toc-text">11.3 推理速度角度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#11-4-%E6%89%A9%E5%B1%95%E6%80%A7%E8%A7%92%E5%BA%A6"><span class="toc-number">1.12.4.</span> <span class="toc-text">11.4 扩展性角度</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#12-%E6%80%BB%E7%BB%93%E4%B8%8E%E4%BD%9C%E4%B8%9A"><span class="toc-number">1.13.</span> <span class="toc-text">12. 总结与作业</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#12-1-%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3%E5%9B%9E%E9%A1%BE%EF%BC%9A%E4%B8%80%E5%BC%A0%E5%9B%BE%E8%AE%B0%E4%BD%8F%E6%95%B4%E7%AB%A0"><span class="toc-number">1.13.1.</span> <span class="toc-text">12.1 核心思想回顾：一张图记住整章</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#12-2-%E7%9F%A5%E8%AF%86%E6%B8%85%E5%8D%95%EF%BC%88%E8%87%AA%E6%9F%A5%E8%A1%A8%EF%BC%89"><span class="toc-number">1.13.2.</span> <span class="toc-text">12.2 知识清单（自查表）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#12-3-%E4%BD%9C%E4%B8%9A"><span class="toc-number">1.13.3.</span> <span class="toc-text">12.3 作业</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E9%A2%98%EF%BC%88%E7%90%86%E8%A7%A3%E6%A6%82%E5%BF%B5%EF%BC%89"><span class="toc-number">1.13.3.1.</span> <span class="toc-text">基础题（理解概念）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BF%9B%E9%98%B6%E9%A2%98%EF%BC%88%E5%8A%A8%E6%89%8B%E4%BF%AE%E6%94%B9%EF%BC%89"><span class="toc-number">1.13.3.2.</span> <span class="toc-text">进阶题（动手修改）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E9%A2%98%EF%BC%88%E5%BC%80%E6%94%BE%E8%AE%A8%E8%AE%BA%EF%BC%89"><span class="toc-number">1.13.3.3.</span> <span class="toc-text">思考题（开放讨论）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#12-4-%E6%9C%AC%E7%AB%A0%E5%BF%83%E6%B3%95"><span class="toc-number">1.13.4.</span> <span class="toc-text">12.4 本章心法</span></a></li></ol></li></ol></li></ol></div></div><footer><nobr>Published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>

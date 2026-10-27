@@ -117,7 +117,7 @@
 <meta property="og:image" content="http://example.com/2026/10/15/ml6/Snipaste_2026-10-19_10-13-31.png">
 <meta property="og:image" content="http://example.com/2026/10/15/ml6/Snipaste_2026-10-19_10-33-09.png">
 <meta property="article:published_time" content="2026-10-15T04:35:23.000Z">
-<meta property="article:modified_time" content="2026-10-20T14:34:15.010Z">
+<meta property="article:modified_time" content="2026-10-25T15:15:26.890Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/2026/10/15/ml6/image-20230912090316271.png"><link rel="canonical" href="http://example.com/2026/10/15/ml6/"><link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="preload" as="font" crossorigin="anonymous" href="/font/Bender.ttf"><link rel="preload" as="font" crossorigin="anonymous" href="/font/BenderLight.woff2"><link rel="preload" as="font" crossorigin="anonymous" href="/font/JetBrainsMono-Regular.woff2"><link rel="stylesheet" href="/css/arknights.css"><style>@font-face {
@@ -247,7 +247,7 @@ document.addEventListener("pjax:complete", reset);document.addEventListener('pja
  const script = document.createElement('script');
  script.src = 'https://vercount.one/js';
  document.head.appendChild(script);
-});reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/tags/"><span class="navItemTitle">Tags</span></a></li><li class="navItem"><a class="navBlock" href="/categories/"><span class="navItemTitle">Categories</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>线性回归</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2026-10-15T04:35:23.000Z" id="date"> 2026-10-15</time></div></span><br><span>Last Update: <div class="control"><time datetime="2026-10-20T14:34:15.010Z" id="updated"> 2026-10-20</time></div></span><br><span>Word Count: <div class="control">14.2k</div></span><br><span>Read Time: <div class="control">59 min</div></span><br><span id="vercount_container_page_pv">Page View: <span class="control" id="vercount_value_page_pv">loading...</span></span></div></div><hr><div id="post-content"><h1 id="线性回归-LinearRegressor"><a href="#线性回归-LinearRegressor" class="headerlink" title="线性回归(LinearRegressor)"></a>线性回归(LinearRegressor)</h1 class='item-img' data-src='/2026/10/15/ml6/image-20230912090316271.png'><img src="/2026/10/15/ml6/image-20230912090316271.png" class="" title="Hexo 博客封面示例">
+});reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/tags/"><span class="navItemTitle">Tags</span></a></li><li class="navItem"><a class="navBlock" href="/categories/"><span class="navItemTitle">Categories</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>线性回归</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2026-10-15T04:35:23.000Z" id="date"> 2026-10-15</time></div></span><br><span>Last Update: <div class="control"><time datetime="2026-10-25T15:15:26.890Z" id="updated"> 2026-10-25</time></div></span><br><span>Word Count: <div class="control">14.2k</div></span><br><span>Read Time: <div class="control">59 min</div></span><br><span id="vercount_container_page_pv">Page View: <span class="control" id="vercount_value_page_pv">loading...</span></span></div></div><hr><div id="post-content"><h1 id="线性回归-LinearRegressor"><a href="#线性回归-LinearRegressor" class="headerlink" title="线性回归(LinearRegressor)"></a>线性回归(LinearRegressor)</h1 class='item-img' data-src='/2026/10/15/ml6/image-20230912090316271.png'><img src="/2026/10/15/ml6/image-20230912090316271.png" class="" title="Hexo 博客封面示例">
 <img src="/2026/10/15/ml6/Snipaste_2026-10-17_23-13-29.png" class="" title="Hexo 博客封面示例">
 <h2 id="线性回归介绍"><a href="#线性回归介绍" class="headerlink" title="线性回归介绍"></a>线性回归介绍</h2><p><strong>学习目标：</strong></p>
 <p>1.理解线性回归是什么？</p>
@@ -336,7 +336,7 @@ document.addEventListener("pjax:complete", reset);document.addEventListener('pja
 <li><p>张量Tensor :多维数组，张量是基于向量和矩阵的推广</p class='item-img' data-src='/2026/10/15/ml6/image-20230901115246275.png'><img src="/2026/10/15/ml6/image-20230901115246275.png" class="" title="Hexo 博客封面示例">
 </li>
 </ul>
-<h4 id="【知道】导数"><a href="#【知道】导数" class="headerlink" title="【知道】导数"></a>【知道】导数</h4><p>当函数y=f（x）的自变量x在一点$x_0$上产生一个增量Δx时，函数输出值的增量Δy与自变量增量Δx的比值在Δx趋于0时的极限a如果存在，a即为在$x_0$处的导数，记作$f^\prime(x_0)$或df($x_0$)/dx。</p class='item-img' data-src='/2026/10/15/ml6/Snipaste_2026-10-18_11-14-22.png'><img src="/2026/10/15/ml6/Snipaste_2026-10-18_11-14-22.png" class="" title="Hexo 博客封面示例">
+<h4 id="【知道】导数"><a href="#【知道】导数" class="headerlink" title="【知道】导数"></a>【知道】导数</h4><p>当函数y=f（x）的自变量x在一点<script type="math/tex">x_0</script>上产生一个增量Δx时，函数输出值的增量Δy与自变量增量Δx的比值在Δx趋于0时的极限a如果存在，a即为在<script type="math/tex">x_0</script>处的导数，记作<script type="math/tex">f^\prime(x_0)</script>或df(<script type="math/tex">x_0</script>)/dx。</p class='item-img' data-src='/2026/10/15/ml6/Snipaste_2026-10-18_11-14-22.png'><img src="/2026/10/15/ml6/Snipaste_2026-10-18_11-14-22.png" class="" title="Hexo 博客封面示例">
 <p>导数公式：</p>
 
 <p>导数是函数的局部性质。一个函数在某一点的导数描述了这个函数在这一点附近的变化率。</p>
@@ -352,36 +352,36 @@ document.addEventListener("pjax:complete", reset);document.addEventListener('pja
 </thead>
 <tbody>
 <tr>
-<td style="text-align:center">$(C)^\prime=0$</td>
-<td style="text-align:center">$\left(5\right)^\prime=0$         $\left(10\right)^\prime=0$</td>
+<td style="text-align:center"><script type="math/tex">(C)^\prime=0</script></td>
+<td style="text-align:center"><script type="math/tex">\left(5\right)^\prime=0</script>         <script type="math/tex">\left(10\right)^\prime=0</script></td>
 </tr>
 <tr>
-<td style="text-align:center">$\left(x^\alpha\right)^\prime=\alpha x^{\alpha-1}$</td>
-<td style="text-align:center">$\left(x^3\right)^\prime=3 x^{2}$      $\left(x^5\right)^\prime=5 x^{4}$</td>
+<td style="text-align:center"><script type="math/tex">\left(x^\alpha\right)^\prime=\alpha x^{\alpha-1}</script></td>
+<td style="text-align:center"><script type="math/tex">\left(x^3\right)^\prime=3 x^{2}</script>      <script type="math/tex">\left(x^5\right)^\prime=5 x^{4}</script></td>
 </tr>
 <tr>
-<td style="text-align:center">$\left(a^x\right)^\prime=a^{x}\ln{a}$</td>
-<td style="text-align:center">$\left(2^x\right)^\prime=2^x\ln{2}$      $\left(7^x\right)^\prime=7^x\ln{7}$</td>
+<td style="text-align:center"><script type="math/tex">\left(a^x\right)^\prime=a^{x}\ln{a}</script></td>
+<td style="text-align:center"><script type="math/tex">\left(2^x\right)^\prime=2^x\ln{2}</script>      <script type="math/tex">\left(7^x\right)^\prime=7^x\ln{7}</script></td>
 </tr>
 <tr>
-<td style="text-align:center">$\left(e^x\right)^\prime=e^{x}$</td>
-<td style="text-align:center">$\left(e^x\right)^\prime=e^{x}$</td>
+<td style="text-align:center"><script type="math/tex">\left(e^x\right)^\prime=e^{x}</script></td>
+<td style="text-align:center"><script type="math/tex">\left(e^x\right)^\prime=e^{x}</script></td>
 </tr>
 <tr>
-<td style="text-align:center">$\left(\log{_a}x\right)^\prime=\frac{1}{x\ln{a}}$</td>
-<td style="text-align:center">$\left(\log{<em>{10}}x\right)^\prime=\frac{1}{x\ln{10}}$      $\left(\log{</em>{6}}x\right)^\prime=\frac{1}{x\ln{6}}$</td>
+<td style="text-align:center"><script type="math/tex">\left(\log{_a}x\right)^\prime=\frac{1}{x\ln{a}}</script></td>
+<td style="text-align:center"><script type="math/tex">\left(\log{_{10}}x\right)^\prime=\frac{1}{x\ln{10}}</script>      <script type="math/tex">\left(\log{_{6}}x\right)^\prime=\frac{1}{x\ln{6}}</script></td>
 </tr>
 <tr>
-<td style="text-align:center">$\left(\ln{x}\right)^\prime=\frac{1}{x}$</td>
-<td style="text-align:center">$\left(\ln{x}\right)^\prime=\frac{1}{x}$</td>
+<td style="text-align:center"><script type="math/tex">\left(\ln{x}\right)^\prime=\frac{1}{x}</script></td>
+<td style="text-align:center"><script type="math/tex">\left(\ln{x}\right)^\prime=\frac{1}{x}</script></td>
 </tr>
 <tr>
-<td style="text-align:center">$\left(\sin{x}\right)^\prime=\cos{x}$</td>
-<td style="text-align:center">$\left(\sin{x}\right)^\prime=\cos{x}$</td>
+<td style="text-align:center"><script type="math/tex">\left(\sin{x}\right)^\prime=\cos{x}</script></td>
+<td style="text-align:center"><script type="math/tex">\left(\sin{x}\right)^\prime=\cos{x}</script></td>
 </tr>
 <tr>
-<td style="text-align:center">$\left(\cos{x}\right)^\prime=-\sin{x}$</td>
-<td style="text-align:center">$\left(\cos{x}\right)^\prime=-\sin{x}$</td>
+<td style="text-align:center"><script type="math/tex">\left(\cos{x}\right)^\prime=-\sin{x}</script></td>
+<td style="text-align:center"><script type="math/tex">\left(\cos{x}\right)^\prime=-\sin{x}</script></td>
 </tr>
 </tbody>
 </table>
@@ -397,20 +397,20 @@ document.addEventListener("pjax:complete", reset);document.addEventListener('pja
 </thead>
 <tbody>
 <tr>
-<td style="text-align:center">$\left[u(x)\pm v(x)\right]^\prime=u^\prime(x) \pm v^\prime(x)$</td>
-<td style="text-align:center">$(e^x+4\ln{x})^\prime=(e^x)^\prime+(4\ln{x})^\prime=e^x+\frac{4}{x}$</td>
+<td style="text-align:center"><script type="math/tex">\left[u(x)\pm v(x)\right]^\prime=u^\prime(x) \pm v^\prime(x)</script></td>
+<td style="text-align:center"><script type="math/tex">(e^x+4\ln{x})^\prime=(e^x)^\prime+(4\ln{x})^\prime=e^x+\frac{4}{x}</script></td>
 </tr>
 <tr>
-<td style="text-align:center">$\left[u(x)\cdot v(x)\right]^\prime=u^\prime(x) \cdot v(x) + u(x) \cdot v^\prime(x)$</td>
-<td style="text-align:center">$(\sin{x}\cdot\ln{x})^\prime=\cos{x}\cdot\ln{x}+\sin{x}\cdot\frac{1}{x}$</td>
+<td style="text-align:center"><script type="math/tex">\left[u(x)\cdot v(x)\right]^\prime=u^\prime(x) \cdot v(x) + u(x) \cdot v^\prime(x)</script></td>
+<td style="text-align:center"><script type="math/tex">(\sin{x}\cdot\ln{x})^\prime=\cos{x}\cdot\ln{x}+\sin{x}\cdot\frac{1}{x}</script></td>
 </tr>
 <tr>
-<td style="text-align:center">$\left[\frac{u(x)}{v(x)}\right]^\prime=\frac{u^\prime(x) \cdot v(x) - u(x) \cdot v^\prime(x)}{v^2(x)}$</td>
-<td style="text-align:center">$\left(\frac{e^x}{\cos{x}}\right)^\prime=\frac{e^x\cdot\cos{x}-e^x\cdot(-\sin{x})}{cos^2(x)}$</td>
+<td style="text-align:center"><script type="math/tex">\left[\frac{u(x)}{v(x)}\right]^\prime=\frac{u^\prime(x) \cdot v(x) - u(x) \cdot v^\prime(x)}{v^2(x)}</script></td>
+<td style="text-align:center"><script type="math/tex">\left(\frac{e^x}{\cos{x}}\right)^\prime=\frac{e^x\cdot\cos{x}-e^x\cdot(-\sin{x})}{cos^2(x)}</script></td>
 </tr>
 <tr>
-<td style="text-align:center">${g[h(x)]}^\prime=g^\prime(h)*h^\prime(x)$</td>
-<td style="text-align:center">$(\sin{2x})^\prime=\cos{2x}\cdot(2x)^\prime=2\cos(2x)$</td>
+<td style="text-align:center"><script type="math/tex">\{g[h(x)]\}^\prime=g^\prime(h)*h^\prime(x)</script></td>
+<td style="text-align:center"><script type="math/tex">(\sin{2x})^\prime=\cos{2x}\cdot(2x)^\prime=2\cos(2x)</script></td>
 </tr>
 </tbody>
 </table>
@@ -494,7 +494,7 @@ document.addEventListener("pjax:complete", reset);document.addEventListener('pja
 <h3 id="【知道】平均绝对误差"><a href="#【知道】平均绝对误差" class="headerlink" title="【知道】平均绝对误差"></a>【知道】平均绝对误差</h3><p><strong>Mean Absolute Error (MAE)</strong></p>
 
 <ul>
-<li><p>上面的公式中：n 为样本数量, y 为实际值, $\hat{y}$ 为预测值</p>
+<li><p>上面的公式中：n 为样本数量, y 为实际值, <script type="math/tex">\hat{y}</script> 为预测值</p>
 </li>
 <li><p>MAE 越小模型预测约准确</p>
 </li>
@@ -504,7 +504,7 @@ document.addEventListener("pjax:complete", reset);document.addEventListener('pja
 <h3 id="【知道】均方误差"><a href="#【知道】均方误差" class="headerlink" title="【知道】均方误差"></a>【知道】均方误差</h3><p>   <strong>Mean Squared Error (MSE)</strong></p>
 
 <ul>
-<li>上面的公式中：n 为样本数量, y 为实际值, $\hat{y}$ 为预测值</li>
+<li>上面的公式中：n 为样本数量, y 为实际值, <script type="math/tex">\hat{y}</script> 为预测值</li>
 <li>MSE 越小模型预测约准确</li>
 </ul>
 <p>Sklearn 中MSE的API</p>
@@ -512,7 +512,7 @@ document.addEventListener("pjax:complete", reset);document.addEventListener('pja
 <h3 id="【知道】-均方根误差"><a href="#【知道】-均方根误差" class="headerlink" title="【知道】 均方根误差"></a>【知道】 均方根误差</h3><p><strong>Root Mean Squared Error (RMSE)</strong></p>
 
 <ul>
-<li>上面的公式中：n 为样本数量, y 为实际值, $\hat{y}$ 为预测值</li>
+<li>上面的公式中：n 为样本数量, y 为实际值, <script type="math/tex">\hat{y}</script> 为预测值</li>
 <li>RMSE 越小模型预测约准确</li>
 </ul>
 <h3 id="【了解】-三种指标的比较"><a href="#【了解】-三种指标的比较" class="headerlink" title="【了解】 三种指标的比较"></a>【了解】 三种指标的比较</h3><p>我们绘制了一条直线 <strong>y = 2x +5</strong> 用来拟合 <strong>y = 2x + 5 + e.</strong> 这些数据点，其中e为噪声</p>
@@ -524,7 +524,7 @@ document.addEventListener("pjax:complete", reset);document.addEventListener('pja
 <li><p>可以得出结论，RMSE 会放大预测误差较大的样本对结果的影响，而 MAE 只是给出了平均误差</p>
 </li>
 <li><p>由于 RMSE 对误差的 <strong>平方和求平均</strong> 再开根号，大多数情况下RMSE&gt;MAE</p>
-<p>举例 (1+3)/2 = 2   $\sqrt{(1^2+3^2)/2 }= \sqrt{10/2} = \sqrt{5} = 2.236$</p>
+<p>举例 (1+3)/2 = 2   <script type="math/tex">\sqrt{(1^2+3^2)/2 }= \sqrt{10/2} = \sqrt{5} = 2.236</script></p>
 </li>
 </ul>
 <p>我们再看下一个例子</p>
@@ -567,8 +567,8 @@ document.addEventListener("pjax:complete", reset);document.addEventListener('pja
 <li>线性回归的算法效果评估</li>
 </ul>
 <h4 id="回归性能评估"><a href="#回归性能评估" class="headerlink" title="回归性能评估"></a>回归性能评估</h4><p>均方误差(Mean Squared Error, MSE)评价机制：</p>
-<p>$\Large MSE = \frac{1}{m}\sum_{i=1}^{m}(y^i-\hat{y})^2$</p>
-<p>sklearn中的API：sklearn.metrics.mean_squared_error(y_true, y_pred)</p>
+<script type="math/tex; mode=display">
+\Large MSE = \frac{1}{m}\sum_{i=1}^{m}(y^i-\hat{y})^2</script><p>sklearn中的API：sklearn.metrics.mean_squared_error(y_true, y_pred)</p>
 <ul>
 <li>均方误差回归损失</li>
 <li>y_true:真实值</li>
@@ -633,22 +633,22 @@ document.addEventListener("pjax:complete", reset);document.addEventListener('pja
 <p>注：调整时候，算法并不知道某个特征影响，而是去调整参数得出优化的结</p>
 <h4 id="L1正则化"><a href="#L1正则化" class="headerlink" title="L1正则化"></a><strong>L1正则化</strong></h4><ul>
 <li>假设𝐿(𝑊)是未加正则项的损失，𝜆是一个超参，控制正则化项的大小。</li>
-<li>则最终的损失函数：$𝐿=𝐿(𝑊)+ \lambda*\sum_{i=1}^{n}\lvert w_i\rvert$ </li>
+<li>则最终的损失函数：<script type="math/tex">𝐿=𝐿(𝑊)+ \lambda*\sum_{i=1}^{n}\lvert w_i\rvert</script> </li>
 </ul>
 <p>作用：用来进行特征选择，主要原因在于L1正则化会使得较多的参数为0，从而产生稀疏解,可以将0对应的特征遗弃，进而用来选择特征。一定程度上L1正则也可以防止模型过拟合。</p class='item-img' data-src='/2026/10/15/ml6/Snipaste_2026-10-19_09-49-12.png'><img src="/2026/10/15/ml6/Snipaste_2026-10-19_09-49-12.png" class="" title="Hexo 博客封面示例">
 <p><strong>L1正则为什么可以产生稀疏解（可以特征选择）</strong></p>
 <p>稀疏性：向量中很多维度值为0</p>
 <ul>
-<li>对其中的一个参数 $ w_i $ 计算梯度，其他参数同理，α是学习率，sign(wi)是符号函数。</li>
+<li>对其中的一个参数 <script type="math/tex">w_i</script> 计算梯度，其他参数同理，α是学习率，sign(wi)是符号函数。</li>
 </ul>
 
 <p>L1的梯度：</p>
-<p>$𝐿=𝐿(𝑊)+ \lambda*\sum_{i=1}^{n}\lvert w_i\rvert$ </p>
-<p>$\frac{\partial L}{\partial w<em>{i}} = \frac{\partial L(W)}{\partial w</em>{i}}+\lambda sign(w_{i})$</p>
-<p>LASSO回归: from sklearn.linear_model import Lasso</p>
+<script type="math/tex; mode=display">
+𝐿=𝐿(𝑊)+ \lambda*\sum_{i=1}^{n}\lvert w_i\rvert</script><script type="math/tex; mode=display">
+\frac{\partial L}{\partial w_{i}} = \frac{\partial L(W)}{\partial w_{i}}+\lambda sign(w_{i})</script><p>LASSO回归: from sklearn.linear_model import Lasso</p>
 <h4 id="L2正则化"><a href="#L2正则化" class="headerlink" title="L2正则化"></a><strong>L2正则化</strong></h4><ul>
 <li>假设𝐿(𝑊)是未加正则项的损失，𝜆是一个超参，控制正则化项的大小。</li>
-<li>则最终的损失函数：$𝐿=𝐿(𝑊)+ \lambda*\sum<em>{i=1}^{n}w</em>{i}^{2}$ </li>
+<li>则最终的损失函数：<script type="math/tex">𝐿=𝐿(𝑊)+ \lambda*\sum_{i=1}^{n}w_{i}^{2}</script> </li>
 </ul>
 <p>作用：主要用来防止模型过拟合，可以减小特征的权重</p>
 <p>优点：越小的参数说明模型越简单，越简单的模型则越不容易产生过拟合现象</p>

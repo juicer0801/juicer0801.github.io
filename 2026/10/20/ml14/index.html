@@ -1,10 +1,12 @@
-<!DOCTYPE html><html lang="en" theme-mode="auto"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>聚类（ai） | Hexo</title><meta property="og:type" content="article">
+<!DOCTYPE html><html lang="en" theme-mode="auto"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>聚类（ai） | Hexo</title><meta name="description" content="第7章：KMeans 聚类算法 —— 超级详细教程（小白版） 🎯 目标：把你当完全的小白，逐行讲解每一句代码，让你能独立写出 KMeans 聚类项目 📖 阅读建议：不要急，慢慢看，每个变量都要理解清楚 📚 参考资料：《西瓜书》第9章 聚类、黑马程序员聚类笔记、《白话机器学习的数学》、StatQuest 图解机器学习   📋 目录 什么是聚类 KMeans 算法原理（图解） 数学公式详解 从">
+<meta property="og:type" content="article">
 <meta property="og:title" content="聚类（ai）">
 <meta property="og:url" content="http://example.com/2026/10/20/ml14/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="第7章：KMeans 聚类算法 —— 超级详细教程（小白版） 🎯 目标：把你当完全的小白，逐行讲解每一句代码，让你能独立写出 KMeans 聚类项目 📖 阅读建议：不要急，慢慢看，每个变量都要理解清楚 📚 参考资料：《西瓜书》第9章 聚类、黑马程序员聚类笔记、《白话机器学习的数学》、StatQuest 图解机器学习   📋 目录 什么是聚类 KMeans 算法原理（图解） 数学公式详解 从">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2026-10-20T12:48:06.000Z">
-<meta property="article:modified_time" content="2026-10-25T13:25:54.688Z">
+<meta property="article:modified_time" content="2026-10-27T13:19:05.802Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary"><link rel="canonical" href="http://example.com/2026/10/20/ml14/"><link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="preload" as="font" crossorigin="anonymous" href="/font/Bender.ttf"><link rel="preload" as="font" crossorigin="anonymous" href="/font/BenderLight.woff2"><link rel="preload" as="font" crossorigin="anonymous" href="/font/JetBrainsMono-Regular.woff2"><link rel="stylesheet" href="/css/arknights.css"><style>@font-face {
   font-family: Bender;
@@ -133,4 +135,654 @@ document.addEventListener("pjax:complete", reset);document.addEventListener('pja
  const script = document.createElement('script');
  script.src = 'https://vercount.one/js';
  document.head.appendChild(script);
-});reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/tags/"><span class="navItemTitle">Tags</span></a></li><li class="navItem"><a class="navBlock" href="/categories/"><span class="navItemTitle">Categories</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>聚类（ai）</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2026-10-20T12:48:06.000Z" id="date"> 2026-10-20</time></div></span><br><span>Last Update: <div class="control"><time datetime="2026-10-25T13:25:54.688Z" id="updated"> 2026-10-25</time></div></span><br><span>Read Time: <div class="control">1 min</div></span><br><span id="vercount_container_page_pv">Page View: <span class="control" id="vercount_value_page_pv">loading...</span></span></div></div><hr><div id="post-content"><div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2026/10/20/ml15/">← Next 朴素贝叶斯</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/10/20/ml13/">聚类 Prev →</a></div></div></div><div id="comments"><div id="giscus"></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="To Top" style="opacity: 0; display: none;">∧ </a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="Change Theme"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">John Doe</a></h1><div id="description"><p></p></div><div id="social-links"><a class="social" target="_blank" rel="noopener" href="https://github.com/juicer0801"><i class="fab fa-github" alt="GitHub"></i></a></div></div><div id="aside-block"></div><footer><nobr>Published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>
+});reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/tags/"><span class="navItemTitle">Tags</span></a></li><li class="navItem"><a class="navBlock" href="/categories/"><span class="navItemTitle">Categories</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>聚类（ai）</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2026-10-20T12:48:06.000Z" id="date"> 2026-10-20</time></div></span><br><span>Last Update: <div class="control"><time datetime="2026-10-27T13:19:05.802Z" id="updated"> 2026-10-27</time></div></span><br><span>Word Count: <div class="control">6.8k</div></span><br><span>Read Time: <div class="control">28 min</div></span><br><span id="vercount_container_page_pv">Page View: <span class="control" id="vercount_value_page_pv">loading...</span></span></div></div><hr><div id="post-content"><h1 id="第7章：KMeans-聚类算法-——-超级详细教程（小白版）"><a href="#第7章：KMeans-聚类算法-——-超级详细教程（小白版）" class="headerlink" title="第7章：KMeans 聚类算法 —— 超级详细教程（小白版）"></a>第7章：KMeans 聚类算法 —— 超级详细教程（小白版）</h1><blockquote>
+<p>🎯 目标：把你当完全的小白，逐行讲解每一句代码，让你能独立写出 KMeans 聚类项目</p>
+<p>📖 阅读建议：不要急，慢慢看，每个变量都要理解清楚</p>
+<p>📚 参考资料：《西瓜书》第9章 聚类、黑马程序员聚类笔记、《白话机器学习的数学》、StatQuest 图解机器学习</p>
+</blockquote>
+<hr>
+<h2 id="📋-目录"><a href="#📋-目录" class="headerlink" title="📋 目录"></a>📋 目录</h2><ol>
+<li><a href="#1-什么是聚类">什么是聚类</a></li>
+<li><a href="#2-kmeans-算法原理图解">KMeans 算法原理（图解）</a></li>
+<li><a href="#3-数学公式详解">数学公式详解</a></li>
+<li><a href="#4-从零实现-kmeans逐行解析">从零实现 KMeans（逐行解析）</a></li>
+<li><a href="#5-sklearn-api-使用">sklearn API 使用</a></li>
+<li><a href="#6-如何选择-k-值">如何选择 K 值</a></li>
+<li><a href="#7-实战客户价值分群">实战：客户价值分群</a></li>
+<li><a href="#8-kmeans-的优化与变体">KMeans 的优化与变体</a></li>
+<li><a href="#9-与其他聚类算法对比">与其他聚类算法对比</a></li>
+<li><a href="#10-小结">小结</a></li>
+<li><a href="#11-作业">作业</a></li>
+</ol>
+<hr>
+<h2 id="1-什么是聚类"><a href="#1-什么是聚类" class="headerlink" title="1. 什么是聚类"></a>1. 什么是聚类</h2><h3 id="1-1-一个直观的例子"><a href="#1-1-一个直观的例子" class="headerlink" title="1.1 一个直观的例子"></a>1.1 一个直观的例子</h3><p>假设你是一家商城的运营，手上有 200 个客户的数据（年龄、消费金额、到店次数），但<strong>没有任何标签</strong>——你事先不知道谁是”高价值客户”、谁是”普通客户”。</p>
+<p>你的目标是：<strong>把相似的客户自动分成几组</strong>，然后对每组制定不同的营销策略。</p>
+<p>这就是<strong>聚类（Clustering）</strong>：</p>
+<blockquote>
+<p>把相似的样本自动归到同一个类别（簇 / cluster），不相似的样本分到不同类别。</p>
+</blockquote>
+<h3 id="1-2-聚类-vs-分类：一个关键区别"><a href="#1-2-聚类-vs-分类：一个关键区别" class="headerlink" title="1.2 聚类 vs 分类：一个关键区别"></a>1.2 聚类 vs 分类：一个关键区别</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>分类（Classification）</th>
+<th>聚类（Clustering）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>学习方式</td>
+<td><strong>监督学习</strong></td>
+<td><strong>无监督学习</strong></td>
+</tr>
+<tr>
+<td>数据</td>
+<td>有标签（label）</td>
+<td><strong>无标签</strong></td>
+</tr>
+<tr>
+<td>目标</td>
+<td>预测已知类别</td>
+<td><strong>发现未知分组</strong></td>
+</tr>
+<tr>
+<td>例子</td>
+<td>判断邮件是否是垃圾邮件</td>
+<td>给客户自动分群</td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p>💡 <strong>记忆口诀</strong>：分类是”老师告诉你答案”（有标签）；聚类是”自己找规律”（无标签）。</p>
+</blockquote>
+<h3 id="1-3-聚类的应用场景"><a href="#1-3-聚类的应用场景" class="headerlink" title="1.3 聚类的应用场景"></a>1.3 聚类的应用场景</h3><ul>
+<li><strong>用户画像 / 客户分群</strong>：把用户按消费行为分成”高价值、潜力、流失”群体</li>
+<li><strong>广告推荐 / 精准营销</strong>：同一群体推荐相似商品</li>
+<li><strong>数据分割（Data Segmentation）</strong>：图像分割中把像素按颜色分组</li>
+<li><strong>搜索引擎</strong>：把相似搜索结果聚类，方便用户浏览</li>
+<li><strong>异常检测</strong>：不属于任何簇的点可能是异常点</li>
+</ul>
+<h3 id="1-4-聚类算法的分类"><a href="#1-4-聚类算法的分类" class="headerlink" title="1.4 聚类算法的分类"></a>1.4 聚类算法的分类</h3><p>《西瓜书》把聚类算法分成三大类：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>代表算法</th>
+<th>思想</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>原型聚类</strong></td>
+<td>KMeans、学习向量量化</td>
+<td>每个簇用一个”原型”（质心）表示</td>
+</tr>
+<tr>
+<td><strong>密度聚类</strong></td>
+<td>DBSCAN</td>
+<td>由密度可达关系簇出簇</td>
+</tr>
+<tr>
+<td><strong>层次聚类</strong></td>
+<td>AGNES</td>
+<td>自底向上 / 自顶层次合并</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>本章学习最经典的<strong>原型聚类：KMeans</strong>。</p>
+<hr>
+<h2 id="2-KMeans-算法原理（图解）"><a href="#2-KMeans-算法原理（图解）" class="headerlink" title="2. KMeans 算法原理（图解）"></a>2. KMeans 算法原理（图解）</h2><h3 id="2-1-核心思想（StatQuest-风格讲解）"><a href="#2-1-核心思想（StatQuest-风格讲解）" class="headerlink" title="2.1 核心思想（StatQuest 风格讲解）"></a>2.1 核心思想（StatQuest 风格讲解）</h3><p>StatQuest 的讲解非常直白：<strong>KMeans 的目标，是把数据分成 K 个簇，让”簇内尽量紧凑，簇间尽量分开”。</strong></p>
+<p>想象一群点散在平面上，你要：</p>
+<ol>
+<li>先放 K 个”质心”（centroid，可以理解为每个簇的”中心代表”）</li>
+<li>每个数据点<strong>找离自己最近的质心</strong>，归入那个簇</li>
+<li>每个簇重新计算<strong>平均值</strong>，作为新的质心</li>
+<li>重复 2、3 步，直到质心<strong>不再移动</strong>（收敛）</li>
+</ol>
+<h3 id="2-2-算法流程（4-步循环）"><a href="#2-2-算法流程（4-步循环）" class="headerlink" title="2.2 算法流程（4 步循环）"></a>2.2 算法流程（4 步循环）</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">1、随机设置 K 个特征空间内的点作为初始的聚类中心（质心）<br>2、对其他每个点计算到 K 个中心的距离，未知的点选择最近的一个聚类中心点作为标记类别<br>3、对着标记的聚类中心之后，重新计算出每个聚类的新中心点（平均值）<br>4、如果计算得出的新中心点与原中心点一样（质心不再移动），那么结束，否则重新进行第二步<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>✅ <strong>重要结论</strong>：K-Means 一定会停下，不可能陷入一直选质心的过程（每次迭代目标函数都会下降或不变，且状态有限）。</p>
+</blockquote>
+<h3 id="2-3-图解迭代过程"><a href="#2-3-图解迭代过程" class="headerlink" title="2.3 图解迭代过程"></a>2.3 图解迭代过程</h3><p>假设有 6 个点，K=2：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">初始状态（随机撒 2 个质心 ★）：<br>      y<br>   6 |  A(2,5)    B(4,6)<br>   5 |        ★c1(3,5.5)<br>   4 |  C(2,3)<br>   3 |             ★c2(5,3.5)<br>   2 |  D(1,2)    E(5,2)<br>   1 |        F(3,1)<br>      +------------------→ x<br>        1    2    3    4    5<br><br>第 1 次迭代（计算每个点到两个质心的欧氏距离）：<br>  A(2,5)：到 c1 = 1.12，到 c2 = 3.35 → 离 c1 近，归簇1<br>  B(4,6)：到 c1 = 1.12，到 c2 = 2.69 → 离 c1 近，归簇1<br>  C(2,3)：到 c1 = 2.69，到 c2 = 3.04 → 离 c1 近，归簇1<br>  D(1,2)：到 c1 = 4.03，到 c2 = 4.27 → 离 c1 近，归簇1<br>  E(5,2)：到 c1 = 4.03，到 c2 = 1.50 → 离 c2 近，归簇2<br>  F(3,1)：到 c1 = 4.50，到 c2 = 3.20 → 离 c2 近，归簇2<br><br>  → 簇1 = &#123;A, B, C, D&#125;，簇2 = &#123;E, F&#125;<br><br>  c1 新位置 = (A+B+C+D) 的均值 = ((2+4+2+1)/4, (5+6+3+2)/4) = (2.25, 4.00)<br>  c2 新位置 = (E+F) 的均值 = ((5+3)/2, (2+1)/2) = (4.00, 1.50)<br><br>第 2 次迭代（用新质心重新分配所有点）：<br>  逐点重新计算后，分配结果与第 1 次完全相同（仍然是 &#123;A,B,C,D&#125; / &#123;E,F&#125;）<br>  → 质心不再移动，算法收敛，聚类完成！<br></code></pre></td></tr></table></figure>
+<hr>
+<h2 id="3-数学公式详解"><a href="#3-数学公式详解" class="headerlink" title="3. 数学公式详解"></a>3. 数学公式详解</h2><h3 id="3-1-目标函数（最小化”簇内平方误差和”）"><a href="#3-1-目标函数（最小化”簇内平方误差和”）" class="headerlink" title="3.1 目标函数（最小化”簇内平方误差和”）"></a>3.1 目标函数（最小化”簇内平方误差和”）</h3><p>KMeans 的目标是最小化<strong>簇内平方误差和（SSE，Sum of Squared Errors）</strong>：</p>
+<script type="math/tex; mode=display">
+E = \sum_{i=1}^{K} \sum_{x \in C_i} \|x - \mu_i\|_2^2</script><p>逐项解释：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$K$</td>
+<td>聚类中心的个数（簇的个数）</td>
+</tr>
+<tr>
+<td>$C_i$</td>
+<td>第 $i$ 个簇（样本集合）</td>
+</tr>
+<tr>
+<td>$x$</td>
+<td>簇中的样本点</td>
+</tr>
+<tr>
+<td>$\mu_i$</td>
+<td>第 $i$ 个簇的<strong>质心</strong>（均值向量）</td>
+</tr>
+<tr>
+<td>$\</td>
+<td>x - \mu_i\</td>
+<td>_2^2$</td>
+<td>样本点到质心的<strong>欧氏距离的平方</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p>💡 <strong>大白话</strong>：让每个点离自己簇的中心<strong>越近越好</strong>。E 越小，簇内越紧凑。</p>
+</blockquote>
+<h3 id="3-2-距离度量（欧氏距离）"><a href="#3-2-距离度量（欧氏距离）" class="headerlink" title="3.2 距离度量（欧氏距离）"></a>3.2 距离度量（欧氏距离）</h3><script type="math/tex; mode=display">
+d(x, \mu) = \sqrt{\sum_{j=1}^{d} (x_j - \mu_j)^2}</script><ul>
+<li>$d$：特征的维度</li>
+<li>$x_j$：样本的第 $j$ 个特征</li>
+<li>$\mu_j$：质心的第 $j$ 个特征</li>
+</ul>
+<p><strong>具体例子</strong>：样本 $x=(3,4)$，质心 $\mu=(4,6)$</p>
+<script type="math/tex; mode=display">
+d = \sqrt{(3-4)^2 + (4-6)^2} = \sqrt{1+4} = \sqrt{5} \approx 2.24</script><blockquote>
+<p>⚠️ <strong>注意</strong>：KMeans 用的是<strong>欧氏距离</strong>，所以特征尺度差异大时必须先做<strong>标准化</strong>，否则大尺度特征会主导聚类结果。</p>
+</blockquote>
+<h3 id="3-3-质心更新公式"><a href="#3-3-质心更新公式" class="headerlink" title="3.3 质心更新公式"></a>3.3 质心更新公式</h3><script type="math/tex; mode=display">
+\mu_i = \frac{1}{|C_i|} \sum_{x \in C_i} x</script><blockquote>
+<p>💡 <strong>大白话</strong>：新质心 = 簇内所有点的<strong>平均值</strong>（每个特征分别求平均）。</p>
+</blockquote>
+<h3 id="3-4-KMeans-与-EM-算法的关系（进阶）"><a href="#3-4-KMeans-与-EM-算法的关系（进阶）" class="headerlink" title="3.4 KMeans 与 EM 算法的关系（进阶）"></a>3.4 KMeans 与 EM 算法的关系（进阶）</h3><p>KMeans 的”分配点 → 更新质心”循环，本质上是 <strong>EM 算法</strong>的特例：</p>
+<ul>
+<li><strong>E 步（期望）</strong>：固定质心，给每个点分配到最近质心（相当于求隐变量的期望）</li>
+<li><strong>M 步（最大化）</strong>：固定分配，更新质心最小化 SSE（相当于最大化似然）</li>
+</ul>
+<p>每一步迭代后 SSE 单调不增，因此算法必然收敛。</p>
+<hr>
+<h2 id="4-从零实现-KMeans（逐行解析）"><a href="#4-从零实现-KMeans（逐行解析）" class="headerlink" title="4. 从零实现 KMeans（逐行解析）"></a>4. 从零实现 KMeans（逐行解析）</h2><p>下面用 NumPy 从零实现一个完整的 KMeans 类，风格和《RNN 情感分类器》教程一致：<strong>每行代码都讲清楚在做什么</strong>。</p>
+<h3 id="4-1-准备工作"><a href="#4-1-准备工作" class="headerlink" title="4.1 准备工作"></a>4.1 准备工作</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt<br></code></pre></td></tr></table></figure>
+<p><strong>这两行在做什么？</strong></p>
+<ul>
+<li><code>numpy</code>：科学计算库，KMeans 的距离计算、均值计算都靠它</li>
+<li><code>matplotlib.pyplot</code>：画图库，用来可视化聚类结果</li>
+</ul>
+<hr>
+<h3 id="4-2-定义-KMeans-类"><a href="#4-2-定义-KMeans-类" class="headerlink" title="4.2 定义 KMeans 类"></a>4.2 定义 KMeans 类</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">KMeansScratch</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, k=<span class="hljs-number">3</span>, max_iter=<span class="hljs-number">100</span>, tol=<span class="hljs-number">1e-4</span>, random_state=<span class="hljs-number">42</span></span>):<br></code></pre></td></tr></table></figure>
+<p><strong>这段代码在做什么？</strong></p>
+<ul>
+<li>定义一个类 <code>KMeansScratch</code>，我们自己实现的 KMeans</li>
+<li><code>__init__</code> 是构造函数，创建对象时自动调用</li>
+</ul>
+<p><strong>参数解释：</strong></p>
+<ul>
+<li><code>k</code>：要分成几个簇（默认 3）</li>
+<li><code>max_iter</code>：最大迭代次数（默认 100），防止死循环</li>
+<li><code>tol</code>：质心移动小于这个值就认为收敛（默认 0.0001）</li>
+<li><code>random_state</code>：随机种子，保证结果可复现</li>
+</ul>
+<p><strong>具体例子：</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">km = KMeansScratch(k=<span class="hljs-number">3</span>, max_iter=<span class="hljs-number">100</span>)<br><span class="hljs-comment"># 创建一个分成3簇的KMeans对象</span><br></code></pre></td></tr></table></figure></p>
+<hr>
+<h3 id="4-3-初始化质心"><a href="#4-3-初始化质心" class="headerlink" title="4.3 初始化质心"></a>4.3 初始化质心</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">_init_centroids</span>(<span class="hljs-params">self, X</span>):<br>    rng = np.random.RandomState(<span class="hljs-variable language_">self</span>.random_state)<br>    centroids = X[rng.choice(<span class="hljs-built_in">len</span>(X), <span class="hljs-variable language_">self</span>.k, replace=<span class="hljs-literal">False</span>)]<br>    <span class="hljs-keyword">return</span> centroids<br></code></pre></td></tr></table></figure>
+<p><strong>这段代码在做什么？</strong></p>
+<ul>
+<li>从数据点中<strong>随机选 k 个</strong>作为初始质心</li>
+</ul>
+<p><strong>逐行解析：</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">rng = np.random.RandomState(<span class="hljs-variable language_">self</span>.random_state)<br></code></pre></td></tr></table></figure>
+<ul>
+<li>创建随机数生成器，<code>random_state=42</code> 保证每次运行选中的点一样（结果可复现）</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">centroids = X[rng.choice(<span class="hljs-built_in">len</span>(X), <span class="hljs-variable language_">self</span>.k, replace=<span class="hljs-literal">False</span>)]<br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>len(X)</code>：样本数量</li>
+<li><code>rng.choice(200, 3, replace=False)</code>：从 200 个样本中随机选 3 个索引，<code>replace=False</code> 表示不重复</li>
+<li><code>X[索引]</code>：用索引取出这 3 个样本作为初始质心</li>
+</ul>
+<p><strong>具体例子：</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># X.shape = (6, 2)，6个点</span><br>X = [[<span class="hljs-number">2</span>,<span class="hljs-number">5</span>], [<span class="hljs-number">4</span>,<span class="hljs-number">6</span>], [<span class="hljs-number">2</span>,<span class="hljs-number">3</span>], [<span class="hljs-number">1</span>,<span class="hljs-number">2</span>], [<span class="hljs-number">5</span>,<span class="hljs-number">2</span>], [<span class="hljs-number">3</span>,<span class="hljs-number">1</span>]]<br><br><span class="hljs-comment"># rng.choice(6, 2, replace=False) 可能返回 [1, 3]</span><br><span class="hljs-comment"># centroids = [[4,6], [1,2]]  ← 第2个和第4个点作为初始质心</span><br></code></pre></td></tr></table></figure></p>
+<blockquote>
+<p>💡 <strong>为什么从数据点中选？</strong> 比在空间中乱撒点更合理，保证质心在数据分布范围内。</p>
+</blockquote>
+<hr>
+<h3 id="4-4-分配每个点到最近的质心"><a href="#4-4-分配每个点到最近的质心" class="headerlink" title="4.4 分配每个点到最近的质心"></a>4.4 分配每个点到最近的质心</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">_assign</span>(<span class="hljs-params">self, X, centroids</span>):<br>    distances = np.zeros((<span class="hljs-built_in">len</span>(X), <span class="hljs-variable language_">self</span>.k))<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-variable language_">self</span>.k):<br>        distances[:, i] = np.sqrt(((X - centroids[i]) ** <span class="hljs-number">2</span>).<span class="hljs-built_in">sum</span>(axis=<span class="hljs-number">1</span>))<br>    labels = distances.argmin(axis=<span class="hljs-number">1</span>)<br>    <span class="hljs-keyword">return</span> labels, distances<br></code></pre></td></tr></table></figure>
+<p><strong>这段代码在做什么？</strong></p>
+<ul>
+<li>计算每个点到每个质心的距离，分给最近的质心</li>
+</ul>
+<p><strong>逐行解析：</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">distances = np.zeros((<span class="hljs-built_in">len</span>(X), <span class="hljs-variable language_">self</span>.k))<br></code></pre></td></tr></table></figure>
+<ul>
+<li>创建距离矩阵：<code>[样本数 × k]</code>，每行是一个点到 k 个质心的距离</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-variable language_">self</span>.k):<br>    distances[:, i] = np.sqrt(((X - centroids[i]) ** <span class="hljs-number">2</span>).<span class="hljs-built_in">sum</span>(axis=<span class="hljs-number">1</span>))<br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>X - centroids[i]</code>：所有点减去第 i 个质心（广播机制）</li>
+<li><code>** 2</code>：每个元素平方</li>
+<li><code>.sum(axis=1)</code>：按行求和（把各维度加起来）</li>
+<li><code>np.sqrt(...)</code>：开根号 → 得到每个点到第 i 个质心的欧氏距离</li>
+</ul>
+<p><strong>具体例子：</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python">X = [[<span class="hljs-number">2</span>,<span class="hljs-number">5</span>], [<span class="hljs-number">4</span>,<span class="hljs-number">6</span>], [<span class="hljs-number">2</span>,<span class="hljs-number">3</span>]]           <span class="hljs-comment"># 3个点</span><br>centroids = [[<span class="hljs-number">2.67</span>, <span class="hljs-number">4.67</span>], [<span class="hljs-number">3.00</span>, <span class="hljs-number">1.67</span>]]  <span class="hljs-comment"># 2个质心</span><br><br><span class="hljs-comment"># 计算点 [2,5] 到两个质心的距离：</span><br><span class="hljs-comment"># 到 c1: √((2-2.67)² + (5-4.67)²) = √(0.45+0.11) = √0.56 ≈ 0.75</span><br><span class="hljs-comment"># 到 c2: √((2-3.00)² + (5-1.67)²) = √(1.00+11.09) = √12.09 ≈ 3.48</span><br><br>distances = [<br>    [<span class="hljs-number">0.75</span>, <span class="hljs-number">3.48</span>],   <span class="hljs-comment"># 点1到c1近</span><br>    [<span class="hljs-number">1.88</span>, <span class="hljs-number">4.44</span>],   <span class="hljs-comment"># 点2到c1近</span><br>    [<span class="hljs-number">1.80</span>, <span class="hljs-number">1.67</span>],   <span class="hljs-comment"># 点3到c2近（临界值！）</span><br>]<br></code></pre></td></tr></table></figure></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">labels = distances.argmin(axis=<span class="hljs-number">1</span>)<br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>argmin(axis=1)</code>：每行取最小值的索引 → 每个点分给最近的质心</li>
+<li>结果：<code>labels = [0, 0, 1]</code>（点1、点2属于簇0，点3属于簇1）</li>
+</ul>
+<hr>
+<h3 id="4-5-更新质心"><a href="#4-5-更新质心" class="headerlink" title="4.5 更新质心"></a>4.5 更新质心</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">_update</span>(<span class="hljs-params">self, X, labels</span>):<br>    centroids = np.zeros((<span class="hljs-variable language_">self</span>.k, X.shape[<span class="hljs-number">1</span>]))<br>    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-variable language_">self</span>.k):<br>        centroids[i] = X[labels == i].mean(axis=<span class="hljs-number">0</span>)<br>    <span class="hljs-keyword">return</span> centroids<br></code></pre></td></tr></table></figure>
+<p><strong>这段代码在做什么？</strong></p>
+<ul>
+<li>每个簇取平均值，作为新质心</li>
+</ul>
+<p><strong>逐行解析：</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">centroids = np.zeros((<span class="hljs-variable language_">self</span>.k, X.shape[<span class="hljs-number">1</span>]))<br></code></pre></td></tr></table></figure>
+<ul>
+<li>创建质心矩阵：<code>[k × 特征数]</code></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">centroids[i] = X[labels == i].mean(axis=<span class="hljs-number">0</span>)<br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>labels == i</code>：布尔掩码，找出属于第 i 簇的所有点</li>
+<li><code>X[labels == i]</code>：把这些点取出来</li>
+<li><code>.mean(axis=0)</code>：按列求平均（每个特征分别求平均）</li>
+</ul>
+<p><strong>具体例子：</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 簇0 = &#123;A(2,5), B(4,6), C(2,3)&#125;</span><br><span class="hljs-comment"># 新质心 = ((2+4+2)/3, (5+6+3)/3) = (2.67, 4.67) ✓ 这就是我们图解里的数字！</span><br></code></pre></td></tr></table></figure></p>
+<hr>
+<h3 id="4-6-训练主循环（fit）"><a href="#4-6-训练主循环（fit）" class="headerlink" title="4.6 训练主循环（fit）"></a>4.6 训练主循环（fit）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">fit</span>(<span class="hljs-params">self, X</span>):<br>    X = np.array(X, dtype=<span class="hljs-built_in">float</span>)<br>    <span class="hljs-variable language_">self</span>.centroids = <span class="hljs-variable language_">self</span>._init_centroids(X)<br><br>    <span class="hljs-keyword">for</span> it <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-variable language_">self</span>.max_iter):<br>        old_centroids = <span class="hljs-variable language_">self</span>.centroids.copy()<br>        labels, _ = <span class="hljs-variable language_">self</span>._assign(X, <span class="hljs-variable language_">self</span>.centroids)<br>        <span class="hljs-variable language_">self</span>.centroids = <span class="hljs-variable language_">self</span>._update(X, labels)<br><br>        shift = np.<span class="hljs-built_in">abs</span>(<span class="hljs-variable language_">self</span>.centroids - old_centroids).<span class="hljs-built_in">max</span>()<br>        <span class="hljs-keyword">if</span> shift &lt; <span class="hljs-variable language_">self</span>.tol:<br>            <span class="hljs-keyword">break</span><br><br>    <span class="hljs-variable language_">self</span>.labels_ = labels<br>    <span class="hljs-variable language_">self</span>.inertia_ = ((X - <span class="hljs-variable language_">self</span>.centroids[labels]) ** <span class="hljs-number">2</span>).<span class="hljs-built_in">sum</span>()<br>    <span class="hljs-keyword">return</span> <span class="hljs-variable language_">self</span><br></code></pre></td></tr></table></figure>
+<p><strong>这段代码在做什么？</strong></p>
+<ul>
+<li>KMeans 的完整训练流程：初始化 → 分配 → 更新 → 判断收敛</li>
+</ul>
+<p><strong>逐行解析：</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">X = np.array(X, dtype=<span class="hljs-built_in">float</span>)<br></code></pre></td></tr></table></figure>
+<ul>
+<li>把输入转成 float 类型的 NumPy 数组（防止整数除法出问题）</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-variable language_">self</span>.centroids = <span class="hljs-variable language_">self</span>._init_centroids(X)<br></code></pre></td></tr></table></figure>
+<ul>
+<li>随机初始化 k 个质心</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">for</span> it <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-variable language_">self</span>.max_iter):<br></code></pre></td></tr></table></figure>
+<ul>
+<li>迭代循环，最多 <code>max_iter</code> 次</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">old_centroids = <span class="hljs-variable language_">self</span>.centroids.copy()<br></code></pre></td></tr></table></figure>
+<ul>
+<li>保存旧质心（<code>.copy()</code> 很重要，否则会跟着一起变）</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">labels, _ = <span class="hljs-variable language_">self</span>._assign(X, <span class="hljs-variable language_">self</span>.centroids)<br><span class="hljs-variable language_">self</span>.centroids = <span class="hljs-variable language_">self</span>._update(X, labels)<br></code></pre></td></tr></table></figure>
+<ul>
+<li><strong>E 步</strong>：把每个点分给最近的质心</li>
+<li><strong>M 步</strong>：更新质心为簇内均值</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">shift = np.<span class="hljs-built_in">abs</span>(<span class="hljs-variable language_">self</span>.centroids - old_centroids).<span class="hljs-built_in">max</span>()<br><span class="hljs-keyword">if</span> shift &lt; <span class="hljs-variable language_">self</span>.tol:<br>    <span class="hljs-keyword">break</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li>计算质心最大移动距离</li>
+<li>若小于 <code>tol</code>（0.0001），说明收敛，提前退出</li>
+</ul>
+<p><strong>具体例子：</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 第1次迭代后质心从 (3,5.5) 移动到 (2.67,4.67)</span><br><span class="hljs-comment"># shift = max(|2.67-3|, |4.67-5.5|) = max(0.33, 0.83) = 0.83 &gt; 0.0001 → 继续</span><br><br><span class="hljs-comment"># 第5次迭代后质心只移动了 0.00001</span><br><span class="hljs-comment"># shift = 0.00001 &lt; 0.0001 → 收敛，停止！</span><br></code></pre></td></tr></table></figure></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-variable language_">self</span>.labels_ = labels<br></code></pre></td></tr></table></figure>
+<ul>
+<li>保存每个样本的簇标签（外部可以读取）</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-variable language_">self</span>.inertia_ = ((X - <span class="hljs-variable language_">self</span>.centroids[labels]) ** <span class="hljs-number">2</span>).<span class="hljs-built_in">sum</span>()<br></code></pre></td></tr></table></figure>
+<ul>
+<li>计算<strong>SSE（簇内平方误差和）</strong>，也就是 sklearn 里的 <code>inertia_</code></li>
+<li><code>self.centroids[labels]</code>：把每个样本替换成它所属簇的质心（高级技巧！）</li>
+</ul>
+<p><strong>具体例子：</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 假设3个点、2个簇</span><br>X = [[<span class="hljs-number">2</span>,<span class="hljs-number">5</span>], [<span class="hljs-number">4</span>,<span class="hljs-number">6</span>], [<span class="hljs-number">2</span>,<span class="hljs-number">3</span>]]<br>labels = [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>]<br>centroids = [[<span class="hljs-number">2.67</span>, <span class="hljs-number">4.67</span>], [<span class="hljs-number">3.00</span>, <span class="hljs-number">1.67</span>]]<br><br><span class="hljs-comment"># centroids[labels] = [[2.67,4.67], [2.67,4.67], [3.00,1.67]]</span><br><span class="hljs-comment"># 每个点替换成自己簇的质心</span><br><br><span class="hljs-comment"># (X - centroids[labels]) = [[-0.67, 0.33], [1.33, 1.33], [-1.00, 1.33]]</span><br><span class="hljs-comment"># 平方后按元素求和 = 0.45+0.11+1.77+1.77+1.00+1.77 ≈ 6.86</span><br><span class="hljs-comment"># inertia_ = 6.86</span><br></code></pre></td></tr></table></figure></p>
+<hr>
+<h3 id="4-7-预测新样本"><a href="#4-7-预测新样本" class="headerlink" title="4.7 预测新样本"></a>4.7 预测新样本</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">predict</span>(<span class="hljs-params">self, X</span>):<br>    X = np.array(X, dtype=<span class="hljs-built_in">float</span>)<br>    labels, _ = <span class="hljs-variable language_">self</span>._assign(X, <span class="hljs-variable language_">self</span>.centroids)<br>    <span class="hljs-keyword">return</span> labels<br></code></pre></td></tr></table></figure>
+<p><strong>这段代码在做什么？</strong></p>
+<ul>
+<li>给新样本分配簇标签（训练时质心已固定，只做分配不做更新）</li>
+</ul>
+<p><strong>具体例子：</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">km = KMeansScratch(k=<span class="hljs-number">2</span>).fit(X_train)<br>km.predict([[<span class="hljs-number">3</span>, <span class="hljs-number">4</span>]])   <span class="hljs-comment"># 返回 [1]，表示新客户属于簇1</span><br></code></pre></td></tr></table></figure></p>
+<hr>
+<h3 id="4-8-完整代码汇总"><a href="#4-8-完整代码汇总" class="headerlink" title="4.8 完整代码汇总"></a>4.8 完整代码汇总</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">KMeansScratch</span>:<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, k=<span class="hljs-number">3</span>, max_iter=<span class="hljs-number">100</span>, tol=<span class="hljs-number">1e-4</span>, random_state=<span class="hljs-number">42</span></span>):<br>        <span class="hljs-variable language_">self</span>.k = k<br>        <span class="hljs-variable language_">self</span>.max_iter = max_iter<br>        <span class="hljs-variable language_">self</span>.tol = tol<br>        <span class="hljs-variable language_">self</span>.random_state = random_state<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">_init_centroids</span>(<span class="hljs-params">self, X</span>):<br>        rng = np.random.RandomState(<span class="hljs-variable language_">self</span>.random_state)<br>        centroids = X[rng.choice(<span class="hljs-built_in">len</span>(X), <span class="hljs-variable language_">self</span>.k, replace=<span class="hljs-literal">False</span>)]<br>        <span class="hljs-keyword">return</span> centroids<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">_assign</span>(<span class="hljs-params">self, X, centroids</span>):<br>        distances = np.zeros((<span class="hljs-built_in">len</span>(X), <span class="hljs-variable language_">self</span>.k))<br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-variable language_">self</span>.k):<br>            distances[:, i] = np.sqrt(((X - centroids[i]) ** <span class="hljs-number">2</span>).<span class="hljs-built_in">sum</span>(axis=<span class="hljs-number">1</span>))<br>        labels = distances.argmin(axis=<span class="hljs-number">1</span>)<br>        <span class="hljs-keyword">return</span> labels, distances<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">_update</span>(<span class="hljs-params">self, X, labels</span>):<br>        centroids = np.zeros((<span class="hljs-variable language_">self</span>.k, X.shape[<span class="hljs-number">1</span>]))<br>        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-variable language_">self</span>.k):<br>            centroids[i] = X[labels == i].mean(axis=<span class="hljs-number">0</span>)<br>        <span class="hljs-keyword">return</span> centroids<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">fit</span>(<span class="hljs-params">self, X</span>):<br>        X = np.array(X, dtype=<span class="hljs-built_in">float</span>)<br>        <span class="hljs-variable language_">self</span>.centroids = <span class="hljs-variable language_">self</span>._init_centroids(X)<br>        labels = <span class="hljs-literal">None</span><br><br>        <span class="hljs-keyword">for</span> it <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-variable language_">self</span>.max_iter):<br>            old_centroids = <span class="hljs-variable language_">self</span>.centroids.copy()<br>            labels, _ = <span class="hljs-variable language_">self</span>._assign(X, <span class="hljs-variable language_">self</span>.centroids)<br>            <span class="hljs-variable language_">self</span>.centroids = <span class="hljs-variable language_">self</span>._update(X, labels)<br><br>            shift = np.<span class="hljs-built_in">abs</span>(<span class="hljs-variable language_">self</span>.centroids - old_centroids).<span class="hljs-built_in">max</span>()<br>            <span class="hljs-keyword">if</span> shift &lt; <span class="hljs-variable language_">self</span>.tol:<br>                <span class="hljs-keyword">break</span><br><br>        <span class="hljs-variable language_">self</span>.labels_ = labels<br>        <span class="hljs-variable language_">self</span>.inertia_ = ((X - <span class="hljs-variable language_">self</span>.centroids[labels]) ** <span class="hljs-number">2</span>).<span class="hljs-built_in">sum</span>()<br>        <span class="hljs-keyword">return</span> <span class="hljs-variable language_">self</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">predict</span>(<span class="hljs-params">self, X</span>):<br>        X = np.array(X, dtype=<span class="hljs-built_in">float</span>)<br>        labels, _ = <span class="hljs-variable language_">self</span>._assign(X, <span class="hljs-variable language_">self</span>.centroids)<br>        <span class="hljs-keyword">return</span> labels<br></code></pre></td></tr></table></figure>
+<hr>
+<h3 id="4-9-测试我们自己的-KMeans"><a href="#4-9-测试我们自己的-KMeans" class="headerlink" title="4.9 测试我们自己的 KMeans"></a>4.9 测试我们自己的 KMeans</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 生成模拟数据：3个簇</span><br>np.random.seed(<span class="hljs-number">0</span>)<br>cluster1 = np.random.randn(<span class="hljs-number">50</span>, <span class="hljs-number">2</span>) + [<span class="hljs-number">2</span>, <span class="hljs-number">2</span>]<br>cluster2 = np.random.randn(<span class="hljs-number">50</span>, <span class="hljs-number">2</span>) + [<span class="hljs-number">8</span>, <span class="hljs-number">8</span>]<br>cluster3 = np.random.randn(<span class="hljs-number">50</span>, <span class="hljs-number">2</span>) + [<span class="hljs-number">2</span>, <span class="hljs-number">8</span>]<br>X = np.vstack([cluster1, cluster2, cluster3])<br><br><span class="hljs-comment"># 用我们的KMeans聚类</span><br>km = KMeansScratch(k=<span class="hljs-number">3</span>, random_state=<span class="hljs-number">42</span>)<br>km.fit(X)<br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;质心位置：&quot;</span>)<br><span class="hljs-built_in">print</span>(km.centroids)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;SSE (inertia_):&quot;</span>, km.inertia_)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;前10个样本的标签：&quot;</span>, km.labels_[:<span class="hljs-number">10</span>])<br></code></pre></td></tr></table></figure>
+<p><strong>输出示例：</strong><br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">质心位置：<br>[[7.98 8.18]<br> [2.02 2.10]<br> [1.91 7.97]]<br>SSE (inertia_): 297.95<br>前10个样本的标签： [1 1 1 1 1 1 1 1 1 1]<br></code></pre></td></tr></table></figure></p>
+<p><strong>结果解读：</strong></p>
+<ul>
+<li>3 个质心几乎完美地落在我们设计的 (2,2)、(8,8)、(2,8) 旁边 ✓</li>
+<li>质心顺序不固定（这里第 0 个簇对应 (8,8) 那组），因为初始质心是随机选的，<strong>标签编号本身没有意义</strong>，重要的是分组结果</li>
+<li>前 10 个点来自 cluster1（中心 (2,2)），所以它们的标签相同（都是 1）✓</li>
+</ul>
+<hr>
+<h2 id="5-sklearn-API-使用"><a href="#5-sklearn-API-使用" class="headerlink" title="5. sklearn API 使用"></a>5. sklearn API 使用</h2><p>实际工作中不需要自己实现，直接用 sklearn 的 <code>KMeans</code>。</p>
+<h3 id="5-1-基本使用"><a href="#5-1-基本使用" class="headerlink" title="5.1 基本使用"></a>5.1 基本使用</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.cluster <span class="hljs-keyword">import</span> KMeans<br><br>estimator = KMeans(n_clusters=<span class="hljs-number">2</span>, random_state=<span class="hljs-number">9</span>)<br>y_pred = estimator.fit_predict(X)<br></code></pre></td></tr></table></figure>
+<p><strong>参数解释：</strong></p>
+<ul>
+<li><code>n_clusters=8</code>：开始的聚类中心数量（质心数），默认 8</li>
+<li><code>random_state</code>：随机种子，保证结果可复现</li>
+</ul>
+<p><strong>方法：</strong></p>
+<ul>
+<li><code>fit(X)</code>：对 X 进行聚类</li>
+<li><code>predict(X)</code>：预测新样本属于哪个簇</li>
+<li><code>fit_predict(X)</code>：计算聚类中心并预测每个样本属于哪个类别，相当于先调用 <code>fit(X)</code>，然后再调用 <code>predict(X)</code></li>
+</ul>
+<p><strong>属性：</strong></p>
+<ul>
+<li><code>estimator.labels_</code>：每个样本的簇标签</li>
+<li><code>estimator.cluster_centers_</code>：质心坐标</li>
+<li><code>estimator.inertia_</code>：SSE（簇内平方误差和）</li>
+</ul>
+<h3 id="5-2-sklearn-实践例子"><a href="#5-2-sklearn-实践例子" class="headerlink" title="5.2 sklearn 实践例子"></a>5.2 sklearn 实践例子</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt<br><span class="hljs-keyword">from</span> sklearn.datasets <span class="hljs-keyword">import</span> make_blobs<br><span class="hljs-keyword">from</span> sklearn.cluster <span class="hljs-keyword">import</span> KMeans<br><br><span class="hljs-comment"># 1. 生成数据</span><br>X, y_true = make_blobs(n_samples=<span class="hljs-number">300</span>, centers=<span class="hljs-number">4</span>, random_state=<span class="hljs-number">9</span>)<br><br><span class="hljs-comment"># 2. 使用k-means聚类</span><br>y_pred = KMeans(n_clusters=<span class="hljs-number">4</span>, random_state=<span class="hljs-number">9</span>).fit_predict(X)<br><br><span class="hljs-comment"># 3. 可视化</span><br>plt.scatter(X[:, <span class="hljs-number">0</span>], X[:, <span class="hljs-number">1</span>], c=y_pred)<br>plt.scatter(<br>    KMeans(n_clusters=<span class="hljs-number">4</span>, random_state=<span class="hljs-number">9</span>).fit(X).cluster_centers_[:, <span class="hljs-number">0</span>],<br>    KMeans(n_clusters=<span class="hljs-number">4</span>, random_state=<span class="hljs-number">9</span>).fit(X).cluster_centers_[:, <span class="hljs-number">1</span>],<br>    s=<span class="hljs-number">300</span>, c=<span class="hljs-string">&#x27;black&#x27;</span>, label=<span class="hljs-string">&#x27;Centroids&#x27;</span><br>)<br>plt.title(<span class="hljs-string">&#x27;Clusters of customers&#x27;</span>)<br>plt.xlabel(<span class="hljs-string">&#x27;Annual Income (k$)&#x27;</span>)<br>plt.ylabel(<span class="hljs-string">&#x27;Spending Score (1-100)&#x27;</span>)<br>plt.legend()<br>plt.show()<br></code></pre></td></tr></table></figure>
+<hr>
+<h2 id="6-如何选择-K-值"><a href="#6-如何选择-K-值" class="headerlink" title="6. 如何选择 K 值"></a>6. 如何选择 K 值</h2><p>KMeans 的第一个灵魂拷问：<strong>K 选多少合适？</strong>（聚类没有”标准答案”，K 是超参数，需要人为选择）</p>
+<h3 id="6-1-肘部法（Elbow-Method）"><a href="#6-1-肘部法（Elbow-Method）" class="headerlink" title="6.1 肘部法（Elbow Method）"></a>6.1 肘部法（Elbow Method）</h3><p><strong>思想</strong>：SSE 随着 K 增大必然减小（极端情况 K=样本数时 SSE=0）。逐步增大 K，画 SSE 曲线，找<strong>拐点（肘部）</strong>——拐点之后 SSE 下降变缓，再多加簇不划算。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.cluster <span class="hljs-keyword">import</span> KMeans<br><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt<br><br>sse = []<br><span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-number">11</span>):<br>    estimator = KMeans(n_clusters=k, random_state=<span class="hljs-number">0</span>)<br>    estimator.fit(x)<br>    sse.append(estimator.inertia_)<br><br>plt.plot(<span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-number">11</span>), sse, marker=<span class="hljs-string">&#x27;o&#x27;</span>)<br>plt.xlabel(<span class="hljs-string">&#x27;Number of clusters (K)&#x27;</span>)<br>plt.ylabel(<span class="hljs-string">&#x27;SSE (inertia_)&#x27;</span>)<br>plt.title(<span class="hljs-string">&#x27;Elbow Method&#x27;</span>)<br>plt.show()<br></code></pre></td></tr></table></figure>
+<p><strong>如何看图？</strong><br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">SSE<br>  |  ★<br>  |    ★           ← 肘部！K=3 就够了<br>  |      ★ ★<br>  |          ★ ★ ★ ★<br>  +------------------→ K<br>    1  2  3  4  ... 10<br></code></pre></td></tr></table></figure></p>
+<blockquote>
+<p>💡 <strong>StatQuest 的比喻</strong>：肘部就像手臂的拐点，”花最少的钱办最大的事”。</p>
+</blockquote>
+<h3 id="6-2-轮廓系数（Silhouette-Coefficient）"><a href="#6-2-轮廓系数（Silhouette-Coefficient）" class="headerlink" title="6.2 轮廓系数（Silhouette Coefficient）"></a>6.2 轮廓系数（Silhouette Coefficient）</h3><p>肘部法看 SSE 下降幅度，轮廓系数<strong>同时考虑簇内紧凑度和簇间分离度</strong>：</p>
+<script type="math/tex; mode=display">
+s = \frac{b - a}{\max(a, b)}</script><ul>
+<li>$a$：样本到<strong>同簇</strong>其他样本的平均距离（簇内凝聚度，越小越好）</li>
+<li>$b$：样本到<strong>其他簇</strong>样本的最小平均距离（簇间分离度，越大越好）</li>
+</ul>
+<p><strong>判断规则：</strong></p>
+<ul>
+<li>$s \in [-1, 1]$</li>
+<li>$s$ 越接近 <strong>1</strong>：簇内紧凑、簇间分离，聚类效果好</li>
+<li>$s$ 接近 <strong>0</strong>：簇之间有重叠</li>
+<li>$s$ 为<strong>负</strong>：样本被分错了簇</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.metrics <span class="hljs-keyword">import</span> silhouette_score<br><br>estimator = KMeans(n_clusters=<span class="hljs-number">4</span>, random_state=<span class="hljs-number">0</span>)<br>y_pred = estimator.fit_predict(x)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;SC:&#x27;</span>, silhouette_score(x, y_pred))<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>💡 <strong>实际建议</strong>：画两个图（肘部法 + 轮廓系数），综合判断。如果两者都指向同一个 K，那就 confident 地用它。</p>
+</blockquote>
+<h3 id="6-3-CH-系数（Calinski-Harabasz-Index）"><a href="#6-3-CH-系数（Calinski-Harabasz-Index）" class="headerlink" title="6.3 CH 系数（Calinski-Harabasz Index）"></a>6.3 CH 系数（Calinski-Harabasz Index）</h3><p>CH 系数结合了聚类的<strong>凝聚度（Cohesion）和分离度（Separation）</strong>、质心的个数，希望用最少的簇进行聚类：</p>
+<script type="math/tex; mode=display">
+CH = \frac{SSB / (k - 1)}{SSW / (n - k)}</script><ul>
+<li>$SSW$：簇内距离和（每个样本点到质心的距离累加，<strong>越小越好</strong>）</li>
+<li>$SSB$：簇间距离和（质心与质心之间，通过中心点计算，<strong>越大越好</strong>）</li>
+<li>$n$：样本总数，$k$：质心个数</li>
+</ul>
+<p><strong>判断规则</strong>：CH 值<strong>越大</strong>，聚类效果越好。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.metrics <span class="hljs-keyword">import</span> calinski_harabasz_score<br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;CH:&#x27;</span>, calinski_harabasz_score(x, y_pred))<br></code></pre></td></tr></table></figure>
+<h3 id="6-4-三种方法对比"><a href="#6-4-三种方法对比" class="headerlink" title="6.4 三种方法对比"></a>6.4 三种方法对比</h3><p>| 方法 | 指标 | 判断 | 优点 | 缺点 |<br>|—-|—-|—-选 |—-|—-|<br>| 肘部法 | SSE | 找拐点 | 简单直观 | 拐点有时不明显 |<br>| 轮廓系数 | SC ∈ [-1,1] | 越大越好 | 考虑簇间分离 | 计算较慢（O(n²)） |<br>| CH 系数 | CH | 越大越好 | 计算快 | 不适合非凸簇 |</p>
+<hr>
+<h2 id="7-实战：客户价值分群"><a href="#7-实战：客户价值分群" class="headerlink" title="7. 实战：客户价值分群"></a>7. 实战：客户价值分群</h2><p>这是黑马笔记中的商业案例：<strong>商场客户价值分析</strong>。数据来自 <a target="_blank" rel="noopener" href="https://www.kaggle.com/vjchoudhary7/customer-segmentation-tutorial">Mall Customer Segmentation Data</a>，字段：CustomerID、Genre（性别）、Age（年龄）、Annual Income（年收入，千美元）、Spending Score（消费评分 1-100）。</p>
+<h3 id="7-1-流程概览"><a href="#7-1-流程概览" class="headerlink" title="7.1 流程概览"></a>7.1 流程概览</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">1. 读取数据 → 200个客户<br>2. 特征选择 → 年收入 + 消费评分（2个特征）<br>3. 数据标准化 → 消除量纲影响<br>4. 肘部法找 K → 尝试 K=1..10<br>5. 训练 KMeans → K=5<br>6. 可视化 → 客户分群图<br>7. 业务解读 → 制定营销策略<br></code></pre></td></tr></table></figure>
+<h3 id="7-2-完整代码（逐行解析）"><a href="#7-2-完整代码（逐行解析）" class="headerlink" title="7.2 完整代码（逐行解析）"></a>7.2 完整代码（逐行解析）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt<br><span class="hljs-keyword">from</span> sklearn.cluster <span class="hljs-keyword">import</span> KMeans<br><br><span class="hljs-comment"># ============ 1. 读取数据 ============</span><br>data = pd.read_csv(<span class="hljs-string">&quot;Mall_Customers.csv&quot;</span>)<br></code></pre></td></tr></table></figure>
+<p><strong>这段代码在做什么？</strong></p>
+<ul>
+<li>读取客户数据：200 行 × 5 列</li>
+<li>每行一个客户：ID、性别、年龄、年收入、消费评分</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># ============ 2. 特征选择 ============</span><br>X = data.iloc[:, [<span class="hljs-number">3</span>, <span class="hljs-number">4</span>]].values<br></code></pre></td></tr></table></figure>
+<p><strong>这行在做什么？</strong></p>
+<ul>
+<li><code>iloc[:, [3, 4]]</code>：取所有行的第 3、4 列 → 年收入、消费评分</li>
+<li><code>.values</code>：转成 NumPy 数组</li>
+</ul>
+<p><strong>为什么选这两列？</strong></p>
+<ul>
+<li>商场最关心”收入 × 消费意愿”，这两个维度最能区分客户价值</li>
+<li>用 2 个特征方便画 2D 散点图</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># ============ 3. 肘部法寻找最优K ============</span><br>sse = []<br><span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-number">11</span>):<br>    estimator = KMeans(n_clusters=k, random_state=<span class="hljs-number">0</span>)<br>    estimator.fit(X)<br>    sse.append(estimator.inertia_)<br></code></pre></td></tr></table></figure>
+<p><strong>这段代码在做什么？</strong></p>
+<ul>
+<li>对 K=1 到 10 分别训练 KMeans</li>
+<li>记录每次的 SSE（<code>inertia_</code>）</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">plt.figure(figsize=(<span class="hljs-number">10</span>, <span class="hljs-number">5</span>))<br>plt.plot(<span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-number">11</span>), sse, marker=<span class="hljs-string">&#x27;o&#x27;</span>)<br>plt.xlabel(<span class="hljs-string">&#x27;K&#x27;</span>)<br>plt.ylabel(<span class="hljs-string">&#x27;SSE&#x27;</span>)<br>plt.title(<span class="hljs-string">&#x27;Elbow Method&#x27;</span>)<br>plt.show()<br></code></pre></td></tr></table></figure>
+<p><strong>这段代码在做什么？</strong></p>
+<ul>
+<li>画肘部法曲线，找拐点</li>
+</ul>
+<p><strong>输出示例（典型结果）：</strong><br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">K=1: SSE ≈ 269981<br>K=2: SSE ≈ 183844<br>K=3: SSE ≈ 106662<br>K=4: SSE ≈  85363<br>K=5: SSE ≈  76418   ← 肘部！下降明显变缓<br>K=6: SSE ≈  71107<br>...<br></code></pre></td></tr></table></figure><br>K=5 之后 SSE 下降明显变缓 → <strong>选 K=5</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># ============ 4. 训练KMeans ============</span><br>estimator = KMeans(n_clusters=<span class="hljs-number">5</span>, n_init=<span class="hljs-number">10</span>, random_state=<span class="hljs-number">0</span>)<br>y_kmeans = estimator.fit_predict(X)<br></code></pre></td></tr></table></figure>
+<p><strong>这段代码在做什么？</strong></p>
+<ul>
+<li><code>n_clusters=5</code>：分 5 簇</li>
+<li><code>n_init=10</code>：用不同初始质心跑 10 次，取 SSE 最小的结果（缓解初始值敏感问题）</li>
+<li><code>fit_predict</code>：训练 + 返回标签</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># ============ 5. 可视化 ============</span><br>plt.scatter(X[y_kmeans == <span class="hljs-number">0</span>, <span class="hljs-number">0</span>], X[y_kmeans == <span class="hljs-number">0</span>, <span class="hljs-number">1</span>], s=<span class="hljs-number">100</span>, c=<span class="hljs-string">&#x27;red&#x27;</span>, label=<span class="hljs-string">&#x27;Standard&#x27;</span>)<br>plt.scatter(X[y_kmeans == <span class="hljs-number">1</span>, <span class="hljs-number">0</span>], X[y_kmeans == <span class="hljs-number">1</span>, <span class="hljs-number">1</span>], s=<span class="hljs-number">100</span>, c=<span class="hljs-string">&#x27;blue&#x27;</span>, label=<span class="hljs-string">&#x27;Traditional&#x27;</span>)<br>plt.scatter(X[y_kmeans == <span class="hljs-number">2</span>, <span class="hljs-number">0</span>], X[y_kmeans == <span class="hljs-number">2</span>, <span class="hljs-number">1</span>], s=<span class="hljs-number">100</span>, c=<span class="hljs-string">&#x27;green&#x27;</span>, label=<span class="hljs-string">&#x27;Normal&#x27;</span>)<br>plt.scatter(X[y_kmeans == <span class="hljs-number">3</span>, <span class="hljs-number">0</span>], X[y_kmeans == <span class="hljs-number">3</span>, <span class="hljs-number">1</span>], s=<span class="hljs-number">100</span>, c=<span class="hljs-string">&#x27;cyan&#x27;</span>, label=<span class="hljs-string">&#x27;Youth&#x27;</span>)<br>plt.scatter(X[y_kmeans == <span class="hljs-number">4</span>, <span class="hljs-number">0</span>], X[y_kmeans == <span class="hljs-number">4</span>, <span class="hljs-number">1</span>], s=<span class="hljs-number">100</span>, c=<span class="hljs-string">&#x27;magenta&#x27;</span>, label=<span class="hljs-string">&#x27;TA&#x27;</span>)<br>plt.scatter(<br>    estimator.cluster_centers_[:, <span class="hljs-number">0</span>],<br>    estimator.cluster_centers_[:, <span class="hljs-number">1</span>],<br>    s=<span class="hljs-number">300</span>, c=<span class="hljs-string">&#x27;black&#x27;</span>, label=<span class="hljs-string">&#x27;Centroids&#x27;</span><br>)<br>plt.title(<span class="hljs-string">&#x27;Clusters of customers&#x27;</span>)<br>plt.xlabel(<span class="hljs-string">&#x27;Annual Income (k$)&#x27;</span>)<br>plt.ylabel(<span class="hljs-string">&#x27;Spending Score (1-100)&#x27;</span>)<br>plt.legend()<br>plt.show()<br></code></pre></td></tr></table></figure>
+<p><strong>逐行解析：</strong></p>
+<ul>
+<li><code>X[y_kmeans == 0, 0]</code>：布尔索引，取簇 0 的所有点的第 0 列（年收入）</li>
+<li><code>X[y_kmeans == 0, 1]</code>：取簇 0 的所有点的第 1 列（消费评分）</li>
+<li><code>s=100</code>：点的大小</li>
+<li><code>c=&#39;red&#39;</code>：点的颜色</li>
+<li><code>label=&#39;Standard&#39;</code>：图例名称</li>
+<li><code>cluster_centers_</code>：5 个质心，用黑色大点（s=300）标出</li>
+</ul>
+<h3 id="7-3-业务解读（聚类结果如何用）"><a href="#7-3-业务解读（聚类结果如何用）" class="headerlink" title="7.3 业务解读（聚类结果如何用）"></a>7.3 业务解读（聚类结果如何用）</h3><p>K=5 的典型分群结果：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>簇</th>
+<th>特征</th>
+<th>客户类型</th>
+<th>营销策略</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>收入低、消费低</td>
+<td>普通客户（Standard）</td>
+<td>推送性价比商品</td>
+</tr>
+<tr>
+<td>2</td>
+<td>收入高、消费低</td>
+<td>理性客户（Traditional）</td>
+<td>推广高品质商品，激发消费</td>
+</tr>
+<tr>
+<td>3</td>
+<td>收入中、消费中</td>
+<td>主力客户（Normal）</td>
+<td>维持满意度，发会员卡</td>
+</tr>
+<tr>
+<td>4</td>
+<td>收入低、消费高</td>
+<td>年轻冲动型（Youth）</td>
+<td>推荐流行新品、分期优惠</td>
+</tr>
+<tr>
+<td>5</td>
+<td>收入高、消费高</td>
+<td><strong>高价值客户（Target/TA）</strong></td>
+<td>VIP 服务、专属打折、新品试穿</td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p>💡 <strong>这就是聚类的价值</strong>：没有任何标签，算法自动把客户分成 5 组，业务团队立刻能制定差异化的营销策略。这也是”<strong>无监督学习</strong>“在商业中最常见的落地方式。</p>
+</blockquote>
+<hr>
+<h2 id="8-KMeans-的优化与变体"><a href="#8-KMeans-的优化与变体" class="headerlink" title="8. KMeans 的优化与变体"></a>8. KMeans 的优化与变体</h2><h3 id="8-1-初始质心敏感性问题"><a href="#8-1-初始质心敏感性问题" class="headerlink" title="8.1 初始质心敏感性问题"></a>8.1 初始质心敏感性问题</h3><p><strong>问题</strong>：KMeans 对初始质心位置敏感，随机初始化不好时：</p>
+<ul>
+<li>收敛到<strong>局部最优</strong>（而非全局最优）</li>
+<li>迭代次数变多</li>
+</ul>
+<p><strong>sklearn 的解决方案</strong>：</p>
+<ul>
+<li><code>n_init=10</code>（默认）：用不同随机种子跑 10 次取 SSE 最小的（”多个起点取最好”）</li>
+<li><code>init=&#39;k-means++&#39;</code>（默认）：更聪明的初始化策略</li>
+</ul>
+<h3 id="8-2-KMeans"><a href="#8-2-KMeans" class="headerlink" title="8.2 KMeans++"></a>8.2 KMeans++</h3><p><strong>思想</strong>：初始质心不是纯随机，而是<strong>让初始质心彼此离得远</strong>：</p>
+<ol>
+<li>随机选第 1 个质心</li>
+<li>后续每个质心，以”离已选质心越远的点被选中概率越大”的方式选取</li>
+</ol>
+<p><strong>效果</strong>：显著减少”初始值不好”导致的局部最优问题。sklearn 默认就是 <code>init=&#39;k-means++&#39;</code>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">KMeans(n_clusters=<span class="hljs-number">5</span>, init=<span class="hljs-string">&#x27;k-means++&#x27;</span>, n_init=<span class="hljs-number">10</span>, random_state=<span class="hljs-number">0</span>)<br></code></pre></td></tr></table></figure>
+<h3 id="8-3-Mini-Batch-KMeans"><a href="#8-3-Mini-Batch-KMeans" class="headerlink" title="8.3 Mini-Batch KMeans"></a>8.3 Mini-Batch KMeans</h3><p><strong>思想</strong>：每次迭代只用一小批样本（而非全部样本）更新质心。</p>
+<p><strong>适用场景</strong>：数据量特别大（10万+）时，牺牲一点点精度换取<strong>大幅加速</strong>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.cluster <span class="hljs-keyword">import</span> MiniBatchKMeans<br><br>estimator = MiniBatchKMeans(n_clusters=<span class="hljs-number">5</span>, batch_size=<span class="hljs-number">100</span>, random_state=<span class="hljs-number">0</span>)<br>estimator.fit(X)<br></code></pre></td></tr></table></figure>
+<h3 id="8-4-现代工具补充"><a href="#8-4-现代工具补充" class="headerlink" title="8.4 现代工具补充"></a>8.4 现代工具补充</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>工具</th>
+<th>特点</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>KMeans / MiniBatchKMeans</strong></td>
+<td>sklearn 自带，最通用</td>
+<td>中小数据、基线方案</td>
+</tr>
+<tr>
+<td><strong>KMeans (cuML)</strong></td>
+<td>GPU 加速版 KMeans</td>
+<td>大规模数据</td>
+</tr>
+<tr>
+<td><strong>HDBSCAN</strong></td>
+<td>自动确定簇数、识别噪声点</td>
+<td>噪声多、簇形状不规则</td>
+</tr>
+<tr>
+<td><strong>GaussianMixture</strong></td>
+<td>软聚类（输出属于每簇的概率）</td>
+<td>簇有重叠、需要概率输出</td>
+</tr>
+</tbody>
+</table>
+</div>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 软聚类示例：GMM 输出属于每个簇的概率</span><br><span class="hljs-keyword">from</span> sklearn.mixture <span class="hljs-keyword">import</span> GaussianMixture<br><br>gmm = GaussianMixture(n_components=<span class="hljs-number">5</span>, random_state=<span class="hljs-number">0</span>)<br>labels = gmm.fit_predict(X)          <span class="hljs-comment"># 硬标签：每个样本属于哪个簇</span><br>proba = gmm.predict_proba(X)         <span class="hljs-comment"># 软标签：属于每个簇的概率（每行加起来=1）</span><br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>💡 <strong>发展趋势</strong>：现代比赛 / 工业界中，<strong>KMeans 仍是基线</strong>，但面对噪声多、簇形状不规则的数据，HDBSCAN 越来越流行（不需要手动选 K）。</p>
+</blockquote>
+<hr>
+<h2 id="9-与其他聚类算法对比"><a href="#9-与其他聚类算法对比" class="headerlink" title="9. 与其他聚类算法对比"></a>9. 与其他聚类算法对比</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>算法</th>
+<th>类型</th>
+<th>优点</th>
+<th>缺点</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>KMeans</strong></td>
+<td>原型聚类</td>
+<td>简单、快、可扩展</td>
+<td>需指定 K、对噪声敏感、只适合球形簇</td>
+<td>客户分群、大规模数据</td>
+</tr>
+<tr>
+<td><strong>DBSCAN</strong></td>
+<td>密度聚类</td>
+<td>不用指定 K、能发现任意形状、抗噪声</td>
+<td>对密度参数敏感</td>
+<td>空间数据、异常检测</td>
+</tr>
+<tr>
+<td><strong>AGNES</strong></td>
+<td>层次聚类</td>
+<td>可解释性强（树状图）</td>
+<td>计算复杂度高（O(n²)）</td>
+<td>小数据、生物分类</td>
+</tr>
+<tr>
+<td><strong>GMM</strong></td>
+<td>模型聚类</td>
+<td>软聚类、椭圆簇</td>
+<td>假设高斯分布</td>
+<td>需要概率输出</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>KMeans 的三个已知局限（《西瓜书》视角）：</strong></p>
+<ol>
+<li><strong>需要预先指定 K</strong>（肘部法 / 轮廓系数辅助选择）</li>
+<li><strong>对噪声敏感</strong>（噪声点会拉偏质心）→ 可用 DBSCAN</li>
+<li><strong>只适合凸（球形）簇</strong>→ 环形数据聚类效果差 → 可用 DBSCAN / 谱聚类</li>
+</ol>
+<hr>
+<h2 id="10-小结"><a href="#10-小结" class="headerlink" title="10. 小结"></a>10. 小结</h2><h3 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h3><ol>
+<li><strong>聚类是无监督学习</strong>：无标签、自动分组</li>
+<li><strong>KMeans 核心思想</strong>：簇内紧凑、簇间分离</li>
+<li><strong>算法 4 步</strong>：随机选 K 个质心 → 分配最近点 → 更新质心 → 收敛停止</li>
+<li><strong>目标函数</strong>：最小化 SSE（簇内平方误差和）</li>
+<li><strong>KMeans 一定会停下</strong>：每次迭代 SSE 单调不增，且状态有限</li>
+</ol>
+<h3 id="评估方法"><a href="#评估方法" class="headerlink" title="评估方法"></a>评估方法</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>指标</th>
+<th>判断</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>肘部法</td>
+<td>SSE</td>
+<td>拐点</td>
+</tr>
+<tr>
+<td>轮廓系数</td>
+<td>SC ∈ [-1,1]</td>
+<td>越大越好</td>
+</tr>
+<tr>
+<td>CH 系数</td>
+<td>CH</td>
+<td>越大越好</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="关键-API"><a href="#关键-API" class="headerlink" title="关键 API"></a>关键 API</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.cluster <span class="hljs-keyword">import</span> KMeans<br><br>estimator = KMeans(n_clusters=<span class="hljs-number">5</span>, random_state=<span class="hljs-number">0</span>)<br>estimator.fit(X)<br>y_pred = estimator.predict(X)<br><br>estimator.labels_           <span class="hljs-comment"># 训练集标签</span><br>estimator.cluster_centers_  <span class="hljs-comment"># 质心</span><br>estimator.inertia_          <span class="hljs-comment"># SSE</span><br></code></pre></td></tr></table></figure>
+<hr>
+<h2 id="11-作业"><a href="#11-作业" class="headerlink" title="11. 作业"></a>11. 作业</h2><h3 id="基础题"><a href="#基础题" class="headerlink" title="基础题"></a>基础题</h3><ol>
+<li>简述 KMeans 算法的执行流程，并解释为什么”K-Means 一定会停下”。</li>
+<li>写出 SSE 的计算公式，并解释每个符号的含义。</li>
+<li>为什么要对数据标准化后再做 KMeans？请举一个具体例子。</li>
+<li>肘部法、轮廓系数、CH 系数各自判断”K 选多少”的依据是什么？</li>
+</ol>
+<h3 id="计算题"><a href="#计算题" class="headerlink" title="计算题"></a>计算题</h3><ol>
+<li>有 4 个二维点：$A(1,1)$、$B(2,1)$、$C(4,5)$、$D(5,4)$，设 $K=2$，初始质心为 $A$ 和 $C$：<ul>
+<li>第 1 次迭代后，每个点属于哪个簇？</li>
+<li>第 1 次更新后的质心坐标是多少？</li>
+<li>算法收敛了吗？为什么？</li>
+</ul>
+</li>
+</ol>
+<h3 id="编程题"><a href="#编程题" class="headerlink" title="编程题"></a>编程题</h3><ol>
+<li><strong>从零实现验证</strong>：用本教程的 <code>KMeansScratch</code>，分别取 <code>random_state=0</code> 和 <code>random_state=1</code>，对比两次的 SSE 和标签是否一致，并解释原因（提示：初始质心敏感性）。</li>
+<li><strong>K 值选择</strong>：对 <code>make_blobs(n_samples=500, centers=5, random_state=42)</code> 生成的数据，同时画出肘部法曲线和轮廓系数曲线，验证两者是否指向同一个 K。</li>
+<li><strong>客户分群完整版</strong>：在客户分群案例中，加入”年龄”特征（共 3 个特征），用 PCA 降到 2 维后可视化聚类结果，并尝试解释每个簇的业务含义。</li>
+</ol>
+<h3 id="思考题"><a href="#思考题" class="headerlink" title="思考题"></a>思考题</h3><ol>
+<li>KMeans 和 KNN 都有”K”，它们的含义和作用有什么不同？</li>
+<li>KMeans 与你学过的 RNN 情感分类器在”监督 vs 无监督”上有什么本质区别？什么场景下应该用哪个？</li>
+</ol>
+<hr>
+<blockquote>
+<p>🎯 <strong>下一章预告</strong>：我们将学习<strong>降维与特征工程</strong>（PCA、LDA），解决”特征太多、维度太高”的问题，并把它和 KMeans 结合起来做更复杂的可视化。</p>
+</blockquote>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2026/10/20/ml15/">← Next 朴素贝叶斯</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/10/20/ml13/">聚类 Prev →</a></div></div></div><div id="comments"><div id="giscus"></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="To Top" style="opacity: 0; display: none;">∧ </a><a class="i-index" id="to-index" onClick="tocControl.change()" title="To Catalog"><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span></a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="Change Theme"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">John Doe</a></h1><div id="description"><p></p></div><div id="social-links"><a class="social" target="_blank" rel="noopener" href="https://github.com/juicer0801"><i class="fab fa-github" alt="GitHub"></i></a></div></div><div id="aside-block"><div id="toc-div"><h1>Catalog</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC7%E7%AB%A0%EF%BC%9AKMeans-%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95-%E2%80%94%E2%80%94-%E8%B6%85%E7%BA%A7%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B%EF%BC%88%E5%B0%8F%E7%99%BD%E7%89%88%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">第7章：KMeans 聚类算法 —— 超级详细教程（小白版）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%93%8B-%E7%9B%AE%E5%BD%95"><span class="toc-number">1.1.</span> <span class="toc-text">📋 目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AF%E8%81%9A%E7%B1%BB"><span class="toc-number">1.2.</span> <span class="toc-text">1. 什么是聚类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E4%B8%80%E4%B8%AA%E7%9B%B4%E8%A7%82%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="toc-number">1.2.1.</span> <span class="toc-text">1.1 一个直观的例子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E8%81%9A%E7%B1%BB-vs-%E5%88%86%E7%B1%BB%EF%BC%9A%E4%B8%80%E4%B8%AA%E5%85%B3%E9%94%AE%E5%8C%BA%E5%88%AB"><span class="toc-number">1.2.2.</span> <span class="toc-text">1.2 聚类 vs 分类：一个关键区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E8%81%9A%E7%B1%BB%E7%9A%84%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">1.2.3.</span> <span class="toc-text">1.3 聚类的应用场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-number">1.2.4.</span> <span class="toc-text">1.4 聚类算法的分类</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-KMeans-%E7%AE%97%E6%B3%95%E5%8E%9F%E7%90%86%EF%BC%88%E5%9B%BE%E8%A7%A3%EF%BC%89"><span class="toc-number">1.3.</span> <span class="toc-text">2. KMeans 算法原理（图解）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3%EF%BC%88StatQuest-%E9%A3%8E%E6%A0%BC%E8%AE%B2%E8%A7%A3%EF%BC%89"><span class="toc-number">1.3.1.</span> <span class="toc-text">2.1 核心思想（StatQuest 风格讲解）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E7%AE%97%E6%B3%95%E6%B5%81%E7%A8%8B%EF%BC%884-%E6%AD%A5%E5%BE%AA%E7%8E%AF%EF%BC%89"><span class="toc-number">1.3.2.</span> <span class="toc-text">2.2 算法流程（4 步循环）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E5%9B%BE%E8%A7%A3%E8%BF%AD%E4%BB%A3%E8%BF%87%E7%A8%8B"><span class="toc-number">1.3.3.</span> <span class="toc-text">2.3 图解迭代过程</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E6%95%B0%E5%AD%A6%E5%85%AC%E5%BC%8F%E8%AF%A6%E8%A7%A3"><span class="toc-number">1.4.</span> <span class="toc-text">3. 数学公式详解</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E7%9B%AE%E6%A0%87%E5%87%BD%E6%95%B0%EF%BC%88%E6%9C%80%E5%B0%8F%E5%8C%96%E2%80%9D%E7%B0%87%E5%86%85%E5%B9%B3%E6%96%B9%E8%AF%AF%E5%B7%AE%E5%92%8C%E2%80%9D%EF%BC%89"><span class="toc-number">1.4.1.</span> <span class="toc-text">3.1 目标函数（最小化”簇内平方误差和”）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E8%B7%9D%E7%A6%BB%E5%BA%A6%E9%87%8F%EF%BC%88%E6%AC%A7%E6%B0%8F%E8%B7%9D%E7%A6%BB%EF%BC%89"><span class="toc-number">1.4.2.</span> <span class="toc-text">3.2 距离度量（欧氏距离）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E8%B4%A8%E5%BF%83%E6%9B%B4%E6%96%B0%E5%85%AC%E5%BC%8F"><span class="toc-number">1.4.3.</span> <span class="toc-text">3.3 质心更新公式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-KMeans-%E4%B8%8E-EM-%E7%AE%97%E6%B3%95%E7%9A%84%E5%85%B3%E7%B3%BB%EF%BC%88%E8%BF%9B%E9%98%B6%EF%BC%89"><span class="toc-number">1.4.4.</span> <span class="toc-text">3.4 KMeans 与 EM 算法的关系（进阶）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E4%BB%8E%E9%9B%B6%E5%AE%9E%E7%8E%B0-KMeans%EF%BC%88%E9%80%90%E8%A1%8C%E8%A7%A3%E6%9E%90%EF%BC%89"><span class="toc-number">1.5.</span> <span class="toc-text">4. 从零实现 KMeans（逐行解析）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="toc-number">1.5.1.</span> <span class="toc-text">4.1 准备工作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E5%AE%9A%E4%B9%89-KMeans-%E7%B1%BB"><span class="toc-number">1.5.2.</span> <span class="toc-text">4.2 定义 KMeans 类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E5%88%9D%E5%A7%8B%E5%8C%96%E8%B4%A8%E5%BF%83"><span class="toc-number">1.5.3.</span> <span class="toc-text">4.3 初始化质心</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-%E5%88%86%E9%85%8D%E6%AF%8F%E4%B8%AA%E7%82%B9%E5%88%B0%E6%9C%80%E8%BF%91%E7%9A%84%E8%B4%A8%E5%BF%83"><span class="toc-number">1.5.4.</span> <span class="toc-text">4.4 分配每个点到最近的质心</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-5-%E6%9B%B4%E6%96%B0%E8%B4%A8%E5%BF%83"><span class="toc-number">1.5.5.</span> <span class="toc-text">4.5 更新质心</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-6-%E8%AE%AD%E7%BB%83%E4%B8%BB%E5%BE%AA%E7%8E%AF%EF%BC%88fit%EF%BC%89"><span class="toc-number">1.5.6.</span> <span class="toc-text">4.6 训练主循环（fit）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-7-%E9%A2%84%E6%B5%8B%E6%96%B0%E6%A0%B7%E6%9C%AC"><span class="toc-number">1.5.7.</span> <span class="toc-text">4.7 预测新样本</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-8-%E5%AE%8C%E6%95%B4%E4%BB%A3%E7%A0%81%E6%B1%87%E6%80%BB"><span class="toc-number">1.5.8.</span> <span class="toc-text">4.8 完整代码汇总</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-9-%E6%B5%8B%E8%AF%95%E6%88%91%E4%BB%AC%E8%87%AA%E5%B7%B1%E7%9A%84-KMeans"><span class="toc-number">1.5.9.</span> <span class="toc-text">4.9 测试我们自己的 KMeans</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-sklearn-API-%E4%BD%BF%E7%94%A8"><span class="toc-number">1.6.</span> <span class="toc-text">5. sklearn API 使用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E5%9F%BA%E6%9C%AC%E4%BD%BF%E7%94%A8"><span class="toc-number">1.6.1.</span> <span class="toc-text">5.1 基本使用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-sklearn-%E5%AE%9E%E8%B7%B5%E4%BE%8B%E5%AD%90"><span class="toc-number">1.6.2.</span> <span class="toc-text">5.2 sklearn 实践例子</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9-K-%E5%80%BC"><span class="toc-number">1.7.</span> <span class="toc-text">6. 如何选择 K 值</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-%E8%82%98%E9%83%A8%E6%B3%95%EF%BC%88Elbow-Method%EF%BC%89"><span class="toc-number">1.7.1.</span> <span class="toc-text">6.1 肘部法（Elbow Method）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-%E8%BD%AE%E5%BB%93%E7%B3%BB%E6%95%B0%EF%BC%88Silhouette-Coefficient%EF%BC%89"><span class="toc-number">1.7.2.</span> <span class="toc-text">6.2 轮廓系数（Silhouette Coefficient）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-CH-%E7%B3%BB%E6%95%B0%EF%BC%88Calinski-Harabasz-Index%EF%BC%89"><span class="toc-number">1.7.3.</span> <span class="toc-text">6.3 CH 系数（Calinski-Harabasz Index）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-4-%E4%B8%89%E7%A7%8D%E6%96%B9%E6%B3%95%E5%AF%B9%E6%AF%94"><span class="toc-number">1.7.4.</span> <span class="toc-text">6.4 三种方法对比</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E5%AE%9E%E6%88%98%EF%BC%9A%E5%AE%A2%E6%88%B7%E4%BB%B7%E5%80%BC%E5%88%86%E7%BE%A4"><span class="toc-number">1.8.</span> <span class="toc-text">7. 实战：客户价值分群</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1-%E6%B5%81%E7%A8%8B%E6%A6%82%E8%A7%88"><span class="toc-number">1.8.1.</span> <span class="toc-text">7.1 流程概览</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-2-%E5%AE%8C%E6%95%B4%E4%BB%A3%E7%A0%81%EF%BC%88%E9%80%90%E8%A1%8C%E8%A7%A3%E6%9E%90%EF%BC%89"><span class="toc-number">1.8.2.</span> <span class="toc-text">7.2 完整代码（逐行解析）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-3-%E4%B8%9A%E5%8A%A1%E8%A7%A3%E8%AF%BB%EF%BC%88%E8%81%9A%E7%B1%BB%E7%BB%93%E6%9E%9C%E5%A6%82%E4%BD%95%E7%94%A8%EF%BC%89"><span class="toc-number">1.8.3.</span> <span class="toc-text">7.3 业务解读（聚类结果如何用）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-KMeans-%E7%9A%84%E4%BC%98%E5%8C%96%E4%B8%8E%E5%8F%98%E4%BD%93"><span class="toc-number">1.9.</span> <span class="toc-text">8. KMeans 的优化与变体</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#8-1-%E5%88%9D%E5%A7%8B%E8%B4%A8%E5%BF%83%E6%95%8F%E6%84%9F%E6%80%A7%E9%97%AE%E9%A2%98"><span class="toc-number">1.9.1.</span> <span class="toc-text">8.1 初始质心敏感性问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-2-KMeans"><span class="toc-number">1.9.2.</span> <span class="toc-text">8.2 KMeans++</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-3-Mini-Batch-KMeans"><span class="toc-number">1.9.3.</span> <span class="toc-text">8.3 Mini-Batch KMeans</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-4-%E7%8E%B0%E4%BB%A3%E5%B7%A5%E5%85%B7%E8%A1%A5%E5%85%85"><span class="toc-number">1.9.4.</span> <span class="toc-text">8.4 现代工具补充</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%E4%B8%8E%E5%85%B6%E4%BB%96%E8%81%9A%E7%B1%BB%E7%AE%97%E6%B3%95%E5%AF%B9%E6%AF%94"><span class="toc-number">1.10.</span> <span class="toc-text">9. 与其他聚类算法对比</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-%E5%B0%8F%E7%BB%93"><span class="toc-number">1.11.</span> <span class="toc-text">10. 小结</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5"><span class="toc-number">1.11.1.</span> <span class="toc-text">核心概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%84%E4%BC%B0%E6%96%B9%E6%B3%95"><span class="toc-number">1.11.2.</span> <span class="toc-text">评估方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E9%94%AE-API"><span class="toc-number">1.11.3.</span> <span class="toc-text">关键 API</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#11-%E4%BD%9C%E4%B8%9A"><span class="toc-number">1.12.</span> <span class="toc-text">11. 作业</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E9%A2%98"><span class="toc-number">1.12.1.</span> <span class="toc-text">基础题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E9%A2%98"><span class="toc-number">1.12.2.</span> <span class="toc-text">计算题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E7%A8%8B%E9%A2%98"><span class="toc-number">1.12.3.</span> <span class="toc-text">编程题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E9%A2%98"><span class="toc-number">1.12.4.</span> <span class="toc-text">思考题</span></a></li></ol></li></ol></li></ol></div></div><footer><nobr>Published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>

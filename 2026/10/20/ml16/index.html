@@ -1,10 +1,12 @@
-<!DOCTYPE html><html lang="en" theme-mode="auto"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>朴素贝叶斯（ai） | Hexo</title><meta property="og:type" content="article">
+<!DOCTYPE html><html lang="en" theme-mode="auto"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>朴素贝叶斯（ai） | Hexo</title><meta name="description" content="第8章：朴素贝叶斯 —— 超级详细教程（小白版） 🎯 目标：把你当完全的小白，逐行讲解每一句代码，让你能独立写出朴素贝叶斯项目 📖 阅读建议：不要急，慢慢看，每个变量都要理解清楚 📚 参考资料：《西瓜书》第7章 朴素贝叶斯、《南瓜书》第7章公式推导、《白话机器学习的数学》、StatQuest 图解机器学习   📋 目录 什么是朴素贝叶斯 数学基础：贝叶斯公式（图解） 朴素贝叶斯原理（图解">
+<meta property="og:type" content="article">
 <meta property="og:title" content="朴素贝叶斯（ai）">
 <meta property="og:url" content="http://example.com/2026/10/20/ml16/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="第8章：朴素贝叶斯 —— 超级详细教程（小白版） 🎯 目标：把你当完全的小白，逐行讲解每一句代码，让你能独立写出朴素贝叶斯项目 📖 阅读建议：不要急，慢慢看，每个变量都要理解清楚 📚 参考资料：《西瓜书》第7章 朴素贝叶斯、《南瓜书》第7章公式推导、《白话机器学习的数学》、StatQuest 图解机器学习   📋 目录 什么是朴素贝叶斯 数学基础：贝叶斯公式（图解） 朴素贝叶斯原理（图解">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2026-10-20T12:48:28.000Z">
-<meta property="article:modified_time" content="2026-10-25T13:26:05.489Z">
+<meta property="article:modified_time" content="2026-10-27T13:19:04.304Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary"><link rel="canonical" href="http://example.com/2026/10/20/ml16/"><link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="preload" as="font" crossorigin="anonymous" href="/font/Bender.ttf"><link rel="preload" as="font" crossorigin="anonymous" href="/font/BenderLight.woff2"><link rel="preload" as="font" crossorigin="anonymous" href="/font/JetBrainsMono-Regular.woff2"><link rel="stylesheet" href="/css/arknights.css"><style>@font-face {
   font-family: Bender;
@@ -133,4 +135,798 @@ document.addEventListener("pjax:complete", reset);document.addEventListener('pja
  const script = document.createElement('script');
  script.src = 'https://vercount.one/js';
  document.head.appendChild(script);
-});reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/tags/"><span class="navItemTitle">Tags</span></a></li><li class="navItem"><a class="navBlock" href="/categories/"><span class="navItemTitle">Categories</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>朴素贝叶斯（ai）</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2026-10-20T12:48:28.000Z" id="date"> 2026-10-20</time></div></span><br><span>Last Update: <div class="control"><time datetime="2026-10-25T13:26:05.489Z" id="updated"> 2026-10-25</time></div></span><br><span>Read Time: <div class="control">1 min</div></span><br><span id="vercount_container_page_pv">Page View: <span class="control" id="vercount_value_page_pv">loading...</span></span></div></div><hr><div id="post-content"><div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2026/10/20/API/">← Next API</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/10/20/ml15/">朴素贝叶斯 Prev →</a></div></div></div><div id="comments"><div id="giscus"></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="To Top" style="opacity: 0; display: none;">∧ </a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="Change Theme"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">John Doe</a></h1><div id="description"><p></p></div><div id="social-links"><a class="social" target="_blank" rel="noopener" href="https://github.com/juicer0801"><i class="fab fa-github" alt="GitHub"></i></a></div></div><div id="aside-block"></div><footer><nobr>Published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>
+});reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/tags/"><span class="navItemTitle">Tags</span></a></li><li class="navItem"><a class="navBlock" href="/categories/"><span class="navItemTitle">Categories</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>朴素贝叶斯（ai）</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2026-10-20T12:48:28.000Z" id="date"> 2026-10-20</time></div></span><br><span>Last Update: <div class="control"><time datetime="2026-10-27T13:19:04.304Z" id="updated"> 2026-10-27</time></div></span><br><span>Word Count: <div class="control">8k</div></span><br><span>Read Time: <div class="control">32 min</div></span><br><span id="vercount_container_page_pv">Page View: <span class="control" id="vercount_value_page_pv">loading...</span></span></div></div><hr><div id="post-content"><h1 id="第8章：朴素贝叶斯-——-超级详细教程（小白版）"><a href="#第8章：朴素贝叶斯-——-超级详细教程（小白版）" class="headerlink" title="第8章：朴素贝叶斯 —— 超级详细教程（小白版）"></a>第8章：朴素贝叶斯 —— 超级详细教程（小白版）</h1><blockquote>
+<p>🎯 目标：把你当完全的小白，逐行讲解每一句代码，让你能独立写出朴素贝叶斯项目</p>
+<p>📖 阅读建议：不要急，慢慢看，每个变量都要理解清楚</p>
+<p>📚 参考资料：《西瓜书》第7章 朴素贝叶斯、《南瓜书》第7章公式推导、《白话机器学习的数学》、StatQuest 图解机器学习</p>
+</blockquote>
+<hr>
+<h2 id="📋-目录"><a href="#📋-目录" class="headerlink" title="📋 目录"></a>📋 目录</h2><ol>
+<li><a href="#1-什么是朴素贝叶斯">什么是朴素贝叶斯</a></li>
+<li><a href="#2-数学基础贝叶斯公式图解">数学基础：贝叶斯公式（图解）</a></li>
+<li><a href="#3-朴素贝叶斯原理图解--公式">朴素贝叶斯原理（图解 + 公式）</a></li>
+<li><a href="#4-从零实现朴素贝叶斯逐行解析">从零实现朴素贝叶斯（逐行解析）</a></li>
+<li><a href="#5-sklearn-中的朴素贝叶斯">sklearn 中的朴素贝叶斯</a></li>
+<li><a href="#6-实战垃圾短信分类">实战：垃圾短信分类</a></li>
+<li><a href="#7-优缺点与适用场景">优缺点与适用场景</a></li>
+<li><a href="#8-与其他算法对比">与其他算法对比</a></li>
+<li><a href="#9-小结">小结</a></li>
+<li><a href="#10-作业">作业</a></li>
+</ol>
+<hr>
+<h2 id="1-什么是朴素贝叶斯"><a href="#1-什么是朴素贝叶斯" class="headerlink" title="1. 什么是朴素贝叶斯"></a>1. 什么是朴素贝叶斯</h2><h3 id="1-1-一个生活例子"><a href="#1-1-一个生活例子" class="headerlink" title="1.1 一个生活例子"></a>1.1 一个生活例子</h3><p>假设你在水果摊挑西瓜，你观察到：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">色泽=青绿、根蒂=蜷缩、敲声=浊响<br></code></pre></td></tr></table></figure>
+<p>你的大脑会根据<strong>以往吃瓜的经验</strong>快速判断：”这瓜大概率是好瓜！”</p>
+<p>朴素贝叶斯做的就是这件事：</p>
+<blockquote>
+<p>💡 <strong>核心思想</strong>：根据<strong>已有的训练数据</strong>，计算”在观察到这些特征的前提下，属于某个类别”的概率，然后<strong>选概率最大的那个类别</strong>。</p>
+</blockquote>
+<p>它和 KNN、决策树一样，是一类经典的<strong>监督学习</strong>算法（有标签），主要用于<strong>分类</strong>。</p>
+<h3 id="1-2-为什么叫”朴素”？"><a href="#1-2-为什么叫”朴素”？" class="headerlink" title="1.2 为什么叫”朴素”？"></a>1.2 为什么叫”朴素”？</h3><p>因为它做了一个<strong>很傻很天真（朴素）的假设</strong>：</p>
+<blockquote>
+<p>⚠️ <strong>特征条件独立假设</strong>：所有特征之间<strong>相互独立</strong>，互不影响。</p>
+</blockquote>
+<p>放到挑瓜的例子里，就是假设”色泽”和”根蒂”毫无关系、”敲声”和”纹理”毫无关系……</p>
+<p>这显然不完全符合现实（好瓜的青绿往往伴随蜷缩根蒂），但奇妙的是：</p>
+<blockquote>
+<p>💡 <strong>StatQuest 的评价</strong>：这个假设虽然”naive”，但在实践中效果出奇地好！尤其是<strong>文本分类</strong>（垃圾邮件识别、情感分析），词与词之间当作独立处理，依然能拿到很高的准确率。</p>
+</blockquote>
+<p>为什么有效？因为：</p>
+<ol>
+<li>它只需要估计<strong>每个特征单独的概率</strong>，参数极少，不容易过拟合</li>
+<li>分类只关心<strong>哪个类别概率最大</strong>，不要求概率本身精确</li>
+</ol>
+<h3 id="1-3-应用场景"><a href="#1-3-应用场景" class="headerlink" title="1.3 应用场景"></a>1.3 应用场景</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>垃圾邮件/短信识别</strong></td>
+<td>朴素贝叶斯最经典的应用，历史上第一个反垃圾邮件系统就是它</td>
+</tr>
+<tr>
+<td><strong>文本情感分析</strong></td>
+<td>判断评论是正面还是负面</td>
+</tr>
+<tr>
+<td><strong>新闻分类</strong></td>
+<td>政治 / 体育 / 科技 / 娱乐自动打标签</td>
+</tr>
+<tr>
+<td><strong>拼写纠错 / 输入法</strong></td>
+<td>“你到底想打哪个词”</td>
+</tr>
+<tr>
+<td><strong>医疗辅助诊断</strong></td>
+<td>根据症状组合判断患病概率</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+<h2 id="2-数学基础：贝叶斯公式（图解）"><a href="#2-数学基础：贝叶斯公式（图解）" class="headerlink" title="2. 数学基础：贝叶斯公式（图解）"></a>2. 数学基础：贝叶斯公式（图解）</h2><h3 id="2-1-先看一个直观的例子"><a href="#2-1-先看一个直观的例子" class="headerlink" title="2.1 先看一个直观的例子"></a>2.1 先看一个直观的例子</h3><blockquote>
+<p>📖 《白话机器学习的数学》的经典思路：把概率理解为”<strong>确信程度</strong>“，贝叶斯公式就是”<strong>根据新证据更新确信程度</strong>“。</p>
+</blockquote>
+<p>假设：</p>
+<ul>
+<li>你一开始觉得”今天下雨”的概率是 20%（<strong>先验</strong>）</li>
+<li>你抬头看到<strong>满天乌云</strong>（新证据）</li>
+<li>你会怎么调整？”乌云”这证据太有说服力了 → 你把概率上调到 80%（<strong>后验</strong>）</li>
+</ul>
+<p>贝叶斯公式就是<strong>把这件事用数学写出来</strong>。</p>
+<h3 id="2-2-贝叶斯公式"><a href="#2-2-贝叶斯公式" class="headerlink" title="2.2 贝叶斯公式"></a>2.2 贝叶斯公式</h3><script type="math/tex; mode=display">
+P(Y|X) = \frac{P(X|Y) \cdot P(Y)}{P(X)}</script><p>每个符号的含义：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>读法</th>
+<th>大白话</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$P(Y)$</td>
+<td>先验概率</td>
+<td><strong>没看到证据前</strong>，Y 发生的概率（比如”好瓜占 47%”）</td>
+</tr>
+<tr>
+<td>$P(X\</td>
+<td>Y)$</td>
+<td>似然</td>
+<td><strong>已知 Y 成立</strong>时，观察到 X 的概率（”好瓜里”有多少是青绿蜷缩）</td>
+</tr>
+<tr>
+<td>$P(X)$</td>
+<td>证据因子</td>
+<td>X 本身有多常见，起<strong>归一化</strong>作用</td>
+</tr>
+<tr>
+<td>$P(Y\</td>
+<td>X)$</td>
+<td>后验概率</td>
+<td><strong>看到证据 X 后</strong>，Y 成立的概率 —— <strong>这是我们真正想要的</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p>💡 <strong>一句话记忆</strong>：<strong>后验 = 先验 × 似然 / 证据</strong></p>
+</blockquote>
+<h3 id="2-3-图解流程（StatQuest-风格）"><a href="#2-3-图解流程（StatQuest-风格）" class="headerlink" title="2.3 图解流程（StatQuest 风格）"></a>2.3 图解流程（StatQuest 风格）</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">观察 X = (色泽青绿, 根蒂蜷缩, 敲声浊响, ...)<br>                   │<br>                   ▼<br>   ┌──────────────────────────────┐<br>   │  对每个类别 c 分别计算：      │<br>   │                              │<br>   │   P(c|X) ∝ P(c) × P(X|c)    │   ← 比谁更大即可<br>   │          ↑先验    ↑似然      │<br>   └──────────────────────────────┘<br>                   │<br>                   ▼<br>   好瓜:  P(好瓜)×P(X|好瓜) = 0.015067   ★ 大！<br>   坏瓜:  P(坏瓜)×P(X|坏瓜) = 0.003229<br>                   │<br>                   ▼<br>             预测：好瓜 ✓<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>💡 <strong>关键技巧</strong>：分母 $P(X)$ 对所有类别<strong>都一样</strong>，所以比较时<strong>直接忽略它</strong>，只比较分子 $P(Y) \cdot P(X|Y)$，大大简化计算。这就是为什么朴素贝叶斯<strong>预测速度快</strong>。</p>
+</blockquote>
+<h3 id="2-4-多分类情形（全概率公式展开分母）"><a href="#2-4-多分类情形（全概率公式展开分母）" class="headerlink" title="2.4 多分类情形（全概率公式展开分母）"></a>2.4 多分类情形（全概率公式展开分母）</h3><p>当类别不止两个时，分母用<strong>全概率公式</strong>展开：</p>
+<script type="math/tex; mode=display">
+P(X) = \sum_{c} P(X|c) \cdot P(c)</script><p>比如西瓜有”好瓜/坏瓜”两类：</p>
+<script type="math/tex; mode=display">
+P(X) = P(X|\text{好瓜})P(\text{好瓜}) + P(X|\text{坏瓜})P(\text{坏瓜})</script><hr>
+<h2 id="3-朴素贝叶斯原理（图解-公式）"><a href="#3-朴素贝叶斯原理（图解-公式）" class="headerlink" title="3. 朴素贝叶斯原理（图解 + 公式）"></a>3. 朴素贝叶斯原理（图解 + 公式）</h2><h3 id="3-1-从贝叶斯到朴素贝叶斯：一步”朴素”的化简"><a href="#3-1-从贝叶斯到朴素贝叶斯：一步”朴素”的化简" class="headerlink" title="3.1 从贝叶斯到朴素贝叶斯：一步”朴素”的化简"></a>3.1 从贝叶斯到朴素贝叶斯：一步”朴素”的化简</h3><p>对一条有 $d$ 个特征的样本 $x = (x_1, x_2, \dots, x_d)$，精确的似然是<strong>联合概率</strong>：</p>
+<script type="math/tex; mode=display">
+P(x_1, x_2, \dots, x_d | Y) \quad \leftarrow \text{这个极难计算！}</script><p>难点在于：要估计所有特征的<strong>组合概率</strong>，特征多时组合数指数爆炸，训练数据根本覆盖不过来。</p>
+<p><strong>“朴素”假设登场</strong>——假设特征之间相互独立，联合概率变成<strong>简单连乘</strong>：</p>
+<script type="math/tex; mode=display">
+P(x_1, x_2, \dots, x_d | Y) = \prod_{j=1}^{d} P(x_j | Y)</script><blockquote>
+<p>💡 <strong>大白话</strong>：把”这么多特征同时出现的概率”拆成”每个特征单独出现的概率相乘”。这就是<strong>朴素贝叶斯</strong>（Naive Bayes）名字的由来。</p>
+</blockquote>
+<h3 id="3-2-朴素贝叶斯预测公式"><a href="#3-2-朴素贝叶斯预测公式" class="headerlink" title="3.2 朴素贝叶斯预测公式"></a>3.2 朴素贝叶斯预测公式</h3><p>对样本 $x$，预测它属于<strong>后验概率最大</strong>的类别：</p>
+<script type="math/tex; mode=display">
+\hat{y} = \arg\max_{c} \Big[ P(c) \cdot \prod_{j=1}^{d} P(x_j | c) \Big]</script><ul>
+<li>$\hat{y}$：预测的类别</li>
+<li>$c$：遍历每个候选类别</li>
+<li>$P(c)$：先验（训练集中 c 类样本的比例）</li>
+<li>$P(x_j|c)$：条件概率（训练集 c 类样本中，第 j 个特征等于 $x_j$ 的比例）</li>
+<li>$\arg\max$：返回使括号内<strong>值最大</strong>的那个 c</li>
+</ul>
+<h3 id="3-3-参数怎么估计？（西瓜书-§7-2）"><a href="#3-3-参数怎么估计？（西瓜书-§7-2）" class="headerlink" title="3.3 参数怎么估计？（西瓜书 §7.2）"></a>3.3 参数怎么估计？（西瓜书 §7.2）</h3><p>朴素贝叶斯是典型的<strong>频率学派 / 基于统计</strong>的方法，参数直接从数据里<strong>数频率</strong>：</p>
+<ul>
+<li><strong>先验</strong>：</li>
+</ul>
+<script type="math/tex; mode=display">
+P(c) = \frac{|D_c|}{|D|}</script><ul>
+<li><strong>条件概率</strong>：</li>
+</ul>
+<script type="math/tex; mode=display">
+P(x_j | c) = \frac{|D_{c, x_j}|}{|D_c|}</script><p>符号说明：</p>
+<ul>
+<li>$|D|$：训练集<strong>总样本数</strong></li>
+<li>$|D_c|$：训练集中属于类别 $c$ 的<strong>样本数</strong></li>
+<li>$|D_{c,x_j}|$：训练集中类别为 $c$ <strong>且</strong>第 j 个特征取值为 $x_j$ 的样本数</li>
+</ul>
+<blockquote>
+<p>💡 <strong>大白话</strong>：数一数就完事了！没有梯度下降、没有迭代优化。<strong>训练过程就是”查表”</strong>。</p>
+</blockquote>
+<h3 id="3-4-遇到零概率怎么办？——-拉普拉斯修正"><a href="#3-4-遇到零概率怎么办？——-拉普拉斯修正" class="headerlink" title="3.4 遇到零概率怎么办？—— 拉普拉斯修正"></a>3.4 遇到零概率怎么办？—— 拉普拉斯修正</h3><p>⚠️ <strong>致命问题</strong>：如果训练集中”好瓜”里从没有过”纹理=模糊”，那么 $P(\text{模糊}|\text{好瓜}) = 0$，一连乘整个概率<strong>全部归零</strong>！这一个”从没见过”的特征，就把好瓜的概率<strong>一刀清零</strong>了。</p>
+<p><strong>拉普拉斯修正（Laplace Correction / 平滑）</strong>：给分子和分母各加一点”虚样本”：</p>
+<script type="math/tex; mode=display">
+\hat{P}(c) = \frac{|D_c| + 1}{|D| + N}  , \qquad
+\hat{P}(x_j | c) = \frac{|D_{c, x_j}| + 1}{|D_c| + N_j}</script><ul>
+<li>$N$：<strong>类别总数</strong>（如好瓜/坏瓜两类 → N=2）</li>
+<li>$N_j$：第 j 个特征的<strong>取值种类数</strong>（如”色泽”有 3 种取值 → $N_j = 3$）</li>
+</ul>
+<p><strong>为什么有效？</strong></p>
+<ul>
+<li>计数从 0 变成 $\frac{0+1}{|D_c| + N_j}$，是一个<strong>很小但非零</strong>的值</li>
+<li>训练集很大时，+1 的影响微乎其微；训练集很小时，它防止某类概率被清零</li>
+<li>每个类别、每个取值都加了 1，依然保证所有类别的概率和为 1</li>
+</ul>
+<blockquote>
+<p>💡 <strong>StatQuest 的比喻</strong>：就像给每个结果都”白送一票”，没人会是零票，避免一票定生死。</p>
+</blockquote>
+<h3 id="3-5-连续特征怎么办？——高斯朴素贝叶斯"><a href="#3-5-连续特征怎么办？——高斯朴素贝叶斯" class="headerlink" title="3.5 连续特征怎么办？——高斯朴素贝叶斯"></a>3.5 连续特征怎么办？——高斯朴素贝叶斯</h3><p>如果特征是<strong>连续数值</strong>（如密度、含糖率），不能”数频率”。西瓜书给出两种做法：</p>
+<p><strong>做法一（简单）</strong>：把连续值<strong>离散化</strong>（分箱），当作类别处理。</p>
+<p><strong>做法二（常用）</strong>：假设特征服从<strong>高斯（正态）分布</strong>，用概率密度代替概率：</p>
+<script type="math/tex; mode=display">
+p(x_j | c) = \frac{1}{\sqrt{2\pi\sigma_{c,j}^2}} \exp\left( -\frac{(x_j - \mu_{c,j})^2}{2\sigma_{c,j}^2} \right)</script><ul>
+<li>$\mu<em>{c,j}$、$\sigma</em>{c,j}^2$：训练集中类别 c 的样本在第 j 个特征上的<strong>均值</strong>和<strong>方差</strong></li>
+</ul>
+<p><strong>计算示例</strong>：某类别下特征”含糖率”的均值 $\mu=3$、方差 $\sigma^2=4$，新样本 $x=5$：</p>
+<script type="math/tex; mode=display">
+p(5) = \frac{1}{\sqrt{2\pi \cdot 4}} \exp\left( -\frac{(5-3)^2}{2 \cdot 4} \right)
+     = \frac{1}{2\sqrt{2\pi}} e^{-0.5} \approx 0.120985</script><p>这就是 sklearn <code>GaussianNB</code> 的核心假设。</p>
+<h3 id="3-6-一个完整的计算例子（西瓜书-§7-3）"><a href="#3-6-一个完整的计算例子（西瓜书-§7-3）" class="headerlink" title="3.6 一个完整的计算例子（西瓜书 §7.3）"></a>3.6 一个完整的计算例子（西瓜书 §7.3）</h3><p><strong>训练集</strong>（西瓜书 3.0α 版，17 条数据）：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>编号</th>
+<th>色泽</th>
+<th>根蒂</th>
+<th>敲声</th>
+<th>纹理</th>
+<th>脐部</th>
+<th>触感</th>
+<th>好瓜</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>乌黑</td>
+<td>蜷缩</td>
+<td>浊响</td>
+<td>清晰</td>
+<td>凹陷</td>
+<td>硬滑</td>
+<td>是</td>
+</tr>
+<tr>
+<td>2</td>
+<td>乌黑</td>
+<td>蜷缩</td>
+<td>沉闷</td>
+<td>清晰</td>
+<td>凹陷</td>
+<td>硬滑</td>
+<td>是</td>
+</tr>
+<tr>
+<td>3</td>
+<td>乌黑</td>
+<td>蜷缩</td>
+<td>浊响</td>
+<td>清晰</td>
+<td>凹陷</td>
+<td>硬滑</td>
+<td>是</td>
+</tr>
+<tr>
+<td>4</td>
+<td>青绿</td>
+<td>蜷缩</td>
+<td>沉闷</td>
+<td>清晰</td>
+<td>凹陷</td>
+<td>硬滑</td>
+<td>是</td>
+</tr>
+<tr>
+<td>5</td>
+<td>浅白</td>
+<td>蜷缩</td>
+<td>浊响</td>
+<td>清晰</td>
+<td>凹陷</td>
+<td>硬滑</td>
+<td>是</td>
+</tr>
+<tr>
+<td>6</td>
+<td>青绿</td>
+<td>稍蜷</td>
+<td>浊响</td>
+<td>清晰</td>
+<td>稍凹</td>
+<td>软粘</td>
+<td>是</td>
+</tr>
+<tr>
+<td>7</td>
+<td>乌黑</td>
+<td>稍蜷</td>
+<td>浊响</td>
+<td>稍糊</td>
+<td>稍凹</td>
+<td>软粘</td>
+<td>是</td>
+</tr>
+<tr>
+<td>8</td>
+<td>浅白</td>
+<td>稍蜷</td>
+<td>浊响</td>
+<td>清晰</td>
+<td>稍凹</td>
+<td>硬滑</td>
+<td>是</td>
+</tr>
+<tr>
+<td>9</td>
+<td>浅白</td>
+<td>蜷缩</td>
+<td>浊响</td>
+<td>模糊</td>
+<td>平坦</td>
+<td>硬滑</td>
+<td>否</td>
+</tr>
+<tr>
+<td>10</td>
+<td>青绿</td>
+<td>蜷缩</td>
+<td>浊响</td>
+<td>稍糊</td>
+<td>稍凹</td>
+<td>硬滑</td>
+<td>否</td>
+</tr>
+<tr>
+<td>11</td>
+<td>浅白</td>
+<td>蜷缩</td>
+<td>沉闷</td>
+<td>稍糊</td>
+<td>稍凹</td>
+<td>硬滑</td>
+<td>否</td>
+</tr>
+<tr>
+<td>12</td>
+<td>乌黑</td>
+<td>蜷缩</td>
+<td>浊响</td>
+<td>清晰</td>
+<td>凹陷</td>
+<td>软粘</td>
+<td>否</td>
+</tr>
+<tr>
+<td>13</td>
+<td>浅白</td>
+<td>蜷缩</td>
+<td>浊响</td>
+<td>稍糊</td>
+<td>平坦</td>
+<td>硬滑</td>
+<td>否</td>
+</tr>
+<tr>
+<td>14</td>
+<td>青绿</td>
+<td>蜷缩</td>
+<td>沉闷</td>
+<td>清晰</td>
+<td>凹陷</td>
+<td>硬滑</td>
+<td>否</td>
+</tr>
+<tr>
+<td>15</td>
+<td>乌黑</td>
+<td>稍蜷</td>
+<td>浊响</td>
+<td>稍糊</td>
+<td>稍凹</td>
+<td>软粘</td>
+<td>否</td>
+</tr>
+<tr>
+<td>16</td>
+<td>浅白</td>
+<td>稍蜷</td>
+<td>浊响</td>
+<td>稍糊</td>
+<td>稍凹</td>
+<td>硬滑</td>
+<td>否</td>
+</tr>
+<tr>
+<td>17</td>
+<td>青绿</td>
+<td>稍蜷</td>
+<td>沉闷</td>
+<td>稍糊</td>
+<td>稍凹</td>
+<td>硬滑</td>
+<td>否</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>待预测样本</strong>：（色泽=青绿，根蒂=蜷缩，敲声=浊响，纹理=清晰，脐部=凹陷，触感=硬滑）</p>
+<p><strong>Step 1：计算先验</strong>（共 17 个样本，好瓜 8 个，坏瓜 9 个，N=2）</p>
+<script type="math/tex; mode=display">
+P(\text{好瓜}) = \frac{8+1}{17+2} = 0.47368, \qquad
+P(\text{坏瓜}) = \frac{9+1}{17+2} = 0.52632</script><p><strong>Step 2：逐个特征计算条件概率</strong>（带拉普拉斯修正）</p>
+<p>以”好瓜”为例（$|D_c| = 8$）：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>特征</th>
+<th>计数 $\</th>
+<th>D_{c,x_j}\</th>
+<th>$</th>
+<th>计算</th>
+<th>结果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>色泽=青绿</td>
+<td>2</td>
+<td>(2+1)/(8+3)</td>
+<td>0.27273</td>
+</tr>
+<tr>
+<td>根蒂=蜷缩</td>
+<td>5</td>
+<td>(5+1)/(8+2)</td>
+<td>0.60000</td>
+</tr>
+<tr>
+<td>敲声=浊响</td>
+<td>6</td>
+<td>(6+1)/(8+2)</td>
+<td>0.70000</td>
+</tr>
+<tr>
+<td>纹理=清晰</td>
+<td>7</td>
+<td>(7+1)/(8+3)</td>
+<td>0.72727</td>
+</tr>
+<tr>
+<td>脐部=凹陷</td>
+<td>5</td>
+<td>(5+1)/(8+3)</td>
+<td>0.54545</td>
+</tr>
+<tr>
+<td>触感=硬滑</td>
+<td>6</td>
+<td>(6+1)/(8+2)</td>
+<td>0.70000</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Step 3：连乘得到联合概率</strong></p>
+<script type="math/tex; mode=display">
+P(\text{好瓜}) \prod_j P(x_j|\text{好瓜}) = 0.47368 \times 0.27273 \times 0.60000 \times 0.70000 \times 0.72727 \times 0.54545 \times 0.70000 = 0.015067</script><p>对”坏瓜”同样计算：</p>
+<script type="math/tex; mode=display">
+P(\text{坏瓜}) \prod_j P(x_j|\text{坏瓜}) = 0.52632 \times 0.33333 \times 0.63636 \times 0.63636 \times 0.25000 \times 0.25000 \times 0.72727 = 0.003229</script><p><strong>Step 4：归一化</strong>（分母 = 0.015067 + 0.003229 = 0.018296）</p>
+<script type="math/tex; mode=display">
+P(\text{好瓜}|x) = \frac{0.015067}{0.018296} = 0.8235, \qquad
+P(\text{坏瓜}|x) = \frac{0.003229}{0.018296} = 0.1765</script><p><strong>结论</strong>：$0.8235 &gt; 0.1765$，预测为 <strong>好瓜</strong> ✓</p>
+<blockquote>
+<p>💡 <strong>注意</strong>：分类时其实只要比较分子大小（0.015067 &gt; 0.003229）就能得出”好瓜”，归一化只是为了得到我们熟悉的概率值。</p>
+</blockquote>
+<hr>
+<h2 id="4-从零实现朴素贝叶斯（逐行解析）"><a href="#4-从零实现朴素贝叶斯（逐行解析）" class="headerlink" title="4. 从零实现朴素贝叶斯（逐行解析）"></a>4. 从零实现朴素贝叶斯（逐行解析）</h2><p>我们用上面的西瓜数据，<strong>从零手写</strong>一个朴素贝叶斯分类器。</p>
+<h3 id="4-1-完整代码"><a href="#4-1-完整代码" class="headerlink" title="4.1 完整代码"></a>4.1 完整代码</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">from</span> collections <span class="hljs-keyword">import</span> defaultdict<br><br><span class="hljs-keyword">class</span> <span class="hljs-title class_">NaiveBayesScratch</span>:<br>    <span class="hljs-string">&quot;&quot;&quot;从零实现的朴素贝叶斯分类器（离散特征 + 拉普拉斯修正）&quot;&quot;&quot;</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, alpha=<span class="hljs-number">1.0</span></span>):<br>        <span class="hljs-variable language_">self</span>.alpha = alpha          <span class="hljs-comment"># 平滑系数，1.0 就是标准拉普拉斯修正</span><br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">fit</span>(<span class="hljs-params">self, X, y</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;训练：其实就是统计频率，把概率&quot;查表&quot;存起来&quot;&quot;&quot;</span><br>        X = np.array(X, dtype=<span class="hljs-built_in">object</span>)<br>        y = np.array(y)<br>        <span class="hljs-variable language_">self</span>.classes_ = np.unique(y)                     <span class="hljs-comment"># 有哪些类别，如 [&#x27;坏瓜&#x27;, &#x27;好瓜&#x27;]</span><br>        n_samples, n_features = X.shape                  <span class="hljs-comment"># 样本数、特征数</span><br><br>        <span class="hljs-variable language_">self</span>.prior_ = &#123;&#125;         <span class="hljs-comment"># 先验概率 P(c)</span><br>        <span class="hljs-variable language_">self</span>.cond_prob_ = &#123;&#125;     <span class="hljs-comment"># 条件概率 P(x_j | c)，结构: &#123;类别: &#123;特征列号: &#123;取值: 概率&#125;&#125;&#125;</span><br><br>        <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> <span class="hljs-variable language_">self</span>.classes_:                          <span class="hljs-comment"># 逐个类别统计</span><br>            X_c = X[y == c]                              <span class="hljs-comment"># ① 取出该类别的全部样本</span><br>            Nc = <span class="hljs-built_in">len</span>(X_c)                                <span class="hljs-comment"># ② 该类别样本数 |D_c|</span><br><br>            <span class="hljs-comment"># —— 先验（拉普拉斯修正）：(|D_c|+1) / (|D|+N) ——</span><br>            <span class="hljs-variable language_">self</span>.prior_[c] = (Nc + <span class="hljs-variable language_">self</span>.alpha) / (n_samples + <span class="hljs-built_in">len</span>(<span class="hljs-variable language_">self</span>.classes_) * <span class="hljs-variable language_">self</span>.alpha)<br><br>            <span class="hljs-variable language_">self</span>.cond_prob_[c] = &#123;&#125;<br>            <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n_features):                  <span class="hljs-comment"># 逐个特征</span><br>                <span class="hljs-comment"># 该类别下，每个取值的样本数</span><br>                values, counts = np.unique(X_c[:, j], return_counts=<span class="hljs-literal">True</span>)<br>                <span class="hljs-comment"># 该特征总共有多少种取值 N_j（注意要全集上统计）</span><br>                N_j = <span class="hljs-built_in">len</span>(np.unique(X[:, j]))<br>                <span class="hljs-comment"># 条件概率：(|D_&#123;c,x_j&#125;|+1) / (|D_c|+N_j)</span><br>                probs = &#123;v: (cnt + <span class="hljs-variable language_">self</span>.alpha) / (Nc + N_j * <span class="hljs-variable language_">self</span>.alpha)<br>                         <span class="hljs-keyword">for</span> v, cnt <span class="hljs-keyword">in</span> <span class="hljs-built_in">zip</span>(values, counts)&#125;<br>                <span class="hljs-comment"># 训练集里该类别下没出现过的取值，也要补上 (0+1)/(|D_c|+N_j)，防止预测时 KeyError</span><br>                <span class="hljs-keyword">for</span> v <span class="hljs-keyword">in</span> np.unique(X[:, j]):<br>                    <span class="hljs-keyword">if</span> v <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> probs:<br>                        probs[v] = <span class="hljs-variable language_">self</span>.alpha / (Nc + N_j * <span class="hljs-variable language_">self</span>.alpha)<br>                <span class="hljs-variable language_">self</span>.cond_prob_[c][j] = probs<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">predict_proba</span>(<span class="hljs-params">self, X</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;计算每个样本属于每个类别的联合概率（未归一化）&quot;&quot;&quot;</span><br>        X = np.array(X, dtype=<span class="hljs-built_in">object</span>)<br>        results = []<br>        <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> X:                                      <span class="hljs-comment"># 逐样本处理</span><br>            scores = &#123;&#125;<br>            <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> <span class="hljs-variable language_">self</span>.classes_:                      <span class="hljs-comment"># 逐类别计算</span><br>                s = <span class="hljs-variable language_">self</span>.prior_[c]                       <span class="hljs-comment"># 从先验开始</span><br>                <span class="hljs-keyword">for</span> j, v <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(x):                <span class="hljs-comment"># 逐特征连乘</span><br>                    s *= <span class="hljs-variable language_">self</span>.cond_prob_[c][j][v]<br>                scores[c] = s<br>            results.append(scores)<br>        <span class="hljs-keyword">return</span> results<br><br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">predict</span>(<span class="hljs-params">self, X</span>):<br>        <span class="hljs-string">&quot;&quot;&quot;预测类别：返回联合概率最大的那个类&quot;&quot;&quot;</span><br>        results = <span class="hljs-variable language_">self</span>.predict_proba(X)<br>        <span class="hljs-keyword">return</span> np.array([<span class="hljs-built_in">max</span>(r, key=r.get) <span class="hljs-keyword">for</span> r <span class="hljs-keyword">in</span> results])<br></code></pre></td></tr></table></figure>
+<h3 id="4-2-逐行解析"><a href="#4-2-逐行解析" class="headerlink" title="4.2 逐行解析"></a>4.2 逐行解析</h3><p><strong><code>__init__</code>（初始化）</strong></p>
+<ul>
+<li><code>alpha</code>：平滑系数。<code>alpha=1.0</code> 就是西瓜书的<strong>拉普拉斯修正</strong>；<code>alpha=0</code> 则退化为不做平滑（会碰到零概率问题）</li>
+</ul>
+<p><strong><code>fit</code>（训练）—— 核心是”数频率”</strong></p>
+<ul>
+<li><code>self.classes_ = np.unique(y)</code>：提取所有类别标签，比如 <code>[&#39;坏瓜&#39;, &#39;好瓜&#39;]</code></li>
+<li><code>n_samples, n_features = X.shape</code>：X 是 <code>(17, 6)</code> 的矩阵 → 17 条样本、6 个特征</li>
+<li><code>X[y == c]</code>：<strong>布尔索引</strong>，巧妙地把某一类别的样本全部筛出来（例如 8 条好瓜）</li>
+<li><code>np.unique(X_c[:, j], return_counts=True)</code>：对第 j 列统计取值及其次数，例如 <code>([&#39;乌黑&#39;,&#39;青绿&#39;,&#39;浅白&#39;], [4,2,2])</code></li>
+<li><code>N_j = len(np.unique(X[:, j]))</code>：<strong>特征取值数</strong>（在全集上统计！如”色泽”有 3 种）</li>
+<li>拉普拉斯修正公式 <code>(cnt + alpha) / (Nc + N_j * alpha)</code>：分子是计数+1，分母是该类样本数+特征取值数</li>
+<li>🔑 <strong>容易忽略的细节</strong>：还要遍历全集的取值，给”没见过”的取值补概率，否则预测时遇到新取值会 <code>KeyError</code></li>
+</ul>
+<p><strong><code>predict_proba</code>（计算联合概率）</strong></p>
+<ul>
+<li>外层循环每个测试样本，内层循环每个类别</li>
+<li><code>s = self.prior_[c]</code>：从先验开始（对应公式 $P(c)$）</li>
+<li><code>s *= self.cond_prob_[c][j][v]</code>：逐特征连乘（对应 $\prod_j P(x_j|c)$）</li>
+<li>⚠️ 注意这里<strong>没有除以 $P(X)$</strong>——因为比较大小时分母相同，省掉它既正确又快</li>
+</ul>
+<p><strong><code>predict</code>（预测）</strong></p>
+<ul>
+<li><code>max(r, key=r.get)</code>：对每个样本返回概率最大的类别名，<code>key=r.get</code> 表示”按字典的值比较”</li>
+</ul>
+<h3 id="4-3-运行验证"><a href="#4-3-运行验证" class="headerlink" title="4.3 运行验证"></a>4.3 运行验证</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 西瓜书 3.0alpha 数据</span><br>feature_names = [<span class="hljs-string">&quot;色泽&quot;</span>, <span class="hljs-string">&quot;根蒂&quot;</span>, <span class="hljs-string">&quot;敲声&quot;</span>, <span class="hljs-string">&quot;纹理&quot;</span>, <span class="hljs-string">&quot;脐部&quot;</span>, <span class="hljs-string">&quot;触感&quot;</span>]<br>data = [<br>    [<span class="hljs-string">&quot;乌黑&quot;</span>,<span class="hljs-string">&quot;蜷缩&quot;</span>,<span class="hljs-string">&quot;浊响&quot;</span>,<span class="hljs-string">&quot;清晰&quot;</span>,<span class="hljs-string">&quot;凹陷&quot;</span>,<span class="hljs-string">&quot;硬滑&quot;</span>,<span class="hljs-string">&quot;好瓜&quot;</span>],<br>    [<span class="hljs-string">&quot;乌黑&quot;</span>,<span class="hljs-string">&quot;蜷缩&quot;</span>,<span class="hljs-string">&quot;沉闷&quot;</span>,<span class="hljs-string">&quot;清晰&quot;</span>,<span class="hljs-string">&quot;凹陷&quot;</span>,<span class="hljs-string">&quot;硬滑&quot;</span>,<span class="hljs-string">&quot;好瓜&quot;</span>],<br>    [<span class="hljs-string">&quot;乌黑&quot;</span>,<span class="hljs-string">&quot;蜷缩&quot;</span>,<span class="hljs-string">&quot;浊响&quot;</span>,<span class="hljs-string">&quot;清晰&quot;</span>,<span class="hljs-string">&quot;凹陷&quot;</span>,<span class="hljs-string">&quot;硬滑&quot;</span>,<span class="hljs-string">&quot;好瓜&quot;</span>],<br>    [<span class="hljs-string">&quot;青绿&quot;</span>,<span class="hljs-string">&quot;蜷缩&quot;</span>,<span class="hljs-string">&quot;沉闷&quot;</span>,<span class="hljs-string">&quot;清晰&quot;</span>,<span class="hljs-string">&quot;凹陷&quot;</span>,<span class="hljs-string">&quot;硬滑&quot;</span>,<span class="hljs-string">&quot;好瓜&quot;</span>],<br>    [<span class="hljs-string">&quot;浅白&quot;</span>,<span class="hljs-string">&quot;蜷缩&quot;</span>,<span class="hljs-string">&quot;浊响&quot;</span>,<span class="hljs-string">&quot;清晰&quot;</span>,<span class="hljs-string">&quot;凹陷&quot;</span>,<span class="hljs-string">&quot;硬滑&quot;</span>,<span class="hljs-string">&quot;好瓜&quot;</span>],<br>    [<span class="hljs-string">&quot;青绿&quot;</span>,<span class="hljs-string">&quot;稍蜷&quot;</span>,<span class="hljs-string">&quot;浊响&quot;</span>,<span class="hljs-string">&quot;清晰&quot;</span>,<span class="hljs-string">&quot;稍凹&quot;</span>,<span class="hljs-string">&quot;软粘&quot;</span>,<span class="hljs-string">&quot;好瓜&quot;</span>],<br>    [<span class="hljs-string">&quot;乌黑&quot;</span>,<span class="hljs-string">&quot;稍蜷&quot;</span>,<span class="hljs-string">&quot;浊响&quot;</span>,<span class="hljs-string">&quot;稍糊&quot;</span>,<span class="hljs-string">&quot;稍凹&quot;</span>,<span class="hljs-string">&quot;软粘&quot;</span>,<span class="hljs-string">&quot;好瓜&quot;</span>],<br>    [<span class="hljs-string">&quot;浅白&quot;</span>,<span class="hljs-string">&quot;稍蜷&quot;</span>,<span class="hljs-string">&quot;浊响&quot;</span>,<span class="hljs-string">&quot;清晰&quot;</span>,<span class="hljs-string">&quot;稍凹&quot;</span>,<span class="hljs-string">&quot;硬滑&quot;</span>,<span class="hljs-string">&quot;好瓜&quot;</span>],<br>    [<span class="hljs-string">&quot;浅白&quot;</span>,<span class="hljs-string">&quot;蜷缩&quot;</span>,<span class="hljs-string">&quot;浊响&quot;</span>,<span class="hljs-string">&quot;模糊&quot;</span>,<span class="hljs-string">&quot;平坦&quot;</span>,<span class="hljs-string">&quot;硬滑&quot;</span>,<span class="hljs-string">&quot;坏瓜&quot;</span>],<br>    [<span class="hljs-string">&quot;青绿&quot;</span>,<span class="hljs-string">&quot;蜷缩&quot;</span>,<span class="hljs-string">&quot;浊响&quot;</span>,<span class="hljs-string">&quot;稍糊&quot;</span>,<span class="hljs-string">&quot;稍凹&quot;</span>,<span class="hljs-string">&quot;硬滑&quot;</span>,<span class="hljs-string">&quot;坏瓜&quot;</span>],<br>    [<span class="hljs-string">&quot;浅白&quot;</span>,<span class="hljs-string">&quot;蜷缩&quot;</span>,<span class="hljs-string">&quot;沉闷&quot;</span>,<span class="hljs-string">&quot;稍糊&quot;</span>,<span class="hljs-string">&quot;稍凹&quot;</span>,<span class="hljs-string">&quot;硬滑&quot;</span>,<span class="hljs-string">&quot;坏瓜&quot;</span>],<br>    [<span class="hljs-string">&quot;乌黑&quot;</span>,<span class="hljs-string">&quot;蜷缩&quot;</span>,<span class="hljs-string">&quot;浊响&quot;</span>,<span class="hljs-string">&quot;清晰&quot;</span>,<span class="hljs-string">&quot;凹陷&quot;</span>,<span class="hljs-string">&quot;软粘&quot;</span>,<span class="hljs-string">&quot;坏瓜&quot;</span>],<br>    [<span class="hljs-string">&quot;浅白&quot;</span>,<span class="hljs-string">&quot;蜷缩&quot;</span>,<span class="hljs-string">&quot;浊响&quot;</span>,<span class="hljs-string">&quot;稍糊&quot;</span>,<span class="hljs-string">&quot;平坦&quot;</span>,<span class="hljs-string">&quot;硬滑&quot;</span>,<span class="hljs-string">&quot;坏瓜&quot;</span>],<br>    [<span class="hljs-string">&quot;青绿&quot;</span>,<span class="hljs-string">&quot;蜷缩&quot;</span>,<span class="hljs-string">&quot;沉闷&quot;</span>,<span class="hljs-string">&quot;清晰&quot;</span>,<span class="hljs-string">&quot;凹陷&quot;</span>,<span class="hljs-string">&quot;硬滑&quot;</span>,<span class="hljs-string">&quot;坏瓜&quot;</span>],<br>    [<span class="hljs-string">&quot;乌黑&quot;</span>,<span class="hljs-string">&quot;稍蜷&quot;</span>,<span class="hljs-string">&quot;浊响&quot;</span>,<span class="hljs-string">&quot;稍糊&quot;</span>,<span class="hljs-string">&quot;稍凹&quot;</span>,<span class="hljs-string">&quot;软粘&quot;</span>,<span class="hljs-string">&quot;坏瓜&quot;</span>],<br>    [<span class="hljs-string">&quot;浅白&quot;</span>,<span class="hljs-string">&quot;稍蜷&quot;</span>,<span class="hljs-string">&quot;浊响&quot;</span>,<span class="hljs-string">&quot;稍糊&quot;</span>,<span class="hljs-string">&quot;稍凹&quot;</span>,<span class="hljs-string">&quot;硬滑&quot;</span>,<span class="hljs-string">&quot;坏瓜&quot;</span>],<br>    [<span class="hljs-string">&quot;青绿&quot;</span>,<span class="hljs-string">&quot;稍蜷&quot;</span>,<span class="hljs-string">&quot;沉闷&quot;</span>,<span class="hljs-string">&quot;稍糊&quot;</span>,<span class="hljs-string">&quot;稍凹&quot;</span>,<span class="hljs-string">&quot;硬滑&quot;</span>,<span class="hljs-string">&quot;坏瓜&quot;</span>],<br>]<br>X = [row[:-<span class="hljs-number">1</span>] <span class="hljs-keyword">for</span> row <span class="hljs-keyword">in</span> data]      <span class="hljs-comment"># 前 6 列是特征</span><br>y = [row[-<span class="hljs-number">1</span>] <span class="hljs-keyword">for</span> row <span class="hljs-keyword">in</span> data]       <span class="hljs-comment"># 最后一列是标签</span><br><br>nb = NaiveBayesScratch(alpha=<span class="hljs-number">1.0</span>)<br>nb.fit(X, y)<br><br>test = [[<span class="hljs-string">&quot;青绿&quot;</span>,<span class="hljs-string">&quot;蜷缩&quot;</span>,<span class="hljs-string">&quot;浊响&quot;</span>,<span class="hljs-string">&quot;清晰&quot;</span>,<span class="hljs-string">&quot;凹陷&quot;</span>,<span class="hljs-string">&quot;硬滑&quot;</span>]]<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;预测结果:&quot;</span>, nb.predict(test))<br><span class="hljs-comment"># 输出: [&#x27;好瓜&#x27;]      ← 与第 3.6 节手算结果一致 ✓</span><br></code></pre></td></tr></table></figure>
+<p><strong>实际输出（已运行核验）：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">预测结果: [&#x27;好瓜&#x27;]<br>训练集准确率: 0.8235     # 17 条里分对 14 条<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>💡 <strong>为什么不是 100%？</strong> 训练集本身就有”看起来矛盾”的样本（如第 12 条”乌黑/蜷缩/浊响/清晰/凹陷”却是坏瓜），朴素贝叶斯按”大多数统计规律”预测，必然有少数样本分错。这正是<strong>噪声 / 例外</strong>在真实数据中的体现。</p>
+</blockquote>
+<hr>
+<h2 id="5-sklearn-中的朴素贝叶斯"><a href="#5-sklearn-中的朴素贝叶斯" class="headerlink" title="5. sklearn 中的朴素贝叶斯"></a>5. sklearn 中的朴素贝叶斯</h2><p>scikit-learn 提供了三种朴素贝叶斯，区别在于<strong>对 $P(x_j|c)$ 的假设不同</strong>，对应不同类型的数据：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>类</th>
+<th>适用数据</th>
+<th>条件概率假设</th>
+<th>典型场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>GaussianNB</strong></td>
+<td>连续值</td>
+<td>高斯分布</td>
+<td>身高体重、密度含糖率</td>
+</tr>
+<tr>
+<td><strong>MultinomialNB__</strong></td>
+<td>计数</td>
+<td>多项式分布</td>
+<td>词频 / TF-IDF 文本分类</td>
+</tr>
+<tr>
+<td><strong>BernoulliNB</strong></td>
+<td>二值（0/1）</td>
+<td>伯努利分布</td>
+<td>词是否出现（不关心次数）</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="5-1-GaussianNB（高斯朴素贝叶斯）"><a href="#5-1-GaussianNB（高斯朴素贝叶斯）" class="headerlink" title="5.1 GaussianNB（高斯朴素贝叶斯）"></a>5.1 GaussianNB（高斯朴素贝叶斯）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.naive_bayes <span class="hljs-keyword">import</span> GaussianNB<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><br><span class="hljs-comment"># 数据：两簇点</span><br>X = np.array([[<span class="hljs-number">1.0</span>, <span class="hljs-number">2.0</span>], [<span class="hljs-number">1.2</span>, <span class="hljs-number">1.9</span>], [<span class="hljs-number">4.0</span>, <span class="hljs-number">5.0</span>],<br>              [<span class="hljs-number">4.2</span>, <span class="hljs-number">4.8</span>], [<span class="hljs-number">1.1</span>, <span class="hljs-number">2.1</span>], [<span class="hljs-number">3.9</span>, <span class="hljs-number">5.2</span>]])<br>y = np.array([<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>])<br><br>gnb = GaussianNB()            <span class="hljs-comment"># ① 实例化（无必需参数）</span><br>gnb.fit(X, y)                 <span class="hljs-comment"># ② 训练：估计每个类每个特征的均值和方差</span><br><br><span class="hljs-built_in">print</span>(gnb.predict([[<span class="hljs-number">1.1</span>, <span class="hljs-number">2.0</span>]]))          <span class="hljs-comment"># [0]</span><br><span class="hljs-built_in">print</span>(gnb.predict_proba([[<span class="hljs-number">1.1</span>, <span class="hljs-number">2.0</span>]]))    <span class="hljs-comment"># [[1.0, 1.3e-194]]  → 几乎 100% 是类别 0</span><br></code></pre></td></tr></table></figure>
+<p><strong>输出（已运行核验）：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">GaussianNB predict: [0]<br>predict_proba: [[1.00000000e+000 1.30126677e-194]]<br></code></pre></td></tr></table></figure>
+<p><strong>常见属性：</strong></p>
+<ul>
+<li><code>gnb.theta_</code>：每个类、每个特征的<strong>均值</strong> $\mu$</li>
+<li><code>gnb.var_</code>：每个类、每个特征的<strong>方差</strong> $\sigma^2$</li>
+</ul>
+<blockquote>
+<p>💡 <strong>大白话</strong>：GaussianNB 训练就是给每个类别画几个<strong>高斯钟形曲线</strong>，预测时看新样本落在哪一类的曲线下面密度更高。</p>
+</blockquote>
+<h3 id="5-2-MultinomialNB（多项式朴素贝叶斯）"><a href="#5-2-MultinomialNB（多项式朴素贝叶斯）" class="headerlink" title="5.2 MultinomialNB（多项式朴素贝叶斯）"></a>5.2 MultinomialNB（多项式朴素贝叶斯）</h3><p><strong>特征是”计数”</strong>（某词出现几次）时使用，是<strong>文本分类的头号主力</strong>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.naive_bayes <span class="hljs-keyword">import</span> MultinomialNB<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><br><span class="hljs-comment"># 数据：4 个词的特征向量（词袋模型）</span><br>X = np.array([[<span class="hljs-number">2</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>], [<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>], [<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">1</span>],<br>              [<span class="hljs-number">3</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>], [<span class="hljs-number">2</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>], [<span class="hljs-number">0</span>,<span class="hljs-number">2</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>]])<br>y = np.array([<span class="hljs-string">&#x27;搞笑&#x27;</span>,<span class="hljs-string">&#x27;搞笑&#x27;</span>,<span class="hljs-string">&#x27;悲伤&#x27;</span>,<span class="hljs-string">&#x27;悲伤&#x27;</span>,<span class="hljs-string">&#x27;搞笑&#x27;</span>,<span class="hljs-string">&#x27;悲伤&#x27;</span>])<br><br>mnb = MultinomialNB(alpha=<span class="hljs-number">1.0</span>)<br>mnb.fit(X, y)<br><span class="hljs-built_in">print</span>(mnb.predict([[<span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>]]))           <span class="hljs-comment"># [&#x27;悲伤&#x27;]</span><br><span class="hljs-built_in">print</span>(mnb.predict_proba([[<span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>]]))     <span class="hljs-comment"># [[0.537, 0.463]]</span><br></code></pre></td></tr></table></figure>
+<p><strong>输出（已运行核验）：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">MultinomialNB predict: [&#x27;悲伤&#x27;]<br>predict_proba: [[0.53735435 0.46264565]]<br></code></pre></td></tr></table></figure>
+<p><strong>关键参数：</strong></p>
+<ul>
+<li><code>alpha</code>：平滑系数（默认 1.0，即拉普拉斯修正）。<strong>文本分类必加</strong>，否则遇到测试集中没见过的词会零概率</li>
+<li><code>mnb.feature_log_prob_</code>：每个词在每个类别下的对数概率（取 <code>np.exp</code> 可还原）</li>
+</ul>
+<blockquote>
+<p>💡 <strong>为什么文本分类喜欢它？</strong> 对数把连乘变<strong>连加</strong>，既避免下溢出（无数小概率相乘 → 计算机存不下），又算得更快。</p>
+</blockquote>
+<h3 id="5-3-BernoulliNB（伯努利朴素贝叶斯）"><a href="#5-3-BernoulliNB（伯努利朴素贝叶斯）" class="headerlink" title="5.3 BernoulliNB（伯努利朴素贝叶斯）"></a>5.3 BernoulliNB（伯努利朴素贝叶斯）</h3><p>特征只有 <strong>出现(1)/不出现(0)</strong> 时使用。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.naive_bayes <span class="hljs-keyword">import</span> BernoulliNB<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><br><span class="hljs-comment"># 数据：4 个词&quot;是否出现&quot;</span><br>X = np.array([[<span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>], [<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>], [<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>],<br>              [<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">1</span>], [<span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>], [<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">0</span>]])<br>y = np.array([<span class="hljs-string">&#x27;猫&#x27;</span>,<span class="hljs-string">&#x27;猫&#x27;</span>,<span class="hljs-string">&#x27;狗&#x27;</span>,<span class="hljs-string">&#x27;狗&#x27;</span>,<span class="hljs-string">&#x27;猫&#x27;</span>,<span class="hljs-string">&#x27;狗&#x27;</span>])<br><br>bnb = BernoulliNB(alpha=<span class="hljs-number">1.0</span>)<br>bnb.fit(X, y)<br><span class="hljs-built_in">print</span>(bnb.predict([[<span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>]]))           <span class="hljs-comment"># [&#x27;猫&#x27;]</span><br><span class="hljs-built_in">print</span>(bnb.predict_proba([[<span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>]]))     <span class="hljs-comment"># [[0.143, 0.857]]</span><br></code></pre></td></tr></table></figure>
+<p><strong>输出（已运行核验）：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">BernoulliNB predict: [&#x27;猫&#x27;]<br>predict_proba: [[0.14285714 0.85714286]]<br></code></pre></td></tr></table></figure>
+<p><strong>BernoulliNB vs MultinomialNB 怎么选？</strong></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th></th>
+<th>MultinomialNB</th>
+<th>BernoulliNB</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>特征含义</td>
+<td>词出现了<strong>几次</strong></td>
+<td>词<strong>是否</strong>出现</td>
+</tr>
+<tr>
+<td>忽略与否</td>
+<td>通常忽略”未出现”</td>
+<td><strong>明确建模”不出现”的贡献</strong></td>
+</tr>
+<tr>
+<td>适用</td>
+<td>长文本 / 邮件</td>
+<td>短文本 / 关键词有无</td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p>💡 <strong>经验法则</strong>：不确定就先用 <strong>MultinomialNB</strong>，它对文本更稳；短评论、关键词判别可试 BernoulliNB。</p>
+</blockquote>
+<hr>
+<h2 id="6-实战：垃圾短信分类"><a href="#6-实战：垃圾短信分类" class="headerlink" title="6. 实战：垃圾短信分类"></a>6. 实战：垃圾短信分类</h2><p>朴素贝叶斯的<strong>经典战场</strong>。我们用”词袋模型 + MultinomialNB”做一个中文短信分类器（玩具版数据）。</p>
+<h3 id="6-1-问题分析"><a href="#6-1-问题分析" class="headerlink" title="6.1 问题分析"></a>6.1 问题分析</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">输入：一条短信文本<br>      ↓<br>处理：中文按&quot;字&quot;切分（玩具做法）；工程上用 jieba 分词<br>      ↓<br>向量化：统计每个字出现次数 → 词袋向量<br>      ↓<br>模型：MultinomialNB（多项式朴素贝叶斯）<br>      ↓<br>输出：ham（正常）/ spam（垃圾）<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>💡 <strong>StatQuest 的直觉</strong>：垃圾短信总爱用”中奖””点击””链接””免费””领取”这些字；正常短信很少出现。<strong>朴素贝叶斯就是把这些字的概率证据累加起来做判断</strong>。</p>
+</blockquote>
+<h3 id="6-2-完整代码（逐行解析）"><a href="#6-2-完整代码（逐行解析）" class="headerlink" title="6.2 完整代码（逐行解析）"></a>6.2 完整代码（逐行解析）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><span class="hljs-keyword">from</span> sklearn.naive_bayes <span class="hljs-keyword">import</span> MultinomialNB<br><span class="hljs-keyword">from</span> sklearn.metrics <span class="hljs-keyword">import</span> accuracy_score<br><span class="hljs-keyword">from</span> sklearn.model_selection <span class="hljs-keyword">import</span> train_test_split<br><br><span class="hljs-comment"># ============ 1. 准备数据 ============</span><br>ham = [                        <span class="hljs-comment"># 正常短信</span><br>    <span class="hljs-string">&quot;嘿，你今天好吗&quot;</span>, <span class="hljs-string">&quot;我们去看电影吧&quot;</span>, <span class="hljs-string">&quot;明天见&quot;</span>, <span class="hljs-string">&quot;你吃饭了吗&quot;</span>,<br>    <span class="hljs-string">&quot;周末一起打球&quot;</span>, <span class="hljs-string">&quot;作业写完了吗&quot;</span>, <span class="hljs-string">&quot;路上小心&quot;</span>, <span class="hljs-string">&quot;晚上吃什么&quot;</span>,<br>    <span class="hljs-string">&quot;好久不见，最近怎样&quot;</span>, <span class="hljs-string">&quot;祝你生日快乐&quot;</span>,<br>]<br>spam = [                       <span class="hljs-comment"># 垃圾短信</span><br>    <span class="hljs-string">&quot;恭喜中奖，请点击链接领取&quot;</span>, <span class="hljs-string">&quot;您的账户已过期，请点击链接验证&quot;</span>,<br>    <span class="hljs-string">&quot;低价出售，请联系客服&quot;</span>, <span class="hljs-string">&quot;免费领取大奖，点击链接&quot;</span>,<br>    <span class="hljs-string">&quot;高薪兼职，日结工资，点击报名&quot;</span>, <span class="hljs-string">&quot;您的快递丢失，请点击理赔&quot;</span>,<br>    <span class="hljs-string">&quot;限时优惠，抢购从速&quot;</span>, <span class="hljs-string">&quot;尊贵客户，您有一笔待领奖金&quot;</span>,<br>    <span class="hljs-string">&quot;零门槛贷款，马上申请&quot;</span>, <span class="hljs-string">&quot;系统检测到风险，点击解锁&quot;</span>,<br>]<br>y = np.array([<span class="hljs-string">&quot;ham&quot;</span>]*<span class="hljs-built_in">len</span>(ham) + [<span class="hljs-string">&quot;spam&quot;</span>]*<span class="hljs-built_in">len</span>(spam))<br>corpus = ham + spam<br></code></pre></td></tr></table></figure>
+<p><strong>这段在做什么？</strong></p>
+<ul>
+<li>构造平衡数据：10 条正常 + 10 条垃圾（玩具数据，重点在走通流程）</li>
+<li><code>y</code>：标签数组，前 10 个 <code>ham</code>、后 10 个 <code>spam</code></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># ============ 2. 构建词表 ============</span><br>words = <span class="hljs-built_in">sorted</span>(<span class="hljs-built_in">set</span>(<span class="hljs-string">&quot;&quot;</span>.join(corpus)))      <span class="hljs-comment"># 把所有短信拼起来，按&quot;字&quot;去重排序</span><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;词表大小:&quot;</span>, <span class="hljs-built_in">len</span>(words))<br></code></pre></td></tr></table></figure>
+<p><strong>逐行解析：</strong></p>
+<ul>
+<li><code>&quot;&quot;.join(corpus)</code>：把 20 条短信拼成一个大字符串（玩具级中文处理，不用分词）</li>
+<li><code>set(...)</code>：<strong>去重</strong>，得到所有出现过的字</li>
+<li><code>sorted(...)</code>：排序，保证词表顺序固定（否则每次运行结果可能不同）</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># ============ 3. 文本转向量（词袋模型） ============</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">vec</span>(<span class="hljs-params">text</span>):<br>    <span class="hljs-keyword">return</span> np.array([text.count(w) <span class="hljs-keyword">for</span> w <span class="hljs-keyword">in</span> words])<br><br>X = np.array([vec(t) <span class="hljs-keyword">for</span> t <span class="hljs-keyword">in</span> corpus])<br></code></pre></td></tr></table></figure>
+<p><strong>逐行解析：</strong></p>
+<ul>
+<li><code>vec(text)</code>：对词表里每个字 <code>w</code>，数一数它在这条短信里出现几次，组成一个向量</li>
+<li>例如词表是 <code>[&#39;一&#39;,&#39;万&#39;,&#39;三&#39;,...]</code>，”恭喜中奖”就只会在对应字位置上计数</li>
+<li><code>X</code>：形状 <code>(20, 词表大小)</code> 的矩阵，每一行是一条短信的向量</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># ============ 4. 训练模型 ============</span><br>mnb = MultinomialNB(alpha=<span class="hljs-number">1.0</span>)<br>mnb.fit(X, y)<br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>alpha=1.0</code>：拉普拉斯平滑，防止测试短信里有训练集没见过的字</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># ============ 5. 测试 ============</span><br>tests = [<span class="hljs-string">&quot;你今天吃什么&quot;</span>, <span class="hljs-string">&quot;点击链接免费领取&quot;</span>, <span class="hljs-string">&quot;明天一起打球吗&quot;</span>,<br>         <span class="hljs-string">&quot;恭喜您中奖了点击链接&quot;</span>, <span class="hljs-string">&quot;好久不见最近好吗&quot;</span>]<br><span class="hljs-keyword">for</span> t <span class="hljs-keyword">in</span> tests:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;&#x27;<span class="hljs-subst">&#123;t&#125;</span>&#x27; -&gt; <span class="hljs-subst">&#123;mnb.predict([vec(t)])[<span class="hljs-number">0</span>]&#125;</span>&quot;</span>)<br></code></pre></td></tr></table></figure>
+<p><strong>实际输出（已运行核验）：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">词表大小: 121<br>&#x27;你今天吃什么&#x27; -&gt; ham<br>&#x27;点击链接免费领取&#x27; -&gt; spam<br>&#x27;明天一起打球吗&#x27; -&gt; ham<br>&#x27;恭喜您中奖了点击链接&#x27; -&gt; spam<br>&#x27;好久不见最近好吗&#x27; -&gt; ham<br>训练集准确率: 1.0<br>5 次随机划分(30%测试)的平均准确率: 0.833<br></code></pre></td></tr></table></figure>
+<p><strong>逐条解读：</strong></p>
+<ul>
+<li>含”点击””链接””免费””领取””中奖”的短信 → 全部判为 <code>spam</code> ✓（这些字在训练集中只出现在垃圾短信里）</li>
+<li>“你今天吃什么””好久不见最近好吗” → <code>ham</code> ✓（日常用词）</li>
+<li>⚠️ 第 4 条里”您””了”两个字训练集没出现过，多亏 <strong>alpha=1.0</strong> 没让概率归零，模型依然判断正确</li>
+</ul>
+<h3 id="6-3-训练集-vs-测试集准确率"><a href="#6-3-训练集-vs-测试集准确率" class="headerlink" title="6.3 训练集 vs 测试集准确率"></a>6.3 训练集 vs 测试集准确率</h3><ul>
+<li><strong>训练集 100%</strong>：数据简单、模型”记住”了每条短信的模式</li>
+<li><strong>测试集平均 0.833</strong>：玩具数据只有 20 条，1/3 的划分里样本太少，波动大</li>
+<li><blockquote>
+<p>⚠️ <strong>真实项目</strong>应使用 <code>scikit-learn</code> 官方中文短信数据集或 SMS Spam Collection（5000+ 条），并配合 <code>CountVectorizer</code>（英文）/ <code>jieba</code> 分词（中文）+ <code>TfidfVectorizer</code>，效果会稳定得多</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="6-4-进阶改进清单"><a href="#6-4-进阶改进清单" class="headerlink" title="6.4 进阶改进清单"></a>6.4 进阶改进清单</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>改进</th>
+<th>做法</th>
+<th>收益</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>分词</td>
+<td>中文用 <code>jieba</code>，英文按空格</td>
+<td>词表更有语义，准确率显著提升</td>
+</tr>
+<tr>
+<td>加权</td>
+<td><code>TfidfVectorizer</code> 替代词频</td>
+<td>降低”的、了”等高频无义词的影响</td>
+</tr>
+<tr>
+<td>停用词</td>
+<td>去掉标点、虚词</td>
+<td>减少噪声特征</td>
+</tr>
+<tr>
+<td>对数概率</td>
+<td>sklearn 内部已自动用 <code>feature_log_prob_</code></td>
+<td>避免小概率连乘下溢出</td>
+</tr>
+<tr>
+<td>调 alpha</td>
+<td>网格搜索 0.1 / 0.5 / 1.0</td>
+<td>微调平滑强度</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+<h2 id="7-优缺点与适用场景"><a href="#7-优缺点与适用场景" class="headerlink" title="7. 优缺点与适用场景"></a>7. 优缺点与适用场景</h2><h3 id="7-1-优点"><a href="#7-1-优点" class="headerlink" title="7.1 优点"></a>7.1 优点</h3><ol>
+<li><strong>训练和预测都极快</strong>：训练是”数频率”查表式操作，预测是少量乘法（sklearn 内部用对数加法）</li>
+<li><strong>小数据也能跑</strong>：参数少，不需要海量数据就能收敛</li>
+<li><strong>对缺失值天然友好</strong>：某个特征缺失，连乘里直接跳过即可</li>
+<li><strong>适合高维稀疏数据</strong>：文本动辄上万维特征，朴素贝叶斯依然从容</li>
+<li><strong>输出概率而非硬标签</strong>：<code>predict_proba</code> 能给出”多确定”，可用于排序、阈值调优</li>
+</ol>
+<h3 id="7-2-缺点"><a href="#7-2-缺点" class="headerlink" title="7.2 缺点"></a>7.2 缺点</h3><ol>
+<li><strong>“朴素”假设过强</strong>：特征之间存在强相关时（如图像相邻像素），效果差</li>
+<li><strong>条件概率常被低估</strong>：连乘导致后验概率偏小且”过度自信”（如 <code>1e-194</code>），<strong>适合比较排序，不适合当作真实概率</strong></li>
+<li><strong>零概率敏感</strong>：必须做平滑（已由 alpha 参数保护）</li>
+<li><strong>对输入特征表示敏感</strong>：用错模型（如对连续数据硬用 MultinomialNB）效果骤降</li>
+</ol>
+<blockquote>
+<p>💡 <strong>西瓜书视角</strong>：朴素贝叶斯的”朴素”（属性条件独立）几乎必然不成立，但<strong>它只需要估计一维条件概率</strong>，回避了估计联合分布的”维数灾难”，这是它在实践中有效的根本原因。</p>
+</blockquote>
+<h3 id="7-3-适用场景"><a href="#7-3-适用场景" class="headerlink" title="7.3 适用场景"></a>7.3 适用场景</h3><ul>
+<li>✅ <strong>文本分类</strong>（垃圾邮件、情感分析、新闻打标签）—— <strong>首选基线</strong></li>
+<li>✅ <strong>特征多、样本少</strong>的高维稀疏场景</li>
+<li>✅ 需要<strong>概率输出</strong>或快速原型的场景</li>
+<li>❌ 特征强相关、需精确建模组合特征（用决策树/集成学习）</li>
+<li>❌ 图像等空间结构数据（假设与事实严重背离）</li>
+</ul>
+<hr>
+<h2 id="8-与其他算法对比"><a href="#8-与其他算法对比" class="headerlink" title="8. 与其他算法对比"></a>8. 与其他算法对比</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>算法</th>
+<th>类别</th>
+<th>输出</th>
+<th>优点</th>
+<th>缺点</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>朴素贝叶斯</strong></td>
+<td>生成模型</td>
+<td>概率</td>
+<td>快、稳、可解释、小数据可用</td>
+<td>独立性假设过强</td>
+<td>文本分类、基线模型</td>
+</tr>
+<tr>
+<td><strong>KNN</strong></td>
+<td>判别模型</td>
+<td>硬标签</td>
+<td>无需训练、直观</td>
+<td>预测慢、需调 K、对尺度敏感</td>
+<td>小数据原型</td>
+</tr>
+<tr>
+<td><strong>逻辑回归</strong></td>
+<td>判别模型</td>
+<td>概率</td>
+<td>可解释、正则化灵活</td>
+<td>只能线性分割</td>
+<td>点击率预估、风控</td>
+</tr>
+<tr>
+<td><strong>决策树</strong></td>
+<td>判别模型</td>
+<td>硬标签</td>
+<td>可解释性最强、能处理组合特征</td>
+<td>易过拟合</td>
+<td>特征交互明确的场景</td>
+</tr>
+<tr>
+<td><strong>集成学习</strong></td>
+<td>判别模型</td>
+<td>概率</td>
+<td>精度通常最高</td>
+<td>训练慢、黑盒</td>
+<td>比赛、追求精度</td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p>💡 <strong>生成模型 vs 判别模型</strong>（西瓜书 §7.1）：朴素贝叶斯的”野心”更大——它试图建模 $P(x, y)$ 的<strong>联合分布</strong>（数据是怎么生成的），再从中推出 $P(y|x)$；而 KNN/逻辑回归只直接学 $P(y|x)$。生成模型可以利用无标签数据，但也承担了更强的假设风险。</p>
+</blockquote>
+<hr>
+<h2 id="9-小结"><a href="#9-小结" class="headerlink" title="9. 小结"></a>9. 小结</h2><h3 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h3><ol>
+<li><strong>朴素贝叶斯 = 贝叶斯公式 + 特征独立假设</strong></li>
+<li><strong>贝叶斯公式</strong>：后验 = 先验 × 似然 / 证据</li>
+<li><strong>预测规则</strong>：$\hat{y} = \arg\max_c \left[ P(c) \prod_j P(x_j|c) \right]$（忽略分母）</li>
+<li><strong>参数估计</strong>：全部靠”数频率”，无迭代优化</li>
+<li><strong>拉普拉斯修正</strong>：$(\text{计数}+1) / (\text{总数}+\text{取值数})$，专治零概率清零</li>
+</ol>
+<h3 id="训练-预测流程图"><a href="#训练-预测流程图" class="headerlink" title="训练 / 预测流程图"></a>训练 / 预测流程图</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">【训练】<br>  D_c（该类样本） → 统计频率 → 查表存 P(c) 与 P(x_j|c) → 拉普拉斯修正 → 模型<br><br>【预测】<br>  新样本 x → 逐类别连乘 → 比大小 → 返回最大类<br></code></pre></td></tr></table></figure>
+<h3 id="三种-sklearn-模型速查"><a href="#三种-sklearn-模型速查" class="headerlink" title="三种 sklearn 模型速查"></a>三种 sklearn 模型速查</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> sklearn.naive_bayes <span class="hljs-keyword">import</span> GaussianNB, MultinomialNB, BernoulliNB<br><br>GaussianNB()       <span class="hljs-comment"># 连续值：假设高斯分布</span><br>MultinomialNB()    <span class="hljs-comment"># 计数（词频）：文本分类首选</span><br>BernoulliNB()      <span class="hljs-comment"># 二值：词是否出现</span><br><br>mnb = MultinomialNB(alpha=<span class="hljs-number">1.0</span>)   <span class="hljs-comment"># alpha=平滑系数，文本必加</span><br>mnb.fit(X, y)<br>mnb.predict(X)                  <span class="hljs-comment"># 硬标签</span><br>mnb.predict_proba(X)            <span class="hljs-comment"># 概率（每行和为 1）</span><br></code></pre></td></tr></table></figure>
+<hr>
+<h2 id="10-作业"><a href="#10-作业" class="headerlink" title="10. 作业"></a>10. 作业</h2><h3 id="基础题"><a href="#基础题" class="headerlink" title="基础题"></a>基础题</h3><ol>
+<li>用自己的话解释贝叶斯公式中”先验””似然””后验”的含义，并说明为什么比较时可以忽略 $P(X)$。</li>
+<li>为什么朴素贝叶斯叫”朴素”？这个假设带来了什么好处和坏处？</li>
+<li>写出拉普拉斯修正的公式，并解释”某特征计数为 0 会造成什么后果”。</li>
+<li>GaussianNB、MultinomialNB、BernoulliNB 分别假设数据长什么样？各举一个应用例子。</li>
+</ol>
+<h3 id="计算题"><a href="#计算题" class="headerlink" title="计算题"></a>计算题</h3><ol>
+<li>用第 3.6 节的数据集，<strong>手算</strong>下面样本的类别：<br>（色泽=乌黑，根蒂=稍蜷，敲声=浊响，纹理=稍糊，脐部=稍凹，触感=软粘）<ul>
+<li>提示：先验 $P(\text{好瓜}) = 9/19$，$P(\text{坏瓜}) = 10/19$；条件概率按 $\frac{|D_{c,x_j}|+1}{|D_c|+N_j}$ 计算</li>
+<li>要求写出每个特征的 $|D_{c,x_j}|$ 和最终比较结果</li>
+</ul>
+</li>
+<li>给定类别 c 下特征 $X$ 服从高斯分布，$\mu = 3$、$\sigma^2 = 4$，计算 $p(X=5|c)$（对照第 3.5 节答案：≈ 0.120985）。</li>
+</ol>
+<h3 id="编程题"><a href="#编程题" class="headerlink" title="编程题"></a>编程题</h3><ol>
+<li><strong>从零实现验证</strong>：用第 4 节的 <code>NaiveBayesScratch</code>，把一条测试样本（青绿、蜷缩、浊响、清晰、凹陷、硬滑）的先验、各条件概率、联合概率<strong>全部打印出来</strong>，与第 3.6 节的手算结果逐项对比。</li>
+<li><strong>alpha 实验</strong>：把 <code>alpha</code> 设为 0、0.5、1、2，分别记录训练集准确率和你手算样本预测是否改变，思考平滑强度对结果的影响。</li>
+<li><strong>垃圾短信加强版</strong>：在第 6 节玩具数据上<ul>
+<li>把 <code>vec()</code> 从”按字统计”改成”按词统计”（提示：用 <code>jieba.lcut</code>，需先 <code>pip install jieba</code>）</li>
+<li>用 <code>train_test_split(test_size=0.3)</code> 划分，报告测试集准确率</li>
+<li>尝试把字符级词袋换成 <code>sklearn.feature_extraction.text.CountVectorizer</code>，对比准确率变化</li>
+</ul>
+</li>
+<li><strong>模型对比</strong>：用同一个数据集（如 sklearn 的 <code>fetch_20newsgroups</code> 子集），分别用 MultinomialNB 和逻辑回归做文本分类，比较准确率和训练耗时，说说你的发现。</li>
+</ol>
+<h3 id="思考题"><a href="#思考题" class="headerlink" title="思考题"></a>思考题</h3><ol>
+<li>在垃圾短信分类中，朴素贝叶斯把”特征独立”当作理所当然——“链接”和”点击”明明总是一起出现，为什么模型还是有效？</li>
+<li>朴素贝叶斯和第 7 章学的 KMeans 在”有无标签”上有什么本质区别？给一个新项目（比如”用户评论自动打分”），你会选哪个？</li>
+</ol>
+<hr>
+<blockquote>
+<p>🎯 <strong>下一章预告</strong>：我们将学习<strong>降维与特征工程</strong>（PCA、LDA），解决”特征太多、维度太高”的问题，并把它和朴素贝叶斯、KMeans 结合起来做更复杂的文本挖掘。</p>
+</blockquote>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2026/10/20/API/">← Next API搜集</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/10/20/ml15/">朴素贝叶斯 Prev →</a></div></div></div><div id="comments"><div id="giscus"></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="To Top" style="opacity: 0; display: none;">∧ </a><a class="i-index" id="to-index" onClick="tocControl.change()" title="To Catalog"><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span></a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="Change Theme"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">John Doe</a></h1><div id="description"><p></p></div><div id="social-links"><a class="social" target="_blank" rel="noopener" href="https://github.com/juicer0801"><i class="fab fa-github" alt="GitHub"></i></a></div></div><div id="aside-block"><div id="toc-div"><h1>Catalog</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC8%E7%AB%A0%EF%BC%9A%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF-%E2%80%94%E2%80%94-%E8%B6%85%E7%BA%A7%E8%AF%A6%E7%BB%86%E6%95%99%E7%A8%8B%EF%BC%88%E5%B0%8F%E7%99%BD%E7%89%88%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">第8章：朴素贝叶斯 —— 超级详细教程（小白版）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%F0%9F%93%8B-%E7%9B%AE%E5%BD%95"><span class="toc-number">1.1.</span> <span class="toc-text">📋 目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AF%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF"><span class="toc-number">1.2.</span> <span class="toc-text">1. 什么是朴素贝叶斯</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E4%B8%80%E4%B8%AA%E7%94%9F%E6%B4%BB%E4%BE%8B%E5%AD%90"><span class="toc-number">1.2.1.</span> <span class="toc-text">1.1 一个生活例子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8F%AB%E2%80%9D%E6%9C%B4%E7%B4%A0%E2%80%9D%EF%BC%9F"><span class="toc-number">1.2.2.</span> <span class="toc-text">1.2 为什么叫”朴素”？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">1.2.3.</span> <span class="toc-text">1.3 应用场景</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%95%B0%E5%AD%A6%E5%9F%BA%E7%A1%80%EF%BC%9A%E8%B4%9D%E5%8F%B6%E6%96%AF%E5%85%AC%E5%BC%8F%EF%BC%88%E5%9B%BE%E8%A7%A3%EF%BC%89"><span class="toc-number">1.3.</span> <span class="toc-text">2. 数学基础：贝叶斯公式（图解）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E5%85%88%E7%9C%8B%E4%B8%80%E4%B8%AA%E7%9B%B4%E8%A7%82%E7%9A%84%E4%BE%8B%E5%AD%90"><span class="toc-number">1.3.1.</span> <span class="toc-text">2.1 先看一个直观的例子</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E8%B4%9D%E5%8F%B6%E6%96%AF%E5%85%AC%E5%BC%8F"><span class="toc-number">1.3.2.</span> <span class="toc-text">2.2 贝叶斯公式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E5%9B%BE%E8%A7%A3%E6%B5%81%E7%A8%8B%EF%BC%88StatQuest-%E9%A3%8E%E6%A0%BC%EF%BC%89"><span class="toc-number">1.3.3.</span> <span class="toc-text">2.3 图解流程（StatQuest 风格）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-%E5%A4%9A%E5%88%86%E7%B1%BB%E6%83%85%E5%BD%A2%EF%BC%88%E5%85%A8%E6%A6%82%E7%8E%87%E5%85%AC%E5%BC%8F%E5%B1%95%E5%BC%80%E5%88%86%E6%AF%8D%EF%BC%89"><span class="toc-number">1.3.4.</span> <span class="toc-text">2.4 多分类情形（全概率公式展开分母）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E5%8E%9F%E7%90%86%EF%BC%88%E5%9B%BE%E8%A7%A3-%E5%85%AC%E5%BC%8F%EF%BC%89"><span class="toc-number">1.4.</span> <span class="toc-text">3. 朴素贝叶斯原理（图解 + 公式）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E4%BB%8E%E8%B4%9D%E5%8F%B6%E6%96%AF%E5%88%B0%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%EF%BC%9A%E4%B8%80%E6%AD%A5%E2%80%9D%E6%9C%B4%E7%B4%A0%E2%80%9D%E7%9A%84%E5%8C%96%E7%AE%80"><span class="toc-number">1.4.1.</span> <span class="toc-text">3.1 从贝叶斯到朴素贝叶斯：一步”朴素”的化简</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%E9%A2%84%E6%B5%8B%E5%85%AC%E5%BC%8F"><span class="toc-number">1.4.2.</span> <span class="toc-text">3.2 朴素贝叶斯预测公式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E5%8F%82%E6%95%B0%E6%80%8E%E4%B9%88%E4%BC%B0%E8%AE%A1%EF%BC%9F%EF%BC%88%E8%A5%BF%E7%93%9C%E4%B9%A6-%C2%A77-2%EF%BC%89"><span class="toc-number">1.4.3.</span> <span class="toc-text">3.3 参数怎么估计？（西瓜书 §7.2）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E9%81%87%E5%88%B0%E9%9B%B6%E6%A6%82%E7%8E%87%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F%E2%80%94%E2%80%94-%E6%8B%89%E6%99%AE%E6%8B%89%E6%96%AF%E4%BF%AE%E6%AD%A3"><span class="toc-number">1.4.4.</span> <span class="toc-text">3.4 遇到零概率怎么办？—— 拉普拉斯修正</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-%E8%BF%9E%E7%BB%AD%E7%89%B9%E5%BE%81%E6%80%8E%E4%B9%88%E5%8A%9E%EF%BC%9F%E2%80%94%E2%80%94%E9%AB%98%E6%96%AF%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF"><span class="toc-number">1.4.5.</span> <span class="toc-text">3.5 连续特征怎么办？——高斯朴素贝叶斯</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-6-%E4%B8%80%E4%B8%AA%E5%AE%8C%E6%95%B4%E7%9A%84%E8%AE%A1%E7%AE%97%E4%BE%8B%E5%AD%90%EF%BC%88%E8%A5%BF%E7%93%9C%E4%B9%A6-%C2%A77-3%EF%BC%89"><span class="toc-number">1.4.6.</span> <span class="toc-text">3.6 一个完整的计算例子（西瓜书 §7.3）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E4%BB%8E%E9%9B%B6%E5%AE%9E%E7%8E%B0%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%EF%BC%88%E9%80%90%E8%A1%8C%E8%A7%A3%E6%9E%90%EF%BC%89"><span class="toc-number">1.5.</span> <span class="toc-text">4. 从零实现朴素贝叶斯（逐行解析）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E5%AE%8C%E6%95%B4%E4%BB%A3%E7%A0%81"><span class="toc-number">1.5.1.</span> <span class="toc-text">4.1 完整代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E9%80%90%E8%A1%8C%E8%A7%A3%E6%9E%90"><span class="toc-number">1.5.2.</span> <span class="toc-text">4.2 逐行解析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E8%BF%90%E8%A1%8C%E9%AA%8C%E8%AF%81"><span class="toc-number">1.5.3.</span> <span class="toc-text">4.3 运行验证</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-sklearn-%E4%B8%AD%E7%9A%84%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF"><span class="toc-number">1.6.</span> <span class="toc-text">5. sklearn 中的朴素贝叶斯</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-GaussianNB%EF%BC%88%E9%AB%98%E6%96%AF%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%EF%BC%89"><span class="toc-number">1.6.1.</span> <span class="toc-text">5.1 GaussianNB（高斯朴素贝叶斯）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-MultinomialNB%EF%BC%88%E5%A4%9A%E9%A1%B9%E5%BC%8F%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%EF%BC%89"><span class="toc-number">1.6.2.</span> <span class="toc-text">5.2 MultinomialNB（多项式朴素贝叶斯）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-BernoulliNB%EF%BC%88%E4%BC%AF%E5%8A%AA%E5%88%A9%E6%9C%B4%E7%B4%A0%E8%B4%9D%E5%8F%B6%E6%96%AF%EF%BC%89"><span class="toc-number">1.6.3.</span> <span class="toc-text">5.3 BernoulliNB（伯努利朴素贝叶斯）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E5%AE%9E%E6%88%98%EF%BC%9A%E5%9E%83%E5%9C%BE%E7%9F%AD%E4%BF%A1%E5%88%86%E7%B1%BB"><span class="toc-number">1.7.</span> <span class="toc-text">6. 实战：垃圾短信分类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-%E9%97%AE%E9%A2%98%E5%88%86%E6%9E%90"><span class="toc-number">1.7.1.</span> <span class="toc-text">6.1 问题分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-%E5%AE%8C%E6%95%B4%E4%BB%A3%E7%A0%81%EF%BC%88%E9%80%90%E8%A1%8C%E8%A7%A3%E6%9E%90%EF%BC%89"><span class="toc-number">1.7.2.</span> <span class="toc-text">6.2 完整代码（逐行解析）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-%E8%AE%AD%E7%BB%83%E9%9B%86-vs-%E6%B5%8B%E8%AF%95%E9%9B%86%E5%87%86%E7%A1%AE%E7%8E%87"><span class="toc-number">1.7.3.</span> <span class="toc-text">6.3 训练集 vs 测试集准确率</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-4-%E8%BF%9B%E9%98%B6%E6%94%B9%E8%BF%9B%E6%B8%85%E5%8D%95"><span class="toc-number">1.7.4.</span> <span class="toc-text">6.4 进阶改进清单</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E4%BC%98%E7%BC%BA%E7%82%B9%E4%B8%8E%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">1.8.</span> <span class="toc-text">7. 优缺点与适用场景</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1-%E4%BC%98%E7%82%B9"><span class="toc-number">1.8.1.</span> <span class="toc-text">7.1 优点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-2-%E7%BC%BA%E7%82%B9"><span class="toc-number">1.8.2.</span> <span class="toc-text">7.2 缺点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-3-%E9%80%82%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">1.8.3.</span> <span class="toc-text">7.3 适用场景</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E4%B8%8E%E5%85%B6%E4%BB%96%E7%AE%97%E6%B3%95%E5%AF%B9%E6%AF%94"><span class="toc-number">1.9.</span> <span class="toc-text">8. 与其他算法对比</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%E5%B0%8F%E7%BB%93"><span class="toc-number">1.10.</span> <span class="toc-text">9. 小结</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5"><span class="toc-number">1.10.1.</span> <span class="toc-text">核心概念</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%AD%E7%BB%83-%E9%A2%84%E6%B5%8B%E6%B5%81%E7%A8%8B%E5%9B%BE"><span class="toc-number">1.10.2.</span> <span class="toc-text">训练 &#x2F; 预测流程图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E7%A7%8D-sklearn-%E6%A8%A1%E5%9E%8B%E9%80%9F%E6%9F%A5"><span class="toc-number">1.10.3.</span> <span class="toc-text">三种 sklearn 模型速查</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-%E4%BD%9C%E4%B8%9A"><span class="toc-number">1.11.</span> <span class="toc-text">10. 作业</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E9%A2%98"><span class="toc-number">1.11.1.</span> <span class="toc-text">基础题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E9%A2%98"><span class="toc-number">1.11.2.</span> <span class="toc-text">计算题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%96%E7%A8%8B%E9%A2%98"><span class="toc-number">1.11.3.</span> <span class="toc-text">编程题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%9D%E8%80%83%E9%A2%98"><span class="toc-number">1.11.4.</span> <span class="toc-text">思考题</span></a></li></ol></li></ol></li></ol></div></div><footer><nobr>Published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>
