@@ -1,0 +1,228 @@
+<!DOCTYPE html><html lang="en" theme-mode="auto"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>流程的python2——第一章 | Hexo</title><meta name="description" content="在 Python 里，只要你实现了 __getitem__ 这个特殊方法，Python 解释器就会自动地免费送你一大堆强大的功能。 这叫协议（Protocol）或者鸭子类型（Duck Typing）——“只要它走起来像鸭子，叫起来像鸭子，那它就是鸭子”。（经典名言hhh）  1. 自动支持“切片”（Slicing）12345&gt;&gt;&gt; deck[1:3][Card(rank&#x3D;&amp;#x2">
+<meta property="og:type" content="article">
+<meta property="og:title" content="流程的python2——第一章">
+<meta property="og:url" content="http://example.com/2026/11/04/python1/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="在 Python 里，只要你实现了 __getitem__ 这个特殊方法，Python 解释器就会自动地免费送你一大堆强大的功能。 这叫协议（Protocol）或者鸭子类型（Duck Typing）——“只要它走起来像鸭子，叫起来像鸭子，那它就是鸭子”。（经典名言hhh）  1. 自动支持“切片”（Slicing）12345&gt;&gt;&gt; deck[1:3][Card(rank&#x3D;&amp;#x2">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-11-04T15:26:22.000Z">
+<meta property="article:modified_time" content="2026-11-04T16:13:18.880Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary"><link rel="canonical" href="http://example.com/2026/11/04/python1/"><link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="preload" as="font" crossorigin="anonymous" href="/font/Bender.ttf"><link rel="preload" as="font" crossorigin="anonymous" href="/font/BenderLight.woff2"><link rel="preload" as="font" crossorigin="anonymous" href="/font/JetBrainsMono-Regular.woff2"><link rel="stylesheet" href="/css/arknights.css"><style>@font-face {
+  font-family: Bender;
+  src: local('Bender'), url("/font/Bender.ttf"), url("/font/Bender.otf");
+}
+@font-face {
+  font-family: BenderLight;
+  src: local('BenderLight'), url("/font/BenderLight.woff2") format('woff2');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}
+</style><meta name="page-config" content="{&quot;code_fold&quot;:null}"><script class="pjax-js">var config = {"root":"/","code_fold":15,"search":{"preload":true,"activeHolder":"键入以继续","blurHolder":"数据检索","noResult":"无 $0 相关数据"},"code":{"codeInfo":"$0 - $1 行","copy":"复制"}};
+var page_config = {
+  code_fold: null
+};
+function updatePageConfig() {
+  var newPageConfig = document.querySelector('meta[name="page-config"]');
+  if (newPageConfig) {
+    page_config = JSON.parse(newPageConfig.content);
+  }
+}
+document.addEventListener('pjax:complete', function() { updatePageConfig(); });
+updatePageConfig();</script><link type="text/css" rel="stylesheet" href="/lib/encrypt/hbe.style.css"><script src="//unpkg.com/mermaid@11.12.2/dist/mermaid.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.1/MathJax.js"></script><script>MathJax.Hub.Config({
+ menuSettings: {
+   zoom: "None"
+ },
+ showMathMenu: false,
+ jax: ["input/TeX","output/CommonHTML"],
+ extensions: ["tex2jax.js"],
+ TeX: {
+   extensions: ["AMSmath.js","AMSsymbols.js"],
+   equationNumbers: {
+     autoNumber: "AMS"
+   }
+ },
+ tex2jax: {
+   inlineMath: [["\\(", "\\)"]],
+   displayMath: [["\\[", "\\]"]]
+ }
+});</script><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lightgallery.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-zoom.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-thumbnail.css"><link type="text/css" rel="stylesheet" href="/lib/fontawesome/css/all.min.css"><script>if (window.localStorage.getItem('theme-mode') === 'light' || window.matchMedia('(prefers-color-scheme:light)').matches)
+ document.documentElement.setAttribute('theme-mode', 'light')
+if (window.localStorage.getItem('theme-mode') === 'dark' || window.matchMedia('(prefers-color-scheme:dark)').matches)
+ document.documentElement.setAttribute('theme-mode', 'dark')</script><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.woff2") format('woff2');
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><style>:root {
+ --dark-background: url('https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg');
+ --light-background: url('/img/bk.jpg');
+ --theme-encrypt-confirm: '确认'
+}</style><script defer src="/js/arknights.js"></script><script defer src="/js/search.js"></script><script defer src="https://vercount.one/js"></script><script defer type="module">import mermaid from '//unpkg.com/mermaid@11.12.2/dist/mermaid.esm.min.mjs';
+window.mermaid = mermaid;
+code.paintMermaid();
+</script><script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.1/MathJax.js"></script><script>MathJax.Hub.Config({
+  menuSettings: {
+    zoom: "None"
+  },
+  showMathMenu: false,
+  jax: ["input/TeX","output/CommonHTML"],
+  extensions: ["tex2jax.js"],
+  TeX: {
+    extensions: ["AMSmath.js","AMSsymbols.js"],
+    equationNumbers: {
+      autoNumber: "AMS"
+    }
+  },
+  tex2jax: {
+    inlineMath: [["\\(", "\\)"]],
+    displayMath: [["\\[", "\\]"]]
+  }
+});
+</script><script async src="//unpkg.com/lightgallery@2.7.1/lightgallery.min.js"></script><script async src="//unpkg.com/lightgallery@2.7.1/plugins/zoom/lg-zoom.min.js"></script><script async src="//unpkg.com/lightgallery@2.7.1/plugins/thumbnail/lg-thumbnail.min.js"></script><script async src="/lib/encrypt/hbe.js"></script><script async src="/js/pjax.js"></script><script class="pjax-js">reset= () => {document.querySelector('.lg-container')?.remove()
+lightGallery(document.getElementById('post-bg'), {
+  plugins: [lgZoom,lgThumbnail],
+  selector: '.item-img'})}</script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js','data-pjax','.vercount','meta[name=page-config]'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);document.addEventListener('pjax:success', _ => {
+ const script = document.createElement('script');
+ script.src = 'https://vercount.one/js';
+ document.head.appendChild(script);
+});reset()})</script><script class="pjax-js">reset= () => {window.giscusSettings = {
+ repo: 'juicer0801/juicer0801.github.io',
+ repoId: 'R_kgDOUcAR_w',
+ category: 'Announcements',
+ categoryId: 'DIC_kwDOUcAR_84DIlqM',
+ mapping: 'pathname',
+ strict: '0',
+ reactionsEnabled: '1',
+ emitMetadata: '0',
+ inputPosition: 'bottom',
+ lang: 'zh-CN',
+ crossorigin: 'anonymous' , loading: 'lazy'};window.giscusThemeConfig = { theme: 'preferred_color_scheme' };MathJax.Hub.Queue(["Typeset", MathJax.Hub]);document.querySelector('.lg-container')?.remove()
+const postBg = document.querySelector('#post-bg');
+if (postBg) lightGallery(postBg, {
+  plugins: [lgZoom,lgThumbnail],
+  selector: '.item-img'})}</script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js','data-pjax','.vercount','meta[name=page-config]'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);document.addEventListener('pjax:success', _ => {
+ const script = document.createElement('script');
+ script.src = 'https://vercount.one/js';
+ document.head.appendChild(script);
+});reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="数据检索" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/tags/"><span class="navItemTitle">Tags</span></a></li><li class="navItem"><a class="navBlock" href="/categories/"><span class="navItemTitle">Categories</span></a></li><li class="navItem"><a class="navBlock" href="/friends"><span class="navItemTitle">友链</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>流程的python2——第一章</h1><div id="post-info"><span>文章发布时间: <div class="control"><time datetime="2026-11-04T15:26:22.000Z" id="date"> 2026-11-04</time></div></span><br><span>最后更新时间: <div class="control"><time datetime="2026-11-04T16:13:18.880Z" id="updated"> 2026-11-05</time></div></span><br><span>文章总字数: <div class="control">3.2k</div></span><br><span>预计阅读时间: <div class="control">12 分钟</div></span><br><span id="vercount_container_page_pv">页面浏览: <span class="control" id="vercount_value_page_pv">加载中...</span></span></div></div><hr><div id="post-content"><p><strong>在 Python 里，只要你实现了 <code>__getitem__</code> 这个特殊方法，Python 解释器就会自动地免费送你一大堆强大的功能。</strong></p>
+<p>这叫<strong>协议（Protocol）</strong>或者<strong>鸭子类型（Duck Typing）</strong>——“只要它走起来像鸭子，叫起来像鸭子，那它就是鸭子”。（经典名言hhh）</p>
+<hr>
+<h3 id="1-自动支持“切片”（Slicing）"><a href="#1-自动支持“切片”（Slicing）" class="headerlink" title="1. 自动支持“切片”（Slicing）"></a>1. 自动支持“切片”（Slicing）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>deck[<span class="hljs-number">1</span>:<span class="hljs-number">3</span>]<br>[Card(rank=<span class="hljs-string">&#x27;2&#x27;</span>, suit=<span class="hljs-string">&#x27;spades&#x27;</span>), Card(rank=<span class="hljs-string">&#x27;3&#x27;</span>, suit=<span class="hljs-string">&#x27;spades&#x27;</span>)] <span class="hljs-comment"># 注：这里书上似乎印错了，deck[1:3] 应该是黑桃3和黑桃4</span><br><br><span class="hljs-meta">&gt;&gt;&gt; </span>deck[<span class="hljs-number">12</span>::<span class="hljs-number">13</span>]<br>[Card(rank=<span class="hljs-string">&#x27;A&#x27;</span>, suit=<span class="hljs-string">&#x27;spades&#x27;</span>), Card(rank=<span class="hljs-string">&#x27;A&#x27;</span>, suit=<span class="hljs-string">&#x27;diamonds&#x27;</span>), Card(rank=<span class="hljs-string">&#x27;A&#x27;</span>, suit=<span class="hljs-string">&#x27;clubs&#x27;</span>), Card(rank=<span class="hljs-string">&#x27;A&#x27;</span>, suit=<span class="hljs-string">&#x27;hearts&#x27;</span>)]<br></code></pre></td></tr></table></figure>
+<p>我只写了 <code>__getitem__</code>（获取单个元素），但当我写 <code>deck[1:3]</code>（切片）时，代码居然没报错，直接返回了牌！</p>
+<p><strong>底层原理：</strong><br>当我对对象使用切片语法时，Python 会自动调用 <code>__getitem__</code>。这时的参数不再是整数 <code>0, 1, 2</code>，而是一个 <code>slice</code> 对象（比如 <code>slice(1, 3, None)</code>）。<br>因为你在 <code>FrenchDeck</code> 的 <code>__getitem__</code> 里写的是 <code>return self._cards[position]</code>，你把 <code>slice</code> 对象直接传给了底层的列表 <code>self._cards</code>。列表天生支持切片，所以我的扑克牌类也就<strong>白嫖</strong>了切片功能。</p>
+<p>那个 <code>deck[12::13]</code> 是什么意思？<br>基础复习：<code>[start:stop:step]</code>。<br>起点是 12（第一张 A，黑桃 A），步长是 13。13张牌是一组花色，所以跳 13 张拿一张，刚好把 4 张 A 全抽出来了。</p>
+<hr>
+<h3 id="2-自动支持“循环遍历”（Iteration）"><a href="#2-自动支持“循环遍历”（Iteration）" class="headerlink" title="2. 自动支持“循环遍历”（Iteration）"></a>2. 自动支持“循环遍历”（Iteration）</h3><p>看图中部的代码：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">for</span> card <span class="hljs-keyword">in</span> deck:<br><span class="hljs-meta">... </span>    <span class="hljs-built_in">print</span>(card)<br></code></pre></td></tr></table></figure></p>
+<p>我没有定义 <code>__iter__</code> 方法，凭什么能直接用 <code>for</code> 循环？<br><strong>底层原理：</strong><br>当 Python 遇到 <code>for x in my_object</code> 时，它第一反应是找对象的 <code>__iter__</code> 方法。找不到怎么办？<br>Python 解释器会<strong>退而求其次</strong>：它发现我有 <code>__getitem__</code>，于是它就会像入机一样，从索引 <code>0</code> 开始，一直调用 <code>deck[0]</code>, <code>deck[1]</code>, <code>deck[2]</code>……直到抛出 <code>IndexError</code> 异常为止。<br>同样，<code>reversed(deck)</code>（反向迭代）也是如此。如果没有 <code>__reversed__</code> 方法，Python 会尝试利用 <code>__len__</code> 和 <code>__getitem__</code> 倒着取值，实现反向遍历。</p>
+<hr>
+<h3 id="3-自动支持-in-运算符（Membership）"><a href="#3-自动支持-in-运算符（Membership）" class="headerlink" title="3. 自动支持 in 运算符（Membership）"></a>3. 自动支持 <code>in</code> 运算符（Membership）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>Card(<span class="hljs-string">&#x27;Q&#x27;</span>, <span class="hljs-string">&#x27;hearts&#x27;</span>) <span class="hljs-keyword">in</span> deck<br><span class="hljs-literal">True</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>Card(<span class="hljs-string">&#x27;7&#x27;</span>, <span class="hljs-string">&#x27;beasts&#x27;</span>) <span class="hljs-keyword">in</span> deck<br><span class="hljs-literal">False</span><br></code></pre></td></tr></table></figure>
+<p><strong>发生了什么？</strong><br>我也没有写 <code>__contains__</code> 方法，为什么可以用 <code>in</code> 来判断一张牌在不在牌堆里？<br><strong>底层原理：</strong><br>当 Python 执行 <code>x in my_object</code> 时，会找 <code>__contains__</code>。找不到的话，它会<strong>再次退而求其次</strong>，利用 <code>__getitem__</code> 进行<strong>顺序扫描</strong>。<br>也就是说，它会通过 <code>__getitem__</code> 把牌堆从头到尾拿一遍，挨个跟我找的那张牌比对，直到找到（返回 <code>True</code>）或者找完都没有（返回 <code>False</code>）。</p>
+<p><em>(不过要注意，由于没有 <code>__contains__</code>，这种顺序扫描的效率是 O(n) 的，比起原生列表的 <code>in</code> 操作可能要慢。)</em></p>
+<hr>
+<h3 id="4-接下来的任务：自定义排序规则"><a href="#4-接下来的任务：自定义排序规则" class="headerlink" title="4. 接下来的任务：自定义排序规则"></a>4. 接下来的任务：自定义排序规则</h3><p>看图片最下方的一段文字：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">suit_values = <span class="hljs-built_in">dict</span>(spades=<span class="hljs-number">3</span>, hearts=<span class="hljs-number">2</span>, diamonds=<span class="hljs-number">1</span>, clubs=<span class="hljs-number">0</span>)<br></code></pre></td></tr></table></figure></p>
+<p>前面我已经造好了牌，也能抽牌、循环了。现在我需要解决一个现实问题：<strong>怎么比大小？</strong><br>在扑克牌里，花色是有权重的（黑桃最大，梅花最小）。因为之前的 <code>Card</code> 是 <code>namedtuple</code>，它只是存数据的，不知道怎么比大小。<br>所以这里定义了一个字典，给不同花色赋了值（黑桃 3，红桃 2…）。这就为后面教你怎么用 <code>sorted()</code> 函数，配合 <code>key</code> 参数，给一副扑克牌排序做好了铺垫。</p>
+<hr>
+<h3 id="总结ing："><a href="#总结ing：" class="headerlink" title="总结ing："></a>总结ing：</h3><p>这就是 Python <strong>数据模型（Data Model）</strong> 的威力。<br>写一个类，只要顺着 Python 的规矩，实现了特定的“魔术方法”（双下划线方法），Python 就会自动帮你把切片、迭代、<code>in</code> 判断等基础功能全配齐，一行额外的代码都不用写。</p>
+<p><strong>“借力打力，少写代码”</strong>，这就是 Pythonic（有 Python 味）的编程方式。</p>
+<p>接着<br><strong>三个核心知识点</strong>：</p>
+<ol>
+<li>如何利用前面的扑克牌进行自定义排序（<code>sorted</code> 和 <code>key</code> 的实战）。</li>
+<li>为什么最好不要去继承内置类型（组合优于继承）。</li>
+<li>特殊方法（魔术方法）在底层到底是怎么被调用的。</li>
+</ol>
+<hr>
+<h3 id="一、-顶部代码：如何按规则给扑克牌排序？"><a href="#一、-顶部代码：如何按规则给扑克牌排序？" class="headerlink" title="一、 顶部代码：如何按规则给扑克牌排序？"></a>一、 顶部代码：如何按规则给扑克牌排序？</h3><p>看图最上面那段代码：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">spades_high</span>(<span class="hljs-params">card</span>):<br>    rank_value = FrenchDeck.ranks.index(card.rank)<br>    <span class="hljs-keyword">return</span> rank_value * <span class="hljs-built_in">len</span>(suit_values) + suit_values[card.suit]<br><br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">for</span> card <span class="hljs-keyword">in</span> <span class="hljs-built_in">sorted</span>(deck, key=spades_high):  <span class="hljs-comment"># doctest: +ELLIPSIS</span><br><span class="hljs-meta">... </span>    <span class="hljs-built_in">print</span>(card)<br></code></pre></td></tr></table></figure></p>
+<p>这里用到了 Python 内置的 <code>sorted()</code> 函数，并且传入了 <code>key</code> 参数。<br><code>sorted()</code> 默认是没法给 <code>Card</code> 对象排序的（因为它不知道两张牌谁大谁小）。所以它需要你提供一个“裁判”（即 <code>key=spades_high</code>），每次拿一张牌，裁判告诉它一个数字，最后 <code>sorted</code> 根据这个数字从小到大排。</p>
+<p><strong><code>spades_high</code></strong><br>这是一个非常巧妙的<strong>加权打分</strong>算法：</p>
+<ul>
+<li><code>FrenchDeck.ranks.index(card.rank)</code>：找到这张牌的点数在列表 <code>[&#39;2&#39;, &#39;3&#39;, ..., &#39;K&#39;, &#39;A&#39;]</code> 里的索引。比如 <code>2</code> 是 0，<code>A</code> 是 12。</li>
+<li><code>rank_value * len(suit_values)</code>：<code>suit_values</code> 有4个花色，所以长度是 4。这就把点数放大了。比如 <code>2</code> 算出来是 0，<code>3</code> 算出来是 4，<code>A</code> 算出来是 48。</li>
+<li><code>+ suit_values[card.suit]</code>：加上花色的权重（黑桃3，红桃2，方块1，梅花0）。</li>
+</ul>
+<p><strong>举个例子</strong>：</p>
+<ul>
+<li>黑桃 A = 12 * 4 + 3 = 51（最大）</li>
+<li>红桃 A = 12 * 4 + 2 = 50</li>
+<li>黑桃 2 = 0 * 4 + 3 = 3</li>
+<li>梅花 2 = 0 <em> 4 + 0 = 0（最小）<br>通过这个简单的数学算式实现了<em>*“先比点数，点数一样比花色”</em></em>的规则。</li>
+</ul>
+<hr>
+<h3 id="二、-为什么是“组合”，而不是“继承”？"><a href="#二、-为什么是“组合”，而不是“继承”？" class="headerlink" title="二、 为什么是“组合”，而不是“继承”？"></a>二、 为什么是“组合”，而不是“继承”？</h3><p>“<em>虽然 FrenchDeck 类隐式继承 object 类，但是前者的多数功能不是继承而来的，而是源自数据模型和组合模式。</em>”</p>
+<p><strong>基础不牢的喵喵，可能会喵：既然我是一副牌，里面装的是列表，我为什么不直接让 <code>FrenchDeck</code> 继承 <code>list</code> 呢？</strong></p>
+<ul>
+<li><strong>继承（Inheritance）</strong>：<code>class FrenchDeck(list):</code>。这样确实能直接用 <code>append</code>、<code>pop</code> 等等方法。<strong>但坏处是</strong>，它会把列表的所有方法都暴露出来。别人可以随便往你的扑克牌里加一个“苹果”或者“字符串”，这就不符合逻辑了。</li>
+<li><strong>组合（Composition）</strong>：<code>FrenchDeck</code> 内部有一个 <code>self._cards</code>（是一个列表）。这叫<strong>把列表当作一个鱼干吃进自己的肚子里了喵</strong>。</li>
+<li><strong>好处</strong>：你只挑你想要的特性（用 <code>__len__</code> 代理长度，用 <code>__getitem__</code> 代理拿牌）。别人不能改我肚子里的小鱼干————<strong>封装性更好</strong>。</li>
+</ul>
+<hr>
+<h3 id="三、-“如何洗牌？”（不可变性）"><a href="#三、-“如何洗牌？”（不可变性）" class="headerlink" title="三、 “如何洗牌？”（不可变性）"></a>三、 “如何洗牌？”（不可变性）</h3><p>书上说不能对 <code>FrenchDeck</code> 洗牌。<br>为什么？因为只实现了 <code>__len__</code> 和 <code>__getitem__</code>，<strong>我只给了别人“看”和“拿”的权利，没给“改”的权利。</strong><br>如果别人写 <code>deck[0] = Card(&#39;A&#39;, &#39;spades&#39;)</code>，Python 会直接报错，因为没有实现 <code>__setitem__</code> 方法。<br><em>(书里说第13章会加 <code>__setitem__</code> 解决这个问题，这里先埋个坑。)</em></p>
+<hr>
+<h3 id="四、-1-3-特殊方法是如何使用的（重点）"><a href="#四、-1-3-特殊方法是如何使用的（重点）" class="headerlink" title="四、 1.3 特殊方法是如何使用的（重点）"></a>四、 1.3 特殊方法是如何使用的（重点）</h3><p>这一小节讲的是 Python 的<strong>底层逻辑</strong>和<strong>性能优化</strong>。</p>
+<p><strong>1. 有些新喵可能会直接调用 <code>__len__</code></strong><br>在写代码时，<strong>千万不要</strong>写 <code>my_object.__len__()</code>。<br>正确的写法是：<code>len(my_object)</code>。<br>为什么？因为 <code>len()</code> 是 Python 的内置函数（C语言实现的）。当你调用 <code>len()</code> 时，Python 解释器会直接去对象底层的 C 结构体（<code>PyVarObject</code>）里读取一个叫 <code>ob_size</code> 的字段（存着元素的个数）。<strong>这个速度超级快</strong>，比调用方法快得多。</p>
+<p><strong>2. <code>for</code> 循环</strong><br>之前说过，你只写了 <code>__getitem__</code>，凭什么能 <code>for i in x:</code>？<br>书上解释了：<code>for i in x:</code> 背后其实是在调用 <code>iter(x)</code>。如果 <code>x</code> 没有 <code>__iter__</code> 方法，Python 就会退一步，利用 <code>__getitem__</code>，从索引 <code>0</code> 开始，配合一个计数器，不停地去拿数据，直到抛出 <code>IndexError</code>。<br><em>(但注意：这种依靠 <code>__getitem__</code> 的迭代是后备方案，效率不如直接定义 <code>__iter__</code>。)</em></p>
+<p><strong>3. <code>__init__</code> 是个例外</strong><br>绝大多数双下划线方法（比如 <code>__len__</code>、<code>__getitem__</code>）都是解释器偷偷调用的（隐式调用），<strong>但 <code>__init__</code> 是个例外</strong>。<br>在写 <code>deck = FrenchDeck()</code> 的时候，其实是显式地触发了 <code>__init__</code> 来给对象做初始化。这是代码编写中最常见的直接调用特殊方法的情况。</p>
+<hr>
+<p><strong>总结ing</strong>：</p>
+<ol>
+<li>怎么用 <code>sorted</code> 的 <code>key</code> 配合自定义函数来实现复杂的多重条件排序。</li>
+<li>“组合（把对象装进去）”通常比“继承（变成子类）”更安全、更灵活。</li>
+<li><code>len()</code> 为什么比调用 <code>.__len__()</code> 快（底层 C 语言优化），以及 <code>for</code> 循环如果没有 <code>__iter__</code> 会怎么利用 <code>__getitem__</code> 后位替代</li>
+</ol>
+<p>再来</p>
+<p>书中通过一个 <code>Vector</code>（二维向量）的类，展示了<strong>如何让自定义的类像 Python 内置的整数、字符串一样，支持 <code>+</code>、<code>*</code>、<code>abs()</code> 等操作</strong>。</p>
+<p>这就是所谓的<strong>“运算符重载”（Operator Overloading）</strong>。</p>
+<hr>
+<h3 id="运算符重载（左侧代码-add-和-mul-）"><a href="#运算符重载（左侧代码-add-和-mul-）" class="headerlink" title="运算符重载（左侧代码 __add__ 和 __mul__）"></a>运算符重载（左侧代码 <code>__add__</code> 和 <code>__mul__</code>）</h3><p>看左侧的代码：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">__add__</span>(<span class="hljs-params">self, other</span>):<br>    x = <span class="hljs-variable language_">self</span>.x + other.x<br>    y = <span class="hljs-variable language_">self</span>.y + other.y<br>    <span class="hljs-keyword">return</span> Vector(x, y)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">__mul__</span>(<span class="hljs-params">self, scalar</span>):<br>    <span class="hljs-keyword">return</span> Vector(<span class="hljs-variable language_">self</span>.x * scalar, <span class="hljs-variable language_">self</span>.y * scalar)<br></code></pre></td></tr></table></figure></p>
+<p>以前要把两个向量相加，可能要写 <code>v1.add(v2)</code>。现在只要写了 <code>__add__</code> 这个魔法方法，你就可以直接写 <code>v1 + v2</code> 了。<br>同样，写了 <code>__mul__</code>，就可以写 <code>v * 3</code>（向量乘以一个数字）。</p>
+<p><strong>复习</strong></p>
+<ol>
+<li><strong>触发</strong> Python 只要看到 <code>+</code>，就会偷偷去左边那个对象的类里面找 <code>__add__</code> 方法。看到 <code>*</code>，就找 <code>__mul__</code>。</li>
+<li><strong>不可变性</strong>：注意看这里有段代码（串了），<code>__add__</code> 里面是 <code>return Vector(x, y)</code>。它在内部算出了一个全新的向量返回出去，<strong>并没有修改原来的 <code>v1</code> 或者 <code>v2</code></strong>。这在 Python 里是很好的习惯（就像你写 <code>a = 1; b = a + 1</code>，原来的 <code>a</code> 还是 <code>1</code>，只是生成了新的 <code>b</code>）。</li>
+<li><strong>书上的遗憾</strong>：书上文字提到“一个向量可以乘以一个数，但是一个数不能乘以一个向量……这违背了标量积的交换律”。意思是，如果你写 <code>v * 3</code> 没问题，但你写 <code>3 * v</code> 会报错，因为整数 <code>3</code> 不知道该怎么乘以一个 <code>Vector</code>。（第 16 章会讲怎么解决，这叫解决左乘问题，需要实现 <code>__rmul__</code>）。</li>
+</ol>
+<hr>
+<h3 id="第二块：让对象“更好看”（右侧-1-3-2-repr-）"><a href="#第二块：让对象“更好看”（右侧-1-3-2-repr-）" class="headerlink" title="第二块：让对象“更好看”（右侧 1.3.2 __repr__）"></a>第二块：让对象“更好看”（右侧 1.3.2 <code>__repr__</code>）</h3><p>新手经常搞混 <code>__repr__</code> 和 <code>__str__</code>。</p>
+<p>看代码里的 <code>__repr__</code>：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">__repr__</span>(<span class="hljs-params">self</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-string">f&#x27;Vector(<span class="hljs-subst">&#123;self.x!r&#125;</span>, <span class="hljs-subst">&#123;self.y!r&#125;</span>)&#x27;</span><br></code></pre></td></tr></table></figure><br><strong>它有什么用？</strong><br>如果你在控制台（终端）里直接输入一个对象名按回车，Python 就会调用这个对象的 <code>__repr__</code> 方法，把结果展示给你。它是用来<strong>给开发者看</strong>的，主要用于调试。<br>所以它的目标应该是<strong>精准</strong>，最好长得像你创建它的代码，比如 <code>Vector(1, 2)</code>。那个 <code>!r</code> 是 <code>repr()</code> 的简写，保证打印出来的是带引号或者原本的样子。</p>
+<p><strong>那 <code>__str__</code> 呢？</strong><br><code>__str__</code> 是给<strong>用户看</strong>的（比如用 <code>print()</code> 打印的时候）。</p>
+<ul>
+<li><code>__repr__</code> 就像是程序员查错的报告，要详细。</li>
+<li><code>__str__</code> 就像是给用户看的说明书，要好看。<br>如果你只写了 <code>__repr__</code> 没写 <code>__str__</code>，Python 在 <code>print()</code> 时会走投无路，“退而求其次”直接借用 <code>__repr__</code> 的结果。</li>
+</ul>
+<hr>
+<h3 id="第三块：内置函数的魔法（左侧-abs-和-bool-，右上角-1-3-3）"><a href="#第三块：内置函数的魔法（左侧-abs-和-bool-，右上角-1-3-3）" class="headerlink" title="第三块：内置函数的魔法（左侧 __abs__ 和 __bool__，右上角 1.3.3）"></a>第三块：内置函数的魔法（左侧 <code>__abs__</code> 和 <code>__bool__</code>，右上角 1.3.3）</h3><p>看代码里的这两个：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">__abs__</span>(<span class="hljs-params">self</span>):<br>    <span class="hljs-keyword">return</span> math.hypot(<span class="hljs-variable language_">self</span>.x, <span class="hljs-variable language_">self</span>.y)<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">__bool__</span>(<span class="hljs-params">self</span>):<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">bool</span>(<span class="hljs-built_in">abs</span>(<span class="hljs-variable language_">self</span>))<br></code></pre></td></tr></table></figure><br><strong>1. <code>__abs__</code> 的妙用：</strong><br>内置函数 <code>abs()</code> 本来是求绝对值的（比如 <code>abs(-5)</code> 等于 5）。对于向量来说，求“模长”（向量的长度）最合适了。所以当你写 <code>abs(v)</code> 的时候，Python 就去调用了 <code>__abs__</code>，里面用勾股定理（<code>math.hypot</code>）算出了向量的长度。</p>
+<p><strong>2. <code>__bool__</code> 决定对象是“真”还是“假”：</strong><br>在 Python 里，如果你写 <code>if v:</code>，解释器怎么知道这个 <code>v</code> 是真还是假呢？<br>它会去找 <code>__bool__</code> 方法。这里定义了：如果这个向量的长度（<code>abs(self)</code>）不是 0，那就是 <code>True</code>；如果长度是 0（也就是原点），那就是 <code>False</code>。</p>
+<p><strong>右上角 1.3.3 补全（书上没写完）：</strong><br>书右上角说，如果你没写 <code>__bool__</code> 怎么办？<br>Python 会接着找 <code>__len__</code>（跟之前学的一样）。如果长度为 0，布尔值就是 <code>False</code>。<br>如果 <code>__bool__</code> 和 <code>__len__</code> 你都没写，那么不管你类里装了什么，只要对象存在，布尔值就永远是 <code>True</code>。</p>
+<hr>
+<h3 id="总结一下："><a href="#总结一下：" class="headerlink" title="总结一下："></a>总结一下：</h3><p>这一页可以说是让你<strong>从“会用 Python”向“懂 Python 哲学”跨越</strong>的一页。<br>通过简单的魔术方法，你写的 <code>Vector</code> 可以像列表一样相加、像数字一样相乘，可以用 <code>print()</code> 打印好看的样子，可以用 <code>abs()</code> 算长度，还能放在 <code>if</code> 语句里做判断。这一切，都归功于“数据模型”的统一设计。</p>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2026/11/04/python2/">← 下一篇 python2</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/11/03/claude2/">claude2 上一篇 →</a></div></div></div><div id="comments"><div id="giscus"></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="回到顶部" style="opacity: 0; display: none;">∧ </a><a class="i-index" id="to-index" onClick="tocControl.change()" title="文章目录"><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span></a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="切换主题"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">John Doe</a></h1><div id="description"><p></p></div><div id="social-links"><a class="social" target="_blank" rel="noopener" href="https://github.com/juicer0801"><i class="fab fa-github" alt="GitHub"></i></a></div></div><div id="aside-block"><div id="toc-div"><h1>目录</h1><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%87%AA%E5%8A%A8%E6%94%AF%E6%8C%81%E2%80%9C%E5%88%87%E7%89%87%E2%80%9D%EF%BC%88Slicing%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">1. 自动支持“切片”（Slicing）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%87%AA%E5%8A%A8%E6%94%AF%E6%8C%81%E2%80%9C%E5%BE%AA%E7%8E%AF%E9%81%8D%E5%8E%86%E2%80%9D%EF%BC%88Iteration%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">2. 自动支持“循环遍历”（Iteration）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E8%87%AA%E5%8A%A8%E6%94%AF%E6%8C%81-in-%E8%BF%90%E7%AE%97%E7%AC%A6%EF%BC%88Membership%EF%BC%89"><span class="toc-number">3.</span> <span class="toc-text">3. 自动支持 in 运算符（Membership）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E6%8E%A5%E4%B8%8B%E6%9D%A5%E7%9A%84%E4%BB%BB%E5%8A%A1%EF%BC%9A%E8%87%AA%E5%AE%9A%E4%B9%89%E6%8E%92%E5%BA%8F%E8%A7%84%E5%88%99"><span class="toc-number">4.</span> <span class="toc-text">4. 接下来的任务：自定义排序规则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93ing%EF%BC%9A"><span class="toc-number">5.</span> <span class="toc-text">总结ing：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E3%80%81-%E9%A1%B6%E9%83%A8%E4%BB%A3%E7%A0%81%EF%BC%9A%E5%A6%82%E4%BD%95%E6%8C%89%E8%A7%84%E5%88%99%E7%BB%99%E6%89%91%E5%85%8B%E7%89%8C%E6%8E%92%E5%BA%8F%EF%BC%9F"><span class="toc-number">6.</span> <span class="toc-text">一、 顶部代码：如何按规则给扑克牌排序？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%8C%E3%80%81-%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AF%E2%80%9C%E7%BB%84%E5%90%88%E2%80%9D%EF%BC%8C%E8%80%8C%E4%B8%8D%E6%98%AF%E2%80%9C%E7%BB%A7%E6%89%BF%E2%80%9D%EF%BC%9F"><span class="toc-number">7.</span> <span class="toc-text">二、 为什么是“组合”，而不是“继承”？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E3%80%81-%E2%80%9C%E5%A6%82%E4%BD%95%E6%B4%97%E7%89%8C%EF%BC%9F%E2%80%9D%EF%BC%88%E4%B8%8D%E5%8F%AF%E5%8F%98%E6%80%A7%EF%BC%89"><span class="toc-number">8.</span> <span class="toc-text">三、 “如何洗牌？”（不可变性）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9B%9B%E3%80%81-1-3-%E7%89%B9%E6%AE%8A%E6%96%B9%E6%B3%95%E6%98%AF%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E7%9A%84%EF%BC%88%E9%87%8D%E7%82%B9%EF%BC%89"><span class="toc-number">9.</span> <span class="toc-text">四、 1.3 特殊方法是如何使用的（重点）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E7%AE%97%E7%AC%A6%E9%87%8D%E8%BD%BD%EF%BC%88%E5%B7%A6%E4%BE%A7%E4%BB%A3%E7%A0%81-add-%E5%92%8C-mul-%EF%BC%89"><span class="toc-number">10.</span> <span class="toc-text">运算符重载（左侧代码 __add__ 和 __mul__）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E5%9D%97%EF%BC%9A%E8%AE%A9%E5%AF%B9%E8%B1%A1%E2%80%9C%E6%9B%B4%E5%A5%BD%E7%9C%8B%E2%80%9D%EF%BC%88%E5%8F%B3%E4%BE%A7-1-3-2-repr-%EF%BC%89"><span class="toc-number">11.</span> <span class="toc-text">第二块：让对象“更好看”（右侧 1.3.2 __repr__）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E5%9D%97%EF%BC%9A%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0%E7%9A%84%E9%AD%94%E6%B3%95%EF%BC%88%E5%B7%A6%E4%BE%A7-abs-%E5%92%8C-bool-%EF%BC%8C%E5%8F%B3%E4%B8%8A%E8%A7%92-1-3-3%EF%BC%89"><span class="toc-number">12.</span> <span class="toc-text">第三块：内置函数的魔法（左侧 __abs__ 和 __bool__，右上角 1.3.3）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93%E4%B8%80%E4%B8%8B%EF%BC%9A"><span class="toc-number">13.</span> <span class="toc-text">总结一下：</span></a></li></ol></div></div><footer><nobr>构建自 <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> 使用主题 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> 主题作者 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>
