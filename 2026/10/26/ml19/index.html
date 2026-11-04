@@ -1,10 +1,12 @@
-<!DOCTYPE html><html lang="en" theme-mode="auto"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>ml19 | Hexo</title><meta property="og:type" content="article">
-<meta property="og:title" content="ml19">
+<!DOCTYPE html><html lang="en" theme-mode="auto"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>时间序列的数据处理方法总结 | Hexo</title><meta name="description" content="时间序列特征工程笔记一、问题的起点表格模型（线性回归、XGBoost、LightGBM）把每一行当作独立样本，不感知行的先后顺序。对时间序列做预测时，这种假设会丢掉两类关键信息：  时间位置：当前样本处于一天中的第几小时、一年中的第几天，处在周期循环的哪个相位。 历史上下文：此前若干时刻的取值，以及过去一段窗口内的整体水平与波动。  特征工程的任务就是把这两类信息编码进单行特征。下面按”日历特征">
+<meta property="og:type" content="article">
+<meta property="og:title" content="时间序列的数据处理方法总结">
 <meta property="og:url" content="http://example.com/2026/10/26/ml19/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="时间序列特征工程笔记一、问题的起点表格模型（线性回归、XGBoost、LightGBM）把每一行当作独立样本，不感知行的先后顺序。对时间序列做预测时，这种假设会丢掉两类关键信息：  时间位置：当前样本处于一天中的第几小时、一年中的第几天，处在周期循环的哪个相位。 历史上下文：此前若干时刻的取值，以及过去一段窗口内的整体水平与波动。  特征工程的任务就是把这两类信息编码进单行特征。下面按”日历特征">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2026-10-26T02:16:40.000Z">
-<meta property="article:modified_time" content="2026-10-26T02:16:40.167Z">
+<meta property="article:modified_time" content="2026-11-01T10:17:51.683Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary"><link rel="canonical" href="http://example.com/2026/10/26/ml19/"><link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="preload" as="font" crossorigin="anonymous" href="/font/Bender.ttf"><link rel="preload" as="font" crossorigin="anonymous" href="/font/BenderLight.woff2"><link rel="preload" as="font" crossorigin="anonymous" href="/font/JetBrainsMono-Regular.woff2"><link rel="stylesheet" href="/css/arknights.css"><style>@font-face {
   font-family: Bender;
@@ -133,4 +135,323 @@ document.addEventListener("pjax:complete", reset);document.addEventListener('pja
  const script = document.createElement('script');
  script.src = 'https://vercount.one/js';
  document.head.appendChild(script);
-});reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/tags/"><span class="navItemTitle">Tags</span></a></li><li class="navItem"><a class="navBlock" href="/categories/"><span class="navItemTitle">Categories</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>ml19</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2026-10-26T02:16:40.000Z" id="date"> 2026-10-26</time></div></span><br><span>Last Update: <div class="control"><time datetime="2026-10-26T02:16:40.167Z" id="updated"> 2026-10-26</time></div></span><br><span>Read Time: <div class="control">1 min</div></span><br><span id="vercount_container_page_pv">Page View: <span class="control" id="vercount_value_page_pv">loading...</span></span></div></div><hr><div id="post-content"><div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2026/10/26/ml20/">← Next ml20</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/10/26/ml18/">南方电网数据挖掘 Prev →</a></div></div></div><div id="comments"><div id="giscus"></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="To Top" style="opacity: 0; display: none;">∧ </a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="Change Theme"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">John Doe</a></h1><div id="description"><p></p></div><div id="social-links"><a class="social" target="_blank" rel="noopener" href="https://github.com/juicer0801"><i class="fab fa-github" alt="GitHub"></i></a></div></div><div id="aside-block"></div><footer><nobr>Published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>
+});reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/tags/"><span class="navItemTitle">Tags</span></a></li><li class="navItem"><a class="navBlock" href="/categories/"><span class="navItemTitle">Categories</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>时间序列的数据处理方法总结</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2026-10-26T02:16:40.000Z" id="date"> 2026-10-26</time></div></span><br><span>Last Update: <div class="control"><time datetime="2026-11-01T10:17:51.683Z" id="updated"> 2026-11-01</time></div></span><br><span>Word Count: <div class="control">4.2k</div></span><br><span>Read Time: <div class="control">16 min</div></span><br><span id="vercount_container_page_pv">Page View: <span class="control" id="vercount_value_page_pv">loading...</span></span></div></div><hr><div id="post-content"><h1 id="时间序列特征工程笔记"><a href="#时间序列特征工程笔记" class="headerlink" title="时间序列特征工程笔记"></a>时间序列特征工程笔记</h1><h2 id="一、问题的起点"><a href="#一、问题的起点" class="headerlink" title="一、问题的起点"></a>一、问题的起点</h2><p>表格模型（线性回归、XGBoost、LightGBM）把每一行当作独立样本，不感知行的先后顺序。对时间序列做预测时，这种假设会丢掉两类关键信息：</p>
+<ol>
+<li><strong>时间位置</strong>：当前样本处于一天中的第几小时、一年中的第几天，处在周期循环的哪个相位。</li>
+<li><strong>历史上下文</strong>：此前若干时刻的取值，以及过去一段窗口内的整体水平与波动。</li>
+</ol>
+<p>特征工程的任务就是把这两类信息编码进单行特征。下面按”日历特征 → 滞后 → 滚动 → 补充方法 → 数据泄漏与验证”的顺序整理，示例基于 Delhi 电力负荷数据（1 小时网格，8737 行，目标列 <code>Load (MW)</code>）。</p>
+<hr>
+<h2 id="二、日历特征：周期编码与独热编码"><a href="#二、日历特征：周期编码与独热编码" class="headerlink" title="二、日历特征：周期编码与独热编码"></a>二、日历特征：周期编码与独热编码</h2><p><code>hour</code>、<code>weekday</code>、<code>month</code>、<code>dayofyear</code> 这类变量取自 <code>time</code> 列，属于<strong>循环变量</strong>：取值有界，且首尾相接。例如 23 点与 0 点相差 1 小时，12 月与 1 月相差 1 个月。直接用原始数值会破坏这种相邻关系，因此需要专门的编码方式。</p>
+<h3 id="2-1-原始数值表示的问题"><a href="#2-1-原始数值表示的问题" class="headerlink" title="2.1 原始数值表示的问题"></a>2.1 原始数值表示的问题</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>表示</th>
+<th>23 点</th>
+<th>0 点</th>
+<th>数值差</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>原始 <code>hour</code></td>
+<td>23</td>
+<td>0</td>
+<td>23</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>模型读到的信号是”从 23 到 0 发生了巨大跳变”，与实际的 1 小时间隔不符。周期性越强的变量，这种失真越明显。</p>
+<h3 id="2-2-周期编码（sin-cos）"><a href="#2-2-周期编码（sin-cos）" class="headerlink" title="2.2 周期编码（sin / cos）"></a>2.2 周期编码（sin / cos）</h3><p>把周期变量映射到单位圆上，用坐标代替标量：</p>
+<script type="math/tex; mode=display">
+\theta = \frac{2\pi x}{T}, \quad x_{\sin} = \sin\theta, \quad x_{\cos} = \cos\theta</script><p>其中 $T$ 为周期长度（<code>hour</code> 取 24，<code>weekday</code> 取 7，<code>month</code> 取 12，<code>dayofyear</code> 取 365）。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">result[<span class="hljs-string">&#x27;hour_sin&#x27;</span>] = np.sin(<span class="hljs-number">2</span> * np.pi * result[<span class="hljs-string">&#x27;hour&#x27;</span>] / <span class="hljs-number">24</span>)<br>result[<span class="hljs-string">&#x27;hour_cos&#x27;</span>] = np.cos(<span class="hljs-number">2</span> * np.pi * result[<span class="hljs-string">&#x27;hour&#x27;</span>] / <span class="hljs-number">24</span>)<br></code></pre></td></tr></table></figure>
+<p>编码后，23 点对应 $(\sin\frac{23\pi}{12}, \cos\frac{23\pi}{12})\approx(-0.26,\,0.97)$，0 点对应 $(0,1)$，欧氏距离约 0.26，与”相差 1 小时”的直觉一致。任意两个时刻的环形距离都转化为平面距离。</p>
+<p><strong>为什么必须成对使用。</strong> 只用 $\sin$ 会产生歧义：$\sin\theta$ 在 $\theta$ 与 $\pi-\theta$ 处相等（上午 6 点与下午 6 点取值相同），模型无法区分。$\sin$ 与 $\cos$ 联合才能唯一定位圆上的点。</p>
+<p><strong>取舍。</strong></p>
+<ul>
+<li>优点：只占 2 列，保留环形顺序，对线性模型和神经网络友好。</li>
+<li>缺点：树模型不擅长拟合平滑曲线，往往要通过大量切分逼近，收益有限；周期内模式突变（如早晚高峰）时，单一正弦波表达不足。</li>
+</ul>
+<h3 id="2-3-独热编码（one-hot）"><a href="#2-3-独热编码（one-hot）" class="headerlink" title="2.3 独热编码（one-hot）"></a>2.3 独热编码（one-hot）</h3><p>把每个取值映射成一个独立的 0/1 列。对 <code>hour</code> 生成 24 列，第 $k$ 列在 $hour=k$ 时为 1。</p>
+<p><strong>固定类别是核心。</strong> 直接用 <code>pd.get_dummies</code> 有两个隐患：</p>
+<ol>
+<li>若某批数据里恰好没有 <code>hour=3</code>，生成的列会缺失，导致训练与预测的特征维度不一致；</li>
+<li>列类型默认是 <code>bool</code>，与流水线其余列的类型不统一。</li>
+</ol>
+<p>正确做法是先固定类别集合，再用 <code>pd.Categorical</code> 生成：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs python">HOUR_CATS    = <span class="hljs-built_in">list</span>(<span class="hljs-built_in">range</span>(<span class="hljs-number">24</span>))<br>MONTH_CATS   = <span class="hljs-built_in">list</span>(<span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-number">13</span>))<br>WEEKDAY_CATS = <span class="hljs-built_in">list</span>(<span class="hljs-built_in">range</span>(<span class="hljs-number">7</span>))<br><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">_add_onehot</span>(<span class="hljs-params">df, col, categories, prefix, logger=<span class="hljs-literal">None</span></span>):<br>    cat = pd.Categorical(df[col], categories=<span class="hljs-built_in">list</span>(categories))<br><br>    <span class="hljs-comment"># 未知值：原本非缺失、但落不进 categories 的值</span><br>    mask_unknown = df[col].notna() &amp; pd.isna(cat)<br>    <span class="hljs-keyword">if</span> mask_unknown.<span class="hljs-built_in">any</span>() <span class="hljs-keyword">and</span> logger <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>:<br>        logger.warning(<span class="hljs-string">f&#x27;[onehot] <span class="hljs-subst">&#123;col&#125;</span> 有 <span class="hljs-subst">&#123;<span class="hljs-built_in">int</span>(mask_unknown.<span class="hljs-built_in">sum</span>())&#125;</span> 个值不在固定类别里&#x27;</span>)<br><br>    dummies = pd.get_dummies(cat, prefix=prefix, dtype=<span class="hljs-string">&#x27;int8&#x27;</span>)<br>    dummies.index = df.index          <span class="hljs-comment"># pd.Categorical 不带索引，必须显式赋值</span><br><br>    <span class="hljs-comment"># 防止与已有列重名</span><br>    clash = [c <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> dummies.columns <span class="hljs-keyword">if</span> c <span class="hljs-keyword">in</span> df.columns]<br>    <span class="hljs-keyword">if</span> clash:<br>        <span class="hljs-keyword">raise</span> ValueError(<span class="hljs-string">f&#x27;[onehot] 列名冲突: <span class="hljs-subst">&#123;clash[:<span class="hljs-number">5</span>]&#125;</span>&#x27;</span>)<br><br>    <span class="hljs-keyword">return</span> pd.concat([df, dummies], axis=<span class="hljs-number">1</span>), <span class="hljs-built_in">list</span>(dummies.columns)<br></code></pre></td></tr></table></figure>
+<p>要点：</p>
+<ul>
+<li><code>dtype=&#39;int8&#39;</code> 控制内存。bool 与 int8 同为 1 字节，编码成 0/1 后可直接进入模型。</li>
+<li><code>dummies.index = df.index</code> 不能省略，<code>pd.Categorical</code> 不携带原索引。</li>
+<li>未知值按全 0 处理，需要给出告警。静默丢弃会让问题难以定位。</li>
+<li>全 0 列（类别存在但数据里从未出现）值得告警，往往说明类别集合写错或数据分布漂移。</li>
+</ul>
+<p><strong>取舍。</strong></p>
+<ul>
+<li>优点：无顺序假设，对树模型友好，单个周期内的突变模式能被精确表达。</li>
+<li>缺点：列数等于周期长度，<code>dayofyear</code> 这类变量会产生 365 列，与行数不成比例；类别之间无”距离”概念。</li>
+</ul>
+<h3 id="2-4-两种编码的选择"><a href="#2-4-两种编码的选择" class="headerlink" title="2.4 两种编码的选择"></a>2.4 两种编码的选择</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>推荐</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>线性模型、神经网络</td>
+<td>周期编码为主，必要时补 one-hot</td>
+</tr>
+<tr>
+<td>树模型</td>
+<td>one-hot 为主；周期编码可作为辅助，收益有限</td>
+</tr>
+<tr>
+<td>基数很高（如 <code>dayofyear</code>）</td>
+<td>保留原始数值 + 周期编码，不做 one-hot</td>
+</tr>
+<tr>
+<td>名义变量（无顺序，如 <code>real_estate</code>）</td>
+<td>只能用 one-hot</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>同时保留三套表示（原始数值 + 周期编码 + one-hot）的问题。</strong> 对树模型无害但冗余；对线性模型会造成完全共线，系数估计不稳定。应当按下游模型选择一套，而非全部保留。</p>
+<p>一个具体的调整：Delhi 数据里 <code>dayofyear</code> 做 one-hot 会产生 365 列，8737 行数据平均每列仅 24 个 1，且与已有的 <code>month</code>（12 列）、<code>weekday</code>（7 列）严重共线，属于应删除的设计。<code>is_weekend</code> 本身已是 0/1 变量，再做 one-hot 会生成 <code>is_weekend_0</code>、<code>is_weekend_1</code> 与原列三列完全共线，同样应删除。真正需要 one-hot 的是 <code>real_estate</code>（High / Medium / Low 的字符串名义变量）。</p>
+<hr>
+<h2 id="三、滞后特征（lag）"><a href="#三、滞后特征（lag）" class="headerlink" title="三、滞后特征（lag）"></a>三、滞后特征（lag）</h2><h3 id="3-1-定义"><a href="#3-1-定义" class="headerlink" title="3.1 定义"></a>3.1 定义</h3><p>把目标列或特征列向前平移 $k$ 行，作为当前行的特征：</p>
+<script type="math/tex; mode=display">
+\text{lag}_k(t) = y(t-k)</script><p>在 1 小时网格上，<code>shift(24)</code> 即”昨天同一时刻的值”，<code>shift(168)</code> 即”上周同一时刻的值”（$7\times 24=168$）。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">LAG_STEPS = &#123;<span class="hljs-string">&#x27;1h&#x27;</span>: <span class="hljs-number">1</span>, <span class="hljs-string">&#x27;2h&#x27;</span>: <span class="hljs-number">2</span>, <span class="hljs-string">&#x27;3h&#x27;</span>: <span class="hljs-number">3</span>, <span class="hljs-string">&#x27;1d&#x27;</span>: <span class="hljs-number">24</span>, <span class="hljs-string">&#x27;1w&#x27;</span>: <span class="hljs-number">168</span>&#125;<br><br><span class="hljs-keyword">for</span> name, step <span class="hljs-keyword">in</span> LAG_STEPS.items():<br>    result[<span class="hljs-string">f&#x27;lag_<span class="hljs-subst">&#123;name&#125;</span>&#x27;</span>] = result[<span class="hljs-string">&#x27;load&#x27;</span>].shift(step)<br></code></pre></td></tr></table></figure>
+<h3 id="3-2-步长的意义"><a href="#3-2-步长的意义" class="headerlink" title="3.2 步长的意义"></a>3.2 步长的意义</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>步长</th>
+<th>捕捉的结构</th>
+<th>Delhi 负荷中的含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1～3</td>
+<td>短期惯性</td>
+<td>相邻小时负荷高度相关，是最强的单变量预测因子</td>
+</tr>
+<tr>
+<td>24</td>
+<td>日周期</td>
+<td>昨天同一时刻的负荷，避开日内波动</td>
+</tr>
+<tr>
+<td>168</td>
+<td>周周期</td>
+<td>上周同一时刻的负荷，同时覆盖日周期与周内模式</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>步长的选取依据是数据的自相关结构。实践中可以先画 ACF / PACF 观察显著滞后阶，或直接列出候选步长后由模型筛选。上述三档是电力负荷数据的通用起点。</p>
+<h3 id="3-3-首部缺失与处理"><a href="#3-3-首部缺失与处理" class="headerlink" title="3.3 首部缺失与处理"></a>3.3 首部缺失与处理</h3><p><code>shift(168)</code> 会让前 168 行变成 NaN。处理方式有两种：</p>
+<ul>
+<li><code>dropna()</code>：损失 168 行（8737 → 8569），占比不到 2%，推荐。</li>
+<li><code>fillna(0)</code> 或插值：不推荐。0 在负荷语境下不是缺失的含义，会让树模型把 0 当作真实取值学习。</li>
+</ul>
+<h3 id="3-4-预测时的一致性"><a href="#3-4-预测时的一致性" class="headerlink" title="3.4 预测时的一致性"></a>3.4 预测时的一致性</h3><p>训练阶段使用真实历史负荷构造滞后列没有问题。预测阶段则受两步约束：</p>
+<ul>
+<li><strong>单步预测</strong>：<code>lag_1</code> 等特征全部来自已知历史，可直接构造。</li>
+<li><strong>多步预测</strong>：第一小时预测后，其预测值成为下一小时的 <code>lag_1</code>，需要递归展开；<code>lag_24</code>、<code>lag_168</code> 在短期预测内仍来自真实历史。递归预测的逻辑需在推理脚本中单独实现，训练侧不涉及。</li>
+</ul>
+<hr>
+<h2 id="四、滚动特征（rolling）"><a href="#四、滚动特征（rolling）" class="headerlink" title="四、滚动特征（rolling）"></a>四、滚动特征（rolling）</h2><h3 id="4-1-定义"><a href="#4-1-定义" class="headerlink" title="4.1 定义"></a>4.1 定义</h3><p>在过去长度为 $w$ 的窗口内计算统计量，作为当前行的特征：</p>
+<script type="math/tex; mode=display">
+\text{roll}_w(t) = \text{agg}\big(y(t-w), \dots, y(t-1)\big)</script><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">ROLLING_STEPS = &#123;<span class="hljs-string">&#x27;6h&#x27;</span>: <span class="hljs-number">6</span>, <span class="hljs-string">&#x27;1d&#x27;</span>: <span class="hljs-number">24</span>, <span class="hljs-string">&#x27;1w&#x27;</span>: <span class="hljs-number">168</span>&#125;<br><br><span class="hljs-keyword">for</span> name, w <span class="hljs-keyword">in</span> ROLLING_STEPS.items():<br>    result[<span class="hljs-string">f&#x27;roll_<span class="hljs-subst">&#123;name&#125;</span>_mean&#x27;</span>] = result[<span class="hljs-string">&#x27;load&#x27;</span>].shift(<span class="hljs-number">1</span>).rolling(w).mean()<br>    result[<span class="hljs-string">f&#x27;roll_<span class="hljs-subst">&#123;name&#125;</span>_std&#x27;</span>]  = result[<span class="hljs-string">&#x27;load&#x27;</span>].shift(<span class="hljs-number">1</span>).rolling(w).std()<br></code></pre></td></tr></table></figure>
+<h3 id="4-2-与滞后特征的差异"><a href="#4-2-与滞后特征的差异" class="headerlink" title="4.2 与滞后特征的差异"></a>4.2 与滞后特征的差异</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>滞后</th>
+<th>滚动</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>信息来源</td>
+<td>单个时刻</td>
+<td>一段窗口</td>
+</tr>
+<tr>
+<td>噪声</td>
+<td>较高</td>
+<td>经聚合后较低</td>
+</tr>
+<tr>
+<td>表达</td>
+<td>“昨天 15 点负荷为 4800”</td>
+<td>“过去 24 小时均值 4500、标准差 300”</td>
+</tr>
+<tr>
+<td>适用</td>
+<td>精确的周期对齐</td>
+<td>近期整体水平与波动性</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>两者互补。<code>lag_24</code> 提供周期对齐的单点信息，<code>roll_24h_mean</code> 提供近期中枢，<code>roll_24h_std</code> 提供近期稳定性。若近期标准差显著偏高，模型可据此降低对滞后值的依赖。</p>
+<h3 id="4-3-shift-1-不可省略"><a href="#4-3-shift-1-不可省略" class="headerlink" title="4.3 shift(1) 不可省略"></a>4.3 <code>shift(1)</code> 不可省略</h3><p><code>rolling(w)</code> 默认包含当前行。若写成 <code>df[&#39;load&#39;].rolling(24).mean()</code>，当前行的目标值就进入了特征，属于数据泄漏。正确顺序是先在窗口前平移一位，再滚动：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">result[<span class="hljs-string">&#x27;roll_24h_mean&#x27;</span>] = result[<span class="hljs-string">&#x27;load&#x27;</span>].shift(<span class="hljs-number">1</span>).rolling(<span class="hljs-number">24</span>).mean()<br></code></pre></td></tr></table></figure>
+<p>等价写法 <code>df[&#39;load&#39;].rolling(24).mean().shift(1)</code> 结果相同，前者更直观。</p>
+<p><code>rolling</code> 默认 <code>min_periods=window</code>，前 $w-1$ 行为 NaN。若希望更早开始计算，可设 <code>min_periods=1</code>，但早期窗口样本不足，统计量意义有限。实践中建议接受 NaN 并配合 <code>dropna</code>，而非放宽 <code>min_periods</code>。</p>
+<h3 id="4-4-可滚动的对象"><a href="#4-4-可滚动的对象" class="headerlink" title="4.4 可滚动的对象"></a>4.4 可滚动的对象</h3><p>除目标列外，天气列同样适用：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">result[<span class="hljs-string">&#x27;roll_24h_temp_mean&#x27;</span>] = result[<span class="hljs-string">&#x27;temp&#x27;</span>].shift(<span class="hljs-number">1</span>).rolling(<span class="hljs-number">24</span>).mean()<br>result[<span class="hljs-string">&#x27;roll_24h_rain_sum&#x27;</span>]  = result[<span class="hljs-string">&#x27;rain&#x27;</span>].shift(<span class="hljs-number">1</span>).rolling(<span class="hljs-number">24</span>).<span class="hljs-built_in">sum</span>()<br>result[<span class="hljs-string">&#x27;roll_168h_holiday_sum&#x27;</span>] = result[<span class="hljs-string">&#x27;is_public_holiday&#x27;</span>].shift(<span class="hljs-number">1</span>).rolling(<span class="hljs-number">168</span>).<span class="hljs-built_in">sum</span>()<br></code></pre></td></tr></table></figure>
+<p>后两者分别反映”过去一天是否持续降雨”和”过去一周有多少节假日”，对负荷的解释力往往强于单点值。</p>
+<hr>
+<h2 id="五、补充方法"><a href="#五、补充方法" class="headerlink" title="五、补充方法"></a>五、补充方法</h2><p>以下方法在前述三类特征之外，可视数据特点选用。</p>
+<h3 id="5-1-差分特征"><a href="#5-1-差分特征" class="headerlink" title="5.1 差分特征"></a>5.1 差分特征</h3><script type="math/tex; mode=display">
+\Delta_k y(t) = y(t) - y(t-k)</script><p>对应 <code>df[&#39;load&#39;].diff(k)</code>。差分把”绝对值”问题转化为”变化量”问题，对非平稳序列有用。对电力负荷，<code>diff(1)</code> 表达负荷的小时变化，<code>diff(24)</code> 表达”今天比昨天同时段高/低多少”，两者都能提供滞后与滚动之外的视角。</p>
+<h3 id="5-2-指数移动平均（EMA）"><a href="#5-2-指数移动平均（EMA）" class="headerlink" title="5.2 指数移动平均（EMA）"></a>5.2 指数移动平均（EMA）</h3><script type="math/tex; mode=display">
+\text{EMA}_t = \alpha\, y_t + (1-\alpha)\,\text{EMA}_{t-1}</script><p>对应 <code>df[&#39;load&#39;].shift(1).ewm(span=w).mean()</code>。与滚动均值相比，EMA 更重视近期样本，对趋势转折更敏感。通常与滚动均值并列使用，而非替代。</p>
+<h3 id="5-3-扩展窗口统计（expanding）"><a href="#5-3-扩展窗口统计（expanding）" class="headerlink" title="5.3 扩展窗口统计（expanding）"></a>5.3 扩展窗口统计（expanding）</h3><p><code>df[&#39;load&#39;].shift(1).expanding().mean()</code> 使用截至当前的全部历史计算均值，窗口随时间单调扩大。适合刻画长期水平变化，样本早期不稳定，通常与滚动统计配合，不作为主特征。</p>
+<h3 id="5-4-时间距离特征"><a href="#5-4-时间距离特征" class="headerlink" title="5.4 时间距离特征"></a>5.4 时间距离特征</h3><p>把”距某事件还有多久”转化为数值，比 one-hot 或布尔列更有表达力：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">result[<span class="hljs-string">&#x27;days_to_month_end&#x27;</span>]   = result[<span class="hljs-string">&#x27;time&#x27;</span>].dt.days_in_month - result[<span class="hljs-string">&#x27;time&#x27;</span>].dt.day<br>result[<span class="hljs-string">&#x27;days_from_weekend&#x27;</span>]   = (<span class="hljs-number">5</span> - result[<span class="hljs-string">&#x27;weekday&#x27;</span>]).clip(lower=<span class="hljs-number">0</span>)   <span class="hljs-comment"># 距周末</span><br>result[<span class="hljs-string">&#x27;days_to_holiday&#x27;</span>]     = ...   <span class="hljs-comment"># 需要节假日日历，向前向后搜索最近节日</span><br></code></pre></td></tr></table></figure>
+<p>这类特征在负荷、客流、销量预测中常见，尤其能捕捉”节前效应”（如春节前的负荷下降往往提前数天开始）。</p>
+<h3 id="5-5-傅里叶级数特征"><a href="#5-5-傅里叶级数特征" class="headerlink" title="5.5 傅里叶级数特征"></a>5.5 傅里叶级数特征</h3><p>周期编码只包含基频（一次谐波）。若周期内模式复杂（早高峰与晚高峰不对称），可加入多次谐波：</p>
+<script type="math/tex; mode=display">
+\sin\!\left(\frac{2\pi k x}{T}\right),\ \cos\!\left(\frac{2\pi k x}{T}\right),\quad k=1,2,\dots,K</script><p>$K$ 取 2～4 通常足够。相比 one-hot 的 $T$ 列，傅里叶级数用 $2K$ 列表达相近的模式，且保持平滑性。对 <code>hour</code> 周期，$K=3$ 的 6 列即可近似刻画日内双峰。</p>
+<h3 id="5-6-天气的滞后与累积"><a href="#5-6-天气的滞后与累积" class="headerlink" title="5.6 天气的滞后与累积"></a>5.6 天气的滞后与累积</h3><p>温度对负荷的影响存在滞后（建筑热惯性），降雨的影响是累积的。对天气列同样做滞后与滚动：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">result[<span class="hljs-string">&#x27;temp_lag_3h&#x27;</span>]   = result[<span class="hljs-string">&#x27;temp&#x27;</span>].shift(<span class="hljs-number">3</span>)<br>result[<span class="hljs-string">&#x27;temp_roll_6h&#x27;</span>]  = result[<span class="hljs-string">&#x27;temp&#x27;</span>].shift(<span class="hljs-number">1</span>).rolling(<span class="hljs-number">6</span>).mean()<br>result[<span class="hljs-string">&#x27;rain_roll_24h&#x27;</span>] = result[<span class="hljs-string">&#x27;rain&#x27;</span>].shift(<span class="hljs-number">1</span>).rolling(<span class="hljs-number">24</span>).<span class="hljs-built_in">sum</span>()<br></code></pre></td></tr></table></figure>
+<p>同时可以引入温度与湿度的交互项，或温度的分段（如 <code>temp &gt; 35</code> 的指示变量），表达”高温区间负荷增速加快”这类非线性关系。</p>
+<h3 id="5-7-高基数类别编码"><a href="#5-7-高基数类别编码" class="headerlink" title="5.7 高基数类别编码"></a>5.7 高基数类别编码</h3><p>当类别数较多（数十以上）时，one-hot 的列数失控。两种替代：</p>
+<ul>
+<li><strong>频率编码</strong>：用类别在训练集中的出现频率代替类别值，1 列。</li>
+<li><strong>目标编码</strong>：用该类别对应的目标均值代替，1 列，但必须仅在训练折内计算，否则泄漏（见第六节）。</li>
+</ul>
+<p>Delhi 数据中 <code>real_estate</code> 仅 3 类，one-hot 足够，不需要上述方法。但当类别升到几十以上时，两者是常规选择。</p>
+<h3 id="5-8-趋势-斜率"><a href="#5-8-趋势-斜率" class="headerlink" title="5.8 趋势 / 斜率"></a>5.8 趋势 / 斜率</h3><p>对过去窗口做线性拟合，取斜率作为特征：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">rolling_slope</span>(<span class="hljs-params">s, w</span>):<br>    <span class="hljs-keyword">return</span> s.shift(<span class="hljs-number">1</span>).rolling(w).apply(<br>        <span class="hljs-keyword">lambda</span> x: np.polyfit(np.arange(<span class="hljs-built_in">len</span>(x)), x, <span class="hljs-number">1</span>)[<span class="hljs-number">0</span>] <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(x) == w <span class="hljs-keyword">else</span> np.nan,<br>        raw=<span class="hljs-literal">True</span>,<br>    )<br><br>result[<span class="hljs-string">&#x27;load_slope_24h&#x27;</span>] = rolling_slope(result[<span class="hljs-string">&#x27;load&#x27;</span>], <span class="hljs-number">24</span>)<br></code></pre></td></tr></table></figure>
+<p>斜率表达”近期负荷在上升还是下降”，滚动均值无法区分”平稳高位”和”持续爬升”，斜率可以。计算成本高于 <code>mean</code>/<code>std</code>，在数据量大时需权衡。</p>
+<hr>
+<h2 id="六、数据泄漏与验证"><a href="#六、数据泄漏与验证" class="headerlink" title="六、数据泄漏与验证"></a>六、数据泄漏与验证</h2><p>滞后、滚动、目标编码这三类特征都有”用到未来信息”的风险。若训练流程不严谨，离线指标会显著偏高，上线后大幅下滑。</p>
+<h3 id="6-1-滞后与滚动的泄漏"><a href="#6-1-滞后与滚动的泄漏" class="headerlink" title="6.1 滞后与滚动的泄漏"></a>6.1 滞后与滚动的泄漏</h3><ul>
+<li><code>shift(k)</code> 中 $k$ 必须 $\ge 1$，不能出现 <code>shift(0)</code> 或 <code>shift(-k)</code>。</li>
+<li><code>rolling</code> 必须先 <code>shift(1)</code> 再聚合，不能包含当前行。</li>
+<li>训练、验证、测试集的构造方式必须一致，三者的特征列都由同一函数生成。</li>
+</ul>
+<h3 id="6-2-全局统计量的泄漏"><a href="#6-2-全局统计量的泄漏" class="headerlink" title="6.2 全局统计量的泄漏"></a>6.2 全局统计量的泄漏</h3><p>任何跨越训练/测试边界的统计量都不能作为特征：</p>
+<ul>
+<li>全量数据的均值、标准差、分位数，只能用于训练集，再应用到测试集。</li>
+<li>标准化、归一化的 <code>fit</code> 只能在训练集上做。</li>
+<li>目标编码的类别均值必须仅在训练折内计算，且最好用 K 折方式，避免同一行既参与编码又参与训练。</li>
+</ul>
+<h3 id="6-3-时序切分"><a href="#6-3-时序切分" class="headerlink" title="6.3 时序切分"></a>6.3 时序切分</h3><p><strong>不能使用随机 <code>train_test_split</code>。</strong> 因为 <code>lag_1</code> 与下一行几乎相同，随机切分会让训练集和测试集在时间上交错，模型等于提前见过相邻时刻的目标值，指标严重虚高。</p>
+<p>正确做法：</p>
+<ul>
+<li><strong>留出法</strong>：按时间顺序切分，前 80% 训练，后 20% 测试。测试集必须完全在训练集之后。</li>
+<li><strong>前向滚动验证</strong>：<code>sklearn.model_selection.TimeSeriesSplit</code>，每次用前 $k$ 段训练、第 $k+1$ 段验证，逐步前移。</li>
+<li><strong>多步预测评估</strong>：若业务需要预测未来 $h$ 小时，测试集的构造要模拟多步场景，不能只用单步指标评估。</li>
+</ul>
+<h3 id="6-4-首部-NaN-的处理"><a href="#6-4-首部-NaN-的处理" class="headerlink" title="6.4 首部 NaN 的处理"></a>6.4 首部 NaN 的处理</h3><p>滞后与滚动会在数据首部产生 NaN 行（<code>shift(168)</code> 产生 168 行）。这些行在训练时 <code>dropna</code> 剔除，但在推理时必须保留（推理不需要历史，只需要当前时刻及之前的数据）。训练与推理的 <code>dropna</code> 逻辑要分开处理，不能共用同一段代码。</p>
+<hr>
+<h2 id="七、特征清单"><a href="#七、特征清单" class="headerlink" title="七、特征清单"></a>七、特征清单</h2><p>基于 Delhi 数据的一个完整建议集，按类别列出。斜体为需删除或替换的项。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>特征</th>
+<th>列数</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>时间</td>
+<td><code>hour</code>, <code>month</code>, <code>weekday</code>, <code>dayofyear</code></td>
+<td>4</td>
+<td>原始数值，供树模型使用</td>
+</tr>
+<tr>
+<td>周期</td>
+<td><code>hour_sin/cos</code>, <code>month_sin/cos</code>, <code>weekday_sin/cos</code>, <code>dayofyear_sin/cos</code></td>
+<td>8</td>
+<td>供线性模型使用，树模型中可删</td>
+</tr>
+<tr>
+<td>one-hot</td>
+<td><code>hour_*</code>(24), <code>month_*</code>(12), <code>weekday_*</code>(7), <code>estate_*</code>(3)</td>
+<td>46</td>
+<td>按需保留</td>
+</tr>
+<tr>
+<td>日历</td>
+<td><code>is_weekend</code>, <code>is_public_holiday</code>, <code>is_weekly_holiday</code>, <code>is_festival</code></td>
+<td>4</td>
+<td>已存在，直接使用</td>
+</tr>
+<tr>
+<td>天气</td>
+<td><code>temp</code>, <code>humidity</code>, <code>wind_speed</code>, <code>rain</code></td>
+<td>4</td>
+<td>原始值</td>
+</tr>
+<tr>
+<td>天气衍生</td>
+<td><code>temp_lag_3h</code>, <code>temp_roll_6h</code>, <code>rain_roll_24h</code></td>
+<td>3</td>
+<td>增强对负荷的滞后影响</td>
+</tr>
+<tr>
+<td>开发面积</td>
+<td><code>low_dev</code>, <code>mid_dev</code>, <code>high_dev</code></td>
+<td>3</td>
+<td>原始数值</td>
+</tr>
+<tr>
+<td>滞后</td>
+<td><code>lag_1h</code>, <code>lag_2h</code>, <code>lag_3h</code>, <code>lag_1d</code>, <code>lag_1w</code></td>
+<td>5</td>
+<td>必须 <code>shift</code></td>
+</tr>
+<tr>
+<td>滚动</td>
+<td><code>roll_6h_mean/std</code>, <code>roll_1d_mean/std</code>, <code>roll_1w_mean/std</code></td>
+<td>6</td>
+<td>先 <code>shift(1)</code> 再 <code>rolling</code></td>
+</tr>
+<tr>
+<td>差分</td>
+<td><code>diff_1h</code>, <code>diff_24h</code></td>
+<td>2</td>
+<td>可选</td>
+</tr>
+<tr>
+<td><em>删除</em></td>
+<td><em><code>dayofyear_onehot</code>(365), <code>is_weekend_onehot</code>(2)</em></td>
+<td><em>-367</em></td>
+<td><em>过拟合或完全共线</em></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>合计约 85 列，与 8737 行数据匹配。<code>dayofyear</code> 的 one-hot 和 <code>is_weekend</code> 的 one-hot 是应当去掉的两项，前者制造过拟合，后者与原始列完全共线。</p>
+<hr>
+<h2 id="八、检查清单"><a href="#八、检查清单" class="headerlink" title="八、检查清单"></a>八、检查清单</h2><p>在把特征集交给模型之前，逐项核对：</p>
+<ol>
+<li><strong>泄漏</strong>：所有滞后 <code>k ≥ 1</code>；所有滚动先 <code>shift(1)</code>；所有标准化在训练集 <code>fit</code>；目标编码在训练折内计算。</li>
+<li><strong>一致性</strong>：训练、验证、推理调用同一个 <code>build_features</code>，特征列名与顺序完全一致。</li>
+<li><strong>NaN</strong>：首部 NaN 在训练时剔除、推理时保留；不能统一 <code>fillna(0)</code>。</li>
+<li><strong>共线</strong>：同一变量不同时保留三套表示；0/1 变量不再做 one-hot。</li>
+<li><strong>维度</strong>：特征列数不超过样本量的 1/10（经验比例，非线性模型可放宽）；<code>dayofyear</code> 类高基数变量不做 one-hot。</li>
+<li><strong>验证</strong>：按时间顺序切分或 <code>TimeSeriesSplit</code>，不使用随机切分。</li>
+<li><strong>多步</strong>：若业务需要多步预测，评估指标也需按多步方式构造，不能只看单步 MAE/MAPE。</li>
+</ol>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2026/10/26/ml20/">← Next 杂记</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/10/26/ml18/">南方电网数据挖掘 Prev →</a></div></div></div><div id="comments"><div id="giscus"></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="To Top" style="opacity: 0; display: none;">∧ </a><a class="i-index" id="to-index" onClick="tocControl.change()" title="To Catalog"><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span></a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="Change Theme"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">John Doe</a></h1><div id="description"><p></p></div><div id="social-links"><a class="social" target="_blank" rel="noopener" href="https://github.com/juicer0801"><i class="fab fa-github" alt="GitHub"></i></a></div></div><div id="aside-block"><div id="toc-div"><h1>Catalog</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%97%B6%E9%97%B4%E5%BA%8F%E5%88%97%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B%E7%AC%94%E8%AE%B0"><span class="toc-number">1.</span> <span class="toc-text">时间序列特征工程笔记</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E9%97%AE%E9%A2%98%E7%9A%84%E8%B5%B7%E7%82%B9"><span class="toc-number">1.1.</span> <span class="toc-text">一、问题的起点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%97%A5%E5%8E%86%E7%89%B9%E5%BE%81%EF%BC%9A%E5%91%A8%E6%9C%9F%E7%BC%96%E7%A0%81%E4%B8%8E%E7%8B%AC%E7%83%AD%E7%BC%96%E7%A0%81"><span class="toc-number">1.2.</span> <span class="toc-text">二、日历特征：周期编码与独热编码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E5%8E%9F%E5%A7%8B%E6%95%B0%E5%80%BC%E8%A1%A8%E7%A4%BA%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 原始数值表示的问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E5%91%A8%E6%9C%9F%E7%BC%96%E7%A0%81%EF%BC%88sin-cos%EF%BC%89"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2 周期编码（sin &#x2F; cos）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E7%8B%AC%E7%83%AD%E7%BC%96%E7%A0%81%EF%BC%88one-hot%EF%BC%89"><span class="toc-number">1.2.3.</span> <span class="toc-text">2.3 独热编码（one-hot）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-%E4%B8%A4%E7%A7%8D%E7%BC%96%E7%A0%81%E7%9A%84%E9%80%89%E6%8B%A9"><span class="toc-number">1.2.4.</span> <span class="toc-text">2.4 两种编码的选择</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E6%BB%9E%E5%90%8E%E7%89%B9%E5%BE%81%EF%BC%88lag%EF%BC%89"><span class="toc-number">1.3.</span> <span class="toc-text">三、滞后特征（lag）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E5%AE%9A%E4%B9%89"><span class="toc-number">1.3.1.</span> <span class="toc-text">3.1 定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E6%AD%A5%E9%95%BF%E7%9A%84%E6%84%8F%E4%B9%89"><span class="toc-number">1.3.2.</span> <span class="toc-text">3.2 步长的意义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E9%A6%96%E9%83%A8%E7%BC%BA%E5%A4%B1%E4%B8%8E%E5%A4%84%E7%90%86"><span class="toc-number">1.3.3.</span> <span class="toc-text">3.3 首部缺失与处理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E9%A2%84%E6%B5%8B%E6%97%B6%E7%9A%84%E4%B8%80%E8%87%B4%E6%80%A7"><span class="toc-number">1.3.4.</span> <span class="toc-text">3.4 预测时的一致性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%BB%9A%E5%8A%A8%E7%89%B9%E5%BE%81%EF%BC%88rolling%EF%BC%89"><span class="toc-number">1.4.</span> <span class="toc-text">四、滚动特征（rolling）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E5%AE%9A%E4%B9%89"><span class="toc-number">1.4.1.</span> <span class="toc-text">4.1 定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E4%B8%8E%E6%BB%9E%E5%90%8E%E7%89%B9%E5%BE%81%E7%9A%84%E5%B7%AE%E5%BC%82"><span class="toc-number">1.4.2.</span> <span class="toc-text">4.2 与滞后特征的差异</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-shift-1-%E4%B8%8D%E5%8F%AF%E7%9C%81%E7%95%A5"><span class="toc-number">1.4.3.</span> <span class="toc-text">4.3 shift(1) 不可省略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-%E5%8F%AF%E6%BB%9A%E5%8A%A8%E7%9A%84%E5%AF%B9%E8%B1%A1"><span class="toc-number">1.4.4.</span> <span class="toc-text">4.4 可滚动的对象</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E8%A1%A5%E5%85%85%E6%96%B9%E6%B3%95"><span class="toc-number">1.5.</span> <span class="toc-text">五、补充方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E5%B7%AE%E5%88%86%E7%89%B9%E5%BE%81"><span class="toc-number">1.5.1.</span> <span class="toc-text">5.1 差分特征</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E6%8C%87%E6%95%B0%E7%A7%BB%E5%8A%A8%E5%B9%B3%E5%9D%87%EF%BC%88EMA%EF%BC%89"><span class="toc-number">1.5.2.</span> <span class="toc-text">5.2 指数移动平均（EMA）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-%E6%89%A9%E5%B1%95%E7%AA%97%E5%8F%A3%E7%BB%9F%E8%AE%A1%EF%BC%88expanding%EF%BC%89"><span class="toc-number">1.5.3.</span> <span class="toc-text">5.3 扩展窗口统计（expanding）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-4-%E6%97%B6%E9%97%B4%E8%B7%9D%E7%A6%BB%E7%89%B9%E5%BE%81"><span class="toc-number">1.5.4.</span> <span class="toc-text">5.4 时间距离特征</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-5-%E5%82%85%E9%87%8C%E5%8F%B6%E7%BA%A7%E6%95%B0%E7%89%B9%E5%BE%81"><span class="toc-number">1.5.5.</span> <span class="toc-text">5.5 傅里叶级数特征</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-6-%E5%A4%A9%E6%B0%94%E7%9A%84%E6%BB%9E%E5%90%8E%E4%B8%8E%E7%B4%AF%E7%A7%AF"><span class="toc-number">1.5.6.</span> <span class="toc-text">5.6 天气的滞后与累积</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-7-%E9%AB%98%E5%9F%BA%E6%95%B0%E7%B1%BB%E5%88%AB%E7%BC%96%E7%A0%81"><span class="toc-number">1.5.7.</span> <span class="toc-text">5.7 高基数类别编码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-8-%E8%B6%8B%E5%8A%BF-%E6%96%9C%E7%8E%87"><span class="toc-number">1.5.8.</span> <span class="toc-text">5.8 趋势 &#x2F; 斜率</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E6%95%B0%E6%8D%AE%E6%B3%84%E6%BC%8F%E4%B8%8E%E9%AA%8C%E8%AF%81"><span class="toc-number">1.6.</span> <span class="toc-text">六、数据泄漏与验证</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-%E6%BB%9E%E5%90%8E%E4%B8%8E%E6%BB%9A%E5%8A%A8%E7%9A%84%E6%B3%84%E6%BC%8F"><span class="toc-number">1.6.1.</span> <span class="toc-text">6.1 滞后与滚动的泄漏</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-%E5%85%A8%E5%B1%80%E7%BB%9F%E8%AE%A1%E9%87%8F%E7%9A%84%E6%B3%84%E6%BC%8F"><span class="toc-number">1.6.2.</span> <span class="toc-text">6.2 全局统计量的泄漏</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-%E6%97%B6%E5%BA%8F%E5%88%87%E5%88%86"><span class="toc-number">1.6.3.</span> <span class="toc-text">6.3 时序切分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-4-%E9%A6%96%E9%83%A8-NaN-%E7%9A%84%E5%A4%84%E7%90%86"><span class="toc-number">1.6.4.</span> <span class="toc-text">6.4 首部 NaN 的处理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E7%89%B9%E5%BE%81%E6%B8%85%E5%8D%95"><span class="toc-number">1.7.</span> <span class="toc-text">七、特征清单</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E6%A3%80%E6%9F%A5%E6%B8%85%E5%8D%95"><span class="toc-number">1.8.</span> <span class="toc-text">八、检查清单</span></a></li></ol></li></ol></div></div><footer><nobr>Published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>

@@ -1,10 +1,12 @@
-<!DOCTYPE html><html lang="en" theme-mode="auto"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>deeplearn43 | Hexo</title><meta property="og:type" content="article">
-<meta property="og:title" content="deeplearn43">
+<!DOCTYPE html><html lang="en" theme-mode="auto"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>注意力机制 | Hexo</title><meta name="description" content="以下是基于上述对话内容整理的严谨版学习笔记：  一、 注意力机制的核心计算流程注意力机制的核心本质是加权求和（Weighted Sum），分为以下三个步骤：  相似度打分（Score Calculation）： 将解码器当前时间步的状态（Query）与编码器的所有隐藏状态（Keys）进行相似度计算（通常通过点积或全连接层）。 例：图中解码器状态与两个编码器状态计算，得出分数 -0.55 和 -0.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="注意力机制">
 <meta property="og:url" content="http://example.com/2026/10/14/deeplearn43/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="以下是基于上述对话内容整理的严谨版学习笔记：  一、 注意力机制的核心计算流程注意力机制的核心本质是加权求和（Weighted Sum），分为以下三个步骤：  相似度打分（Score Calculation）： 将解码器当前时间步的状态（Query）与编码器的所有隐藏状态（Keys）进行相似度计算（通常通过点积或全连接层）。 例：图中解码器状态与两个编码器状态计算，得出分数 -0.55 和 -0.">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2026-10-14T13:27:44.000Z">
-<meta property="article:modified_time" content="2026-10-25T01:32:22.247Z">
+<meta property="article:modified_time" content="2026-10-29T16:19:17.173Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary"><link rel="canonical" href="http://example.com/2026/10/14/deeplearn43/"><link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="preload" as="font" crossorigin="anonymous" href="/font/Bender.ttf"><link rel="preload" as="font" crossorigin="anonymous" href="/font/BenderLight.woff2"><link rel="preload" as="font" crossorigin="anonymous" href="/font/JetBrainsMono-Regular.woff2"><link rel="stylesheet" href="/css/arknights.css"><style>@font-face {
   font-family: Bender;
@@ -133,4 +135,95 @@ document.addEventListener("pjax:complete", reset);document.addEventListener('pja
  const script = document.createElement('script');
  script.src = 'https://vercount.one/js';
  document.head.appendChild(script);
-});reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/tags/"><span class="navItemTitle">Tags</span></a></li><li class="navItem"><a class="navBlock" href="/categories/"><span class="navItemTitle">Categories</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>deeplearn43</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2026-10-14T13:27:44.000Z" id="date"> 2026-10-14</time></div></span><br><span>Last Update: <div class="control"><time datetime="2026-10-25T01:32:22.247Z" id="updated"> 2026-10-25</time></div></span><br><span>Read Time: <div class="control">1 min</div></span><br><span id="vercount_container_page_pv">Page View: <span class="control" id="vercount_value_page_pv">loading...</span></span></div></div><hr><div id="post-content"><div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2026/10/14/deeplearn44/">← Next deeplearn44</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/10/14/deeplearn42/">数据预处理——拼接与加工 Prev →</a></div></div></div><div id="comments"><div id="giscus"></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="To Top" style="opacity: 0; display: none;">∧ </a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="Change Theme"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">John Doe</a></h1><div id="description"><p></p></div><div id="social-links"><a class="social" target="_blank" rel="noopener" href="https://github.com/juicer0801"><i class="fab fa-github" alt="GitHub"></i></a></div></div><div id="aside-block"></div><footer><nobr>Published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>
+});reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/tags/"><span class="navItemTitle">Tags</span></a></li><li class="navItem"><a class="navBlock" href="/categories/"><span class="navItemTitle">Categories</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>注意力机制</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2026-10-14T13:27:44.000Z" id="date"> 2026-10-14</time></div></span><br><span>Last Update: <div class="control"><time datetime="2026-10-29T16:19:17.173Z" id="updated"> 2026-10-30</time></div></span><br><span>Word Count: <div class="control">2k</div></span><br><span>Read Time: <div class="control">7 min</div></span><br><span id="vercount_container_page_pv">Page View: <span class="control" id="vercount_value_page_pv">loading...</span></span></div></div><hr><div id="post-content"><p>以下是基于上述对话内容整理的严谨版学习笔记：</p>
+<hr>
+<h4 id="一、-注意力机制的核心计算流程"><a href="#一、-注意力机制的核心计算流程" class="headerlink" title="一、 注意力机制的核心计算流程"></a>一、 注意力机制的核心计算流程</h4><p>注意力机制的核心本质是<strong>加权求和（Weighted Sum）</strong>，分为以下三个步骤：</p>
+<ol>
+<li><strong>相似度打分（Score Calculation）</strong>：<ul>
+<li>将解码器当前时间步的状态（Query）与编码器的所有隐藏状态（Keys）进行相似度计算（通常通过点积或全连接层）。</li>
+<li><em>例：图中解码器状态与两个编码器状态计算，得出分数 -0.55 和 -0.52。</em></li>
+</ul>
+</li>
+<li><strong>权重分配（Attention Weights）</strong>：<ul>
+<li>将得到的分数输入第一个 Softmax 层进行归一化，使所有分数之和为 1，得到注意力权重。</li>
+<li><em>例：Softmax 后得到权重 0.49 和 0.51。</em></li>
+</ul>
+</li>
+<li><strong>加权求和生成上下文向量（Context Vector）</strong>：<ul>
+<li>将注意力权重与对应的编码器状态（Values）逐项相乘，并将所有乘积相加。</li>
+<li><em>数学公式：<script type="math/tex">Context Vector = \sum (Attention\_Weight_i \times Encoder\_State_i)</script></em></li>
+</ul>
+</li>
+</ol>
+<h4 id="二、-解码器输出与自回归生成"><a href="#二、-解码器输出与自回归生成" class="headerlink" title="二、 解码器输出与自回归生成"></a>二、 解码器输出与自回归生成</h4><ol>
+<li><strong>融合与预测</strong>：<ul>
+<li>计算出的<strong>上下文向量</strong>与<strong>解码器当前状态</strong>进行拼接（Concatenate）或相加。</li>
+<li>融合后的向量经过全连接层（Fully Connected Layer），输出 Logits（未归一化得分）。</li>
+<li>经过第二个 Softmax 层，计算出词表（Vocabulary）中每个词的概率分布。</li>
+</ul>
+</li>
+<li><strong>自回归循环（Autoregressive Loop）</strong>：<ul>
+<li>当前时间步选出的概率最大的词，将在下一个时间步作为输入（Input）喂回解码器。</li>
+<li>解码器状态更新后，重新计算 Query，重复上述注意力及预测步骤，直到生成结束符 <code>&lt;EOS&gt;</code> 或达到最大长度。</li>
+</ul>
+</li>
+<li><strong>训练与推理的差异</strong>：<ul>
+<li><strong>训练阶段（Teacher Forcing）</strong>：下一步的输入强制使用真实标签（Ground Truth）中的词，而非模型预测出的词，以加速收敛。</li>
+<li><strong>推理阶段（Free Running）</strong>：下一步的输入使用模型上一步自己预测出的词。</li>
+</ul>
+</li>
+</ol>
+<h4 id="三、-关键概念与细节辨析"><a href="#三、-关键概念与细节辨析" class="headerlink" title="三、 关键概念与细节辨析"></a>三、 关键概念与细节辨析</h4><ol>
+<li><p><strong>两种 Softmax 的本质区别</strong>：</p>
+<ul>
+<li><strong>注意力 Softmax（打分用）</strong>：输入为相似度分数，输出为注意力权重。数值为连续的小数，表示对各编码状态的“关注度”百分比。</li>
+<li><strong>预测 Softmax（输出用）</strong>：输入为全连接层得分，输出为词表概率。数值向两端极化（接近 1 或 0）。</li>
+<li><strong>图解中的 0 和 1</strong>：书上的 <code>[0, 1, 0, 0]</code> 并非 Softmax 的真实概率输出，而是经过 Argmax 筛选后转化为的 <strong>One-Hot 编码</strong>，代表最终选中的词。</li>
+</ul>
+</li>
+<li><p><strong>矩阵在框架中的意义（并行计算）</strong>：</p>
+<ul>
+<li>在网络底层（如 PyTorch）实现时，不会用 for 循环逐个计算。编码器的所有输出状态会被“收纳”为一个矩阵（Tensor）。</li>
+<li>通过 <code>torch.matmul</code> 进行矩阵乘法，可以<strong>并行、一次性</strong>计算出 Query 与所有 Keys 的相似度，以及一次性完成加权求和操作，极大提升 GPU 计算效率。</li>
+</ul>
+</li>
+<li><p><strong>多层 LSTM（Stacked LSTM）的处理</strong>：</p>
+<ul>
+<li>注意力机制通常只与编码器<strong>最顶层（最后一层）</strong>的 LSTM 输出发生交互。</li>
+<li>底层 LSTM 提取词法、句法特征，顶层 LSTM 包含完整的高阶语义信息。通常取顶层输出构成 <code>[序列长度, 隐藏层维度]</code> 的矩阵作为 Keys 和 Values。</li>
+<li>若解码器也是多层，Query 同样取解码器最顶层的状态。</li>
+</ul>
+</li>
+<li><p><strong>多次注意力计算的独立性</strong>：</p>
+<ul>
+<li>在整个解码过程中，编码器输出的键值矩阵（Keys/Values）保持不变。</li>
+<li>解码器每生成一个词，内部状态都会更新（生成新的 Query），因此需要<strong>重新计算</strong>注意力权重，生成<strong>全新的上下文向量</strong>。</li>
+</ul>
+<p>以下是根据你的手写草稿与书本架构，结合严谨的术语整理的完整流程图。</p>
+</li>
+</ol>
+<p>由于文本界面无法手绘，这里采用 <strong>Mermaid 流程图语法</strong>（支持 Markdown 渲染）。你可以直接查看图表，或将其复制到支持 Mermaid 的编辑器（如 Typora、Notion）中查看图形。</p>
+<hr>
+<h3 id="核心流程图：基于注意力机制的-Seq2Seq-模型"><a href="#核心流程图：基于注意力机制的-Seq2Seq-模型" class="headerlink" title="核心流程图：基于注意力机制的 Seq2Seq 模型"></a>核心流程图：基于注意力机制的 Seq2Seq 模型</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><code class="hljs mermaid">graph TD<br>    %% 编码阶段<br>    subgraph Encoder [编码器阶段 (Encoder)]<br>        A[输入序列&lt;br&gt;词向量序列] --&gt; B[多层 LSTM 网络]<br>        B --&gt;|提取高阶语义信息| C(编码器隐藏状态矩阵 H &lt;br&gt; 维度: 序列长度 × 隐藏层维度)<br>        C --&gt;|作为 Keys 和 Values| Attention[注意力模块]<br>    end<br><br>    %% 注意力模块 (对应你的草稿本核心)<br>    subgraph AttentionModule [注意力模块 (Attention)]<br>        Q[解码器当前隐藏状态&lt;br&gt;(Query)] --&gt; D&#123;矩阵乘法&lt;br&gt;计算相似度&#125;<br>        C --&gt;|传入 Keys| D<br>        D --&gt;|得出所有位置的&lt;br&gt;相似度得分 (Logits)| E[注意力 SoftMax]<br>        E --&gt;|归一化| F[注意力权重矩阵]<br>        C --&gt;|传入 Values| G&#123;加权求和&lt;br&gt;(矩阵乘法并行计算)&#125;<br>        F --&gt;|传入权重| G<br>        G --&gt;|得出| H[上下文向量 (Context Vector)]<br>    end<br><br>    %% 解码与预测模块 (对应草稿本右侧)<br>    subgraph Decoder [解码与预测阶段 (Decoder)]<br>        Q --&gt;|同时作为解码输入| I[拼接层 (Concatenate)]<br>        H --&gt;|融合上下文| I<br>        I --&gt; J[全连接层 (FC Layer)]<br>        J --&gt;|输出未归一化得分| K[预测 SoftMax]<br>        K --&gt;|输出词表概率分布| L&#123;Argmax 选取&lt;br&gt;概率最大的词&#125;<br>    end<br><br>    %% 循环反馈机制<br>    subgraph Loop [自回归循环 (Autoregressive)]<br>        L --&gt; M&#123;是否为 &lt;EOS&gt; ?&#125;<br>        M --&gt;|否| N(将预测出的词作为下一步输入&lt;br&gt;更新解码器隐藏状态)<br>        N --&gt;|生成新的 Query| Q<br>        M --&gt;|是| O[输出最终序列&lt;br&gt;结束解码]<br>    end<br>    <br>    %% 样式调整<br>    classDef default fill:#f9f9f9,stroke:#333,stroke-width:1px;<br>    classDef encoder fill:#e1f5fe,stroke:#03a9f4;<br>    classDef attention fill:#f3e5f5,stroke:#9c27b0;<br>    classDef decoder fill:#fff3e0,stroke:#ff9800;<br>    classDef loop fill:#e8f5e9,stroke:#4caf50;<br>    <br>    class Encoder encoder;<br>    class AttentionModule attention;<br>    class Decoder decoder;<br>    class Loop loop;<br></code></pre></td></tr></table></figure>
+<h4 id="一、-编码器阶段-Encoder"><a href="#一、-编码器阶段-Encoder" class="headerlink" title="一、 编码器阶段 (Encoder)"></a>一、 编码器阶段 (Encoder)</h4><ul>
+<li><strong>过程</strong>：输入序列经过多层 LSTM，注意力机制仅提取<strong>最顶层（最后一层）</strong>的隐藏状态。</li>
+<li><strong>结果</strong>：将所有时间步的输出拼接为<strong>编码器隐藏状态矩阵 (H)</strong>。该矩阵同时充当注意力机制中的 <strong>Keys（用于求相似度）</strong> 和 <strong>Values（用于加权求和）</strong>。</li>
+</ul>
+<h4 id="二、-注意力模块-Attention-——-对应草稿本左侧"><a href="#二、-注意力模块-Attention-——-对应草稿本左侧" class="headerlink" title="二、 注意力模块 (Attention) —— 对应草稿本左侧"></a>二、 注意力模块 (Attention) —— <em>对应草稿本左侧</em></h4><ul>
+<li><strong>计算相似度</strong>：解码器的当前状态（Query）与矩阵 (H)（Keys）进行<strong>矩阵乘法</strong>。这一步用并行运算替代了草稿本中的“某个编码值 × 解码值”。</li>
+<li><strong>第一个 SoftMax</strong>：将相似度得分输入 Softmax，得出<strong>注意力权重</strong>。<em>(注：此处输出连续小数，非 0/1)</em>。</li>
+<li><strong>加权求和</strong>：将注意力权重与矩阵 (H)（Values）再次进行矩阵乘法。</li>
+<li><strong>结果</strong>：得出 <strong>上下文向量 (Context Vector)</strong>，代表当前解码步对整句输入信息的凝练。<em>(注：草稿本中的“重复并求和”在此由矩阵乘法一次性完成)</em>。</li>
+</ul>
+<h4 id="三、-解码与预测阶段-Decoder-——-对应草稿本右侧"><a href="#三、-解码与预测阶段-Decoder-——-对应草稿本右侧" class="headerlink" title="三、 解码与预测阶段 (Decoder) —— 对应草稿本右侧"></a>三、 解码与预测阶段 (Decoder) —— <em>对应草稿本右侧</em></h4><ul>
+<li><strong>信息融合</strong>：上下文向量 与 解码器当前状态（Query）进行<strong>拼接 (Concatenate)</strong>。<em>(对应草稿本中的大括号汇合)</em>。</li>
+<li><strong>全连接</strong>：融合后的向量进入<strong>全连接层 (Linear)</strong>，映射到词表维度。</li>
+<li><strong>第二个 SoftMax</strong>：全连接输出输入 Softmax，得到<strong>词表概率分布</strong>。<em>(注：概率最高者经 Argmax 变为 1，其余变为 0，图示中的 [0,1,0,0] 即为该 One-Hot 结果)</em>。</li>
+</ul>
+<h4 id="四、-自回归循环-Autoregressive-Loop"><a href="#四、-自回归循环-Autoregressive-Loop" class="headerlink" title="四、 自回归循环 (Autoregressive Loop)"></a>四、 自回归循环 (Autoregressive Loop)</h4><ul>
+<li><strong>判断终止</strong>：若预测出的词为 <code>&lt;EOS&gt;</code>（结束符），则停止解码。</li>
+<li><strong>状态更新</strong>：若未结束，将预测出的词作为下一时刻的输入，更新解码器的隐藏状态（生成<strong>新的 Query</strong>）。</li>
+<li><strong>重新计算</strong>：携带新的 Query 返回注意力模块，重新计算权重，生成<strong>全新的上下文向量</strong>。</li>
+<li><em>训练阶段补充（Teacher Forcing）</em>：模型训练时，此处的输入强制使用真实标签词（Ground Truth），而非模型预测词，以防误差累积。</li>
+</ul>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2026/10/14/deeplearn44/">← Next 综合电力预测项目总结</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/10/14/deeplearn42/">数据预处理——拼接与加工 Prev →</a></div></div></div><div id="comments"><div id="giscus"></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="To Top" style="opacity: 0; display: none;">∧ </a><a class="i-index" id="to-index" onClick="tocControl.change()" title="To Catalog"><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span></a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="Change Theme"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">John Doe</a></h1><div id="description"><p></p></div><div id="social-links"><a class="social" target="_blank" rel="noopener" href="https://github.com/juicer0801"><i class="fab fa-github" alt="GitHub"></i></a></div></div><div id="aside-block"><div id="toc-div"><h1>Catalog</h1><ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E3%80%81-%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E7%9A%84%E6%A0%B8%E5%BF%83%E8%AE%A1%E7%AE%97%E6%B5%81%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text">一、 注意力机制的核心计算流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%8C%E3%80%81-%E8%A7%A3%E7%A0%81%E5%99%A8%E8%BE%93%E5%87%BA%E4%B8%8E%E8%87%AA%E5%9B%9E%E5%BD%92%E7%94%9F%E6%88%90"><span class="toc-number">2.</span> <span class="toc-text">二、 解码器输出与自回归生成</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%89%E3%80%81-%E5%85%B3%E9%94%AE%E6%A6%82%E5%BF%B5%E4%B8%8E%E7%BB%86%E8%8A%82%E8%BE%A8%E6%9E%90"><span class="toc-number">3.</span> <span class="toc-text">三、 关键概念与细节辨析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B8%E5%BF%83%E6%B5%81%E7%A8%8B%E5%9B%BE%EF%BC%9A%E5%9F%BA%E4%BA%8E%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%9C%BA%E5%88%B6%E7%9A%84-Seq2Seq-%E6%A8%A1%E5%9E%8B"><span class="toc-number">4.</span> <span class="toc-text">核心流程图：基于注意力机制的 Seq2Seq 模型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%80%E3%80%81-%E7%BC%96%E7%A0%81%E5%99%A8%E9%98%B6%E6%AE%B5-Encoder"><span class="toc-number">4.1.</span> <span class="toc-text">一、 编码器阶段 (Encoder)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%8C%E3%80%81-%E6%B3%A8%E6%84%8F%E5%8A%9B%E6%A8%A1%E5%9D%97-Attention-%E2%80%94%E2%80%94-%E5%AF%B9%E5%BA%94%E8%8D%89%E7%A8%BF%E6%9C%AC%E5%B7%A6%E4%BE%A7"><span class="toc-number">4.2.</span> <span class="toc-text">二、 注意力模块 (Attention) —— 对应草稿本左侧</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%89%E3%80%81-%E8%A7%A3%E7%A0%81%E4%B8%8E%E9%A2%84%E6%B5%8B%E9%98%B6%E6%AE%B5-Decoder-%E2%80%94%E2%80%94-%E5%AF%B9%E5%BA%94%E8%8D%89%E7%A8%BF%E6%9C%AC%E5%8F%B3%E4%BE%A7"><span class="toc-number">4.3.</span> <span class="toc-text">三、 解码与预测阶段 (Decoder) —— 对应草稿本右侧</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9B%9B%E3%80%81-%E8%87%AA%E5%9B%9E%E5%BD%92%E5%BE%AA%E7%8E%AF-Autoregressive-Loop"><span class="toc-number">4.4.</span> <span class="toc-text">四、 自回归循环 (Autoregressive Loop)</span></a></li></ol></li></ol></div></div><footer><nobr>Published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>

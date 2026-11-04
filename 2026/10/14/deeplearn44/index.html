@@ -1,10 +1,12 @@
-<!DOCTYPE html><html lang="en" theme-mode="auto"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>deeplearn44 | Hexo</title><meta property="og:type" content="article">
-<meta property="og:title" content="deeplearn44">
+<!DOCTYPE html><html lang="en" theme-mode="auto"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>综合电力预测项目总结 | Hexo</title><meta name="description" content="电力负荷预测 · 工程笔记 基于本次从“基础 XGBoost”走到“MAE 2379”的全过程整理。重点是通用逻辑、防泄漏原则、踩过的坑，代码只保留关键片段。   一、项目分层123456789项目根&#x2F;├── data&#x2F;                  # 原始数据 + 生成的图├── model&#x2F;                 # 模型文件├── log&#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="综合电力预测项目总结">
 <meta property="og:url" content="http://example.com/2026/10/14/deeplearn44/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="电力负荷预测 · 工程笔记 基于本次从“基础 XGBoost”走到“MAE 2379”的全过程整理。重点是通用逻辑、防泄漏原则、踩过的坑，代码只保留关键片段。   一、项目分层123456789项目根&#x2F;├── data&#x2F;                  # 原始数据 + 生成的图├── model&#x2F;                 # 模型文件├── log&#x2F;">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2026-10-14T13:27:47.000Z">
-<meta property="article:modified_time" content="2026-10-14T13:27:47.860Z">
+<meta property="article:modified_time" content="2026-10-29T16:19:17.177Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary"><link rel="canonical" href="http://example.com/2026/10/14/deeplearn44/"><link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="preload" as="font" crossorigin="anonymous" href="/font/Bender.ttf"><link rel="preload" as="font" crossorigin="anonymous" href="/font/BenderLight.woff2"><link rel="preload" as="font" crossorigin="anonymous" href="/font/JetBrainsMono-Regular.woff2"><link rel="stylesheet" href="/css/arknights.css"><style>@font-face {
   font-family: Bender;
@@ -133,4 +135,855 @@ document.addEventListener("pjax:complete", reset);document.addEventListener('pja
  const script = document.createElement('script');
  script.src = 'https://vercount.one/js';
  document.head.appendChild(script);
-});reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/tags/"><span class="navItemTitle">Tags</span></a></li><li class="navItem"><a class="navBlock" href="/categories/"><span class="navItemTitle">Categories</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>deeplearn44</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2026-10-14T13:27:47.000Z" id="date"> 2026-10-14</time></div></span><br><span>Last Update: <div class="control"><time datetime="2026-10-14T13:27:47.860Z" id="updated"> 2026-10-14</time></div></span><br><span>Read Time: <div class="control">1 min</div></span><br><span id="vercount_container_page_pv">Page View: <span class="control" id="vercount_value_page_pv">loading...</span></span></div></div><hr><div id="post-content"><div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2026/10/14/deeplearn45/">← Next deeplearn45</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/10/14/deeplearn43/">deeplearn43 Prev →</a></div></div></div><div id="comments"><div id="giscus"></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="To Top" style="opacity: 0; display: none;">∧ </a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="Change Theme"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">John Doe</a></h1><div id="description"><p></p></div><div id="social-links"><a class="social" target="_blank" rel="noopener" href="https://github.com/juicer0801"><i class="fab fa-github" alt="GitHub"></i></a></div></div><div id="aside-block"></div><footer><nobr>Published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>
+});reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/tags/"><span class="navItemTitle">Tags</span></a></li><li class="navItem"><a class="navBlock" href="/categories/"><span class="navItemTitle">Categories</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>综合电力预测项目总结</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2026-10-14T13:27:47.000Z" id="date"> 2026-10-14</time></div></span><br><span>Last Update: <div class="control"><time datetime="2026-10-29T16:19:17.177Z" id="updated"> 2026-10-30</time></div></span><br><span>Word Count: <div class="control">7k</div></span><br><span>Read Time: <div class="control">29 min</div></span><br><span id="vercount_container_page_pv">Page View: <span class="control" id="vercount_value_page_pv">loading...</span></span></div></div><hr><div id="post-content"><h1 id="电力负荷预测-·-工程笔记"><a href="#电力负荷预测-·-工程笔记" class="headerlink" title="电力负荷预测 · 工程笔记"></a>电力负荷预测 · 工程笔记</h1><blockquote>
+<p>基于本次从“基础 XGBoost”走到“MAE 2379”的全过程整理。重点是<strong>通用逻辑、防泄漏原则、踩过的坑</strong>，代码只保留关键片段。</p>
+</blockquote>
+<hr>
+<h2 id="一、项目分层"><a href="#一、项目分层" class="headerlink" title="一、项目分层"></a>一、项目分层</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">项目根/<br>├── data/                  # 原始数据 + 生成的图<br>├── model/                 # 模型文件<br>├── log/                   # 训练日志<br>├── src/<br>│   └── train.py           # 训练主流程：读数据 → 特征工程 → 训练评估<br>└── utils/<br>    ├── common.py          # 数据预处理 + 通用解析函数<br>    └── log.py             # 日志封装<br></code></pre></td></tr></table></figure>
+<p><strong>分层原则</strong>：</p>
+<ul>
+<li><code>utils/</code> 只放<strong>无业务状态</strong>的工具函数，可被训练、推理、测试复用；</li>
+<li><code>train.py</code> 负责<strong>编排流程</strong>，不写具体解析细节；</li>
+<li>原始数据、模型、日志、图<strong>分开目录</strong>，不混在一起。</li>
+</ul>
+<hr>
+<h2 id="二、数据预处理层（common-py）"><a href="#二、数据预处理层（common-py）" class="headerlink" title="二、数据预处理层（common.py）"></a>二、数据预处理层（common.py）</h2><h3 id="2-1-标准流程"><a href="#2-1-标准流程" class="headerlink" title="2.1 标准流程"></a>2.1 标准流程</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">data_preprocessing</span>(<span class="hljs-params">path</span>):<br>    data = pd.read_csv(path, encoding=<span class="hljs-string">&#x27;utf-8-sig&#x27;</span>)<br>    data = data.rename(columns=&#123;<span class="hljs-string">&#x27;数据时间&#x27;</span>: <span class="hljs-string">&#x27;time&#x27;</span>, <span class="hljs-string">&#x27;总有功功率（kw）&#x27;</span>: <span class="hljs-string">&#x27;power_load&#x27;</span>&#125;)<br>    data[<span class="hljs-string">&#x27;time&#x27;</span>] = pd.to_datetime(data[<span class="hljs-string">&#x27;time&#x27;</span>])<br>    data = data.sort_values(<span class="hljs-string">&#x27;time&#x27;</span>)<br>    data = data.drop_duplicates()<br>    <span class="hljs-comment"># 异常值 → NaN → 插值</span><br>    data[<span class="hljs-string">&#x27;power_load&#x27;</span>] = data[<span class="hljs-string">&#x27;power_load&#x27;</span>].interpolate(method=<span class="hljs-string">&#x27;linear&#x27;</span>)<br>    data = data.reset_index(drop=<span class="hljs-literal">True</span>)<br>    <span class="hljs-keyword">return</span> data<br></code></pre></td></tr></table></figure>
+<h3 id="2-2-三条通用原则"><a href="#2-2-三条通用原则" class="headerlink" title="2.2 三条通用原则"></a>2.2 三条通用原则</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>原则</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>rename 必须赋值</strong></td>
+<td><code>data = data.rename(...)</code>，不能只写 <code>data.rename(inplace=True)</code>，新版 pandas 会废弃 inplace</td>
+</tr>
+<tr>
+<td><strong>先排序再去重再插值</strong></td>
+<td><code>shift</code> 特征依赖顺序，顺序错了全错</td>
+</tr>
+<tr>
+<td><strong>异常值不要硬编码阈值</strong></td>
+<td>用 <code>quantile(0.001/0.999)</code> 或业务下限，硬编码 10 万会误杀春节/夜间真实低负荷</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="2-3-踩过的坑"><a href="#2-3-踩过的坑" class="headerlink" title="2.3 踩过的坑"></a>2.3 踩过的坑</h3><ul>
+<li>❌ <code>result.dropna(axis=0)</code> 不赋值 → 等于没执行 → 前 96 行 NaN 进训练；</li>
+<li>✅ <code>result = result.dropna(axis=0).reset_index(drop=True)</code>；</li>
+<li>❌ 硬编码 <code>&lt; 100000</code> 当异常 → 春节、疫情低负荷被插值拉平；</li>
+<li>✅ 先用 <code>describe()</code> + 比例统计确认，再改分位数阈值。</li>
+</ul>
+<hr>
+<h2 id="三、特征工程层（核心）"><a href="#三、特征工程层（核心）" class="headerlink" title="三、特征工程层（核心）"></a>三、特征工程层（核心）</h2><h3 id="3-1-特征分五类"><a href="#3-1-特征分五类" class="headerlink" title="3.1 特征分五类"></a>3.1 特征分五类</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>类别</th>
+<th>代表特征</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>时间</strong></td>
+<td><code>hour / month / weekday</code> one-hot</td>
+<td>告诉模型“现在是什么时段”</td>
+</tr>
+<tr>
+<td><strong>滞后</strong></td>
+<td><code>power_load_t-1 / yesterday_load / last_week_load</code></td>
+<td>告诉模型“刚才是多少”</td>
+</tr>
+<tr>
+<td><strong>滚动</strong></td>
+<td><code>rolling_mean_onehour / oneday / oneweek</code></td>
+<td>告诉模型“最近一段的平均水平”</td>
+</tr>
+<tr>
+<td><strong>外部</strong></td>
+<td>天气 7 列、节假日 2 列</td>
+<td>解释“为什么今天不一样”</td>
+</tr>
+<tr>
+<td><strong>行业</strong>（未接入）</td>
+<td>行业日负荷 lag/roll</td>
+<td>解释“上下游在干什么”</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="3-2-时间特征写法"><a href="#3-2-时间特征写法" class="headerlink" title="3.2 时间特征写法"></a>3.2 时间特征写法</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python">result[<span class="hljs-string">&#x27;hour&#x27;</span>] = result[<span class="hljs-string">&#x27;time&#x27;</span>].dt.hour<br>result[<span class="hljs-string">&#x27;month&#x27;</span>] = result[<span class="hljs-string">&#x27;time&#x27;</span>].dt.month<br>result[<span class="hljs-string">&#x27;weekday&#x27;</span>] = result[<span class="hljs-string">&#x27;time&#x27;</span>].dt.dayofweek<br><br>hour_encoding = pd.get_dummies(result[<span class="hljs-string">&#x27;hour&#x27;</span>], prefix=<span class="hljs-string">&#x27;hour&#x27;</span>)<br>month_encoding = pd.get_dummies(result[<span class="hljs-string">&#x27;month&#x27;</span>], prefix=<span class="hljs-string">&#x27;month&#x27;</span>)<br>weekday_encoding = pd.get_dummies(result[<span class="hljs-string">&#x27;weekday&#x27;</span>], prefix=<span class="hljs-string">&#x27;weekday&#x27;</span>)<br><br>result = pd.concat([result, hour_encoding, month_encoding, weekday_encoding], axis=<span class="hljs-number">1</span>)<br></code></pre></td></tr></table></figure>
+<p><strong>为什么 one-hot</strong>：星期几、小时是<strong>类别</strong>不是连续值。不做 one-hot，模型会以为“周一 &lt; 周日”，学到错误关系。</p>
+<h3 id="3-3-滞后特征：三个尺度"><a href="#3-3-滞后特征：三个尺度" class="headerlink" title="3.3 滞后特征：三个尺度"></a>3.3 滞后特征：三个尺度</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-number">4</span>):<br>    result[<span class="hljs-string">f&#x27;power_load_t-<span class="hljs-subst">&#123;i&#125;</span>&#x27;</span>] = result[<span class="hljs-string">&#x27;power_load&#x27;</span>].shift(i * <span class="hljs-number">4</span>)   <span class="hljs-comment"># 1/2/3 小时前</span><br>result[<span class="hljs-string">&#x27;yesterday_load&#x27;</span>] = result[<span class="hljs-string">&#x27;power_load&#x27;</span>].shift(<span class="hljs-number">96</span>)             <span class="hljs-comment"># 昨天同时刻</span><br>result[<span class="hljs-string">&#x27;last_week_load&#x27;</span>] = result[<span class="hljs-string">&#x27;power_load&#x27;</span>].shift(<span class="hljs-number">672</span>)            <span class="hljs-comment"># 上周同时刻</span><br></code></pre></td></tr></table></figure>
+<p><strong>为什么三个尺度</strong>：短期（小时级）抓连续性，日级抓同日规律，周级抓周期规律。</p>
+<h3 id="3-4-滚动特征：shift-和-window-要配对"><a href="#3-4-滚动特征：shift-和-window-要配对" class="headerlink" title="3.4 滚动特征：shift 和 window 要配对"></a>3.4 滚动特征：<code>shift</code> 和 <code>window</code> 要配对</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 正确：严格&quot;过去 1 小时 / 1 天 / 1 周&quot;，不含当前点</span><br>result[<span class="hljs-string">&#x27;rolling_mean_onehour&#x27;</span>] = result[<span class="hljs-string">&#x27;power_load&#x27;</span>].shift(<span class="hljs-number">4</span>).rolling(<span class="hljs-number">4</span>, min_periods=<span class="hljs-number">1</span>).mean()<br>result[<span class="hljs-string">&#x27;rolling_mean_oneday&#x27;</span>] = result[<span class="hljs-string">&#x27;power_load&#x27;</span>].shift(<span class="hljs-number">96</span>).rolling(<span class="hljs-number">96</span>, min_periods=<span class="hljs-number">1</span>).mean()<br>result[<span class="hljs-string">&#x27;rolling_mean_oneweek&#x27;</span>] = result[<span class="hljs-string">&#x27;power_load&#x27;</span>].shift(<span class="hljs-number">672</span>).rolling(<span class="hljs-number">672</span>, min_periods=<span class="hljs-number">1</span>).mean()<br></code></pre></td></tr></table></figure>
+<p><strong>踩过的坑</strong>：</p>
+<ul>
+<li>❌ <code>shift(1).rolling(4)</code> → 和 <code>t-1</code> 高度共线，重要性虚高到 0.85，MAE 变差；</li>
+<li>✅ <code>shift(4).rolling(4)</code> → 和 <code>t-1</code> 隔开，信息互补；</li>
+<li><strong>规律</strong>：<code>shift</code> 的步数 ≈ <code>window</code> 的大小，表示“一个完整周期之前的那段”。</li>
+</ul>
+<h3 id="3-5-外部数据融合：三段式"><a href="#3-5-外部数据融合：三段式" class="headerlink" title="3.5 外部数据融合：三段式"></a>3.5 外部数据融合：三段式</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 1. 构造日频特征表（一天一行）</span><br>weather = build_weather_features(<span class="hljs-string">&#x27;../data/附件3-气象数据.csv&#x27;</span>, logger=logger)<br><br><span class="hljs-comment"># 2. 按 date 左连接</span><br>result[<span class="hljs-string">&#x27;date&#x27;</span>] = result[<span class="hljs-string">&#x27;time&#x27;</span>].dt.normalize()<br>result = result.merge(weather, on=<span class="hljs-string">&#x27;date&#x27;</span>, how=<span class="hljs-string">&#x27;left&#x27;</span>)<br><br><span class="hljs-comment"># 3. 缺失处理：天气可 ffill+bfill，行业只 ffill</span><br>result[weather_cols] = result[weather_cols].ffill().bfill().fillna(<span class="hljs-number">0</span>)<br></code></pre></td></tr></table></figure>
+<p><strong>规则</strong>：</p>
+<ul>
+<li><strong>天气</strong>：前后都能补，因为气象数据本身独立于负荷；</li>
+<li><strong>行业</strong>：<strong>只向前补</strong>，不能用未来补过去，否则泄漏；</li>
+<li><strong>节假日</strong>：<code>chinese_calendar</code> 的 <code>is_holiday</code> / <code>is_workday</code>，注意调休日。</li>
+</ul>
+<h3 id="3-6-防泄漏三条铁律"><a href="#3-6-防泄漏三条铁律" class="headerlink" title="3.6 防泄漏三条铁律"></a>3.6 防泄漏三条铁律</h3><ol>
+<li><strong>任何 rolling 都要 <code>shift(1)</code> 起步</strong>，不能包含当前目标值；</li>
+<li><strong>任何外部数据的“当天极值/汇总”不能直接 merge</strong>，只能用 <code>shift(1)</code> 后的 lag/roll（附件2 行业最大最小值就是典型）；</li>
+<li><strong>任何 <code>ffill</code> 都不能反转为 <code>bfill</code></strong>，除非确认该数据与目标无关（如天气）。</li>
+</ol>
+<hr>
+<h2 id="四、模型训练与评估"><a href="#四、模型训练与评估" class="headerlink" title="四、模型训练与评估"></a>四、模型训练与评估</h2><h3 id="4-1-切分策略"><a href="#4-1-切分策略" class="headerlink" title="4.1 切分策略"></a>4.1 切分策略</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">split_idx = <span class="hljs-built_in">int</span>(<span class="hljs-built_in">len</span>(X) * <span class="hljs-number">0.7</span>)<br>X_train, X_test = X.iloc[:split_idx], X.iloc[split_idx:]   <span class="hljs-comment"># 时间序列，不能随机打乱</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li>时间序列<strong>必须按时间顺序切</strong>，不能 <code>train_test_split(shuffle=True)</code>；</li>
+<li>进阶用 <code>TimeSeriesSplit(n_splits=5)</code> 做滚动验证，确认单次切分不是运气。</li>
+</ul>
+<h3 id="4-2-调参经验"><a href="#4-2-调参经验" class="headerlink" title="4.2 调参经验"></a>4.2 调参经验</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python">XGBRegressor(<br>    n_estimators=<span class="hljs-number">2000</span>,<br>    learning_rate=<span class="hljs-number">0.03</span>,<br>    max_depth=<span class="hljs-number">6</span>,<br>    min_child_weight=<span class="hljs-number">5</span>,<br>    subsample=<span class="hljs-number">0.8</span>,<br>    colsample_bytree=<span class="hljs-number">0.8</span>,<br>    reg_lambda=<span class="hljs-number">1.0</span>,<br>    early_stopping_rounds=<span class="hljs-number">50</span>,<br>    eval_metric=<span class="hljs-string">&#x27;mae&#x27;</span>,<br>)<br></code></pre></td></tr></table></figure>
+<ul>
+<li><strong><code>early_stopping_rounds</code> 是关键</strong>，让模型自己决定停在哪里；</li>
+<li><code>best_iteration=930</code> 说明 2000 是够的，继续加树收益很小；</li>
+<li><code>eval_metric=&#39;mae&#39;</code> 和业务指标一致，比 <code>rmse</code> 更稳。</li>
+</ul>
+<h3 id="4-3-评估指标组合"><a href="#4-3-评估指标组合" class="headerlink" title="4.3 评估指标组合"></a>4.3 评估指标组合</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>指标</th>
+<th>看什么</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>MAE</strong></td>
+<td>整体平均误差，业务最直观</td>
+</tr>
+<tr>
+<td><strong>MSE / RMSE</strong></td>
+<td>对极端值敏感，反映“最差能差多少”</td>
+</tr>
+<tr>
+<td><strong>bias（真实-预测）</strong></td>
+<td>正=低估，负=高估，判断系统性偏差</td>
+</tr>
+<tr>
+<td><strong>分月 / 分小时 MAE</strong></td>
+<td>定位哪段时间差</td>
+</tr>
+<tr>
+<td><strong>误差最大 10 天</strong></td>
+<td>定位异常事件</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>关键经验</strong>：<strong>bias 接近 0 但 MAE 高 → 不是水平问题，是形状或异常日问题</strong>。这个判断能省掉大量无效调参。</p>
+<h3 id="4-4-特征重要性分析"><a href="#4-4-特征重要性分析" class="headerlink" title="4.4 特征重要性分析"></a>4.4 特征重要性分析</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">importance = pd.Series(model.feature_importances_, index=time_feature_names).sort_values(ascending=<span class="hljs-literal">False</span>)<br><span class="hljs-built_in">print</span>(importance.head(<span class="hljs-number">20</span>))<br></code></pre></td></tr></table></figure>
+<p><strong>读法</strong>：</p>
+<ul>
+<li>单个特征重要性 <strong>&gt; 0.5</strong> → 模型高度依赖它，有泄漏或共线嫌疑；</li>
+<li>一类特征（如天气 7 列）<strong>全部 &lt; 0.001</strong> → 该类特征当前形态贡献极小，不必再投入；</li>
+<li><strong>重要性高 ≠ 有用</strong>：<code>rolling_mean_onehour</code> 曾到 0.85 但 MAE 变差，因为它和 <code>t-1</code> 共线。</li>
+</ul>
+<h3 id="4-5-模型保存要带特征列"><a href="#4-5-模型保存要带特征列" class="headerlink" title="4.5 模型保存要带特征列"></a>4.5 模型保存要带特征列</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">joblib.dump(&#123;<br>    <span class="hljs-string">&#x27;model&#x27;</span>: model,<br>    <span class="hljs-string">&#x27;features&#x27;</span>: time_feature_names,<br>    <span class="hljs-string">&#x27;target&#x27;</span>: <span class="hljs-string">&#x27;power_load&#x27;</span>,<br>    <span class="hljs-string">&#x27;freq&#x27;</span>: <span class="hljs-string">&#x27;15min&#x27;</span>,<br>&#125;, <span class="hljs-string">&#x27;../model/xgb_bundle.pkl&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<p><strong>为什么</strong>：推理时列顺序、列名必须和训练一致，只存 <code>.pkl</code> 模型不带特征列表，下次推理容易错位。</p>
+<hr>
+<h2 id="五、踩坑清单（按严重程度）"><a href="#五、踩坑清单（按严重程度）" class="headerlink" title="五、踩坑清单（按严重程度）"></a>五、踩坑清单（按严重程度）</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>坑</th>
+<th>后果</th>
+<th>修复</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td><code>rolling</code> 不含 <code>shift(1)</code></td>
+<td>训练时偷看答案，指标虚高</td>
+<td><code>shift(1).rolling(...)</code> 或 <code>shift(n).rolling(n)</code></td>
+</tr>
+<tr>
+<td>2</td>
+<td><code>dropna</code> 不赋值</td>
+<td>前 N 行 NaN 进训练</td>
+<td><code>result = result.dropna(...)</code></td>
+</tr>
+<tr>
+<td>3</td>
+<td>rename 不赋值</td>
+<td><code>KeyError: &#39;time&#39;</code></td>
+<td><code>data = data.rename(...)</code></td>
+</tr>
+<tr>
+<td>4</td>
+<td>行业当天极值直接 merge</td>
+<td>严重泄漏</td>
+<td>只用 lag/roll</td>
+</tr>
+<tr>
+<td>5</td>
+<td>硬编码异常阈值</td>
+<td>误杀真实低负荷</td>
+<td>分位数 / 业务下限</td>
+</tr>
+<tr>
+<td>6</td>
+<td><code>shift</code> 和 <code>window</code> 不对齐</td>
+<td>语义混乱，共线</td>
+<td><code>shift(n).rolling(n)</code></td>
+</tr>
+<tr>
+<td>7</td>
+<td>共线特征全塞进去</td>
+<td>MAE 变差</td>
+<td>A/B 对比，删掉冗余</td>
+</tr>
+<tr>
+<td>8</td>
+<td>只存模型不存特征列</td>
+<td>推理错位</td>
+<td>存 bundle</td>
+</tr>
+<tr>
+<td>9</td>
+<td>随机切分时间序列</td>
+<td>未来信息泄漏</td>
+<td>按时间顺序切</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+<h2 id="六、本次关键指标演变"><a href="#六、本次关键指标演变" class="headerlink" title="六、本次关键指标演变"></a>六、本次关键指标演变</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>MAE</th>
+<th>MSE</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>基础版（t-1/2/3 + yesterday）</td>
+<td>2525</td>
+<td>1724 万</td>
+<td>有 <code>dropna</code> bug</td>
+</tr>
+<tr>
+<td>加 lag672 + rolling（有泄漏）</td>
+<td>2597</td>
+<td>1522 万</td>
+<td>rolling 含当前点，指标虚高</td>
+</tr>
+<tr>
+<td>修泄漏 + 加天气</td>
+<td>2586</td>
+<td>1731 万</td>
+<td>真实基线</td>
+</tr>
+<tr>
+<td>rolling 改成 <code>shift(4)</code></td>
+<td>2574</td>
+<td>1721 万</td>
+<td>语义修正</td>
+</tr>
+<tr>
+<td>加节假日</td>
+<td>2608</td>
+<td>1763 万</td>
+<td>2 月降 29，其他微升</td>
+</tr>
+<tr>
+<td><strong>调参 + 去共线</strong></td>
+<td><strong>2379</strong></td>
+<td><strong>1539 万</strong></td>
+<td><strong>当前最优</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>结论</strong>：<strong>调参 + 去共线</strong>是单次收益最大的改动（MAE -229），远大于加天气（-0）和加节假日（+34）。</p>
+<hr>
+<h2 id="七、当前特征清单（定稿版）"><a href="#七、当前特征清单（定稿版）" class="headerlink" title="七、当前特征清单（定稿版）"></a>七、当前特征清单（定稿版）</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python">time_feature_names = (<br>    <span class="hljs-built_in">list</span>(hour_encoding.columns)          <span class="hljs-comment"># 24 列</span><br>    + <span class="hljs-built_in">list</span>(month_encoding.columns)       <span class="hljs-comment"># 12 列</span><br>    + <span class="hljs-built_in">list</span>(weekday_encoding.columns)     <span class="hljs-comment"># 7 列</span><br>    + weather_cols                       <span class="hljs-comment"># 7 列：tmax,tmin,temp_diff,is_rain,is_cloud,is_sunny,wind_day</span><br>    + [<span class="hljs-string">&#x27;power_load_t-1&#x27;</span>, <span class="hljs-string">&#x27;power_load_t-2&#x27;</span>, <span class="hljs-string">&#x27;power_load_t-3&#x27;</span>]<br>    + [<span class="hljs-string">&#x27;yesterday_load&#x27;</span>, <span class="hljs-string">&#x27;last_week_load&#x27;</span>]<br>    + [<span class="hljs-string">&#x27;rolling_mean_onehour&#x27;</span>, <span class="hljs-string">&#x27;rolling_mean_oneday&#x27;</span>, <span class="hljs-string">&#x27;rolling_mean_oneweek&#x27;</span>]<br>    + [<span class="hljs-string">&#x27;is_holiday&#x27;</span>]                     <span class="hljs-comment"># 已去掉 is_workday_adjusted（共线，去掉更好）</span><br>)<br></code></pre></td></tr></table></figure>
+<hr>
+<h2 id="八、尚未做-下一步候选"><a href="#八、尚未做-下一步候选" class="headerlink" title="八、尚未做 / 下一步候选"></a>八、尚未做 / 下一步候选</h2><ol>
+<li><strong><code>TimeSeriesSplit</code> 滚动验证</strong>：确认 2379 是稳定水平还是单次运气；</li>
+<li><strong>异常日处理</strong>：2021-04-26 等区域性停工日，纯数据驱动预测不了，评估时单独报告“剔除 N 个异常日后 MAE”；</li>
+<li><strong>行业日负荷（附件2）</strong>：只用 <code>lag1/lag7/roll7</code>，先做行业日负荷预测，再输入 15 分钟模型（两级模型）；</li>
+<li><strong>分时段建模</strong>：早高峰、晚高峰、夜间分别建模，看是否比全局模型好；</li>
+<li><strong>模型对比</strong>：LightGBM / CatBoost 与 XGBoost 对比，通常 15 分钟负荷上树模型差距不大，但 CatBoost 对小样本异常日更稳。</li>
+</ol>
+<hr>
+<h2 id="九、一句话总结"><a href="#九、一句话总结" class="headerlink" title="九、一句话总结"></a>九、一句话总结</h2><blockquote>
+<p><strong>防泄漏 &gt; 调参 &gt; 加特征</strong>。先保证 rolling/lag/merge 没有偷看答案，再用早停调参，最后才考虑加外部特征。特征重要性高不代表有用，共线特征会互相干扰，A/B 对比是唯一标准。</p>
+</blockquote>
+<h1 id="电力负荷预测-·-工程级优化笔记"><a href="#电力负荷预测-·-工程级优化笔记" class="headerlink" title="电力负荷预测 · 工程级优化笔记"></a>电力负荷预测 · 工程级优化笔记</h1><blockquote>
+<p>聚焦<strong>代码工程化</strong>：分层、配置、函数设计、可观测性、契约、可维护性。算法逻辑（特征语义、调参经验）见上一份笔记，这里不重复。</p>
+</blockquote>
+<hr>
+<h2 id="一、分层架构：职责边界"><a href="#一、分层架构：职责边界" class="headerlink" title="一、分层架构：职责边界"></a>一、分层架构：职责边界</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">src/train.py          →  编排流程：读数据 → 特征工程 → 训练评估<br>utils/common.py       →  数据工具：预处理 + 原子解析函数<br>utils/log.py          →  基础设施：日志封装<br>data/ model/ log/     →  产物隔离：原始数据、模型、日志、图<br></code></pre></td></tr></table></figure>
+<p><strong>已做到</strong>：</p>
+<ul>
+<li><code>utils/</code> 只放<strong>无业务状态</strong>的工具函数，可被训练、推理、测试复用；</li>
+<li><code>train.py</code> 不写具体解析细节，只调用；</li>
+<li>数据 / 模型 / 日志 / 图分目录，不混放。</li>
+</ul>
+<p><strong>判断标准</strong>：如果明天要写 <code>predict.py</code>，<code>utils/</code> 里的东西能不能直接 import 复用？能，就分层对了。</p>
+<hr>
+<h2 id="二、配置外置：消灭魔法值"><a href="#二、配置外置：消灭魔法值" class="headerlink" title="二、配置外置：消灭魔法值"></a>二、配置外置：消灭魔法值</h2><p><strong>已做到</strong>：把散落在代码里的字符串/数字抽成模块级常量。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># ---------------- 气象特征工程配置 ----------------</span><br>DATE_COL = <span class="hljs-string">&#x27;日期&#x27;</span><br>WEATHER_COL = <span class="hljs-string">&#x27;天气状况&#x27;</span><br>TMAX_COL = <span class="hljs-string">&#x27;最高温度&#x27;</span><br>TMIN_COL = <span class="hljs-string">&#x27;最低温度&#x27;</span><br>WIND_DAY_COL = <span class="hljs-string">&#x27;白天风力风向&#x27;</span><br><br>WEATHER_RULES = &#123;<br>    <span class="hljs-string">&#x27;is_rain&#x27;</span>:  <span class="hljs-string">r&#x27;雨|雷|暴雨|阵雨&#x27;</span>,<br>    <span class="hljs-string">&#x27;is_cloud&#x27;</span>: <span class="hljs-string">r&#x27;阴|多云|雾&#x27;</span>,<br>    <span class="hljs-string">&#x27;is_sunny&#x27;</span>: <span class="hljs-string">r&#x27;晴&#x27;</span>,<br>&#125;<br><br>DEFAULT_WIND_LEVEL = <span class="hljs-number">2.0</span><br><br>WEATHER_FEATURE_COLS = [<br>    <span class="hljs-string">&#x27;date&#x27;</span>, <span class="hljs-string">&#x27;tmax&#x27;</span>, <span class="hljs-string">&#x27;tmin&#x27;</span>, <span class="hljs-string">&#x27;temp_diff&#x27;</span>,<br>    <span class="hljs-string">&#x27;is_rain&#x27;</span>, <span class="hljs-string">&#x27;is_cloud&#x27;</span>, <span class="hljs-string">&#x27;is_sunny&#x27;</span>, <span class="hljs-string">&#x27;wind_day&#x27;</span>,<br>]<br></code></pre></td></tr></table></figure>
+<p><strong>收益</strong>：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>常量</th>
+<th>好处</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>*_COL</code></td>
+<td>列名变化只改一处，不用全文搜索替换</td>
+</tr>
+<tr>
+<td><code>WEATHER_RULES</code></td>
+<td>以后加 <code>is_snow</code>，只加一行，主流程不动</td>
+</tr>
+<tr>
+<td><code>WEATHER_FEATURE_COLS</code></td>
+<td>输出列顺序固定，下游 merge 不会错位</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>还没做</strong>：特征工程里的魔法数字仍然散落。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">step = <span class="hljs-number">4</span><br>window_size = <span class="hljs-number">3</span><br>split_idx = <span class="hljs-built_in">int</span>(<span class="hljs-built_in">len</span>(X) * <span class="hljs-number">0.7</span>)<br>result[<span class="hljs-string">&#x27;power_load&#x27;</span>].shift(<span class="hljs-number">96</span>)     <span class="hljs-comment"># 96 是什么？一天 96 个 15 分钟点</span><br>result[<span class="hljs-string">&#x27;power_load&#x27;</span>].shift(<span class="hljs-number">672</span>)    <span class="hljs-comment"># 672 是什么？一周</span><br></code></pre></td></tr></table></figure>
+<p><strong>建议</strong>：抽到顶部统一管理。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">FREQ_PER_HOUR = <span class="hljs-number">4</span><br>FREQ_PER_DAY = <span class="hljs-number">96</span><br>FREQ_PER_WEEK = <span class="hljs-number">672</span><br>LAG_STEPS = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>]        <span class="hljs-comment"># 小时级滞后</span><br>ROLL_WINDOWS = [<span class="hljs-number">4</span>, <span class="hljs-number">96</span>, <span class="hljs-number">672</span>]  <span class="hljs-comment"># 滚动窗口</span><br>TRAIN_RATIO = <span class="hljs-number">0.7</span><br></code></pre></td></tr></table></figure>
+<p>这样 <code>shift(96)</code> 变成 <code>shift(FREQ_PER_DAY)</code>，代码自解释，改频率（比如换 5 分钟数据）只改一处。</p>
+<hr>
+<h2 id="三、函数设计：单一职责-可组合"><a href="#三、函数设计：单一职责-可组合" class="headerlink" title="三、函数设计：单一职责 + 可组合"></a>三、函数设计：单一职责 + 可组合</h2><p><strong>已做到</strong>：把气象解析拆成 4 个原子函数，<code>build_weather_features</code> 只负责编排。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">_parse_date(series)                     <span class="hljs-comment"># 中文日期 → datetime</span><br>_parse_temp(series)                     <span class="hljs-comment"># &quot;22℃&quot; → 22.0</span><br>_classify_weather(series, rules)        <span class="hljs-comment"># 天气文字 → 0/1 特征</span><br>_parse_wind(series, default)            <span class="hljs-comment"># &quot;北风3～4级&quot; → 3.5</span><br></code></pre></td></tr></table></figure>
+<p><strong>好处</strong>：</p>
+<ul>
+<li>每个函数<strong>可用一行输入单测</strong>，不用读整个 csv；</li>
+<li>出问题能定位到具体哪一步，而不是“整个函数报错”；</li>
+<li>规则变化只动 <code>WEATHER_RULES</code>，不动函数。</li>
+</ul>
+<p><strong>还没做</strong>：<code>feature_engineering</code> 已经 100+ 行，承担了 5 件事：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">feature_engineering</span>(<span class="hljs-params">data, logger</span>):<br>    result = data.copy()                    <span class="hljs-comment"># 1</span><br>    result = result.merge(weather, ...)     <span class="hljs-comment"># 2 天气</span><br>    result[<span class="hljs-string">&#x27;hour&#x27;</span>] = ...                    <span class="hljs-comment"># 3 时间</span><br>    result[<span class="hljs-string">&#x27;power_load_t-1&#x27;</span>] = ...          <span class="hljs-comment"># 4 滞后</span><br>    result[<span class="hljs-string">&#x27;rolling_mean_*&#x27;</span>] = ...          <span class="hljs-comment"># 5 滚动</span><br>    flags = result[<span class="hljs-string">&#x27;date&#x27;</span>].apply(...)       <span class="hljs-comment"># 6 节假日</span><br>    ...<br></code></pre></td></tr></table></figure>
+<p><strong>建议拆成</strong>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">feature_engineering</span>(<span class="hljs-params">data, logger</span>):<br>    result = data.copy()<br>    result = _add_weather(result, logger)<br>    result = _add_time_features(result)<br>    result = _add_lag_features(result)<br>    result = _add_rolling_features(result)<br>    result = _add_holiday_features(result)<br>    result = result.dropna().reset_index(drop=<span class="hljs-literal">True</span>)<br>    feature_cols = _collect_feature_names(...)<br>    <span class="hljs-keyword">return</span> result, feature_cols<br></code></pre></td></tr></table></figure>
+<p><strong>判断标准</strong>：一个函数能一句话说清楚“它做什么”，就是单一职责；如果说成“它做 A 又做 B 还做 C”，就该拆。</p>
+<hr>
+<h2 id="四、可观测性：日志-数据质量报告"><a href="#四、可观测性：日志-数据质量报告" class="headerlink" title="四、可观测性：日志 + 数据质量报告"></a>四、可观测性：日志 + 数据质量报告</h2><p><strong>已做到</strong>：<code>Logger</code> 类封装 + 阶段性日志 + 数据质量报告。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Logger</span>:<br>    level_relations = &#123;...&#125;<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, root_path, log_name, level=<span class="hljs-string">&#x27;info&#x27;</span>, fmt=...</span>):<br>        ...<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">get_logger</span>(<span class="hljs-params">self</span>):<br>        ...<br>        <span class="hljs-keyword">return</span> <span class="hljs-variable language_">self</span>.logger<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">build_weather_features</span>(<span class="hljs-params">path, logger=<span class="hljs-literal">None</span></span>):<br>    <span class="hljs-keyword">def</span> <span class="hljs-title function_">log</span>(<span class="hljs-params">msg</span>):<br>        <span class="hljs-keyword">if</span> logger <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>:<br>            logger.info(msg)<br>    ...<br>    report = &#123;<br>        <span class="hljs-string">&#x27;rows&#x27;</span>: <span class="hljs-built_in">len</span>(df),<br>        <span class="hljs-string">&#x27;date_min&#x27;</span>: ..., <span class="hljs-string">&#x27;date_max&#x27;</span>: ...,<br>        <span class="hljs-string">&#x27;tmax_missing&#x27;</span>: ..., <span class="hljs-string">&#x27;wind_missing&#x27;</span>: ...,<br>        <span class="hljs-string">&#x27;temp_abnormal&#x27;</span>: ...,<br>    &#125;<br>    log(<span class="hljs-string">f&quot;[weather] 数据质量: <span class="hljs-subst">&#123;report&#125;</span>&quot;</span>)<br></code></pre></td></tr></table></figure>
+<p><strong>好处</strong>：</p>
+<ul>
+<li>训练挂了能翻日志定位到哪一步；</li>
+<li><code>logger=None</code> 时静默，函数可在 Jupyter 里单独调试，不污染日志；</li>
+<li>数据质量报告让“数据有没有问题”从“猜”变成“看数字”。</li>
+</ul>
+<p><strong>还没做</strong>：</p>
+<ul>
+<li><code>Logger.get_logger()</code> 每次 <code>addHandler</code>，同一个 <code>log_name</code> 实例化两次会重复写日志；</li>
+<li>训练日志里有<strong>特征重要性、分月 MAE、误差最大 10 天</strong>，但这些只写了 <code>logger.info</code>，没有<strong>结构化落盘</strong>（比如存成 <code>metrics.json</code>），后面做模型对比要手工复制。</li>
+</ul>
+<p><strong>建议</strong>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 防重复 handler</span><br><span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> <span class="hljs-variable language_">self</span>.logger.handlers:<br>    <span class="hljs-variable language_">self</span>.logger.addHandler(rotate_handler)<br><br><span class="hljs-comment"># 指标结构化</span><br>metrics = &#123;<span class="hljs-string">&#x27;mae&#x27;</span>: mae, <span class="hljs-string">&#x27;mse&#x27;</span>: mse, <span class="hljs-string">&#x27;best_iter&#x27;</span>: model.best_iteration,<br>           <span class="hljs-string">&#x27;features&#x27;</span>: <span class="hljs-built_in">len</span>(time_feature_names)&#125;<br><span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;../log/metrics.json&#x27;</span>, <span class="hljs-string">&#x27;w&#x27;</span>) <span class="hljs-keyword">as</span> f:<br>    json.dump(metrics, f, ensure_ascii=<span class="hljs-literal">False</span>, indent=<span class="hljs-number">2</span>)<br></code></pre></td></tr></table></figure>
+<hr>
+<h2 id="五、契约与防御：类型提示-入参校验"><a href="#五、契约与防御：类型提示-入参校验" class="headerlink" title="五、契约与防御：类型提示 + 入参校验"></a>五、契约与防御：类型提示 + 入参校验</h2><p><strong>已做到</strong>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">build_weather_features</span>(<span class="hljs-params">path: <span class="hljs-built_in">str</span>, logger=<span class="hljs-literal">None</span></span>) -&gt; pd.DataFrame:<br>    <span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">    Parameters</span><br><span class="hljs-string">    ----------</span><br><span class="hljs-string">    path : str</span><br><span class="hljs-string">    logger : logging.Logger, optional</span><br><span class="hljs-string">    Returns</span><br><span class="hljs-string">    -------</span><br><span class="hljs-string">    pd.DataFrame</span><br><span class="hljs-string">        列固定为 WEATHER_FEATURE_COLS，一天一行，按 date 升序</span><br><span class="hljs-string">    &quot;&quot;&quot;</span><br>    required = [DATE_COL, WEATHER_COL, TMAX_COL, TMIN_COL, WIND_DAY_COL]<br>    missing = [c <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> required <span class="hljs-keyword">if</span> c <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> df.columns]<br>    <span class="hljs-keyword">if</span> missing:<br>        <span class="hljs-keyword">raise</span> KeyError(<span class="hljs-string">f&quot;气象数据缺少列: <span class="hljs-subst">&#123;missing&#125;</span>，实际列: <span class="hljs-subst">&#123;<span class="hljs-built_in">list</span>(df.columns)&#125;</span>&quot;</span>)<br></code></pre></td></tr></table></figure>
+<p><strong>三个契约点</strong>：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>契约</th>
+<th>做法</th>
+<th>收益</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>输入契约</td>
+<td><code>required</code> 列检查</td>
+<td>数据变化时<strong>立刻报错</strong>，而不是后面 merge 出一堆 NaN</td>
+</tr>
+<tr>
+<td>输出契约</td>
+<td>返回列固定 <code>WEATHER_FEATURE_COLS</code></td>
+<td>下游按列名取，不依赖位置</td>
+</tr>
+<tr>
+<td>类型契约</td>
+<td><code>-&gt; pd.DataFrame</code> + docstring</td>
+<td>别人（包括未来的你）知道返回什么</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>对比</strong>：没有校验的版本，如果附件3 改了一列名，会静默 merge 出一列 NaN，模型指标变差但不知道原因。<strong>防御性编程的核心是“早点报错”</strong>。</p>
+<p><strong>还没做</strong>：<code>feature_engineering</code> 和 <code>model_train_and_evaluate</code> 没有输入校验。比如传进来的 <code>data</code> 缺 <code>power_load</code> 列，要跑到 <code>y = data[&#39;power_load&#39;]</code> 才报错。<strong>建议</strong>在入口加：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">feature_engineering</span>(<span class="hljs-params">data, logger</span>):<br>    <span class="hljs-keyword">assert</span> &#123;<span class="hljs-string">&#x27;time&#x27;</span>, <span class="hljs-string">&#x27;power_load&#x27;</span>&#125;.issubset(data.columns), \<br>        <span class="hljs-string">f&quot;输入缺少必需列，实际: <span class="hljs-subst">&#123;data.columns.tolist()&#125;</span>&quot;</span><br></code></pre></td></tr></table></figure>
+<hr>
+<h2 id="六、防泄漏的工程约束"><a href="#六、防泄漏的工程约束" class="headerlink" title="六、防泄漏的工程约束"></a>六、防泄漏的工程约束</h2><p><strong>已做到</strong>（通过代码结构保证，而不是靠人记）：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>约束</th>
+<th>工程手段</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>滚动不含当前点</td>
+<td>统一用 <code>shift(n).rolling(n)</code> 的写法，不写 <code>shift(1).rolling(n)</code></td>
+</tr>
+<tr>
+<td>时间序列不随机切</td>
+<td><code>X.iloc[:split_idx]</code> 而不是 <code>train_test_split(shuffle=True)</code></td>
+</tr>
+<tr>
+<td>外部数据只 lag</td>
+<td>行业数据只 merge <code>lag1/lag7/roll7</code>，不 merge 当天极值</td>
+</tr>
+<tr>
+<td>天气可 bfill</td>
+<td><code>result[weather_cols].ffill().bfill()</code>，因为气象独立于负荷</td>
+</tr>
+<tr>
+<td>行业只 ffill</td>
+<td>行业数据 <code>ffill()</code> 不 <code>bfill()</code>，避免未来信息补过去</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>为什么这是“工程”而不是“算法”</strong>：算法讨论“为什么不能泄漏”，工程讨论“怎么用代码结构保证不泄漏”。<strong>好的工程是用 API 设计让人不可能写出泄漏代码</strong>，而不是靠 code review 抓。</p>
+<hr>
+<h2 id="七、评估工程化：指标-诊断-可视化分离"><a href="#七、评估工程化：指标-诊断-可视化分离" class="headerlink" title="七、评估工程化：指标 / 诊断 / 可视化分离"></a>七、评估工程化：指标 / 诊断 / 可视化分离</h2><p><strong>已做到</strong>：三层评估各司其职。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 1. 指标层：量化好坏</span><br>mse = mean_squared_error(y_test, y_pred)<br>mae = mean_absolute_error(y_test, y_pred)<br><br><span class="hljs-comment"># 2. 诊断层：定位问题</span><br>month_bias = error_df.groupby(<span class="hljs-string">&#x27;month&#x27;</span>).agg(<br>    mae=(<span class="hljs-string">&#x27;abs_error&#x27;</span>, <span class="hljs-string">&#x27;mean&#x27;</span>),<br>    bias=(<span class="hljs-string">&#x27;error&#x27;</span>, <span class="hljs-string">&#x27;mean&#x27;</span>),<br>    true_mean=(<span class="hljs-string">&#x27;y_true&#x27;</span>, <span class="hljs-string">&#x27;mean&#x27;</span>),<br>    pred_mean=(<span class="hljs-string">&#x27;y_pred&#x27;</span>, <span class="hljs-string">&#x27;mean&#x27;</span>),<br>)<br>daily_mae = error_df.groupby(error_df[<span class="hljs-string">&#x27;time&#x27;</span>].dt.date)[<span class="hljs-string">&#x27;abs_error&#x27;</span>].mean()<br><br><span class="hljs-comment"># 3. 可视化层：肉眼确认</span><br>plt.plot(sub[<span class="hljs-string">&#x27;time&#x27;</span>], sub[<span class="hljs-string">&#x27;y_true&#x27;</span>], label=<span class="hljs-string">&#x27;真实值&#x27;</span>)<br>plt.plot(sub[<span class="hljs-string">&#x27;time&#x27;</span>], sub[<span class="hljs-string">&#x27;y_pred&#x27;</span>], label=<span class="hljs-string">&#x27;预测值&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<p><strong><code>error_df</code> 是评估的基石</strong>：一张表同时支持指标、诊断、可视化。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">error_df = pd.DataFrame(&#123;<br>    <span class="hljs-string">&#x27;time&#x27;</span>: ..., <span class="hljs-string">&#x27;y_true&#x27;</span>: ..., <span class="hljs-string">&#x27;y_pred&#x27;</span>: ...,<br>    <span class="hljs-string">&#x27;error&#x27;</span>: ...,      <span class="hljs-comment"># 带符号，看 bias</span><br>    <span class="hljs-string">&#x27;abs_error&#x27;</span>: ...,  <span class="hljs-comment"># 绝对值，看 MAE</span><br>&#125;)<br></code></pre></td></tr></table></figure>
+<p><strong>还没做</strong>：评估代码和训练代码混在 <code>model_train_and_evaluate</code> 里，函数 200+ 行。<strong>建议</strong>：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">model_train_and_evaluate</span>(<span class="hljs-params">data, feature_cols, logger</span>):<br>    model = _train(data, feature_cols)<br>    _save_bundle(model, feature_cols)<br>    y_pred = model.predict(data[feature_cols].iloc[split_idx:])<br>    _report_metrics(y_test, y_pred, logger)<br>    _report_diagnostics(y_test, y_pred, data, logger)<br>    _plot_diagnostics(y_test, y_pred, data)<br>    <span class="hljs-keyword">return</span> model<br></code></pre></td></tr></table></figure>
+<p><strong>判断标准</strong>：函数超过 100 行，或者包含 <code>print</code> + <code>plt</code> + <code>logger</code> + <code>joblib</code> 四种副作用，就该拆。</p>
+<hr>
+<h2 id="八、已做到-vs-待改进（打分表）"><a href="#八、已做到-vs-待改进（打分表）" class="headerlink" title="八、已做到 vs 待改进（打分表）"></a>八、已做到 vs 待改进（打分表）</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>状态</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>分层架构</td>
+<td>✅</td>
+<td>三层清晰，utils 可复用</td>
+</tr>
+<tr>
+<td>配置外置</td>
+<td>🟡</td>
+<td>气象配置已外置，特征工程魔法数字散落</td>
+</tr>
+<tr>
+<td>函数单一职责</td>
+<td>🟡</td>
+<td>原子解析函数做得好，主流程函数太长</td>
+</tr>
+<tr>
+<td>类型提示 + docstring</td>
+<td>🟡</td>
+<td><code>build_weather_features</code> 有，其余函数没有</td>
+</tr>
+<tr>
+<td>输入契约校验</td>
+<td>🟡</td>
+<td>气象有 <code>required</code> 检查，其他函数没有</td>
+</tr>
+<tr>
+<td>可观测性</td>
+<td>🟡</td>
+<td>日志有，指标未结构化落盘</td>
+</tr>
+<tr>
+<td>防泄漏</td>
+<td>✅</td>
+<td>通过 <code>shift(n).rolling(n)</code> 和切分方式保证</td>
+</tr>
+<tr>
+<td>评估分层</td>
+<td>🟡</td>
+<td>指标/诊断/可视化逻辑都在，但混在一个函数</td>
+</tr>
+<tr>
+<td>模型保存</td>
+<td>❌</td>
+<td>只存 <code>.pkl</code>，没存 <code>feature_cols</code></td>
+</tr>
+<tr>
+<td>单元测试</td>
+<td>❌</td>
+<td>无</td>
+</tr>
+<tr>
+<td>路径管理</td>
+<td>❌</td>
+<td><code>&#39;../data/附件3-气象数据.csv&#39;</code> 硬编码</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+<h2 id="九、重构建议（按性价比排序）"><a href="#九、重构建议（按性价比排序）" class="headerlink" title="九、重构建议（按性价比排序）"></a>九、重构建议（按性价比排序）</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>优先级</th>
+<th>改动</th>
+<th>成本</th>
+<th>收益</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>P0</strong></td>
+<td><code>joblib.dump</code> 存 bundle（model + features + 配置）</td>
+<td>5 行</td>
+<td>推理不踩列错位的坑</td>
+</tr>
+<tr>
+<td><strong>P0</strong></td>
+<td>指标存 <code>metrics.json</code></td>
+<td>5 行</td>
+<td>模型对比不用手抄</td>
+</tr>
+<tr>
+<td><strong>P1</strong></td>
+<td>特征工程魔法数字抽常量</td>
+<td>10 行</td>
+<td>换频率只改一处</td>
+</tr>
+<tr>
+<td><strong>P1</strong></td>
+<td><code>feature_engineering</code> 拆成 5 个子函数</td>
+<td>30 行</td>
+<td>每加一类特征只改一个函数</td>
+</tr>
+<tr>
+<td><strong>P2</strong></td>
+<td>评估代码从训练函数拆出</td>
+<td>50 行</td>
+<td>训练/评估独立演进</td>
+</tr>
+<tr>
+<td><strong>P2</strong></td>
+<td><code>Logger</code> 加 <code>if not handlers</code> 防重复</td>
+<td>2 行</td>
+<td>推理脚本复用不重复写</td>
+</tr>
+<tr>
+<td><strong>P3</strong></td>
+<td>路径配置化（<code>config.py</code>）</td>
+<td>20 行</td>
+<td>换数据目录不改代码</td>
+</tr>
+<tr>
+<td><strong>P3</strong></td>
+<td>给 <code>_parse_*</code> 函数写单测</td>
+<td>50 行</td>
+<td>解析逻辑坏了立刻发现</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+<h2 id="十、一句话总结"><a href="#十、一句话总结" class="headerlink" title="十、一句话总结"></a>十、一句话总结</h2><blockquote>
+<p><strong>工程化的本质是“让错误早点暴露、让改动只发生在一处、让逻辑可被单独验证”。</strong></p>
+<p>你现在已经做到：<strong>配置外置、原子函数拆分、输入契约校验、防泄漏的代码结构</strong>。<br>下一步该做：<strong>模型 bundle、指标落盘、主流程函数拆分</strong>——这三件事做完，代码就从“能跑”变成“能交接”。</p>
+</blockquote>
+<h1 id="电力负荷预测-·-切片与向量化优化笔记（含-dt-延申）"><a href="#电力负荷预测-·-切片与向量化优化笔记（含-dt-延申）" class="headerlink" title="电力负荷预测 · 切片与向量化优化笔记（含 dt 延申）"></a>电力负荷预测 · 切片与向量化优化笔记（含 <code>dt</code> 延申）</h1><blockquote>
+<p>切片在 pandas 里不只是“取几个元素”，它同时决定了<strong>索引对不对齐、内存有没有复制、逻辑有没有隐式 bug</strong>。而 <code>dt</code> / <code>.str</code> 这类<strong>访问器</strong>是切片的延申：<strong>切片是“取哪一块”，访问器是“从这一块里提取什么成分”</strong>，两者共同决定代码是“能跑”还是“跑得快、不出错”。</p>
+</blockquote>
+<hr>
+<h2 id="一、先搞清楚三种切片"><a href="#一、先搞清楚三种切片" class="headerlink" title="一、先搞清楚三种切片"></a>一、先搞清楚三种切片</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>写法</th>
+<th>按什么切</th>
+<th>什么时候用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>df.iloc[a:b]</code></td>
+<td><strong>位置</strong>（第 a 行到第 b-1 行）</td>
+<td>时间序列切分、按行号取</td>
+</tr>
+<tr>
+<td><code>df.loc[a:b]</code></td>
+<td><strong>标签</strong>（索引值从 a 到 b，<strong>含 b</strong>）</td>
+<td>按时间/日期取、按条件取</td>
+</tr>
+<tr>
+<td><code>df[&#39;col&#39;]</code> / <code>df[[&#39;c1&#39;,&#39;c2&#39;]]</code></td>
+<td><strong>列名</strong></td>
+<td>取列、取多列</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>最容易错的两点</strong>：</p>
+<ol>
+<li><code>iloc</code> <strong>不含右端点</strong>，<code>loc</code> <strong>含右端点</strong>；</li>
+<li><code>loc</code> 是按<strong>索引值</strong>切，不是按行号。如果 <code>reset_index</code> 过，<code>loc[0:10]</code> 和 <code>iloc[0:10]</code> 一样；如果没 reset，<code>loc[0:10]</code> 可能一行都没有。</li>
+</ol>
+<hr>
+<h2 id="二、这份代码里的-6-处切片"><a href="#二、这份代码里的-6-处切片" class="headerlink" title="二、这份代码里的 6 处切片"></a>二、这份代码里的 6 处切片</h2><h3 id="1-训练-测试切分：iloc-split-idx-✅"><a href="#1-训练-测试切分：iloc-split-idx-✅" class="headerlink" title="1. 训练/测试切分：iloc[:split_idx] ✅"></a>1. 训练/测试切分：<code>iloc[:split_idx]</code> ✅</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">split_idx = <span class="hljs-built_in">int</span>(<span class="hljs-built_in">len</span>(X) * <span class="hljs-number">0.7</span>)<br>X_train, X_test = X.iloc[:split_idx], X.iloc[split_idx:]<br>y_train, y_test = y.iloc[:split_idx], y.iloc[split_idx:]<br></code></pre></td></tr></table></figure>
+<p><strong>为什么用 <code>iloc</code></strong>：</p>
+<ul>
+<li>时间序列必须<strong>按位置切</strong>，不能按标签切；</li>
+<li><code>iloc[:split_idx]</code> 是<strong>视图</strong>（view），不复制数据，内存友好；</li>
+<li>如果用 <code>train_test_split(shuffle=True)</code>，会打乱时间顺序，未来信息泄漏。</li>
+</ul>
+<p><strong>注意</strong>：<code>X</code> 和 <code>y</code> 必须来自<strong>同一个 <code>data</code></strong>，且中间没有对 <code>X</code> 或 <code>y</code> 单独 <code>reset_index</code>，否则 <code>iloc</code> 位置对不上。</p>
+<hr>
+<h3 id="2-对齐取时间列：data-loc-y-test-index-39-time-39-⚠️-有风险"><a href="#2-对齐取时间列：data-loc-y-test-index-39-time-39-⚠️-有风险" class="headerlink" title="2. 对齐取时间列：data.loc[y_test.index, &#39;time&#39;] ⚠️ 有风险"></a>2. 对齐取时间列：<code>data.loc[y_test.index, &#39;time&#39;]</code> ⚠️ 有风险</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">error_df = pd.DataFrame(&#123;<br>    <span class="hljs-string">&#x27;time&#x27;</span>: data.loc[y_test.index, <span class="hljs-string">&#x27;time&#x27;</span>].values,<br>    <span class="hljs-string">&#x27;y_true&#x27;</span>: y_test.values,<br>    ...<br>&#125;)<br></code></pre></td></tr></table></figure>
+<p><strong>这行能跑，但依赖一个隐含前提</strong>：<code>y_test.index</code> 是 <code>data</code> 的原始索引。</p>
+<ul>
+<li>如果 <code>feature_engineering</code> 里 <code>result = result.dropna().reset_index(drop=True)</code>，<code>y_test.index</code> 就是 <code>data</code> 的行号，<code>data.loc[...]</code> 能对上；</li>
+<li>如果某一步 <code>reset_index</code> 之后又 <code>merge</code>，索引可能变，<code>data.loc[y_test.index]</code> 就错位了。</li>
+</ul>
+<p><strong>更稳的写法</strong>：在切分时<strong>同时切 <code>time</code> 列</strong>，不依赖索引对齐。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python">time_all = data[<span class="hljs-string">&#x27;time&#x27;</span>]<br>time_train, time_test = time_all.iloc[:split_idx], time_all.iloc[split_idx:]<br><br>error_df = pd.DataFrame(&#123;<br>    <span class="hljs-string">&#x27;time&#x27;</span>: pd.to_datetime(time_test.values),<br>    <span class="hljs-string">&#x27;y_true&#x27;</span>: y_test.values,<br>    <span class="hljs-string">&#x27;y_pred&#x27;</span>: y_pred,<br>&#125;)<br></code></pre></td></tr></table></figure>
+<p><strong>收益</strong>：</p>
+<ul>
+<li>不依赖 <code>y_test.index</code> 和 <code>data.index</code> 是否一致；</li>
+<li><code>time_test.values</code> 和 <code>y_test.values</code> 长度天然一致；</li>
+<li>少一次 <code>data.loc</code> 查表，快一点点。</li>
+</ul>
+<hr>
+<h3 id="3-字符串切片：-str-split-39-39-str-0-✅"><a href="#3-字符串切片：-str-split-39-39-str-0-✅" class="headerlink" title="3. 字符串切片：.str.split(&#39;/&#39;).str[0] ✅"></a>3. 字符串切片：<code>.str.split(&#39;/&#39;).str[0]</code> ✅</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">day_weather = series.astype(<span class="hljs-built_in">str</span>).<span class="hljs-built_in">str</span>.split(<span class="hljs-string">&#x27;/&#x27;</span>).<span class="hljs-built_in">str</span>[<span class="hljs-number">0</span>]<br></code></pre></td></tr></table></figure>
+<p><strong>做的事</strong>：把 <code>&quot;多云/小雨&quot;</code> 拆成 <code>[&quot;多云&quot;, &quot;小雨&quot;]</code>，取第一个 <code>&quot;多云&quot;</code>。</p>
+<p><strong>为什么不用 <code>apply(lambda x: x.split(&#39;/&#39;)[0])</code></strong>：</p>
+<ul>
+<li><code>.str</code> 是 pandas 的<strong>向量化字符串方法</strong>，底层是 C 实现，比 <code>apply</code> + Python 循环快 5～10 倍；</li>
+<li><code>.str</code> 对 NaN 自动返回 NaN，不用手写 <code>if pd.isna</code>；</li>
+<li><code>apply(lambda ...)</code> 每行调一次 Python 函数，12 万行就是 12 万次函数调用。</li>
+</ul>
+<p><strong>规律</strong>：<strong>只要能用 <code>.str.</code>，就不要用 <code>apply</code></strong>。</p>
+<hr>
+<h3 id="4-列表推导取元组：-x-0-for-x-in-flags-🟡-可优化"><a href="#4-列表推导取元组：-x-0-for-x-in-flags-🟡-可优化" class="headerlink" title="4. 列表推导取元组：[x[0] for x in flags] 🟡 可优化"></a>4. 列表推导取元组：<code>[x[0] for x in flags]</code> 🟡 可优化</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">flags = result[<span class="hljs-string">&#x27;date&#x27;</span>].apply(_holiday_flags)   <span class="hljs-comment"># 每行返回 (0/1, 0/1)</span><br>result[<span class="hljs-string">&#x27;is_holiday&#x27;</span>] = [x[<span class="hljs-number">0</span>] <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> flags]<br>result[<span class="hljs-string">&#x27;is_workday_adjusted&#x27;</span>] = [x[<span class="hljs-number">1</span>] <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> flags]<br></code></pre></td></tr></table></figure>
+<p><strong>能跑，但有两个问题</strong>：</p>
+<ol>
+<li><code>apply</code> 返回的是 <code>Series of tuple</code>，再列表推导拆开，<strong>遍历了两次</strong>；</li>
+<li>列表推导的结果是 <strong>Python list</strong>，赋给 DataFrame 列时 pandas 要再转一次 <code>Series</code>。</li>
+</ol>
+<p><strong>优化写法</strong>：<code>apply</code> 直接返回 <code>Series</code>，一次拆分。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">flags = result[<span class="hljs-string">&#x27;date&#x27;</span>].apply(<br>    <span class="hljs-keyword">lambda</span> d: pd.Series(_holiday_flags(d), index=[<span class="hljs-string">&#x27;is_holiday&#x27;</span>, <span class="hljs-string">&#x27;is_workday_adjusted&#x27;</span>])<br>)<br>result = pd.concat([result, flags], axis=<span class="hljs-number">1</span>)<br></code></pre></td></tr></table></figure>
+<p><strong>更快的写法</strong>：<code>.str</code> 直接取。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">flags = result[<span class="hljs-string">&#x27;date&#x27;</span>].apply(_holiday_flags)<br>result[<span class="hljs-string">&#x27;is_holiday&#x27;</span>] = flags.<span class="hljs-built_in">str</span>[<span class="hljs-number">0</span>]<br>result[<span class="hljs-string">&#x27;is_workday_adjusted&#x27;</span>] = flags.<span class="hljs-built_in">str</span>[<span class="hljs-number">1</span>]<br></code></pre></td></tr></table></figure>
+<p><code>flags.str[0]</code> 是向量化取元组第 0 位，比列表推导快，且自动对齐索引。</p>
+<p><strong>但注意</strong>：<code>chinese_calendar</code> 本身是<strong>按行调用 Python 函数</strong>，<code>apply</code> 无法避免逐行。如果数据量再大，可以<strong>先对 <code>date</code> 去重再 apply</strong>，再 merge 回去——因为一天只有一个节假日标记，96 个 15 分钟点重复算 96 次是浪费。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python">unique_dates = result[<span class="hljs-string">&#x27;date&#x27;</span>].drop_duplicates().reset_index(drop=<span class="hljs-literal">True</span>)<br>flags = unique_dates.apply(_holiday_flags)<br>holiday_map = pd.DataFrame(&#123;<br>    <span class="hljs-string">&#x27;date&#x27;</span>: unique_dates,<br>    <span class="hljs-string">&#x27;is_holiday&#x27;</span>: flags.<span class="hljs-built_in">str</span>[<span class="hljs-number">0</span>],<br>    <span class="hljs-string">&#x27;is_workday_adjusted&#x27;</span>: flags.<span class="hljs-built_in">str</span>[<span class="hljs-number">1</span>],<br>&#125;)<br>result = result.merge(holiday_map, on=<span class="hljs-string">&#x27;date&#x27;</span>, how=<span class="hljs-string">&#x27;left&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<p><strong>收益</strong>：计算量从“12 万行”降到“约 1000 天”，快 100 倍以上。</p>
+<hr>
+<h3 id="5-条件赋值：-loc-mask-col-✅"><a href="#5-条件赋值：-loc-mask-col-✅" class="headerlink" title="5. 条件赋值：.loc[mask, col] ✅"></a>5. 条件赋值：<code>.loc[mask, col]</code> ✅</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">data.loc[data[<span class="hljs-string">&#x27;power_load&#x27;</span>] &lt; <span class="hljs-number">100000</span>, <span class="hljs-string">&#x27;power_load&#x27;</span>] = np.nan<br></code></pre></td></tr></table></figure>
+<p><strong>为什么用 <code>.loc</code> 而不是 <code>data[mask][&#39;col&#39;] = ...</code></strong>：</p>
+<ul>
+<li><code>data[mask][&#39;col&#39;] = ...</code> 是<strong>链式索引</strong>，pandas 可能返回一个 copy，赋值丢失，还会报 <code>SettingWithCopyWarning</code>；</li>
+<li><code>data.loc[mask, &#39;col&#39;] = ...</code> 是<strong>原子操作</strong>，直接改原 DataFrame，行为确定。</li>
+</ul>
+<p><strong>规律</strong>：<strong>条件赋值一律用 <code>.loc[mask, col]</code></strong>，不要链式。</p>
+<hr>
+<h3 id="6-reset-index-drop-True-：切完必做-✅"><a href="#6-reset-index-drop-True-：切完必做-✅" class="headerlink" title="6. reset_index(drop=True)：切完必做 ✅"></a>6. <code>reset_index(drop=True)</code>：切完必做 ✅</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">result = result.dropna(axis=<span class="hljs-number">0</span>).reset_index(drop=<span class="hljs-literal">True</span>)<br></code></pre></td></tr></table></figure>
+<p><strong>为什么</strong>：<code>dropna</code> 之后索引是<strong>不连续的</strong>（比如 <code>0,1,2,5,6,9...</code>）。</p>
+<ul>
+<li>不 reset：后面 <code>iloc[:split_idx]</code> 仍然按位置切，没问题；但 <code>loc[y_test.index]</code> 就可能对不上；</li>
+<li>reset 后：索引变成 <code>0,1,2,...,n-1</code>，<code>iloc</code> 和 <code>loc</code> 行为一致，调试时也好看。</li>
+</ul>
+<p><strong>代价</strong>：<code>reset_index</code> 会<strong>复制一份数据</strong>，内存翻倍。12 万行还好，几百万行就要考虑。</p>
+<p><strong>规律</strong>：<strong><code>dropna</code> / <code>merge</code> / <code>concat</code> 之后，统一 <code>reset_index(drop=True)</code></strong>，让索引始终干净。</p>
+<hr>
+<h2 id="三、延申：dt-str-是切片的“下游伙伴”"><a href="#三、延申：dt-str-是切片的“下游伙伴”" class="headerlink" title="三、延申：dt / .str 是切片的“下游伙伴”"></a>三、延申：<code>dt</code> / <code>.str</code> 是切片的“下游伙伴”</h2><p>切片是“取哪一块”，<code>dt</code> / <code>.str</code> 是“从这一块里提取什么成分”。<strong>两者是同一类优化思路：能用 pandas 内置的向量化访问器，就不用 <code>apply</code> + Python 循环。</strong></p>
+<h3 id="3-1-dt-和-str-是同一类访问器"><a href="#3-1-dt-和-str-是同一类访问器" class="headerlink" title="3.1 dt 和 .str 是同一类访问器"></a>3.1 <code>dt</code> 和 <code>.str</code> 是同一类访问器</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>访问器</th>
+<th>用于</th>
+<th>例子</th>
+<th>底层</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>.str</code></td>
+<td>字符串列</td>
+<td><code>series.str.split(&#39;/&#39;)</code></td>
+<td>C 实现</td>
+</tr>
+<tr>
+<td><code>.dt</code></td>
+<td>datetime 列</td>
+<td><code>series.dt.hour</code></td>
+<td>C 实现</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>它们都比 <code>apply(lambda)</code> 快 5～10 倍，因为<strong>不逐行调 Python 函数</strong>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># ❌ 慢：12 万行调 12 万次 lambda</span><br>result[<span class="hljs-string">&#x27;hour&#x27;</span>] = result[<span class="hljs-string">&#x27;time&#x27;</span>].apply(<span class="hljs-keyword">lambda</span> x: x.hour)<br><br><span class="hljs-comment"># ✅ 快：向量化，一次算完</span><br>result[<span class="hljs-string">&#x27;hour&#x27;</span>] = result[<span class="hljs-string">&#x27;time&#x27;</span>].dt.hour<br></code></pre></td></tr></table></figure>
+<p>你代码里 <code>result[&#39;time&#39;].dt.hour / dt.month / dt.dayofweek / dt.normalize()</code> 全是向量化写法，这块已经是优化过的，不用改。</p>
+<h3 id="3-2-dt-能取的所有常用属性（备查）"><a href="#3-2-dt-能取的所有常用属性（备查）" class="headerlink" title="3.2 dt 能取的所有常用属性（备查）"></a>3.2 <code>dt</code> 能取的所有常用属性（备查）</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python">s.dt.year          <span class="hljs-comment"># 年</span><br>s.dt.month         <span class="hljs-comment"># 月</span><br>s.dt.day           <span class="hljs-comment"># 日</span><br>s.dt.hour          <span class="hljs-comment"># 时</span><br>s.dt.minute        <span class="hljs-comment"># 分</span><br>s.dt.second        <span class="hljs-comment"># 秒</span><br>s.dt.dayofweek     <span class="hljs-comment"># 星期几 0-6（新版也叫 day_of_week，旧版只认 dayofweek）</span><br>s.dt.dayofyear     <span class="hljs-comment"># 一年第几天</span><br>s.dt.quarter       <span class="hljs-comment"># 季度</span><br>s.dt.is_month_start <span class="hljs-comment"># 是否月初</span><br>s.dt.is_month_end   <span class="hljs-comment"># 是否月末</span><br>s.dt.normalize()    <span class="hljs-comment"># 归一化到当天 00:00</span><br>s.dt.floor(<span class="hljs-string">&#x27;15min&#x27;</span>) <span class="hljs-comment"># 向下取整到 15 分钟</span><br>s.dt.strftime(<span class="hljs-string">&#x27;%Y-%m-%d&#x27;</span>)  <span class="hljs-comment"># 格式化字符串</span><br></code></pre></td></tr></table></figure>
+<p><strong>规律</strong>：想从 datetime 列里取任何时间成分，<strong>先查 <code>dt</code> 有没有，没有再用 <code>apply</code></strong>。90% 的情况 <code>dt</code> 都有。</p>
+<h3 id="3-3-一处可优化：按天聚合用-dt-normalize-而不是-dt-date"><a href="#3-3-一处可优化：按天聚合用-dt-normalize-而不是-dt-date" class="headerlink" title="3.3 一处可优化：按天聚合用 dt.normalize() 而不是 dt.date"></a>3.3 一处可优化：按天聚合用 <code>dt.normalize()</code> 而不是 <code>dt.date</code></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 你现在的写法</span><br>daily_mae = error_df.groupby(error_df[<span class="hljs-string">&#x27;time&#x27;</span>].dt.date)[<span class="hljs-string">&#x27;abs_error&#x27;</span>].mean()<br><br><span class="hljs-comment"># 更快：保持 datetime64，groupby 走 C 实现</span><br>daily_mae = error_df.groupby(error_df[<span class="hljs-string">&#x27;time&#x27;</span>].dt.normalize())[<span class="hljs-string">&#x27;abs_error&#x27;</span>].mean()<br></code></pre></td></tr></table></figure>
+<p><strong>原因</strong>：</p>
+<ul>
+<li><code>dt.date</code> 每行生成一个 Python <code>date</code> 对象，12 万行就是 12 万个对象；</li>
+<li><code>dt.normalize()</code> 保持 <code>datetime64[ns]</code> 类型，groupby 走 C 层哈希，快很多。</li>
+</ul>
+<p><strong>数据量小时差别不明显，数据量大时差距明显</strong>。这是 <code>dt</code> 访问器里少数需要“选对具体方法”的地方。</p>
+<h3 id="3-4-dt-str-与切片的关系"><a href="#3-4-dt-str-与切片的关系" class="headerlink" title="3.4 dt / .str 与切片的关系"></a>3.4 <code>dt</code> / <code>.str</code> 与切片的关系</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>场景</th>
+<th>切片 + 访问器</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>训练/测试切分后取小时</td>
+<td><code>t_test.dt.hour</code> 向量化，一次算完</td>
+</tr>
+<tr>
+<td>按月聚合误差</td>
+<td><code>error_df[&#39;time&#39;].dt.month</code> 做 groupby key，比 <code>apply(lambda)</code> 快</td>
+</tr>
+<tr>
+<td>按天看 MAE</td>
+<td><code>error_df[&#39;time&#39;].dt.normalize()</code> 做 groupby key</td>
+</tr>
+<tr>
+<td>天气字符串拆白天/夜晚</td>
+<td><code>series.str.split(&#39;/&#39;).str[0]</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>一句话</strong>：<strong>切片负责“取哪一段数据”，<code>dt</code> / <code>.str</code> 负责“从这段数据里快速提取成分”，两者组合起来才是完整的向量化写法。</strong></p>
+<hr>
+<h2 id="四、切片优化的三个通用原则"><a href="#四、切片优化的三个通用原则" class="headerlink" title="四、切片优化的三个通用原则"></a>四、切片优化的三个通用原则</h2><h3 id="原则-1：能-str-dt-不-apply，能-apply-不去重算"><a href="#原则-1：能-str-dt-不-apply，能-apply-不去重算" class="headerlink" title="原则 1：能 .str / .dt 不 apply，能 apply 不去重算"></a>原则 1：能 <code>.str</code> / <code>.dt</code> 不 <code>apply</code>，能 <code>apply</code> 不去重算</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>写法</th>
+<th>相对速度</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>.str.xxx</code> / <code>.dt.xxx</code></td>
+<td>最快（C 实现）</td>
+</tr>
+<tr>
+<td><code>.apply(内置函数)</code></td>
+<td>中</td>
+</tr>
+<tr>
+<td><code>.apply(lambda)</code></td>
+<td>慢</td>
+</tr>
+<tr>
+<td><code>for</code> 循环 + <code>iterrows</code></td>
+<td>最慢</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="原则-2：切分时同时切“特征-标签-辅助列”"><a href="#原则-2：切分时同时切“特征-标签-辅助列”" class="headerlink" title="原则 2：切分时同时切“特征 + 标签 + 辅助列”"></a>原则 2：切分时同时切“特征 + 标签 + 辅助列”</h3><p>不要只切 <code>X</code> 和 <code>y</code>，把 <code>time</code> 也一起切：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">X_train, X_test = X.iloc[:split_idx], X.iloc[split_idx:]<br>y_train, y_test = y.iloc[:split_idx], y.iloc[split_idx:]<br>t_train, t_test = data[<span class="hljs-string">&#x27;time&#x27;</span>].iloc[:split_idx], data[<span class="hljs-string">&#x27;time&#x27;</span>].iloc[split_idx:]<br></code></pre></td></tr></table></figure>
+<p><strong>收益</strong>：后面画图、算 bias、按天聚合，都用 <code>t_test</code>，不用再 <code>data.loc[y_test.index]</code>，彻底摆脱索引对齐风险。</p>
+<h3 id="原则-3：重复计算前先问“能不能去重”"><a href="#原则-3：重复计算前先问“能不能去重”" class="headerlink" title="原则 3：重复计算前先问“能不能去重”"></a>原则 3：重复计算前先问“能不能去重”</h3><p><code>_holiday_flags</code> 一天只算一次就够，96 个 15 分钟点重复算 96 次是浪费。<strong>先 <code>drop_duplicates</code> 算，再 <code>merge</code> 回去</strong>，是这类“日频特征挂到 15 分钟数据”的标准优化。</p>
+<h3 id="原则-4（延申）：访问器选对方法"><a href="#原则-4（延申）：访问器选对方法" class="headerlink" title="原则 4（延申）：访问器选对方法"></a>原则 4（延申）：访问器选对方法</h3><p>同一个 <code>dt</code> 访问器下，不同方法代价不同。按天聚合用 <code>dt.normalize()</code> 而不是 <code>dt.date</code>，保持 <code>datetime64</code> 类型，groupby 快一个量级。</p>
+<hr>
+<h2 id="五、这段代码的切片打分"><a href="#五、这段代码的切片打分" class="headerlink" title="五、这段代码的切片打分"></a>五、这段代码的切片打分</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>切片 / 访问器</th>
+<th>写法</th>
+<th>评价</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>X.iloc[:split_idx]</code></td>
+<td>位置切，不 shuffle</td>
+<td>✅ 正确</td>
+</tr>
+<tr>
+<td><code>data.loc[y_test.index, &#39;time&#39;]</code></td>
+<td>依赖索引对齐</td>
+<td>⚠️ 能跑，建议改成同时切 <code>time</code></td>
+</tr>
+<tr>
+<td><code>.str.split(&#39;/&#39;).str[0]</code></td>
+<td>向量化字符串</td>
+<td>✅ 正确</td>
+</tr>
+<tr>
+<td><code>[x[0] for x in flags]</code></td>
+<td>列表推导拆元组</td>
+<td>🟡 可改 <code>.str[0]</code>，最好去重后再算</td>
+</tr>
+<tr>
+<td><code>data.loc[mask, &#39;col&#39;] = ...</code></td>
+<td>原子条件赋值</td>
+<td>✅ 正确</td>
+</tr>
+<tr>
+<td><code>reset_index(drop=True)</code></td>
+<td>切完清索引</td>
+<td>✅ 正确</td>
+</tr>
+<tr>
+<td><code>dt.hour / dt.month / dt.dayofweek</code></td>
+<td>向量化时间属性</td>
+<td>✅ 正确</td>
+</tr>
+<tr>
+<td><code>dt.date</code> 做 groupby key</td>
+<td>生成 Python 对象</td>
+<td>🟡 可改 <code>dt.normalize()</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+<h2 id="六、一句话总结"><a href="#六、一句话总结" class="headerlink" title="六、一句话总结"></a>六、一句话总结</h2><blockquote>
+<p><strong>切片优化的核心不是“写得更短”，而是“让索引永远对齐、让向量化替代循环、让重复计算只算一次”。</strong></p>
+<p><strong>切片是“取哪一块”，<code>dt</code> / <code>.str</code> 是“从这一块里提取什么成分”</strong>——两者是同一类向量化思路的两端。</p>
+<p>当前代码在 <code>iloc</code> 切分、<code>.str</code> / <code>.dt</code> 向量化、<code>.loc</code> 条件赋值上已经是对的；下一步优化三处：<strong>切分时同时切 <code>time</code>，摆脱 <code>data.loc[y_test.index]</code> 的索引依赖</strong>；<strong>节假日特征先去重再算，再 merge 回去</strong>；<strong>按天聚合用 <code>dt.normalize()</code> 替代 <code>dt.date</code></strong>。</p>
+</blockquote>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2026/10/14/deeplearn45/">← Next transformer理解</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/10/14/deeplearn43/">注意力机制 Prev →</a></div></div></div><div id="comments"><div id="giscus"></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="To Top" style="opacity: 0; display: none;">∧ </a><a class="i-index" id="to-index" onClick="tocControl.change()" title="To Catalog"><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span></a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="Change Theme"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">John Doe</a></h1><div id="description"><p></p></div><div id="social-links"><a class="social" target="_blank" rel="noopener" href="https://github.com/juicer0801"><i class="fab fa-github" alt="GitHub"></i></a></div></div><div id="aside-block"><div id="toc-div"><h1>Catalog</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%94%B5%E5%8A%9B%E8%B4%9F%E8%8D%B7%E9%A2%84%E6%B5%8B-%C2%B7-%E5%B7%A5%E7%A8%8B%E7%AC%94%E8%AE%B0"><span class="toc-number">1.</span> <span class="toc-text">电力负荷预测 · 工程笔记</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E9%A1%B9%E7%9B%AE%E5%88%86%E5%B1%82"><span class="toc-number">1.1.</span> <span class="toc-text">一、项目分层</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%95%B0%E6%8D%AE%E9%A2%84%E5%A4%84%E7%90%86%E5%B1%82%EF%BC%88common-py%EF%BC%89"><span class="toc-number">1.2.</span> <span class="toc-text">二、数据预处理层（common.py）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E6%A0%87%E5%87%86%E6%B5%81%E7%A8%8B"><span class="toc-number">1.2.1.</span> <span class="toc-text">2.1 标准流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E4%B8%89%E6%9D%A1%E9%80%9A%E7%94%A8%E5%8E%9F%E5%88%99"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.2 三条通用原则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E8%B8%A9%E8%BF%87%E7%9A%84%E5%9D%91"><span class="toc-number">1.2.3.</span> <span class="toc-text">2.3 踩过的坑</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E7%89%B9%E5%BE%81%E5%B7%A5%E7%A8%8B%E5%B1%82%EF%BC%88%E6%A0%B8%E5%BF%83%EF%BC%89"><span class="toc-number">1.3.</span> <span class="toc-text">三、特征工程层（核心）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E7%89%B9%E5%BE%81%E5%88%86%E4%BA%94%E7%B1%BB"><span class="toc-number">1.3.1.</span> <span class="toc-text">3.1 特征分五类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E6%97%B6%E9%97%B4%E7%89%B9%E5%BE%81%E5%86%99%E6%B3%95"><span class="toc-number">1.3.2.</span> <span class="toc-text">3.2 时间特征写法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E6%BB%9E%E5%90%8E%E7%89%B9%E5%BE%81%EF%BC%9A%E4%B8%89%E4%B8%AA%E5%B0%BA%E5%BA%A6"><span class="toc-number">1.3.3.</span> <span class="toc-text">3.3 滞后特征：三个尺度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E6%BB%9A%E5%8A%A8%E7%89%B9%E5%BE%81%EF%BC%9Ashift-%E5%92%8C-window-%E8%A6%81%E9%85%8D%E5%AF%B9"><span class="toc-number">1.3.4.</span> <span class="toc-text">3.4 滚动特征：shift 和 window 要配对</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-%E5%A4%96%E9%83%A8%E6%95%B0%E6%8D%AE%E8%9E%8D%E5%90%88%EF%BC%9A%E4%B8%89%E6%AE%B5%E5%BC%8F"><span class="toc-number">1.3.5.</span> <span class="toc-text">3.5 外部数据融合：三段式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-6-%E9%98%B2%E6%B3%84%E6%BC%8F%E4%B8%89%E6%9D%A1%E9%93%81%E5%BE%8B"><span class="toc-number">1.3.6.</span> <span class="toc-text">3.6 防泄漏三条铁律</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%A8%A1%E5%9E%8B%E8%AE%AD%E7%BB%83%E4%B8%8E%E8%AF%84%E4%BC%B0"><span class="toc-number">1.4.</span> <span class="toc-text">四、模型训练与评估</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E5%88%87%E5%88%86%E7%AD%96%E7%95%A5"><span class="toc-number">1.4.1.</span> <span class="toc-text">4.1 切分策略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E8%B0%83%E5%8F%82%E7%BB%8F%E9%AA%8C"><span class="toc-number">1.4.2.</span> <span class="toc-text">4.2 调参经验</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E8%AF%84%E4%BC%B0%E6%8C%87%E6%A0%87%E7%BB%84%E5%90%88"><span class="toc-number">1.4.3.</span> <span class="toc-text">4.3 评估指标组合</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-%E7%89%B9%E5%BE%81%E9%87%8D%E8%A6%81%E6%80%A7%E5%88%86%E6%9E%90"><span class="toc-number">1.4.4.</span> <span class="toc-text">4.4 特征重要性分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-5-%E6%A8%A1%E5%9E%8B%E4%BF%9D%E5%AD%98%E8%A6%81%E5%B8%A6%E7%89%B9%E5%BE%81%E5%88%97"><span class="toc-number">1.4.5.</span> <span class="toc-text">4.5 模型保存要带特征列</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E8%B8%A9%E5%9D%91%E6%B8%85%E5%8D%95%EF%BC%88%E6%8C%89%E4%B8%A5%E9%87%8D%E7%A8%8B%E5%BA%A6%EF%BC%89"><span class="toc-number">1.5.</span> <span class="toc-text">五、踩坑清单（按严重程度）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E6%9C%AC%E6%AC%A1%E5%85%B3%E9%94%AE%E6%8C%87%E6%A0%87%E6%BC%94%E5%8F%98"><span class="toc-number">1.6.</span> <span class="toc-text">六、本次关键指标演变</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E5%BD%93%E5%89%8D%E7%89%B9%E5%BE%81%E6%B8%85%E5%8D%95%EF%BC%88%E5%AE%9A%E7%A8%BF%E7%89%88%EF%BC%89"><span class="toc-number">1.7.</span> <span class="toc-text">七、当前特征清单（定稿版）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E5%B0%9A%E6%9C%AA%E5%81%9A-%E4%B8%8B%E4%B8%80%E6%AD%A5%E5%80%99%E9%80%89"><span class="toc-number">1.8.</span> <span class="toc-text">八、尚未做 &#x2F; 下一步候选</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%80%BB%E7%BB%93"><span class="toc-number">1.9.</span> <span class="toc-text">九、一句话总结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%94%B5%E5%8A%9B%E8%B4%9F%E8%8D%B7%E9%A2%84%E6%B5%8B-%C2%B7-%E5%B7%A5%E7%A8%8B%E7%BA%A7%E4%BC%98%E5%8C%96%E7%AC%94%E8%AE%B0"><span class="toc-number">2.</span> <span class="toc-text">电力负荷预测 · 工程级优化笔记</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%88%86%E5%B1%82%E6%9E%B6%E6%9E%84%EF%BC%9A%E8%81%8C%E8%B4%A3%E8%BE%B9%E7%95%8C"><span class="toc-number">2.1.</span> <span class="toc-text">一、分层架构：职责边界</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E9%85%8D%E7%BD%AE%E5%A4%96%E7%BD%AE%EF%BC%9A%E6%B6%88%E7%81%AD%E9%AD%94%E6%B3%95%E5%80%BC"><span class="toc-number">2.2.</span> <span class="toc-text">二、配置外置：消灭魔法值</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%87%BD%E6%95%B0%E8%AE%BE%E8%AE%A1%EF%BC%9A%E5%8D%95%E4%B8%80%E8%81%8C%E8%B4%A3-%E5%8F%AF%E7%BB%84%E5%90%88"><span class="toc-number">2.3.</span> <span class="toc-text">三、函数设计：单一职责 + 可组合</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%8F%AF%E8%A7%82%E6%B5%8B%E6%80%A7%EF%BC%9A%E6%97%A5%E5%BF%97-%E6%95%B0%E6%8D%AE%E8%B4%A8%E9%87%8F%E6%8A%A5%E5%91%8A"><span class="toc-number">2.4.</span> <span class="toc-text">四、可观测性：日志 + 数据质量报告</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E5%A5%91%E7%BA%A6%E4%B8%8E%E9%98%B2%E5%BE%A1%EF%BC%9A%E7%B1%BB%E5%9E%8B%E6%8F%90%E7%A4%BA-%E5%85%A5%E5%8F%82%E6%A0%A1%E9%AA%8C"><span class="toc-number">2.5.</span> <span class="toc-text">五、契约与防御：类型提示 + 入参校验</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E9%98%B2%E6%B3%84%E6%BC%8F%E7%9A%84%E5%B7%A5%E7%A8%8B%E7%BA%A6%E6%9D%9F"><span class="toc-number">2.6.</span> <span class="toc-text">六、防泄漏的工程约束</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%83%E3%80%81%E8%AF%84%E4%BC%B0%E5%B7%A5%E7%A8%8B%E5%8C%96%EF%BC%9A%E6%8C%87%E6%A0%87-%E8%AF%8A%E6%96%AD-%E5%8F%AF%E8%A7%86%E5%8C%96%E5%88%86%E7%A6%BB"><span class="toc-number">2.7.</span> <span class="toc-text">七、评估工程化：指标 &#x2F; 诊断 &#x2F; 可视化分离</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AB%E3%80%81%E5%B7%B2%E5%81%9A%E5%88%B0-vs-%E5%BE%85%E6%94%B9%E8%BF%9B%EF%BC%88%E6%89%93%E5%88%86%E8%A1%A8%EF%BC%89"><span class="toc-number">2.8.</span> <span class="toc-text">八、已做到 vs 待改进（打分表）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B9%9D%E3%80%81%E9%87%8D%E6%9E%84%E5%BB%BA%E8%AE%AE%EF%BC%88%E6%8C%89%E6%80%A7%E4%BB%B7%E6%AF%94%E6%8E%92%E5%BA%8F%EF%BC%89"><span class="toc-number">2.9.</span> <span class="toc-text">九、重构建议（按性价比排序）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8D%81%E3%80%81%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%80%BB%E7%BB%93"><span class="toc-number">2.10.</span> <span class="toc-text">十、一句话总结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%94%B5%E5%8A%9B%E8%B4%9F%E8%8D%B7%E9%A2%84%E6%B5%8B-%C2%B7-%E5%88%87%E7%89%87%E4%B8%8E%E5%90%91%E9%87%8F%E5%8C%96%E4%BC%98%E5%8C%96%E7%AC%94%E8%AE%B0%EF%BC%88%E5%90%AB-dt-%E5%BB%B6%E7%94%B3%EF%BC%89"><span class="toc-number">3.</span> <span class="toc-text">电力负荷预测 · 切片与向量化优化笔记（含 dt 延申）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%85%88%E6%90%9E%E6%B8%85%E6%A5%9A%E4%B8%89%E7%A7%8D%E5%88%87%E7%89%87"><span class="toc-number">3.1.</span> <span class="toc-text">一、先搞清楚三种切片</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E8%BF%99%E4%BB%BD%E4%BB%A3%E7%A0%81%E9%87%8C%E7%9A%84-6-%E5%A4%84%E5%88%87%E7%89%87"><span class="toc-number">3.2.</span> <span class="toc-text">二、这份代码里的 6 处切片</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E8%AE%AD%E7%BB%83-%E6%B5%8B%E8%AF%95%E5%88%87%E5%88%86%EF%BC%9Ailoc-split-idx-%E2%9C%85"><span class="toc-number">3.2.1.</span> <span class="toc-text">1. 训练&#x2F;测试切分：iloc[:split_idx] ✅</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E5%AF%B9%E9%BD%90%E5%8F%96%E6%97%B6%E9%97%B4%E5%88%97%EF%BC%9Adata-loc-y-test-index-39-time-39-%E2%9A%A0%EF%B8%8F-%E6%9C%89%E9%A3%8E%E9%99%A9"><span class="toc-number">3.2.2.</span> <span class="toc-text">2. 对齐取时间列：data.loc[y_test.index, &#39;time&#39;] ⚠️ 有风险</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%AD%97%E7%AC%A6%E4%B8%B2%E5%88%87%E7%89%87%EF%BC%9A-str-split-39-39-str-0-%E2%9C%85"><span class="toc-number">3.2.3.</span> <span class="toc-text">3. 字符串切片：.str.split(&#39;&#x2F;&#39;).str[0] ✅</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E5%88%97%E8%A1%A8%E6%8E%A8%E5%AF%BC%E5%8F%96%E5%85%83%E7%BB%84%EF%BC%9A-x-0-for-x-in-flags-%F0%9F%9F%A1-%E5%8F%AF%E4%BC%98%E5%8C%96"><span class="toc-number">3.2.4.</span> <span class="toc-text">4. 列表推导取元组：[x[0] for x in flags] 🟡 可优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E6%9D%A1%E4%BB%B6%E8%B5%8B%E5%80%BC%EF%BC%9A-loc-mask-col-%E2%9C%85"><span class="toc-number">3.2.5.</span> <span class="toc-text">5. 条件赋值：.loc[mask, col] ✅</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-reset-index-drop-True-%EF%BC%9A%E5%88%87%E5%AE%8C%E5%BF%85%E5%81%9A-%E2%9C%85"><span class="toc-number">3.2.6.</span> <span class="toc-text">6. reset_index(drop&#x3D;True)：切完必做 ✅</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%BB%B6%E7%94%B3%EF%BC%9Adt-str-%E6%98%AF%E5%88%87%E7%89%87%E7%9A%84%E2%80%9C%E4%B8%8B%E6%B8%B8%E4%BC%99%E4%BC%B4%E2%80%9D"><span class="toc-number">3.3.</span> <span class="toc-text">三、延申：dt &#x2F; .str 是切片的“下游伙伴”</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-dt-%E5%92%8C-str-%E6%98%AF%E5%90%8C%E4%B8%80%E7%B1%BB%E8%AE%BF%E9%97%AE%E5%99%A8"><span class="toc-number">3.3.1.</span> <span class="toc-text">3.1 dt 和 .str 是同一类访问器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-dt-%E8%83%BD%E5%8F%96%E7%9A%84%E6%89%80%E6%9C%89%E5%B8%B8%E7%94%A8%E5%B1%9E%E6%80%A7%EF%BC%88%E5%A4%87%E6%9F%A5%EF%BC%89"><span class="toc-number">3.3.2.</span> <span class="toc-text">3.2 dt 能取的所有常用属性（备查）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E4%B8%80%E5%A4%84%E5%8F%AF%E4%BC%98%E5%8C%96%EF%BC%9A%E6%8C%89%E5%A4%A9%E8%81%9A%E5%90%88%E7%94%A8-dt-normalize-%E8%80%8C%E4%B8%8D%E6%98%AF-dt-date"><span class="toc-number">3.3.3.</span> <span class="toc-text">3.3 一处可优化：按天聚合用 dt.normalize() 而不是 dt.date</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-dt-str-%E4%B8%8E%E5%88%87%E7%89%87%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-number">3.3.4.</span> <span class="toc-text">3.4 dt &#x2F; .str 与切片的关系</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E5%88%87%E7%89%87%E4%BC%98%E5%8C%96%E7%9A%84%E4%B8%89%E4%B8%AA%E9%80%9A%E7%94%A8%E5%8E%9F%E5%88%99"><span class="toc-number">3.4.</span> <span class="toc-text">四、切片优化的三个通用原则</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E5%88%99-1%EF%BC%9A%E8%83%BD-str-dt-%E4%B8%8D-apply%EF%BC%8C%E8%83%BD-apply-%E4%B8%8D%E5%8E%BB%E9%87%8D%E7%AE%97"><span class="toc-number">3.4.1.</span> <span class="toc-text">原则 1：能 .str &#x2F; .dt 不 apply，能 apply 不去重算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E5%88%99-2%EF%BC%9A%E5%88%87%E5%88%86%E6%97%B6%E5%90%8C%E6%97%B6%E5%88%87%E2%80%9C%E7%89%B9%E5%BE%81-%E6%A0%87%E7%AD%BE-%E8%BE%85%E5%8A%A9%E5%88%97%E2%80%9D"><span class="toc-number">3.4.2.</span> <span class="toc-text">原则 2：切分时同时切“特征 + 标签 + 辅助列”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E5%88%99-3%EF%BC%9A%E9%87%8D%E5%A4%8D%E8%AE%A1%E7%AE%97%E5%89%8D%E5%85%88%E9%97%AE%E2%80%9C%E8%83%BD%E4%B8%8D%E8%83%BD%E5%8E%BB%E9%87%8D%E2%80%9D"><span class="toc-number">3.4.3.</span> <span class="toc-text">原则 3：重复计算前先问“能不能去重”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E5%88%99-4%EF%BC%88%E5%BB%B6%E7%94%B3%EF%BC%89%EF%BC%9A%E8%AE%BF%E9%97%AE%E5%99%A8%E9%80%89%E5%AF%B9%E6%96%B9%E6%B3%95"><span class="toc-number">3.4.4.</span> <span class="toc-text">原则 4（延申）：访问器选对方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E8%BF%99%E6%AE%B5%E4%BB%A3%E7%A0%81%E7%9A%84%E5%88%87%E7%89%87%E6%89%93%E5%88%86"><span class="toc-number">3.5.</span> <span class="toc-text">五、这段代码的切片打分</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E4%B8%80%E5%8F%A5%E8%AF%9D%E6%80%BB%E7%BB%93"><span class="toc-number">3.6.</span> <span class="toc-text">六、一句话总结</span></a></li></ol></li></ol></div></div><footer><nobr>Published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>

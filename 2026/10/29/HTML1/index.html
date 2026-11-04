@@ -1,0 +1,1409 @@
+<!DOCTYPE html><html lang="en" theme-mode="auto"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>HTML1 | Hexo</title><meta name="description" content="1. 前端开发介绍我们介绍Web网站工作流程的时候提到，前端开发，主要的职责就是将数据以好看的样式呈现出来。说白了，就是开发网页程序，如下图所示：  那在讲解web前端开发之前，我们先需要对web前端开发有一个整体的认知。主要明确一下三个问题： 1). 网页有哪些部分组成 ? 文字、图片、音频、视频、超链接、表格等等。 2). 我们看到的网页，背后的本质是什么 ? 程序员写的前端代码 (备注：在前">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HTML1">
+<meta property="og:url" content="http://example.com/2026/10/29/HTML1/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1. 前端开发介绍我们介绍Web网站工作流程的时候提到，前端开发，主要的职责就是将数据以好看的样式呈现出来。说白了，就是开发网页程序，如下图所示：  那在讲解web前端开发之前，我们先需要对web前端开发有一个整体的认知。主要明确一下三个问题： 1). 网页有哪些部分组成 ? 文字、图片、音频、视频、超链接、表格等等。 2). 我们看到的网页，背后的本质是什么 ? 程序员写的前端代码 (备注：在前">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2026/10/29/HTML1/Snipaste_2026-10-29_22-17-39.png">
+<meta property="og:image" content="http://example.com/2026/10/29/HTML1/Snipaste_2026-10-29_22-30-59.png">
+<meta property="article:published_time" content="2026-10-29T14:14:54.000Z">
+<meta property="article:modified_time" content="2026-10-30T12:10:20.516Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2026/10/29/HTML1/Snipaste_2026-10-29_22-17-39.png"><link rel="canonical" href="http://example.com/2026/10/29/HTML1/"><link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="preload" as="font" crossorigin="anonymous" href="/font/Bender.ttf"><link rel="preload" as="font" crossorigin="anonymous" href="/font/BenderLight.woff2"><link rel="preload" as="font" crossorigin="anonymous" href="/font/JetBrainsMono-Regular.woff2"><link rel="stylesheet" href="/css/arknights.css"><style>@font-face {
+  font-family: Bender;
+  src: local('Bender'), url("/font/Bender.ttf"), url("/font/Bender.otf");
+}
+@font-face {
+  font-family: BenderLight;
+  src: local('BenderLight'), url("/font/BenderLight.woff2") format('woff2');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}
+</style><meta name="page-config" content="{&quot;code_fold&quot;:null}"><script class="pjax-js">var config = {"root":"/","code_fold":15,"search":{"preload":true,"activeHolder":"Enter here","blurHolder":"Search","noResult":"Data \"$0\" not found"},"code":{"codeInfo":"$0 - $1 lines","copy":"copy"}};
+var page_config = {
+  code_fold: null
+};
+function updatePageConfig() {
+  var newPageConfig = document.querySelector('meta[name="page-config"]');
+  if (newPageConfig) {
+    page_config = JSON.parse(newPageConfig.content);
+  }
+}
+document.addEventListener('pjax:complete', function() { updatePageConfig(); });
+updatePageConfig();</script><link type="text/css" rel="stylesheet" href="/lib/encrypt/hbe.style.css"><script src="//unpkg.com/mermaid@11.12.2/dist/mermaid.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.1/MathJax.js"></script><script>MathJax.Hub.Config({
+ menuSettings: {
+   zoom: "None"
+ },
+ showMathMenu: false,
+ jax: ["input/TeX","output/CommonHTML"],
+ extensions: ["tex2jax.js"],
+ TeX: {
+   extensions: ["AMSmath.js","AMSsymbols.js"],
+   equationNumbers: {
+     autoNumber: "AMS"
+   }
+ },
+ tex2jax: {
+   inlineMath: [["\\(", "\\)"]],
+   displayMath: [["\\[", "\\]"]]
+ }
+});</script><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lightgallery.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-zoom.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-thumbnail.css"><link type="text/css" rel="stylesheet" href="/lib/fontawesome/css/all.min.css"><script>if (window.localStorage.getItem('theme-mode') === 'light' || window.matchMedia('(prefers-color-scheme:light)').matches)
+ document.documentElement.setAttribute('theme-mode', 'light')
+if (window.localStorage.getItem('theme-mode') === 'dark' || window.matchMedia('(prefers-color-scheme:dark)').matches)
+ document.documentElement.setAttribute('theme-mode', 'dark')</script><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.woff2") format('woff2');
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><style>:root {
+ --dark-background: url('https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg');
+ --light-background: url('/img/bk.jpg');
+ --theme-encrypt-confirm: 'confirm'
+}</style><script defer src="/js/arknights.js"></script><script defer src="/js/search.js"></script><script defer src="https://vercount.one/js"></script><script defer type="module">import mermaid from '//unpkg.com/mermaid@11.12.2/dist/mermaid.esm.min.mjs';
+window.mermaid = mermaid;
+code.paintMermaid();
+</script><script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.1/MathJax.js"></script><script>MathJax.Hub.Config({
+  menuSettings: {
+    zoom: "None"
+  },
+  showMathMenu: false,
+  jax: ["input/TeX","output/CommonHTML"],
+  extensions: ["tex2jax.js"],
+  TeX: {
+    extensions: ["AMSmath.js","AMSsymbols.js"],
+    equationNumbers: {
+      autoNumber: "AMS"
+    }
+  },
+  tex2jax: {
+    inlineMath: [["\\(", "\\)"]],
+    displayMath: [["\\[", "\\]"]]
+  }
+});
+</script><script async src="//unpkg.com/lightgallery@2.7.1/lightgallery.min.js"></script><script async src="//unpkg.com/lightgallery@2.7.1/plugins/zoom/lg-zoom.min.js"></script><script async src="//unpkg.com/lightgallery@2.7.1/plugins/thumbnail/lg-thumbnail.min.js"></script><script async src="/lib/encrypt/hbe.js"></script><script async src="/js/pjax.js"></script><script class="pjax-js">reset= () => {document.querySelector('.lg-container')?.remove()
+lightGallery(document.getElementById('post-bg'), {
+  plugins: [lgZoom,lgThumbnail],
+  selector: '.item-img'})}</script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js','data-pjax','.vercount','meta[name=page-config]'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);document.addEventListener('pjax:success', _ => {
+ const script = document.createElement('script');
+ script.src = 'https://vercount.one/js';
+ document.head.appendChild(script);
+});reset()})</script><script class="pjax-js">reset= () => {window.giscusSettings = {
+ repo: 'juicer0801/juicer0801.github.io',
+ repoId: 'R_kgDOUcAR_w',
+ category: 'Announcements',
+ categoryId: 'DIC_kwDOUcAR_84DIlqM',
+ mapping: 'pathname',
+ strict: '0',
+ reactionsEnabled: '1',
+ emitMetadata: '0',
+ inputPosition: 'bottom',
+ lang: 'zh-CN',
+ crossorigin: 'anonymous' , loading: 'lazy'};window.giscusThemeConfig = { theme: 'preferred_color_scheme' };MathJax.Hub.Queue(["Typeset", MathJax.Hub]);document.querySelector('.lg-container')?.remove()
+const postBg = document.querySelector('#post-bg');
+if (postBg) lightGallery(postBg, {
+  plugins: [lgZoom,lgThumbnail],
+  selector: '.item-img'})}</script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js','data-pjax','.vercount','meta[name=page-config]'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);document.addEventListener('pjax:success', _ => {
+ const script = document.createElement('script');
+ script.src = 'https://vercount.one/js';
+ document.head.appendChild(script);
+});reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/tags/"><span class="navItemTitle">Tags</span></a></li><li class="navItem"><a class="navBlock" href="/categories/"><span class="navItemTitle">Categories</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>HTML1</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2026-10-29T14:14:54.000Z" id="date"> 2026-10-29</time></div></span><br><span>Last Update: <div class="control"><time datetime="2026-10-30T12:10:20.516Z" id="updated"> 2026-10-30</time></div></span><br><span>Word Count: <div class="control">11k</div></span><br><span>Read Time: <div class="control">46 min</div></span><br><span id="vercount_container_page_pv">Page View: <span class="control" id="vercount_value_page_pv">loading...</span></span></div></div><hr><div id="post-content"><h1 id="1-前端开发介绍"><a href="#1-前端开发介绍" class="headerlink" title="1. 前端开发介绍"></a>1. 前端开发介绍</h1><p>我们介绍Web网站工作流程的时候提到，前端开发，主要的职责就是将数据以好看的样式呈现出来。说白了，就是开发网页程序，如下图所示：</p>
+
+<p>那在讲解web前端开发之前，我们先需要对web前端开发有一个整体的认知。主要明确一下三个问题：</p>
+<p>1). 网页有哪些部分组成 ?</p>
+<p>文字、图片、音频、视频、超链接、表格等等。</p>
+<p>2). 我们看到的网页，背后的本质是什么 ?</p>
+<p>程序员写的前端代码 (备注：在前后端分离的开发模式中，)</p>
+<p>3). 前端的代码是如何转换成用户眼中的网页的 ?</p>
+<p>通过浏览器转化（解析和渲染）成用户看到的网页</p>
+<p>浏览器中对代码进行解析和渲染的部分，称为 <strong>浏览器内核</strong></p>
+<p>而市面上的浏览器非常多，比如：IE、火狐Firefox、苹果safari、欧朋、谷歌Chrome、QQ浏览器、360浏览器等等。 而且我们电脑上安装的浏览器可能都不止一个，有很多。 </p>
+<p>但是呢，需要大家注意的是，不同的浏览器，内核不同，对于相同的前端代码解析的效果也会存在差异。 那这就会造成一个问题，同一段前端程序，不同浏览器展示出来的效果是不一样的，这个用户体验就很差了。而我们想达到的效果则是，即使用户使用的是不同的浏览器，解析同一段前端代码，最终展示出来的效果都是相同的。</p>
+<p>要想达成这样一个目标，我们就需要定义一个统一的标准，然后让各大浏览器厂商都参照这个标准来实现即可。 而这套标准呢，其实早都已经定义好了，那就是我们接下来，要介绍的web标准。</p>
+<p><strong>Web标准</strong>也称为<strong>网页标准</strong>，由一系列的标准组成，大部分由W3C（ World Wide Web Consortium，万维网联盟）负责制定。由三个组成部分：</p>
+<ul>
+<li><p>HTML：负责网页的结构（页面元素和内容）。</p>
+</li>
+<li><p>CSS：负责网页的表现（页面元素的外观、位置等页面样式，如：颜色、大小等）。</p>
+</li>
+<li><p>JavaScript：负责网页的行为（交互效果）。</p>
+</li>
+</ul>
+
+<p>当然了，随着技术的发展，我们为了更加快速的开发，现在也出现了很多前端开发的高级技术。例如：vue、elementui、Axios等等。</p>
+<p>那这些内容呢，也是我们前端三天课程中要讲解的内容。 前端的3天课程安排如下：</p>
+<ul>
+<li>HTML &amp; CSS</li>
+<li>JavaScript &amp; Vue</li>
+<li>Ajax &amp; Axios &amp; ElementUI &amp; Nginx</li>
+</ul>
+<h1 id="2-HTML-amp-CSS"><a href="#2-HTML-amp-CSS" class="headerlink" title="2. HTML &amp; CSS"></a>2. HTML &amp; CSS</h1><p>1). 什么是HTML ?</p>
+<blockquote>
+<p><strong>HTML: </strong>HyperText Markup Language，超文本标记语言。</p>
+<ul>
+<li><p>超文本：超越了文本的限制，比普通文本更强大。除了文字信息，还可以定义图片、音频、视频等内容。</p>
+</li>
+<li><p>标记语言：由标签构成的语言</p>
+<ul>
+<li>HTML标签都是预定义好的。例如：使用 <h1> 标签展示标题，使用<a>展示超链接，使用<img>展示图片，<video>展示视频。</li>
+<li>HTML代码直接在浏览器中运行，HTML标签由浏览器解析。</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<p>下面展示的是一段html代码经过浏览器解析，呈现的效果如右图所示：</p>
+
+<p>2). 什么是CSS ?</p>
+<blockquote>
+<p><strong>CSS:</strong> Cascading Style Sheet，层叠样式表，用于控制页面的样式（表现）。</p>
+</blockquote>
+<p>下面展示的是一段 html代码 及 CSS样式 经过浏览器解析，呈现的效果如右图所示：</p>
+
+<h2 id="2-1-HTML快速入门"><a href="#2-1-HTML快速入门" class="headerlink" title="2.1 HTML快速入门"></a>2.1 HTML快速入门</h2><h3 id="2-1-1-操作"><a href="#2-1-1-操作" class="headerlink" title="2.1.1 操作"></a>2.1.1 操作</h3><p>第一步:创建一个名为HTML的文件夹，然后找到课程资料中的 1.jpg 文件放到该目录下，此时HTML文件夹中内容如下：</p>
+
+<p>第二步：创建一个文本文件，然后修改文件名为hello.html,注意文件的后缀是.html,如下图所示：</p>
+
+<p>第三步：选中文件，鼠标右击，选择使用记事本打开文件，并且编写前端代码</p>
+<p>首先html有固定的基本结构</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>HTML 快速入门<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><br>	<span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Hello HTML<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span><br>		<span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;1.jpg&quot;</span>/&gt;</span><br>	<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>其中&lt;html&gt;是根标签，&lt;head&gt;和&lt;body&gt;是子标签，&lt;head&gt;中的字标签&lt;title&gt;是用来定义网页的标题的，里面定义的内容会显示在浏览器网页的标题位置。</p>
+<p>而 <body> 中编写的内容，就网页中显示的核心内容。</p>
+<p>第四步：然后选中文件，鼠标右击，选择使用浏览器打开文件，浏览器呈现效果如下:</p>
+
+<h3 id="2-1-2-总结"><a href="#2-1-2-总结" class="headerlink" title="2.1.2 总结"></a>2.1.2 总结</h3><p>1). HTML页面的基础结构标签</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>    	<span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span> <span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>       <br>    <span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>&lt;title&gt;中定义标题显示在浏览器的标题位置，&lt;body&gt;中定义的内容会呈现在浏览器的内容区域</p>
+<p>2). HTML中的标签特点</p>
+<ul>
+<li>HTML标签不区分大小写</li>
+<li>HTML标签的属性值，采用单引号、双引号都可以</li>
+<li>HTML语法相对比较松散 (建议大家编写HTML标签的时候尽量严谨一些)</li>
+</ul>
+<h2 id="2-2-开发工具"><a href="#2-2-开发工具" class="headerlink" title="2.2 开发工具"></a>2.2 开发工具</h2><ul>
+<li><p>我们通过快速入门案例，发现由记事本文件开发html是非常不方便的，所以接下来我们需要学习一款前端专业的开发工具VS Code。</p>
+</li>
+<li><p>Visual Studio Code（简称 VS Code ）是 Microsoft 于2015年4月发布的一款代码编辑器。VS Code 对前端代码有非常强大的支持，同时也其他编程语言（例如：C++、Java、Python、PHP、Go等）。VS Code 提供了非常强大的插件库，大大提高了开发效率。</p>
+</li>
+<li><p>官网： <a target="_blank" rel="noopener" href="https://code.visualstudio.com">https://code.visualstudio.com</a></p>
+</li>
+</ul>
+<ul>
+<li>详细安装教程：参考 <strong>资料/VSCode安装/安装文档/VS Code安装文档.md</strong></li>
+</ul>
+<blockquote>
+<p>注意：需要注意的是，我们作为一名开发者，不应该将软件软装在包含中文名的路径中 。</p>
+</blockquote>
+<h2 id="2-3-基础标签-amp-样式"><a href="#2-3-基础标签-amp-样式" class="headerlink" title="2.3 基础标签 &amp; 样式"></a>2.3 基础标签 &amp; 样式</h2><p>那我们在讲解HTML的常见基础标签 及 CSS的基本样式时，我们就以 新浪新闻页面 为例，来进行讲解，这样大家不仅能够知道 常见标签及样式的作用，还能够知道具体的应用场景。</p>
+<p>新浪新闻的具体页面效果如下：</p>
+
+<p>原始页面网址：<a target="_blank" rel="noopener" href="https://news.sina.com.cn/gov/xlxw/2023-03-03/doc-imyipzuy7321600.shtml">https://news.sina.com.cn/gov/xlxw/2023-03-03/doc-imyipzuy7321600.shtml</a></p>
+<p>而对于这个新浪新闻的页面来说，核心内容分为两个部分，如下：</p>
+<ul>
+<li>新浪新闻-标题部分</li>
+<li>新浪新闻-正文部分</li>
+</ul>
+
+<h3 id="2-3-1-新浪新闻-标题实现"><a href="#2-3-1-新浪新闻-标题实现" class="headerlink" title="2.3.1 新浪新闻-标题实现"></a>2.3.1 新浪新闻-标题实现</h3><h4 id="2-3-1-1-标题排版"><a href="#2-3-1-1-标题排版" class="headerlink" title="2.3.1.1 标题排版"></a>2.3.1.1 标题排版</h4><h5 id="2-3-1-1-1-分析"><a href="#2-3-1-1-1-分析" class="headerlink" title="2.3.1.1.1 分析"></a>2.3.1.1.1 分析</h5>
+<p> 1). 第一部分，是一张图片，需要用到HTML中的图片标签 <img> 来实现。</p>
+<p> 2). 第二部分，是一个标题，需要用到HTML中的标题标签 <h1> … <h6>来实现。</p>
+<p> 3). 第三部分，有两条水平分割线，需要用到HTML中的 <hr> 标签来定义水平分割线。</p>
+<h5 id="2-3-1-1-2-标签"><a href="#2-3-1-1-2-标签" class="headerlink" title="2.3.1.1.2 标签"></a>2.3.1.1.2 标签</h5><p>1). 图片标签 img</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs html">A. 图片标签: <span class="hljs-tag">&lt;<span class="hljs-name">img</span>&gt;</span><br><br>B. 常见属性: <br>	src: 指定图像的url (可以指定 绝对路径 , 也可以指定 相对路径)<br>	width: 图像的宽度 (像素 / 百分比 , 相对于父元素的百分比)<br>	height: 图像的高度 (像素 / 百分比 , 相对于父元素的百分比)<br>	<br>	备注: 一般width 和 height 我们只会指定一个，另外一个会自动的等比例缩放。<br>	<br>C. 路径书写方式:<br>    绝对路径:<br>        1. 绝对磁盘路径: C:\Users\Administrator\Desktop\HTML\img\news_logo.png<br>        			   <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;C:\Users\Administrator\Desktop\HTML\img\news_logo.png&quot;</span>&gt;</span><br><br>        2. 绝对网络路径: https://i2.sinaimg.cn/dy/deco/2012/0613/yocc20120613img01/news_logo.png<br>        			   <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;https://i2.sinaimg.cn/dy/deco/2012/0613/yocc20120613img01/news_logo.png&quot;</span>&gt;</span><br>    <br>    相对路径:<br>        ./ : 当前目录 , ./ 可以省略的<br>        ../: 上一级目录<br></code></pre></td></tr></table></figure>
+<p>2). 标题标签 h 系列</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs html">A. 标题标签: <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span> - <span class="hljs-tag">&lt;<span class="hljs-name">h6</span>&gt;</span><br>    <br>	<span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>111111111111<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>111111111111<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">h3</span>&gt;</span>111111111111<span class="hljs-tag">&lt;/<span class="hljs-name">h3</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">h4</span>&gt;</span>111111111111<span class="hljs-tag">&lt;/<span class="hljs-name">h4</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">h5</span>&gt;</span>111111111111<span class="hljs-tag">&lt;/<span class="hljs-name">h5</span>&gt;</span><br>	<span class="hljs-tag">&lt;<span class="hljs-name">h6</span>&gt;</span>111111111111<span class="hljs-tag">&lt;/<span class="hljs-name">h6</span>&gt;</span><br>	<br>B. 效果 : h1为一级标题，字体也是最大的 ； h6为六级标题，字体是最小的。<br></code></pre></td></tr></table></figure>
+<p>3). 水平分页线标签 <hr></p>
+<h5 id="2-3-1-1-2-实现"><a href="#2-3-1-1-2-实现" class="headerlink" title="2.3.1.1.2 实现"></a>2.3.1.1.2 实现</h5><p>1). 打开VsCode，选择左侧最底部的 “资源管理器”，然后选择打开文件夹，选择打开桌面的 HTML 文件夹 </p>
+<p>2). 将资料中提供的 图片、音频、视频 文件夹的这三个文件夹（里面是图片、音视频素材），复制到 HTML 文件夹中。 </p>
+
+<p>3). 在VsCode中创建一个新的 html 文件，文件的后缀名设置为 .html</p>
+
+<p>4). html 文件创建好之后，在其中输入 ！，然后直接回车，就可以生成 HTML 的基础结构标签</p>
+
+<p>5). 编写标题排版的核心代码</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-comment">&lt;!-- 文档类型为HTML --&gt;</span><br><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;en&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>    <span class="hljs-comment">&lt;!-- 字符集为UTF-8 --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;</span><br>    <span class="hljs-comment">&lt;!-- 设置浏览器兼容性 --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">http-equiv</span>=<span class="hljs-string">&quot;X-UA-Compatible&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;IE=edge&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;viewport&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>焦点访谈：中国底气 新思想夯实大国粮仓<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>    <span class="hljs-comment">&lt;!-- </span><br><span class="hljs-comment">    img标签: </span><br><span class="hljs-comment">        src: 图片资源路径</span><br><span class="hljs-comment">        width: 宽度(px, 像素 ; % , 相对于父元素的百分比)</span><br><span class="hljs-comment">        height: 高度(px, 像素 ; % , 相对于父元素的百分比)</span><br><span class="hljs-comment">        </span><br><span class="hljs-comment">        &lt;img src=&quot;img/news_logo.png&quot; width=&quot;80%&quot; &gt;</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">    路径书写方式:</span><br><span class="hljs-comment">        绝对路径:</span><br><span class="hljs-comment">            1. 绝对磁盘路径: C:\Users\Administrator\Desktop\HTML\img\news_logo.png</span><br><span class="hljs-comment">                           &lt;img src=&quot;C:\Users\Administrator\Desktop\HTML\img\news_logo.png&quot;&gt;</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">            2. 绝对网络路径: https://i2.sinaimg.cn/dy/deco/2012/0613/yocc20120613img01/news_logo.png</span><br><span class="hljs-comment">                           &lt;img src=&quot;https://i2.sinaimg.cn/dy/deco/2012/0613/yocc20120613img01/news_logo.png&quot;&gt;</span><br><span class="hljs-comment">        相对路径:</span><br><span class="hljs-comment">            ./ : 当前目录 , ./ 可以省略的</span><br><span class="hljs-comment">            ../: 上一级目录</span><br><span class="hljs-comment">     --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;img/news_logo.png&quot;</span>&gt;</span> 新浪政务 &gt; 正文<br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>焦点访谈：中国底气 新思想夯实大国粮仓<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span><br>    <br>    <span class="hljs-tag">&lt;<span class="hljs-name">hr</span>&gt;</span><br>    2023年03月02日 21:50 央视网<br>    <span class="hljs-tag">&lt;<span class="hljs-name">hr</span>&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>图片的设置既可以设置它的像素也可以设置他的占比，但是我们一般只会设置它的宽（高）的其中一个，因为另一个会等比例缩放，两个都设置的形状话会奇怪</p>
+<h4 id="2-3-1-2-标题样式"><a href="#2-3-1-2-标题样式" class="headerlink" title="2.3.1.2 标题样式"></a>2.3.1.2 标题样式</h4><p>新浪新闻的标题部分的基本排版，我们已经完成了，然后大家会看到，我们编写的一级标题，默认字体颜色为纯黑色。 而原始的新浪新闻页面的新闻标题字体，并不是纯黑色，而是灰黑色， 那接下来，我们就要来设置这个字体的颜色。 而要设置这个字体的颜色，我们就需要通过CSS样式来控制 。</p>
+<p>那在HTML的文件中，我们如何来编写CSS样式呢，此时就涉及到CSS的三种引入方式。</p>
+<h5 id="2-3-1-2-1-CSS引入方式"><a href="#2-3-1-2-1-CSS引入方式" class="headerlink" title="2.3.1.2.1 CSS引入方式"></a>2.3.1.2.1 CSS引入方式</h5><p>具体有3种引入方式，语法如下表格所示：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>语法描述</th>
+<th>示例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>行内样式</td>
+<td>在标签内使用style属性，属性值是css属性键值对</td>
+<td>&lt;h1 style=”xxx:xxx;”&gt;中国新闻网&lt;/h1&gt;</td>
+</tr>
+<tr>
+<td>内嵌样式</td>
+<td>定义&lt;style&gt;标签，在标签内部定义css样式</td>
+<td>&lt;style&gt; h1 {…} &lt;/style&gt;</td>
+</tr>
+<tr>
+<td>外联样式</td>
+<td>定义&lt;link&gt;标签，通过href属性引入外部css文件</td>
+<td>&lt;link rel=”stylesheet” href=”css/news.css”&gt;</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>对于上述3种引入方式，企业开发的使用情况如下：</p>
+<ol>
+<li>内联样式会出现大量的代码冗余，不方便后期的维护，所以不常用。</li>
+<li>内部样式，通过定义css选择器，让样式作用于当前页面的指定的标签上。</li>
+<li>外部样式，html和css实现了完全的分离，企业开发常用方式。</li>
+</ol>
+<h5 id="2-3-1-2-2-颜色表示"><a href="#2-3-1-2-2-颜色表示" class="headerlink" title="2.3.1.2.2 颜色表示"></a>2.3.1.2.2 颜色表示</h5><p>在前端程序开发中，颜色的表示方式常见的有如下三种：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>表示方式</strong></th>
+<th><strong>表示含义</strong></th>
+<th><strong>取值</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>关键字</td>
+<td>预定义的颜色名</td>
+<td>red、green、blue…</td>
+</tr>
+<tr>
+<td>rgb表示法</td>
+<td>红绿蓝三原色，每项取值范围：0-255</td>
+<td>rgb(0,0,0)、rgb(255,255,255)、rgb(255,0,0)</td>
+</tr>
+<tr>
+<td>十六进制表示法</td>
+<td>#开头，将数字转换成十六进制表示</td>
+<td>#000000、#ff0000、#cccccc，简写：#000、#ccc</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h5 id="2-3-1-2-3-标题字体颜色"><a href="#2-3-1-2-3-标题字体颜色" class="headerlink" title="2.3.1.2.3 标题字体颜色"></a>2.3.1.2.3 标题字体颜色</h5><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;en&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">http-equiv</span>=<span class="hljs-string">&quot;X-UA-Compatible&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;IE=edge&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;viewport&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>焦点访谈：中国底气 新思想夯实大国粮仓<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><br>    <span class="hljs-comment">&lt;!-- 方式二: 内嵌样式 --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="language-css"></span><br><span class="language-css">        <span class="hljs-selector-tag">h1</span> &#123;</span><br><span class="language-css">            <span class="hljs-comment">/* color: red; */</span></span><br><span class="language-css">            <span class="hljs-comment">/* color: rgb(0, 0, 255); */</span></span><br><span class="language-css">            <span class="hljs-attribute">color</span>: <span class="hljs-number">#4D4F53</span>;</span><br><span class="language-css">        &#125;</span><br><span class="language-css">    </span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span><br><br>    <span class="hljs-comment">&lt;!-- 方式三: 外联样式 --&gt;</span><br>    <span class="hljs-comment">&lt;!-- &lt;link rel=&quot;stylesheet&quot; href=&quot;css/news.css&quot;&gt; --&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;img/news_logo.png&quot;</span>&gt;</span> 新浪政务 &gt; 正文<br><br>    <span class="hljs-comment">&lt;!-- 方式一: 行内样式 --&gt;</span><br>    <span class="hljs-comment">&lt;!-- &lt;h1 style=&quot;color: red;&quot;&gt;焦点访谈：中国底气 新思想夯实大国粮仓&lt;/h1&gt; --&gt;</span><br>    <br>    <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>焦点访谈：中国底气 新思想夯实大国粮仓<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">hr</span>&gt;</span><br>    2023年03月02日 21:50 央视网<br>    <span class="hljs-tag">&lt;<span class="hljs-name">hr</span>&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>备注: 要想拾取某一个网页中的颜色，我们可以借助于浏览器的拾色器插件来完成。【拾色器插件的安装，参照资料中提供的文档即可】</p>
+<h5 id="2-3-1-2-4-CSS选择器"><a href="#2-3-1-2-4-CSS选择器" class="headerlink" title="2.3.1.2.4 CSS选择器"></a>2.3.1.2.4 CSS选择器</h5><p>顾名思义：选择器是选取需设置样式的元素（标签），但是我们根据业务场景不同，选择的标签的需求也是多种多样的，所以选择器有很多种，因为我们是做后台开发的，所以对于css选择器，我们只学习最基本的3种。</p>
+<p><strong>选择器通用语法如下</strong>：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs css">选择器名   &#123;<br>    css样式名：css样式值;<br>    css样式名：css样式值;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>我们需要学习的3种选择器是元素选择器，id选择器，class选择器，语法以及作用如下：</p>
+<p><strong>1.元素（标签）选择器：</strong> </p>
+<ul>
+<li>选择器的名字必须是标签的名字</li>
+<li>作用：选择器中的样式会作用于所有同名的标签上</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">元素名称 &#123;<br>    css样式名:css样式值；<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>例子如下：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-tag">div</span>&#123;<br>    <span class="hljs-attribute">color</span>: red;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><strong>2.id选择器:</strong></p>
+<ul>
+<li>选择器的名字前面需要加上#</li>
+<li>作用：选择器中的样式会作用于指定id的标签上，而且有且只有一个标签（由于id是唯一的）</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">#id属性值 &#123;<br>    css样式名:css样式值；<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>例子如下：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-id">#did</span> &#123;<br>    <span class="hljs-attribute">color</span>: blue;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><strong>3.类选择器：</strong></p>
+<ul>
+<li>选择器的名字前面需要加上 .</li>
+<li>作用：选择器中的样式会作用于所有class的属性值和该名字一样的标签上，可以是多个</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">.class属性值 &#123;<br>    css样式名:css样式值；<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>例子如下：</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs css"><span class="hljs-selector-class">.cls</span>&#123;<br>     <span class="hljs-attribute">color</span>: green;<br> &#125;<br></code></pre></td></tr></table></figure>
+<h5 id="2-3-1-2-5-发布时间字体颜色"><a href="#2-3-1-2-5-发布时间字体颜色" class="headerlink" title="2.3.1.2.5 发布时间字体颜色"></a>2.3.1.2.5 发布时间字体颜色</h5><p>Hexo 颜色设置的写法<br class='item-img' data-src='/2026/10/29/HTML1/Snipaste_2026-10-29_22-17-39.png'><img src="/2026/10/29/HTML1/Snipaste_2026-10-29_22-17-39.png" class="" title="颜色设置的写法"></p>
+<p>CSS元素选择器<br class='item-img' data-src='/2026/10/29/HTML1/Snipaste_2026-10-29_22-30-59.png'><img src="/2026/10/29/HTML1/Snipaste_2026-10-29_22-30-59.png" class="" title="CSS元素选择器"></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;en&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">http-equiv</span>=<span class="hljs-string">&quot;X-UA-Compatible&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;IE=edge&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;viewport&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>焦点访谈：中国底气 新思想夯实大国粮仓<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="language-css"></span><br><span class="language-css">        <span class="hljs-selector-tag">h1</span> &#123;</span><br><span class="language-css">            <span class="hljs-attribute">color</span>: <span class="hljs-number">#4D4F53</span>;</span><br><span class="language-css">        &#125;</span><br><span class="language-css"></span><br><span class="language-css">        <span class="hljs-comment">/* 元素选择器 */</span></span><br><span class="language-css">        <span class="hljs-comment">/* span &#123;</span></span><br><span class="hljs-comment"><span class="language-css">            color: red;</span></span><br><span class="hljs-comment"><span class="language-css">        &#125; */</span></span><br><span class="language-css"></span><br><span class="language-css">        <span class="hljs-comment">/* 类选择器 */</span></span><br><span class="language-css">        <span class="hljs-comment">/* .cls &#123;</span></span><br><span class="hljs-comment"><span class="language-css">            color: green;</span></span><br><span class="hljs-comment"><span class="language-css">        &#125; */</span></span><br><span class="language-css">        </span><br><span class="language-css">        <span class="hljs-comment">/* ID选择器 */</span></span><br><span class="language-css">        <span class="hljs-selector-id">#time</span> &#123;</span><br><span class="language-css">            <span class="hljs-attribute">color</span>: <span class="hljs-number">#968D92</span>;</span><br><span class="language-css">            <span class="hljs-attribute">font-size</span>: <span class="hljs-number">13px</span>; <span class="hljs-comment">/* 设置字体大小 */</span></span><br><span class="language-css">        &#125;</span><br><span class="language-css"></span><br><span class="language-css">    </span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;img/news_logo.png&quot;</span>&gt;</span> 新浪政务 &gt; 正文<br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>焦点访谈：中国底气 新思想夯实大国粮仓<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">hr</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;cls&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;time&quot;</span>&gt;</span>2023年03月02日 21:50<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>  <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;cls&quot;</span>&gt;</span>央视网<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">hr</span>&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>上述我们还使用了一个css的属性 font-size , 用来设置字体的大小。 但是需要注意，在设置字体的大小时，单位px不能省略，否则不生效。</p>
+<h4 id="2-3-1-3-超链接"><a href="#2-3-1-3-超链接" class="headerlink" title="2.3.1.3 超链接"></a>2.3.1.3 超链接</h4><ul>
+<li><p>在新浪新闻的标题部分，当我们点击顶部的 “新浪政务”，浏览器将自动在当前窗口访问新浪政务首页这个资源（<a target="_blank" rel="noopener" href="http://gov.sina.com.cn/）">http://gov.sina.com.cn/）</a></p>
+</li>
+<li><p>当我们点击新闻发布时间之后的 “央视网”，浏览器将会自动打开一个新的标签页，然后在新的标签页中访问央视网中的该新闻资源 （<a target="_blank" rel="noopener" href="https://news.cctv.com/2023/03/02/ARTIUCKFf9kE9eXgYE46ugx3230302.shtml）">https://news.cctv.com/2023/03/02/ARTIUCKFf9kE9eXgYE46ugx3230302.shtml）</a></p>
+</li>
+</ul>
+
+<p>那接下来，我们就来完善新闻标题部分的这个功能，那此时呢，我们就需要用到HTML中的超链接的标签 。</p>
+<h5 id="2-3-1-3-1-介绍"><a href="#2-3-1-3-1-介绍" class="headerlink" title="2.3.1.3.1 介绍"></a>2.3.1.3.1 介绍</h5><ul>
+<li>标签: &lt;a href=”…” target=”…”&gt;央视网&lt;/a&gt;</li>
+<li>属性:<ul>
+<li>href: 指定资源访问的url</li>
+<li>target: 指定在何处打开资源链接<ul>
+<li>_self: 默认值，在当前页面打开</li>
+<li>_blank: 在空白页面打开</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="2-3-1-3-2-实现"><a href="#2-3-1-3-2-实现" class="headerlink" title="2.3.1.3.2 实现"></a>2.3.1.3.2 实现</h5><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;en&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">http-equiv</span>=<span class="hljs-string">&quot;X-UA-Compatible&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;IE=edge&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;viewport&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>焦点访谈：中国底气 新思想夯实大国粮仓<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="language-css"></span><br><span class="language-css">        <span class="hljs-selector-tag">h1</span> &#123;</span><br><span class="language-css">            <span class="hljs-attribute">color</span>: <span class="hljs-number">#4D4F53</span>;</span><br><span class="language-css">        &#125;</span><br><span class="language-css">        </span><br><span class="language-css">        <span class="hljs-selector-id">#time</span> &#123;</span><br><span class="language-css">            <span class="hljs-attribute">color</span>: <span class="hljs-number">#968D92</span>;</span><br><span class="language-css">            <span class="hljs-attribute">font-size</span>: <span class="hljs-number">13px</span>; <span class="hljs-comment">/* 设置字体大小 */</span></span><br><span class="language-css">        &#125;</span><br><span class="language-css"></span><br><span class="language-css">        <span class="hljs-selector-tag">a</span> &#123;</span><br><span class="language-css">            <span class="hljs-attribute">color</span>: black;</span><br><span class="language-css">            <span class="hljs-attribute">text-decoration</span>: none; <span class="hljs-comment">/* 设置文本为一个标准的文本 , 去除掉 超链接 下面默认的下划线 */</span></span><br><span class="language-css">        &#125;</span><br><span class="language-css">    </span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;img/news_logo.png&quot;</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;http://gov.sina.com.cn/&quot;</span> <span class="hljs-attr">target</span>=<span class="hljs-string">&quot;_self&quot;</span>&gt;</span>新浪政务<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>  &gt; 正文<br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>焦点访谈：中国底气 新思想夯实大国粮仓<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">hr</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;time&quot;</span>&gt;</span>2023年03月02日 21:50<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span>  <br>    <span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span> <br>    <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;https://news.cctv.com/2023/03/02/ARTIUCKFf9kE9eXgYE46ugx3230302.shtml&quot;</span> <span class="hljs-attr">target</span>=<span class="hljs-string">&quot;_blank&quot;</span>&gt;</span>央视网<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">hr</span>&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>浏览器打开此页面，我们可以看到最终效果（超链接的字体，以及默认的下划线，通过css样式已经调整好了）：</p>
+
+<h3 id="2-3-2-新浪新闻-正文实现"><a href="#2-3-2-新浪新闻-正文实现" class="headerlink" title="2.3.2 新浪新闻-正文实现"></a>2.3.2 新浪新闻-正文实现</h3><h4 id="2-3-2-1-正文排版"><a href="#2-3-2-1-正文排版" class="headerlink" title="2.3.2.1 正文排版"></a>2.3.2.1 正文排版</h4><h5 id="2-3-2-1-1-分析"><a href="#2-3-2-1-1-分析" class="headerlink" title="2.3.2.1.1 分析"></a>2.3.2.1.1 分析</h5>
+<p>整个正文部分的排版，主要分为这么四个部分：</p>
+<p>1). 视频 (当前这种新闻页面,可能也会存在音频)</p>
+<p>2). 文字段落</p>
+<p>3). 字体加粗</p>
+<p>4). 图片</p>
+<h5 id="2-3-2-1-2-标签"><a href="#2-3-2-1-2-标签" class="headerlink" title="2.3.2.1.2 标签"></a>2.3.2.1.2 标签</h5><p><strong>1). 视频、音频标签</strong></p>
+<ul>
+<li><p>视频标签: &lt;video&gt;</p>
+<ul>
+<li>属性: <ul>
+<li>src: 规定视频的url</li>
+<li>controls: 显示播放控件</li>
+<li>width: 播放器的宽度</li>
+<li>height: 播放器的高度</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>音频标签: &lt;audio&gt;</p>
+<ul>
+<li>属性:<ul>
+<li>src: 规定音频的url</li>
+<li>controls: 显示播放控件</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>2). 段落标签</strong></p>
+<ul>
+<li>换行标签: &lt;br&gt;<ul>
+<li>注意: 在HTML页面中,我们在编辑器中通过回车实现的换行, 仅仅在文本编辑器中会看到换行效果, 浏览器是不会解析的, HTML中换行需要通过br标签</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>段落标签: &lt;p&gt;<ul>
+<li>如: &lt;p&gt; 这是一个段落 &lt;/p&gt;</li>
+</ul>
+</li>
+</ul>
+<p><strong>3). 文本格式标签</strong></p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>效果</th>
+<th>标签</th>
+<th>标签(强调)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>加粗</td>
+<td>b</td>
+<td>strong</td>
+</tr>
+<tr>
+<td>倾斜</td>
+<td>i</td>
+<td>em</td>
+</tr>
+<tr>
+<td>下划线</td>
+<td>u</td>
+<td>ins</td>
+</tr>
+<tr>
+<td>删除线</td>
+<td>s</td>
+<td>del</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>前面的标签 b、i、u、s 就仅仅是实现加粗、倾斜、下划线、删除线的效果，是没有强调语义的。 而后面的strong、em、ins、del在实现加粗、倾斜、下划线、删除线的效果的同时，还带有强调语义。</p>
+<h5 id="2-3-2-1-3-实现"><a href="#2-3-2-1-3-实现" class="headerlink" title="2.3.2.1.3 实现"></a>2.3.2.1.3 实现</h5><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;en&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">http-equiv</span>=<span class="hljs-string">&quot;X-UA-Compatible&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;IE=edge&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;viewport&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>焦点访谈：中国底气 新思想夯实大国粮仓<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="language-css"></span><br><span class="language-css">        <span class="hljs-selector-tag">h1</span> &#123;</span><br><span class="language-css">            <span class="hljs-attribute">color</span>: <span class="hljs-number">#4D4F53</span>;</span><br><span class="language-css">        &#125;</span><br><span class="language-css">        </span><br><span class="language-css">        <span class="hljs-selector-id">#time</span> &#123;</span><br><span class="language-css">            <span class="hljs-attribute">color</span>: <span class="hljs-number">#968D92</span>;</span><br><span class="language-css">            <span class="hljs-attribute">font-size</span>: <span class="hljs-number">13px</span>; <span class="hljs-comment">/* 设置字体大小 */</span></span><br><span class="language-css">        &#125;</span><br><span class="language-css"></span><br><span class="language-css">        <span class="hljs-selector-tag">a</span> &#123;</span><br><span class="language-css">            <span class="hljs-attribute">color</span>: black;</span><br><span class="language-css">            <span class="hljs-attribute">text-decoration</span>: none; <span class="hljs-comment">/* 设置文本为一个标准的文本 */</span></span><br><span class="language-css">        &#125;</span><br><span class="language-css"></span><br><span class="language-css">        <span class="hljs-selector-tag">p</span> &#123;</span><br><span class="language-css">            <span class="hljs-attribute">text-indent</span>: <span class="hljs-number">35px</span>; <span class="hljs-comment">/* 设置首行缩进 */</span></span><br><span class="language-css">            <span class="hljs-attribute">line-height</span>: <span class="hljs-number">40px</span>; <span class="hljs-comment">/* 设置行高 */</span></span><br><span class="language-css">        &#125;</span><br><span class="language-css"></span><br><span class="language-css">        <span class="hljs-selector-id">#plast</span> &#123;</span><br><span class="language-css">            <span class="hljs-attribute">text-align</span>: right; <span class="hljs-comment">/* 对齐方式 */</span></span><br><span class="language-css">        &#125;</span><br><span class="language-css">    </span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br><br>    <span class="hljs-comment">&lt;!-- 标题 --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;img/news_logo.png&quot;</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;http://gov.sina.com.cn/&quot;</span> <span class="hljs-attr">target</span>=<span class="hljs-string">&quot;_self&quot;</span>&gt;</span>新浪政务<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>  &gt; 正文<br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>焦点访谈：中国底气 新思想夯实大国粮仓<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">hr</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;time&quot;</span>&gt;</span>2023年03月02日 21:50<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;https://news.cctv.com/2023/03/02/ARTIUCKFf9kE9eXgYE46ugx3230302.shtml&quot;</span> <span class="hljs-attr">target</span>=<span class="hljs-string">&quot;_blank&quot;</span>&gt;</span>央视网<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">hr</span>&gt;</span><br><br>    <span class="hljs-comment">&lt;!-- 正文 --&gt;</span><br>    <span class="hljs-comment">&lt;!-- 视频 --&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">video</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;video/1.mp4&quot;</span> <span class="hljs-attr">controls</span> <span class="hljs-attr">width</span>=<span class="hljs-string">&quot;950px&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">video</span>&gt;</span><br><br>    <span class="hljs-comment">&lt;!-- 音频 --&gt;</span><br>    <span class="hljs-comment">&lt;!-- &lt;audio src=&quot;audio/1.mp3&quot; controls&gt;&lt;/audio&gt; --&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">strong</span>&gt;</span>央视网消息<span class="hljs-tag">&lt;/<span class="hljs-name">strong</span>&gt;</span> （焦点访谈）：党的十八大以来，以习近平同志为核心的党中央始终把解决粮食安全问题作为治国理政的头等大事，重农抓粮一系列政策举措有力有效，我国粮食产量站稳1.3万亿斤台阶，实现谷物基本自给、口粮绝对安全。我们把饭碗牢牢端在自己手中，为保障经济社会发展提供了坚实支撑，为应对各种风险挑战赢得了主动。连续八年1.3万亿斤，这个沉甸甸的数据是如何取得的呢？<br>    <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><br>    人勤春来早，春耕农事忙。立春之后，由南到北，我国春耕春管工作陆续展开，春天的田野处处生机盎然。<br>    <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;img/1.jpg&quot;</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><br>        今年，我国启动了新一轮千亿斤粮食产能提升行动，这是一个新的起点。2015年以来，我国粮食产量连续8年稳定在1.3万亿斤以上，人均粮食占有量始终稳稳高于国际公认的400公斤粮食安全线。从十年前的约12200亿斤到2022年的约13700亿斤，粮食产量提高了1500亿斤。<br>    <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;img/2.jpg&quot;</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><br>        中国式现代化一个重要的中国特色是人口规模巨大的现代化。我们粮食生产的发展，意味着我们要立足国内，解决14亿多人吃饭的问题。仓廪实，天下安。保障粮食安全是一个永恒的课题，任何时候都不能放松。在以习近平同志为核心的党中央坚强领导下，亿万中国人民辛勤耕耘、不懈奋斗，我们就一定能够牢牢守住粮食安全这一&quot;国之大者&quot;，把中国人的饭碗牢牢端在自己手中，夯实中国式现代化基础。<br>    <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;plast&quot;</span>&gt;</span><br>        责任编辑：王树淼 SN242<br>    <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>在上述的正文排版实现中，还用到了几个CSS属性： </p>
+<ul>
+<li>text-indent: 设置段落的首行缩进 </li>
+<li>line-height: 设置行高</li>
+<li>text-align: 设置对齐方式, 可取值为 left / center / right</li>
+</ul>
+<blockquote>
+<p>注意事项: </p>
+<ul>
+<li><p>在HTML页面中无论输入了多少个空格, 最多只会显示一个。 可以使用空格占位符（&amp;nbsp；）来生成空格，如果需要多个空格，就使用多次占位符。</p>
+</li>
+<li><p>那在HTML中，除了空格占位符以外，还有一些其他的占位符(了解, 只需要知道空格的占位符写法即可)，如下：</p>
+<ul>
+<li>| 显示结果 | 描述   | 占位符  |<br>| :———- | :——- | :——— |<br>|          | 空格   | \&nbsp; |<br>| &lt;        | 小于号 | \&lt;   |<br>| &gt;        | 大于号 | \&gt;   |<br>| &amp;        | 和号   | \&amp;  |<br>| “        | 引号   | \&quot; |<br>| ‘        | 撇号   | \&apos; |</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h4 id="2-3-2-2-页面布局"><a href="#2-3-2-2-页面布局" class="headerlink" title="2.3.2.2 页面布局"></a>2.3.2.2 页面布局</h4><p>目前，新闻页面的基本排版，我们都已经完成了，但是，大家会看到，无论是标题部分，还是正文部分，都是铺满了整个浏览器。 而我们再来看看新浪新闻的原始页面，我们会看到新闻网页内容都是居中展示的，左边、右边都是一定的边距的。</p>
+
+<p>那接下来呢，我们就需要按照这个效果，来完成页面布局。 而要想完成这样一个页面布局，我们就需要介绍一下CSS中的盒子模型 。 </p>
+<h5 id="2-3-2-2-1-盒子模型"><a href="#2-3-2-2-1-盒子模型" class="headerlink" title="2.3.2.2.1 盒子模型"></a>2.3.2.2.1 盒子模型</h5><ul>
+<li><p>盒子：页面中所有的元素（标签），都可以看做是一个 盒子，由盒子将页面中的元素包含在一个矩形区域内，通过盒子的视角更方便的进行页面布局</p>
+</li>
+<li><p>盒子模型组成：内容区域（content）、内边距区域（padding）、边框区域（border）、外边距区域（margin）</p>
+</li>
+</ul>
+
+<p>CSS盒子模型，其实和日常生活中的包装盒是非常类似的，就比如：</p>
+
+<p>盒子的大小，其实就包括三个部分： border、padding、content，而margin外边距是不包括在盒子之内的。</p>
+<h5 id="2-3-2-2-2-布局标签"><a href="#2-3-2-2-2-布局标签" class="headerlink" title="2.3.2.2.2 布局标签"></a>2.3.2.2.2 布局标签</h5><ul>
+<li><p>布局标签：实际开发网页中，会大量频繁的使用 div 和 span 这两个没有语义的布局标签。</p>
+</li>
+<li><p>标签：<div> <span></p>
+</li>
+<li><p>特点：</p>
+<ul>
+<li><p>div标签：</p>
+<ul>
+<li><p>一行只显示一个（独占一行）</p>
+</li>
+<li><p>宽度默认是父元素的宽度，高度默认由内容撑开</p>
+</li>
+<li><p>可以设置宽高（width、height）</p>
+</li>
+</ul>
+</li>
+<li><p>span标签：</p>
+<ul>
+<li><p>一行可以显示多个</p>
+</li>
+<li><p>宽度和高度默认由内容撑开</p>
+</li>
+<li><p>不可以设置宽高（width、height）</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>测试：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span><br>        A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A <br>    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span><br>        A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A <br>    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><br>    <span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span><br>        A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A <br>    <span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span><br>        A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A <br>    <span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>浏览器打开后的效果:</p>
+<p>1). div会独占一行，默认宽度为父元素 body 的宽度</p>
+
+<p>2). span一行会显示多个，用来组合行内元素，默认宽度为内容撑开的宽度</p>
+
+<h5 id="2-3-2-2-3-盒子模型代码"><a href="#2-3-2-2-3-盒子模型代码" class="headerlink" title="2.3.2.2.3 盒子模型代码"></a>2.3.2.2.3 盒子模型代码</h5><p>代码如下: </p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;en&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">http-equiv</span>=<span class="hljs-string">&quot;X-UA-Compatible&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;IE=edge&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;viewport&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>盒子模型<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="language-css"></span><br><span class="language-css">        <span class="hljs-selector-tag">div</span> &#123;</span><br><span class="language-css">            <span class="hljs-attribute">width</span>: <span class="hljs-number">200px</span>;  <span class="hljs-comment">/* 宽度 */</span></span><br><span class="language-css">            <span class="hljs-attribute">height</span>: <span class="hljs-number">200px</span>;  <span class="hljs-comment">/* 高度 */</span></span><br><span class="language-css">            <span class="hljs-attribute">box-sizing</span>: border-box; <span class="hljs-comment">/* 指定width height为盒子的高宽 */</span></span><br><span class="language-css">            <span class="hljs-attribute">background-color</span>: aquamarine; <span class="hljs-comment">/* 背景色 */</span></span><br><span class="language-css">            </span><br><span class="language-css">            <span class="hljs-attribute">padding</span>: <span class="hljs-number">20px</span> <span class="hljs-number">20px</span> <span class="hljs-number">20px</span> <span class="hljs-number">20px</span>; <span class="hljs-comment">/* 内边距, 上 右 下 左 , 边距都一行, 可以简写: padding: 20px;*/</span> </span><br><span class="language-css">            <span class="hljs-attribute">border</span>: <span class="hljs-number">10px</span> solid red; <span class="hljs-comment">/* 边框, 宽度 线条类型 颜色 */</span></span><br><span class="language-css">            <span class="hljs-attribute">margin</span>: <span class="hljs-number">30px</span> <span class="hljs-number">30px</span> <span class="hljs-number">30px</span> <span class="hljs-number">30px</span>; <span class="hljs-comment">/* 外边距, 上 右 下 左 , 边距都一行, 可以简写: margin: 30px; */</span></span><br><span class="language-css">        &#125;</span><br><span class="language-css">    </span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br><br><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>    <br>    <span class="hljs-tag">&lt;<span class="hljs-name">div</span>&gt;</span><br>        A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A <br>    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>代码编写好了, 可以通过浏览器打开该页面, 通过开发者工具,我们就可以看到盒子的大小, 以及盒子各个组成部分(内容、内边距、边框、外边距)：</p>
+
+<p>我们也可以，通过浏览器的开发者工具，清晰的看到这个盒子，以及每一个部分的大小：</p>
+
+<h5 id="2-3-2-2-3-布局实现"><a href="#2-3-2-2-3-布局实现" class="headerlink" title="2.3.2.2.3 布局实现"></a>2.3.2.2.3 布局实现</h5><p>在实现新闻页面的布局时，我们需要做两部操作：</p>
+<ul>
+<li>第一步：需要将body中的新闻标题部分、正文部分使用一个 div 布局标签将其包裹起来，方便通过css设置内容占用的宽度，比如：65%。</li>
+<li>第二步：通过css为该div设置外边距，左右的外边距分别为：17.5%，上下外边距靠边展示即可，为：0%。</li>
+</ul>
+<p>具体的代码实现如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;en&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">http-equiv</span>=<span class="hljs-string">&quot;X-UA-Compatible&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;IE=edge&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;viewport&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>焦点访谈：中国底气 新思想夯实大国粮仓<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="language-css"></span><br><span class="language-css">        <span class="hljs-selector-tag">h1</span> &#123;</span><br><span class="language-css">            <span class="hljs-attribute">color</span>: <span class="hljs-number">#4D4F53</span>;</span><br><span class="language-css">        &#125;</span><br><span class="language-css">        </span><br><span class="language-css">        <span class="hljs-selector-id">#time</span> &#123;</span><br><span class="language-css">            <span class="hljs-attribute">color</span>: <span class="hljs-number">#968D92</span>;</span><br><span class="language-css">            <span class="hljs-attribute">font-size</span>: <span class="hljs-number">13px</span>; <span class="hljs-comment">/* 设置字体大小 */</span></span><br><span class="language-css">        &#125;</span><br><span class="language-css"></span><br><span class="language-css">        <span class="hljs-selector-tag">a</span> &#123;</span><br><span class="language-css">            <span class="hljs-attribute">color</span>: black;</span><br><span class="language-css">            <span class="hljs-attribute">text-decoration</span>: none; <span class="hljs-comment">/* 设置文本为一个标准的文本 */</span></span><br><span class="language-css">        &#125;</span><br><span class="language-css"></span><br><span class="language-css">        <span class="hljs-selector-tag">p</span> &#123;</span><br><span class="language-css">            <span class="hljs-attribute">text-indent</span>: <span class="hljs-number">35px</span>; <span class="hljs-comment">/* 设置首行缩进 */</span></span><br><span class="language-css">            <span class="hljs-attribute">line-height</span>: <span class="hljs-number">40px</span>; <span class="hljs-comment">/* 设置行高 */</span></span><br><span class="language-css">        &#125;</span><br><span class="language-css"></span><br><span class="language-css">        <span class="hljs-selector-id">#plast</span> &#123;</span><br><span class="language-css">            <span class="hljs-attribute">text-align</span>: right; <span class="hljs-comment">/* 对齐方式 */</span></span><br><span class="language-css">        &#125;</span><br><span class="language-css"></span><br><span class="language-css">        <span class="hljs-selector-id">#center</span> &#123;</span><br><span class="language-css">            <span class="hljs-attribute">width</span>: <span class="hljs-number">65%</span>;</span><br><span class="language-css">            <span class="hljs-comment">/* margin: 0% 17.5% 0% 17.5% ; */</span> <span class="hljs-comment">/* 外边距, 上 右 下 左 */</span></span><br><span class="language-css">            <span class="hljs-attribute">margin</span>: <span class="hljs-number">0</span> auto;</span><br><span class="language-css">        &#125;</span><br><span class="language-css">    </span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>    <br>    <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;center&quot;</span>&gt;</span><br>        <span class="hljs-comment">&lt;!-- 标题 --&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;img/news_logo.png&quot;</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;http://gov.sina.com.cn/&quot;</span> <span class="hljs-attr">target</span>=<span class="hljs-string">&quot;_self&quot;</span>&gt;</span>新浪政务<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span>  &gt; 正文<br><br>        <span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>焦点访谈：中国底气 新思想夯实大国粮仓<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span><br><br>        <span class="hljs-tag">&lt;<span class="hljs-name">hr</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;time&quot;</span>&gt;</span>2023年03月02日 21:50<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">span</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;https://news.cctv.com/2023/03/02/ARTIUCKFf9kE9eXgYE46ugx3230302.shtml&quot;</span> <span class="hljs-attr">target</span>=<span class="hljs-string">&quot;_blank&quot;</span>&gt;</span>央视网<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">hr</span>&gt;</span><br><br>        <span class="hljs-comment">&lt;!-- 正文 --&gt;</span><br>        <span class="hljs-comment">&lt;!-- 视频 --&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">video</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;video/1.mp4&quot;</span> <span class="hljs-attr">controls</span> <span class="hljs-attr">width</span>=<span class="hljs-string">&quot;950px&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">video</span>&gt;</span><br><br>        <span class="hljs-comment">&lt;!-- 音频 --&gt;</span><br>        <span class="hljs-comment">&lt;!-- &lt;audio src=&quot;audio/1.mp3&quot; controls&gt;&lt;/audio&gt; --&gt;</span><br><br>        <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">strong</span>&gt;</span>央视网消息<span class="hljs-tag">&lt;/<span class="hljs-name">strong</span>&gt;</span> （焦点访谈）：党的十八大以来，以习近平同志为核心的党中央始终把解决粮食安全问题作为治国理政的头等大事，重农抓粮一系列政策举措有力有效，我国粮食产量站稳1.3万亿斤台阶，实现谷物基本自给、口粮绝对安全。我们把饭碗牢牢端在自己手中，为保障经济社会发展提供了坚实支撑，为应对各种风险挑战赢得了主动。连续八年1.3万亿斤，这个沉甸甸的数据是如何取得的呢？<br>        <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br><br>        <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><br>        人勤春来早，春耕农事忙。立春之后，由南到北，我国春耕春管工作陆续展开，春天的田野处处生机盎然。<br>        <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br><br>        <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;img/1.jpg&quot;</span>&gt;</span><br><br>        <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><br>            今年，我国启动了新一轮千亿斤粮食产能提升行动，这是一个新的起点。2015年以来，我国粮食产量连续8年稳定在1.3万亿斤以上，人均粮食占有量始终稳稳高于国际公认的400公斤粮食安全线。从十年前的约12200亿斤到2022年的约13700亿斤，粮食产量提高了1500亿斤。<br>        <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br><br>        <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;img/2.jpg&quot;</span>&gt;</span><br><br>        <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><br>            中国式现代化一个重要的中国特色是人口规模巨大的现代化。我们粮食生产的发展，意味着我们要立足国内，解决14亿多人吃饭的问题。仓廪实，天下安。保障粮食安全是一个永恒的课题，任何时候都不能放松。在以习近平同志为核心的党中央坚强领导下，亿万中国人民辛勤耕耘、不懈奋斗，我们就一定能够牢牢守住粮食安全这一&quot;国之大者&quot;，把中国人的饭碗牢牢端在自己手中，夯实中国式现代化基础。<br>        <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span><br><br>        <span class="hljs-tag">&lt;<span class="hljs-name">p</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;plast&quot;</span>&gt;</span><br>            责任编辑：王树淼 SN242<br>        <span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>  <br>    <span class="hljs-tag">&lt;/<span class="hljs-name">div</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>浏览器打开此页面，最终效果如下：</p>
+
+<h2 id="2-4-表格标签"><a href="#2-4-表格标签" class="headerlink" title="2.4 表格标签"></a>2.4 表格标签</h2><p><strong>场景：</strong>在网页中以表格（行、列）形式整齐展示数据，我们在一些管理类的系统中，会看到数据通常都是以表格的形式呈现出来的，比如：班级表、学生表、课程表、成绩表等等。</p>
+
+<p><strong>标签：</strong></p>
+<ul>
+<li><p>&lt;table&gt; : 用于定义整个表格, 可以包裹多个 &lt;tr&gt;， 常用属性如下： </p>
+<ul>
+<li>border：规定表格边框的宽度</li>
+<li>width：规定表格的宽度</li>
+<li>cellspacing: 规定单元之间的空间</li>
+</ul>
+</li>
+<li><p>&lt;tr&gt; : 表格的行，可以包裹多个 &lt;td&gt;  </p>
+</li>
+<li>&lt;td&gt; : 表格单元格(普通)，可以包裹内容 , 如果是表头单元格，可以替换为 &lt;th&gt;  </li>
+</ul>
+<p><strong>演示：</strong></p>
+<p>代码如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;en&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">http-equiv</span>=<span class="hljs-string">&quot;X-UA-Compatible&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;IE=edge&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;viewport&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>HTML-表格<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="language-css"></span><br><span class="language-css">        <span class="hljs-selector-tag">td</span> &#123;</span><br><span class="language-css">            <span class="hljs-attribute">text-align</span>: center; <span class="hljs-comment">/* 单元格内容居中展示 */</span></span><br><span class="language-css">        &#125;</span><br><span class="language-css">    </span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>    <br>    <span class="hljs-tag">&lt;<span class="hljs-name">table</span> <span class="hljs-attr">border</span>=<span class="hljs-string">&quot;1px&quot;</span> <span class="hljs-attr">cellspacing</span>=<span class="hljs-string">&quot;0&quot;</span>  <span class="hljs-attr">width</span>=<span class="hljs-string">&quot;600px&quot;</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">tr</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">th</span>&gt;</span>序号<span class="hljs-tag">&lt;/<span class="hljs-name">th</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">th</span>&gt;</span>品牌Logo<span class="hljs-tag">&lt;/<span class="hljs-name">th</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">th</span>&gt;</span>品牌名称<span class="hljs-tag">&lt;/<span class="hljs-name">th</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">th</span>&gt;</span>企业名称<span class="hljs-tag">&lt;/<span class="hljs-name">th</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">tr</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">tr</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>1<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;img/huawei.jpg&quot;</span> <span class="hljs-attr">width</span>=<span class="hljs-string">&quot;100px&quot;</span>&gt;</span> <span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>华为<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>华为技术有限公司<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">tr</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">tr</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>2<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">img</span> <span class="hljs-attr">src</span>=<span class="hljs-string">&quot;img/alibaba.jpg&quot;</span>  <span class="hljs-attr">width</span>=<span class="hljs-string">&quot;100px&quot;</span>&gt;</span> <span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>阿里<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span><br>            <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span>阿里巴巴集团控股有限公司<span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span><br>        <span class="hljs-tag">&lt;/<span class="hljs-name">tr</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">table</span>&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>打开浏览器，效果如下图所示：</p>
+
+<p>整合表格使用 table 标签包裹 , 其中的每一行数据都是一个 tr , 每一行中的每一个单元格都是一个 td , 而如果是表头单元格, 可以使用 th (具有加粗居中展示的效果)。</p>
+<h2 id="2-5-表单标签"><a href="#2-5-表单标签" class="headerlink" title="2.5 表单标签"></a>2.5 表单标签</h2><h3 id="2-5-1-表单"><a href="#2-5-1-表单" class="headerlink" title="2.5.1 表单"></a>2.5.1 表单</h3><h4 id="2-5-1-1-介绍"><a href="#2-5-1-1-介绍" class="headerlink" title="2.5.1.1 介绍"></a>2.5.1.1 介绍</h4><p>那表单呢,在我们日常的上网的过程中,基本上每天都会遇到。比如，我们经常在访问网站时，出现的登录页面、注册页面、个人信息提交页面，其实都是一个一个的表单 。 当我们在这些表单中录入数据之后，一点击 “提交”，就会将表单中我们填写的数据采集到，并提交， 那其实这个数据呢，一般会提交到服务端，最终保存在数据库中 （后面的课程中会讲到）。</p>
+ 
+<p>那其实，上述的整个窗口是一个表单，而表单是一项一项的，这个我们称为表单项 或 表单元素。</p>
+<ul>
+<li><p>表单场景: 表单就是在网页中负责数据采集功能的，如：注册、登录的表单。 </p>
+</li>
+<li><p>表单标签: &lt;form&gt;</p>
+</li>
+<li><p>表单属性:</p>
+<ul>
+<li>action: 规定表单提交时，向何处发送表单数据，表单提交的URL。</li>
+<li>method: 规定用于发送表单数据的方式，常见为： GET、POST。<ul>
+<li>GET：表单数据是拼接在url后面的， 如： xxxxxxxxxxx?username=Tom&amp;age=12，url中能携带的表单数据大小是有限制的。</li>
+<li>POST： 表单数据是在请求体（消息体）中携带的，大小没有限制。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>表单项标签: 不同类型的input元素、下拉列表、文本域等。</p>
+<ul>
+<li>input: 定义表单项，通过type属性控制输入形式</li>
+<li>select: 定义下拉列表</li>
+<li>textarea: 定义文本域</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-5-1-2-演示"><a href="#2-5-1-2-演示" class="headerlink" title="2.5.1.2 演示"></a>2.5.1.2 演示</h4><p>1). GET方式提交的表单</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;en&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">http-equiv</span>=<span class="hljs-string">&quot;X-UA-Compatible&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;IE=edge&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;viewport&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>HTML-表单<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>    <span class="hljs-comment">&lt;!-- </span><br><span class="hljs-comment">    form表单属性: </span><br><span class="hljs-comment">        action: 表单提交的url, 往何处提交数据 . 如果不指定, 默认提交到当前页面</span><br><span class="hljs-comment">        method: 表单的提交方式 .</span><br><span class="hljs-comment">            get: 在url后面拼接表单数据, 比如: ?username=Tom&amp;age=12 , url长度有限制 . 默认值</span><br><span class="hljs-comment">            post: 在消息体(请求体)中传递的, 参数大小无限制的.</span><br><span class="hljs-comment">    --&gt;</span>   <br>    <br>	<span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">action</span>=<span class="hljs-string">&quot;&quot;</span> <span class="hljs-attr">method</span>=<span class="hljs-string">&quot;get&quot;</span>&gt;</span><br>        用户名: <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;username&quot;</span>&gt;</span><br>        年龄: <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;age&quot;</span>&gt;</span><br><br>        <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;submit&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;提交&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span><br>	<br><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>表单编写完毕之后，通过浏览器打开此表单，然后再表单项中录入值之后，点击提交，我们会看到表单的数据在url后面提交到服务端，格式为：?username=Tom&amp;age=12。</p>
+
+<p>2). POST方式提交表单</p>
+<p>将上述的表单提交方式由get，改为post</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;en&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">http-equiv</span>=<span class="hljs-string">&quot;X-UA-Compatible&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;IE=edge&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;viewport&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>HTML-表单<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br>    <span class="hljs-comment">&lt;!-- </span><br><span class="hljs-comment">    form表单属性: </span><br><span class="hljs-comment">        action: 表单提交的url, 往何处提交数据 . 如果不指定, 默认提交到当前页面</span><br><span class="hljs-comment">        method: 表单的提交方式 .</span><br><span class="hljs-comment">            get: 在url后面拼接表单数据, 比如: ?username=Tom&amp;age=12 , url长度有限制 . 默认值</span><br><span class="hljs-comment">            post: 在消息体(请求体)中传递的, 参数大小无限制的.</span><br><span class="hljs-comment">    --&gt;</span>   <br>    <br>    <span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">action</span>=<span class="hljs-string">&quot;&quot;</span> <span class="hljs-attr">method</span>=<span class="hljs-string">&quot;post&quot;</span>&gt;</span><br>        用户名: <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;username&quot;</span>&gt;</span><br>        年龄: <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;age&quot;</span>&gt;</span><br><br>        <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;submit&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;提交&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span><br>	<br><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>表单编写完毕之后，通过浏览器打开此表单，然后再表单项中录入值之后，点击提交，我们会看到表单的数据在url后面提交到服务端，格式为：?username=Tom&amp;age=12。</p>
+
+<h4 id="2-5-1-3-注意事项"><a href="#2-5-1-3-注意事项" class="headerlink" title="2.5.1.3 注意事项"></a>2.5.1.3 注意事项</h4><p>表单中的所有表单项，要想能够正常的采集数据，在提交的时候能提交到服务端，表单项必须指定name属性。 否则，无法提交该表单项。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs html">用户名: <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;username&quot;</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<h3 id="2-5-2-表单项"><a href="#2-5-2-表单项" class="headerlink" title="2.5.2 表单项"></a>2.5.2 表单项</h3><h4 id="2-5-2-1-介绍"><a href="#2-5-2-1-介绍" class="headerlink" title="2.5.2.1 介绍"></a>2.5.2.1 介绍</h4><p>在一个表单中，可以存在很多的表单项，而虽然表单项的形式各式各样，但是表单项的标签其实就只有三个，分别是：</p>
+<ul>
+<li><p>&lt;input&gt;: 表单项 , 通过type属性控制输入形式。</p>
+<p>| type取值                 | <strong>描述</strong>                             |<br>| ———————————— | —————————————————— |<br>| text                     | 默认值，定义单行的输入字段           |<br>| password                 | 定义密码字段                         |<br>| radio                    | 定义单选按钮                         |<br>| checkbox                 | 定义复选框                           |<br>| file                     | 定义文件上传按钮                     |<br>| date/time/datetime-local | 定义日期/时间/日期时间               |<br>| number                   | 定义数字输入框                       |<br>| email                    | 定义邮件输入框                       |<br>| hidden                   | 定义隐藏域                           |<br>| submit / reset / button  | 定义提交按钮 / 重置按钮 / 可点击按钮 |</p>
+</li>
+<li><p>&lt;select&gt;: 定义下拉列表, &lt;option&gt; 定义列表项</p>
+</li>
+<li><p>&lt;textarea&gt;: 文本域</p>
+</li>
+</ul>
+<h4 id="2-5-2-2-演示"><a href="#2-5-2-2-演示" class="headerlink" title="2.5.2.2 演示"></a>2.5.2.2 演示</h4><p>创建一个新的表单项的html文件，具体内容如下：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">&quot;en&quot;</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">http-equiv</span>=<span class="hljs-string">&quot;X-UA-Compatible&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;IE=edge&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;viewport&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>HTML-表单项标签<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span><br><br><span class="hljs-comment">&lt;!-- value: 表单项提交的值 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">form</span> <span class="hljs-attr">action</span>=<span class="hljs-string">&quot;&quot;</span> <span class="hljs-attr">method</span>=<span class="hljs-string">&quot;post&quot;</span>&gt;</span><br>     姓名: <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;name&quot;</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span><br>     密码: <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;password&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;password&quot;</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span> <br>     性别: <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;radio&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;gender&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;1&quot;</span>&gt;</span> 男<br>          <span class="hljs-tag">&lt;<span class="hljs-name">label</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;radio&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;gender&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;2&quot;</span>&gt;</span> 女 <span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span><br>     爱好: <span class="hljs-tag">&lt;<span class="hljs-name">label</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;checkbox&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;hobby&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;java&quot;</span>&gt;</span> java <span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">label</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;checkbox&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;hobby&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;game&quot;</span>&gt;</span> game <span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span><br>          <span class="hljs-tag">&lt;<span class="hljs-name">label</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;checkbox&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;hobby&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;sing&quot;</span>&gt;</span> sing <span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span><br>     图像: <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;file&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;image&quot;</span>&gt;</span>  <span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span><br>     生日: <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;date&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;birthday&quot;</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span><br>     时间: <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;time&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;time&quot;</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span><br>     日期时间: <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;datetime-local&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;datetime&quot;</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span><br>     邮箱: <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;email&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;email&quot;</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span><br>     年龄: <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;number&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;age&quot;</span>&gt;</span> <span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span><br>     学历: <span class="hljs-tag">&lt;<span class="hljs-name">select</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;degree&quot;</span>&gt;</span><br>               <span class="hljs-tag">&lt;<span class="hljs-name">option</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;&quot;</span>&gt;</span>----------- 请选择 -----------<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span><br>               <span class="hljs-tag">&lt;<span class="hljs-name">option</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;1&quot;</span>&gt;</span>大专<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span><br>               <span class="hljs-tag">&lt;<span class="hljs-name">option</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;2&quot;</span>&gt;</span>本科<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span><br>               <span class="hljs-tag">&lt;<span class="hljs-name">option</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;3&quot;</span>&gt;</span>硕士<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span><br>               <span class="hljs-tag">&lt;<span class="hljs-name">option</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;4&quot;</span>&gt;</span>博士<span class="hljs-tag">&lt;/<span class="hljs-name">option</span>&gt;</span><br>          <span class="hljs-tag">&lt;/<span class="hljs-name">select</span>&gt;</span>  <span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span><br>     描述: <span class="hljs-tag">&lt;<span class="hljs-name">textarea</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;description&quot;</span> <span class="hljs-attr">cols</span>=<span class="hljs-string">&quot;30&quot;</span> <span class="hljs-attr">rows</span>=<span class="hljs-string">&quot;10&quot;</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">textarea</span>&gt;</span>  <span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span><br>     <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;hidden&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;id&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;1&quot;</span>&gt;</span><br> 	    <br>     <span class="hljs-comment">&lt;!-- 表单常见按钮 --&gt;</span><br>     <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;按钮&quot;</span>&gt;</span><br>     <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;reset&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;重置&quot;</span>&gt;</span> <br>     <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;submit&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;提交&quot;</span>&gt;</span>   <br>     <span class="hljs-tag">&lt;<span class="hljs-name">br</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">form</span>&gt;</span><br><br><span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>通过浏览器打开上述的表单项html文件，最终展示出的表单信息如下：</p>
+
+<p>而对于input type=”hidden”，是一个隐藏域，在表单中并不会显示出来，但是在提交表单的时候，是会提交到服务端的。 接下来，我们就点击提交按钮，来提交当前表单，看看提交的数据：</p>
+
+<p><label>标签</p>
+<p><code>&lt;label&gt;</code> 标签用来为表单控件（如 <code>&lt;input&gt;</code>、<code>&lt;textarea&gt;</code> 等）定义<strong>标签（说明文字）</strong>。</p>
+<p>它最大的作用就是<strong>“绑定”</strong>：把一段文字和对应的输入框绑定在一起。</p>
+<ul>
+<li><strong>点击生效</strong>：当你用 <code>&lt;label&gt;</code> 绑定了文字和输入框后，用户<strong>点击文字</strong>，也能让对应的输入框获得焦点（光标闪烁）或选中状态。这在单选框（radio）和复选框（checkbox）中极其重要，因为原生的圆框或方框太小了，不好点。</li>
+<li><strong>无障碍阅读（SEO与屏幕阅读器）</strong>：屏幕阅读器（供视障人士使用）读到 <code>&lt;label&gt;</code> 时，会朗读出文字，让用户知道这个输入框是填什么的。</li>
+</ul>
+<p>两种绑定方式：</p>
+<p><strong>方式一：包裹法（隐式绑定）</strong><br>把文字和输入框一起包在 <code>&lt;label&gt;</code> 里面。<br><em>你之前的代码中性别部分就是这么用的：</em><br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">label</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;radio&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;gender&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;male&quot;</span>&gt;</span> 男<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">label</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;radio&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;gender&quot;</span> <span class="hljs-attr">value</span>=<span class="hljs-string">&quot;female&quot;</span>&gt;</span> 女<span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span><br></code></pre></td></tr></table></figure><br><em>效果：此时你点击“男”或“女”这两个字，就能选中前面的圆圈。</em></p>
+<p><strong>方式二：<code>for</code> 属性法（显式绑定）—— 推荐做法</strong><br>给 <code>&lt;input&gt;</code> 设置一个 <code>id</code>，然后给 <code>&lt;label&gt;</code> 设置相同的 <code>for</code> 属性值。<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs html"><span class="hljs-tag">&lt;<span class="hljs-name">label</span> <span class="hljs-attr">for</span>=<span class="hljs-string">&quot;username&quot;</span>&gt;</span>your name: <span class="hljs-tag">&lt;/<span class="hljs-name">label</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;text&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;username&quot;</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;name&quot;</span>&gt;</span><br></code></pre></td></tr></table></figure><br><em>效果：点击 “your name:” 这段文字，光标会自动跳到后面的输入框里。</em></p>
+<h1 id="3-文档查阅"><a href="#3-文档查阅" class="headerlink" title="3. 文档查阅"></a>3. 文档查阅</h1><p>文档地址: <a target="_blank" rel="noopener" href="https://www.w3school.com.cn/index.html">https://www.w3school.com.cn/index.html</a></p>
+<h2 id="3-1-HTML文档查阅"><a href="#3-1-HTML文档查阅" class="headerlink" title="3.1 HTML文档查阅"></a>3.1 HTML文档查阅</h2><p>以video标签为例:</p>
+
+<h2 id="3-2-CSS文档查阅"><a href="#3-2-CSS文档查阅" class="headerlink" title="3.2 CSS文档查阅"></a>3.2 CSS文档查阅</h2><p>以padding属性为例:</p>
+
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2026/10/29/HTML2/">← Next JS基本交互</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/10/26/ml20/">杂记 Prev →</a></div></div></div><div id="comments"><div id="giscus"></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="To Top" style="opacity: 0; display: none;">∧ </a><a class="i-index" id="to-index" onClick="tocControl.change()" title="To Catalog"><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span></a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="Change Theme"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">John Doe</a></h1><div id="description"><p></p></div><div id="social-links"><a class="social" target="_blank" rel="noopener" href="https://github.com/juicer0801"><i class="fab fa-github" alt="GitHub"></i></a></div></div><div id="aside-block"><div id="toc-div"><h1>Catalog</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-%E5%89%8D%E7%AB%AF%E5%BC%80%E5%8F%91%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">1. 前端开发介绍</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-HTML-amp-CSS"><span class="toc-number">2.</span> <span class="toc-text">2. HTML &amp; CSS</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">3.</span> <span class="toc-text"> 标签展示标题，使用展示超链接，使用展示图片，展示视频。</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-HTML%E5%BF%AB%E9%80%9F%E5%85%A5%E9%97%A8"><span class="toc-number">3.1.</span> <span class="toc-text">2.1 HTML快速入门</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-1-%E6%93%8D%E4%BD%9C"><span class="toc-number">3.1.1.</span> <span class="toc-text">2.1.1 操作</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-2-%E6%80%BB%E7%BB%93"><span class="toc-number">3.1.2.</span> <span class="toc-text">2.1.2 总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-%E5%BC%80%E5%8F%91%E5%B7%A5%E5%85%B7"><span class="toc-number">3.2.</span> <span class="toc-text">2.2 开发工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-3-%E5%9F%BA%E7%A1%80%E6%A0%87%E7%AD%BE-amp-%E6%A0%B7%E5%BC%8F"><span class="toc-number">3.3.</span> <span class="toc-text">2.3 基础标签 &amp; 样式</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-1-%E6%96%B0%E6%B5%AA%E6%96%B0%E9%97%BB-%E6%A0%87%E9%A2%98%E5%AE%9E%E7%8E%B0"><span class="toc-number">3.3.1.</span> <span class="toc-text">2.3.1 新浪新闻-标题实现</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-1-1-%E6%A0%87%E9%A2%98%E6%8E%92%E7%89%88"><span class="toc-number">3.3.1.1.</span> <span class="toc-text">2.3.1.1 标题排版</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#2-3-1-1-1-%E5%88%86%E6%9E%90"><span class="toc-number">3.3.1.1.1.</span> <span class="toc-text">2.3.1.1.1 分析</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">4.</span> <span class="toc-text"> … 来实现。
+ 3). 第三部分，有两条水平分割线，需要用到HTML中的  标签来定义水平分割线。
+2.3.1.1.2 标签1). 图片标签 img
+1234567891011121314151617181920A. 图片标签: &lt;img&gt;B. 常见属性: 	src: 指定图像的url (可以指定 绝对路径 , 也可以指定 相对路径)	width: 图像的宽度 (像素 &#x2F; 百分比 , 相对于父元素的百分比)	height: 图像的高度 (像素 &#x2F; 百分比 , 相对于父元素的百分比)		备注: 一般width 和 height 我们只会指定一个，另外一个会自动的等比例缩放。	C. 路径书写方式:    绝对路径:        1. 绝对磁盘路径: C:\Users\Administrator\Desktop\HTML\img\news_logo.png        			   &lt;img src&#x3D;&quot;C:\Users\Administrator\Desktop\HTML\img\news_logo.png&quot;&gt;        2. 绝对网络路径: https:&#x2F;&#x2F;i2.sinaimg.cn&#x2F;dy&#x2F;deco&#x2F;2012&#x2F;0613&#x2F;yocc20120613img01&#x2F;news_logo.png        			   &lt;img src&#x3D;&quot;https:&#x2F;&#x2F;i2.sinaimg.cn&#x2F;dy&#x2F;deco&#x2F;2012&#x2F;0613&#x2F;yocc20120613img01&#x2F;news_logo.png&quot;&gt;        相对路径:        .&#x2F; : 当前目录 , .&#x2F; 可以省略的        ..&#x2F;: 上一级目录
+2). 标题标签 h 系列
+12345678910A. 标题标签: &lt;h1&gt; - &lt;h6&gt;    	&lt;h1&gt;111111111111&lt;&#x2F;h1&gt;	&lt;h2&gt;111111111111&lt;&#x2F;h2&gt;	&lt;h3&gt;111111111111&lt;&#x2F;h3&gt;	&lt;h4&gt;111111111111&lt;&#x2F;h4&gt;	&lt;h5&gt;111111111111&lt;&#x2F;h5&gt;	&lt;h6&gt;111111111111&lt;&#x2F;h6&gt;	B. 效果 : h1为一级标题，字体也是最大的 ； h6为六级标题，字体是最小的。
+3). 水平分页线标签 
+2.3.1.1.2 实现1). 打开VsCode，选择左侧最底部的 “资源管理器”，然后选择打开文件夹，选择打开桌面的 HTML 文件夹 
+2). 将资料中提供的 图片、音频、视频 文件夹的这三个文件夹（里面是图片、音视频素材），复制到 HTML 文件夹中。 
+
+3). 在VsCode中创建一个新的 html 文件，文件的后缀名设置为 .html
+
+4). html 文件创建好之后，在其中输入 ！，然后直接回车，就可以生成 HTML 的基础结构标签
+
+5). 编写标题排版的核心代码
+1234567891011121314151617181920212223242526272829303132333435363738394041&lt;!-- 文档类型为HTML --&gt;&lt;!DOCTYPE html&gt;&lt;html lang&#x3D;&quot;en&quot;&gt;&lt;head&gt;    &lt;!-- 字符集为UTF-8 --&gt;    &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;    &lt;!-- 设置浏览器兼容性 --&gt;    &lt;meta http-equiv&#x3D;&quot;X-UA-Compatible&quot; content&#x3D;&quot;IE&#x3D;edge&quot;&gt;    &lt;meta name&#x3D;&quot;viewport&quot; content&#x3D;&quot;width&#x3D;device-width, initial-scale&#x3D;1.0&quot;&gt;    &lt;title&gt;焦点访谈：中国底气 新思想夯实大国粮仓&lt;&#x2F;title&gt;&lt;&#x2F;head&gt;&lt;body&gt;    &lt;!--     img标签:         src: 图片资源路径        width: 宽度(px, 像素 ; % , 相对于父元素的百分比)        height: 高度(px, 像素 ; % , 相对于父元素的百分比)                &lt;img src&#x3D;&quot;img&#x2F;news_logo.png&quot; width&#x3D;&quot;80%&quot; &gt;    路径书写方式:        绝对路径:            1. 绝对磁盘路径: C:\Users\Administrator\Desktop\HTML\img\news_logo.png                           &lt;img src&#x3D;&quot;C:\Users\Administrator\Desktop\HTML\img\news_logo.png&quot;&gt;            2. 绝对网络路径: https:&#x2F;&#x2F;i2.sinaimg.cn&#x2F;dy&#x2F;deco&#x2F;2012&#x2F;0613&#x2F;yocc20120613img01&#x2F;news_logo.png                           &lt;img src&#x3D;&quot;https:&#x2F;&#x2F;i2.sinaimg.cn&#x2F;dy&#x2F;deco&#x2F;2012&#x2F;0613&#x2F;yocc20120613img01&#x2F;news_logo.png&quot;&gt;        相对路径:            .&#x2F; : 当前目录 , .&#x2F; 可以省略的            ..&#x2F;: 上一级目录     --&gt;    &lt;img src&#x3D;&quot;img&#x2F;news_logo.png&quot;&gt; 新浪政务 &gt; 正文    &lt;h1&gt;焦点访谈：中国底气 新思想夯实大国粮仓&lt;&#x2F;h1&gt;        &lt;hr&gt;    2023年03月02日 21:50 央视网    &lt;hr&gt;&lt;&#x2F;body&gt;&lt;&#x2F;html&gt;
+图片的设置既可以设置它的像素也可以设置他的占比，但是我们一般只会设置它的宽（高）的其中一个，因为另一个会等比例缩放，两个都设置的形状话会奇怪
+2.3.1.2 标题样式新浪新闻的标题部分的基本排版，我们已经完成了，然后大家会看到，我们编写的一级标题，默认字体颜色为纯黑色。 而原始的新浪新闻页面的新闻标题字体，并不是纯黑色，而是灰黑色， 那接下来，我们就要来设置这个字体的颜色。 而要设置这个字体的颜色，我们就需要通过CSS样式来控制 。
+那在HTML的文件中，我们如何来编写CSS样式呢，此时就涉及到CSS的三种引入方式。
+2.3.1.2.1 CSS引入方式具体有3种引入方式，语法如下表格所示：
+
+
+
+
+名称
+语法描述
+示例
+
+
+
+
+行内样式
+在标签内使用style属性，属性值是css属性键值对
+&lt;h1 style&#x3D;”xxx:xxx;”&gt;中国新闻网&lt;&#x2F;h1&gt;
+
+
+内嵌样式
+定义&lt;style&gt;标签，在标签内部定义css样式
+&lt;style&gt; h1 {…} &lt;&#x2F;style&gt;
+
+
+外联样式
+定义&lt;link&gt;标签，通过href属性引入外部css文件
+&lt;link rel&#x3D;”stylesheet” href&#x3D;”css&#x2F;news.css”&gt;
+
+
+
+
+对于上述3种引入方式，企业开发的使用情况如下：
+
+内联样式会出现大量的代码冗余，不方便后期的维护，所以不常用。
+内部样式，通过定义css选择器，让样式作用于当前页面的指定的标签上。
+外部样式，html和css实现了完全的分离，企业开发常用方式。
+
+2.3.1.2.2 颜色表示在前端程序开发中，颜色的表示方式常见的有如下三种：
+
+
+
+
+表示方式
+表示含义
+取值
+
+
+
+
+关键字
+预定义的颜色名
+red、green、blue…
+
+
+rgb表示法
+红绿蓝三原色，每项取值范围：0-255
+rgb(0,0,0)、rgb(255,255,255)、rgb(255,0,0)
+
+
+十六进制表示法
+#开头，将数字转换成十六进制表示
+#000000、#ff0000、#cccccc，简写：#000、#ccc
+
+
+
+
+2.3.1.2.3 标题字体颜色123456789101112131415161718192021222324252627282930313233&lt;!DOCTYPE html&gt;&lt;html lang&#x3D;&quot;en&quot;&gt;&lt;head&gt;    &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;    &lt;meta http-equiv&#x3D;&quot;X-UA-Compatible&quot; content&#x3D;&quot;IE&#x3D;edge&quot;&gt;    &lt;meta name&#x3D;&quot;viewport&quot; content&#x3D;&quot;width&#x3D;device-width, initial-scale&#x3D;1.0&quot;&gt;    &lt;title&gt;焦点访谈：中国底气 新思想夯实大国粮仓&lt;&#x2F;title&gt;    &lt;!-- 方式二: 内嵌样式 --&gt;    &lt;style&gt;        h1 {            &#x2F;* color: red; *&#x2F;            &#x2F;* color: rgb(0, 0, 255); *&#x2F;            color: #4D4F53;        }    &lt;&#x2F;style&gt;    &lt;!-- 方式三: 外联样式 --&gt;    &lt;!-- &lt;link rel&#x3D;&quot;stylesheet&quot; href&#x3D;&quot;css&#x2F;news.css&quot;&gt; --&gt;&lt;&#x2F;head&gt;&lt;body&gt;    &lt;img src&#x3D;&quot;img&#x2F;news_logo.png&quot;&gt; 新浪政务 &gt; 正文    &lt;!-- 方式一: 行内样式 --&gt;    &lt;!-- &lt;h1 style&#x3D;&quot;color: red;&quot;&gt;焦点访谈：中国底气 新思想夯实大国粮仓&lt;&#x2F;h1&gt; --&gt;        &lt;h1&gt;焦点访谈：中国底气 新思想夯实大国粮仓&lt;&#x2F;h1&gt;    &lt;hr&gt;    2023年03月02日 21:50 央视网    &lt;hr&gt;&lt;&#x2F;body&gt;&lt;&#x2F;html&gt;
+备注: 要想拾取某一个网页中的颜色，我们可以借助于浏览器的拾色器插件来完成。【拾色器插件的安装，参照资料中提供的文档即可】
+2.3.1.2.4 CSS选择器顾名思义：选择器是选取需设置样式的元素（标签），但是我们根据业务场景不同，选择的标签的需求也是多种多样的，所以选择器有很多种，因为我们是做后台开发的，所以对于css选择器，我们只学习最基本的3种。
+选择器通用语法如下：
+1234选择器名   {    css样式名：css样式值;    css样式名：css样式值;}
+我们需要学习的3种选择器是元素选择器，id选择器，class选择器，语法以及作用如下：
+1.元素（标签）选择器： 
+
+选择器的名字必须是标签的名字
+作用：选择器中的样式会作用于所有同名的标签上
+
+123元素名称 {    css样式名:css样式值；}
+例子如下：
+123div{    color: red;}
+2.id选择器:
+
+选择器的名字前面需要加上#
+作用：选择器中的样式会作用于指定id的标签上，而且有且只有一个标签（由于id是唯一的）
+
+123#id属性值 {    css样式名:css样式值；}
+例子如下：
+123#did {    color: blue;}
+3.类选择器：
+
+选择器的名字前面需要加上 .
+作用：选择器中的样式会作用于所有class的属性值和该名字一样的标签上，可以是多个
+
+123.class属性值 {    css样式名:css样式值；}
+例子如下：
+123.cls{     color: green; }
+2.3.1.2.5 发布时间字体颜色Hexo 颜色设置的写法
+CSS元素选择器
+123456789101112131415161718192021222324252627282930313233343536373839404142&lt;!DOCTYPE html&gt;&lt;html lang&#x3D;&quot;en&quot;&gt;&lt;head&gt;    &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;    &lt;meta http-equiv&#x3D;&quot;X-UA-Compatible&quot; content&#x3D;&quot;IE&#x3D;edge&quot;&gt;    &lt;meta name&#x3D;&quot;viewport&quot; content&#x3D;&quot;width&#x3D;device-width, initial-scale&#x3D;1.0&quot;&gt;    &lt;title&gt;焦点访谈：中国底气 新思想夯实大国粮仓&lt;&#x2F;title&gt;    &lt;style&gt;        h1 {            color: #4D4F53;        }        &#x2F;* 元素选择器 *&#x2F;        &#x2F;* span {            color: red;        } *&#x2F;        &#x2F;* 类选择器 *&#x2F;        &#x2F;* .cls {            color: green;        } *&#x2F;                &#x2F;* ID选择器 *&#x2F;        #time {            color: #968D92;            font-size: 13px; &#x2F;* 设置字体大小 *&#x2F;        }    &lt;&#x2F;style&gt;&lt;&#x2F;head&gt;&lt;body&gt;    &lt;img src&#x3D;&quot;img&#x2F;news_logo.png&quot;&gt; 新浪政务 &gt; 正文    &lt;h1&gt;焦点访谈：中国底气 新思想夯实大国粮仓&lt;&#x2F;h1&gt;    &lt;hr&gt;    &lt;span class&#x3D;&quot;cls&quot; id&#x3D;&quot;time&quot;&gt;2023年03月02日 21:50&lt;&#x2F;span&gt;  &lt;span class&#x3D;&quot;cls&quot;&gt;央视网&lt;&#x2F;span&gt;    &lt;hr&gt;&lt;&#x2F;body&gt;&lt;&#x2F;html&gt;
+上述我们还使用了一个css的属性 font-size , 用来设置字体的大小。 但是需要注意，在设置字体的大小时，单位px不能省略，否则不生效。
+2.3.1.3 超链接
+在新浪新闻的标题部分，当我们点击顶部的 “新浪政务”，浏览器将自动在当前窗口访问新浪政务首页这个资源（http:&#x2F;&#x2F;gov.sina.com.cn&#x2F;）
+
+当我们点击新闻发布时间之后的 “央视网”，浏览器将会自动打开一个新的标签页，然后在新的标签页中访问央视网中的该新闻资源 （https:&#x2F;&#x2F;news.cctv.com&#x2F;2023&#x2F;03&#x2F;02&#x2F;ARTIUCKFf9kE9eXgYE46ugx3230302.shtml）
+
+
+
+那接下来，我们就来完善新闻标题部分的这个功能，那此时呢，我们就需要用到HTML中的超链接的标签 。
+2.3.1.3.1 介绍
+标签: &lt;a href&#x3D;”…” target&#x3D;”…”&gt;央视网&lt;&#x2F;a&gt;
+属性:
+href: 指定资源访问的url
+target: 指定在何处打开资源链接
+_self: 默认值，在当前页面打开
+_blank: 在空白页面打开
+
+
+
+
+
+2.3.1.3.2 实现1234567891011121314151617181920212223242526272829303132333435363738&lt;!DOCTYPE html&gt;&lt;html lang&#x3D;&quot;en&quot;&gt;&lt;head&gt;    &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;    &lt;meta http-equiv&#x3D;&quot;X-UA-Compatible&quot; content&#x3D;&quot;IE&#x3D;edge&quot;&gt;    &lt;meta name&#x3D;&quot;viewport&quot; content&#x3D;&quot;width&#x3D;device-width, initial-scale&#x3D;1.0&quot;&gt;    &lt;title&gt;焦点访谈：中国底气 新思想夯实大国粮仓&lt;&#x2F;title&gt;    &lt;style&gt;        h1 {            color: #4D4F53;        }                #time {            color: #968D92;            font-size: 13px; &#x2F;* 设置字体大小 *&#x2F;        }        a {            color: black;            text-decoration: none; &#x2F;* 设置文本为一个标准的文本 , 去除掉 超链接 下面默认的下划线 *&#x2F;        }    &lt;&#x2F;style&gt;&lt;&#x2F;head&gt;&lt;body&gt;    &lt;img src&#x3D;&quot;img&#x2F;news_logo.png&quot;&gt; &lt;a href&#x3D;&quot;http:&#x2F;&#x2F;gov.sina.com.cn&#x2F;&quot; target&#x3D;&quot;_self&quot;&gt;新浪政务&lt;&#x2F;a&gt;  &gt; 正文    &lt;h1&gt;焦点访谈：中国底气 新思想夯实大国粮仓&lt;&#x2F;h1&gt;    &lt;hr&gt;    &lt;span id&#x3D;&quot;time&quot;&gt;2023年03月02日 21:50&lt;&#x2F;span&gt;      &lt;span&gt;     &lt;a href&#x3D;&quot;https:&#x2F;&#x2F;news.cctv.com&#x2F;2023&#x2F;03&#x2F;02&#x2F;ARTIUCKFf9kE9eXgYE46ugx3230302.shtml&quot; target&#x3D;&quot;_blank&quot;&gt;央视网&lt;&#x2F;a&gt;    &lt;&#x2F;span&gt;    &lt;hr&gt;&lt;&#x2F;body&gt;&lt;&#x2F;html&gt;
+浏览器打开此页面，我们可以看到最终效果（超链接的字体，以及默认的下划线，通过css样式已经调整好了）：
+
+2.3.2 新浪新闻-正文实现2.3.2.1 正文排版2.3.2.1.1 分析
+整个正文部分的排版，主要分为这么四个部分：
+1). 视频 (当前这种新闻页面,可能也会存在音频)
+2). 文字段落
+3). 字体加粗
+4). 图片
+2.3.2.1.2 标签1). 视频、音频标签
+
+视频标签: &lt;video&gt;
+
+属性: 
+src: 规定视频的url
+controls: 显示播放控件
+width: 播放器的宽度
+height: 播放器的高度
+
+
+
+
+音频标签: &lt;audio&gt;
+
+属性:
+src: 规定音频的url
+controls: 显示播放控件
+
+
+
+
+
+2). 段落标签
+
+换行标签: &lt;br&gt;
+注意: 在HTML页面中,我们在编辑器中通过回车实现的换行, 仅仅在文本编辑器中会看到换行效果, 浏览器是不会解析的, HTML中换行需要通过br标签
+
+
+
+
+段落标签: &lt;p&gt;
+如: &lt;p&gt; 这是一个段落 &lt;&#x2F;p&gt;
+
+
+
+3). 文本格式标签
+
+
+
+
+效果
+标签
+标签(强调)
+
+
+
+
+加粗
+b
+strong
+
+
+倾斜
+i
+em
+
+
+下划线
+u
+ins
+
+
+删除线
+s
+del
+
+
+
+
+前面的标签 b、i、u、s 就仅仅是实现加粗、倾斜、下划线、删除线的效果，是没有强调语义的。 而后面的strong、em、ins、del在实现加粗、倾斜、下划线、删除线的效果的同时，还带有强调语义。
+2.3.2.1.3 实现12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576&lt;!DOCTYPE html&gt;&lt;html lang&#x3D;&quot;en&quot;&gt;&lt;head&gt;    &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;    &lt;meta http-equiv&#x3D;&quot;X-UA-Compatible&quot; content&#x3D;&quot;IE&#x3D;edge&quot;&gt;    &lt;meta name&#x3D;&quot;viewport&quot; content&#x3D;&quot;width&#x3D;device-width, initial-scale&#x3D;1.0&quot;&gt;    &lt;title&gt;焦点访谈：中国底气 新思想夯实大国粮仓&lt;&#x2F;title&gt;    &lt;style&gt;        h1 {            color: #4D4F53;        }                #time {            color: #968D92;            font-size: 13px; &#x2F;* 设置字体大小 *&#x2F;        }        a {            color: black;            text-decoration: none; &#x2F;* 设置文本为一个标准的文本 *&#x2F;        }        p {            text-indent: 35px; &#x2F;* 设置首行缩进 *&#x2F;            line-height: 40px; &#x2F;* 设置行高 *&#x2F;        }        #plast {            text-align: right; &#x2F;* 对齐方式 *&#x2F;        }    &lt;&#x2F;style&gt;&lt;&#x2F;head&gt;&lt;body&gt;    &lt;!-- 标题 --&gt;    &lt;img src&#x3D;&quot;img&#x2F;news_logo.png&quot;&gt; &lt;a href&#x3D;&quot;http:&#x2F;&#x2F;gov.sina.com.cn&#x2F;&quot; target&#x3D;&quot;_self&quot;&gt;新浪政务&lt;&#x2F;a&gt;  &gt; 正文    &lt;h1&gt;焦点访谈：中国底气 新思想夯实大国粮仓&lt;&#x2F;h1&gt;    &lt;hr&gt;    &lt;span id&#x3D;&quot;time&quot;&gt;2023年03月02日 21:50&lt;&#x2F;span&gt;    &lt;span&gt;&lt;a href&#x3D;&quot;https:&#x2F;&#x2F;news.cctv.com&#x2F;2023&#x2F;03&#x2F;02&#x2F;ARTIUCKFf9kE9eXgYE46ugx3230302.shtml&quot; target&#x3D;&quot;_blank&quot;&gt;央视网&lt;&#x2F;a&gt;&lt;&#x2F;span&gt;    &lt;hr&gt;    &lt;!-- 正文 --&gt;    &lt;!-- 视频 --&gt;    &lt;video src&#x3D;&quot;video&#x2F;1.mp4&quot; controls width&#x3D;&quot;950px&quot;&gt;&lt;&#x2F;video&gt;    &lt;!-- 音频 --&gt;    &lt;!-- &lt;audio src&#x3D;&quot;audio&#x2F;1.mp3&quot; controls&gt;&lt;&#x2F;audio&gt; --&gt;    &lt;p&gt;    &lt;strong&gt;央视网消息&lt;&#x2F;strong&gt; （焦点访谈）：党的十八大以来，以习近平同志为核心的党中央始终把解决粮食安全问题作为治国理政的头等大事，重农抓粮一系列政策举措有力有效，我国粮食产量站稳1.3万亿斤台阶，实现谷物基本自给、口粮绝对安全。我们把饭碗牢牢端在自己手中，为保障经济社会发展提供了坚实支撑，为应对各种风险挑战赢得了主动。连续八年1.3万亿斤，这个沉甸甸的数据是如何取得的呢？    &lt;&#x2F;p&gt;    &lt;p&gt;    人勤春来早，春耕农事忙。立春之后，由南到北，我国春耕春管工作陆续展开，春天的田野处处生机盎然。    &lt;&#x2F;p&gt;    &lt;img src&#x3D;&quot;img&#x2F;1.jpg&quot;&gt;    &lt;p&gt;        今年，我国启动了新一轮千亿斤粮食产能提升行动，这是一个新的起点。2015年以来，我国粮食产量连续8年稳定在1.3万亿斤以上，人均粮食占有量始终稳稳高于国际公认的400公斤粮食安全线。从十年前的约12200亿斤到2022年的约13700亿斤，粮食产量提高了1500亿斤。    &lt;&#x2F;p&gt;    &lt;img src&#x3D;&quot;img&#x2F;2.jpg&quot;&gt;    &lt;p&gt;        中国式现代化一个重要的中国特色是人口规模巨大的现代化。我们粮食生产的发展，意味着我们要立足国内，解决14亿多人吃饭的问题。仓廪实，天下安。保障粮食安全是一个永恒的课题，任何时候都不能放松。在以习近平同志为核心的党中央坚强领导下，亿万中国人民辛勤耕耘、不懈奋斗，我们就一定能够牢牢守住粮食安全这一&quot;国之大者&quot;，把中国人的饭碗牢牢端在自己手中，夯实中国式现代化基础。    &lt;&#x2F;p&gt;    &lt;p id&#x3D;&quot;plast&quot;&gt;        责任编辑：王树淼 SN242    &lt;&#x2F;p&gt;&lt;&#x2F;body&gt;&lt;&#x2F;html&gt;
+在上述的正文排版实现中，还用到了几个CSS属性： 
+
+text-indent: 设置段落的首行缩进 
+line-height: 设置行高
+text-align: 设置对齐方式, 可取值为 left &#x2F; center &#x2F; right
+
+
+注意事项: 
+
+在HTML页面中无论输入了多少个空格, 最多只会显示一个。 可以使用空格占位符（&amp;nbsp；）来生成空格，如果需要多个空格，就使用多次占位符。
+
+那在HTML中，除了空格占位符以外，还有一些其他的占位符(了解, 只需要知道空格的占位符写法即可)，如下：
+
+| 显示结果 | 描述   | 占位符  || :———- | :——- | :——— ||          | 空格   | \  || &lt;        | 小于号 | \&lt;   || &gt;        | 大于号 | \&gt;   || &amp;        | 和号   | \&amp;  || “        | 引号   | \&quot; || ‘        | 撇号   | \&#39; |
+
+
+
+
+2.3.2.2 页面布局目前，新闻页面的基本排版，我们都已经完成了，但是，大家会看到，无论是标题部分，还是正文部分，都是铺满了整个浏览器。 而我们再来看看新浪新闻的原始页面，我们会看到新闻网页内容都是居中展示的，左边、右边都是一定的边距的。
+
+那接下来呢，我们就需要按照这个效果，来完成页面布局。 而要想完成这样一个页面布局，我们就需要介绍一下CSS中的盒子模型 。 
+2.3.2.2.1 盒子模型
+盒子：页面中所有的元素（标签），都可以看做是一个 盒子，由盒子将页面中的元素包含在一个矩形区域内，通过盒子的视角更方便的进行页面布局
+
+盒子模型组成：内容区域（content）、内边距区域（padding）、边框区域（border）、外边距区域（margin）
+
+
+
+CSS盒子模型，其实和日常生活中的包装盒是非常类似的，就比如：
+
+盒子的大小，其实就包括三个部分： border、padding、content，而margin外边距是不包括在盒子之内的。
+2.3.2.2.2 布局标签
+布局标签：实际开发网页中，会大量频繁的使用 div 和 span 这两个没有语义的布局标签。
+
+标签： 
+
+特点：
+
+div标签：
+
+一行只显示一个（独占一行）
+
+宽度默认是父元素的宽度，高度默认由内容撑开
+
+可以设置宽高（width、height）
+
+
+
+span标签：
+
+一行可以显示多个
+
+宽度和高度默认由内容撑开
+
+不可以设置宽高（width、height）
+
+
+
+
+
+
+测试：
+123456789101112131415&lt;body&gt;    &lt;div&gt;        A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A     &lt;&#x2F;div&gt;    &lt;div&gt;        A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A     &lt;&#x2F;div&gt;    &lt;span&gt;        A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A     &lt;&#x2F;span&gt;    &lt;span&gt;        A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A     &lt;&#x2F;span&gt;&lt;&#x2F;body&gt;
+浏览器打开后的效果:
+1). div会独占一行，默认宽度为父元素 body 的宽度
+
+2). span一行会显示多个，用来组合行内元素，默认宽度为内容撑开的宽度
+
+2.3.2.2.3 盒子模型代码代码如下: 
+1234567891011121314151617181920212223242526272829&lt;!DOCTYPE html&gt;&lt;html lang&#x3D;&quot;en&quot;&gt;&lt;head&gt;    &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;    &lt;meta http-equiv&#x3D;&quot;X-UA-Compatible&quot; content&#x3D;&quot;IE&#x3D;edge&quot;&gt;    &lt;meta name&#x3D;&quot;viewport&quot; content&#x3D;&quot;width&#x3D;device-width, initial-scale&#x3D;1.0&quot;&gt;    &lt;title&gt;盒子模型&lt;&#x2F;title&gt;    &lt;style&gt;        div {            width: 200px;  &#x2F;* 宽度 *&#x2F;            height: 200px;  &#x2F;* 高度 *&#x2F;            box-sizing: border-box; &#x2F;* 指定width height为盒子的高宽 *&#x2F;            background-color: aquamarine; &#x2F;* 背景色 *&#x2F;                        padding: 20px 20px 20px 20px; &#x2F;* 内边距, 上 右 下 左 , 边距都一行, 可以简写: padding: 20px;*&#x2F;             border: 10px solid red; &#x2F;* 边框, 宽度 线条类型 颜色 *&#x2F;            margin: 30px 30px 30px 30px; &#x2F;* 外边距, 上 右 下 左 , 边距都一行, 可以简写: margin: 30px; *&#x2F;        }    &lt;&#x2F;style&gt;&lt;&#x2F;head&gt;&lt;body&gt;        &lt;div&gt;        A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A     &lt;&#x2F;div&gt;&lt;&#x2F;body&gt;&lt;&#x2F;html&gt;
+代码编写好了, 可以通过浏览器打开该页面, 通过开发者工具,我们就可以看到盒子的大小, 以及盒子各个组成部分(内容、内边距、边框、外边距)：
+
+我们也可以，通过浏览器的开发者工具，清晰的看到这个盒子，以及每一个部分的大小：
+
+2.3.2.2.3 布局实现在实现新闻页面的布局时，我们需要做两部操作：
+
+第一步：需要将body中的新闻标题部分、正文部分使用一个 div 布局标签将其包裹起来，方便通过css设置内容占用的宽度，比如：65%。
+第二步：通过css为该div设置外边距，左右的外边距分别为：17.5%，上下外边距靠边展示即可，为：0%。
+
+具体的代码实现如下：
+123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384&lt;!DOCTYPE html&gt;&lt;html lang&#x3D;&quot;en&quot;&gt;&lt;head&gt;    &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;    &lt;meta http-equiv&#x3D;&quot;X-UA-Compatible&quot; content&#x3D;&quot;IE&#x3D;edge&quot;&gt;    &lt;meta name&#x3D;&quot;viewport&quot; content&#x3D;&quot;width&#x3D;device-width, initial-scale&#x3D;1.0&quot;&gt;    &lt;title&gt;焦点访谈：中国底气 新思想夯实大国粮仓&lt;&#x2F;title&gt;    &lt;style&gt;        h1 {            color: #4D4F53;        }                #time {            color: #968D92;            font-size: 13px; &#x2F;* 设置字体大小 *&#x2F;        }        a {            color: black;            text-decoration: none; &#x2F;* 设置文本为一个标准的文本 *&#x2F;        }        p {            text-indent: 35px; &#x2F;* 设置首行缩进 *&#x2F;            line-height: 40px; &#x2F;* 设置行高 *&#x2F;        }        #plast {            text-align: right; &#x2F;* 对齐方式 *&#x2F;        }        #center {            width: 65%;            &#x2F;* margin: 0% 17.5% 0% 17.5% ; *&#x2F; &#x2F;* 外边距, 上 右 下 左 *&#x2F;            margin: 0 auto;        }    &lt;&#x2F;style&gt;&lt;&#x2F;head&gt;&lt;body&gt;        &lt;div id&#x3D;&quot;center&quot;&gt;        &lt;!-- 标题 --&gt;        &lt;img src&#x3D;&quot;img&#x2F;news_logo.png&quot;&gt; &lt;a href&#x3D;&quot;http:&#x2F;&#x2F;gov.sina.com.cn&#x2F;&quot; target&#x3D;&quot;_self&quot;&gt;新浪政务&lt;&#x2F;a&gt;  &gt; 正文        &lt;h1&gt;焦点访谈：中国底气 新思想夯实大国粮仓&lt;&#x2F;h1&gt;        &lt;hr&gt;        &lt;span id&#x3D;&quot;time&quot;&gt;2023年03月02日 21:50&lt;&#x2F;span&gt;        &lt;span&gt;&lt;a href&#x3D;&quot;https:&#x2F;&#x2F;news.cctv.com&#x2F;2023&#x2F;03&#x2F;02&#x2F;ARTIUCKFf9kE9eXgYE46ugx3230302.shtml&quot; target&#x3D;&quot;_blank&quot;&gt;央视网&lt;&#x2F;a&gt;&lt;&#x2F;span&gt;        &lt;hr&gt;        &lt;!-- 正文 --&gt;        &lt;!-- 视频 --&gt;        &lt;video src&#x3D;&quot;video&#x2F;1.mp4&quot; controls width&#x3D;&quot;950px&quot;&gt;&lt;&#x2F;video&gt;        &lt;!-- 音频 --&gt;        &lt;!-- &lt;audio src&#x3D;&quot;audio&#x2F;1.mp3&quot; controls&gt;&lt;&#x2F;audio&gt; --&gt;        &lt;p&gt;        &lt;strong&gt;央视网消息&lt;&#x2F;strong&gt; （焦点访谈）：党的十八大以来，以习近平同志为核心的党中央始终把解决粮食安全问题作为治国理政的头等大事，重农抓粮一系列政策举措有力有效，我国粮食产量站稳1.3万亿斤台阶，实现谷物基本自给、口粮绝对安全。我们把饭碗牢牢端在自己手中，为保障经济社会发展提供了坚实支撑，为应对各种风险挑战赢得了主动。连续八年1.3万亿斤，这个沉甸甸的数据是如何取得的呢？        &lt;&#x2F;p&gt;        &lt;p&gt;        人勤春来早，春耕农事忙。立春之后，由南到北，我国春耕春管工作陆续展开，春天的田野处处生机盎然。        &lt;&#x2F;p&gt;        &lt;img src&#x3D;&quot;img&#x2F;1.jpg&quot;&gt;        &lt;p&gt;            今年，我国启动了新一轮千亿斤粮食产能提升行动，这是一个新的起点。2015年以来，我国粮食产量连续8年稳定在1.3万亿斤以上，人均粮食占有量始终稳稳高于国际公认的400公斤粮食安全线。从十年前的约12200亿斤到2022年的约13700亿斤，粮食产量提高了1500亿斤。        &lt;&#x2F;p&gt;        &lt;img src&#x3D;&quot;img&#x2F;2.jpg&quot;&gt;        &lt;p&gt;            中国式现代化一个重要的中国特色是人口规模巨大的现代化。我们粮食生产的发展，意味着我们要立足国内，解决14亿多人吃饭的问题。仓廪实，天下安。保障粮食安全是一个永恒的课题，任何时候都不能放松。在以习近平同志为核心的党中央坚强领导下，亿万中国人民辛勤耕耘、不懈奋斗，我们就一定能够牢牢守住粮食安全这一&quot;国之大者&quot;，把中国人的饭碗牢牢端在自己手中，夯实中国式现代化基础。        &lt;&#x2F;p&gt;        &lt;p id&#x3D;&quot;plast&quot;&gt;            责任编辑：王树淼 SN242        &lt;&#x2F;p&gt;      &lt;&#x2F;div&gt;&lt;&#x2F;body&gt;&lt;&#x2F;html&gt;
+浏览器打开此页面，最终效果如下：
+
+2.4 表格标签场景：在网页中以表格（行、列）形式整齐展示数据，我们在一些管理类的系统中，会看到数据通常都是以表格的形式呈现出来的，比如：班级表、学生表、课程表、成绩表等等。
+
+标签：
+
+&lt;table&gt; : 用于定义整个表格, 可以包裹多个 &lt;tr&gt;， 常用属性如下： 
+
+border：规定表格边框的宽度
+width：规定表格的宽度
+cellspacing: 规定单元之间的空间
+
+
+&lt;tr&gt; : 表格的行，可以包裹多个 &lt;td&gt;  
+
+&lt;td&gt; : 表格单元格(普通)，可以包裹内容 , 如果是表头单元格，可以替换为 &lt;th&gt;  
+
+演示：
+代码如下：
+1234567891011121314151617181920212223242526272829303132333435363738&lt;!DOCTYPE html&gt;&lt;html lang&#x3D;&quot;en&quot;&gt;&lt;head&gt;    &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;    &lt;meta http-equiv&#x3D;&quot;X-UA-Compatible&quot; content&#x3D;&quot;IE&#x3D;edge&quot;&gt;    &lt;meta name&#x3D;&quot;viewport&quot; content&#x3D;&quot;width&#x3D;device-width, initial-scale&#x3D;1.0&quot;&gt;    &lt;title&gt;HTML-表格&lt;&#x2F;title&gt;    &lt;style&gt;        td {            text-align: center; &#x2F;* 单元格内容居中展示 *&#x2F;        }    &lt;&#x2F;style&gt;&lt;&#x2F;head&gt;&lt;body&gt;        &lt;table border&#x3D;&quot;1px&quot; cellspacing&#x3D;&quot;0&quot;  width&#x3D;&quot;600px&quot;&gt;        &lt;tr&gt;            &lt;th&gt;序号&lt;&#x2F;th&gt;            &lt;th&gt;品牌Logo&lt;&#x2F;th&gt;            &lt;th&gt;品牌名称&lt;&#x2F;th&gt;            &lt;th&gt;企业名称&lt;&#x2F;th&gt;        &lt;&#x2F;tr&gt;        &lt;tr&gt;            &lt;td&gt;1&lt;&#x2F;td&gt;            &lt;td&gt; &lt;img src&#x3D;&quot;img&#x2F;huawei.jpg&quot; width&#x3D;&quot;100px&quot;&gt; &lt;&#x2F;td&gt;            &lt;td&gt;华为&lt;&#x2F;td&gt;            &lt;td&gt;华为技术有限公司&lt;&#x2F;td&gt;        &lt;&#x2F;tr&gt;        &lt;tr&gt;            &lt;td&gt;2&lt;&#x2F;td&gt;            &lt;td&gt; &lt;img src&#x3D;&quot;img&#x2F;alibaba.jpg&quot;  width&#x3D;&quot;100px&quot;&gt; &lt;&#x2F;td&gt;            &lt;td&gt;阿里&lt;&#x2F;td&gt;            &lt;td&gt;阿里巴巴集团控股有限公司&lt;&#x2F;td&gt;        &lt;&#x2F;tr&gt;    &lt;&#x2F;table&gt;&lt;&#x2F;body&gt;&lt;&#x2F;html&gt;
+打开浏览器，效果如下图所示：
+
+整合表格使用 table 标签包裹 , 其中的每一行数据都是一个 tr , 每一行中的每一个单元格都是一个 td , 而如果是表头单元格, 可以使用 th (具有加粗居中展示的效果)。
+2.5 表单标签2.5.1 表单2.5.1.1 介绍那表单呢,在我们日常的上网的过程中,基本上每天都会遇到。比如，我们经常在访问网站时，出现的登录页面、注册页面、个人信息提交页面，其实都是一个一个的表单 。 当我们在这些表单中录入数据之后，一点击 “提交”，就会将表单中我们填写的数据采集到，并提交， 那其实这个数据呢，一般会提交到服务端，最终保存在数据库中 （后面的课程中会讲到）。
+ 
+那其实，上述的整个窗口是一个表单，而表单是一项一项的，这个我们称为表单项 或 表单元素。
+
+表单场景: 表单就是在网页中负责数据采集功能的，如：注册、登录的表单。 
+
+表单标签: &lt;form&gt;
+
+表单属性:
+
+action: 规定表单提交时，向何处发送表单数据，表单提交的URL。
+method: 规定用于发送表单数据的方式，常见为： GET、POST。
+GET：表单数据是拼接在url后面的， 如： xxxxxxxxxxx?username&#x3D;Tom&amp;age&#x3D;12，url中能携带的表单数据大小是有限制的。
+POST： 表单数据是在请求体（消息体）中携带的，大小没有限制。
+
+
+
+
+表单项标签: 不同类型的input元素、下拉列表、文本域等。
+
+input: 定义表单项，通过type属性控制输入形式
+select: 定义下拉列表
+textarea: 定义文本域
+
+
+
+2.5.1.2 演示1). GET方式提交的表单
+1234567891011121314151617181920212223242526&lt;!DOCTYPE html&gt;&lt;html lang&#x3D;&quot;en&quot;&gt;&lt;head&gt;    &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;    &lt;meta http-equiv&#x3D;&quot;X-UA-Compatible&quot; content&#x3D;&quot;IE&#x3D;edge&quot;&gt;    &lt;meta name&#x3D;&quot;viewport&quot; content&#x3D;&quot;width&#x3D;device-width, initial-scale&#x3D;1.0&quot;&gt;    &lt;title&gt;HTML-表单&lt;&#x2F;title&gt;&lt;&#x2F;head&gt;&lt;body&gt;    &lt;!--     form表单属性:         action: 表单提交的url, 往何处提交数据 . 如果不指定, 默认提交到当前页面        method: 表单的提交方式 .            get: 在url后面拼接表单数据, 比如: ?username&#x3D;Tom&amp;age&#x3D;12 , url长度有限制 . 默认值            post: 在消息体(请求体)中传递的, 参数大小无限制的.    --&gt;       	&lt;form action&#x3D;&quot;&quot; method&#x3D;&quot;get&quot;&gt;        用户名: &lt;input type&#x3D;&quot;text&quot; name&#x3D;&quot;username&quot;&gt;        年龄: &lt;input type&#x3D;&quot;text&quot; name&#x3D;&quot;age&quot;&gt;        &lt;input type&#x3D;&quot;submit&quot; value&#x3D;&quot;提交&quot;&gt;    &lt;&#x2F;form&gt;	&lt;&#x2F;body&gt;&lt;&#x2F;html&gt;
+表单编写完毕之后，通过浏览器打开此表单，然后再表单项中录入值之后，点击提交，我们会看到表单的数据在url后面提交到服务端，格式为：?username&#x3D;Tom&amp;age&#x3D;12。
+
+2). POST方式提交表单
+将上述的表单提交方式由get，改为post
+1234567891011121314151617181920212223242526&lt;!DOCTYPE html&gt;&lt;html lang&#x3D;&quot;en&quot;&gt;&lt;head&gt;    &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;    &lt;meta http-equiv&#x3D;&quot;X-UA-Compatible&quot; content&#x3D;&quot;IE&#x3D;edge&quot;&gt;    &lt;meta name&#x3D;&quot;viewport&quot; content&#x3D;&quot;width&#x3D;device-width, initial-scale&#x3D;1.0&quot;&gt;    &lt;title&gt;HTML-表单&lt;&#x2F;title&gt;&lt;&#x2F;head&gt;&lt;body&gt;    &lt;!--     form表单属性:         action: 表单提交的url, 往何处提交数据 . 如果不指定, 默认提交到当前页面        method: 表单的提交方式 .            get: 在url后面拼接表单数据, 比如: ?username&#x3D;Tom&amp;age&#x3D;12 , url长度有限制 . 默认值            post: 在消息体(请求体)中传递的, 参数大小无限制的.    --&gt;           &lt;form action&#x3D;&quot;&quot; method&#x3D;&quot;post&quot;&gt;        用户名: &lt;input type&#x3D;&quot;text&quot; name&#x3D;&quot;username&quot;&gt;        年龄: &lt;input type&#x3D;&quot;text&quot; name&#x3D;&quot;age&quot;&gt;        &lt;input type&#x3D;&quot;submit&quot; value&#x3D;&quot;提交&quot;&gt;    &lt;&#x2F;form&gt;	&lt;&#x2F;body&gt;&lt;&#x2F;html&gt;
+表单编写完毕之后，通过浏览器打开此表单，然后再表单项中录入值之后，点击提交，我们会看到表单的数据在url后面提交到服务端，格式为：?username&#x3D;Tom&amp;age&#x3D;12。
+
+2.5.1.3 注意事项表单中的所有表单项，要想能够正常的采集数据，在提交的时候能提交到服务端，表单项必须指定name属性。 否则，无法提交该表单项。
+1用户名: &lt;input type&#x3D;&quot;text&quot; name&#x3D;&quot;username&quot;&gt;
+2.5.2 表单项2.5.2.1 介绍在一个表单中，可以存在很多的表单项，而虽然表单项的形式各式各样，但是表单项的标签其实就只有三个，分别是：
+
+&lt;input&gt;: 表单项 , 通过type属性控制输入形式。
+| type取值                 | 描述                             || ———————————— | —————————————————— || text                     | 默认值，定义单行的输入字段           || password                 | 定义密码字段                         || radio                    | 定义单选按钮                         || checkbox                 | 定义复选框                           || file                     | 定义文件上传按钮                     || date&#x2F;time&#x2F;datetime-local | 定义日期&#x2F;时间&#x2F;日期时间               || number                   | 定义数字输入框                       || email                    | 定义邮件输入框                       || hidden                   | 定义隐藏域                           || submit &#x2F; reset &#x2F; button  | 定义提交按钮 &#x2F; 重置按钮 &#x2F; 可点击按钮 |
+
+&lt;select&gt;: 定义下拉列表, &lt;option&gt; 定义列表项
+
+&lt;textarea&gt;: 文本域
+
+
+2.5.2.2 演示创建一个新的表单项的html文件，具体内容如下：
+1234567891011121314151617181920212223242526272829303132333435363738394041424344&lt;!DOCTYPE html&gt;&lt;html lang&#x3D;&quot;en&quot;&gt;&lt;head&gt;    &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;    &lt;meta http-equiv&#x3D;&quot;X-UA-Compatible&quot; content&#x3D;&quot;IE&#x3D;edge&quot;&gt;    &lt;meta name&#x3D;&quot;viewport&quot; content&#x3D;&quot;width&#x3D;device-width, initial-scale&#x3D;1.0&quot;&gt;    &lt;title&gt;HTML-表单项标签&lt;&#x2F;title&gt;&lt;&#x2F;head&gt;&lt;body&gt;&lt;!-- value: 表单项提交的值 --&gt;&lt;form action&#x3D;&quot;&quot; method&#x3D;&quot;post&quot;&gt;     姓名: &lt;input type&#x3D;&quot;text&quot; name&#x3D;&quot;name&quot;&gt; &lt;br&gt;&lt;br&gt;     密码: &lt;input type&#x3D;&quot;password&quot; name&#x3D;&quot;password&quot;&gt; &lt;br&gt;&lt;br&gt;      性别: &lt;input type&#x3D;&quot;radio&quot; name&#x3D;&quot;gender&quot; value&#x3D;&quot;1&quot;&gt; 男          &lt;label&gt;&lt;input type&#x3D;&quot;radio&quot; name&#x3D;&quot;gender&quot; value&#x3D;&quot;2&quot;&gt; 女 &lt;&#x2F;label&gt; &lt;br&gt;&lt;br&gt;     爱好: &lt;label&gt;&lt;input type&#x3D;&quot;checkbox&quot; name&#x3D;&quot;hobby&quot; value&#x3D;&quot;java&quot;&gt; java &lt;&#x2F;label&gt;          &lt;label&gt;&lt;input type&#x3D;&quot;checkbox&quot; name&#x3D;&quot;hobby&quot; value&#x3D;&quot;game&quot;&gt; game &lt;&#x2F;label&gt;          &lt;label&gt;&lt;input type&#x3D;&quot;checkbox&quot; name&#x3D;&quot;hobby&quot; value&#x3D;&quot;sing&quot;&gt; sing &lt;&#x2F;label&gt; &lt;br&gt;&lt;br&gt;     图像: &lt;input type&#x3D;&quot;file&quot; name&#x3D;&quot;image&quot;&gt;  &lt;br&gt;&lt;br&gt;     生日: &lt;input type&#x3D;&quot;date&quot; name&#x3D;&quot;birthday&quot;&gt; &lt;br&gt;&lt;br&gt;     时间: &lt;input type&#x3D;&quot;time&quot; name&#x3D;&quot;time&quot;&gt; &lt;br&gt;&lt;br&gt;     日期时间: &lt;input type&#x3D;&quot;datetime-local&quot; name&#x3D;&quot;datetime&quot;&gt; &lt;br&gt;&lt;br&gt;     邮箱: &lt;input type&#x3D;&quot;email&quot; name&#x3D;&quot;email&quot;&gt; &lt;br&gt;&lt;br&gt;     年龄: &lt;input type&#x3D;&quot;number&quot; name&#x3D;&quot;age&quot;&gt; &lt;br&gt;&lt;br&gt;     学历: &lt;select name&#x3D;&quot;degree&quot;&gt;               &lt;option value&#x3D;&quot;&quot;&gt;----------- 请选择 -----------&lt;&#x2F;option&gt;               &lt;option value&#x3D;&quot;1&quot;&gt;大专&lt;&#x2F;option&gt;               &lt;option value&#x3D;&quot;2&quot;&gt;本科&lt;&#x2F;option&gt;               &lt;option value&#x3D;&quot;3&quot;&gt;硕士&lt;&#x2F;option&gt;               &lt;option value&#x3D;&quot;4&quot;&gt;博士&lt;&#x2F;option&gt;          &lt;&#x2F;select&gt;  &lt;br&gt;&lt;br&gt;     描述: &lt;textarea name&#x3D;&quot;description&quot; cols&#x3D;&quot;30&quot; rows&#x3D;&quot;10&quot;&gt;&lt;&#x2F;textarea&gt;  &lt;br&gt;&lt;br&gt;     &lt;input type&#x3D;&quot;hidden&quot; name&#x3D;&quot;id&quot; value&#x3D;&quot;1&quot;&gt; 	         &lt;!-- 表单常见按钮 --&gt;     &lt;input type&#x3D;&quot;button&quot; value&#x3D;&quot;按钮&quot;&gt;     &lt;input type&#x3D;&quot;reset&quot; value&#x3D;&quot;重置&quot;&gt;      &lt;input type&#x3D;&quot;submit&quot; value&#x3D;&quot;提交&quot;&gt;        &lt;br&gt;&lt;&#x2F;form&gt;&lt;&#x2F;body&gt;&lt;&#x2F;html&gt;
+通过浏览器打开上述的表单项html文件，最终展示出的表单信息如下：
+
+而对于input type&#x3D;”hidden”，是一个隐藏域，在表单中并不会显示出来，但是在提交表单的时候，是会提交到服务端的。 接下来，我们就点击提交按钮，来提交当前表单，看看提交的数据：
+
+标签
+&lt;label&gt; 标签用来为表单控件（如 &lt;input&gt;、&lt;textarea&gt; 等）定义标签（说明文字）。
+它最大的作用就是“绑定”：把一段文字和对应的输入框绑定在一起。
+
+点击生效：当你用 &lt;label&gt; 绑定了文字和输入框后，用户点击文字，也能让对应的输入框获得焦点（光标闪烁）或选中状态。这在单选框（radio）和复选框（checkbox）中极其重要，因为原生的圆框或方框太小了，不好点。
+无障碍阅读（SEO与屏幕阅读器）：屏幕阅读器（供视障人士使用）读到 &lt;label&gt; 时，会朗读出文字，让用户知道这个输入框是填什么的。
+
+两种绑定方式：
+方式一：包裹法（隐式绑定）把文字和输入框一起包在 &lt;label&gt; 里面。你之前的代码中性别部分就是这么用的：12&lt;label&gt;&lt;input type&#x3D;&quot;radio&quot; name&#x3D;&quot;gender&quot; value&#x3D;&quot;male&quot;&gt; 男&lt;&#x2F;label&gt;&lt;label&gt;&lt;input type&#x3D;&quot;radio&quot; name&#x3D;&quot;gender&quot; value&#x3D;&quot;female&quot;&gt; 女&lt;&#x2F;label&gt;效果：此时你点击“男”或“女”这两个字，就能选中前面的圆圈。
+方式二：for 属性法（显式绑定）—— 推荐做法给 &lt;input&gt; 设置一个 id，然后给 &lt;label&gt; 设置相同的 for 属性值。12&lt;label for&#x3D;&quot;username&quot;&gt;your name: &lt;&#x2F;label&gt;&lt;input type&#x3D;&quot;text&quot; id&#x3D;&quot;username&quot; name&#x3D;&quot;name&quot;&gt;效果：点击 “your name:” 这段文字，光标会自动跳到后面的输入框里。
+3. 文档查阅文档地址: https:&#x2F;&#x2F;www.w3school.com.cn&#x2F;index.html
+3.1 HTML文档查阅以video标签为例:
+
+3.2 CSS文档查阅以padding属性为例:
+
+</span></a><ol class="toc-child"><li class="toc-item toc-level-6"><a class="toc-link"><span class="toc-number">4.1.</span> <span class="toc-text">来实现。
+ 3). 第三部分，有两条水平分割线，需要用到HTML中的  标签来定义水平分割线。
+2.3.1.1.2 标签1). 图片标签 img
+1234567891011121314151617181920A. 图片标签: &lt;img&gt;B. 常见属性: 	src: 指定图像的url (可以指定 绝对路径 , 也可以指定 相对路径)	width: 图像的宽度 (像素 &#x2F; 百分比 , 相对于父元素的百分比)	height: 图像的高度 (像素 &#x2F; 百分比 , 相对于父元素的百分比)		备注: 一般width 和 height 我们只会指定一个，另外一个会自动的等比例缩放。	C. 路径书写方式:    绝对路径:        1. 绝对磁盘路径: C:\Users\Administrator\Desktop\HTML\img\news_logo.png        			   &lt;img src&#x3D;&quot;C:\Users\Administrator\Desktop\HTML\img\news_logo.png&quot;&gt;        2. 绝对网络路径: https:&#x2F;&#x2F;i2.sinaimg.cn&#x2F;dy&#x2F;deco&#x2F;2012&#x2F;0613&#x2F;yocc20120613img01&#x2F;news_logo.png        			   &lt;img src&#x3D;&quot;https:&#x2F;&#x2F;i2.sinaimg.cn&#x2F;dy&#x2F;deco&#x2F;2012&#x2F;0613&#x2F;yocc20120613img01&#x2F;news_logo.png&quot;&gt;        相对路径:        .&#x2F; : 当前目录 , .&#x2F; 可以省略的        ..&#x2F;: 上一级目录
+2). 标题标签 h 系列
+12345678910A. 标题标签: &lt;h1&gt; - &lt;h6&gt;    	&lt;h1&gt;111111111111&lt;&#x2F;h1&gt;	&lt;h2&gt;111111111111&lt;&#x2F;h2&gt;	&lt;h3&gt;111111111111&lt;&#x2F;h3&gt;	&lt;h4&gt;111111111111&lt;&#x2F;h4&gt;	&lt;h5&gt;111111111111&lt;&#x2F;h5&gt;	&lt;h6&gt;111111111111&lt;&#x2F;h6&gt;	B. 效果 : h1为一级标题，字体也是最大的 ； h6为六级标题，字体是最小的。
+3). 水平分页线标签 
+2.3.1.1.2 实现1). 打开VsCode，选择左侧最底部的 “资源管理器”，然后选择打开文件夹，选择打开桌面的 HTML 文件夹 
+2). 将资料中提供的 图片、音频、视频 文件夹的这三个文件夹（里面是图片、音视频素材），复制到 HTML 文件夹中。 
+
+3). 在VsCode中创建一个新的 html 文件，文件的后缀名设置为 .html
+
+4). html 文件创建好之后，在其中输入 ！，然后直接回车，就可以生成 HTML 的基础结构标签
+
+5). 编写标题排版的核心代码
+1234567891011121314151617181920212223242526272829303132333435363738394041&lt;!-- 文档类型为HTML --&gt;&lt;!DOCTYPE html&gt;&lt;html lang&#x3D;&quot;en&quot;&gt;&lt;head&gt;    &lt;!-- 字符集为UTF-8 --&gt;    &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;    &lt;!-- 设置浏览器兼容性 --&gt;    &lt;meta http-equiv&#x3D;&quot;X-UA-Compatible&quot; content&#x3D;&quot;IE&#x3D;edge&quot;&gt;    &lt;meta name&#x3D;&quot;viewport&quot; content&#x3D;&quot;width&#x3D;device-width, initial-scale&#x3D;1.0&quot;&gt;    &lt;title&gt;焦点访谈：中国底气 新思想夯实大国粮仓&lt;&#x2F;title&gt;&lt;&#x2F;head&gt;&lt;body&gt;    &lt;!--     img标签:         src: 图片资源路径        width: 宽度(px, 像素 ; % , 相对于父元素的百分比)        height: 高度(px, 像素 ; % , 相对于父元素的百分比)                &lt;img src&#x3D;&quot;img&#x2F;news_logo.png&quot; width&#x3D;&quot;80%&quot; &gt;    路径书写方式:        绝对路径:            1. 绝对磁盘路径: C:\Users\Administrator\Desktop\HTML\img\news_logo.png                           &lt;img src&#x3D;&quot;C:\Users\Administrator\Desktop\HTML\img\news_logo.png&quot;&gt;            2. 绝对网络路径: https:&#x2F;&#x2F;i2.sinaimg.cn&#x2F;dy&#x2F;deco&#x2F;2012&#x2F;0613&#x2F;yocc20120613img01&#x2F;news_logo.png                           &lt;img src&#x3D;&quot;https:&#x2F;&#x2F;i2.sinaimg.cn&#x2F;dy&#x2F;deco&#x2F;2012&#x2F;0613&#x2F;yocc20120613img01&#x2F;news_logo.png&quot;&gt;        相对路径:            .&#x2F; : 当前目录 , .&#x2F; 可以省略的            ..&#x2F;: 上一级目录     --&gt;    &lt;img src&#x3D;&quot;img&#x2F;news_logo.png&quot;&gt; 新浪政务 &gt; 正文    &lt;h1&gt;焦点访谈：中国底气 新思想夯实大国粮仓&lt;&#x2F;h1&gt;        &lt;hr&gt;    2023年03月02日 21:50 央视网    &lt;hr&gt;&lt;&#x2F;body&gt;&lt;&#x2F;html&gt;
+图片的设置既可以设置它的像素也可以设置他的占比，但是我们一般只会设置它的宽（高）的其中一个，因为另一个会等比例缩放，两个都设置的形状话会奇怪
+2.3.1.2 标题样式新浪新闻的标题部分的基本排版，我们已经完成了，然后大家会看到，我们编写的一级标题，默认字体颜色为纯黑色。 而原始的新浪新闻页面的新闻标题字体，并不是纯黑色，而是灰黑色， 那接下来，我们就要来设置这个字体的颜色。 而要设置这个字体的颜色，我们就需要通过CSS样式来控制 。
+那在HTML的文件中，我们如何来编写CSS样式呢，此时就涉及到CSS的三种引入方式。
+2.3.1.2.1 CSS引入方式具体有3种引入方式，语法如下表格所示：
+
+
+
+
+名称
+语法描述
+示例
+
+
+
+
+行内样式
+在标签内使用style属性，属性值是css属性键值对
+&lt;h1 style&#x3D;”xxx:xxx;”&gt;中国新闻网&lt;&#x2F;h1&gt;
+
+
+内嵌样式
+定义&lt;style&gt;标签，在标签内部定义css样式
+&lt;style&gt; h1 {…} &lt;&#x2F;style&gt;
+
+
+外联样式
+定义&lt;link&gt;标签，通过href属性引入外部css文件
+&lt;link rel&#x3D;”stylesheet” href&#x3D;”css&#x2F;news.css”&gt;
+
+
+
+
+对于上述3种引入方式，企业开发的使用情况如下：
+
+内联样式会出现大量的代码冗余，不方便后期的维护，所以不常用。
+内部样式，通过定义css选择器，让样式作用于当前页面的指定的标签上。
+外部样式，html和css实现了完全的分离，企业开发常用方式。
+
+2.3.1.2.2 颜色表示在前端程序开发中，颜色的表示方式常见的有如下三种：
+
+
+
+
+表示方式
+表示含义
+取值
+
+
+
+
+关键字
+预定义的颜色名
+red、green、blue…
+
+
+rgb表示法
+红绿蓝三原色，每项取值范围：0-255
+rgb(0,0,0)、rgb(255,255,255)、rgb(255,0,0)
+
+
+十六进制表示法
+#开头，将数字转换成十六进制表示
+#000000、#ff0000、#cccccc，简写：#000、#ccc
+
+
+
+
+2.3.1.2.3 标题字体颜色123456789101112131415161718192021222324252627282930313233&lt;!DOCTYPE html&gt;&lt;html lang&#x3D;&quot;en&quot;&gt;&lt;head&gt;    &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;    &lt;meta http-equiv&#x3D;&quot;X-UA-Compatible&quot; content&#x3D;&quot;IE&#x3D;edge&quot;&gt;    &lt;meta name&#x3D;&quot;viewport&quot; content&#x3D;&quot;width&#x3D;device-width, initial-scale&#x3D;1.0&quot;&gt;    &lt;title&gt;焦点访谈：中国底气 新思想夯实大国粮仓&lt;&#x2F;title&gt;    &lt;!-- 方式二: 内嵌样式 --&gt;    &lt;style&gt;        h1 {            &#x2F;* color: red; *&#x2F;            &#x2F;* color: rgb(0, 0, 255); *&#x2F;            color: #4D4F53;        }    &lt;&#x2F;style&gt;    &lt;!-- 方式三: 外联样式 --&gt;    &lt;!-- &lt;link rel&#x3D;&quot;stylesheet&quot; href&#x3D;&quot;css&#x2F;news.css&quot;&gt; --&gt;&lt;&#x2F;head&gt;&lt;body&gt;    &lt;img src&#x3D;&quot;img&#x2F;news_logo.png&quot;&gt; 新浪政务 &gt; 正文    &lt;!-- 方式一: 行内样式 --&gt;    &lt;!-- &lt;h1 style&#x3D;&quot;color: red;&quot;&gt;焦点访谈：中国底气 新思想夯实大国粮仓&lt;&#x2F;h1&gt; --&gt;        &lt;h1&gt;焦点访谈：中国底气 新思想夯实大国粮仓&lt;&#x2F;h1&gt;    &lt;hr&gt;    2023年03月02日 21:50 央视网    &lt;hr&gt;&lt;&#x2F;body&gt;&lt;&#x2F;html&gt;
+备注: 要想拾取某一个网页中的颜色，我们可以借助于浏览器的拾色器插件来完成。【拾色器插件的安装，参照资料中提供的文档即可】
+2.3.1.2.4 CSS选择器顾名思义：选择器是选取需设置样式的元素（标签），但是我们根据业务场景不同，选择的标签的需求也是多种多样的，所以选择器有很多种，因为我们是做后台开发的，所以对于css选择器，我们只学习最基本的3种。
+选择器通用语法如下：
+1234选择器名   {    css样式名：css样式值;    css样式名：css样式值;}
+我们需要学习的3种选择器是元素选择器，id选择器，class选择器，语法以及作用如下：
+1.元素（标签）选择器： 
+
+选择器的名字必须是标签的名字
+作用：选择器中的样式会作用于所有同名的标签上
+
+123元素名称 {    css样式名:css样式值；}
+例子如下：
+123div{    color: red;}
+2.id选择器:
+
+选择器的名字前面需要加上#
+作用：选择器中的样式会作用于指定id的标签上，而且有且只有一个标签（由于id是唯一的）
+
+123#id属性值 {    css样式名:css样式值；}
+例子如下：
+123#did {    color: blue;}
+3.类选择器：
+
+选择器的名字前面需要加上 .
+作用：选择器中的样式会作用于所有class的属性值和该名字一样的标签上，可以是多个
+
+123.class属性值 {    css样式名:css样式值；}
+例子如下：
+123.cls{     color: green; }
+2.3.1.2.5 发布时间字体颜色Hexo 颜色设置的写法
+CSS元素选择器
+123456789101112131415161718192021222324252627282930313233343536373839404142&lt;!DOCTYPE html&gt;&lt;html lang&#x3D;&quot;en&quot;&gt;&lt;head&gt;    &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;    &lt;meta http-equiv&#x3D;&quot;X-UA-Compatible&quot; content&#x3D;&quot;IE&#x3D;edge&quot;&gt;    &lt;meta name&#x3D;&quot;viewport&quot; content&#x3D;&quot;width&#x3D;device-width, initial-scale&#x3D;1.0&quot;&gt;    &lt;title&gt;焦点访谈：中国底气 新思想夯实大国粮仓&lt;&#x2F;title&gt;    &lt;style&gt;        h1 {            color: #4D4F53;        }        &#x2F;* 元素选择器 *&#x2F;        &#x2F;* span {            color: red;        } *&#x2F;        &#x2F;* 类选择器 *&#x2F;        &#x2F;* .cls {            color: green;        } *&#x2F;                &#x2F;* ID选择器 *&#x2F;        #time {            color: #968D92;            font-size: 13px; &#x2F;* 设置字体大小 *&#x2F;        }    &lt;&#x2F;style&gt;&lt;&#x2F;head&gt;&lt;body&gt;    &lt;img src&#x3D;&quot;img&#x2F;news_logo.png&quot;&gt; 新浪政务 &gt; 正文    &lt;h1&gt;焦点访谈：中国底气 新思想夯实大国粮仓&lt;&#x2F;h1&gt;    &lt;hr&gt;    &lt;span class&#x3D;&quot;cls&quot; id&#x3D;&quot;time&quot;&gt;2023年03月02日 21:50&lt;&#x2F;span&gt;  &lt;span class&#x3D;&quot;cls&quot;&gt;央视网&lt;&#x2F;span&gt;    &lt;hr&gt;&lt;&#x2F;body&gt;&lt;&#x2F;html&gt;
+上述我们还使用了一个css的属性 font-size , 用来设置字体的大小。 但是需要注意，在设置字体的大小时，单位px不能省略，否则不生效。
+2.3.1.3 超链接
+在新浪新闻的标题部分，当我们点击顶部的 “新浪政务”，浏览器将自动在当前窗口访问新浪政务首页这个资源（http:&#x2F;&#x2F;gov.sina.com.cn&#x2F;）
+
+当我们点击新闻发布时间之后的 “央视网”，浏览器将会自动打开一个新的标签页，然后在新的标签页中访问央视网中的该新闻资源 （https:&#x2F;&#x2F;news.cctv.com&#x2F;2023&#x2F;03&#x2F;02&#x2F;ARTIUCKFf9kE9eXgYE46ugx3230302.shtml）
+
+
+
+那接下来，我们就来完善新闻标题部分的这个功能，那此时呢，我们就需要用到HTML中的超链接的标签 。
+2.3.1.3.1 介绍
+标签: &lt;a href&#x3D;”…” target&#x3D;”…”&gt;央视网&lt;&#x2F;a&gt;
+属性:
+href: 指定资源访问的url
+target: 指定在何处打开资源链接
+_self: 默认值，在当前页面打开
+_blank: 在空白页面打开
+
+
+
+
+
+2.3.1.3.2 实现1234567891011121314151617181920212223242526272829303132333435363738&lt;!DOCTYPE html&gt;&lt;html lang&#x3D;&quot;en&quot;&gt;&lt;head&gt;    &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;    &lt;meta http-equiv&#x3D;&quot;X-UA-Compatible&quot; content&#x3D;&quot;IE&#x3D;edge&quot;&gt;    &lt;meta name&#x3D;&quot;viewport&quot; content&#x3D;&quot;width&#x3D;device-width, initial-scale&#x3D;1.0&quot;&gt;    &lt;title&gt;焦点访谈：中国底气 新思想夯实大国粮仓&lt;&#x2F;title&gt;    &lt;style&gt;        h1 {            color: #4D4F53;        }                #time {            color: #968D92;            font-size: 13px; &#x2F;* 设置字体大小 *&#x2F;        }        a {            color: black;            text-decoration: none; &#x2F;* 设置文本为一个标准的文本 , 去除掉 超链接 下面默认的下划线 *&#x2F;        }    &lt;&#x2F;style&gt;&lt;&#x2F;head&gt;&lt;body&gt;    &lt;img src&#x3D;&quot;img&#x2F;news_logo.png&quot;&gt; &lt;a href&#x3D;&quot;http:&#x2F;&#x2F;gov.sina.com.cn&#x2F;&quot; target&#x3D;&quot;_self&quot;&gt;新浪政务&lt;&#x2F;a&gt;  &gt; 正文    &lt;h1&gt;焦点访谈：中国底气 新思想夯实大国粮仓&lt;&#x2F;h1&gt;    &lt;hr&gt;    &lt;span id&#x3D;&quot;time&quot;&gt;2023年03月02日 21:50&lt;&#x2F;span&gt;      &lt;span&gt;     &lt;a href&#x3D;&quot;https:&#x2F;&#x2F;news.cctv.com&#x2F;2023&#x2F;03&#x2F;02&#x2F;ARTIUCKFf9kE9eXgYE46ugx3230302.shtml&quot; target&#x3D;&quot;_blank&quot;&gt;央视网&lt;&#x2F;a&gt;    &lt;&#x2F;span&gt;    &lt;hr&gt;&lt;&#x2F;body&gt;&lt;&#x2F;html&gt;
+浏览器打开此页面，我们可以看到最终效果（超链接的字体，以及默认的下划线，通过css样式已经调整好了）：
+
+2.3.2 新浪新闻-正文实现2.3.2.1 正文排版2.3.2.1.1 分析
+整个正文部分的排版，主要分为这么四个部分：
+1). 视频 (当前这种新闻页面,可能也会存在音频)
+2). 文字段落
+3). 字体加粗
+4). 图片
+2.3.2.1.2 标签1). 视频、音频标签
+
+视频标签: &lt;video&gt;
+
+属性: 
+src: 规定视频的url
+controls: 显示播放控件
+width: 播放器的宽度
+height: 播放器的高度
+
+
+
+
+音频标签: &lt;audio&gt;
+
+属性:
+src: 规定音频的url
+controls: 显示播放控件
+
+
+
+
+
+2). 段落标签
+
+换行标签: &lt;br&gt;
+注意: 在HTML页面中,我们在编辑器中通过回车实现的换行, 仅仅在文本编辑器中会看到换行效果, 浏览器是不会解析的, HTML中换行需要通过br标签
+
+
+
+
+段落标签: &lt;p&gt;
+如: &lt;p&gt; 这是一个段落 &lt;&#x2F;p&gt;
+
+
+
+3). 文本格式标签
+
+
+
+
+效果
+标签
+标签(强调)
+
+
+
+
+加粗
+b
+strong
+
+
+倾斜
+i
+em
+
+
+下划线
+u
+ins
+
+
+删除线
+s
+del
+
+
+
+
+前面的标签 b、i、u、s 就仅仅是实现加粗、倾斜、下划线、删除线的效果，是没有强调语义的。 而后面的strong、em、ins、del在实现加粗、倾斜、下划线、删除线的效果的同时，还带有强调语义。
+2.3.2.1.3 实现12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970717273747576&lt;!DOCTYPE html&gt;&lt;html lang&#x3D;&quot;en&quot;&gt;&lt;head&gt;    &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;    &lt;meta http-equiv&#x3D;&quot;X-UA-Compatible&quot; content&#x3D;&quot;IE&#x3D;edge&quot;&gt;    &lt;meta name&#x3D;&quot;viewport&quot; content&#x3D;&quot;width&#x3D;device-width, initial-scale&#x3D;1.0&quot;&gt;    &lt;title&gt;焦点访谈：中国底气 新思想夯实大国粮仓&lt;&#x2F;title&gt;    &lt;style&gt;        h1 {            color: #4D4F53;        }                #time {            color: #968D92;            font-size: 13px; &#x2F;* 设置字体大小 *&#x2F;        }        a {            color: black;            text-decoration: none; &#x2F;* 设置文本为一个标准的文本 *&#x2F;        }        p {            text-indent: 35px; &#x2F;* 设置首行缩进 *&#x2F;            line-height: 40px; &#x2F;* 设置行高 *&#x2F;        }        #plast {            text-align: right; &#x2F;* 对齐方式 *&#x2F;        }    &lt;&#x2F;style&gt;&lt;&#x2F;head&gt;&lt;body&gt;    &lt;!-- 标题 --&gt;    &lt;img src&#x3D;&quot;img&#x2F;news_logo.png&quot;&gt; &lt;a href&#x3D;&quot;http:&#x2F;&#x2F;gov.sina.com.cn&#x2F;&quot; target&#x3D;&quot;_self&quot;&gt;新浪政务&lt;&#x2F;a&gt;  &gt; 正文    &lt;h1&gt;焦点访谈：中国底气 新思想夯实大国粮仓&lt;&#x2F;h1&gt;    &lt;hr&gt;    &lt;span id&#x3D;&quot;time&quot;&gt;2023年03月02日 21:50&lt;&#x2F;span&gt;    &lt;span&gt;&lt;a href&#x3D;&quot;https:&#x2F;&#x2F;news.cctv.com&#x2F;2023&#x2F;03&#x2F;02&#x2F;ARTIUCKFf9kE9eXgYE46ugx3230302.shtml&quot; target&#x3D;&quot;_blank&quot;&gt;央视网&lt;&#x2F;a&gt;&lt;&#x2F;span&gt;    &lt;hr&gt;    &lt;!-- 正文 --&gt;    &lt;!-- 视频 --&gt;    &lt;video src&#x3D;&quot;video&#x2F;1.mp4&quot; controls width&#x3D;&quot;950px&quot;&gt;&lt;&#x2F;video&gt;    &lt;!-- 音频 --&gt;    &lt;!-- &lt;audio src&#x3D;&quot;audio&#x2F;1.mp3&quot; controls&gt;&lt;&#x2F;audio&gt; --&gt;    &lt;p&gt;    &lt;strong&gt;央视网消息&lt;&#x2F;strong&gt; （焦点访谈）：党的十八大以来，以习近平同志为核心的党中央始终把解决粮食安全问题作为治国理政的头等大事，重农抓粮一系列政策举措有力有效，我国粮食产量站稳1.3万亿斤台阶，实现谷物基本自给、口粮绝对安全。我们把饭碗牢牢端在自己手中，为保障经济社会发展提供了坚实支撑，为应对各种风险挑战赢得了主动。连续八年1.3万亿斤，这个沉甸甸的数据是如何取得的呢？    &lt;&#x2F;p&gt;    &lt;p&gt;    人勤春来早，春耕农事忙。立春之后，由南到北，我国春耕春管工作陆续展开，春天的田野处处生机盎然。    &lt;&#x2F;p&gt;    &lt;img src&#x3D;&quot;img&#x2F;1.jpg&quot;&gt;    &lt;p&gt;        今年，我国启动了新一轮千亿斤粮食产能提升行动，这是一个新的起点。2015年以来，我国粮食产量连续8年稳定在1.3万亿斤以上，人均粮食占有量始终稳稳高于国际公认的400公斤粮食安全线。从十年前的约12200亿斤到2022年的约13700亿斤，粮食产量提高了1500亿斤。    &lt;&#x2F;p&gt;    &lt;img src&#x3D;&quot;img&#x2F;2.jpg&quot;&gt;    &lt;p&gt;        中国式现代化一个重要的中国特色是人口规模巨大的现代化。我们粮食生产的发展，意味着我们要立足国内，解决14亿多人吃饭的问题。仓廪实，天下安。保障粮食安全是一个永恒的课题，任何时候都不能放松。在以习近平同志为核心的党中央坚强领导下，亿万中国人民辛勤耕耘、不懈奋斗，我们就一定能够牢牢守住粮食安全这一&quot;国之大者&quot;，把中国人的饭碗牢牢端在自己手中，夯实中国式现代化基础。    &lt;&#x2F;p&gt;    &lt;p id&#x3D;&quot;plast&quot;&gt;        责任编辑：王树淼 SN242    &lt;&#x2F;p&gt;&lt;&#x2F;body&gt;&lt;&#x2F;html&gt;
+在上述的正文排版实现中，还用到了几个CSS属性： 
+
+text-indent: 设置段落的首行缩进 
+line-height: 设置行高
+text-align: 设置对齐方式, 可取值为 left &#x2F; center &#x2F; right
+
+
+注意事项: 
+
+在HTML页面中无论输入了多少个空格, 最多只会显示一个。 可以使用空格占位符（&amp;nbsp；）来生成空格，如果需要多个空格，就使用多次占位符。
+
+那在HTML中，除了空格占位符以外，还有一些其他的占位符(了解, 只需要知道空格的占位符写法即可)，如下：
+
+| 显示结果 | 描述   | 占位符  || :———- | :——- | :——— ||          | 空格   | \  || &lt;        | 小于号 | \&lt;   || &gt;        | 大于号 | \&gt;   || &amp;        | 和号   | \&amp;  || “        | 引号   | \&quot; || ‘        | 撇号   | \&#39; |
+
+
+
+
+2.3.2.2 页面布局目前，新闻页面的基本排版，我们都已经完成了，但是，大家会看到，无论是标题部分，还是正文部分，都是铺满了整个浏览器。 而我们再来看看新浪新闻的原始页面，我们会看到新闻网页内容都是居中展示的，左边、右边都是一定的边距的。
+
+那接下来呢，我们就需要按照这个效果，来完成页面布局。 而要想完成这样一个页面布局，我们就需要介绍一下CSS中的盒子模型 。 
+2.3.2.2.1 盒子模型
+盒子：页面中所有的元素（标签），都可以看做是一个 盒子，由盒子将页面中的元素包含在一个矩形区域内，通过盒子的视角更方便的进行页面布局
+
+盒子模型组成：内容区域（content）、内边距区域（padding）、边框区域（border）、外边距区域（margin）
+
+
+
+CSS盒子模型，其实和日常生活中的包装盒是非常类似的，就比如：
+
+盒子的大小，其实就包括三个部分： border、padding、content，而margin外边距是不包括在盒子之内的。
+2.3.2.2.2 布局标签
+布局标签：实际开发网页中，会大量频繁的使用 div 和 span 这两个没有语义的布局标签。
+
+标签： 
+
+特点：
+
+div标签：
+
+一行只显示一个（独占一行）
+
+宽度默认是父元素的宽度，高度默认由内容撑开
+
+可以设置宽高（width、height）
+
+
+
+span标签：
+
+一行可以显示多个
+
+宽度和高度默认由内容撑开
+
+不可以设置宽高（width、height）
+
+
+
+
+
+
+测试：
+123456789101112131415&lt;body&gt;    &lt;div&gt;        A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A     &lt;&#x2F;div&gt;    &lt;div&gt;        A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A     &lt;&#x2F;div&gt;    &lt;span&gt;        A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A     &lt;&#x2F;span&gt;    &lt;span&gt;        A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A     &lt;&#x2F;span&gt;&lt;&#x2F;body&gt;
+浏览器打开后的效果:
+1). div会独占一行，默认宽度为父元素 body 的宽度
+
+2). span一行会显示多个，用来组合行内元素，默认宽度为内容撑开的宽度
+
+2.3.2.2.3 盒子模型代码代码如下: 
+1234567891011121314151617181920212223242526272829&lt;!DOCTYPE html&gt;&lt;html lang&#x3D;&quot;en&quot;&gt;&lt;head&gt;    &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;    &lt;meta http-equiv&#x3D;&quot;X-UA-Compatible&quot; content&#x3D;&quot;IE&#x3D;edge&quot;&gt;    &lt;meta name&#x3D;&quot;viewport&quot; content&#x3D;&quot;width&#x3D;device-width, initial-scale&#x3D;1.0&quot;&gt;    &lt;title&gt;盒子模型&lt;&#x2F;title&gt;    &lt;style&gt;        div {            width: 200px;  &#x2F;* 宽度 *&#x2F;            height: 200px;  &#x2F;* 高度 *&#x2F;            box-sizing: border-box; &#x2F;* 指定width height为盒子的高宽 *&#x2F;            background-color: aquamarine; &#x2F;* 背景色 *&#x2F;                        padding: 20px 20px 20px 20px; &#x2F;* 内边距, 上 右 下 左 , 边距都一行, 可以简写: padding: 20px;*&#x2F;             border: 10px solid red; &#x2F;* 边框, 宽度 线条类型 颜色 *&#x2F;            margin: 30px 30px 30px 30px; &#x2F;* 外边距, 上 右 下 左 , 边距都一行, 可以简写: margin: 30px; *&#x2F;        }    &lt;&#x2F;style&gt;&lt;&#x2F;head&gt;&lt;body&gt;        &lt;div&gt;        A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A A     &lt;&#x2F;div&gt;&lt;&#x2F;body&gt;&lt;&#x2F;html&gt;
+代码编写好了, 可以通过浏览器打开该页面, 通过开发者工具,我们就可以看到盒子的大小, 以及盒子各个组成部分(内容、内边距、边框、外边距)：
+
+我们也可以，通过浏览器的开发者工具，清晰的看到这个盒子，以及每一个部分的大小：
+
+2.3.2.2.3 布局实现在实现新闻页面的布局时，我们需要做两部操作：
+
+第一步：需要将body中的新闻标题部分、正文部分使用一个 div 布局标签将其包裹起来，方便通过css设置内容占用的宽度，比如：65%。
+第二步：通过css为该div设置外边距，左右的外边距分别为：17.5%，上下外边距靠边展示即可，为：0%。
+
+具体的代码实现如下：
+123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384&lt;!DOCTYPE html&gt;&lt;html lang&#x3D;&quot;en&quot;&gt;&lt;head&gt;    &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;    &lt;meta http-equiv&#x3D;&quot;X-UA-Compatible&quot; content&#x3D;&quot;IE&#x3D;edge&quot;&gt;    &lt;meta name&#x3D;&quot;viewport&quot; content&#x3D;&quot;width&#x3D;device-width, initial-scale&#x3D;1.0&quot;&gt;    &lt;title&gt;焦点访谈：中国底气 新思想夯实大国粮仓&lt;&#x2F;title&gt;    &lt;style&gt;        h1 {            color: #4D4F53;        }                #time {            color: #968D92;            font-size: 13px; &#x2F;* 设置字体大小 *&#x2F;        }        a {            color: black;            text-decoration: none; &#x2F;* 设置文本为一个标准的文本 *&#x2F;        }        p {            text-indent: 35px; &#x2F;* 设置首行缩进 *&#x2F;            line-height: 40px; &#x2F;* 设置行高 *&#x2F;        }        #plast {            text-align: right; &#x2F;* 对齐方式 *&#x2F;        }        #center {            width: 65%;            &#x2F;* margin: 0% 17.5% 0% 17.5% ; *&#x2F; &#x2F;* 外边距, 上 右 下 左 *&#x2F;            margin: 0 auto;        }    &lt;&#x2F;style&gt;&lt;&#x2F;head&gt;&lt;body&gt;        &lt;div id&#x3D;&quot;center&quot;&gt;        &lt;!-- 标题 --&gt;        &lt;img src&#x3D;&quot;img&#x2F;news_logo.png&quot;&gt; &lt;a href&#x3D;&quot;http:&#x2F;&#x2F;gov.sina.com.cn&#x2F;&quot; target&#x3D;&quot;_self&quot;&gt;新浪政务&lt;&#x2F;a&gt;  &gt; 正文        &lt;h1&gt;焦点访谈：中国底气 新思想夯实大国粮仓&lt;&#x2F;h1&gt;        &lt;hr&gt;        &lt;span id&#x3D;&quot;time&quot;&gt;2023年03月02日 21:50&lt;&#x2F;span&gt;        &lt;span&gt;&lt;a href&#x3D;&quot;https:&#x2F;&#x2F;news.cctv.com&#x2F;2023&#x2F;03&#x2F;02&#x2F;ARTIUCKFf9kE9eXgYE46ugx3230302.shtml&quot; target&#x3D;&quot;_blank&quot;&gt;央视网&lt;&#x2F;a&gt;&lt;&#x2F;span&gt;        &lt;hr&gt;        &lt;!-- 正文 --&gt;        &lt;!-- 视频 --&gt;        &lt;video src&#x3D;&quot;video&#x2F;1.mp4&quot; controls width&#x3D;&quot;950px&quot;&gt;&lt;&#x2F;video&gt;        &lt;!-- 音频 --&gt;        &lt;!-- &lt;audio src&#x3D;&quot;audio&#x2F;1.mp3&quot; controls&gt;&lt;&#x2F;audio&gt; --&gt;        &lt;p&gt;        &lt;strong&gt;央视网消息&lt;&#x2F;strong&gt; （焦点访谈）：党的十八大以来，以习近平同志为核心的党中央始终把解决粮食安全问题作为治国理政的头等大事，重农抓粮一系列政策举措有力有效，我国粮食产量站稳1.3万亿斤台阶，实现谷物基本自给、口粮绝对安全。我们把饭碗牢牢端在自己手中，为保障经济社会发展提供了坚实支撑，为应对各种风险挑战赢得了主动。连续八年1.3万亿斤，这个沉甸甸的数据是如何取得的呢？        &lt;&#x2F;p&gt;        &lt;p&gt;        人勤春来早，春耕农事忙。立春之后，由南到北，我国春耕春管工作陆续展开，春天的田野处处生机盎然。        &lt;&#x2F;p&gt;        &lt;img src&#x3D;&quot;img&#x2F;1.jpg&quot;&gt;        &lt;p&gt;            今年，我国启动了新一轮千亿斤粮食产能提升行动，这是一个新的起点。2015年以来，我国粮食产量连续8年稳定在1.3万亿斤以上，人均粮食占有量始终稳稳高于国际公认的400公斤粮食安全线。从十年前的约12200亿斤到2022年的约13700亿斤，粮食产量提高了1500亿斤。        &lt;&#x2F;p&gt;        &lt;img src&#x3D;&quot;img&#x2F;2.jpg&quot;&gt;        &lt;p&gt;            中国式现代化一个重要的中国特色是人口规模巨大的现代化。我们粮食生产的发展，意味着我们要立足国内，解决14亿多人吃饭的问题。仓廪实，天下安。保障粮食安全是一个永恒的课题，任何时候都不能放松。在以习近平同志为核心的党中央坚强领导下，亿万中国人民辛勤耕耘、不懈奋斗，我们就一定能够牢牢守住粮食安全这一&quot;国之大者&quot;，把中国人的饭碗牢牢端在自己手中，夯实中国式现代化基础。        &lt;&#x2F;p&gt;        &lt;p id&#x3D;&quot;plast&quot;&gt;            责任编辑：王树淼 SN242        &lt;&#x2F;p&gt;      &lt;&#x2F;div&gt;&lt;&#x2F;body&gt;&lt;&#x2F;html&gt;
+浏览器打开此页面，最终效果如下：
+
+2.4 表格标签场景：在网页中以表格（行、列）形式整齐展示数据，我们在一些管理类的系统中，会看到数据通常都是以表格的形式呈现出来的，比如：班级表、学生表、课程表、成绩表等等。
+
+标签：
+
+&lt;table&gt; : 用于定义整个表格, 可以包裹多个 &lt;tr&gt;， 常用属性如下： 
+
+border：规定表格边框的宽度
+width：规定表格的宽度
+cellspacing: 规定单元之间的空间
+
+
+&lt;tr&gt; : 表格的行，可以包裹多个 &lt;td&gt;  
+
+&lt;td&gt; : 表格单元格(普通)，可以包裹内容 , 如果是表头单元格，可以替换为 &lt;th&gt;  
+
+演示：
+代码如下：
+1234567891011121314151617181920212223242526272829303132333435363738&lt;!DOCTYPE html&gt;&lt;html lang&#x3D;&quot;en&quot;&gt;&lt;head&gt;    &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;    &lt;meta http-equiv&#x3D;&quot;X-UA-Compatible&quot; content&#x3D;&quot;IE&#x3D;edge&quot;&gt;    &lt;meta name&#x3D;&quot;viewport&quot; content&#x3D;&quot;width&#x3D;device-width, initial-scale&#x3D;1.0&quot;&gt;    &lt;title&gt;HTML-表格&lt;&#x2F;title&gt;    &lt;style&gt;        td {            text-align: center; &#x2F;* 单元格内容居中展示 *&#x2F;        }    &lt;&#x2F;style&gt;&lt;&#x2F;head&gt;&lt;body&gt;        &lt;table border&#x3D;&quot;1px&quot; cellspacing&#x3D;&quot;0&quot;  width&#x3D;&quot;600px&quot;&gt;        &lt;tr&gt;            &lt;th&gt;序号&lt;&#x2F;th&gt;            &lt;th&gt;品牌Logo&lt;&#x2F;th&gt;            &lt;th&gt;品牌名称&lt;&#x2F;th&gt;            &lt;th&gt;企业名称&lt;&#x2F;th&gt;        &lt;&#x2F;tr&gt;        &lt;tr&gt;            &lt;td&gt;1&lt;&#x2F;td&gt;            &lt;td&gt; &lt;img src&#x3D;&quot;img&#x2F;huawei.jpg&quot; width&#x3D;&quot;100px&quot;&gt; &lt;&#x2F;td&gt;            &lt;td&gt;华为&lt;&#x2F;td&gt;            &lt;td&gt;华为技术有限公司&lt;&#x2F;td&gt;        &lt;&#x2F;tr&gt;        &lt;tr&gt;            &lt;td&gt;2&lt;&#x2F;td&gt;            &lt;td&gt; &lt;img src&#x3D;&quot;img&#x2F;alibaba.jpg&quot;  width&#x3D;&quot;100px&quot;&gt; &lt;&#x2F;td&gt;            &lt;td&gt;阿里&lt;&#x2F;td&gt;            &lt;td&gt;阿里巴巴集团控股有限公司&lt;&#x2F;td&gt;        &lt;&#x2F;tr&gt;    &lt;&#x2F;table&gt;&lt;&#x2F;body&gt;&lt;&#x2F;html&gt;
+打开浏览器，效果如下图所示：
+
+整合表格使用 table 标签包裹 , 其中的每一行数据都是一个 tr , 每一行中的每一个单元格都是一个 td , 而如果是表头单元格, 可以使用 th (具有加粗居中展示的效果)。
+2.5 表单标签2.5.1 表单2.5.1.1 介绍那表单呢,在我们日常的上网的过程中,基本上每天都会遇到。比如，我们经常在访问网站时，出现的登录页面、注册页面、个人信息提交页面，其实都是一个一个的表单 。 当我们在这些表单中录入数据之后，一点击 “提交”，就会将表单中我们填写的数据采集到，并提交， 那其实这个数据呢，一般会提交到服务端，最终保存在数据库中 （后面的课程中会讲到）。
+ 
+那其实，上述的整个窗口是一个表单，而表单是一项一项的，这个我们称为表单项 或 表单元素。
+
+表单场景: 表单就是在网页中负责数据采集功能的，如：注册、登录的表单。 
+
+表单标签: &lt;form&gt;
+
+表单属性:
+
+action: 规定表单提交时，向何处发送表单数据，表单提交的URL。
+method: 规定用于发送表单数据的方式，常见为： GET、POST。
+GET：表单数据是拼接在url后面的， 如： xxxxxxxxxxx?username&#x3D;Tom&amp;age&#x3D;12，url中能携带的表单数据大小是有限制的。
+POST： 表单数据是在请求体（消息体）中携带的，大小没有限制。
+
+
+
+
+表单项标签: 不同类型的input元素、下拉列表、文本域等。
+
+input: 定义表单项，通过type属性控制输入形式
+select: 定义下拉列表
+textarea: 定义文本域
+
+
+
+2.5.1.2 演示1). GET方式提交的表单
+1234567891011121314151617181920212223242526&lt;!DOCTYPE html&gt;&lt;html lang&#x3D;&quot;en&quot;&gt;&lt;head&gt;    &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;    &lt;meta http-equiv&#x3D;&quot;X-UA-Compatible&quot; content&#x3D;&quot;IE&#x3D;edge&quot;&gt;    &lt;meta name&#x3D;&quot;viewport&quot; content&#x3D;&quot;width&#x3D;device-width, initial-scale&#x3D;1.0&quot;&gt;    &lt;title&gt;HTML-表单&lt;&#x2F;title&gt;&lt;&#x2F;head&gt;&lt;body&gt;    &lt;!--     form表单属性:         action: 表单提交的url, 往何处提交数据 . 如果不指定, 默认提交到当前页面        method: 表单的提交方式 .            get: 在url后面拼接表单数据, 比如: ?username&#x3D;Tom&amp;age&#x3D;12 , url长度有限制 . 默认值            post: 在消息体(请求体)中传递的, 参数大小无限制的.    --&gt;       	&lt;form action&#x3D;&quot;&quot; method&#x3D;&quot;get&quot;&gt;        用户名: &lt;input type&#x3D;&quot;text&quot; name&#x3D;&quot;username&quot;&gt;        年龄: &lt;input type&#x3D;&quot;text&quot; name&#x3D;&quot;age&quot;&gt;        &lt;input type&#x3D;&quot;submit&quot; value&#x3D;&quot;提交&quot;&gt;    &lt;&#x2F;form&gt;	&lt;&#x2F;body&gt;&lt;&#x2F;html&gt;
+表单编写完毕之后，通过浏览器打开此表单，然后再表单项中录入值之后，点击提交，我们会看到表单的数据在url后面提交到服务端，格式为：?username&#x3D;Tom&amp;age&#x3D;12。
+
+2). POST方式提交表单
+将上述的表单提交方式由get，改为post
+1234567891011121314151617181920212223242526&lt;!DOCTYPE html&gt;&lt;html lang&#x3D;&quot;en&quot;&gt;&lt;head&gt;    &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;    &lt;meta http-equiv&#x3D;&quot;X-UA-Compatible&quot; content&#x3D;&quot;IE&#x3D;edge&quot;&gt;    &lt;meta name&#x3D;&quot;viewport&quot; content&#x3D;&quot;width&#x3D;device-width, initial-scale&#x3D;1.0&quot;&gt;    &lt;title&gt;HTML-表单&lt;&#x2F;title&gt;&lt;&#x2F;head&gt;&lt;body&gt;    &lt;!--     form表单属性:         action: 表单提交的url, 往何处提交数据 . 如果不指定, 默认提交到当前页面        method: 表单的提交方式 .            get: 在url后面拼接表单数据, 比如: ?username&#x3D;Tom&amp;age&#x3D;12 , url长度有限制 . 默认值            post: 在消息体(请求体)中传递的, 参数大小无限制的.    --&gt;           &lt;form action&#x3D;&quot;&quot; method&#x3D;&quot;post&quot;&gt;        用户名: &lt;input type&#x3D;&quot;text&quot; name&#x3D;&quot;username&quot;&gt;        年龄: &lt;input type&#x3D;&quot;text&quot; name&#x3D;&quot;age&quot;&gt;        &lt;input type&#x3D;&quot;submit&quot; value&#x3D;&quot;提交&quot;&gt;    &lt;&#x2F;form&gt;	&lt;&#x2F;body&gt;&lt;&#x2F;html&gt;
+表单编写完毕之后，通过浏览器打开此表单，然后再表单项中录入值之后，点击提交，我们会看到表单的数据在url后面提交到服务端，格式为：?username&#x3D;Tom&amp;age&#x3D;12。
+
+2.5.1.3 注意事项表单中的所有表单项，要想能够正常的采集数据，在提交的时候能提交到服务端，表单项必须指定name属性。 否则，无法提交该表单项。
+1用户名: &lt;input type&#x3D;&quot;text&quot; name&#x3D;&quot;username&quot;&gt;
+2.5.2 表单项2.5.2.1 介绍在一个表单中，可以存在很多的表单项，而虽然表单项的形式各式各样，但是表单项的标签其实就只有三个，分别是：
+
+&lt;input&gt;: 表单项 , 通过type属性控制输入形式。
+| type取值                 | 描述                             || ———————————— | —————————————————— || text                     | 默认值，定义单行的输入字段           || password                 | 定义密码字段                         || radio                    | 定义单选按钮                         || checkbox                 | 定义复选框                           || file                     | 定义文件上传按钮                     || date&#x2F;time&#x2F;datetime-local | 定义日期&#x2F;时间&#x2F;日期时间               || number                   | 定义数字输入框                       || email                    | 定义邮件输入框                       || hidden                   | 定义隐藏域                           || submit &#x2F; reset &#x2F; button  | 定义提交按钮 &#x2F; 重置按钮 &#x2F; 可点击按钮 |
+
+&lt;select&gt;: 定义下拉列表, &lt;option&gt; 定义列表项
+
+&lt;textarea&gt;: 文本域
+
+
+2.5.2.2 演示创建一个新的表单项的html文件，具体内容如下：
+1234567891011121314151617181920212223242526272829303132333435363738394041424344&lt;!DOCTYPE html&gt;&lt;html lang&#x3D;&quot;en&quot;&gt;&lt;head&gt;    &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt;    &lt;meta http-equiv&#x3D;&quot;X-UA-Compatible&quot; content&#x3D;&quot;IE&#x3D;edge&quot;&gt;    &lt;meta name&#x3D;&quot;viewport&quot; content&#x3D;&quot;width&#x3D;device-width, initial-scale&#x3D;1.0&quot;&gt;    &lt;title&gt;HTML-表单项标签&lt;&#x2F;title&gt;&lt;&#x2F;head&gt;&lt;body&gt;&lt;!-- value: 表单项提交的值 --&gt;&lt;form action&#x3D;&quot;&quot; method&#x3D;&quot;post&quot;&gt;     姓名: &lt;input type&#x3D;&quot;text&quot; name&#x3D;&quot;name&quot;&gt; &lt;br&gt;&lt;br&gt;     密码: &lt;input type&#x3D;&quot;password&quot; name&#x3D;&quot;password&quot;&gt; &lt;br&gt;&lt;br&gt;      性别: &lt;input type&#x3D;&quot;radio&quot; name&#x3D;&quot;gender&quot; value&#x3D;&quot;1&quot;&gt; 男          &lt;label&gt;&lt;input type&#x3D;&quot;radio&quot; name&#x3D;&quot;gender&quot; value&#x3D;&quot;2&quot;&gt; 女 &lt;&#x2F;label&gt; &lt;br&gt;&lt;br&gt;     爱好: &lt;label&gt;&lt;input type&#x3D;&quot;checkbox&quot; name&#x3D;&quot;hobby&quot; value&#x3D;&quot;java&quot;&gt; java &lt;&#x2F;label&gt;          &lt;label&gt;&lt;input type&#x3D;&quot;checkbox&quot; name&#x3D;&quot;hobby&quot; value&#x3D;&quot;game&quot;&gt; game &lt;&#x2F;label&gt;          &lt;label&gt;&lt;input type&#x3D;&quot;checkbox&quot; name&#x3D;&quot;hobby&quot; value&#x3D;&quot;sing&quot;&gt; sing &lt;&#x2F;label&gt; &lt;br&gt;&lt;br&gt;     图像: &lt;input type&#x3D;&quot;file&quot; name&#x3D;&quot;image&quot;&gt;  &lt;br&gt;&lt;br&gt;     生日: &lt;input type&#x3D;&quot;date&quot; name&#x3D;&quot;birthday&quot;&gt; &lt;br&gt;&lt;br&gt;     时间: &lt;input type&#x3D;&quot;time&quot; name&#x3D;&quot;time&quot;&gt; &lt;br&gt;&lt;br&gt;     日期时间: &lt;input type&#x3D;&quot;datetime-local&quot; name&#x3D;&quot;datetime&quot;&gt; &lt;br&gt;&lt;br&gt;     邮箱: &lt;input type&#x3D;&quot;email&quot; name&#x3D;&quot;email&quot;&gt; &lt;br&gt;&lt;br&gt;     年龄: &lt;input type&#x3D;&quot;number&quot; name&#x3D;&quot;age&quot;&gt; &lt;br&gt;&lt;br&gt;     学历: &lt;select name&#x3D;&quot;degree&quot;&gt;               &lt;option value&#x3D;&quot;&quot;&gt;----------- 请选择 -----------&lt;&#x2F;option&gt;               &lt;option value&#x3D;&quot;1&quot;&gt;大专&lt;&#x2F;option&gt;               &lt;option value&#x3D;&quot;2&quot;&gt;本科&lt;&#x2F;option&gt;               &lt;option value&#x3D;&quot;3&quot;&gt;硕士&lt;&#x2F;option&gt;               &lt;option value&#x3D;&quot;4&quot;&gt;博士&lt;&#x2F;option&gt;          &lt;&#x2F;select&gt;  &lt;br&gt;&lt;br&gt;     描述: &lt;textarea name&#x3D;&quot;description&quot; cols&#x3D;&quot;30&quot; rows&#x3D;&quot;10&quot;&gt;&lt;&#x2F;textarea&gt;  &lt;br&gt;&lt;br&gt;     &lt;input type&#x3D;&quot;hidden&quot; name&#x3D;&quot;id&quot; value&#x3D;&quot;1&quot;&gt; 	         &lt;!-- 表单常见按钮 --&gt;     &lt;input type&#x3D;&quot;button&quot; value&#x3D;&quot;按钮&quot;&gt;     &lt;input type&#x3D;&quot;reset&quot; value&#x3D;&quot;重置&quot;&gt;      &lt;input type&#x3D;&quot;submit&quot; value&#x3D;&quot;提交&quot;&gt;        &lt;br&gt;&lt;&#x2F;form&gt;&lt;&#x2F;body&gt;&lt;&#x2F;html&gt;
+通过浏览器打开上述的表单项html文件，最终展示出的表单信息如下：
+
+而对于input type&#x3D;”hidden”，是一个隐藏域，在表单中并不会显示出来，但是在提交表单的时候，是会提交到服务端的。 接下来，我们就点击提交按钮，来提交当前表单，看看提交的数据：
+
+标签
+&lt;label&gt; 标签用来为表单控件（如 &lt;input&gt;、&lt;textarea&gt; 等）定义标签（说明文字）。
+它最大的作用就是“绑定”：把一段文字和对应的输入框绑定在一起。
+
+点击生效：当你用 &lt;label&gt; 绑定了文字和输入框后，用户点击文字，也能让对应的输入框获得焦点（光标闪烁）或选中状态。这在单选框（radio）和复选框（checkbox）中极其重要，因为原生的圆框或方框太小了，不好点。
+无障碍阅读（SEO与屏幕阅读器）：屏幕阅读器（供视障人士使用）读到 &lt;label&gt; 时，会朗读出文字，让用户知道这个输入框是填什么的。
+
+两种绑定方式：
+方式一：包裹法（隐式绑定）把文字和输入框一起包在 &lt;label&gt; 里面。你之前的代码中性别部分就是这么用的：12&lt;label&gt;&lt;input type&#x3D;&quot;radio&quot; name&#x3D;&quot;gender&quot; value&#x3D;&quot;male&quot;&gt; 男&lt;&#x2F;label&gt;&lt;label&gt;&lt;input type&#x3D;&quot;radio&quot; name&#x3D;&quot;gender&quot; value&#x3D;&quot;female&quot;&gt; 女&lt;&#x2F;label&gt;效果：此时你点击“男”或“女”这两个字，就能选中前面的圆圈。
+方式二：for 属性法（显式绑定）—— 推荐做法给 &lt;input&gt; 设置一个 id，然后给 &lt;label&gt; 设置相同的 for 属性值。12&lt;label for&#x3D;&quot;username&quot;&gt;your name: &lt;&#x2F;label&gt;&lt;input type&#x3D;&quot;text&quot; id&#x3D;&quot;username&quot; name&#x3D;&quot;name&quot;&gt;效果：点击 “your name:” 这段文字，光标会自动跳到后面的输入框里。
+3. 文档查阅文档地址: https:&#x2F;&#x2F;www.w3school.com.cn&#x2F;index.html
+3.1 HTML文档查阅以video标签为例:
+
+3.2 CSS文档查阅以padding属性为例:
+
+</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-3-1-1-2-%E6%A0%87%E7%AD%BE"><span class="toc-number">4.2.</span> <span class="toc-text">2.3.1.1.2 标签</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-3-1-1-2-%E5%AE%9E%E7%8E%B0"><span class="toc-number">4.3.</span> <span class="toc-text">2.3.1.1.2 实现</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-1-2-%E6%A0%87%E9%A2%98%E6%A0%B7%E5%BC%8F"><span class="toc-number">4.4.</span> <span class="toc-text">2.3.1.2 标题样式</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#2-3-1-2-1-CSS%E5%BC%95%E5%85%A5%E6%96%B9%E5%BC%8F"><span class="toc-number">4.4.1.</span> <span class="toc-text">2.3.1.2.1 CSS引入方式</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-3-1-2-2-%E9%A2%9C%E8%89%B2%E8%A1%A8%E7%A4%BA"><span class="toc-number">4.4.2.</span> <span class="toc-text">2.3.1.2.2 颜色表示</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-3-1-2-3-%E6%A0%87%E9%A2%98%E5%AD%97%E4%BD%93%E9%A2%9C%E8%89%B2"><span class="toc-number">4.4.3.</span> <span class="toc-text">2.3.1.2.3 标题字体颜色</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-3-1-2-4-CSS%E9%80%89%E6%8B%A9%E5%99%A8"><span class="toc-number">4.4.4.</span> <span class="toc-text">2.3.1.2.4 CSS选择器</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-3-1-2-5-%E5%8F%91%E5%B8%83%E6%97%B6%E9%97%B4%E5%AD%97%E4%BD%93%E9%A2%9C%E8%89%B2"><span class="toc-number">4.4.5.</span> <span class="toc-text">2.3.1.2.5 发布时间字体颜色</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-1-3-%E8%B6%85%E9%93%BE%E6%8E%A5"><span class="toc-number">4.5.</span> <span class="toc-text">2.3.1.3 超链接</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#2-3-1-3-1-%E4%BB%8B%E7%BB%8D"><span class="toc-number">4.5.1.</span> <span class="toc-text">2.3.1.3.1 介绍</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-3-1-3-2-%E5%AE%9E%E7%8E%B0"><span class="toc-number">4.5.2.</span> <span class="toc-text">2.3.1.3.2 实现</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-2-%E6%96%B0%E6%B5%AA%E6%96%B0%E9%97%BB-%E6%AD%A3%E6%96%87%E5%AE%9E%E7%8E%B0"><span class="toc-number">4.6.</span> <span class="toc-text">2.3.2 新浪新闻-正文实现</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-2-1-%E6%AD%A3%E6%96%87%E6%8E%92%E7%89%88"><span class="toc-number">4.6.1.</span> <span class="toc-text">2.3.2.1 正文排版</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#2-3-2-1-1-%E5%88%86%E6%9E%90"><span class="toc-number">4.6.1.1.</span> <span class="toc-text">2.3.2.1.1 分析</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-3-2-1-2-%E6%A0%87%E7%AD%BE"><span class="toc-number">4.6.1.2.</span> <span class="toc-text">2.3.2.1.2 标签</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-3-2-1-3-%E5%AE%9E%E7%8E%B0"><span class="toc-number">4.6.1.3.</span> <span class="toc-text">2.3.2.1.3 实现</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-3-2-2-%E9%A1%B5%E9%9D%A2%E5%B8%83%E5%B1%80"><span class="toc-number">4.6.2.</span> <span class="toc-text">2.3.2.2 页面布局</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#2-3-2-2-1-%E7%9B%92%E5%AD%90%E6%A8%A1%E5%9E%8B"><span class="toc-number">4.6.2.1.</span> <span class="toc-text">2.3.2.2.1 盒子模型</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-3-2-2-2-%E5%B8%83%E5%B1%80%E6%A0%87%E7%AD%BE"><span class="toc-number">4.6.2.2.</span> <span class="toc-text">2.3.2.2.2 布局标签</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-3-2-2-3-%E7%9B%92%E5%AD%90%E6%A8%A1%E5%9E%8B%E4%BB%A3%E7%A0%81"><span class="toc-number">4.6.2.3.</span> <span class="toc-text">2.3.2.2.3 盒子模型代码</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#2-3-2-2-3-%E5%B8%83%E5%B1%80%E5%AE%9E%E7%8E%B0"><span class="toc-number">4.6.2.4.</span> <span class="toc-text">2.3.2.2.3 布局实现</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-4-%E8%A1%A8%E6%A0%BC%E6%A0%87%E7%AD%BE"><span class="toc-number">4.7.</span> <span class="toc-text">2.4 表格标签</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-5-%E8%A1%A8%E5%8D%95%E6%A0%87%E7%AD%BE"><span class="toc-number">4.8.</span> <span class="toc-text">2.5 表单标签</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-1-%E8%A1%A8%E5%8D%95"><span class="toc-number">4.8.1.</span> <span class="toc-text">2.5.1 表单</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-5-1-1-%E4%BB%8B%E7%BB%8D"><span class="toc-number">4.8.1.1.</span> <span class="toc-text">2.5.1.1 介绍</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-5-1-2-%E6%BC%94%E7%A4%BA"><span class="toc-number">4.8.1.2.</span> <span class="toc-text">2.5.1.2 演示</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-5-1-3-%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">4.8.1.3.</span> <span class="toc-text">2.5.1.3 注意事项</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-2-%E8%A1%A8%E5%8D%95%E9%A1%B9"><span class="toc-number">4.8.2.</span> <span class="toc-text">2.5.2 表单项</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-5-2-1-%E4%BB%8B%E7%BB%8D"><span class="toc-number">4.8.2.1.</span> <span class="toc-text">2.5.2.1 介绍</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-5-2-2-%E6%BC%94%E7%A4%BA"><span class="toc-number">4.8.2.2.</span> <span class="toc-text">2.5.2.2 演示</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-%E6%96%87%E6%A1%A3%E6%9F%A5%E9%98%85"><span class="toc-number">5.</span> <span class="toc-text">3. 文档查阅</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1-HTML%E6%96%87%E6%A1%A3%E6%9F%A5%E9%98%85"><span class="toc-number">5.1.</span> <span class="toc-text">3.1 HTML文档查阅</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2-CSS%E6%96%87%E6%A1%A3%E6%9F%A5%E9%98%85"><span class="toc-number">5.2.</span> <span class="toc-text">3.2 CSS文档查阅</span></a></li></ol></li></ol></div></div><footer><nobr>Published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>
