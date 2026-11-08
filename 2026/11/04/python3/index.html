@@ -1,10 +1,12 @@
-<!DOCTYPE html><html lang="en" theme-mode="auto"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>python3 | Hexo</title><meta property="og:type" content="article">
-<meta property="og:title" content="python3">
+<!DOCTYPE html><html lang="en" theme-mode="auto"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>流畅的python2——第3章笔记 | Hexo</title><meta name="description" content="Python 就是“语法糖里的字典”看页面最上方的引言，作者（Lalo Martins）说了一句非常极端的话：“没有 Python 程序不使用字典……Python 就是包裹在一堆语法糖中的字典。”  这句话并不是夸张。在 Python 底层，类属性（self.name）、模块的命名空间、函数的参数（**kwargs），甚至调用的所有内置函数（存储在 __builtins__.__dict__ 里）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="流畅的python2——第3章笔记">
 <meta property="og:url" content="http://example.com/2026/11/04/python3/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Python 就是“语法糖里的字典”看页面最上方的引言，作者（Lalo Martins）说了一句非常极端的话：“没有 Python 程序不使用字典……Python 就是包裹在一堆语法糖中的字典。”  这句话并不是夸张。在 Python 底层，类属性（self.name）、模块的命名空间、函数的参数（**kwargs），甚至调用的所有内置函数（存储在 __builtins__.__dict__ 里）">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2026-11-04T15:31:09.000Z">
-<meta property="article:modified_time" content="2026-11-04T15:31:09.988Z">
+<meta property="article:modified_time" content="2026-11-07T16:20:07.618Z">
 <meta property="article:author" content="John Doe">
 <meta name="twitter:card" content="summary"><link rel="canonical" href="http://example.com/2026/11/04/python3/"><link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="preload" as="font" crossorigin="anonymous" href="/font/Bender.ttf"><link rel="preload" as="font" crossorigin="anonymous" href="/font/BenderLight.woff2"><link rel="preload" as="font" crossorigin="anonymous" href="/font/JetBrainsMono-Regular.woff2"><link rel="stylesheet" href="/css/arknights.css"><style>@font-face {
   font-family: Bender;
@@ -18,7 +20,7 @@
   font-family: 'JetBrains Mono';
   src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
 }
-</style><meta name="page-config" content="{&quot;code_fold&quot;:null}"><script class="pjax-js">var config = {"root":"/","code_fold":15,"search":{"preload":true,"activeHolder":"键入以继续","blurHolder":"数据检索","noResult":"无 $0 相关数据"},"code":{"codeInfo":"$0 - $1 行","copy":"复制"}};
+</style><meta name="page-config" content="{&quot;code_fold&quot;:null}"><script class="pjax-js">var config = {"root":"/","code_fold":15,"search":{"preload":true,"activeHolder":"Enter here","blurHolder":"Search","noResult":"Data \"$0\" not found"},"code":{"codeInfo":"$0 - $1 lines","copy":"copy"}};
 var page_config = {
   code_fold: null
 };
@@ -59,7 +61,7 @@ if (window.localStorage.getItem('theme-mode') === 'dark' || window.matchMedia('(
 }</style><style>:root {
  --dark-background: url('https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg');
  --light-background: url('/img/bk.jpg');
- --theme-encrypt-confirm: '确认'
+ --theme-encrypt-confirm: 'confirm'
 }</style><script defer src="/js/arknights.js"></script><script defer src="/js/search.js"></script><script defer src="https://vercount.one/js"></script><script defer type="module">import mermaid from '//unpkg.com/mermaid@11.12.2/dist/mermaid.esm.min.mjs';
 window.mermaid = mermaid;
 code.paintMermaid();
@@ -133,4 +135,603 @@ document.addEventListener("pjax:complete", reset);document.addEventListener('pja
  const script = document.createElement('script');
  script.src = 'https://vercount.one/js';
  document.head.appendChild(script);
-});reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="数据检索" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/tags/"><span class="navItemTitle">Tags</span></a></li><li class="navItem"><a class="navBlock" href="/categories/"><span class="navItemTitle">Categories</span></a></li><li class="navItem"><a class="navBlock" href="/friends"><span class="navItemTitle">友链</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>python3</h1><div id="post-info"><span>文章发布时间: <div class="control"><time datetime="2026-11-04T15:31:09.000Z" id="date"> 2026-11-04</time></div></span><br><span>最后更新时间: <div class="control"><time datetime="2026-11-04T15:31:09.988Z" id="updated"> 2026-11-04</time></div></span><br><span>预计阅读时间: <div class="control">1 分钟</div></span><br><span id="vercount_container_page_pv">页面浏览: <span class="control" id="vercount_value_page_pv">加载中...</span></span></div></div><hr><div id="post-content"><div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2026/11/04/python4/">← 下一篇 python4</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/11/04/python2/">python2 上一篇 →</a></div></div></div><div id="comments"><div id="giscus"></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="回到顶部" style="opacity: 0; display: none;">∧ </a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="切换主题"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">John Doe</a></h1><div id="description"><p></p></div><div id="social-links"><a class="social" target="_blank" rel="noopener" href="https://github.com/juicer0801"><i class="fab fa-github" alt="GitHub"></i></a></div></div><div id="aside-block"></div><footer><nobr>构建自 <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> 使用主题 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> 主题作者 <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>
+});reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/tags/"><span class="navItemTitle">Tags</span></a></li><li class="navItem"><a class="navBlock" href="/categories/"><span class="navItemTitle">Categories</span></a></li><li class="navItem"><a class="navBlock" href="/friends"><span class="navItemTitle">友链</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>流畅的python2——第3章笔记</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2026-11-04T15:31:09.000Z" id="date"> 2026-11-04</time></div></span><br><span>Last Update: <div class="control"><time datetime="2026-11-07T16:20:07.618Z" id="updated"> 2026-11-08</time></div></span><br><span>Word Count: <div class="control">10.7k</div></span><br><span>Read Time: <div class="control">42 min</div></span><br><span id="vercount_container_page_pv">Page View: <span class="control" id="vercount_value_page_pv">loading...</span></span></div></div><hr><div id="post-content"><h3 id="Python-就是“语法糖里的字典”"><a href="#Python-就是“语法糖里的字典”" class="headerlink" title="Python 就是“语法糖里的字典”"></a>Python 就是“语法糖里的字典”</h3><p>看页面最上方的引言，作者（Lalo Martins）说了一句非常极端的话：<strong>“没有 Python 程序不使用字典……Python 就是包裹在一堆语法糖中的字典。”</strong></p>
+<ul>
+<li>这句话并不是夸张。在 Python 底层，类属性（<code>self.name</code>）、模块的命名空间、函数的参数（<code>**kwargs</code>），甚至调用的所有内置函数（存储在 <code>__builtins__.__dict__</code> 里），全都是用字典来维护的</li>
+<li><strong>实践</strong>：<ul>
+<li><code>model = nn.Linear(10, 20)</code> 时，PyTorch 底层会把这些层注册在一个 <code>OrderedDict</code> 里。</li>
+<li><code>torch.save(model.state_dict(), &#39;model.pth&#39;)</code> 时，<code>state_dict</code> 就是一个巨大的字典，里面存着键值对：<code>{&#39;layer1.weight&#39;: tensor(...), &#39;layer1.bias&#39;: tensor(...)}</code>。</li>
+<li>在加载 Hugging Face 的预训练模型时，读入的 <code>config.json</code> 就是一个典型的字典。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="字典和集合的“引擎”——哈希表"><a href="#字典和集合的“引擎”——哈希表" class="headerlink" title="字典和集合的“引擎”——哈希表"></a>字典和集合的“引擎”——哈希表</h3><p>作者提到：“由于字典的关键作用，Python 对字典做了高度优化……<strong>Python 字典能如此高效，要归功于哈希表（Hash Table）</strong>。”</p>
+<ul>
+<li><strong>底层</strong>：<ul>
+<li>字典是通过计算“哈希值”来直接定位内存地址的。就像查字典一样，不用从头翻到尾，直接看侧边的字母索引，一下就能翻到那一页。</li>
+</ul>
+</li>
+<li><strong>关于集合（Set）</strong>：<ul>
+<li>文字说：“<code>set</code> 和 <code>frozenset</code> 也基于哈希表。”这意味着集合去重和查找也极快。</li>
+<li>文字还提到集合实现了<strong>“集合论中的所有基本运算，包括并集、交集、子集测试等”</strong>。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="本章学习路线图"><a href="#本章学习路线图" class="headerlink" title="本章学习路线图"></a>本章学习路线图</h3><p>作者列出了本章要讲的内容</p>
+<ol>
+<li><strong>构建及处理 dict 和映射的现代句法（包括增强的拆包和模式匹配）</strong>：<ul>
+<li><em>翻译</em>：怎么用 <code>**</code> 合并多个字典？怎么用前面学的 <code>match/case</code> 去处理复杂的字典结构？这在处理 API 返回的复杂 JSON 数据时极其好用。</li>
+</ul>
+</li>
+<li><strong>映射类型的常用方法</strong>：<ul>
+<li><em>翻译</em>：<code>keys()</code>, <code>values()</code>, <code>items()</code>，这些是遍历模型配置的必备工具。</li>
+</ul>
+</li>
+<li><strong>特别处理缺失键的情况</strong>：<ul>
+<li><em>翻译</em>：当你写 <code>dict[&#39;key&#39;]</code> 时，如果 <code>key</code> 不存在，程序直接崩溃。本章会教你用 <code>defaultdict</code> 或者 <code>dict.get()</code> 解决。</li>
+</ul>
+</li>
+<li><strong>标准库中的 dict 变体</strong>：<ul>
+<li><em>翻译</em>：比如 <code>OrderedDict</code>（有序字典）、<code>ChainMap</code>、<code>Counter</code>（用来数词频）。</li>
+</ul>
+</li>
+<li><strong>set 和 frozenset 类型</strong>：<ul>
+<li><em>翻译</em>：一个可变，一个不可变（可以作为字典的键）。</li>
+</ul>
+</li>
+<li><strong>哈希表对集合和字典行为的影响</strong>：<ul>
+<li><em>翻译</em>：为什么列表（<code>list</code>）不能当作字典的键？为什么字典的键必须是“可哈希”的？这牵扯内存不变性。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="3-1-本章新增内容（字典的“进化史”）"><a href="#3-1-本章新增内容（字典的“进化史”）" class="headerlink" title="3.1 本章新增内容（字典的“进化史”）"></a>3.1 本章新增内容（字典的“进化史”）</h3><ol>
+<li><strong>合并字典的神器（<code>|</code> 和 <code>|=</code>）</strong>：<ul>
+<li>“包括自 Python 3.9 开始受 dict 支持的 <code>|</code> 和 <code>|=</code> 运算符。”</li>
+<li><strong>解读</strong>：以前合并两个字典超级麻烦，要么用 <code>update()</code> 破坏原字典，要么写 <code>{**dict1, **dict2}</code>。现在有了 <code>|</code>，你可以直接写 <code>merged = dict1 | dict2</code>，就像数学里的求并集一样。</li>
+</ul>
+</li>
+<li><strong><code>dict</code> 彻底取代了 <code>OrderedDict</code></strong>：<ul>
+<li>“自 Python 3.6 起，dict 也能保留键的插入顺序。”</li>
+<li><strong>解读</strong>：以前 Python 的字典是乱序的，要想记住插入顺序，必须用 <code>collections.OrderedDict</code>。但从 3.6 开始，官方原生字典在底层直接加上了顺序保证。所以在现代 AI 代码中，基本可以直接用原生 <code>dict</code>，不用特意去引 <code>OrderedDict</code> 了。</li>
+</ul>
+</li>
+<li><strong>视图对象（View Objects）</strong>：<ul>
+<li>“讲解 <code>dict.keys</code>、<code>dict.items</code> 和 <code>dict.values</code> 返回的视图对象。”</li>
+<li>写 <code>model.state_dict().keys()</code> 时，拿到的不是一个大列表，而是一个“视图”。它的好处是<strong>极省内存</strong>，它就像一个窗户，你看着字典里的数据，但并没有把数据复制一份出来。</li>
+</ul>
+</li>
+<li><strong>底层优化</strong>：<ul>
+<li>“节省了内存，还能保留键的插入顺序。”</li>
+<li>说明 Python 核心开发者为了更省内存，把哈希表的底层数据结构重写了，挤掉了以前浪费的空隙。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="3-2-1-字典推导式"><a href="#3-2-1-字典推导式" class="headerlink" title="3.2.1 字典推导式"></a>3.2.1 字典推导式</h3><p>第二章学了<strong>列表推导式</strong>（<code>[...]</code>），现在可以无缝衔接<strong>字典推导式</strong>（<code>{key: value ...}</code>）。</p>
+<h3 id="示例-3-1-逐行精讲（高阶代码逻辑）"><a href="#示例-3-1-逐行精讲（高阶代码逻辑）" class="headerlink" title="示例 3-1 逐行精讲（高阶代码逻辑）"></a>示例 3-1 逐行精讲（高阶代码逻辑）</h3><p>这个示例演示了如何对一个国际电话区号列表进行反复的变形。</p>
+<h4 id="1-原始数据（注释-❶）"><a href="#1-原始数据（注释-❶）" class="headerlink" title="1. 原始数据（注释 ❶）"></a>1. 原始数据（注释 ❶）</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">dial_codes = [<br>    (<span class="hljs-number">880</span>, <span class="hljs-string">&#x27;Bangladesh&#x27;</span>),<br>    (<span class="hljs-number">55</span>, <span class="hljs-string">&#x27;Brazil&#x27;</span>),<br>    (<span class="hljs-number">86</span>, <span class="hljs-string">&#x27;China&#x27;</span>),<br>    <span class="hljs-comment"># ... 省略</span><br>]<br></code></pre></td></tr></table></figure>
+<ul>
+<li>这是一个包含<strong>元组</strong>的列表。每个元组的结构是 <code>(区号, 国家名)</code>。</li>
+</ul>
+<h4 id="2-翻转键值对（注释-❷）"><a href="#2-翻转键值对（注释-❷）" class="headerlink" title="2. 翻转键值对（注释 ❷）"></a>2. 翻转键值对（注释 ❷）</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">country_dial = &#123;country: code <span class="hljs-keyword">for</span> code, country <span class="hljs-keyword">in</span> dial_codes&#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li><strong>解读</strong>：看等号右边 <code>for code, country in dial_codes</code>，这里巧妙利用了<strong>解包</strong>。然后，推导式用 <code>country</code> 作键，<code>code</code> 作值。</li>
+<li>结果直接从 <code>[ (880, &#39;孟加拉国&#39;), ... ]</code> 变成了 <code>{&#39;孟加拉国&#39;: 880, ...}</code>。</li>
+</ul>
+<h4 id="3-过滤、转换与大写（注释-❸，全页最复杂代码）"><a href="#3-过滤、转换与大写（注释-❸，全页最复杂代码）" class="headerlink" title="3. 过滤、转换与大写（注释 ❸，全页最复杂代码）"></a>3. 过滤、转换与大写（注释 ❸，全页最复杂代码）</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">&#123;code: country.upper()<br> <span class="hljs-keyword">for</span> country, code <span class="hljs-keyword">in</span> <span class="hljs-built_in">sorted</span>(country_dial.items())<br> <span class="hljs-keyword">if</span> code &lt; <span class="hljs-number">70</span>&#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li><strong>讲师手把手拆解</strong>：<ol>
+<li><code>country_dial.items()</code>：把字典变成一个个的 <code>(国家名, 区号)</code> 键值对。</li>
+<li><code>sorted(...)</code>：<strong>注意，它默认按照国家名字母顺序排序</strong>（B, I, R, U…）。</li>
+<li><code>for country, code in ...</code>：遍历排序后的结果。</li>
+<li><code>if code &lt; 70</code>：<strong>卫语句过滤</strong>。只保留区号小于 70 的国家。</li>
+<li><code>code: country.upper()</code>：又翻转了一次，用区号作键，把国家名变成大写作为值。</li>
+</ol>
+</li>
+<li><strong>最终结果</strong>：<br><code>{55: &#39;BRAZIL&#39;, 62: &#39;INDONESIA&#39;, 7: &#39;RUSSIA&#39;, 1: &#39;UNITED STATES&#39;}</code>。</li>
+</ul>
+<hr>
+<h3 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h3><p>深度学习<strong>构建词表（Vocabulary）</strong>。</p>
+<p>在 NLP（自然语言处理）中，模型只认识数字。需要把人类语言（字符串）映射到数字 ID 上，字典推导式就是干这个的：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 假设你有一堆文本，已经分好词了</span><br>words = [<span class="hljs-string">&quot;I&quot;</span>, <span class="hljs-string">&quot;love&quot;</span>, <span class="hljs-string">&quot;deep&quot;</span>, <span class="hljs-string">&quot;learning&quot;</span>, <span class="hljs-string">&quot;and&quot;</span>, <span class="hljs-string">&quot;I&quot;</span>, <span class="hljs-string">&quot;love&quot;</span>, <span class="hljs-string">&quot;AI&quot;</span>]<br><br><span class="hljs-comment"># 1. 用集合（set）去重，并统计词频，然后构建 词 -&gt; ID 的字典</span><br><span class="hljs-comment"># 这里的 &#123;word: idx for idx, word in enumerate(...)&#125; 就是典型的字典推导式</span><br>vocab = &#123;word: idx <span class="hljs-keyword">for</span> idx, word <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(<span class="hljs-built_in">sorted</span>(<span class="hljs-built_in">set</span>(words)))&#125;<br><span class="hljs-comment"># 结果: &#123;&#x27;AI&#x27;: 0, &#x27;I&#x27;: 1, &#x27;and&#x27;: 2, &#x27;deep&#x27;: 3, &#x27;learning&#x27;: 4, &#x27;love&#x27;: 5&#125;</span><br><br><span class="hljs-comment"># 2. 有了词表，你就可以把句子变成张量了</span><br>input_ids = [vocab[w] <span class="hljs-keyword">for</span> w <span class="hljs-keyword">in</span> words] <br><span class="hljs-comment"># 结果: [1, 5, 3, 4, 2, 1, 5, 0]</span><br></code></pre></td></tr></table></figure>
+<p><strong>总结：</strong></p>
+<ol>
+<li>现代 Python 字典（3.6+）自带顺序，无需再用 <code>OrderedDict</code>。</li>
+<li>合并字典直接用 <code>|</code>（Union）。</li>
+<li>字典推导式 <code>{k: v for ...}</code> 是数据清洗和特征映射的绝对主力。</li>
+</ol>
+<h3 id="顶部注释"><a href="#顶部注释" class="headerlink" title="顶部注释"></a>顶部注释</h3><ul>
+<li><strong>注释 ❶、❷、❸</strong>：是对上一页字典推导式那行长代码的逐段翻译：<ul>
+<li>提取键值对 -&gt; 按国家名称排序 -&gt; 过滤出区号小于 70 的 -&gt; 将国家名转为大写。</li>
+<li><strong>咩咩咩</strong>：其实不用死记硬背，这种复杂的推导式，你只要记住<strong>“看到括号里第一个冒号，左边就是 Key，右边就是 Value”</strong>就行了。至于过滤条件 <code>if</code>，写在后边。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="3-2-2-映射拆包（-）"><a href="#3-2-2-映射拆包（-）" class="headerlink" title="3.2.2 映射拆包（** ）"></a>3.2.2 映射拆包（<code>**</code> ）</h3><p><code>*</code> 用于列表和元组。这里 <code>**</code> 是用来处理<strong>字典（映射）</strong>的。</p>
+<h4 id="1-函数调用时的"><a href="#1-函数调用时的" class="headerlink" title="1. 函数调用时的 **"></a>1. 函数调用时的 <code>**</code></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">def</span> <span class="hljs-title function_">dump</span>(<span class="hljs-params">**kwargs</span>):<br><span class="hljs-meta">... </span>    <span class="hljs-keyword">return</span> kwargs<br></code></pre></td></tr></table></figure>
+<ul>
+<li><strong>解读</strong>：<code>**kwargs</code> 是 Python 里的“字典收集器”。传进去 <code>dump(a=1, b=2)</code>，函数内部就会自动把它们组装成字典 <code>{&#39;a&#39;: 1, &#39;b&#39;: 2}</code>。</li>
+<li><strong>DL 实战</strong>： <code>nn.Linear(**config)</code>。 <code>config</code> 是一个字典（比如 <code>{&#39;in_features&#39;: 10, &#39;out_features&#39;: 20}</code>），前面的 <code>**</code> 会把它<strong>解开</strong>，变成关键字参数传给函数，。注意书里说的“键必须是字符串”，因为函数参数名不能是数字。</li>
+</ul>
+<h4 id="2-字典字面量中的-（合并字典）"><a href="#2-字典字面量中的-（合并字典）" class="headerlink" title="2. 字典字面量中的 **（合并字典）"></a>2. 字典字面量中的 <code>**</code>（合并字典）</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>&#123;<span class="hljs-string">&#x27;x&#x27;</span>: <span class="hljs-number">1</span>, **&#123;<span class="hljs-string">&#x27;y&#x27;</span>: <span class="hljs-number">2</span>, <span class="hljs-string">&#x27;z&#x27;</span>: <span class="hljs-number">3</span>&#125;&#125;<br>&#123;<span class="hljs-string">&#x27;x&#x27;</span>: <span class="hljs-number">1</span>, <span class="hljs-string">&#x27;y&#x27;</span>: <span class="hljs-number">2</span>, <span class="hljs-string">&#x27;z&#x27;</span>: <span class="hljs-number">3</span>&#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>其实这就是我们在第 29 页学的，用 <code>**</code> 把一个字典拆开，塞进另一个新字典里。</li>
+</ul>
+<h4 id="3-键冲突的法则"><a href="#3-键冲突的法则" class="headerlink" title="3. 键冲突的法则"></a>3. 键冲突的法则</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>&#123;<span class="hljs-string">&#x27;a&#x27;</span>: <span class="hljs-number">0</span>, **&#123;<span class="hljs-string">&#x27;x&#x27;</span>: <span class="hljs-number">1</span>&#125;, <span class="hljs-string">&#x27;y&#x27;</span>: <span class="hljs-number">2</span>, **&#123;<span class="hljs-string">&#x27;z&#x27;</span>: <span class="hljs-number">3</span>, <span class="hljs-string">&#x27;x&#x27;</span>: <span class="hljs-number">4</span>&#125;&#125;<br>&#123;<span class="hljs-string">&#x27;a&#x27;</span>: <span class="hljs-number">0</span>, <span class="hljs-string">&#x27;x&#x27;</span>: <span class="hljs-number">4</span>, <span class="hljs-string">&#x27;y&#x27;</span>: <span class="hljs-number">2</span>, <span class="hljs-string">&#x27;z&#x27;</span>: <span class="hljs-number">3</span>&#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>原字典里的 <code>x=1</code> 和后面拆包进来的 <code>x=4</code>。最终结果是 <code>4</code>。</li>
+<li><strong>规定喵</strong>：在字典拆包合并时，如果遇到重复的键，<strong>后面的值会覆盖前面的值</strong>。</li>
+</ul>
+<hr>
+<h3 id="3-2-3-使用-合并映射（Python-3-9）"><a href="#3-2-3-使用-合并映射（Python-3-9）" class="headerlink" title="3.2.3 使用 | 合并映射（Python 3.9）"></a>3.2.3 使用 <code>|</code> 合并映射（Python 3.9）</h3><p>在 Python 3.9 之前，合并字典要么用 <code>.update()</code>（破坏原字典），要么用 <code>{**d1, **d2}</code>。现在有了 <code>|</code>，一切都结束了。</p>
+<h4 id="1-运算符（并集）"><a href="#1-运算符（并集）" class="headerlink" title="1. | 运算符（并集）"></a>1. <code>|</code> 运算符（并集）</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>d1 = &#123;<span class="hljs-string">&#x27;a&#x27;</span>: <span class="hljs-number">1</span>, <span class="hljs-string">&#x27;b&#x27;</span>: <span class="hljs-number">3</span>&#125;<br><span class="hljs-meta">&gt;&gt;&gt; </span>d2 = &#123;<span class="hljs-string">&#x27;a&#x27;</span>: <span class="hljs-number">2</span>, <span class="hljs-string">&#x27;b&#x27;</span>: <span class="hljs-number">4</span>, <span class="hljs-string">&#x27;c&#x27;</span>: <span class="hljs-number">6</span>&#125;<br><span class="hljs-meta">&gt;&gt;&gt; </span>d1 | d2<br>&#123;<span class="hljs-string">&#x27;a&#x27;</span>: <span class="hljs-number">2</span>, <span class="hljs-string">&#x27;b&#x27;</span>: <span class="hljs-number">4</span>, <span class="hljs-string">&#x27;c&#x27;</span>: <span class="hljs-number">6</span>&#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li><strong>解读</strong>：<code>|</code> 和 <code>{**d1, **d2}</code> 的效果一模一样。遇到相同的键 <code>a</code> 和 <code>b</code>，<code>d2</code> 的值覆盖了 <code>d1</code> 的值，并且生成了一个<strong>全新的字典</strong>。<code>d1</code> 和 <code>d2</code> 本身没变。</li>
+</ul>
+<h4 id="2-运算符（就地更新）"><a href="#2-运算符（就地更新）" class="headerlink" title="2. |= 运算符（就地更新）"></a>2. <code>|=</code> 运算符（就地更新）</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>d1 |= d2<br><span class="hljs-meta">&gt;&gt;&gt; </span>d1<br>&#123;<span class="hljs-string">&#x27;a&#x27;</span>: <span class="hljs-number">2</span>, <span class="hljs-string">&#x27;b&#x27;</span>: <span class="hljs-number">4</span>, <span class="hljs-string">&#x27;c&#x27;</span>: <span class="hljs-number">6</span>&#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li><strong>解读</strong>：这就像我们之前学的 <code>+=</code>。<code>|=</code> 是<strong>原地修改</strong>。它把 <code>d2</code> 的内容合并进 <code>d1</code> 里，<code>d1</code> 的变量地址没变，只是内容增加了。如果你要频繁把一个庞大的字典合并进主字典，用 <code>|=</code> 更省内存（不用每次新建对象）。</li>
+</ul>
+<h4 id="3-底部文字的“废话”（略读）"><a href="#3-底部文字的“废话”（略读）" class="headerlink" title="3. 底部文字的“废话”（略读）"></a>3. 底部文字的“废话”（略读）</h4><p>最后一段文字说：“新映射的类型与左操作数相同。这背后涉及运算符重载规则，详见第 16 章。”</p>
+<ul>
+<li>大白话：用 <code>d1 | d2</code>，如果 <code>d1</code> 是个普通的 <code>dict</code>，那结果就是个普通的 <code>dict</code>。如果你在左边用了自定义的字典子类，结果还是那个子类。这里不用深究。</li>
+</ul>
+<hr>
+<h3 id="配置字典合并"><a href="#配置字典合并" class="headerlink" title="配置字典合并"></a>配置字典合并</h3><p>在训练模型时，往往有<strong>默认配置</strong>和<strong>实验配置</strong>。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">default_config = &#123;<span class="hljs-string">&#x27;lr&#x27;</span>: <span class="hljs-number">0.01</span>, <span class="hljs-string">&#x27;batch_size&#x27;</span>: <span class="hljs-number">32</span>, <span class="hljs-string">&#x27;optimizer&#x27;</span>: <span class="hljs-string">&#x27;Adam&#x27;</span>&#125;<br>experiment_config = &#123;<span class="hljs-string">&#x27;lr&#x27;</span>: <span class="hljs-number">0.001</span>, <span class="hljs-string">&#x27;epochs&#x27;</span>: <span class="hljs-number">10</span>&#125;<br><br><span class="hljs-comment"># 用 | 合并：实验配置覆盖了默认的 lr，并加上了 epochs</span><br>final_config = default_config | experiment_config <br><span class="hljs-comment"># 结果: &#123;&#x27;lr&#x27;: 0.001, &#x27;batch_size&#x27;: 32, &#x27;optimizer&#x27;: &#x27;Adam&#x27;, &#x27;epochs&#x27;: 10&#125;</span><br></code></pre></td></tr></table></figure>
+<p><strong>总结：</strong></p>
+<ol>
+<li><code>**</code> 用于函数传参（拆解字典）和构造字典（合并）。</li>
+<li><code>|</code> 用于合并两个字典生成新字典（<code>|=</code> 是原地合并）。</li>
+<li><strong>覆盖原则</strong>：合并时，右边的值干翻左边的值。<br>解：</li>
+</ol>
+<hr>
+<h3 id="左侧边注（略读，了解即可）"><a href="#左侧边注（略读，了解即可）" class="headerlink" title="左侧边注（略读，了解即可）"></a>左侧边注（略读，了解即可）</h3><ul>
+<li><strong>内容</strong>：“如果你需要维护使用 Python 3.8 或更早版本编写的代码，请看‘PEP 584…’”</li>
+<li><strong>解读</strong>：这就是个历史遗留提示。上一页我们学了用 <code>|</code> 合并字典（3.9 引入），如果你维护老代码（3.8 及以前），就用 <code>{**d1, **d2}</code> 的写法。</li>
+</ul>
+<hr>
+<h3 id="3-3-使用模式匹配处理映射"><a href="#3-3-使用模式匹配处理映射" class="headerlink" title="3.3 使用模式匹配处理映射"></a>3.3 使用模式匹配处理映射</h3><p>我们用 <code>match/case</code> 匹配了<strong>序列</strong>（列表/元组）。现在，我们要用它来匹配<strong>映射</strong>（字典）。</p>
+<h4 id="1-映射模式"><a href="#1-映射模式" class="headerlink" title="1. 映射模式"></a>1. 映射模式</h4><ul>
+<li><strong>原文</strong>：“映射的模式看似 dict 字面量，其实能够匹配 <code>collections.abc.Mapping</code> 的任何具体子类或虚拟子类。”</li>
+<li><strong>白话</strong>：在 <code>case</code> 里面写 <code>{&#39;type&#39;: &#39;book&#39;}</code>，它代表的不是“这个字典必须和我长得一模一样”。它的真实含义是：<strong>“不管这个大字典里装了多少乱七八糟的键，只要它包含了 <code>type</code> 这个键，并且值是 <code>&#39;book&#39;</code>，就算匹配成功”</strong>。</li>
+<li><strong>核心差异</strong>：<strong>匹配序列（列表）要求长度严格一致，但匹配映射（字典）是“子集匹配”！</strong> 在 <code>case</code> 里没写的键，都会被自动忽略。</li>
+</ul>
+<h4 id="2-它的应用场景"><a href="#2-它的应用场景" class="headerlink" title="2. 它的应用场景"></a>2. 它的应用场景</h4><ul>
+<li>文字特意提到：JSON API、MongoDB、PostgreSQL 等。</li>
+<li><strong>DL 实战</strong>：调用 OpenAI 的 API，返回的数据是一个巨大的嵌套字典。里面有 <code>choices</code>，有 <code>usage</code>，有 <code>id</code>。只需要提取 <code>role</code> 和 <code>content</code>。这时候用 <code>match/case</code> 匹配字典结构。</li>
+</ul>
+<hr>
+<h3 id="示例-3-2-代码逐行精讲（数据清洗）"><a href="#示例-3-2-代码逐行精讲（数据清洗）" class="headerlink" title="示例 3-2 代码逐行精讲（数据清洗）"></a>示例 3-2 代码逐行精讲（数据清洗）</h3><p>这段代码演示了如何处理“半结构化数据”（就是格式不太统一的数据）。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">get_creators</span>(<span class="hljs-params">record: <span class="hljs-built_in">dict</span></span>) -&gt; <span class="hljs-built_in">list</span>:<br>    <span class="hljs-keyword">match</span> record:<br>        <span class="hljs-comment"># ❶ 匹配带有 &#x27;type&#x27;: &#x27;book&#x27;, &#x27;api&#x27;: 2，且包含 &#x27;authors&#x27; 列表的情况</span><br>        <span class="hljs-keyword">case</span> &#123;<span class="hljs-string">&#x27;type&#x27;</span>: <span class="hljs-string">&#x27;book&#x27;</span>, <span class="hljs-string">&#x27;api&#x27;</span>: <span class="hljs-number">2</span>, <span class="hljs-string">&#x27;authors&#x27;</span>: [names]&#125;: <br>            <span class="hljs-keyword">return</span> names<br><br>        <span class="hljs-comment"># ❷ 匹配带有 &#x27;type&#x27;: &#x27;book&#x27;, &#x27;api&#x27;: 1，且包含 &#x27;author&#x27; 单人的情况</span><br>        <span class="hljs-keyword">case</span> &#123;<span class="hljs-string">&#x27;type&#x27;</span>: <span class="hljs-string">&#x27;book&#x27;</span>, <span class="hljs-string">&#x27;api&#x27;</span>: <span class="hljs-number">1</span>, <span class="hljs-string">&#x27;author&#x27;</span>: name&#125;:<br>            <span class="hljs-keyword">return</span> [name]<br><br>        <span class="hljs-comment"># ❸ 只要是 &#x27;book&#x27;，但缺少版本号或作者，报错</span><br>        <span class="hljs-keyword">case</span> &#123;<span class="hljs-string">&#x27;type&#x27;</span>: <span class="hljs-string">&#x27;book&#x27;</span>&#125;:<br>            <span class="hljs-keyword">raise</span> ValueError(<span class="hljs-string">f&quot;Invalid &#x27;book&#x27; record: <span class="hljs-subst">&#123;record!r&#125;</span>&quot;</span>)<br><br>        <span class="hljs-comment"># ❹ 匹配电影，并提取导演</span><br>        <span class="hljs-keyword">case</span> &#123;<span class="hljs-string">&#x27;type&#x27;</span>: <span class="hljs-string">&#x27;movie&#x27;</span>, <span class="hljs-string">&#x27;director&#x27;</span>: name&#125;:<br>            <span class="hljs-keyword">return</span> [name]<br><br>        <span class="hljs-comment"># ❺ 啥都不匹配就报错</span><br>        <span class="hljs-keyword">case</span> _:<br>            <span class="hljs-keyword">raise</span> ValueError(<span class="hljs-string">f&quot;Invalid record: <span class="hljs-subst">&#123;record!r&#125;</span>&quot;</span>)<br></code></pre></td></tr></table></figure>
+<ul>
+<li><strong>注释 ❶ 深度解析</strong>：<code>case {&#39;type&#39;: &#39;book&#39;, &#39;api&#39;: 2, &#39;authors&#39;: [names]}:</code><ul>
+<li>这里把<strong>字典匹配</strong>和<strong>序列匹配</strong>套娃了</li>
+<li>它要求这个字典里，<code>authors</code> 这个键对应的值，<strong>必须是一个列表</strong>，并且列表里只有一个元素，把它解包给 <code>names</code>。</li>
+</ul>
+</li>
+<li><strong>注释 ❸ 的细节</strong>：<ul>
+<li>如果传进来的字典是 <code>{&#39;type&#39;: &#39;book&#39;, &#39;title&#39;: &#39;Python&#39;}</code>，它匹配不到 ❶ 和 ❷（因为没有 api 和 author）。</li>
+<li>但是它会匹配到 ❸！因为它包含了 <code>&#39;type&#39;: &#39;book&#39;</code>。由于没写其他键，其他的都会被忽略。</li>
+</ul>
+</li>
+<li><strong>注 1 提到</strong>：这里的 <code>dict</code> 只是个类型注解，实际上它不挑，只要长得像字典就行。</li>
+</ul>
+<hr>
+<h3 id="底部文字（注意事项）"><a href="#底部文字（注意事项）" class="headerlink" title="底部文字（注意事项）"></a>底部文字（注意事项）</h3><p>这里总结了几个重要的规则：</p>
+<ol>
+<li><strong>子集匹配原则</strong>：“匹配含有 ‘type’: ‘book’，而且 ‘authors’ 键映射一个序列的映射对象。”<ul>
+<li>大白话：字典匹配就是找子集，字典可以很大，但只要包含了需要的键值对，就算成功。</li>
+</ul>
+</li>
+<li><strong>空字典 <code>{}</code> </strong>：<ul>
+<li>虽然书上没明说，必须知道：在 <code>match/case</code> 里，如果写 <code>case {}:</code>，它会匹配<strong>任何字典</strong>！因为它不要求包含任何特定键。这通常用来做 <code>case _:</code> 的变体，<strong>只捕获字典</strong>。</li>
+</ul>
+</li>
+<li><strong>返回类型</strong>：“以列表形式返回名字”。<ul>
+<li>仔细看代码，不管匹配到哪种情况，函数最终都返回一个列表（<code>[names]</code> 或 <code>[name]</code>）。这保证了函数接口的一致性。</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h3 id="清理不规范的模型配置"><a href="#清理不规范的模型配置" class="headerlink" title="清理不规范的模型配置"></a>清理不规范的模型配置</h3><p>假设你写了一个框架，用户传进来的 <code>config</code> 字典五花八门，有的是老版本，有的是新版本：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python">config1 = &#123;<span class="hljs-string">&#x27;optimizer&#x27;</span>: <span class="hljs-string">&#x27;Adam&#x27;</span>, <span class="hljs-string">&#x27;lr&#x27;</span>: <span class="hljs-number">0.001</span>, <span class="hljs-string">&#x27;betas&#x27;</span>: (<span class="hljs-number">0.9</span>, <span class="hljs-number">0.999</span>)&#125;<br>config2 = &#123;<span class="hljs-string">&#x27;optimizer&#x27;</span>: <span class="hljs-string">&#x27;SGD&#x27;</span>, <span class="hljs-string">&#x27;lr&#x27;</span>: <span class="hljs-number">0.01</span>, <span class="hljs-string">&#x27;momentum&#x27;</span>: <span class="hljs-number">0.9</span>&#125;<br>config3 = &#123;<span class="hljs-string">&#x27;loss&#x27;</span>: <span class="hljs-string">&#x27;MSE&#x27;</span>&#125; <span class="hljs-comment"># 缺东西</span><br><br><span class="hljs-keyword">match</span> config:<br>    <span class="hljs-comment"># 直接匹配并提取 Adam 的超参数，多余的键（如 loss 等）自动忽略</span><br>    <span class="hljs-keyword">case</span> &#123;<span class="hljs-string">&#x27;optimizer&#x27;</span>: <span class="hljs-string">&#x27;Adam&#x27;</span>, <span class="hljs-string">&#x27;lr&#x27;</span>: <span class="hljs-built_in">float</span>(lr), <span class="hljs-string">&#x27;betas&#x27;</span>: (<span class="hljs-built_in">float</span>(b1), <span class="hljs-built_in">float</span>(b2))&#125;:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;初始化 Adam, lr=<span class="hljs-subst">&#123;lr&#125;</span>, betas=<span class="hljs-subst">&#123;b1, b2&#125;</span>&quot;</span>)<br>        <br>    <span class="hljs-keyword">case</span> &#123;<span class="hljs-string">&#x27;optimizer&#x27;</span>: <span class="hljs-string">&#x27;SGD&#x27;</span>, <span class="hljs-string">&#x27;lr&#x27;</span>: <span class="hljs-built_in">float</span>(lr), <span class="hljs-string">&#x27;momentum&#x27;</span>: <span class="hljs-built_in">float</span>(m)&#125;:<br>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;初始化 SGD, lr=<span class="hljs-subst">&#123;lr&#125;</span>, momentum=<span class="hljs-subst">&#123;m&#125;</span>&quot;</span>)<br>        <br>    <span class="hljs-keyword">case</span> _:<br>        <span class="hljs-keyword">raise</span> ValueError(<span class="hljs-string">&quot;配置不完整或格式不对！&quot;</span>)<br></code></pre></td></tr></table></figure>
+<p>用 <code>match/case</code> 做配置校验和提取，不然就写一堆 <code>if &#39;optimizer&#39; in config and config[&#39;optimizer&#39;] == &#39;Adam&#39;</code> </p>
+<p><strong>总结：</strong></p>
+<ol>
+<li><code>match/case</code> 处理字典，只看写出来的键，没写的自动忽略。</li>
+<li>字典模式可以嵌套序列模式（如 <code>[names]</code>），校验极其严密。</li>
+<li>不仅能匹配内置的 <code>dict</code>，还能匹配任何实现了字典协议的类。</li>
+</ol>
+<hr>
+<h3 id="第一板块：右上方代码验证证明理论"><a href="#第一板块：右上方代码验证证明理论" class="headerlink" title="第一板块：右上方代码验证证明理论"></a>第一板块：右上方代码验证证明理论</h3><p>这段代码是验证上一页 <code>get_creators</code> 函数的具体表现（注：原书代码用 <code>dict()</code> 和 <code>OrderedDict</code> 构造字典，是为了证明 <code>match</code> 对任何字典子类都通用）。</p>
+<h4 id="1-验证普通字典与“子集匹配”"><a href="#1-验证普通字典与“子集匹配”" class="headerlink" title="1. 验证普通字典与“子集匹配”"></a>1. 验证普通字典与“子集匹配”</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>b1 = <span class="hljs-built_in">dict</span>(api=<span class="hljs-number">1</span>, author=<span class="hljs-string">&#x27;Douglas Hofstadter&#x27;</span>, <span class="hljs-built_in">type</span>=<span class="hljs-string">&#x27;book&#x27;</span>, title=<span class="hljs-string">&#x27;Gödel, Escher, Bach&#x27;</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>get_creators(b1)<br>[<span class="hljs-string">&#x27;Douglas Hofstadter&#x27;</span>]<br></code></pre></td></tr></table></figure>
+<ul>
+<li><strong>解读</strong>：这个字典里<strong>没有</strong> <code>authors</code> 键，也没有 <code>api: 2</code>。但它包含了 <code>&#39;type&#39;: &#39;book&#39;</code>、<code>&#39;api&#39;: 1</code> 和 <code>&#39;author&#39;</code>，多余的 <code>title</code> 键直接被忽略了。</li>
+</ul>
+<h4 id="2-验证-OrderedDict-与“顺序无关”"><a href="#2-验证-OrderedDict-与“顺序无关”" class="headerlink" title="2. 验证 OrderedDict 与“顺序无关”"></a>2. 验证 OrderedDict 与“顺序无关”</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>b2 = OrderedDict(api=<span class="hljs-number">2</span>, <span class="hljs-built_in">type</span>=<span class="hljs-string">&#x27;book&#x27;</span>, title=<span class="hljs-string">&#x27;Python in a Nutshell&#x27;</span>, authors=<span class="hljs-string">&#x27;Martelli Ravenscroft Holden&#x27;</span>.split())<br><span class="hljs-meta">&gt;&gt;&gt; </span>get_creators(b2)<br>[<span class="hljs-string">&#x27;Martelli&#x27;</span>, <span class="hljs-string">&#x27;Ravenscroft&#x27;</span>, <span class="hljs-string">&#x27;Holden&#x27;</span>]<br></code></pre></td></tr></table></figure>
+<ul>
+<li><strong>解读</strong>：这个字典的顺序很乱（<code>api</code> 在最前面，<code>type</code> 在第二），但依然匹配了，这证明了<strong>模式匹配只看键存不存在，不看键在哪个位置</strong>。</li>
+</ul>
+<h4 id="3-验证非字典类型"><a href="#3-验证非字典类型" class="headerlink" title="3. 验证非字典类型"></a>3. 验证非字典类型</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>get_creators(<span class="hljs-string">&#x27;Spam, spam, spam&#x27;</span>)<br>ValueError: Invalid record: <span class="hljs-string">&#x27;Spam, spam, spam&#x27;</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li>传个字符串进去，连结构都不对，直接掉落到底部的 <code>case _:</code> 兜底分支，抛出异常。</li>
+</ul>
+<hr>
+<h3 id="中间文字与下方代码（-details）"><a href="#中间文字与下方代码（-details）" class="headerlink" title="中间文字与下方代码（**details）"></a>中间文字与下方代码（<code>**details</code>）</h3><p>作者：“注意，模式中键的顺序无关紧要… 也没有必要使用 <code>**extra</code> 匹配多出的键值对，倘若你想把多出的键值对捕获到一个 dict 中，可以在变量前面加上 <code>**</code>…”</p>
+<p>看下方的示例代码：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>food = <span class="hljs-built_in">dict</span>(category=<span class="hljs-string">&#x27;ice cream&#x27;</span>, flavor=<span class="hljs-string">&#x27;vanilla&#x27;</span>, cost=<span class="hljs-number">199</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">match</span> food:<br><span class="hljs-meta">... </span>    <span class="hljs-keyword">case</span> &#123;<span class="hljs-string">&#x27;category&#x27;</span>: <span class="hljs-string">&#x27;ice cream&#x27;</span>, **details&#125;:<br><span class="hljs-meta">... </span>        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;Ice cream details: <span class="hljs-subst">&#123;details&#125;</span>&#x27;</span>)<br>...<br>Ice cream details: &#123;<span class="hljs-string">&#x27;flavor&#x27;</span>: <span class="hljs-string">&#x27;vanilla&#x27;</span>, <span class="hljs-string">&#x27;cost&#x27;</span>: <span class="hljs-number">199</span>&#125;<br></code></pre></td></tr></table></figure></p>
+<ul>
+<li>看看这个 <code>**details</code>，它就是我们之前学的 <code>*rest</code>（捕获剩余列表项）的<strong>字典版本</strong>。</li>
+<li>它的意思是：“只要这个字典里有 <code>category</code> 且值为 <code>&#39;ice cream&#39;</code>，剩下的所有键值对，不管是什么，统统打包进一个新的字典 <code>details</code> 里！”</li>
+<li><strong>实践</strong>：在加载模型配置，只想强制校验模型的类型是 Transformer，其他的超参数都不关心，只想原封不动地传给模型初始化函数：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">config = &#123;<span class="hljs-string">&#x27;model_type&#x27;</span>: <span class="hljs-string">&#x27;Transformer&#x27;</span>, <span class="hljs-string">&#x27;lr&#x27;</span>: <span class="hljs-number">0.001</span>, <span class="hljs-string">&#x27;batch_size&#x27;</span>: <span class="hljs-number">32</span>, <span class="hljs-string">&#x27;dropout&#x27;</span>: <span class="hljs-number">0.1</span>&#125;<br><br><span class="hljs-keyword">match</span> config:<br>    <span class="hljs-keyword">case</span> &#123;<span class="hljs-string">&#x27;model_type&#x27;</span>: <span class="hljs-string">&#x27;Transformer&#x27;</span>, **kwargs&#125;:<br>        <span class="hljs-comment"># 在这里，kwargs 自动收集了 lr, batch_size, dropout 等所有剩下的参数</span><br>        model = build_transformer(**kwargs) <br></code></pre></td></tr></table></figure>
+一行代码，既做了类型校验，又完成了参数提取，简直完美。</li>
+</ul>
+<hr>
+<h3 id="match-与-defaultdict）"><a href="#match-与-defaultdict）" class="headerlink" title="match 与 defaultdict）"></a><code>match</code> 与 <code>defaultdict</code>）</h3><blockquote>
+<p>“模式匹配不自动处理缺失的键，因为模式匹配始终使用 <code>d.get(key, sentinel)</code> 查找… 仅当匹配对象在运行 match 语句之前已经含有所需的键才能成功。这是与 3.5 节讲解的 defaultdict 的巨大区别。”</p>
+</blockquote>
+<ul>
+<li><strong>解读</strong>：<ul>
+<li>如果你匹配 <code>case {&#39;type&#39;: &#39;book&#39;, &#39;author&#39;: name}:</code>，而字典里没 <code>author</code> 这个键，<code>match</code> 会<strong>直接匹配失败</strong>，去试下一个 case。</li>
+<li>而我们在后面要学的 <code>defaultdict</code>（默认字典）是：你用 <code>d[&#39;author&#39;]</code> 取值时，如果没有，它会自动用默认值填进去。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="3-4-映射类型的标准-API"><a href="#3-4-映射类型的标准-API" class="headerlink" title="3.4 映射类型的标准 API"></a>3.4 映射类型的标准 API</h3><h4 id="1-为什么要用抽象基类？"><a href="#1-为什么要用抽象基类？" class="headerlink" title="1. 为什么要用抽象基类？"></a>1. 为什么要用抽象基类？</h4><p>文字说：“<code>collections.abc</code> 模块中的抽象基类 <code>Mapping</code> 和 <code>MutableMapping</code>… 主要作用是确立映射对象的标准接口，并在需要广义映射对象时作为 <code>isinstance</code> 测试标准。”</p>
+<ul>
+<li><strong>翻译</strong>：在 Python 里，字典（<code>dict</code>）是“事实标准”。但除了 <code>dict</code>，还有很多其他类型的字典（比如第三方库自己写的、或者后面的 <code>defaultdict</code>）。</li>
+<li>如果你想写一个通用函数，判断“<strong>你传进来的这个对象，到底是不是一个字典（或者像字典）</strong>”，千万不要写 <code>isinstance(x, dict)</code>，因为这会把其他长得像字典的类排除在外。</li>
+<li><strong>正确写法</strong>：<code>isinstance(x, abc.Mapping)</code>。只要这个类实现了字典该有的方法，它就算过关。这就是前面一直强调的<strong>“鸭子类型”</strong>。</li>
+</ul>
+<h4 id="2-实例代码（左中部分）"><a href="#2-实例代码（左中部分）" class="headerlink" title="2. 实例代码（左中部分）"></a>2. 实例代码（左中部分）</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>my_dict = &#123;&#125;<br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">isinstance</span>(my_dict, abc.Mapping)<br><span class="hljs-literal">True</span><br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">isinstance</span>(my_dict, abc.MutableMapping)<br><span class="hljs-literal">True</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li><code>dict</code> 既是不可变映射（<code>Mapping</code>），又是可变映射（<code>MutableMapping</code>），所以全返回 <code>True</code>。</li>
+</ul>
+<hr>
+<h3 id="第图-3-1-映射的“族谱图”"><a href="#第图-3-1-映射的“族谱图”" class="headerlink" title="第图 3-1 映射的“族谱图”"></a>第图 3-1 映射的“族谱图”</h3><p>核心 UML 继承图</p>
+<ol>
+<li><strong><code>Collection</code>（基础三件套）</strong>：包含 <code>__contains__</code>（<code>in</code> 操作）、<code>__iter__</code>（<code>for</code> 循环）、<code>__len__</code>（<code>len()</code>）。</li>
+<li><strong><code>Mapping</code>（不可变映射）</strong>：<ul>
+<li>继承了 <code>Collection</code>。</li>
+<li><strong>斜体字代表抽象方法，必须由你自己实现</strong>：<code>__getitem__</code>、<code>__len__</code>、<code>__iter__</code>。</li>
+<li><strong>非斜体字代表普通方法，框架帮你写好了</strong>：<code>get</code>、<code>items</code>、<code>keys</code>、<code>values</code>。只要把上面三个斜体字实现了，这三个方法就能直接用。</li>
+</ul>
+</li>
+<li><strong><code>MutableMapping</code>（可变映射）</strong>：<ul>
+<li>继承了 <code>Mapping</code>。</li>
+<li><strong>必须实现</strong>：<code>__setitem__</code>（赋值）、<code>__delitem__</code>（删除）。</li>
+<li><strong>白嫖</strong>：<code>pop</code>、<code>popitem</code>、<code>clear</code>、<code>update</code>、<code>setdefault</code>。</li>
+</ul>
+</li>
+</ol>
+<p>作者说：“<strong>如果想自定义映射类型，扩展 <code>collections.UserDict</code> 或通过组合模式包装 <code>dict</code> 更简单</strong>。”<br>如果你以后需要写一个特殊的字典（比如：每次存入数据时，自动打印一行日志；或者每次读取时，自动把数据转成 Tensor），就不需要从零开始写。你只需要继承 <code>MutableMapping</code>，实现那几个核心的斜体方法，剩下的几十个字典方法，可以直接白嫖。</p>
+<hr>
+<h3 id="3-4-1-“可哈希”指什么？"><a href="#3-4-1-“可哈希”指什么？" class="headerlink" title="3.4.1 “可哈希”指什么？"></a>3.4.1 “可哈希”指什么？</h3><p>这是全书最核心的底层概念之一。</p>
+<p><strong>什么是可哈希（Hashable）？</strong></p>
+<p>满足两个条件：</p>
+<ol>
+<li><strong>生命周期内哈希值不变</strong>：底层有 <code>__hash__()</code> 方法。</li>
+<li><strong>可与其他对象比较</strong>：底层有 <code>__eq__()</code> 方法（判断两对象是否相等）。</li>
+</ol>
+<p><strong>铁律</strong>：<strong>只有可哈希的对象才能作为字典（<code>dict</code>）的键（Key）和集合（<code>set</code>）的元素。</strong></p>
+<h4 id="为什么会有这条规则？"><a href="#为什么会有这条规则？" class="headerlink" title="为什么会有这条规则？"></a>为什么会有这条规则？</h4><p>哈希表（字典的底层）是怎么找东西的？<br>当 <code>key</code> 存进字典时，字典会先算一下它的哈希值（一个数字），然后根据这个数字把它塞进特定的内存格子里。等你下次来找的时候，字典再算一遍哈希值，直接去那个格子拿东西。</p>
+<ul>
+<li>如果这个 <code>key</code> 在里面被修改了，它的哈希值就会变。当你再拿着原来的特征去找它时，就找不到了。</li>
+</ul>
+<h4 id="所以，谁能当键？谁不能？"><a href="#所以，谁能当键？谁不能？" class="headerlink" title="所以，谁能当键？谁不能？"></a>所以，谁能当键？谁不能？</h4><ul>
+<li><strong>能</strong>：数字（<code>int</code>、<code>float</code>）、字符串（<code>str</code>）、元组（<code>tuple</code>，但前提是元组里的每一个元素也都必须可哈希）。</li>
+<li><strong>不能</strong>：列表（<code>list</code>）、字典（<code>dict</code>）、集合（<code>set</code>）。因为它们是可变对象，随时可能被“原地修改”。</li>
+<li><strong>PyTorch 的张量（Tensor）默认是不可哈希的！</strong> 因为张量是可变对象（你可以写 <code>tensor[0] = 5</code>）。如果你试图写 <code>my_dict[torch.tensor([1,2])] = &#39;value&#39;</code>，直接报 <code>TypeError: unhashable type: &#39;Tensor&#39;</code>。</li>
+</ul>
+<h4 id="底部脚注-2（强迫症作者的吐槽）"><a href="#底部脚注-2（强迫症作者的吐槽）" class="headerlink" title="底部脚注 2（强迫症作者的吐槽）"></a>底部脚注 2（强迫症作者的吐槽）</h4><ul>
+<li>作者说：我喜欢用“哈希码”这个词，而不是“哈希值”。有些不懂装懂的人会说“哈希值容易被混淆”，其实只要知道它是用来做键的就行了。这段是翻译和作者的碎碎念，略过即可。</li>
+</ul>
+<hr>
+<h3 id="实战：模型输出与字典键"><a href="#实战：模型输出与字典键" class="headerlink" title="实战：模型输出与字典键"></a>实战：模型输出与字典键</h3><p><strong>场景：处理 Hugging Face 的 Tokenizer</strong><br>在 NLP 里，我们要把词变成数字，字典是 <code>{&#39;apple&#39;: 1, &#39;banana&#39;: 2}</code>。因为 <code>&#39;apple&#39;</code> 是字符串（不可变，可哈希），所以它能完美作为键。</p>
+<p><strong>场景：数据增强的配置</strong><br>假设你写了一个数据增强的工厂函数，你想把不同的参数组合缓存起来。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 正确做法：用元组（不可变且元素可哈希）作为字典的键</span><br>transform_cache = &#123;&#125;<br>config_key = (<span class="hljs-number">224</span>, <span class="hljs-number">224</span>, <span class="hljs-string">&#x27;RandomCrop&#x27;</span>, <span class="hljs-literal">True</span>) <br>transform_cache[config_key] = build_transform(...) <br><br><span class="hljs-comment"># 错误做法：用列表</span><br><span class="hljs-comment"># config_key = [224, 224, &#x27;RandomCrop&#x27;, True] # 报错 unhashable type: &#x27;list&#x27;</span><br></code></pre></td></tr></table></figure></p>
+<p><strong>总结：</strong></p>
+<ol>
+<li>遇到判断“是不是字典”的需求，请用 <code>isinstance(x, abc.Mapping)</code>。</li>
+<li>继承了 <code>MutableMapping</code>，只需要写几个底层方法，就能白嫖一整套字典方法。</li>
+<li><strong>只要你想把一个对象放进 <code>set</code> 里，或者当 <code>dict</code> 的键，它必须是不可变的（元组、字符串、数字）。</strong></li>
+</ol>
+<hr>
+<h3 id="“可哈希”的判定"><a href="#“可哈希”的判定" class="headerlink" title="“可哈希”的判定"></a>“可哈希”的判定</h3><p>这段代码极其直观地演示了上一页的理论：<strong>元组（tuple）是可哈希的，但前提是里面的“所有元素”都必须可哈希。</strong></p>
+<h4 id="1-成功案例（tt）"><a href="#1-成功案例（tt）" class="headerlink" title="1. 成功案例（tt）"></a>1. 成功案例（tt）</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>tt = (<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, (<span class="hljs-number">30</span>, <span class="hljs-number">40</span>))<br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">hash</span>(tt)<br>-<span class="hljs-number">41184992344501110</span>  <span class="hljs-comment"># 成功算出一个哈希值</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li><strong>讲师解读</strong>：<code>tt</code> 是个元组，里面装了两个数字和一个内部元组 <code>(30, 40)</code>。因为数字和元组都是<strong>不可变</strong>的，所以整体 <code>tt</code> 是可哈希的。</li>
+</ul>
+<h4 id="2-失败案例（tl）——-经典的报错"><a href="#2-失败案例（tl）——-经典的报错" class="headerlink" title="2. 失败案例（tl）—— 经典的报错"></a>2. 失败案例（tl）—— 经典的报错</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>tl = (<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, [<span class="hljs-number">30</span>, <span class="hljs-number">40</span>])<br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">hash</span>(tl)<br>TypeError: unhashable <span class="hljs-built_in">type</span>: <span class="hljs-string">&#x27;list&#x27;</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li><strong>解读</strong>：<code>tl</code> 也是个元组，但里面装了一个<strong>列表</strong> <code>[30, 40]</code>。因为列表是可以随时修改的（<code>append</code>，<code>pop</code> 等），一旦修改，它的哈希值就会变，字典的底层索引就会崩溃。因此，Python 直接拒绝为包含列表的元组计算哈希值。</li>
+<li>这就解释了为什么我们在第一章造的扑克牌 <code>Card</code> 类如果要做字典的键，里面绝对不能存列表。</li>
+</ul>
+<h4 id="3-补救案例（tf）"><a href="#3-补救案例（tf）" class="headerlink" title="3. 补救案例（tf）"></a>3. 补救案例（tf）</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>tf = (<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-built_in">frozenset</span>([<span class="hljs-number">30</span>, <span class="hljs-number">40</span>]))<br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">hash</span>(tf)<br>-<span class="hljs-number">41184992344501110</span> <span class="hljs-comment"># 又成功了！</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li><strong>解读</strong>：如果你非要在元组里套一个“集合”，那就必须用 <code>frozenset</code>（冻结的集合）。它跟普通集合的区别就是<strong>不可变</strong>，所以它是可哈希的。</li>
+</ul>
+<h4 id="4-关于自定义类的底层规定"><a href="#4-关于自定义类的底层规定" class="headerlink" title="4. 关于自定义类的底层规定"></a>4. 关于自定义类的底层规定</h4><p>右侧文字提到：“用户定义的类型默认是可哈希的… 如果自己实现了 <code>__eq__()</code>，就必须实现 <code>__hash__()</code>。”</p>
+<ul>
+<li><strong>翻译</strong>：在 Python 里，如果你写了一个类，默认你比较两个对象是否相等，比的是<strong>内存地址</strong>（<code>id()</code>）。如果你的两个对象内容完全一样，但地址不同，它们是不相等的。</li>
+<li>如果你重写了 <code>__eq__</code>（改成判断内容是否一样），那么你必须重写 <code>__hash__</code>（让内容相同的对象拥有相同的哈希值）。否则，字典就找不到东西了。</li>
+</ul>
+<hr>
+<h3 id="表-3-1-映射类型的方法对比"><a href="#表-3-1-映射类型的方法对比" class="headerlink" title="表 3-1 映射类型的方法对比"></a>表 3-1 映射类型的方法对比</h3><p>左下角的表，列了 <code>dict</code>、<code>defaultdict</code>、<code>OrderedDict</code> 的常用方法。</p>
+<ol>
+<li><code>defaultdict</code> 的特权：<code>d.default_factory</code>。<ul>
+<li>这是它的核心，下一节马上讲。意思是“如果找不到键，就用这个工厂函数造一个默认值出来”。</li>
+</ul>
+</li>
+<li><strong><code>OrderedDict</code> 的历史</strong>：虽然现在原生 <code>dict</code> 已经有序了，但在 Python 3.6 之前，如果你要保证字典的顺序，必须用 <code>OrderedDict</code>。</li>
+<li><strong>通用的操作</strong>：<code>d.clear()</code>（清空）、<code>d.copy()</code>（浅拷贝）、<code>del d[k]</code>（删除）。</li>
+</ol>
+<hr>
+<h3 id="3-4-2-映射方法概述"><a href="#3-4-2-映射方法概述" class="headerlink" title="3.4.2 映射方法概述"></a>3.4.2 映射方法概述</h3><p>作者说：“表 3-1 列出了 dict、collections.defaultdict 和 collections.OrderedDict 实现的方法… 接下来概览 Python 中最常用的映射类型的 API。”</p>
+<p>这是作者在为你梳理知识框架。接下来几页，你将会学到字典的各种api，比如：</p>
+<ul>
+<li><code>d.update()</code>：用另一个字典更新自己。</li>
+<li><code>d.setdefault()</code>：处理缺失的键。</li>
+<li><strong><code>collections.defaultdict</code> 和 <code>collections.Counter</code></strong>：这两个 NLP 处理中常用。</li>
+</ul>
+<hr>
+<h3 id="实战：为什么-Tensor-不能当字典的键？"><a href="#实战：为什么-Tensor-不能当字典的键？" class="headerlink" title="实战：为什么 Tensor 不能当字典的键？"></a>实战：为什么 Tensor 不能当字典的键？</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 错误代码</span><br>my_dict = &#123;&#125;<br>tensor_key = torch.tensor([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>])<br>my_dict[tensor_key] = <span class="hljs-string">&quot;value&quot;</span> <br><span class="hljs-comment"># 报错！TypeError: unhashable type: &#x27;Tensor&#x27;</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li>Tensor 是<strong>可变</strong>的。你可以写 <code>tensor_key[0] = 5</code>。</li>
+<li><strong>怎么解决？</strong> 如果你真的想用 Tensor 的特征值作为键（比如做缓存），你需要把它变成不可变的形式，比如转成元组：<code>tuple(tensor.tolist())</code>，或者直接转成字符串 <code>str(tensor)</code>。</li>
+</ul>
+<p><strong>总结：</strong></p>
+<ol>
+<li><strong>字典的键必须绝对不可变</strong>（数字、字符串、元组，或者 <code>frozenset</code>）。</li>
+<li><strong>元组是套娃大师</strong>，但它的每一个子元素也必须不可变。</li>
+<li>如果自定义类要当键，<code>__eq__</code> 和 <code>__hash__</code> 必须配套出现。</li>
+</ol>
+<hr>
+<h3 id="三剑客"><a href="#三剑客" class="headerlink" title="三剑客"></a>三剑客</h3><p>这三个方法几乎每天都会用，尤其是第一个。</p>
+<h4 id="1-d-get-k-default"><a href="#1-d-get-k-default" class="headerlink" title="1. d.get(k, [default])"></a>1. <code>d.get(k, [default])</code></h4><ul>
+<li><strong>解读</strong>：直接写 <code>d[k]</code> 如果字典里没有这个键，程序直接报错崩溃（<code>KeyError</code>）。但如果你用 <code>d.get(k)</code>，找不到就返回 <code>None</code>；如果你写 <code>d.get(k, 0)</code>，找不到就返回 <code>0</code>。</li>
+<li><strong>DL 实战</strong>：在 NLP 里查词表，遇到不认识的词（OOV问题），千万别用 <code>d[word]</code>，一定要用 <code>d.get(word, unk_id)</code>，把生词统一定向到 <code>&lt;UNK&gt;</code> 标记。</li>
+</ul>
+<h4 id="2-d-items-d-keys-d-values"><a href="#2-d-items-d-keys-d-values" class="headerlink" title="2. d.items() / d.keys() / d.values()"></a>2. <code>d.items()</code> / <code>d.keys()</code> / <code>d.values()</code></h4><ul>
+<li><strong>解读</strong>：获取字典的键、值、键值对。表格里特别写了，它们返回的是<strong>视图对象</strong>。意思是它们只占极小内存，不复制数据，改动原字典，视图立刻跟着变。</li>
+<li><strong>DL 实战</strong>：在遍历模型所有层的时候经常写：<code>for name, param in model.named_parameters():</code>，这就类似于字典的 <code>items()</code>。</li>
+</ul>
+<h4 id="3-d-pop-k-default"><a href="#3-d-pop-k-default" class="headerlink" title="3. d.pop(k, [default])"></a>3. <code>d.pop(k, [default])</code></h4><ul>
+<li><strong>解读</strong>：弹出并删除指定的键。常用于你需要“消费”掉某个配置项，用完就删，防止重复使用。</li>
+</ul>
+<hr>
+<h3 id="处理“缺失键”"><a href="#处理“缺失键”" class="headerlink" title="处理“缺失键”"></a>处理“缺失键”</h3><h4 id="1-d-setdefault-k-default"><a href="#1-d-setdefault-k-default" class="headerlink" title="1. d.setdefault(k, [default])"></a>1. <code>d.setdefault(k, [default])</code></h4><ul>
+<li><strong>白话</strong>：如果字典里有 <code>k</code>，直接返回对应的值。如果<strong>没有</strong> <code>k</code>，它就把 <code>k</code> 加进去，值设为 <code>default</code>，然后再把 <code>default</code> 返回给你。</li>
+<li><strong>DL 实战（数据分组）</strong>：假设有 1000 条图片数据，要按类别（猫、狗、鸟）分组：<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">groups = &#123;&#125;<br><span class="hljs-keyword">for</span> img, label <span class="hljs-keyword">in</span> dataset:<br>    <span class="hljs-comment"># 如果 label 第一次出现，创建一个空列表；如果存在，直接取出来。</span><br>    groups.setdefault(label, []).append(img) <br></code></pre></td></tr></table></figure>
+一行代码顶替了 <code>if label not in groups:</code> 的判断。</li>
+</ul>
+<h4 id="2-d-missing-k-与-表下方的-defaultdict"><a href="#2-d-missing-k-与-表下方的-defaultdict" class="headerlink" title="2. d.__missing__(k) 与 表下方的 defaultdict"></a>2. <code>d.__missing__(k)</code> 与 表下方的 <code>defaultdict</code></h4><ul>
+<li><strong>解读</strong>：当你不小心写 <code>d[k]</code> 找不到键时，Python 底层会调用 <code>__missing__</code>。但原生 <code>dict</code> 没实现这个方法，所以报错。而下一节要讲的 <code>defaultdict</code>（表下方的脚注 a），就是重写了这个魔法方法，当你找不到键时，自动生成一个默认值。</li>
+</ul>
+<hr>
+<h3 id="现代语法与派生类专属"><a href="#现代语法与派生类专属" class="headerlink" title="现代语法与派生类专属"></a>现代语法与派生类专属</h3><h4 id="1-d-other-和-d-other"><a href="#1-d-other-和-d-other" class="headerlink" title="1. d | other 和 d |= other"></a>1. <code>d | other</code> 和 <code>d |= other</code></h4><ul>
+<li><strong>解读</strong>：这就是我们上一节刚学过的合并字典的运算符（Python 3.9 引入）。</li>
+</ul>
+<h4 id="2-d-reversed"><a href="#2-d-reversed" class="headerlink" title="2. d.__reversed__()"></a>2. <code>d.__reversed__()</code></h4><ul>
+<li><strong>解读</strong>：用来倒序遍历字典。因为从 Python 3.6 开始字典自带顺序，所以现在可以直接 <code>reversed(d)</code> 了。</li>
+</ul>
+<h4 id="3-OrderedDict-（看中间列）"><a href="#3-OrderedDict-（看中间列）" class="headerlink" title="3. OrderedDict （看中间列）"></a>3. <code>OrderedDict</code> （看中间列）</h4><ul>
+<li><strong><code>d.move_to_end(k, [last])</code></strong>：这是一个特殊的方法，只有 <code>OrderedDict</code>（有序字典）才有。它能把某个键移动到字典的最前面或最后面。</li>
+<li><strong><code>popitem(last=True)</code></strong>：普通字典的 <code>popitem</code> 是后进先出（LIFO）。但 <code>OrderedDict</code> 可以设置 <code>last=False</code>，实现先进先出（FIFO）弹出数据。这也是实现 LRU（最近最少使用）缓存算法的核心。</li>
+</ul>
+<hr>
+<h3 id="update-的鸭子类型"><a href="#update-的鸭子类型" class="headerlink" title="update 的鸭子类型"></a><code>update</code> 的鸭子类型</h3><p><strong>“<code>d.update(m)</code> 处理第一个参数 <code>m</code> 的方式是‘鸭子类型’的典型应用：先检查 <code>m</code> 有没有 <code>keys</code> 方法，如果有，则假定 <code>m</code> 是映射；否则，退而求其次，假定 <code>m</code> 是键值对形式。”</strong></p>
+<ul>
+<li><strong>解析</strong>：当你想给字典更新数据时，写 <code>my_dict.update(other)</code>。<ul>
+<li>如果 <code>other</code> 是一个字典（因为它有 <code>keys()</code> 方法），Python 就按字典的方式遍历它。</li>
+<li>如果 <code>other</code> 不是字典，但它是长得像 <code>[(&#39;a&#39;, 1), (&#39;b&#39;, 2)]</code> 这样的可迭代对象，Python 也不会报错，而是默认里面装的是一个个“键值对元组”，照样给你更新进去。</li>
+</ul>
+</li>
+<li>这种<strong>“我不在乎你是什么类型，只在乎你能干什么（有没有 <code>keys</code> 方法）”</strong>，就是 Python鸭子类型。</li>
+</ul>
+<hr>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ol>
+<li>能不用 <code>d[k]</code> 取值，就尽量用 <code>d.get(k)</code>，防止程序崩溃。</li>
+<li>要给一个多分类数据集分桶时，<code>setdefault</code> </li>
+</ol>
+<h3 id="3-4-3-插入或更新可变的值"><a href="#3-4-3-插入或更新可变的值" class="headerlink" title="3.4.3 插入或更新可变的值"></a>3.4.3 插入或更新可变的值</h3><p>如果你用 <code>d[k]</code> 去取一个不存在的键，Python 会直接抛出 <code>KeyError</code>（快速失败原则）。</p>
+<p>为了防止程序崩溃，聪明人会用 <code>d.get(k, default)</code>（比如默认返回 <code>None</code> 或 <code>0</code>）。</p>
+<p><strong>但是，如果字典的“值”是一个可变对象（比如一个列表 List），<code>get()</code> 用起来就有点恶心了。</strong></p>
+<p>作者抛出了一个需求：我们要写一个脚本，分析《Python之禅》的文本，找出每个单词出现的位置。</p>
+<ul>
+<li><strong>键（Key）</strong>：单词（比如 “Beautiful”）</li>
+<li><strong>值（Value）</strong>：一个列表，里面装着所有出现的位置坐标 <code>[(行号, 列号), ...]</code></li>
+</ul>
+<hr>
+<h3 id="示例-3-3-与-3-4-代码深度还原（展示“笨办法”）"><a href="#示例-3-3-与-3-4-代码深度还原（展示“笨办法”）" class="headerlink" title="示例 3-3 与 3-4 代码深度还原（展示“笨办法”）"></a>示例 3-3 与 3-4 代码深度还原（展示“笨办法”）</h3><p>看示例 3-3 的输出结果：<br><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs text">beats [(11, 23)]<br>Beautiful [(3, 1)]<br>better [(3, 14), (4, 13), (5, 11), (6, 12), (7, 9), (8, 11), (17, 8), (18, 25)]<br></code></pre></td></tr></table></figure></p>
+<ul>
+<li><strong>解读</strong>：目标很明确。单词 “better” 出现了 8 次，它的值就是一个包含 8 个坐标元组的列表。</li>
+</ul>
+<p>再看示例 3-4 的代码：<br>作者在这里使用的是 <code>dict.get()</code>。它的代码逻辑大概是这样的：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python">index = &#123;&#125;<br><span class="hljs-comment"># ... 略过读取文件的代码 ...</span><br><span class="hljs-keyword">for</span> <span class="hljs-keyword">match</span> <span class="hljs-keyword">in</span> WORD_RE.finditer(line):<br>    word = <span class="hljs-keyword">match</span>.group()<br>    column_no = <span class="hljs-keyword">match</span>.start() + <span class="hljs-number">1</span><br>    location = (line_no, column_no)<br>    <br>    <span class="hljs-comment"># 核心痛点：使用 get() 的三步走</span><br>    occurrences = index.get(word, []) <span class="hljs-comment"># ① 如果没有这个词，返回空列表 []</span><br>    occurrences.append(location)      <span class="hljs-comment"># ② 把新位置追加进去</span><br>    index[word] = occurrences         <span class="hljs-comment"># ③ 再重新塞回字典里</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li><strong>大白话</strong>：你看注释，文字说“示例 3-4 中的脚本不太完美，目的是告诉你 <code>dict.get</code> 不是处理缺失键的最佳方式。”</li>
+<li><strong>不够完美</strong> 每次遇到一个词，你都要先 <code>get</code> 查一下，再 <code>append</code> 加进去，最后还要重新赋值。这写了足足三行代码，太啰嗦了。而且，如果这个词是第一次出现，你还要造一个 <code>[]</code> 出来。</li>
+</ul>
+<hr>
+<h3 id="底部脚注"><a href="#底部脚注" class="headerlink" title="底部脚注"></a>底部脚注</h3><p>看左下角的注 4：</p>
+<blockquote>
+<p>“原脚本出自 Martelli 的演讲… 他的脚本其实是演示 <code>dict.setdefault</code>，如示例 3-5 所示。”</p>
+</blockquote>
+<p>如果把上面的核心痛点用 <code>setdefault</code> 改写，代码会变成这样：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 非常优雅的一行！</span><br>index.setdefault(word, []).append(location)<br></code></pre></td></tr></table></figure></p>
+<ul>
+<li><strong>解析</strong>：它的意思是，去字典里找 <code>word</code>，如果找不到，就建一个空列表 <code>[]</code> 塞进去。然后，<strong>不管找没找到，直接对返回的那个列表执行 <code>.append()</code></strong>。这就完美解决了“初始化”和“追加”的割裂感。</li>
+</ul>
+<hr>
+<h3 id="实战性能"><a href="#实战性能" class="headerlink" title="实战性能"></a>实战性能</h3><p>除了搞文本索引，你在处理数据时，这种<strong>“分组字典（Dict of Lists）”</strong>的模式无处不在：</p>
+<p><strong>场景：把图片按类别分组（数据清洗与打包）</strong><br>假设你有一堆猫、狗、鸟的图片路径，你要把它们分到不同的文件夹里：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python">dataset = [(<span class="hljs-string">&quot;cat1.jpg&quot;</span>, <span class="hljs-string">&quot;cat&quot;</span>), (<span class="hljs-string">&quot;dog1.jpg&quot;</span>, <span class="hljs-string">&quot;dog&quot;</span>), (<span class="hljs-string">&quot;cat2.jpg&quot;</span>, <span class="hljs-string">&quot;cat&quot;</span>)]<br><br><span class="hljs-comment"># 笨办法（用 get）</span><br>groups = &#123;&#125;<br><span class="hljs-keyword">for</span> img, label <span class="hljs-keyword">in</span> dataset:<br>    lst = groups.get(label, [])<br>    lst.append(img)<br>    groups[label] = lst<br><br><span class="hljs-comment"># 优雅的办法（用 setdefault）</span><br>groups = &#123;&#125;<br><span class="hljs-keyword">for</span> img, label <span class="hljs-keyword">in</span> dataset:<br>    groups.setdefault(label, []).append(img)<br></code></pre></td></tr></table></figure></p>
+<p><strong>总结：</strong></p>
+<ol>
+<li><code>dict.get()</code> 适合用来获取单个值（比如 <code>count = d.get(word, 0) + 1</code>）。</li>
+<li>但如果字典的值是个<strong>列表</strong>，并且你需要往里面<strong>不断塞东西</strong>，这时候 <code>get()</code> 就很丑了。</li>
+<li><code>setdefault()</code> </li>
+</ol>
+<h3 id="示例-3-4-的收尾"><a href="#示例-3-4-的收尾" class="headerlink" title="示例 3-4 的收尾"></a>示例 3-4 的收尾</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># ❶ 获取 word 出现的位置列表，如果未找到，则返回 []</span><br>occurrences = index.get(word, [])<br><span class="hljs-comment"># ❷ 把新找到的位置追加到 occurrences 中</span><br>occurrences.append(location)<br><span class="hljs-comment"># ❸ 把更新后的 occurrences 放入 index 字典</span><br>index[word] = occurrences <br></code></pre></td></tr></table></figure>
+<ul>
+<li><strong>解读</strong>：这段代码虽然能用，但太啰嗦了。</li>
+<li><strong>注释 ❹ 的小提示</strong>：看 <code>for word in sorted(index, key=str.upper)</code>。这展示了字典在迭代时，默认迭代的是<strong>键（Keys）</strong>。这里用 <code>key=str.upper</code> 实现了忽略大小写的字母排序。</li>
+</ul>
+<hr>
+<h3 id="then"><a href="#then" class="headerlink" title="then"></a>then</h3><p>来看示例 3-5 中的核心（注释 ❺）：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 核心代码只有这一句：</span><br>index.setdefault(word, []).append(location)<br></code></pre></td></tr></table></figure></p>
+<ul>
+<li><strong>手把手拆解这行代码的执行逻辑</strong>：<ol>
+<li><code>index.setdefault(word, [])</code>：去字典 <code>index</code> 里找 <code>word</code>。</li>
+<li>如果 <code>word</code> <strong>不存在</strong>：在字典里建一个 <code>word: []</code> 的键值对，并且<strong>返回这个新创建的空列表的引用</strong>。</li>
+<li>如果 <code>word</code> <strong>已经存在</strong>：不管它的值是什么，直接<strong>返回那个已存在的列表的引用</strong>。</li>
+<li>接下来，后面的 <code>.append(location)</code> 就能直接生效了，因为它拿到了列表的内存地址，可以往里面无限塞数据。</li>
+</ol>
+</li>
+</ul>
+<hr>
+<h3 id="注-5"><a href="#注-5" class="headerlink" title="注 5"></a>注 5</h3><blockquote>
+<p>“这里把方法当作一等对象使用… <code>my_dict.setdefault(key, []).append(new_value)</code>”<br>“也就是，下面这一行（错误示范）：<code>my_dict.setdefault(key, []); my_dict[key].append(new_value)</code>”</p>
+</blockquote>
+<ul>
+<li><strong>深度剖析</strong>：<ul>
+<li>上面的代码只进行了 <strong>一次</strong> 哈希查找（找 <code>key</code>）。</li>
+<li>如果把它拆成两行（先 setdefault 确保存在，再 <code>my_dict[key]</code> 取出列表来 append），底层会进行 <strong>两次</strong> 哈希查找</li>
+<li>在巨大的数据量面前，多一次哈希查找就会多消耗一点时间和 CPU 周期。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="实战-1"><a href="#实战-1" class="headerlink" title="实战"></a>实战</h3><p><strong>场景 1：构建 NLP 词频字典（Bag of Words）</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python">word_counts = &#123;&#125;<br><span class="hljs-keyword">for</span> word <span class="hljs-keyword">in</span> text:<br>    <span class="hljs-comment"># 统计每个词出现的次数</span><br>    word_counts.setdefault(word, <span class="hljs-number">0</span>)<br>    word_counts[word] += <span class="hljs-number">1</span><br><span class="hljs-comment"># (优化写法：word_counts[word] = word_counts.get(word, 0) + 1，或者用我们下面要学的 Counter)</span><br></code></pre></td></tr></table></figure></p>
+<p><strong>场景 2：把变长特征按类别归组</strong><br>假设你在做图神经网络（GNN）或目标检测，要把不同的锚框（anchor）按类别（比如不同大小的目标）分组：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">anchors_by_size = &#123;&#125;<br><span class="hljs-keyword">for</span> box, size_category <span class="hljs-keyword">in</span> boxes:<br>    <span class="hljs-comment"># 一行代码把框塞进对应的尺寸分类列表中</span><br>    anchors_by_size.setdefault(size_category, []).append(box)<br></code></pre></td></tr></table></figure></p>
+<p><strong>场景 3：用 <code>defaultdict</code> 彻底取代它（下一页预告）</strong><br>虽然 <code>setdefault</code> 很爽，但每次都要写一个 <code>[]</code> 有点烦。Python 还有个更懒的工具叫 <code>collections.defaultdict</code>。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> collections <span class="hljs-keyword">import</span> defaultdict<br>index = defaultdict(<span class="hljs-built_in">list</span>) <span class="hljs-comment"># 声明字典的值默认是列表</span><br>index[word].append(location) <br></code></pre></td></tr></table></figure></p>
+<hr>
+<h3 id="性能"><a href="#性能" class="headerlink" title="性能"></a>性能</h3><p>文字先回顾了上一页的 <code>setdefault</code> ：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 终极写法（只搜索 1 次）</span><br>my_dict.setdefault(key, []).append(new_value)<br></code></pre></td></tr></table></figure><br>并给出了反面教材：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 笨办法（搜索了 3 次！）</span><br><span class="hljs-keyword">if</span> key <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> my_dict:<br>    my_dict[key] = []<br>my_dict[key].append(new_value)<br></code></pre></td></tr></table></figure></p>
+<ul>
+<li>笨办法慢是因为 <code>if key not in my_dict</code> 做了一次哈希查找；<code>my_dict[key] = []</code> 算一次；最后 <code>my_dict[key].append</code> 又查一次。在几百万条数据的 NLP 词表统计里，多查两次能要了老命。所以<strong>底层哈希查找越少越好</strong>，这就是 <code>setdefault</code> 的价值。</li>
+</ul>
+<hr>
+<h3 id="3-5-1-defaultdict"><a href="#3-5-1-defaultdict" class="headerlink" title="3.5.1 defaultdict"></a>3.5.1 <code>defaultdict</code></h3><p>虽然 <code>setdefault</code> 很好了，但每次都要打那十几个字母，还要传个 <code>[]</code> 进去，太麻烦了。</p>
+<p>看这页的核心文字：<strong>“实例化 <code>defaultdict</code> 对象时提供一个可调用对象，当 <code>__getitem__</code> 遇到不存在的键时，调用那个可调用对象生成一个默认值。”</strong></p>
+<ul>
+<li><strong>翻译</strong>：你建字典的时候，告诉它：“如果我找了一个不存在的键，你<strong>别报错</strong>，你帮我<strong>造一个默认值</strong>填进去再给我。”</li>
+<li>比比拉布<br>假设你写了 <code>dd = defaultdict(list)</code>，然后访问 <code>dd[&#39;new-key&#39;]</code>：<ol>
+<li>调用 <code>list()</code> 创建一个<strong>新列表</strong> <code>[]</code>。</li>
+<li>把这个 <code>[]</code> 插入到字典的 <code>&#39;new-key&#39;</code> 键上。</li>
+<li>返回这个 <code>[]</code> 的引用给你用。</li>
+</ol>
+</li>
+<li><strong><code>default_factory</code></strong>：这就是你在创建 <code>defaultdict</code> 时传进去的那个函数（比如 <code>list</code>、<code>int</code>、<code>set</code>）。它被偷偷存成了这个字典的属性。</li>
+</ul>
+<hr>
+<h3 id="第三板块：示例-3-6-代码实战"><a href="#第三板块：示例-3-6-代码实战" class="headerlink" title="第三板块：示例 3-6 代码实战"></a>第三板块：示例 3-6 代码实战</h3><p>看下方的示例代码：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> collections<br><br>index = collections.defaultdict(<span class="hljs-built_in">list</span>) <span class="hljs-comment"># ❶ 极其关键</span><br><br><span class="hljs-comment"># ... 中间遍历读取文件的代码省略 ...</span><br><br>    <span class="hljs-comment"># ❷ 爽到飞起的操作！</span><br>    index[word].append(location)<br></code></pre></td></tr></table></figure></p>
+<ul>
+<li><strong>解读</strong>：<ul>
+<li>看注释 ❶：只要声明 <code>defaultdict(list)</code>，字典就会自动填充一个[]列表进去</li>
+<li>看注释 ❷：直接写 <code>index[word].append(...)</code>。<strong>没有 <code>get</code>，没有 <code>setdefault</code>，代码和普通的列表操作一模一样！</strong> 这是因为当 Python 看到 <code>index[word]</code> 且发现没有这个词时，返回一个空列表，紧接着 <code>.append()</code> 就把位置存进去了。</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="defaultdict-的三大应用场景"><a href="#defaultdict-的三大应用场景" class="headerlink" title="defaultdict 的三大应用场景"></a><code>defaultdict</code> 的三大应用场景</h3><p><strong>场景 1：NLP 统计词频</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">from</span> collections <span class="hljs-keyword">import</span> defaultdict<br><br><span class="hljs-comment"># 默认值是 0，即遇到没见过的词，自动初始化为 0</span><br>word_counts = defaultdict(<span class="hljs-built_in">int</span>) <br><br><span class="hljs-keyword">for</span> word <span class="hljs-keyword">in</span> text:<br>    <span class="hljs-comment"># 直接加就行了，不用判断它在不在</span><br>    word_counts[word] += <span class="hljs-number">1</span> <br></code></pre></td></tr></table></figure></p>
+<p><strong>场景 2：把数据集按类别分组</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 默认值是列表 []</span><br>images_by_class = defaultdict(<span class="hljs-built_in">list</span>)<br><br><span class="hljs-keyword">for</span> img_path, label <span class="hljs-keyword">in</span> dataloader:<br>    <span class="hljs-comment"># 直接把路径塞进对应标签的列表里</span><br>    images_by_class[label].append(img_path)<br></code></pre></td></tr></table></figure></p>
+<p><strong>场景 3：构建图（Graph）数据结构（比如 GNN 里）</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 默认值是集合 set，自动去重</span><br>graph = defaultdict(<span class="hljs-built_in">set</span>)<br><br><span class="hljs-comment"># 添加无向图的边</span><br>graph[node_a].add(node_b)<br>graph[node_b].add(node_a)<br></code></pre></td></tr></table></figure></p>
+<hr>
+<h3 id="总结："><a href="#总结：" class="headerlink" title="总结："></a>总结：</h3><ol>
+<li><strong>无脑用 <code>defaultdict</code> </strong>：以后只要需求是“给字典里的某个键收集一系列的值（比如列表或集合）”，用 <code>defaultdict(list)</code>。</li>
+<li><strong>注意 <code>default_factory</code> 的匹配</strong>：<ul>
+<li>你想收集一堆东西不重复，就传 <code>set</code>。</li>
+<li>你想统计个数，就传 <code>int</code>（因为 <code>int()</code> 默认返回 <code>0</code>）。</li>
+<li>千万不能写 <code>defaultdict(0)</code> 或者 <code>defaultdict([])</code>，必须传<strong>类名</strong>（如 <code>int</code>、<code>list</code>），不能传实例。</li>
+</ul>
+</li>
+<li><strong>一个坑</strong>：如果你只是用 <code>word in defaultdict</code> 或者 <code>.get()</code> 去查询，它是<strong>不会</strong>触发默认值生成的。只有通过中括号 <code>[]</code> 去取值，才会触发。</li>
+</ol>
+<hr>
+<h3 id="递归"><a href="#递归" class="headerlink" title="递归"></a>递归</h3><p>页面最上方的一段话：</p>
+<blockquote>
+<p>“递归：<code>__missing__</code> 方法的最后一行 <code>self[str(key)]</code> 将调用 <code>__getitem__</code> 方法，转而又调用 <code>__missing__</code> 方法。”</p>
+</blockquote>
+<ul>
+<li><strong>深度剖析</strong>：<br>这句话描述了一个容易写出来的 Bug。假设你为了把所有的键都转成字符串，在自定义的 <code>__missing__</code> 里写了 <code>self[str(key)]</code>。<br>结果执行逻辑变成了这样：<ol>
+<li>你查 <code>d[1]</code>，没找到，触发 <code>__missing__(1)</code>。</li>
+<li>在 <code>__missing__</code> 里，你写了 <code>self[&#39;1&#39;]</code>，这又触发了 <code>__getitem__(&#39;1&#39;)</code>。</li>
+<li>假设字典里连 <code>&#39;1&#39;</code> 也没有，Python 发现键缺失，<strong>又一次</strong>触发 <code>__missing__(&#39;1&#39;)</code>。</li>
+<li>死循环了，程序直接卡死报错 <code>RecursionError</code>。</li>
+</ol>
+</li>
+</ul>
+<h4 id="解决——-contains"><a href="#解决——-contains" class="headerlink" title="解决——__contains__"></a>解决——<code>__contains__</code></h4><p>为了避免查错，文字里说：“出于对行为一致性的考虑，也需要 <code>__contains__</code> 方法… 我们没有按照常规的 <code>key in self</code> 检查键，因为 <code>str(key) in self</code> 将递归调用 <code>__contains__</code> 方法。”</p>
+<ul>
+<li><strong>翻译</strong>：在自定义字典时，千万别在内部用 <code>key in self</code>，这会引发莫名其妙的连锁反应。正确的做法是<strong>用 <code>self.keys()</code> 去查</strong>（如 <code>key in self.keys()</code>），这样最安全，而且 Python 3 的 <code>keys()</code> 视图极快。</li>
+</ul>
+<hr>
+<h3 id="警告"><a href="#警告" class="headerlink" title="警告"></a>警告</h3><blockquote>
+<p>“用户自己定义的类，如果继承标准库中的映射，在实现 <code>__getitem__</code>、<code>get</code> 或 <code>__contains__</code> 方法时<strong>不一定要回落到 <code>__missing__</code></strong> 方法…”</p>
+</blockquote>
+<ul>
+<li><strong>解读</strong>：很多人的直觉是：字典找不到键 -&gt; 自动调用 <code>__missing__</code>。然而事实并非如此</li>
+<li>只有 <code>d[k]</code> 这种通过中括号取值的语法，才可能会触发 <code>__missing__</code>。而 <code>d.get(k)</code> 和 <code>k in d</code> 会不会触发，完全取决于你继承的是谁，以及你怎么写代码。</li>
+</ul>
+<hr>
+<h3 id="3-5-3-标准库的“分裂”"><a href="#3-5-3-标准库的“分裂”" class="headerlink" title="3.5.3 标准库的“分裂”"></a>3.5.3 标准库的“分裂”</h3><p>这部分展示了 Python 官方标准库里，不同的“字典族”面对缺失键时，行为完全不一样（这其实是历史遗留问题）。</p>
+<p>作者分了四种情况，我们直接当表格看：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:left">继承的父类</th>
+<th style="text-align:left">实现情况</th>
+<th style="text-align:left">触发 <code>__missing__</code> 的方法</th>
+<th style="text-align:left">讲师避坑评价</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong><code>dict</code> 子类</strong></td>
+<td style="text-align:left">仅实现 <code>__missing__</code></td>
+<td style="text-align:left"><strong>只有 <code>d[k]</code></strong></td>
+<td style="text-align:left"><code>d.get(k)</code> 不会触发。这符合我们的直觉。</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong><code>UserDict</code> 子类</strong></td>
+<td style="text-align:left">仅实现 <code>__missing__</code></td>
+<td style="text-align:left"><strong><code>d[k]</code> 和 <code>d.get(k)</code></strong></td>
+<td style="text-align:left">因为 <code>UserDict</code> 的 <code>get</code> 底层是用 <code>d[k]</code> 实现的，所以“拔出萝卜带出泥”。</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong><code>abc.Mapping</code> 子类</strong> (精简版)</td>
+<td style="text-align:left">自己实现 <code>__getitem__</code>，但<strong>不调</strong> <code>__missing__</code></td>
+<td style="text-align:left"><strong>永远不触发</strong></td>
+<td style="text-align:left">就算你写了 <code>__missing__</code>，它也是个摆设，根本不生效。</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong><code>abc.Mapping</code> 子类</strong> (完整版)</td>
+<td style="text-align:left">自己实现 <code>__getitem__</code>，且<strong>主动调用</strong> <code>__missing__</code></td>
+<td style="text-align:left"><strong><code>d[k]</code>、<code>d.get(k)</code>、<code>k in d</code> 都会触发</strong></td>
+<td style="text-align:left">全自动触发。但这要求你自己手写极其复杂的底层逻辑。</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li><strong>总结</strong>：<br><strong>如果只是想用默认值，用 <code>defaultdict</code> 就行了！千万别自己去继承 <code>dict</code> 手写 <code>__missing__</code>！</strong><br>除非你是在给开源框架写底层组件，否则自己瞎继承，很容易因为不同父类的底层实现差异，搞出一堆无法复现的 Bug。</li>
+</ul>
+<hr>
+<h3 id="实战-2"><a href="#实战-2" class="headerlink" title="实战"></a>实战</h3><p><strong>场景 1：Hugging Face 的 <code>PretrainedConfig</code></strong><br> <code>config = AutoConfig.from_pretrained(...)</code>，然后写 <code>config.hidden_size</code>。其实它底层就是一个特殊的字典映射。如果你以后要自己重写底层的 Config 逻辑，去拦截用户输入的错误参数名（找不到就抛异常，或者给个默认值），你必定会用到 <code>__missing__</code> 或 <code>__getattr__</code>。</p>
+<p><strong>场景 2：不要自己造轮子</strong></p>
+<ul>
+<li>要默认值 -&gt; 用 <code>defaultdict</code></li>
+<li>要安全取值不报错 -&gt; 用 <code>d.get(k, default)</code></li>
+<li>要在原字典上修改 -&gt; 用 <code>d.setdefault(k, default)</code></li>
+</ul>
+<hr>
+<p><strong>小结</strong>：</p>
+<ol>
+<li>在 <code>__missing__</code> 内部，不要用 <code>self[key]</code>，容易死循环（递归）。</li>
+<li>标准库中不同字典子类，对 <code>__missing__</code> 的调用规则完全不统一。</li>
+<li><strong>能用 <code>defaultdict</code> 解决的，绝不自定义类。</strong></li>
+</ol>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2026/11/04/python4/">← Next python4</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/11/04/python2/">流畅的python2——第二章 Prev →</a></div></div></div><div id="comments"><div id="giscus"></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="To Top" style="opacity: 0; display: none;">∧ </a><a class="i-index" id="to-index" onClick="tocControl.change()" title="To Catalog"><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span></a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="Change Theme"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">John Doe</a></h1><div id="description"><p></p></div><div id="social-links"><a class="social" target="_blank" rel="noopener" href="https://github.com/juicer0801"><i class="fab fa-github" alt="GitHub"></i></a></div></div><div id="aside-block"><div id="toc-div"><h1>Catalog</h1><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#Python-%E5%B0%B1%E6%98%AF%E2%80%9C%E8%AF%AD%E6%B3%95%E7%B3%96%E9%87%8C%E7%9A%84%E5%AD%97%E5%85%B8%E2%80%9D"><span class="toc-number">1.</span> <span class="toc-text">Python 就是“语法糖里的字典”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%97%E5%85%B8%E5%92%8C%E9%9B%86%E5%90%88%E7%9A%84%E2%80%9C%E5%BC%95%E6%93%8E%E2%80%9D%E2%80%94%E2%80%94%E5%93%88%E5%B8%8C%E8%A1%A8"><span class="toc-number">2.</span> <span class="toc-text">字典和集合的“引擎”——哈希表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%AC%E7%AB%A0%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF%E5%9B%BE"><span class="toc-number">3.</span> <span class="toc-text">本章学习路线图</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E6%9C%AC%E7%AB%A0%E6%96%B0%E5%A2%9E%E5%86%85%E5%AE%B9%EF%BC%88%E5%AD%97%E5%85%B8%E7%9A%84%E2%80%9C%E8%BF%9B%E5%8C%96%E5%8F%B2%E2%80%9D%EF%BC%89"><span class="toc-number">4.</span> <span class="toc-text">3.1 本章新增内容（字典的“进化史”）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-1-%E5%AD%97%E5%85%B8%E6%8E%A8%E5%AF%BC%E5%BC%8F"><span class="toc-number">5.</span> <span class="toc-text">3.2.1 字典推导式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B-3-1-%E9%80%90%E8%A1%8C%E7%B2%BE%E8%AE%B2%EF%BC%88%E9%AB%98%E9%98%B6%E4%BB%A3%E7%A0%81%E9%80%BB%E8%BE%91%EF%BC%89"><span class="toc-number">6.</span> <span class="toc-text">示例 3-1 逐行精讲（高阶代码逻辑）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%8E%9F%E5%A7%8B%E6%95%B0%E6%8D%AE%EF%BC%88%E6%B3%A8%E9%87%8A-%E2%9D%B6%EF%BC%89"><span class="toc-number">6.1.</span> <span class="toc-text">1. 原始数据（注释 ❶）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E7%BF%BB%E8%BD%AC%E9%94%AE%E5%80%BC%E5%AF%B9%EF%BC%88%E6%B3%A8%E9%87%8A-%E2%9D%B7%EF%BC%89"><span class="toc-number">6.2.</span> <span class="toc-text">2. 翻转键值对（注释 ❷）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E8%BF%87%E6%BB%A4%E3%80%81%E8%BD%AC%E6%8D%A2%E4%B8%8E%E5%A4%A7%E5%86%99%EF%BC%88%E6%B3%A8%E9%87%8A-%E2%9D%B8%EF%BC%8C%E5%85%A8%E9%A1%B5%E6%9C%80%E5%A4%8D%E6%9D%82%E4%BB%A3%E7%A0%81%EF%BC%89"><span class="toc-number">6.3.</span> <span class="toc-text">3. 过滤、转换与大写（注释 ❸，全页最复杂代码）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E6%88%98"><span class="toc-number">7.</span> <span class="toc-text">实战</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A1%B6%E9%83%A8%E6%B3%A8%E9%87%8A"><span class="toc-number">8.</span> <span class="toc-text">顶部注释</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-2-%E6%98%A0%E5%B0%84%E6%8B%86%E5%8C%85%EF%BC%88-%EF%BC%89"><span class="toc-number">9.</span> <span class="toc-text">3.2.2 映射拆包（** ）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E5%87%BD%E6%95%B0%E8%B0%83%E7%94%A8%E6%97%B6%E7%9A%84"><span class="toc-number">9.1.</span> <span class="toc-text">1. 函数调用时的 **</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%AD%97%E5%85%B8%E5%AD%97%E9%9D%A2%E9%87%8F%E4%B8%AD%E7%9A%84-%EF%BC%88%E5%90%88%E5%B9%B6%E5%AD%97%E5%85%B8%EF%BC%89"><span class="toc-number">9.2.</span> <span class="toc-text">2. 字典字面量中的 **（合并字典）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E9%94%AE%E5%86%B2%E7%AA%81%E7%9A%84%E6%B3%95%E5%88%99"><span class="toc-number">9.3.</span> <span class="toc-text">3. 键冲突的法则</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-3-%E4%BD%BF%E7%94%A8-%E5%90%88%E5%B9%B6%E6%98%A0%E5%B0%84%EF%BC%88Python-3-9%EF%BC%89"><span class="toc-number">10.</span> <span class="toc-text">3.2.3 使用 | 合并映射（Python 3.9）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E8%BF%90%E7%AE%97%E7%AC%A6%EF%BC%88%E5%B9%B6%E9%9B%86%EF%BC%89"><span class="toc-number">10.1.</span> <span class="toc-text">1. | 运算符（并集）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E8%BF%90%E7%AE%97%E7%AC%A6%EF%BC%88%E5%B0%B1%E5%9C%B0%E6%9B%B4%E6%96%B0%EF%BC%89"><span class="toc-number">10.2.</span> <span class="toc-text">2. |&#x3D; 运算符（就地更新）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E5%BA%95%E9%83%A8%E6%96%87%E5%AD%97%E7%9A%84%E2%80%9C%E5%BA%9F%E8%AF%9D%E2%80%9D%EF%BC%88%E7%95%A5%E8%AF%BB%EF%BC%89"><span class="toc-number">10.3.</span> <span class="toc-text">3. 底部文字的“废话”（略读）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E5%AD%97%E5%85%B8%E5%90%88%E5%B9%B6"><span class="toc-number">11.</span> <span class="toc-text">配置字典合并</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A6%E4%BE%A7%E8%BE%B9%E6%B3%A8%EF%BC%88%E7%95%A5%E8%AF%BB%EF%BC%8C%E4%BA%86%E8%A7%A3%E5%8D%B3%E5%8F%AF%EF%BC%89"><span class="toc-number">12.</span> <span class="toc-text">左侧边注（略读，了解即可）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E4%BD%BF%E7%94%A8%E6%A8%A1%E5%BC%8F%E5%8C%B9%E9%85%8D%E5%A4%84%E7%90%86%E6%98%A0%E5%B0%84"><span class="toc-number">13.</span> <span class="toc-text">3.3 使用模式匹配处理映射</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E6%98%A0%E5%B0%84%E6%A8%A1%E5%BC%8F"><span class="toc-number">13.1.</span> <span class="toc-text">1. 映射模式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%AE%83%E7%9A%84%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">13.2.</span> <span class="toc-text">2. 它的应用场景</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B-3-2-%E4%BB%A3%E7%A0%81%E9%80%90%E8%A1%8C%E7%B2%BE%E8%AE%B2%EF%BC%88%E6%95%B0%E6%8D%AE%E6%B8%85%E6%B4%97%EF%BC%89"><span class="toc-number">14.</span> <span class="toc-text">示例 3-2 代码逐行精讲（数据清洗）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%95%E9%83%A8%E6%96%87%E5%AD%97%EF%BC%88%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9%EF%BC%89"><span class="toc-number">15.</span> <span class="toc-text">底部文字（注意事项）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B8%85%E7%90%86%E4%B8%8D%E8%A7%84%E8%8C%83%E7%9A%84%E6%A8%A1%E5%9E%8B%E9%85%8D%E7%BD%AE"><span class="toc-number">16.</span> <span class="toc-text">清理不规范的模型配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%9D%BF%E5%9D%97%EF%BC%9A%E5%8F%B3%E4%B8%8A%E6%96%B9%E4%BB%A3%E7%A0%81%E9%AA%8C%E8%AF%81%E8%AF%81%E6%98%8E%E7%90%86%E8%AE%BA"><span class="toc-number">17.</span> <span class="toc-text">第一板块：右上方代码验证证明理论</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E9%AA%8C%E8%AF%81%E6%99%AE%E9%80%9A%E5%AD%97%E5%85%B8%E4%B8%8E%E2%80%9C%E5%AD%90%E9%9B%86%E5%8C%B9%E9%85%8D%E2%80%9D"><span class="toc-number">17.1.</span> <span class="toc-text">1. 验证普通字典与“子集匹配”</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E9%AA%8C%E8%AF%81-OrderedDict-%E4%B8%8E%E2%80%9C%E9%A1%BA%E5%BA%8F%E6%97%A0%E5%85%B3%E2%80%9D"><span class="toc-number">17.2.</span> <span class="toc-text">2. 验证 OrderedDict 与“顺序无关”</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E9%AA%8C%E8%AF%81%E9%9D%9E%E5%AD%97%E5%85%B8%E7%B1%BB%E5%9E%8B"><span class="toc-number">17.3.</span> <span class="toc-text">3. 验证非字典类型</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%AD%E9%97%B4%E6%96%87%E5%AD%97%E4%B8%8E%E4%B8%8B%E6%96%B9%E4%BB%A3%E7%A0%81%EF%BC%88-details%EF%BC%89"><span class="toc-number">18.</span> <span class="toc-text">中间文字与下方代码（**details）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#match-%E4%B8%8E-defaultdict%EF%BC%89"><span class="toc-number">19.</span> <span class="toc-text">match 与 defaultdict）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E6%98%A0%E5%B0%84%E7%B1%BB%E5%9E%8B%E7%9A%84%E6%A0%87%E5%87%86-API"><span class="toc-number">20.</span> <span class="toc-text">3.4 映射类型的标准 API</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8%E6%8A%BD%E8%B1%A1%E5%9F%BA%E7%B1%BB%EF%BC%9F"><span class="toc-number">20.1.</span> <span class="toc-text">1. 为什么要用抽象基类？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%AE%9E%E4%BE%8B%E4%BB%A3%E7%A0%81%EF%BC%88%E5%B7%A6%E4%B8%AD%E9%83%A8%E5%88%86%EF%BC%89"><span class="toc-number">20.2.</span> <span class="toc-text">2. 实例代码（左中部分）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E5%9B%BE-3-1-%E6%98%A0%E5%B0%84%E7%9A%84%E2%80%9C%E6%97%8F%E8%B0%B1%E5%9B%BE%E2%80%9D"><span class="toc-number">21.</span> <span class="toc-text">第图 3-1 映射的“族谱图”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-1-%E2%80%9C%E5%8F%AF%E5%93%88%E5%B8%8C%E2%80%9D%E6%8C%87%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">22.</span> <span class="toc-text">3.4.1 “可哈希”指什么？</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E6%9C%89%E8%BF%99%E6%9D%A1%E8%A7%84%E5%88%99%EF%BC%9F"><span class="toc-number">22.1.</span> <span class="toc-text">为什么会有这条规则？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%89%80%E4%BB%A5%EF%BC%8C%E8%B0%81%E8%83%BD%E5%BD%93%E9%94%AE%EF%BC%9F%E8%B0%81%E4%B8%8D%E8%83%BD%EF%BC%9F"><span class="toc-number">22.2.</span> <span class="toc-text">所以，谁能当键？谁不能？</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BA%95%E9%83%A8%E8%84%9A%E6%B3%A8-2%EF%BC%88%E5%BC%BA%E8%BF%AB%E7%97%87%E4%BD%9C%E8%80%85%E7%9A%84%E5%90%90%E6%A7%BD%EF%BC%89"><span class="toc-number">22.3.</span> <span class="toc-text">底部脚注 2（强迫症作者的吐槽）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E6%88%98%EF%BC%9A%E6%A8%A1%E5%9E%8B%E8%BE%93%E5%87%BA%E4%B8%8E%E5%AD%97%E5%85%B8%E9%94%AE"><span class="toc-number">23.</span> <span class="toc-text">实战：模型输出与字典键</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%80%9C%E5%8F%AF%E5%93%88%E5%B8%8C%E2%80%9D%E7%9A%84%E5%88%A4%E5%AE%9A"><span class="toc-number">24.</span> <span class="toc-text">“可哈希”的判定</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E6%88%90%E5%8A%9F%E6%A1%88%E4%BE%8B%EF%BC%88tt%EF%BC%89"><span class="toc-number">24.1.</span> <span class="toc-text">1. 成功案例（tt）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%A4%B1%E8%B4%A5%E6%A1%88%E4%BE%8B%EF%BC%88tl%EF%BC%89%E2%80%94%E2%80%94-%E7%BB%8F%E5%85%B8%E7%9A%84%E6%8A%A5%E9%94%99"><span class="toc-number">24.2.</span> <span class="toc-text">2. 失败案例（tl）—— 经典的报错</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E8%A1%A5%E6%95%91%E6%A1%88%E4%BE%8B%EF%BC%88tf%EF%BC%89"><span class="toc-number">24.3.</span> <span class="toc-text">3. 补救案例（tf）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E5%85%B3%E4%BA%8E%E8%87%AA%E5%AE%9A%E4%B9%89%E7%B1%BB%E7%9A%84%E5%BA%95%E5%B1%82%E8%A7%84%E5%AE%9A"><span class="toc-number">24.4.</span> <span class="toc-text">4. 关于自定义类的底层规定</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%A8-3-1-%E6%98%A0%E5%B0%84%E7%B1%BB%E5%9E%8B%E7%9A%84%E6%96%B9%E6%B3%95%E5%AF%B9%E6%AF%94"><span class="toc-number">25.</span> <span class="toc-text">表 3-1 映射类型的方法对比</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-2-%E6%98%A0%E5%B0%84%E6%96%B9%E6%B3%95%E6%A6%82%E8%BF%B0"><span class="toc-number">26.</span> <span class="toc-text">3.4.2 映射方法概述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E6%88%98%EF%BC%9A%E4%B8%BA%E4%BB%80%E4%B9%88-Tensor-%E4%B8%8D%E8%83%BD%E5%BD%93%E5%AD%97%E5%85%B8%E7%9A%84%E9%94%AE%EF%BC%9F"><span class="toc-number">27.</span> <span class="toc-text">实战：为什么 Tensor 不能当字典的键？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%89%E5%89%91%E5%AE%A2"><span class="toc-number">28.</span> <span class="toc-text">三剑客</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-d-get-k-default"><span class="toc-number">28.1.</span> <span class="toc-text">1. d.get(k, [default])</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-d-items-d-keys-d-values"><span class="toc-number">28.2.</span> <span class="toc-text">2. d.items() &#x2F; d.keys() &#x2F; d.values()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-d-pop-k-default"><span class="toc-number">28.3.</span> <span class="toc-text">3. d.pop(k, [default])</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%84%E7%90%86%E2%80%9C%E7%BC%BA%E5%A4%B1%E9%94%AE%E2%80%9D"><span class="toc-number">29.</span> <span class="toc-text">处理“缺失键”</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-d-setdefault-k-default"><span class="toc-number">29.1.</span> <span class="toc-text">1. d.setdefault(k, [default])</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-d-missing-k-%E4%B8%8E-%E8%A1%A8%E4%B8%8B%E6%96%B9%E7%9A%84-defaultdict"><span class="toc-number">29.2.</span> <span class="toc-text">2. d.__missing__(k) 与 表下方的 defaultdict</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%8E%B0%E4%BB%A3%E8%AF%AD%E6%B3%95%E4%B8%8E%E6%B4%BE%E7%94%9F%E7%B1%BB%E4%B8%93%E5%B1%9E"><span class="toc-number">30.</span> <span class="toc-text">现代语法与派生类专属</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-d-other-%E5%92%8C-d-other"><span class="toc-number">30.1.</span> <span class="toc-text">1. d | other 和 d |&#x3D; other</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-d-reversed"><span class="toc-number">30.2.</span> <span class="toc-text">2. d.__reversed__()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-OrderedDict-%EF%BC%88%E7%9C%8B%E4%B8%AD%E9%97%B4%E5%88%97%EF%BC%89"><span class="toc-number">30.3.</span> <span class="toc-text">3. OrderedDict （看中间列）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#update-%E7%9A%84%E9%B8%AD%E5%AD%90%E7%B1%BB%E5%9E%8B"><span class="toc-number">31.</span> <span class="toc-text">update 的鸭子类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">32.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-3-%E6%8F%92%E5%85%A5%E6%88%96%E6%9B%B4%E6%96%B0%E5%8F%AF%E5%8F%98%E7%9A%84%E5%80%BC"><span class="toc-number">33.</span> <span class="toc-text">3.4.3 插入或更新可变的值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B-3-3-%E4%B8%8E-3-4-%E4%BB%A3%E7%A0%81%E6%B7%B1%E5%BA%A6%E8%BF%98%E5%8E%9F%EF%BC%88%E5%B1%95%E7%A4%BA%E2%80%9C%E7%AC%A8%E5%8A%9E%E6%B3%95%E2%80%9D%EF%BC%89"><span class="toc-number">34.</span> <span class="toc-text">示例 3-3 与 3-4 代码深度还原（展示“笨办法”）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%95%E9%83%A8%E8%84%9A%E6%B3%A8"><span class="toc-number">35.</span> <span class="toc-text">底部脚注</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E6%88%98%E6%80%A7%E8%83%BD"><span class="toc-number">36.</span> <span class="toc-text">实战性能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A4%BA%E4%BE%8B-3-4-%E7%9A%84%E6%94%B6%E5%B0%BE"><span class="toc-number">37.</span> <span class="toc-text">示例 3-4 的收尾</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#then"><span class="toc-number">38.</span> <span class="toc-text">then</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A8-5"><span class="toc-number">39.</span> <span class="toc-text">注 5</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E6%88%98-1"><span class="toc-number">40.</span> <span class="toc-text">实战</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%A7%E8%83%BD"><span class="toc-number">41.</span> <span class="toc-text">性能</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-1-defaultdict"><span class="toc-number">42.</span> <span class="toc-text">3.5.1 defaultdict</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E6%9D%BF%E5%9D%97%EF%BC%9A%E7%A4%BA%E4%BE%8B-3-6-%E4%BB%A3%E7%A0%81%E5%AE%9E%E6%88%98"><span class="toc-number">43.</span> <span class="toc-text">第三板块：示例 3-6 代码实战</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#defaultdict-%E7%9A%84%E4%B8%89%E5%A4%A7%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">44.</span> <span class="toc-text">defaultdict 的三大应用场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93%EF%BC%9A"><span class="toc-number">45.</span> <span class="toc-text">总结：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%92%E5%BD%92"><span class="toc-number">46.</span> <span class="toc-text">递归</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A7%A3%E5%86%B3%E2%80%94%E2%80%94-contains"><span class="toc-number">46.1.</span> <span class="toc-text">解决——__contains__</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AD%A6%E5%91%8A"><span class="toc-number">47.</span> <span class="toc-text">警告</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-3-%E6%A0%87%E5%87%86%E5%BA%93%E7%9A%84%E2%80%9C%E5%88%86%E8%A3%82%E2%80%9D"><span class="toc-number">48.</span> <span class="toc-text">3.5.3 标准库的“分裂”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E6%88%98-2"><span class="toc-number">49.</span> <span class="toc-text">实战</span></a></li></ol></div></div><footer><nobr>Published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>

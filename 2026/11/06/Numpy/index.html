@@ -1,0 +1,788 @@
+<!DOCTYPE html><html lang="en" theme-mode="auto"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Numpy | Hexo</title><meta name="description" content="大纲anaconda环境 Numpy Pandas Matplotlib seaborn sklearn(机器学习工具) jupyter anaconda 沙箱逻辑 anaconda强大的包管理功能 新建虚拟环境 命令行版 补充：conda env list 查看拥有的沙箱 注意不能在该沙箱里删除该沙箱 jupyter 菜单栏  常用快捷键   shift + enter 运行不跳转光标CTRL+">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Numpy">
+<meta property="og:url" content="http://example.com/2026/11/06/Numpy/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="大纲anaconda环境 Numpy Pandas Matplotlib seaborn sklearn(机器学习工具) jupyter anaconda 沙箱逻辑 anaconda强大的包管理功能 新建虚拟环境 命令行版 补充：conda env list 查看拥有的沙箱 注意不能在该沙箱里删除该沙箱 jupyter 菜单栏  常用快捷键   shift + enter 运行不跳转光标CTRL+">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2026/11/06/Numpy/Snipaste_2026-11-06_13-39-52.png">
+<meta property="og:image" content="http://example.com/2026/11/06/Numpy/Snipaste_2026-11-06_13-40-45.png">
+<meta property="og:image" content="http://example.com/2026/11/06/Numpy/Snipaste_2026-11-06_13-41-48.png">
+<meta property="og:image" content="http://example.com/2026/11/06/Numpy/Snipaste_2026-11-06_13-42-24.png">
+<meta property="og:image" content="http://example.com/2026/11/06/Numpy/Snipaste_2026-11-06_13-42-31.png">
+<meta property="og:image" content="http://example.com/2026/11/06/Numpy/Snipaste_2026-11-06_13-42-51.png">
+<meta property="og:image" content="http://example.com/2026/11/06/Numpy/Snipaste_2026-11-06_13-48-28.png">
+<meta property="og:image" content="http://example.com/2026/11/06/Numpy/Snipaste_2026-11-06_13-49-52.png">
+<meta property="og:image" content="http://example.com/2026/11/06/Numpy/Snipaste_2026-11-06_13-51-35.png">
+<meta property="og:image" content="http://example.com/2026/11/06/Numpy/Snipaste_2026-11-06_13-58-10.png">
+<meta property="og:image" content="http://example.com/2026/11/06/Numpy/Snipaste_2026-11-06_13-58-27.png">
+<meta property="og:image" content="http://example.com/2026/11/06/Numpy/Snipaste_2026-11-06_17-26-02.png">
+<meta property="og:image" content="http://example.com/2026/11/06/Numpy/Snipaste_2026-11-06_17-35-24.png">
+<meta property="og:image" content="http://example.com/2026/11/06/Numpy/Snipaste_2026-11-06_17-39-51.png">
+<meta property="og:image" content="http://example.com/2026/11/06/Numpy/Snipaste_2026-11-06_17-40-44.png">
+<meta property="og:image" content="http://example.com/2026/11/06/Numpy/Numpy.png">
+<meta property="og:image" content="http://example.com/2026/11/06/Numpy/Snipaste_2026-11-06_19-25-27.png">
+<meta property="og:image" content="http://example.com/2026/11/06/Numpy/Snipaste_2026-11-06_19-31-04.png">
+<meta property="og:image" content="http://example.com/2026/11/06/Numpy/%E5%AD%A6%E7%94%9F%E6%88%90%E7%BB%A9%E6%95%B0%E6%8D%AE.png">
+<meta property="og:image" content="http://example.com/2026/11/06/Numpy/Snipaste_2026-11-06_19-34-26.png">
+<meta property="og:image" content="http://example.com/2026/11/06/Numpy/%E8%AE%A1%E7%AE%97%E9%87%8F%E5%A4%A7.png">
+<meta property="og:image" content="http://example.com/2026/11/06/Numpy/numpy%E5%86%85%E5%AD%98%E5%9C%B0%E5%9D%80.png">
+<meta property="og:image" content="http://example.com/2026/11/06/Numpy/%E6%95%B0%E7%BB%841.png">
+<meta property="og:image" content="http://example.com/2026/11/06/Numpy/%E6%95%B0%E7%BB%842.png">
+<meta property="og:image" content="http://example.com/2026/11/06/Numpy/Snipaste_2026-11-07_09-19-23.png">
+<meta property="og:image" content="http://example.com/2026/11/06/Numpy/Snipaste_2026-11-07_10-51-00.png">
+<meta property="og:image" content="http://example.com/2026/11/06/Numpy/Snipaste_2026-11-07_11-59-44.png">
+<meta property="og:image" content="http://example.com/2026/11/06/Numpy/Snipaste_2026-11-07_10-51-00.png">
+<meta property="og:image" content="http://example.com/2026/11/06/Numpy/Snipaste_2026-11-07_15-40-05.png">
+<meta property="og:image" content="http://example.com/2026/11/06/Numpy/array%E5%92%8Casarray%E7%9A%84%E5%8C%BA%E5%88%AB.png">
+<meta property="og:image" content="http://example.com/2026/11/06/Numpy/Snipaste_2026-11-06_23-04-26.png">
+<meta property="og:image" content="http://example.com/2026/11/06/Numpy/Snipaste_2026-11-06_23-06-18.png">
+<meta property="og:image" content="http://example.com/2026/11/06/Numpy/image-20190620005224076.png">
+<meta property="article:published_time" content="2026-11-06T05:28:39.000Z">
+<meta property="article:modified_time" content="2026-11-08T04:25:07.012Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2026/11/06/Numpy/Snipaste_2026-11-06_13-39-52.png"><link rel="canonical" href="http://example.com/2026/11/06/Numpy/"><link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="preload" as="font" crossorigin="anonymous" href="/font/Bender.ttf"><link rel="preload" as="font" crossorigin="anonymous" href="/font/BenderLight.woff2"><link rel="preload" as="font" crossorigin="anonymous" href="/font/JetBrainsMono-Regular.woff2"><link rel="stylesheet" href="/css/arknights.css"><style>@font-face {
+  font-family: Bender;
+  src: local('Bender'), url("/font/Bender.ttf"), url("/font/Bender.otf");
+}
+@font-face {
+  font-family: BenderLight;
+  src: local('BenderLight'), url("/font/BenderLight.woff2") format('woff2');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}
+</style><meta name="page-config" content="{&quot;code_fold&quot;:null}"><script class="pjax-js">var config = {"root":"/","code_fold":15,"search":{"preload":true,"activeHolder":"Enter here","blurHolder":"Search","noResult":"Data \"$0\" not found"},"code":{"codeInfo":"$0 - $1 lines","copy":"copy"}};
+var page_config = {
+  code_fold: null
+};
+function updatePageConfig() {
+  var newPageConfig = document.querySelector('meta[name="page-config"]');
+  if (newPageConfig) {
+    page_config = JSON.parse(newPageConfig.content);
+  }
+}
+document.addEventListener('pjax:complete', function() { updatePageConfig(); });
+updatePageConfig();</script><link type="text/css" rel="stylesheet" href="/lib/encrypt/hbe.style.css"><script src="//unpkg.com/mermaid@11.12.2/dist/mermaid.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.1/MathJax.js"></script><script>MathJax.Hub.Config({
+ menuSettings: {
+   zoom: "None"
+ },
+ showMathMenu: false,
+ jax: ["input/TeX","output/CommonHTML"],
+ extensions: ["tex2jax.js"],
+ TeX: {
+   extensions: ["AMSmath.js","AMSsymbols.js"],
+   equationNumbers: {
+     autoNumber: "AMS"
+   }
+ },
+ tex2jax: {
+   inlineMath: [["\\(", "\\)"]],
+   displayMath: [["\\[", "\\]"]]
+ }
+});</script><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lightgallery.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-zoom.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-thumbnail.css"><link type="text/css" rel="stylesheet" href="/lib/fontawesome/css/all.min.css"><script>if (window.localStorage.getItem('theme-mode') === 'light' || window.matchMedia('(prefers-color-scheme:light)').matches)
+ document.documentElement.setAttribute('theme-mode', 'light')
+if (window.localStorage.getItem('theme-mode') === 'dark' || window.matchMedia('(prefers-color-scheme:dark)').matches)
+ document.documentElement.setAttribute('theme-mode', 'dark')</script><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.woff2") format('woff2');
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><style>:root {
+ --dark-background: url('https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg');
+ --light-background: url('/img/bk.jpg');
+ --theme-encrypt-confirm: 'confirm'
+}</style><script defer src="/js/arknights.js"></script><script defer src="/js/search.js"></script><script defer src="https://vercount.one/js"></script><script defer type="module">import mermaid from '//unpkg.com/mermaid@11.12.2/dist/mermaid.esm.min.mjs';
+window.mermaid = mermaid;
+code.paintMermaid();
+</script><script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.1/MathJax.js"></script><script>MathJax.Hub.Config({
+  menuSettings: {
+    zoom: "None"
+  },
+  showMathMenu: false,
+  jax: ["input/TeX","output/CommonHTML"],
+  extensions: ["tex2jax.js"],
+  TeX: {
+    extensions: ["AMSmath.js","AMSsymbols.js"],
+    equationNumbers: {
+      autoNumber: "AMS"
+    }
+  },
+  tex2jax: {
+    inlineMath: [["\\(", "\\)"]],
+    displayMath: [["\\[", "\\]"]]
+  }
+});
+</script><script async src="//unpkg.com/lightgallery@2.7.1/lightgallery.min.js"></script><script async src="//unpkg.com/lightgallery@2.7.1/plugins/zoom/lg-zoom.min.js"></script><script async src="//unpkg.com/lightgallery@2.7.1/plugins/thumbnail/lg-thumbnail.min.js"></script><script async src="/lib/encrypt/hbe.js"></script><script async src="/js/pjax.js"></script><script class="pjax-js">reset= () => {document.querySelector('.lg-container')?.remove()
+lightGallery(document.getElementById('post-bg'), {
+  plugins: [lgZoom,lgThumbnail],
+  selector: '.item-img'})}</script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js','data-pjax','.vercount','meta[name=page-config]'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);document.addEventListener('pjax:success', _ => {
+ const script = document.createElement('script');
+ script.src = 'https://vercount.one/js';
+ document.head.appendChild(script);
+});reset()})</script><script class="pjax-js">reset= () => {window.giscusSettings = {
+ repo: 'juicer0801/juicer0801.github.io',
+ repoId: 'R_kgDOUcAR_w',
+ category: 'Announcements',
+ categoryId: 'DIC_kwDOUcAR_84DIlqM',
+ mapping: 'pathname',
+ strict: '0',
+ reactionsEnabled: '1',
+ emitMetadata: '0',
+ inputPosition: 'bottom',
+ lang: 'zh-CN',
+ crossorigin: 'anonymous' , loading: 'lazy'};window.giscusThemeConfig = { theme: 'preferred_color_scheme' };MathJax.Hub.Queue(["Typeset", MathJax.Hub]);document.querySelector('.lg-container')?.remove()
+const postBg = document.querySelector('#post-bg');
+if (postBg) lightGallery(postBg, {
+  plugins: [lgZoom,lgThumbnail],
+  selector: '.item-img'})}</script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js','data-pjax','.vercount','meta[name=page-config]'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);document.addEventListener('pjax:success', _ => {
+ const script = document.createElement('script');
+ script.src = 'https://vercount.one/js';
+ document.head.appendChild(script);
+});reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/tags/"><span class="navItemTitle">Tags</span></a></li><li class="navItem"><a class="navBlock" href="/categories/"><span class="navItemTitle">Categories</span></a></li><li class="navItem"><a class="navBlock" href="/friends"><span class="navItemTitle">友链</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>Numpy</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2026-11-06T05:28:39.000Z" id="date"> 2026-11-06</time></div></span><br><span>Last Update: <div class="control"><time datetime="2026-11-08T04:25:07.012Z" id="updated"> 2026-11-08</time></div></span><br><span>Word Count: <div class="control">6.6k</div></span><br><span>Read Time: <div class="control">28 min</div></span><br><span id="vercount_container_page_pv">Page View: <span class="control" id="vercount_value_page_pv">loading...</span></span></div></div><hr><div id="post-content"><h1 id="大纲"><a href="#大纲" class="headerlink" title="大纲"></a>大纲</h1><p>anaconda环境</p>
+<p>Numpy<br class='item-img' data-src='/2026/11/06/Numpy/Snipaste_2026-11-06_13-39-52.png'><img src="/2026/11/06/Numpy/Snipaste_2026-11-06_13-39-52.png" class="" title="Numpy简介"></p>
+<p>Pandas<br class='item-img' data-src='/2026/11/06/Numpy/Snipaste_2026-11-06_13-40-45.png'><img src="/2026/11/06/Numpy/Snipaste_2026-11-06_13-40-45.png" class="" title="Pandas简介"></p>
+<p>Matplotlib<br class='item-img' data-src='/2026/11/06/Numpy/Snipaste_2026-11-06_13-41-48.png'><img src="/2026/11/06/Numpy/Snipaste_2026-11-06_13-41-48.png" class="" title="Matplotlib简介"></p>
+<p>seaborn<br class='item-img' data-src='/2026/11/06/Numpy/Snipaste_2026-11-06_13-42-24.png'><img src="/2026/11/06/Numpy/Snipaste_2026-11-06_13-42-24.png" class="" title="seabornb简介"></p>
+<p>sklearn(机器学习工具)<br class='item-img' data-src='/2026/11/06/Numpy/Snipaste_2026-11-06_13-42-31.png'><img src="/2026/11/06/Numpy/Snipaste_2026-11-06_13-42-31.png" class="" title="sklearn简介"></p>
+<p>jupyter<br class='item-img' data-src='/2026/11/06/Numpy/Snipaste_2026-11-06_13-42-51.png'><img src="/2026/11/06/Numpy/Snipaste_2026-11-06_13-42-51.png" class="" title="jupyter简介"></p>
+<p>anaconda<br class='item-img' data-src='/2026/11/06/Numpy/Snipaste_2026-11-06_13-48-28.png'><img src="/2026/11/06/Numpy/Snipaste_2026-11-06_13-48-28.png" class="" title="anaconda简介"></p>
+<p>沙箱逻辑<br class='item-img' data-src='/2026/11/06/Numpy/Snipaste_2026-11-06_13-49-52.png'><img src="/2026/11/06/Numpy/Snipaste_2026-11-06_13-49-52.png" class="" title="沙箱逻辑图"></p>
+<h1 id="anaconda"><a href="#anaconda" class="headerlink" title="anaconda"></a>anaconda</h1><p>强大的包管理功能<br class='item-img' data-src='/2026/11/06/Numpy/Snipaste_2026-11-06_13-51-35.png'><img src="/2026/11/06/Numpy/Snipaste_2026-11-06_13-51-35.png" class="" title="anaconda包管理功能图"></p>
+<p>新建虚拟环境<br class='item-img' data-src='/2026/11/06/Numpy/Snipaste_2026-11-06_13-58-10.png'><img src="/2026/11/06/Numpy/Snipaste_2026-11-06_13-58-10.png" class="" title="anaconda虚拟环境新建步骤"></p>
+<p>命令行版<br class='item-img' data-src='/2026/11/06/Numpy/Snipaste_2026-11-06_13-58-27.png'><img src="/2026/11/06/Numpy/Snipaste_2026-11-06_13-58-27.png" class="" title="anaconda虚拟环境新建步骤（命令行版）"></p>
+<p>补充：<br>conda env list 查看拥有的沙箱</p>
+<p><strong>注意</strong>不能在该沙箱里删除该沙箱</p class='item-img' data-src='/2026/11/06/Numpy/Snipaste_2026-11-06_17-26-02.png'><img src="/2026/11/06/Numpy/Snipaste_2026-11-06_17-26-02.png" class="" title="anaconda补充命令行">
+<h1 id="jupyter"><a href="#jupyter" class="headerlink" title="jupyter"></a>jupyter</h1><ol>
+<li><p>菜单栏</p class='item-img' data-src='/2026/11/06/Numpy/Snipaste_2026-11-06_17-35-24.png'><img src="/2026/11/06/Numpy/Snipaste_2026-11-06_17-35-24.png" class="" title="jupyter菜单栏">
+</li>
+<li><p>常用快捷键</p class='item-img' data-src='/2026/11/06/Numpy/Snipaste_2026-11-06_17-39-51.png'><img src="/2026/11/06/Numpy/Snipaste_2026-11-06_17-39-51.png" class="" title="jupyter常用快捷键——命令模式">
+</li>
+</ol class='item-img' data-src='/2026/11/06/Numpy/Snipaste_2026-11-06_17-40-44.png'><img src="/2026/11/06/Numpy/Snipaste_2026-11-06_17-40-44.png" class="" title="jupyter常用快捷键——编辑模式">
+<p>shift + enter 运行不跳转光标<br>CTRL+ enter 运行并跳转光标</p>
+<p>Y切换code模式<br>M切换markdown模式</p>
+<p>启动jupyter后<br>集成到pycharm即可，<br>这里也可以配置config，不然每次都要启动jupyter</p>
+<h1 id="markdown"><a href="#markdown" class="headerlink" title="markdown"></a>markdown</h1><p>很简单不想写了</p>
+<h1 id="Numpy"><a href="#Numpy" class="headerlink" title="Numpy"></a>Numpy</h1><h1 id="一、Numpy优势"><a href="#一、Numpy优势" class="headerlink" title="一、Numpy优势"></a>一、Numpy优势</h1><h2 id="学习目标"><a href="#学习目标" class="headerlink" title="学习目标"></a>学习目标</h2><ul>
+<li>目标<ul>
+<li>了解Numpy运算速度上的优势</li>
+<li>知道Numpy的数组内存块风格</li>
+<li>知道Numpy的并行化运算</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="1-Numpy介绍"><a href="#1-Numpy介绍" class="headerlink" title="1 Numpy介绍"></a>1 Numpy介绍</h2 class='item-img' data-src='/2026/11/06/Numpy/Numpy.png'><img src="/2026/11/06/Numpy/Numpy.png" class="" title="喵喵喵">
+<img src="/2026/11/06/Numpy/Snipaste_2026-11-06_19-25-27.png" class="" title="Numpy基础">
+<p>Numpy（Numerical Python）是一个开源的Python科学计算库，<strong>用于快速处理任意维度的数组</strong>。</p>
+<p>Numpy<strong>支持常见的数组和矩阵操作</strong>。对于同样的数值计算任务，使用Numpy比直接使用Python要简洁的多。</p>
+<p>Numpy<strong>使用ndarray对象来处理多维数组</strong>，该对象是一个快速而灵活的大数据容器。</p>
+<h2 id="2-ndarray介绍"><a href="#2-ndarray介绍" class="headerlink" title="2 ndarray介绍"></a>2 ndarray介绍</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">NumPy provides an N-dimensional array <span class="hljs-built_in">type</span>, the ndarray, <br>which describes a collection of <span class="hljs-string">&quot;items&quot;</span> of the same <span class="hljs-built_in">type</span>.<br></code></pre></td></tr></table></figure class='item-img' data-src='/2026/11/06/Numpy/Snipaste_2026-11-06_19-31-04.png'><img src="/2026/11/06/Numpy/Snipaste_2026-11-06_19-31-04.png" class="" title="Numpy属性">
+<p>NumPy提供了一个<strong>N维数组类型ndarray</strong>，它描述了<strong>相同类型</strong>的”items”的集合。</p>
+<p>[]为什么其他语言叫数组，python叫列表,看我的新blog————流畅的pytnon2笔记</p class='item-img' data-src='/2026/11/06/Numpy/%E5%AD%A6%E7%94%9F%E6%88%90%E7%BB%A9%E6%95%B0%E6%8D%AE.png'><img src="/2026/11/06/Numpy/%E5%AD%A6%E7%94%9F%E6%88%90%E7%BB%A9%E6%95%B0%E6%8D%AE.png" class="" title="学生成绩数据"> 
+<img src="/2026/11/06/Numpy/Snipaste_2026-11-06_19-34-26.png" class="" title="代码示例"> 
+<p>用ndarray进行存储：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><br><span class="hljs-comment"># 创建ndarray</span><br>score = np.array(<br>[[<span class="hljs-number">80</span>, <span class="hljs-number">89</span>, <span class="hljs-number">86</span>, <span class="hljs-number">67</span>, <span class="hljs-number">79</span>],<br>[<span class="hljs-number">78</span>, <span class="hljs-number">97</span>, <span class="hljs-number">89</span>, <span class="hljs-number">67</span>, <span class="hljs-number">81</span>],<br>[<span class="hljs-number">90</span>, <span class="hljs-number">94</span>, <span class="hljs-number">78</span>, <span class="hljs-number">67</span>, <span class="hljs-number">74</span>],<br>[<span class="hljs-number">91</span>, <span class="hljs-number">91</span>, <span class="hljs-number">90</span>, <span class="hljs-number">67</span>, <span class="hljs-number">69</span>],<br>[<span class="hljs-number">76</span>, <span class="hljs-number">87</span>, <span class="hljs-number">75</span>, <span class="hljs-number">67</span>, <span class="hljs-number">86</span>],<br>[<span class="hljs-number">70</span>, <span class="hljs-number">79</span>, <span class="hljs-number">84</span>, <span class="hljs-number">67</span>, <span class="hljs-number">84</span>],<br>[<span class="hljs-number">94</span>, <span class="hljs-number">92</span>, <span class="hljs-number">93</span>, <span class="hljs-number">67</span>, <span class="hljs-number">64</span>],<br>[<span class="hljs-number">86</span>, <span class="hljs-number">85</span>, <span class="hljs-number">83</span>, <span class="hljs-number">67</span>, <span class="hljs-number">80</span>]])<br><br>score<br></code></pre></td></tr></table></figure>
+<p>返回结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs python">array([[<span class="hljs-number">80</span>, <span class="hljs-number">89</span>, <span class="hljs-number">86</span>, <span class="hljs-number">67</span>, <span class="hljs-number">79</span>],<br>       [<span class="hljs-number">78</span>, <span class="hljs-number">97</span>, <span class="hljs-number">89</span>, <span class="hljs-number">67</span>, <span class="hljs-number">81</span>],<br>       [<span class="hljs-number">90</span>, <span class="hljs-number">94</span>, <span class="hljs-number">78</span>, <span class="hljs-number">67</span>, <span class="hljs-number">74</span>],<br>       [<span class="hljs-number">91</span>, <span class="hljs-number">91</span>, <span class="hljs-number">90</span>, <span class="hljs-number">67</span>, <span class="hljs-number">69</span>],<br>       [<span class="hljs-number">76</span>, <span class="hljs-number">87</span>, <span class="hljs-number">75</span>, <span class="hljs-number">67</span>, <span class="hljs-number">86</span>],<br>       [<span class="hljs-number">70</span>, <span class="hljs-number">79</span>, <span class="hljs-number">84</span>, <span class="hljs-number">67</span>, <span class="hljs-number">84</span>],<br>       [<span class="hljs-number">94</span>, <span class="hljs-number">92</span>, <span class="hljs-number">93</span>, <span class="hljs-number">67</span>, <span class="hljs-number">64</span>],<br>       [<span class="hljs-number">86</span>, <span class="hljs-number">85</span>, <span class="hljs-number">83</span>, <span class="hljs-number">67</span>, <span class="hljs-number">80</span>]])<br></code></pre></td></tr></table></figure>
+<p><strong>提问:</strong></p>
+<p><strong>使用Python列表可以存储一维数组，通过列表的嵌套可以实现多维数组，那么为什么还需要使用Numpy的ndarray呢？</strong></p>
+<h2 id="3-ndarray与Python原生list运算效率对比"><a href="#3-ndarray与Python原生list运算效率对比" class="headerlink" title="3 ndarray与Python原生list运算效率对比"></a>3 ndarray与Python原生list运算效率对比</h2><p>在这里我们通过一段代码运行来体会到ndarray的好处</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> random<br><span class="hljs-keyword">import</span> time<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br>a = []<br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">100000000</span>):<br>    a.append(random.random())<br>    <br><span class="hljs-comment"># 通过%time魔法方法, 查看当前行的代码运行一次所花费的时间</span><br>%time sum1=<span class="hljs-built_in">sum</span>(a)<br><br>b=np.array(a)<br><br>%time sum2=np.<span class="hljs-built_in">sum</span>(b)<br></code></pre></td></tr></table></figure>
+<p>其中第一个时间显示的是使用原生Python计算时间,第二个内容是使用numpy计算时间:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">CPU times: user 852 ms, sys: 262 ms, total: 1.11 s<br>Wall time: 1.13 s<br>CPU times: user 133 ms, sys: 653 µs, total: 133 ms<br>Wall time: 134 ms<br></code></pre></td></tr></table></figure>
+<p>从中我们看到ndarray的计算速度要快很多，节约了时间。</p>
+<p><strong>机器学习的最大特点就是大量的数据运算</strong>，那么如果没有一个快速的解决方案，那可能现在python也在机器学习领域达不到好的效果。</p class='item-img' data-src='/2026/11/06/Numpy/%E8%AE%A1%E7%AE%97%E9%87%8F%E5%A4%A7.png'><img src="/2026/11/06/Numpy/%E8%AE%A1%E7%AE%97%E9%87%8F%E5%A4%A7.png" class="" title="Hexo 博客封面示例">
+<p>Numpy专门针对ndarray的操作和运算进行了设计，所以数组的存储效率和输入输出性能远优于Python中的嵌套列表，数组越大，Numpy的优势就越明显。</p>
+<p><strong>思考：</strong></p>
+<p><strong>ndarray为什么可以这么快？</strong></p>
+<h2 id="4-ndarray的优势"><a href="#4-ndarray的优势" class="headerlink" title="4 ndarray的优势"></a>4 ndarray的优势</h2><h4 id="4-1-内存块风格"><a href="#4-1-内存块风格" class="headerlink" title="4.1 内存块风格"></a>4.1 内存块风格</h4><p>ndarray到底跟原生python列表有什么不同呢，请看一张图：</p class='item-img' data-src='/2026/11/06/Numpy/numpy%E5%86%85%E5%AD%98%E5%9C%B0%E5%9D%80.png'><img src="/2026/11/06/Numpy/numpy%E5%86%85%E5%AD%98%E5%9C%B0%E5%9D%80.png" class="" title="Hexo 博客封面示例">
+<p>从图中我们可以看出ndarray在存储数据的时候，数据与数据的地址都是连续的，这样就给使得批量操作数组元素时速度更快。</p>
+<p>这是因为ndarray中的所有元素的类型都是相同的，而Python列表中的元素类型是任意的，所以ndarray在存储元素时内存可以连续，而python原生list就只能通过寻址方式找到下一个元素，这虽然也导致了在通用性能方面Numpy的ndarray不及Python原生list，但在科学计算中，Numpy的ndarray就可以省掉很多循环语句，代码使用方面比Python原生list简单的多。</p>
+<h4 id="4-2-ndarray支持并行化运算（向量化运算）"><a href="#4-2-ndarray支持并行化运算（向量化运算）" class="headerlink" title="4.2 ndarray支持并行化运算（向量化运算）"></a>4.2 ndarray支持并行化运算（向量化运算）</h4><p>numpy内置了并行运算功能，当系统有多个核心时，做某种计算时，numpy会自动做并行计算</p>
+<h4 id="4-3-效率远高于纯Python代码"><a href="#4-3-效率远高于纯Python代码" class="headerlink" title="4.3 效率远高于纯Python代码"></a>4.3 效率远高于纯Python代码</h4><p>Numpy底层使用C语言编写，内部解除了GIL（全局解释器锁），其对数组的操作速度不受Python解释器的限制，所以，其效率远高于纯Python代码。</p>
+<h2 id="5-小结"><a href="#5-小结" class="headerlink" title="5 小结"></a>5 小结</h2><ul>
+<li>numpy介绍【了解】<ul>
+<li>一个开源的Python科学计算库</li>
+<li>计算起来要比python简洁高效</li>
+<li>Numpy使用ndarray对象来处理多维数组</li>
+</ul>
+</li>
+<li>ndarray介绍【了解】<ul>
+<li>NumPy提供了一个N维数组类型ndarray，它描述了相同类型的”items”的集合。</li>
+<li>生成numpy对象:np.array()</li>
+</ul>
+</li>
+<li>ndarray的优势【掌握】<ul>
+<li>内存块风格<ul>
+<li>list — 分离式存储,存储内容多样化</li>
+<li>ndarray — 一体式存储,存储类型必须一样</li>
+</ul>
+</li>
+<li>ndarray支持并行化运算（向量化运算）</li>
+<li>ndarray底层是用C语言写的,效率更高,释放了GIL</li>
+</ul>
+</li>
+</ul>
+<h1 id="二、N维数组-ndarray"><a href="#二、N维数组-ndarray" class="headerlink" title="二、N维数组-ndarray"></a>二、N维数组-ndarray</h1><h2 id="学习目标-1"><a href="#学习目标-1" class="headerlink" title="学习目标"></a>学习目标</h2><ul>
+<li>目标<ul>
+<li>说明数组的属性，形状、类型</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="1-ndarray的属性"><a href="#1-ndarray的属性" class="headerlink" title="1 ndarray的属性"></a>1 ndarray的属性</h2><p>数组属性反映了数组本身固有的信息。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">属性名字</th>
+<th style="text-align:center">属性解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">ndarray.shape</td>
+<td style="text-align:center">数组维度的元组</td>
+</tr>
+<tr>
+<td style="text-align:center">ndarray.ndim</td>
+<td style="text-align:center">数组维数</td>
+</tr>
+<tr>
+<td style="text-align:center">ndarray.size</td>
+<td style="text-align:center">数组中的元素数量</td>
+</tr>
+<tr>
+<td style="text-align:center">ndarray.itemsize</td>
+<td style="text-align:center">一个数组元素的长度（字节）</td>
+</tr>
+<tr>
+<td style="text-align:center">ndarray.dtype</td>
+<td style="text-align:center">数组元素的类型</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="2-ndarray的形状"><a href="#2-ndarray的形状" class="headerlink" title="2 ndarray的形状"></a>2 ndarray的形状</h2><p>首先创建一些数组。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 创建不同形状的数组</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>a = np.array([[<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>],[<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>]])<br><span class="hljs-meta">&gt;&gt;&gt; </span>b = np.array([<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>])<br><span class="hljs-meta">&gt;&gt;&gt; </span>c = np.array([[[<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>],[<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>]],[[<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>],[<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>]]])<br></code></pre></td></tr></table></figure>
+<p>分别打印出形状</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>a.shape<br><span class="hljs-meta">&gt;&gt;&gt; </span>b.shape<br><span class="hljs-meta">&gt;&gt;&gt; </span>c.shape<br><br>(<span class="hljs-number">2</span>, <span class="hljs-number">3</span>)  <span class="hljs-comment"># 二维数组</span><br>(<span class="hljs-number">4</span>,)	<span class="hljs-comment"># 一维数组</span><br>(<span class="hljs-number">2</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>) <span class="hljs-comment"># 三维数组</span><br></code></pre></td></tr></table></figure>
+<p>如何理解数组的形状？</p>
+<p>二维数组：</p class='item-img' data-src='/2026/11/06/Numpy/%E6%95%B0%E7%BB%841.png'><img src="/2026/11/06/Numpy/%E6%95%B0%E7%BB%841.png" class="" title="Hexo 博客封面示例">
+<p>三维数组：</p class='item-img' data-src='/2026/11/06/Numpy/%E6%95%B0%E7%BB%842.png'><img src="/2026/11/06/Numpy/%E6%95%B0%E7%BB%842.png" class="" title="Hexo 博客封面示例">
+<h2 id="3-ndarray的类型"><a href="#3-ndarray的类型" class="headerlink" title="3 ndarray的类型"></a>3 ndarray的类型</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">type</span>(score.dtype)<br><br>&lt;<span class="hljs-built_in">type</span> <span class="hljs-string">&#x27;numpy.dtype&#x27;</span>&gt;<br></code></pre></td></tr></table></figure>
+<p>dtype是numpy.dtype类型，先看看对于数组来说都有哪些类型</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">名称</th>
+<th style="text-align:center">描述</th>
+<th style="text-align:center">简写</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">np.bool</td>
+<td style="text-align:center">用一个字节存储的布尔类型（True或False）</td>
+<td style="text-align:center">‘b’</td>
+</tr>
+<tr>
+<td style="text-align:center">np.int8</td>
+<td style="text-align:center">tinyint一个字节大小，-128 至 127</td>
+<td style="text-align:center">‘i’</td>
+</tr>
+<tr>
+<td style="text-align:center">np.int16</td>
+<td style="text-align:center">smallint整数，-32768 至 32767</td>
+<td style="text-align:center">‘i2’</td>
+</tr>
+<tr>
+<td style="text-align:center">np.int32</td>
+<td style="text-align:center">int整数，-2^31 至 2^32 -1</td>
+<td style="text-align:center">‘i4’</td>
+</tr>
+<tr>
+<td style="text-align:center">np.int64</td>
+<td style="text-align:center">bigint整数，-2^63 至 2^63 - 1</td>
+<td style="text-align:center">‘i8’</td>
+</tr>
+<tr>
+<td style="text-align:center">np.uint8</td>
+<td style="text-align:center">tinyint unsigned无符号整数，0 至 255</td>
+<td style="text-align:center">‘u’</td>
+</tr>
+<tr>
+<td style="text-align:center">np.uint16</td>
+<td style="text-align:center">smallint unsigned无符号整数，0 至 65535</td>
+<td style="text-align:center">‘u2’</td>
+</tr>
+<tr>
+<td style="text-align:center">np.uint32</td>
+<td style="text-align:center">无符号整数，0 至 2^32 - 1</td>
+<td style="text-align:center">‘u4’</td>
+</tr>
+<tr>
+<td style="text-align:center">np.uint64</td>
+<td style="text-align:center">无符号整数，0 至 2^64 - 1</td>
+<td style="text-align:center">‘u8’</td>
+</tr>
+<tr>
+<td style="text-align:center">np.float16</td>
+<td style="text-align:center">半精度浮点数：16位，正负号1位，指数5位，精度10位</td>
+<td style="text-align:center">‘f2’</td>
+</tr>
+<tr>
+<td style="text-align:center">np.float32</td>
+<td style="text-align:center">float单精度浮点数：32位，正负号1位，指数8位，精度23位</td>
+<td style="text-align:center">‘f4’</td>
+</tr>
+<tr>
+<td style="text-align:center">np.float64</td>
+<td style="text-align:center">double双精度浮点数：64位，正负号1位，指数11位，精度52位</td>
+<td style="text-align:center">‘f8’</td>
+</tr>
+<tr>
+<td style="text-align:center">np.complex64</td>
+<td style="text-align:center">复数，分别用两个32位浮点数表示实部和虚部</td>
+<td style="text-align:center">‘c8’</td>
+</tr>
+<tr>
+<td style="text-align:center">np.complex128</td>
+<td style="text-align:center">复数，分别用两个64位浮点数表示实部和虚部</td>
+<td style="text-align:center">‘c16’</td>
+</tr>
+<tr>
+<td style="text-align:center">np.object_</td>
+<td style="text-align:center">python对象</td>
+<td style="text-align:center">‘O’</td>
+</tr>
+<tr>
+<td style="text-align:center">np.string_</td>
+<td style="text-align:center">字符串</td>
+<td style="text-align:center">‘S’</td>
+</tr>
+<tr>
+<td style="text-align:center">np.unicode_</td>
+<td style="text-align:center">unicode类型（字符串）</td>
+<td style="text-align:center">‘U’</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>常用的几个：</p>
+<p><strong><code>np.int32</code></strong>：32位整数，是最常用的整数类型，适用于大多数整数运算。</p>
+<p><strong><code>np.float64</code></strong>：64位浮点数，是默认的浮点数类型，广泛用于科学计算。</p>
+<p><strong><code>np.bool_</code></strong>：布尔类型，用于表示True或False，常用于条件判断和逻辑操作。</p>
+<p><strong><code>np.string_/np.unicode_</code></strong>：定长字符串类型，常用于二进制数据 或 多语言文本数据</p>
+<p><strong><code>np.object_</code></strong>：用于存储任意Python对象，特别是在处理混合类型数据或需要灵活性的时候。</p>
+<blockquote>
+<p><code>np.string_</code>只支持ASCII编码，不支持Unicode，而<code>np.unicode_</code>支持Unicode字符。</p>
+<p><code>np.string_</code>更适合处理旧有的二进制数据，而<code>np.unicode_</code>更适合处理现代文本数据。</p>
+</blockquote>
+<p><strong>创建数组的时候指定类型</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span>a = np.array([[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>],[<span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>]], dtype=np.float32)<br><span class="hljs-meta">&gt;&gt;&gt; </span>a.dtype<br>dtype(<span class="hljs-string">&#x27;float32&#x27;</span>)<br><br><span class="hljs-meta">&gt;&gt;&gt; </span>arr = np.array([<span class="hljs-string">&#x27;python&#x27;</span>, <span class="hljs-string">&#x27;tensorflow&#x27;</span>, <span class="hljs-string">&#x27;scikit-learn&#x27;</span>, <span class="hljs-string">&#x27;numpy&#x27;</span>], dtype = np.string_)<br><span class="hljs-meta">&gt;&gt;&gt; </span>arr<br>array([<span class="hljs-string">b&#x27;python&#x27;</span>, <span class="hljs-string">b&#x27;tensorflow&#x27;</span>, <span class="hljs-string">b&#x27;scikit-learn&#x27;</span>, <span class="hljs-string">b&#x27;numpy&#x27;</span>], dtype=<span class="hljs-string">&#x27;|S12&#x27;</span>)<br></code></pre></td></tr></table></figure>
+<ul>
+<li>注意：若不指定，整数默认int64，小数默认float64</li>
+</ul>
+<h2 id="4-总结"><a href="#4-总结" class="headerlink" title="4 总结"></a>4 总结</h2><p>数组的基本属性【知道】</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">属性名字</th>
+<th style="text-align:center">属性解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center"><strong>ndarray.shape</strong></td>
+<td style="text-align:center">数组维度的元组</td>
+</tr>
+<tr>
+<td style="text-align:center">ndarray.ndim</td>
+<td style="text-align:center">数组维数</td>
+</tr>
+<tr>
+<td style="text-align:center">ndarray.size</td>
+<td style="text-align:center">数组中的元素数量</td>
+</tr>
+<tr>
+<td style="text-align:center">ndarray.itemsize</td>
+<td style="text-align:center">一个数组元素的长度（字节）</td>
+</tr>
+<tr>
+<td style="text-align:center"><strong>ndarray.dtype</strong></td>
+<td style="text-align:center">数组元素的类型</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 id="三、基本操作"><a href="#三、基本操作" class="headerlink" title="三、基本操作"></a>三、基本操作</h1><h2 id="学习目标-2"><a href="#学习目标-2" class="headerlink" title="学习目标"></a>学习目标</h2><ul>
+<li>目标<ul>
+<li>理解数组的各种生成方法</li>
+<li>应用数组的索引机制实现数组的切片获取</li>
+<li>应用维度变换实现数组的形状改变</li>
+<li>应用类型变换实现数组类型改变</li>
+<li>应用数组的转换</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="基础函数"><a href="#基础函数" class="headerlink" title="基础函数"></a>基础函数</h2 class='item-img' data-src='/2026/11/06/Numpy/Snipaste_2026-11-07_09-19-23.png'><img src="/2026/11/06/Numpy/Snipaste_2026-11-07_09-19-23.png" class="" title="基础函数">
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 测试基本函数</span><br><span class="hljs-built_in">print</span>(np.ceil(arr11)) <span class="hljs-comment"># 向上取整</span><br><span class="hljs-built_in">print</span>(np.floor(arr11)) <span class="hljs-comment"># 向下取整</span><br><span class="hljs-built_in">print</span>(np.rint(arr11)) <span class="hljs-comment"># 四舍五入</span><br><span class="hljs-built_in">print</span>(np.<span class="hljs-built_in">round</span>(arr11,<span class="hljs-number">2</span>)) <span class="hljs-comment"># 四舍五入</span><br><span class="hljs-built_in">print</span>(np.<span class="hljs-built_in">abs</span>(arr11)) <span class="hljs-comment"># 绝对值</span><br><span class="hljs-built_in">print</span>(np.sign(arr11)) <span class="hljs-comment"># 符号函数</span><br><span class="hljs-built_in">print</span>(np.sqrt(arr11)) <span class="hljs-comment"># 开平方</span><br><span class="hljs-built_in">print</span>(np.square(arr11)) <span class="hljs-comment"># 平方</span><br><span class="hljs-built_in">print</span>(np.exp(arr11)) <span class="hljs-comment"># 自然对数</span><br><span class="hljs-built_in">print</span>(np.log(arr11)) <span class="hljs-comment"># 自然对数</span><br><span class="hljs-built_in">print</span>(np.log10(arr11)) <span class="hljs-comment"># 以10为底的对数</span><br><span class="hljs-built_in">print</span>(np.log2(arr11)) <span class="hljs-comment"># 以2为底的对数</span><br><span class="hljs-built_in">print</span>(np.log1p(arr11)) <span class="hljs-comment"># ln(1+x)</span><br><span class="hljs-built_in">print</span>(np.logaddexp(arr11, arr11)) <span class="hljs-comment"># ln(exp(x) + exp(y))</span><br><span class="hljs-built_in">print</span>(np.logaddexp2(arr11, arr11)) <span class="hljs-comment"># log2(exp(x) + exp(y))</span><br><br><span class="hljs-built_in">print</span>(np.<span class="hljs-built_in">sum</span>(arr11)) <span class="hljs-comment"># 求和</span><br><span class="hljs-built_in">print</span>(np.<span class="hljs-built_in">sum</span>(arr11, axis=<span class="hljs-number">0</span>)) <span class="hljs-comment"># 按列求和</span><br><span class="hljs-built_in">print</span>(np.<span class="hljs-built_in">sum</span>(arr11, axis=<span class="hljs-number">1</span>)) <span class="hljs-comment"># 按行求和</span><br><span class="hljs-built_in">print</span>(np.<span class="hljs-built_in">sum</span>(arr11, axis=<span class="hljs-number">2</span>)) <span class="hljs-comment"># 按元素求和，axis=2表示按元素求和</span><br><span class="hljs-built_in">print</span>(np.<span class="hljs-built_in">sum</span>(arr11, axis=<span class="hljs-number">3</span>)) <span class="hljs-comment"># 按元素求和，axis=3表示按元素求和</span><br><span class="hljs-built_in">print</span>(np.<span class="hljs-built_in">sum</span>(arr11, axis=<span class="hljs-number">4</span>)) <span class="hljs-comment"># 按元素求和，axis=4表示按元素求和</span><br><span class="hljs-built_in">print</span>(np.prod(arr11)) <span class="hljs-comment"># 求积</span><br><span class="hljs-built_in">print</span>(np.mean(arr11)) <span class="hljs-comment"># 求平均值</span><br><span class="hljs-built_in">print</span>(np.var(arr11)) <span class="hljs-comment"># 求方差</span><br><span class="hljs-built_in">print</span>(np.std(arr11)) <span class="hljs-comment"># 求标准差</span><br><span class="hljs-built_in">print</span>(np.<span class="hljs-built_in">min</span>(arr11)) <span class="hljs-comment"># 求最小值</span><br><span class="hljs-built_in">print</span>(np.<span class="hljs-built_in">max</span>(arr11)) <span class="hljs-comment"># 求最大值</span><br><span class="hljs-built_in">print</span>(np.argmin(arr11)) <span class="hljs-comment"># 求最小值的索引</span><br><span class="hljs-built_in">print</span>(np.argmax(arr11)) <span class="hljs-comment"># 求最大值的索引</span><br><span class="hljs-built_in">print</span>(np.argsort(arr11)) <span class="hljs-comment"># 求排序后的索引</span><br><span class="hljs-built_in">print</span>(np.sort(arr11)) <span class="hljs-comment"># 求排序后的数组</span><br><br><span class="hljs-built_in">print</span>(np.transpose(arr11)) <span class="hljs-comment"># 矩阵转置</span><br><span class="hljs-built_in">print</span>(np.dot(arr11, arr11)) <span class="hljs-comment"># 矩阵乘法</span><br><span class="hljs-built_in">print</span>(np.matmul(arr11, arr11)) <span class="hljs-comment"># 矩阵乘法</span><br><span class="hljs-built_in">print</span>(np.inner(arr11, arr11)) <span class="hljs-comment"># 矩阵乘法</span><br><span class="hljs-built_in">print</span>(np.outer(arr11, arr11)) <span class="hljs-comment"># 矩阵乘法</span><br><span class="hljs-built_in">print</span>(np.tensordot(arr11, arr11, axes=<span class="hljs-number">0</span>)) <span class="hljs-comment"># 矩阵乘法</span><br><span class="hljs-built_in">print</span>(np.kron(arr11, arr11)) <span class="hljs-comment"># 矩阵乘法</span><br><span class="hljs-built_in">print</span>(np.convolve(arr11, arr11)) <span class="hljs-comment"># 矩阵乘法</span><br><span class="hljs-built_in">print</span>(np.vdot(arr11, arr11)) <span class="hljs-comment"># 矩阵乘法</span><br><span class="hljs-built_in">print</span>(np.dot(arr11, arr11.T)) <span class="hljs-comment"># 矩阵乘法</span><br><br><span class="hljs-built_in">print</span>(np.multiply(arr1,arr1)) <span class="hljs-comment">#矩阵乘法</span><br><span class="hljs-built_in">print</span>(arr11*arr11) <span class="hljs-comment"># 效果同上 </span><br><br><span class="hljs-built_in">print</span>(np.divide(arr11, arr11)) <span class="hljs-comment"># 矩阵除法</span><br><br><span class="hljs-built_in">print</span>(np.where(arr11&gt;<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, -<span class="hljs-number">1</span>)) <span class="hljs-comment"># 条件判断 类似三元表达式</span><br><br></code></pre></td></tr></table></figure>
+<h2 id="统计函数"><a href="#统计函数" class="headerlink" title="统计函数"></a>统计函数</h2 class='item-img' data-src='/2026/11/06/Numpy/Snipaste_2026-11-07_10-51-00.png'><img src="/2026/11/06/Numpy/Snipaste_2026-11-07_10-51-00.png" class="" title="统计函数">
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs python">np.mean()<br>np.<span class="hljs-built_in">sum</span>()<br>np.<span class="hljs-built_in">max</span>()<br>np.<span class="hljs-built_in">min</span>()<br>np.argamx()<br>np.argmin()<br><br>arr12 = np.arange(<span class="hljs-number">0</span>,<span class="hljs-number">10</span>,<span class="hljs-number">2</span>)<br><span class="hljs-built_in">print</span>(arr12)<br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">type</span>(arr12))<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;元素的属性：<span class="hljs-subst">&#123;arr12.dtype&#125;</span>&#x27;</span>)<br><span class="hljs-built_in">print</span>(np.cumsum(arr12)) <span class="hljs-comment"># 累加 [ 0  2  6 12 20]</span><br><span class="hljs-built_in">print</span>(np.cumprod(arr12)) <span class="hljs-comment"># 累乘 [0 0 0 0 0]</span><br><span class="hljs-built_in">print</span>(np.<span class="hljs-built_in">max</span>(arr12)) <span class="hljs-comment"># 累加最大值 8</span><br><span class="hljs-built_in">print</span>(np.<span class="hljs-built_in">min</span>(arr12)) <span class="hljs-comment"># 累加最小值 0</span><br><span class="hljs-built_in">print</span>(np.diff(arr12)) <span class="hljs-comment"># 累加差值 [2 2 2 2]</span><br><br><br>arr13 = np.arange(<span class="hljs-number">0</span>,<span class="hljs-number">8</span>,<span class="hljs-number">1</span>).reshape(<span class="hljs-number">2</span>,<span class="hljs-number">4</span>)<br><span class="hljs-comment">#[[0 1 2 3]</span><br><span class="hljs-comment"># [4 5 6 7]]</span><br><br><span class="hljs-built_in">print</span>(arr13)  <br><span class="hljs-built_in">print</span>(np.<span class="hljs-built_in">sum</span>(arr13, axis=<span class="hljs-number">0</span>)) <span class="hljs-comment"># 按列求和 [ 4  6  8 10]</span><br><span class="hljs-built_in">print</span>(np.<span class="hljs-built_in">sum</span>(arr13, axis=<span class="hljs-number">1</span>)) <span class="hljs-comment"># 按行求和 [ 6 22]</span><br><br></code></pre></td></tr></table></figure>
+<h2 id="去重函数"><a href="#去重函数" class="headerlink" title="去重函数"></a>去重函数</h2 class='item-img' data-src='/2026/11/06/Numpy/Snipaste_2026-11-07_11-59-44.png'><img src="/2026/11/06/Numpy/Snipaste_2026-11-07_11-59-44.png" class="" title="去重函数">
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">arr = np.arry([<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">1</span>],[<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">4</span>])<br><span class="hljs-built_in">print</span>(arr)<br><span class="hljs-built_in">print</span>(np.unique(arr))<br><span class="hljs-comment"># 拿到的是副本</span><br></code></pre></td></tr></table></figure>
+<h2 id="排序函数"><a href="#排序函数" class="headerlink" title="排序函数"></a>排序函数</h2 class='item-img' data-src='/2026/11/06/Numpy/Snipaste_2026-11-07_10-51-00.png'><img src="/2026/11/06/Numpy/Snipaste_2026-11-07_10-51-00.png" class="" title="排序函数">
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python">arr = np.array([<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">34</span>,<span class="hljs-number">5</span>])<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;原数组arr:<span class="hljs-subst">&#123;arr&#125;</span>&#x27;</span>)<br><br>arr2 = np.sort(arr)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;sort后的数组：<span class="hljs-subst">&#123;arr2&#125;</span>&#x27;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;sort后的源数组不变：<span class="hljs-subst">&#123;arr2&#125;</span>&#x27;</span>)<br><br>arr.sort()<br><span class="hljs-built_in">print</span>(arr)<br><br></code></pre></td></tr></table></figure>
+<p>对这里有问题的，请看我的新blog流畅的python2——笔记，第二章，有专门讲这个的</p>
+<h2 id="dot-matmul"><a href="#dot-matmul" class="headerlink" title="dot  @  *  matmul"></a>dot  @  *  matmul</h2 class='item-img' data-src='/2026/11/06/Numpy/Snipaste_2026-11-07_15-40-05.png'><img src="/2026/11/06/Numpy/Snipaste_2026-11-07_15-40-05.png" class="" title="矩阵乘法">
+<h2 id="1-生成数组的方法"><a href="#1-生成数组的方法" class="headerlink" title="1 生成数组的方法"></a>1 生成数组的方法</h2><h3 id="1-1-生成0和1的数组"><a href="#1-1-生成0和1的数组" class="headerlink" title="1.1 生成0和1的数组"></a>1.1 生成0和1的数组</h3><ul>
+<li><strong>np.ones(shape, dtype)</strong></li>
+<li>np.ones_like(a, dtype) ：用于创建一个与数组 <code>a</code> 形状相同且所有元素都为1的数组的函数。</li>
+<li><strong>np.zeros(shape, dtype)</strong></li>
+<li>np.zeros_like(a, dtype) : ：用于创建一个与数组 <code>a</code> 形状相同且所有元素都为0的数组的函数。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">ones = np.ones([<span class="hljs-number">4</span>,<span class="hljs-number">8</span>])<br>ones<br></code></pre></td></tr></table></figure>
+<p>返回结果:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">array([[<span class="hljs-number">1.</span>, <span class="hljs-number">1.</span>, <span class="hljs-number">1.</span>, <span class="hljs-number">1.</span>, <span class="hljs-number">1.</span>, <span class="hljs-number">1.</span>, <span class="hljs-number">1.</span>, <span class="hljs-number">1.</span>],<br>       [<span class="hljs-number">1.</span>, <span class="hljs-number">1.</span>, <span class="hljs-number">1.</span>, <span class="hljs-number">1.</span>, <span class="hljs-number">1.</span>, <span class="hljs-number">1.</span>, <span class="hljs-number">1.</span>, <span class="hljs-number">1.</span>],<br>       [<span class="hljs-number">1.</span>, <span class="hljs-number">1.</span>, <span class="hljs-number">1.</span>, <span class="hljs-number">1.</span>, <span class="hljs-number">1.</span>, <span class="hljs-number">1.</span>, <span class="hljs-number">1.</span>, <span class="hljs-number">1.</span>],<br>       [<span class="hljs-number">1.</span>, <span class="hljs-number">1.</span>, <span class="hljs-number">1.</span>, <span class="hljs-number">1.</span>, <span class="hljs-number">1.</span>, <span class="hljs-number">1.</span>, <span class="hljs-number">1.</span>, <span class="hljs-number">1.</span>]])<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">np.zeros_like(ones)<br></code></pre></td></tr></table></figure>
+<p>返回结果:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python">array([[<span class="hljs-number">0.</span>, <span class="hljs-number">0.</span>, <span class="hljs-number">0.</span>, <span class="hljs-number">0.</span>, <span class="hljs-number">0.</span>, <span class="hljs-number">0.</span>, <span class="hljs-number">0.</span>, <span class="hljs-number">0.</span>],<br>       [<span class="hljs-number">0.</span>, <span class="hljs-number">0.</span>, <span class="hljs-number">0.</span>, <span class="hljs-number">0.</span>, <span class="hljs-number">0.</span>, <span class="hljs-number">0.</span>, <span class="hljs-number">0.</span>, <span class="hljs-number">0.</span>],<br>       [<span class="hljs-number">0.</span>, <span class="hljs-number">0.</span>, <span class="hljs-number">0.</span>, <span class="hljs-number">0.</span>, <span class="hljs-number">0.</span>, <span class="hljs-number">0.</span>, <span class="hljs-number">0.</span>, <span class="hljs-number">0.</span>],<br>       [<span class="hljs-number">0.</span>, <span class="hljs-number">0.</span>, <span class="hljs-number">0.</span>, <span class="hljs-number">0.</span>, <span class="hljs-number">0.</span>, <span class="hljs-number">0.</span>, <span class="hljs-number">0.</span>, <span class="hljs-number">0.</span>]])<br></code></pre></td></tr></table></figure>
+<h3 id="1-2-从现有数组生成"><a href="#1-2-从现有数组生成" class="headerlink" title="1.2 从现有数组生成"></a>1.2 从现有数组生成</h3><h4 id="1-2-1-生成方式"><a href="#1-2-1-生成方式" class="headerlink" title="1.2.1 生成方式"></a>1.2.1 生成方式</h4><ul>
+<li><strong>np.array(object, dtype)</strong></li>
+</ul>
+<ul>
+<li><strong>np.asarray(a, dtype)</strong></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">a = np.array([[<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>],[<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>]])<br><span class="hljs-comment"># 从现有的数组当中创建</span><br>a1 = np.array(a)<br><span class="hljs-comment"># 相当于索引的形式，并没有真正的创建一个新的</span><br>a2 = np.asarray(a)<br></code></pre></td></tr></table></figure>
+<h4 id="1-2-2-关于array和asarray的不同"><a href="#1-2-2-关于array和asarray的不同" class="headerlink" title="1.2.2 关于array和asarray的不同"></a>1.2.2 关于array和asarray的不同</h4 class='item-img' data-src='/2026/11/06/Numpy/array%E5%92%8Casarray%E7%9A%84%E5%8C%BA%E5%88%AB.png'><img src="/2026/11/06/Numpy/array%E5%92%8Casarray%E7%9A%84%E5%8C%BA%E5%88%AB.png" class="" title="Hexo 博客封面示例">
+<h3 id="1-3-生成固定范围的数组"><a href="#1-3-生成固定范围的数组" class="headerlink" title="1.3 生成固定范围的数组"></a>1.3 生成固定范围的数组</h3><p>类似于之前讲过的range()</p>
+<h4 id="1-3-1-np-linspace-start-stop-num-endpoint"><a href="#1-3-1-np-linspace-start-stop-num-endpoint" class="headerlink" title="1.3.1 np.linspace (start, stop, num, endpoint)"></a>1.3.1 np.linspace (start, stop, num, endpoint)</h4><ul>
+<li>创建等差数组 — ==指定数量==</li>
+<li>参数:<ul>
+<li>start:序列的起始值</li>
+<li>stop:序列的终止值</li>
+<li>num:要生成的等间隔样例数量，默认为50</li>
+<li>endpoint:序列中是否包含stop值，默认为True</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 生成等间隔的数组</span><br>np.linspace(<span class="hljs-number">0</span>, <span class="hljs-number">100</span>, <span class="hljs-number">11</span>)<br></code></pre></td></tr></table></figure>
+<p>返回结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">array([  <span class="hljs-number">0.</span>,  <span class="hljs-number">10.</span>,  <span class="hljs-number">20.</span>,  <span class="hljs-number">30.</span>,  <span class="hljs-number">40.</span>,  <span class="hljs-number">50.</span>,  <span class="hljs-number">60.</span>,  <span class="hljs-number">70.</span>,  <span class="hljs-number">80.</span>,  <span class="hljs-number">90.</span>, <span class="hljs-number">100.</span>])<br></code></pre></td></tr></table></figure>
+<h4 id="1-3-2-np-arange-start-stop-step-dtype"><a href="#1-3-2-np-arange-start-stop-step-dtype" class="headerlink" title="1.3.2 np.arange(start,stop, step, dtype)"></a>1.3.2 np.arange(start,stop, step, dtype)</h4><ul>
+<li>创建等差数组 — ==指定步长==</li>
+<li>参数<ul>
+<li>step:步长,默认值为1</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">np.arange(<span class="hljs-number">10</span>, <span class="hljs-number">50</span>, <span class="hljs-number">2</span>)<br></code></pre></td></tr></table></figure>
+<p>返回结果：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">array([<span class="hljs-number">10</span>, <span class="hljs-number">12</span>, <span class="hljs-number">14</span>, <span class="hljs-number">16</span>, <span class="hljs-number">18</span>, <span class="hljs-number">20</span>, <span class="hljs-number">22</span>, <span class="hljs-number">24</span>, <span class="hljs-number">26</span>, <span class="hljs-number">28</span>, <span class="hljs-number">30</span>, <span class="hljs-number">32</span>, <span class="hljs-number">34</span>, <span class="hljs-number">36</span>, <span class="hljs-number">38</span>, <span class="hljs-number">40</span>, <span class="hljs-number">42</span>,<br>       <span class="hljs-number">44</span>, <span class="hljs-number">46</span>, <span class="hljs-number">48</span>])<br></code></pre></td></tr></table></figure>
+<h4 id="1-3-3-np-logspace-start-stop-num"><a href="#1-3-3-np-logspace-start-stop-num" class="headerlink" title="1.3.3 np.logspace(start,stop, num)"></a>1.3.3 np.logspace(start,stop, num)</h4><ul>
+<li><p>创建等比数列</p>
+</li>
+<li><p>参数:</p>
+<ul>
+<li>num:要生成的等比数列数量，默认为50</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 生成10^x</span><br>np.logspace(<span class="hljs-number">0</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>) <br></code></pre></td></tr></table></figure>
+<p>返回结果:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">array([  1.,  10., 100.])<br></code></pre></td></tr></table></figure class='item-img' data-src='/2026/11/06/Numpy/Snipaste_2026-11-06_23-04-26.png'><img src="/2026/11/06/Numpy/Snipaste_2026-11-06_23-04-26.png" class="" title="np.logspace(start,stop, num)">
+<img src="/2026/11/06/Numpy/Snipaste_2026-11-06_23-06-18.png" class="" title="喵喵喵的参数">
+<p>CTRL + shift + enter，单元格内换行</p>
+<h3 id="1-4-生成随机数组（绘图专用）"><a href="#1-4-生成随机数组（绘图专用）" class="headerlink" title="1.4 生成随机数组（绘图专用）"></a>1.4 生成随机数组（绘图专用）</h3><h4 id="1-4-1-使用模块介绍"><a href="#1-4-1-使用模块介绍" class="headerlink" title="1.4.1 使用模块介绍"></a>1.4.1 使用模块介绍</h4><ul>
+<li>np.random模块</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><br><span class="hljs-comment"># 生成一个[0.0, 1.0)之间的均匀分布的随机浮点数</span><br>rand_num = np.random.rand()<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;均匀分布的随机浮点数:&quot;</span>, rand_num)<br><br><span class="hljs-comment"># 生成一个形状为(3, 2)的均匀分布的随机浮点数组</span><br>rand_array = np.random.rand(<span class="hljs-number">3</span>, <span class="hljs-number">2</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;均匀分布的随机数组:\n&quot;</span>, rand_array)<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><br><span class="hljs-comment"># 生成一个从0到9的随机整数</span><br>rand_int = np.random.randint(<span class="hljs-number">0</span>, <span class="hljs-number">10</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;随机整数:&quot;</span>, rand_int)<br><br><span class="hljs-comment"># 生成一个形状为(4, 3)的随机整数数组，范围在[1, 100)之间</span><br>rand_int_array = np.random.randint(<span class="hljs-number">1</span>, <span class="hljs-number">100</span>, size=(<span class="hljs-number">4</span>, <span class="hljs-number">3</span>))<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;随机整数数组:\n&quot;</span>, rand_int_array)<br></code></pre></td></tr></table></figure>
+<h2 id="2-数组的索引、切片"><a href="#2-数组的索引、切片" class="headerlink" title="2 数组的索引、切片"></a>2 数组的索引、切片</h2><p>一维、二维、三维的数组如何索引？</p>
+<ul>
+<li>直接进行索引,切片</li>
+<li>对象[:, :] — 先行后列</li>
+</ul>
+<p>基本索引：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><br><span class="hljs-comment"># 创建一个 2x3 的数组</span><br>arr = np.array([[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>], [<span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>]])<br><br><span class="hljs-comment"># 访问第1行第2列的元素（注意：索引从0开始）</span><br>element = arr[<span class="hljs-number">0</span>, <span class="hljs-number">1</span>]<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;第1行第2列的元素:&quot;</span>, element)  <span class="hljs-comment"># 输出: 2</span><br><br><span class="hljs-comment"># 访问第2行第3列的元素</span><br>element = arr[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>]<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;第2行第3列的元素:&quot;</span>, element)  <span class="hljs-comment"># 输出: 6</span><br><br></code></pre></td></tr></table></figure>
+<p>切片操作</p>
+<p><strong>二维数组</strong>：可以通过 <code>[row, column]</code> 进行索引和切片，提取特定的行、列或子矩阵。</p>
+<p><strong>三维数组</strong>：可以通过 <code>[depth, row, column]</code> 进行索引和切片，提取特定的层、行、列或子阵列。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><br><span class="hljs-comment"># 创建一个 3x4 的数组</span><br>arr = np.array([[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>],<br>                [<span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>],<br>                [<span class="hljs-number">9</span>, <span class="hljs-number">10</span>, <span class="hljs-number">11</span>, <span class="hljs-number">12</span>]])<br><br><span class="hljs-comment"># 提取第1行和第2行的所有列</span><br>sub_array = arr[<span class="hljs-number">0</span>:<span class="hljs-number">2</span>, :]<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;第1行和第2行的所有列:\n&quot;</span>, sub_array)<br><br><span class="hljs-comment"># 提取第2列和第3列的所有行</span><br>sub_array = arr[:, <span class="hljs-number">1</span>:<span class="hljs-number">3</span>]<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;第2列和第3列的所有行:\n&quot;</span>, sub_array)<br><br><span class="hljs-comment"># 提取第1行第2列到第3列的元素</span><br>sub_array = arr[<span class="hljs-number">0</span>, <span class="hljs-number">1</span>:<span class="hljs-number">3</span>]<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;第1行第2列到第3列的元素:&quot;</span>, sub_array)<br></code></pre></td></tr></table></figure>
+<ul>
+<li>三维数组索引方式：</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 三维</span><br>a1 = np.array([[[<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>],[<span class="hljs-number">4</span>,<span class="hljs-number">5</span>,<span class="hljs-number">6</span>]], [[<span class="hljs-number">12</span>,<span class="hljs-number">3</span>,<span class="hljs-number">34</span>],[<span class="hljs-number">5</span>,<span class="hljs-number">6</span>,<span class="hljs-number">7</span>]]])<br><span class="hljs-comment"># 返回结果</span><br>array([[[ <span class="hljs-number">1</span>,  <span class="hljs-number">2</span>,  <span class="hljs-number">3</span>],<br>        [ <span class="hljs-number">4</span>,  <span class="hljs-number">5</span>,  <span class="hljs-number">6</span>]],<br><br>       [[<span class="hljs-number">12</span>,  <span class="hljs-number">3</span>, <span class="hljs-number">34</span>],<br>        [ <span class="hljs-number">5</span>,  <span class="hljs-number">6</span>,  <span class="hljs-number">7</span>]]])<br><span class="hljs-comment"># 索引、切片</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>a1[<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>]   <span class="hljs-comment"># 输出: 2</span><br></code></pre></td></tr></table></figure>
+<h2 id="3-形状修改"><a href="#3-形状修改" class="headerlink" title="3 形状修改"></a>3 形状修改</h2><h3 id="3-1-ndarray-reshape-shape-order"><a href="#3-1-ndarray-reshape-shape-order" class="headerlink" title="3.1 ndarray.reshape(shape, order)"></a>3.1 ndarray.reshape(shape, order)</h3><ul>
+<li>返回一个具有相同数据域，但shape不一样的<strong>视图</strong></li>
+<li>行、列不进行互换</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><br><span class="hljs-comment"># 创建一个 1x9 的数组</span><br>arr = np.array([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>])<br><br><span class="hljs-comment"># 将其重新构造成 3x3 的数组</span><br>reshaped_arr = arr.reshape(<span class="hljs-number">3</span>, <span class="hljs-number">3</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;原数组:\n&quot;</span>, arr)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;reshape后的数组:\n&quot;</span>, reshaped_arr)<br><br>运行结果<br>原数组:<br> [<span class="hljs-number">1</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">4</span> <span class="hljs-number">5</span> <span class="hljs-number">6</span> <span class="hljs-number">7</span> <span class="hljs-number">8</span> <span class="hljs-number">9</span>]<br>reshape后的数组:<br> [[<span class="hljs-number">1</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span>]<br>  [<span class="hljs-number">4</span> <span class="hljs-number">5</span> <span class="hljs-number">6</span>]<br>  [<span class="hljs-number">7</span> <span class="hljs-number">8</span> <span class="hljs-number">9</span>]]<br></code></pre></td></tr></table></figure>
+<h3 id="3-2-ndarray-resize-new-shape"><a href="#3-2-ndarray-resize-new-shape" class="headerlink" title="3.2 ndarray.resize(new_shape)"></a>3.2 ndarray.resize(new_shape)</h3><ul>
+<li>修改数组本身的形状（需要保持元素个数前后相同）</li>
+<li>行、列不进行互换</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><br><span class="hljs-comment"># 创建一个 1x9 的数组</span><br>arr = np.array([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>, <span class="hljs-number">8</span>, <span class="hljs-number">9</span>])<br><br><span class="hljs-comment"># 调整数组的大小为 2x5</span><br>resized_arr = np.resize(arr, (<span class="hljs-number">2</span>, <span class="hljs-number">5</span>))<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;原数组:\n&quot;</span>, arr)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;resize后的数组:\n&quot;</span>, resized_arr)<br><br>运行结果<br>原数组:<br> [<span class="hljs-number">1</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">4</span> <span class="hljs-number">5</span> <span class="hljs-number">6</span> <span class="hljs-number">7</span> <span class="hljs-number">8</span> <span class="hljs-number">9</span>]<br>resize后的数组:<br> [[<span class="hljs-number">1</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">4</span> <span class="hljs-number">5</span>]<br>  [<span class="hljs-number">6</span> <span class="hljs-number">7</span> <span class="hljs-number">8</span> <span class="hljs-number">9</span> <span class="hljs-number">1</span>]]<br></code></pre></td></tr></table></figure>
+<h3 id="3-3-ndarray-T"><a href="#3-3-ndarray-T" class="headerlink" title="3.3 ndarray.T"></a>3.3 ndarray.T</h3><ul>
+<li>数组的转置</li>
+<li>将数组的行、列进行互换</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><br><span class="hljs-comment"># 创建一个 2x3 的二维数组</span><br>arr = np.array([[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>],<br>                [<span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>]])<br><br><span class="hljs-comment"># 对数组进行转置</span><br>transposed_arr = arr.T<br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;原始数组:\n&quot;</span>, arr)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;转置后的数组:\n&quot;</span>, transposed_arr)<br><br>运行结果<br>原始数组:<br> [[<span class="hljs-number">1</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span>]<br>  [<span class="hljs-number">4</span> <span class="hljs-number">5</span> <span class="hljs-number">6</span>]]<br>转置后的数组:<br> [[<span class="hljs-number">1</span> <span class="hljs-number">4</span>]<br>  [<span class="hljs-number">2</span> <span class="hljs-number">5</span>]<br>  [<span class="hljs-number">3</span> <span class="hljs-number">6</span>]]<br></code></pre></td></tr></table></figure>
+<h2 id="4-类型修改"><a href="#4-类型修改" class="headerlink" title="4 类型修改"></a>4 类型修改</h2><h3 id="4-1-ndarray-astype-type"><a href="#4-1-ndarray-astype-type" class="headerlink" title="4.1 ndarray.astype(type)"></a>4.1 ndarray.astype(type)</h3><ul>
+<li>返回修改了类型之后的数组</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np<br><br><span class="hljs-comment"># 创建一个浮点数类型的数组</span><br>arr = np.array([<span class="hljs-number">1.1</span>, <span class="hljs-number">2.2</span>, <span class="hljs-number">3.3</span>, <span class="hljs-number">4.4</span>, <span class="hljs-number">5.5</span>])<br><br><span class="hljs-comment"># 使用 .astype(np.int32) 将数组的元素类型转换为 int32</span><br>arr_int32 = arr.astype(np.int32)<br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;原始数组:&quot;</span>, arr)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;原始数组的类型:&quot;</span>, arr.dtype)<br><br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;转换后的数组:&quot;</span>, arr_int32)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;转换后的数组类型:&quot;</span>, arr_int32.dtype)<br></code></pre></td></tr></table></figure>
+<h3 id="4-2-ndarray-tobytes-order"><a href="#4-2-ndarray-tobytes-order" class="headerlink" title="4.2 ndarray.tobytes([order])"></a>4.2 ndarray.tobytes([order])</h3><ul>
+<li>构造包含数组中原始数据字节的Python字节</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">arr = np.array([[[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>], [<span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>]], [[<span class="hljs-number">12</span>, <span class="hljs-number">3</span>, <span class="hljs-number">34</span>], [<span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">7</span>]]])<br>arr.tobytes()<br></code></pre></td></tr></table></figure>
+<p>为什么转二进制？方便网络传输</p>
+<h2 id="5-数组的去重"><a href="#5-数组的去重" class="headerlink" title="5 数组的去重"></a>5 数组的去重</h2><h3 id="5-1-np-unique"><a href="#5-1-np-unique" class="headerlink" title="5.1 np.unique()"></a>5.1 np.unique()</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python">temp = np.array([[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>],[<span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>]])<br>np.unique(temp)<br>array([<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>])<br></code></pre></td></tr></table></figure>
+<h2 id="6-小结"><a href="#6-小结" class="headerlink" title="6 小结"></a>6 小结</h2><ul>
+<li><p>创建数组【掌握】</p>
+<ul>
+<li>生成0和1的数组<ul>
+<li>np.ones()</li>
+<li>np.ones_like()</li>
+</ul>
+</li>
+<li>从现有数组中生成<ul>
+<li>np.array — 深拷贝</li>
+<li>np.asarray — 浅拷贝</li>
+</ul>
+</li>
+<li><p>生成固定范围数组</p>
+<ul>
+<li>np.linspace()<ul>
+<li>nun — 生成等间隔的多少个</li>
+</ul>
+</li>
+<li>np.arange()<ul>
+<li>step — 每间隔多少生成数据</li>
+</ul>
+</li>
+<li>np.logspace()<ul>
+<li>生成以10的N次幂的数据</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>生层随机数组</p>
+<ul>
+<li>正态分布<ul>
+<li>里面需要关注的参数:均值:u, 标准差:σ<ul>
+<li>u — 决定了这个图形的左右位置</li>
+<li>σ — 决定了这个图形是瘦高还是矮胖</li>
+</ul>
+</li>
+<li>np.random.randn()</li>
+<li>np.random.normal(0, 1, 100)</li>
+</ul>
+</li>
+<li>均匀<ul>
+<li>np.random.rand()</li>
+<li>np.random.uniform(0, 1, 100)</li>
+<li>np.random.randint(0, 10, 10)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>数组索引【知道】</p>
+<ul>
+<li>直接进行索引,切片</li>
+<li>对象[:, :] — 先行后列</li>
+</ul>
+</li>
+<li><p>数组形状改变【掌握】</p>
+<ul>
+<li>对象.reshape()<ul>
+<li>没有进行行列互换,新产生一个ndarray</li>
+</ul>
+</li>
+<li>对象.resize()<ul>
+<li>没有进行行列互换,修改原来的ndarray</li>
+</ul>
+</li>
+<li>对象.T<ul>
+<li>进行了行列互换</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>数组去重【知道】</p>
+<ul>
+<li>np.unique(对象)</li>
+</ul>
+</li>
+</ul>
+<h1 id="四、ndarray运算"><a href="#四、ndarray运算" class="headerlink" title="四、ndarray运算"></a>四、ndarray运算</h1><h2 id="学习目标-3"><a href="#学习目标-3" class="headerlink" title="学习目标"></a>学习目标</h2><ul>
+<li>目标<ul>
+<li>应用数组的通用判断函数</li>
+<li>应用np.where实现数组的三元运算</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p><strong>如果想要操作符合某一条件的数据，应该怎么做？</strong></p>
+<h2 id="1-逻辑运算"><a href="#1-逻辑运算" class="headerlink" title="1 逻辑运算"></a>1 逻辑运算</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 生成10名同学，5门功课的数据</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>score = np.random.randint(<span class="hljs-number">40</span>, <span class="hljs-number">100</span>, (<span class="hljs-number">10</span>, <span class="hljs-number">5</span>))<br><br><span class="hljs-comment"># 取出最后4名同学的成绩，用于逻辑判断</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>test_score = score[<span class="hljs-number">6</span>:, <span class="hljs-number">0</span>:<span class="hljs-number">5</span>]<br><br><span class="hljs-comment"># 逻辑判断, 如果成绩大于60就标记为True 否则为False</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>test_score &gt; <span class="hljs-number">60</span><br>array([[ <span class="hljs-literal">True</span>,  <span class="hljs-literal">True</span>,  <span class="hljs-literal">True</span>, <span class="hljs-literal">False</span>,  <span class="hljs-literal">True</span>],<br>       [ <span class="hljs-literal">True</span>,  <span class="hljs-literal">True</span>,  <span class="hljs-literal">True</span>, <span class="hljs-literal">False</span>,  <span class="hljs-literal">True</span>],<br>       [ <span class="hljs-literal">True</span>,  <span class="hljs-literal">True</span>, <span class="hljs-literal">False</span>, <span class="hljs-literal">False</span>,  <span class="hljs-literal">True</span>],<br>       [<span class="hljs-literal">False</span>,  <span class="hljs-literal">True</span>,  <span class="hljs-literal">True</span>,  <span class="hljs-literal">True</span>,  <span class="hljs-literal">True</span>]])<br><br><span class="hljs-comment"># BOOL赋值, 将满足条件的设置为指定的值-布尔索引</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>test_score[test_score &gt; <span class="hljs-number">60</span>] = <span class="hljs-number">1</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>test_score<br>array([[ <span class="hljs-number">1</span>,  <span class="hljs-number">1</span>,  <span class="hljs-number">1</span>, <span class="hljs-number">52</span>,  <span class="hljs-number">1</span>],<br>       [ <span class="hljs-number">1</span>,  <span class="hljs-number">1</span>,  <span class="hljs-number">1</span>, <span class="hljs-number">59</span>,  <span class="hljs-number">1</span>],<br>       [ <span class="hljs-number">1</span>,  <span class="hljs-number">1</span>, <span class="hljs-number">44</span>, <span class="hljs-number">44</span>,  <span class="hljs-number">1</span>],<br>       [<span class="hljs-number">59</span>,  <span class="hljs-number">1</span>,  <span class="hljs-number">1</span>,  <span class="hljs-number">1</span>,  <span class="hljs-number">1</span>]])<br></code></pre></td></tr></table></figure>
+<h2 id="2-通用判断函数"><a href="#2-通用判断函数" class="headerlink" title="2 通用判断函数"></a>2 通用判断函数</h2><ul>
+<li><p>np.all()</p>
+<p>当你需要检查数组中的所有元素是否都满足条件时使用，如果所有元素都满足条件，返回 <code>True</code>，否则返回 <code>False</code></p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 判断前两名同学的成绩[0:2, :]是否全及格</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>np.<span class="hljs-built_in">all</span>(score[<span class="hljs-number">0</span>:<span class="hljs-number">2</span>, :] &gt; <span class="hljs-number">60</span>)<br><span class="hljs-literal">False</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li><p>np.any()</p>
+<p>当你需要检查数组中是否至少有一个元素满足条件时使用，如果有一个元素满足条件，返回 <code>True</code>，否则返回 <code>False</code></p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 判断前两名同学的成绩[0:2, :]是否有大于90分的</span><br><span class="hljs-meta">&gt;&gt;&gt; </span>np.<span class="hljs-built_in">any</span>(score[<span class="hljs-number">0</span>:<span class="hljs-number">2</span>, :] &gt; <span class="hljs-number">80</span>)<br><span class="hljs-literal">True</span><br></code></pre></td></tr></table></figure>
+<h2 id="3-np-where（三元运算符）"><a href="#3-np-where（三元运算符）" class="headerlink" title="3 np.where（三元运算符）"></a>3 np.where（三元运算符）</h2><p>通过使用np.where能够进行更加复杂的运算</p>
+<ul>
+<li>np.where() =&gt; 类似Python中的if…else结构</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 判断前四名学生,前四门课程中，成绩中大于60的置为1，否则为0</span><br>temp = score[:<span class="hljs-number">4</span>, :<span class="hljs-number">4</span>]<br>np.where(temp &gt; <span class="hljs-number">60</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>)<br></code></pre></td></tr></table></figure>
+<ul>
+<li>复合逻辑需要结合np.logical_and和np.logical_or使用</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 判断前四名学生,前四门课程中，成绩中大于60且小于90的换为1，否则为0</span><br>np.where(np.logical_and(temp &gt; <span class="hljs-number">60</span>, temp &lt; <span class="hljs-number">90</span>), <span class="hljs-number">1</span>, <span class="hljs-number">0</span>)<br><br><span class="hljs-comment"># 判断前四名学生,前四门课程中，成绩中大于90或小于60的换为1，否则为0</span><br>np.where(np.logical_or(temp &gt; <span class="hljs-number">90</span>, temp &lt; <span class="hljs-number">60</span>), <span class="hljs-number">1</span>, <span class="hljs-number">0</span>)<br></code></pre></td></tr></table></figure>
+<h2 id="4-统计运算"><a href="#4-统计运算" class="headerlink" title="4  统计运算"></a>4  统计运算</h2><p><strong>如果想要知道学生成绩最大的分数，或者做小分数应该怎么做？</strong></p>
+<h3 id="4-1-统计指标"><a href="#4-1-统计指标" class="headerlink" title="4.1 统计指标"></a>4.1 统计指标</h3><p>在数据挖掘/机器学习领域，统计指标的值也是我们分析问题的一种方式。常用的指标如下：</p>
+<ul>
+<li>min(a, axis)<ul>
+<li>Return the minimum of an array or minimum along an axis.</li>
+</ul>
+</li>
+<li>max(a, axis])<ul>
+<li>Return the maximum of an array or maximum along an axis.</li>
+</ul>
+</li>
+<li>median(a, axis)<ul>
+<li>Compute the median along the specified axis.</li>
+</ul>
+</li>
+<li>mean(a, axis, dtype)<ul>
+<li>Compute the arithmetic mean along the specified axis.</li>
+</ul>
+</li>
+<li>std(a, axis, dtype)    <ul>
+<li>Compute the standard deviation along the specified axis.</li>
+</ul>
+</li>
+<li>var(a, axis, dtype)    <ul>
+<li>Compute the variance along the specified axis.</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>var方差是衡量数据点离平均值的平方偏差程度。方差的值总是非负的，方差越大，数据越分散。</p>
+<p>std标准方差是衡量数据点离平均值的平均偏差程度。值越小，数据越集中；值越大，数据越分散。</p>
+</blockquote>
+<h3 id="4-2-案例：学生成绩统计运算"><a href="#4-2-案例：学生成绩统计运算" class="headerlink" title="4.2  案例：学生成绩统计运算"></a>4.2  案例：学生成绩统计运算</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 接下来对于前四名学生,进行一些统计运算</span><br><span class="hljs-comment"># 指定列 去统计</span><br>temp = score[:<span class="hljs-number">4</span>, <span class="hljs-number">0</span>:<span class="hljs-number">5</span>]<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;前四名学生,各科成绩的最大分：&#123;&#125;&quot;</span>.<span class="hljs-built_in">format</span>(np.<span class="hljs-built_in">max</span>(temp, axis=<span class="hljs-number">0</span>)))<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;前四名学生,各科成绩的最小分：&#123;&#125;&quot;</span>.<span class="hljs-built_in">format</span>(np.<span class="hljs-built_in">min</span>(temp, axis=<span class="hljs-number">0</span>)))<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;前四名学生,各科成绩波动情况：&#123;&#125;&quot;</span>.<span class="hljs-built_in">format</span>(np.std(temp, axis=<span class="hljs-number">0</span>)))<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;前四名学生,各科成绩的平均分：&#123;&#125;&quot;</span>.<span class="hljs-built_in">format</span>(np.mean(temp, axis=<span class="hljs-number">0</span>)))<br></code></pre></td></tr></table></figure>
+<p><strong>axis = 0</strong>: 沿着每一列进行操作，意味着在每一列上进行统计计算。可以理解为”跨行操作”。</p>
+<p><strong>axis = 1</strong>: 沿着每一行进行操作，意味着在每一行上进行统计计算。可以理解为”跨列操作”。</p>
+<p>结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">前四名学生,各科成绩的最大分：[96 97 72 98 89]<br>前四名学生,各科成绩的最小分：[55 57 45 76 77]<br>前四名学生,各科成绩波动情况：[16.25576821 14.92271758 10.40432602  8.0311892   4.32290412]<br>前四名学生,各科成绩的平均分：[78.5  75.75 62.5  85.   82.25]<br></code></pre></td></tr></table></figure>
+<p>如果需要统计出某科最高分对应的是哪个同学？</p>
+<ul>
+<li>np.argmax(temp, axis=)</li>
+<li>np.argmin(temp, axis=)</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;前四名学生，各科成绩最高分对应的学生下标：&#123;&#125;&quot;</span>.<span class="hljs-built_in">format</span>(np.argmax(temp, axis=<span class="hljs-number">0</span>)))<br></code></pre></td></tr></table></figure>
+<p>结果：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">前四名学生，各科成绩最高分对应的学生下标：[0 2 0 0 1]<br></code></pre></td></tr></table></figure>
+<h2 id="5-小结-1"><a href="#5-小结-1" class="headerlink" title="5 小结"></a>5 小结</h2><ul>
+<li>逻辑运算【知道】<ul>
+<li>直接进行大于,小于的判断</li>
+<li>合适之后,可以直接进行赋值</li>
+</ul>
+</li>
+<li>通用判断函数【知道】<ul>
+<li>np.all()</li>
+<li>np.any()</li>
+</ul>
+</li>
+<li>统计运算【掌握】<ul>
+<li>np.max()</li>
+<li>np.min()</li>
+<li>np.median()</li>
+<li>np.mean()</li>
+<li>np.std()</li>
+<li>np.var()</li>
+<li>np.argmax(axis=)  — 最大元素对应的下标</li>
+<li>np.argmin(axis=)  — 最小元素对应的下标</li>
+</ul>
+</li>
+</ul>
+<h1 id="五、数组间运算"><a href="#五、数组间运算" class="headerlink" title="五、数组间运算"></a>五、数组间运算</h1><h2 id="学习目标-4"><a href="#学习目标-4" class="headerlink" title="学习目标"></a>学习目标</h2><ul>
+<li>目标<ul>
+<li>知道数组与数之间的运算</li>
+<li>知道数组与数组之间的运算</li>
+<li>说明数组间运算的广播机制</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="1-数组与数的运算"><a href="#1-数组与数的运算" class="headerlink" title="1 数组与数的运算"></a>1 数组与数的运算</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python">arr = np.array([[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>, <span class="hljs-number">4</span>], [<span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">1</span>]])<br>arr + <span class="hljs-number">1</span><br>arr / <span class="hljs-number">2</span><br><br><span class="hljs-comment"># 可以对比python列表的运算，看出区别 =&gt; 列表是整体操作，numpy是每个元素单独操作</span><br>a = [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>]<br>a * <span class="hljs-number">3</span><br></code></pre></td></tr></table></figure>
+<h2 id="2-数组与数组的运算"><a href="#2-数组与数组的运算" class="headerlink" title="2 数组与数组的运算"></a>2 数组与数组的运算</h2><h3 id="2-1-思考"><a href="#2-1-思考" class="headerlink" title="2.1 思考"></a>2.1 思考</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">arr1 = np.array([[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>, <span class="hljs-number">4</span>], [<span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">1</span>]])   <span class="hljs-comment"># 2 x 6</span><br>arr2 = np.array([[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>], [<span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>]])  <span class="hljs-comment"># 2 x 4</span><br></code></pre></td></tr></table></figure>
+<p>上面这个能进行运算吗，结果是不行的！</p>
+<h3 id="2-2-广播机制"><a href="#2-2-广播机制" class="headerlink" title="2.2 广播机制"></a>2.2 广播机制</h3><p>数组在进行矢量化运算时，<strong>要求数组的形状是相等的</strong>。当形状不相等的数组执行算术运算的时候，就会出现广播机制，该机制会对数组进行扩展，使数组的shape属性值一样，这样，就可以进行矢量化运算了。下面通过一个例子进行说明：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python">arr1 = np.array([[<span class="hljs-number">0</span>],[<span class="hljs-number">1</span>],[<span class="hljs-number">2</span>],[<span class="hljs-number">3</span>]])  <span class="hljs-comment"># 4 x 1</span><br>arr1.shape<br><span class="hljs-comment"># (4, 1)</span><br><br>arr2 = np.array([<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>])  <span class="hljs-comment"># 1 x 3</span><br>arr2.shape<br><span class="hljs-comment"># (3,)</span><br><br>arr1+arr2<br><span class="hljs-comment"># 结果是：</span><br>array([[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>],<br>       [<span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>],<br>       [<span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">5</span>],<br>       [<span class="hljs-number">4</span>, <span class="hljs-number">5</span>, <span class="hljs-number">6</span>]])<br></code></pre></td></tr></table></figure>
+<p>上述代码中，数组arr1是4行1列，arr2是1行3列。这两个数组要进行相加，按照广播机制会对数组arr1和arr2都进行扩展，使得数组arr1和arr2都变成4行3列。</p>
+<p>下面通过一张图来描述广播机制扩展数组的过程：</p class='item-img' data-src='/2026/11/06/Numpy/image-20190620005224076.png'><img src="/2026/11/06/Numpy/image-20190620005224076.png" class="" title="Hexo 博客封面示例">
+<p>这句话乃是理解广播的核心。广播主要发生在两种情况，一种是两个数组的维数不相等，但是它们的后缘维度的轴长相符，另外一种是有一方的长度为1。</p>
+<p>广播机制：数组与数组之间结构不同的情况</p>
+<blockquote>
+<p>规则 1：如果数组的维度数不同，那么将维度数较少的数组在前面补充 1，使其维度数与维度数较多的数组一致。</p>
+<p>规则 2：从最后一个维度开始比较，如果两个数组在该维度上的长度相同，或其中一个数组在该维度的长度为 1，那么它们在该维度上是兼容的，可以进行运算。</p>
+<p>规则 3：如果在任何一个维度上，两个数组的长度既不同又都不为 1，则它们无法进行广播运算。</p>
+</blockquote>
+<p>如果是下面这样，则不匹配：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">A  (1d array): <span class="hljs-number">10</span><br>B  (1d array): <span class="hljs-number">12</span><br><br>A  (2d array):         <span class="hljs-number">2</span> x <span class="hljs-number">1</span>      <span class="hljs-number">1</span> x <span class="hljs-number">2</span> x <span class="hljs-number">1</span><br>B  (3d array):  <span class="hljs-number">8</span> x <span class="hljs-number">4</span> x <span class="hljs-number">3</span>      <span class="hljs-number">8</span> x <span class="hljs-number">4</span> x <span class="hljs-number">3</span><br></code></pre></td></tr></table></figure>
+<p><strong>思考：下面两个ndarray是否能够进行运算？</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python">arr1 = np.array([[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>, <span class="hljs-number">4</span>], [<span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">1</span>]])   <span class="hljs-comment"># 2 x 6</span><br>arr2 = np.array([[<span class="hljs-number">1</span>], [<span class="hljs-number">3</span>]])  <span class="hljs-comment"># 2 </span><br></code></pre></td></tr></table></figure>
+<h2 id="3-小结"><a href="#3-小结" class="headerlink" title="3 小结"></a>3 小结</h2><ul>
+<li>数组运算,满足广播机制,就OK【知道】<ul>
+<li>1.维度相等</li>
+<li>2.shape(其中对应的地方为1,也是可以的)</li>
+</ul>
+</li>
+</ul>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages" style="justify-content: flex-end"><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/11/06/Pandas/">Pandas Prev →</a></div></div></div><div id="comments"><div id="giscus"></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="To Top" style="opacity: 0; display: none;">∧ </a><a class="i-index" id="to-index" onClick="tocControl.change()" title="To Catalog"><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span></a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="Change Theme"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">John Doe</a></h1><div id="description"><p></p></div><div id="social-links"><a class="social" target="_blank" rel="noopener" href="https://github.com/juicer0801"><i class="fab fa-github" alt="GitHub"></i></a></div></div><div id="aside-block"><div id="toc-div"><h1>Catalog</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A4%A7%E7%BA%B2"><span class="toc-number">1.</span> <span class="toc-text">大纲</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#anaconda"><span class="toc-number">2.</span> <span class="toc-text">anaconda</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#jupyter"><span class="toc-number">3.</span> <span class="toc-text">jupyter</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#markdown"><span class="toc-number">4.</span> <span class="toc-text">markdown</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Numpy"><span class="toc-number">5.</span> <span class="toc-text">Numpy</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81Numpy%E4%BC%98%E5%8A%BF"><span class="toc-number">6.</span> <span class="toc-text">一、Numpy优势</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87"><span class="toc-number">6.1.</span> <span class="toc-text">学习目标</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-Numpy%E4%BB%8B%E7%BB%8D"><span class="toc-number">6.2.</span> <span class="toc-text">1 Numpy介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-ndarray%E4%BB%8B%E7%BB%8D"><span class="toc-number">6.3.</span> <span class="toc-text">2 ndarray介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-ndarray%E4%B8%8EPython%E5%8E%9F%E7%94%9Flist%E8%BF%90%E7%AE%97%E6%95%88%E7%8E%87%E5%AF%B9%E6%AF%94"><span class="toc-number">6.4.</span> <span class="toc-text">3 ndarray与Python原生list运算效率对比</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-ndarray%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="toc-number">6.5.</span> <span class="toc-text">4 ndarray的优势</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#4-1-%E5%86%85%E5%AD%98%E5%9D%97%E9%A3%8E%E6%A0%BC"><span class="toc-number">6.5.1.</span> <span class="toc-text">4.1 内存块风格</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-2-ndarray%E6%94%AF%E6%8C%81%E5%B9%B6%E8%A1%8C%E5%8C%96%E8%BF%90%E7%AE%97%EF%BC%88%E5%90%91%E9%87%8F%E5%8C%96%E8%BF%90%E7%AE%97%EF%BC%89"><span class="toc-number">6.5.2.</span> <span class="toc-text">4.2 ndarray支持并行化运算（向量化运算）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-3-%E6%95%88%E7%8E%87%E8%BF%9C%E9%AB%98%E4%BA%8E%E7%BA%AFPython%E4%BB%A3%E7%A0%81"><span class="toc-number">6.5.3.</span> <span class="toc-text">4.3 效率远高于纯Python代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E5%B0%8F%E7%BB%93"><span class="toc-number">6.6.</span> <span class="toc-text">5 小结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81N%E7%BB%B4%E6%95%B0%E7%BB%84-ndarray"><span class="toc-number">7.</span> <span class="toc-text">二、N维数组-ndarray</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87-1"><span class="toc-number">7.1.</span> <span class="toc-text">学习目标</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-ndarray%E7%9A%84%E5%B1%9E%E6%80%A7"><span class="toc-number">7.2.</span> <span class="toc-text">1 ndarray的属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-ndarray%E7%9A%84%E5%BD%A2%E7%8A%B6"><span class="toc-number">7.3.</span> <span class="toc-text">2 ndarray的形状</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-ndarray%E7%9A%84%E7%B1%BB%E5%9E%8B"><span class="toc-number">7.4.</span> <span class="toc-text">3 ndarray的类型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E6%80%BB%E7%BB%93"><span class="toc-number">7.5.</span> <span class="toc-text">4 总结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E5%9F%BA%E6%9C%AC%E6%93%8D%E4%BD%9C"><span class="toc-number">8.</span> <span class="toc-text">三、基本操作</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87-2"><span class="toc-number">8.1.</span> <span class="toc-text">学习目标</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E5%87%BD%E6%95%B0"><span class="toc-number">8.2.</span> <span class="toc-text">基础函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%9F%E8%AE%A1%E5%87%BD%E6%95%B0"><span class="toc-number">8.3.</span> <span class="toc-text">统计函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%BB%E9%87%8D%E5%87%BD%E6%95%B0"><span class="toc-number">8.4.</span> <span class="toc-text">去重函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%92%E5%BA%8F%E5%87%BD%E6%95%B0"><span class="toc-number">8.5.</span> <span class="toc-text">排序函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#dot-matmul"><span class="toc-number">8.6.</span> <span class="toc-text">dot  @  *  matmul</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E7%94%9F%E6%88%90%E6%95%B0%E7%BB%84%E7%9A%84%E6%96%B9%E6%B3%95"><span class="toc-number">8.7.</span> <span class="toc-text">1 生成数组的方法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E7%94%9F%E6%88%900%E5%92%8C1%E7%9A%84%E6%95%B0%E7%BB%84"><span class="toc-number">8.7.1.</span> <span class="toc-text">1.1 生成0和1的数组</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E4%BB%8E%E7%8E%B0%E6%9C%89%E6%95%B0%E7%BB%84%E7%94%9F%E6%88%90"><span class="toc-number">8.7.2.</span> <span class="toc-text">1.2 从现有数组生成</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-1-%E7%94%9F%E6%88%90%E6%96%B9%E5%BC%8F"><span class="toc-number">8.7.2.1.</span> <span class="toc-text">1.2.1 生成方式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-2-2-%E5%85%B3%E4%BA%8Earray%E5%92%8Casarray%E7%9A%84%E4%B8%8D%E5%90%8C"><span class="toc-number">8.7.2.2.</span> <span class="toc-text">1.2.2 关于array和asarray的不同</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E7%94%9F%E6%88%90%E5%9B%BA%E5%AE%9A%E8%8C%83%E5%9B%B4%E7%9A%84%E6%95%B0%E7%BB%84"><span class="toc-number">8.7.3.</span> <span class="toc-text">1.3 生成固定范围的数组</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-1-np-linspace-start-stop-num-endpoint"><span class="toc-number">8.7.3.1.</span> <span class="toc-text">1.3.1 np.linspace (start, stop, num, endpoint)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-2-np-arange-start-stop-step-dtype"><span class="toc-number">8.7.3.2.</span> <span class="toc-text">1.3.2 np.arange(start,stop, step, dtype)</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#1-3-3-np-logspace-start-stop-num"><span class="toc-number">8.7.3.3.</span> <span class="toc-text">1.3.3 np.logspace(start,stop, num)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-4-%E7%94%9F%E6%88%90%E9%9A%8F%E6%9C%BA%E6%95%B0%E7%BB%84%EF%BC%88%E7%BB%98%E5%9B%BE%E4%B8%93%E7%94%A8%EF%BC%89"><span class="toc-number">8.7.4.</span> <span class="toc-text">1.4 生成随机数组（绘图专用）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-4-1-%E4%BD%BF%E7%94%A8%E6%A8%A1%E5%9D%97%E4%BB%8B%E7%BB%8D"><span class="toc-number">8.7.4.1.</span> <span class="toc-text">1.4.1 使用模块介绍</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%95%B0%E7%BB%84%E7%9A%84%E7%B4%A2%E5%BC%95%E3%80%81%E5%88%87%E7%89%87"><span class="toc-number">8.8.</span> <span class="toc-text">2 数组的索引、切片</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%BD%A2%E7%8A%B6%E4%BF%AE%E6%94%B9"><span class="toc-number">8.9.</span> <span class="toc-text">3 形状修改</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-ndarray-reshape-shape-order"><span class="toc-number">8.9.1.</span> <span class="toc-text">3.1 ndarray.reshape(shape, order)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-ndarray-resize-new-shape"><span class="toc-number">8.9.2.</span> <span class="toc-text">3.2 ndarray.resize(new_shape)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-ndarray-T"><span class="toc-number">8.9.3.</span> <span class="toc-text">3.3 ndarray.T</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E7%B1%BB%E5%9E%8B%E4%BF%AE%E6%94%B9"><span class="toc-number">8.10.</span> <span class="toc-text">4 类型修改</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-ndarray-astype-type"><span class="toc-number">8.10.1.</span> <span class="toc-text">4.1 ndarray.astype(type)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-ndarray-tobytes-order"><span class="toc-number">8.10.2.</span> <span class="toc-text">4.2 ndarray.tobytes([order])</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E6%95%B0%E7%BB%84%E7%9A%84%E5%8E%BB%E9%87%8D"><span class="toc-number">8.11.</span> <span class="toc-text">5 数组的去重</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-np-unique"><span class="toc-number">8.11.1.</span> <span class="toc-text">5.1 np.unique()</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E5%B0%8F%E7%BB%93"><span class="toc-number">8.12.</span> <span class="toc-text">6 小结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B%E3%80%81ndarray%E8%BF%90%E7%AE%97"><span class="toc-number">9.</span> <span class="toc-text">四、ndarray运算</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87-3"><span class="toc-number">9.1.</span> <span class="toc-text">学习目标</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%97%AE%E9%A2%98"><span class="toc-number">9.2.</span> <span class="toc-text">问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E9%80%BB%E8%BE%91%E8%BF%90%E7%AE%97"><span class="toc-number">9.3.</span> <span class="toc-text">1 逻辑运算</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E9%80%9A%E7%94%A8%E5%88%A4%E6%96%AD%E5%87%BD%E6%95%B0"><span class="toc-number">9.4.</span> <span class="toc-text">2 通用判断函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-np-where%EF%BC%88%E4%B8%89%E5%85%83%E8%BF%90%E7%AE%97%E7%AC%A6%EF%BC%89"><span class="toc-number">9.5.</span> <span class="toc-text">3 np.where（三元运算符）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E7%BB%9F%E8%AE%A1%E8%BF%90%E7%AE%97"><span class="toc-number">9.6.</span> <span class="toc-text">4  统计运算</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E7%BB%9F%E8%AE%A1%E6%8C%87%E6%A0%87"><span class="toc-number">9.6.1.</span> <span class="toc-text">4.1 统计指标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E6%A1%88%E4%BE%8B%EF%BC%9A%E5%AD%A6%E7%94%9F%E6%88%90%E7%BB%A9%E7%BB%9F%E8%AE%A1%E8%BF%90%E7%AE%97"><span class="toc-number">9.6.2.</span> <span class="toc-text">4.2  案例：学生成绩统计运算</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E5%B0%8F%E7%BB%93-1"><span class="toc-number">9.7.</span> <span class="toc-text">5 小结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E6%95%B0%E7%BB%84%E9%97%B4%E8%BF%90%E7%AE%97"><span class="toc-number">10.</span> <span class="toc-text">五、数组间运算</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87-4"><span class="toc-number">10.1.</span> <span class="toc-text">学习目标</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E6%95%B0%E7%BB%84%E4%B8%8E%E6%95%B0%E7%9A%84%E8%BF%90%E7%AE%97"><span class="toc-number">10.2.</span> <span class="toc-text">1 数组与数的运算</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E6%95%B0%E7%BB%84%E4%B8%8E%E6%95%B0%E7%BB%84%E7%9A%84%E8%BF%90%E7%AE%97"><span class="toc-number">10.3.</span> <span class="toc-text">2 数组与数组的运算</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E6%80%9D%E8%80%83"><span class="toc-number">10.3.1.</span> <span class="toc-text">2.1 思考</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E5%B9%BF%E6%92%AD%E6%9C%BA%E5%88%B6"><span class="toc-number">10.3.2.</span> <span class="toc-text">2.2 广播机制</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%B0%8F%E7%BB%93"><span class="toc-number">10.4.</span> <span class="toc-text">3 小结</span></a></li></ol></li></ol></div></div><footer><nobr>Published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>

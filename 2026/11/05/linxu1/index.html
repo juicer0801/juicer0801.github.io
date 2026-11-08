@@ -1,0 +1,839 @@
+<!DOCTYPE html><html lang="en" theme-mode="auto"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>linxu基础 | Hexo</title><meta name="description" content="Linux操作系统（大数据基础）学习目标 Linux系统概述 Linux系统的安装和体验 Linux的网络配置和连接工具 Linux的目录结构 Linux的常用命令 Linux的VI&#x2F;VIM编辑器  一、操作系统概述计算机分类计算机一般分为个人计算机（笔记、台式机）与 企业级服务器（1U、2U、机柜、塔式、刀片）两种形式。 计算机组成计算机资源分为2 部分：&#x3D;&#x3D;硬件资源、软件资源&#x3D;&#x3D; 硬件资源：所">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linxu基础">
+<meta property="og:url" content="http://example.com/2026/11/05/linxu1/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Linux操作系统（大数据基础）学习目标 Linux系统概述 Linux系统的安装和体验 Linux的网络配置和连接工具 Linux的目录结构 Linux的常用命令 Linux的VI&#x2F;VIM编辑器  一、操作系统概述计算机分类计算机一般分为个人计算机（笔记、台式机）与 企业级服务器（1U、2U、机柜、塔式、刀片）两种形式。 计算机组成计算机资源分为2 部分：&#x3D;&#x3D;硬件资源、软件资源&#x3D;&#x3D; 硬件资源：所">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2026/11/05/linxu1/image-20210906104118846.png">
+<meta property="og:image" content="http://example.com/2026/11/05/linxu1/image-20210906105138366.png">
+<meta property="og:image" content="http://example.com/2026/11/05/linxu1/image-20210906105455952.png">
+<meta property="og:image" content="http://example.com/2026/11/05/linxu1/image-20210906105816844.png">
+<meta property="og:image" content="http://example.com/2026/11/05/linxu1/image-20210906110452331.png">
+<meta property="og:image" content="http://example.com/2026/11/05/linxu1/image-20210906110721658.png">
+<meta property="og:image" content="http://example.com/2026/11/05/linxu1/image-20210906111159808.png">
+<meta property="og:image" content="http://example.com/2026/11/05/linxu1/image-20210906111353762.png">
+<meta property="og:image" content="http://example.com/2026/11/05/linxu1/image-20200630174304731.png">
+<meta property="og:image" content="http://example.com/2026/11/05/linxu1/image-20220704161151872.png">
+<meta property="og:image" content="http://example.com/2026/11/05/linxu1/image-20210906112547735.png">
+<meta property="og:image" content="http://example.com/2026/11/05/linxu1/image-20210906112747987.png">
+<meta property="og:image" content="http://example.com/2026/11/05/linxu1/image-20210906112916587.png">
+<meta property="og:image" content="http://example.com/2026/11/05/linxu1/image-20210906113257484.png">
+<meta property="og:image" content="http://example.com/2026/11/05/linxu1/image-20210906113337265.png">
+<meta property="og:image" content="http://example.com/2026/11/05/linxu1/image-20210906113433486.png">
+<meta property="og:image" content="http://example.com/2026/11/05/linxu1/image-20210906113936884.png">
+<meta property="og:image" content="http://example.com/2026/11/05/linxu1/image-20210906113956841.png">
+<meta property="og:image" content="http://example.com/2026/11/05/linxu1/image-20210906114011791.png">
+<meta property="og:image" content="http://example.com/2026/11/05/linxu1/image-20220704163409375.png">
+<meta property="og:image" content="http://example.com/2026/11/05/linxu1/image-20211211150117256.png">
+<meta property="og:image" content="http://example.com/2026/11/05/linxu1/image-20211211150455954.png">
+<meta property="og:image" content="http://example.com/2026/11/05/linxu1/image-20211211150647440.png">
+<meta property="og:image" content="http://example.com/2026/11/05/linxu1/image-20230629233612025.png">
+<meta property="og:image" content="http://example.com/2026/11/05/linxu1/image-20230629233658841.png">
+<meta property="og:image" content="http://example.com/2026/11/05/linxu1/image-20210906114619712.png">
+<meta property="og:image" content="http://example.com/2026/11/05/linxu1/image-20220922161602415.png">
+<meta property="og:image" content="http://example.com/2026/11/05/linxu1/image-20230105155405997.png">
+<meta property="og:image" content="http://example.com/2026/11/05/linxu1/image-20210906115918008.png">
+<meta property="og:image" content="http://example.com/2026/11/05/linxu1/image-20220923102632478.png">
+<meta property="og:image" content="http://example.com/2026/11/05/linxu1/image-20220923105607419.png">
+<meta property="og:image" content="http://example.com/2026/11/05/linxu1/image-20220706111855714.png">
+<meta property="og:image" content="http://example.com/2026/11/05/linxu1/image-20210906145652208.png">
+<meta property="og:image" content="http://example.com/2026/11/05/linxu1/image-20210906145713681.png">
+<meta property="og:image" content="http://example.com/2026/11/05/linxu1/image-20210906145910494.png">
+<meta property="og:image" content="http://example.com/2026/11/05/linxu1/image-20210906150018114.png">
+<meta property="og:image" content="http://example.com/2026/11/05/linxu1/image-20210906150233075.png">
+<meta property="og:image" content="http://example.com/2026/11/05/linxu1/image-20210906150356115.png">
+<meta property="og:image" content="http://example.com/2026/11/05/linxu1/image-20220706161536604.png">
+<meta property="og:image" content="http://example.com/2026/11/05/linxu1/image-20220706171038500.png">
+<meta property="article:published_time" content="2026-11-05T12:24:09.000Z">
+<meta property="article:modified_time" content="2026-11-06T15:52:53.564Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2026/11/05/linxu1/image-20210906104118846.png"><link rel="canonical" href="http://example.com/2026/11/05/linxu1/"><link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="preload" as="font" crossorigin="anonymous" href="/font/Bender.ttf"><link rel="preload" as="font" crossorigin="anonymous" href="/font/BenderLight.woff2"><link rel="preload" as="font" crossorigin="anonymous" href="/font/JetBrainsMono-Regular.woff2"><link rel="stylesheet" href="/css/arknights.css"><style>@font-face {
+  font-family: Bender;
+  src: local('Bender'), url("/font/Bender.ttf"), url("/font/Bender.otf");
+}
+@font-face {
+  font-family: BenderLight;
+  src: local('BenderLight'), url("/font/BenderLight.woff2") format('woff2');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}
+</style><meta name="page-config" content="{&quot;code_fold&quot;:null}"><script class="pjax-js">var config = {"root":"/","code_fold":15,"search":{"preload":true,"activeHolder":"Enter here","blurHolder":"Search","noResult":"Data \"$0\" not found"},"code":{"codeInfo":"$0 - $1 lines","copy":"copy"}};
+var page_config = {
+  code_fold: null
+};
+function updatePageConfig() {
+  var newPageConfig = document.querySelector('meta[name="page-config"]');
+  if (newPageConfig) {
+    page_config = JSON.parse(newPageConfig.content);
+  }
+}
+document.addEventListener('pjax:complete', function() { updatePageConfig(); });
+updatePageConfig();</script><link type="text/css" rel="stylesheet" href="/lib/encrypt/hbe.style.css"><script src="//unpkg.com/mermaid@11.12.2/dist/mermaid.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.1/MathJax.js"></script><script>MathJax.Hub.Config({
+ menuSettings: {
+   zoom: "None"
+ },
+ showMathMenu: false,
+ jax: ["input/TeX","output/CommonHTML"],
+ extensions: ["tex2jax.js"],
+ TeX: {
+   extensions: ["AMSmath.js","AMSsymbols.js"],
+   equationNumbers: {
+     autoNumber: "AMS"
+   }
+ },
+ tex2jax: {
+   inlineMath: [["\\(", "\\)"]],
+   displayMath: [["\\[", "\\]"]]
+ }
+});</script><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lightgallery.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-zoom.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-thumbnail.css"><link type="text/css" rel="stylesheet" href="/lib/fontawesome/css/all.min.css"><script>if (window.localStorage.getItem('theme-mode') === 'light' || window.matchMedia('(prefers-color-scheme:light)').matches)
+ document.documentElement.setAttribute('theme-mode', 'light')
+if (window.localStorage.getItem('theme-mode') === 'dark' || window.matchMedia('(prefers-color-scheme:dark)').matches)
+ document.documentElement.setAttribute('theme-mode', 'dark')</script><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.woff2") format('woff2');
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><style>:root {
+ --dark-background: url('https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg');
+ --light-background: url('/img/bk.jpg');
+ --theme-encrypt-confirm: 'confirm'
+}</style><script defer src="/js/arknights.js"></script><script defer src="/js/search.js"></script><script defer src="https://vercount.one/js"></script><script defer type="module">import mermaid from '//unpkg.com/mermaid@11.12.2/dist/mermaid.esm.min.mjs';
+window.mermaid = mermaid;
+code.paintMermaid();
+</script><script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.1/MathJax.js"></script><script>MathJax.Hub.Config({
+  menuSettings: {
+    zoom: "None"
+  },
+  showMathMenu: false,
+  jax: ["input/TeX","output/CommonHTML"],
+  extensions: ["tex2jax.js"],
+  TeX: {
+    extensions: ["AMSmath.js","AMSsymbols.js"],
+    equationNumbers: {
+      autoNumber: "AMS"
+    }
+  },
+  tex2jax: {
+    inlineMath: [["\\(", "\\)"]],
+    displayMath: [["\\[", "\\]"]]
+  }
+});
+</script><script async src="//unpkg.com/lightgallery@2.7.1/lightgallery.min.js"></script><script async src="//unpkg.com/lightgallery@2.7.1/plugins/zoom/lg-zoom.min.js"></script><script async src="//unpkg.com/lightgallery@2.7.1/plugins/thumbnail/lg-thumbnail.min.js"></script><script async src="/lib/encrypt/hbe.js"></script><script async src="/js/pjax.js"></script><script class="pjax-js">reset= () => {document.querySelector('.lg-container')?.remove()
+lightGallery(document.getElementById('post-bg'), {
+  plugins: [lgZoom,lgThumbnail],
+  selector: '.item-img'})}</script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js','data-pjax','.vercount','meta[name=page-config]'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);document.addEventListener('pjax:success', _ => {
+ const script = document.createElement('script');
+ script.src = 'https://vercount.one/js';
+ document.head.appendChild(script);
+});reset()})</script><script class="pjax-js">reset= () => {window.giscusSettings = {
+ repo: 'juicer0801/juicer0801.github.io',
+ repoId: 'R_kgDOUcAR_w',
+ category: 'Announcements',
+ categoryId: 'DIC_kwDOUcAR_84DIlqM',
+ mapping: 'pathname',
+ strict: '0',
+ reactionsEnabled: '1',
+ emitMetadata: '0',
+ inputPosition: 'bottom',
+ lang: 'zh-CN',
+ crossorigin: 'anonymous' , loading: 'lazy'};window.giscusThemeConfig = { theme: 'preferred_color_scheme' };MathJax.Hub.Queue(["Typeset", MathJax.Hub]);document.querySelector('.lg-container')?.remove()
+const postBg = document.querySelector('#post-bg');
+if (postBg) lightGallery(postBg, {
+  plugins: [lgZoom,lgThumbnail],
+  selector: '.item-img'})}</script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js','data-pjax','.vercount','meta[name=page-config]'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);document.addEventListener('pjax:success', _ => {
+ const script = document.createElement('script');
+ script.src = 'https://vercount.one/js';
+ document.head.appendChild(script);
+});reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/tags/"><span class="navItemTitle">Tags</span></a></li><li class="navItem"><a class="navBlock" href="/categories/"><span class="navItemTitle">Categories</span></a></li><li class="navItem"><a class="navBlock" href="/friends"><span class="navItemTitle">友链</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>linxu基础</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2026-11-05T12:24:09.000Z" id="date"> 2026-11-05</time></div></span><br><span>Last Update: <div class="control"><time datetime="2026-11-06T15:52:53.564Z" id="updated"> 2026-11-06</time></div></span><br><span>Word Count: <div class="control">8.5k</div></span><br><span>Read Time: <div class="control">31 min</div></span><br><span id="vercount_container_page_pv">Page View: <span class="control" id="vercount_value_page_pv">loading...</span></span></div></div><hr><div id="post-content"><h1 id="Linux操作系统（大数据基础）"><a href="#Linux操作系统（大数据基础）" class="headerlink" title="Linux操作系统（大数据基础）"></a>Linux操作系统（大数据基础）</h1><h1 id="学习目标"><a href="#学习目标" class="headerlink" title="学习目标"></a>学习目标</h1><ul>
+<li>Linux系统概述</li>
+<li>Linux系统的安装和体验</li>
+<li>Linux的网络配置和连接工具</li>
+<li>Linux的目录结构</li>
+<li>Linux的常用命令</li>
+<li>Linux的VI/VIM编辑器</li>
+</ul>
+<h1 id="一、操作系统概述"><a href="#一、操作系统概述" class="headerlink" title="一、操作系统概述"></a>一、操作系统概述</h1><h2 id="计算机分类"><a href="#计算机分类" class="headerlink" title="计算机分类"></a>计算机分类</h2><p>计算机一般分为个人计算机（笔记、台式机）与 企业级服务器（1U、2U、机柜、塔式、刀片）两种形式。</p>
+<h2 id="计算机组成"><a href="#计算机组成" class="headerlink" title="计算机组成"></a>计算机组成</h2><p>计算机资源分为2 部分：==硬件资源、软件资源==</p>
+<p>硬件资源：所谓的硬件资源就是看得见、摸得着的</p class='item-img' data-src='/2026/11/05/linxu1/image-20210906104118846.png'><img src="/2026/11/05/linxu1/image-20210906104118846.png" class="" title="Hexo 博客封面示例">
+<blockquote>
+<p>在实际工作中，为软件资源提供硬件保障</p>
+</blockquote>
+<p>软件资源：看得见、摸不着（如QQ、Wechat、WPS）</p>
+<p>思考问题：操作硬件，软件有响应。操作软件，硬件也有响应。</p class='item-img' data-src='/2026/11/05/linxu1/image-20210906105138366.png'><img src="/2026/11/05/linxu1/image-20210906105138366.png" class="" title="Hexo 博客封面示例">
+<p>思考：软件可以操作硬件（听音乐）、硬件也可以操作软件（玩游戏，人物的移动），它们之间是如何交互的呢？</p>
+<p>答：主要就是==由于操作系统==，可以这么理解操作系统是软硬件之间的桥梁。</p>
+<h2 id="操作系统概述"><a href="#操作系统概述" class="headerlink" title="操作系统概述"></a>操作系统概述</h2><p>操作系统（Operating System，简称OS）是管理和控制计算机硬件与软件资源的计算机程序，是直接运行在”裸机”上的最基本的系统软件，任何其他软件都必须在操作系统的支持下才能运行。</p class='item-img' data-src='/2026/11/05/linxu1/image-20210906105455952.png'><img src="/2026/11/05/linxu1/image-20210906105455952.png" class="" title="Hexo 博客封面示例">
+<h2 id="操作系统分类"><a href="#操作系统分类" class="headerlink" title="操作系统分类"></a>操作系统分类</h2 class='item-img' data-src='/2026/11/05/linxu1/image-20210906105816844.png'><img src="/2026/11/05/linxu1/image-20210906105816844.png" class="" title="Hexo 博客封面示例">
+<p>由于Linux是开源免费的，而且相比Windows/Mac更加安全、稳定。所以大数据组件都是基于Linux系统安装的，所以，Linux操作系统是我们大数据学习的必备技能。</p>
+<p>Windows操作系统：收费、闭源操作系统</p>
+<p>Unix操作系统：目前常用于Mac苹果电脑或者少量服务器，收费、闭源操作系统</p>
+<p>Linux操作系统：开源、免费的操作系统</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>知道计算机的组成部分</p>
+<p>知道为什么要学习Linux操作系统</p>
+<h1 id="二、Linux操作系统概述"><a href="#二、Linux操作系统概述" class="headerlink" title="二、Linux操作系统概述"></a>二、Linux操作系统概述</h1><h2 id="Linux起源"><a href="#Linux起源" class="headerlink" title="Linux起源"></a>Linux起源</h2><p>Linux创始人——林纳斯 · 托瓦兹 =&gt; Linus =&gt;  Linux</p>
+<p>Linux 诞生于1991年，作者上大学期间实现的 =&gt; 发布学校FTP =&gt; Linux</p>
+<p>Linux的特点：开源、免费、拥有最为庞大的源码贡献者 =》 GNU/Linux</p>
+<p>Linux的吉祥物是企鹅（因为林纳斯小时候被企鹅咬过，印象深刻）=》Git</p class='item-img' data-src='/2026/11/05/linxu1/image-20210906110452331.png'><img src="/2026/11/05/linxu1/image-20210906110452331.png" class="" title="Hexo 博客封面示例">
+<h2 id="Linux-的含义"><a href="#Linux-的含义" class="headerlink" title="Linux 的含义"></a>Linux 的含义</h2><p>狭义：由Linus 编写的一段内核代码。</p>
+<p>广义：广义上的Linux 是指由Linux内核衍生的各种Linux发行版本。</p>
+<h2 id="Linux发行版"><a href="#Linux发行版" class="headerlink" title="Linux发行版"></a>Linux发行版</h2 class='item-img' data-src='/2026/11/05/linxu1/image-20210906110721658.png'><img src="/2026/11/05/linxu1/image-20210906110721658.png" class="" title="Hexo 博客封面示例">
+<h2 id="小结-1"><a href="#小结-1" class="headerlink" title="小结"></a>小结</h2><p>了解Linux的含义</p>
+<p>知道Linux主流的发行版</p>
+<h1 id="三、虚拟机与Linux系统安装"><a href="#三、虚拟机与Linux系统安装" class="headerlink" title="三、虚拟机与Linux系统安装"></a>三、虚拟机与Linux系统安装</h1><h2 id="系统的安装方式"><a href="#系统的安装方式" class="headerlink" title="系统的安装方式"></a>系统的安装方式</h2><p>Linux操作系统也有两种安装方式：① 真机安装 ② 虚拟机安装</p>
+<h2 id="虚拟机概念"><a href="#虚拟机概念" class="headerlink" title="虚拟机概念"></a>虚拟机概念</h2><p>什么是虚拟机？</p>
+<p>虚拟机，有些时候想模拟出一个真实的电脑环境，碍于使用真机安装代价太大，因此而诞生的一款可以模拟操作系统运行的==软件==。</p>
+<p>虚拟机目前有2 个比较有名的产品：==vmware 出品的vmware workstation==、oracle 出品的virtual Box。</p class='item-img' data-src='/2026/11/05/linxu1/image-20210906111159808.png'><img src="/2026/11/05/linxu1/image-20210906111159808.png" class="" title="Hexo 博客封面示例">
+<h2 id="虚拟机的安装"><a href="#虚拟机的安装" class="headerlink" title="虚拟机的安装"></a>虚拟机的安装</h2><blockquote>
+<p>强调：安装后尽量不要卸载，否则后果自负！！！</p>
+</blockquote class='item-img' data-src='/2026/11/05/linxu1/image-20210906111353762.png'><img src="/2026/11/05/linxu1/image-20210906111353762.png" class="" title="Hexo 博客封面示例">
+<p>软件没有什么过多的注意事项，直接双击软件包进行安装即可。但是需要特别注意：当VMware软件安装完毕后，在计算机的网络中会出现两张虚拟网卡（VMnet1和VMnet8）</p class='item-img' data-src='/2026/11/05/linxu1/image-20200630174304731.png'><img src="/2026/11/05/linxu1/image-20200630174304731.png" class="" title="Hexo 博客封面示例">
+<blockquote>
+<p>注意：这个软件安装完成后，尽量不要卸载，会有残留！！！</p>
+</blockquote>
+<h2 id="Linux系统安装"><a href="#Linux系统安装" class="headerlink" title="Linux系统安装"></a>Linux系统安装</h2><p>第一步：解压BigData下面的node1/node2/node3</p class='item-img' data-src='/2026/11/05/linxu1/image-20220704161151872.png'><img src="/2026/11/05/linxu1/image-20220704161151872.png" class="" title="Hexo 博客封面示例">
+<p>第二步：找到解压目录中的node1.vmx</p class='item-img' data-src='/2026/11/05/linxu1/image-20210906112547735.png'><img src="/2026/11/05/linxu1/image-20210906112547735.png" class="" title="Hexo 博客封面示例">
+<p>第三步：启动操作系统</p class='item-img' data-src='/2026/11/05/linxu1/image-20210906112747987.png'><img src="/2026/11/05/linxu1/image-20210906112747987.png" class="" title="Hexo 博客封面示例">
+<p>选择我已移动该虚拟机</p class='item-img' data-src='/2026/11/05/linxu1/image-20210906112916587.png'><img src="/2026/11/05/linxu1/image-20210906112916587.png" class="" title="Hexo 博客封面示例">
+<p>输入默认账号：root（超级管理员），默认密码：123456</p class='item-img' data-src='/2026/11/05/linxu1/image-20210906113257484.png'><img src="/2026/11/05/linxu1/image-20210906113257484.png" class="" title="Hexo 博客封面示例">
+<p>单击登陆，进入CentOS7操作系统，如下图所示：</p class='item-img' data-src='/2026/11/05/linxu1/image-20210906113337265.png'><img src="/2026/11/05/linxu1/image-20210906113337265.png" class="" title="Hexo 博客封面示例">
+<h2 id="常见问题汇总"><a href="#常见问题汇总" class="headerlink" title="常见问题汇总"></a>常见问题汇总</h2><p>① 同时启动3台机器，提示内存不足？</p>
+<p>答：由于计算机的内存本身只有8G左右，但是每个虚拟机需要占用4G内存，所以最少需要12GB内存才能启动3台虚拟机。</p>
+<p>注：如果无法加大内存，就只能使用云平台了。条件允许，建议加大内存。</p>
+<p>② 输入密码总是提示验证不正确？</p>
+<p>答：由于Vmware虚拟机会自动关闭NumLock键，所以在输入密码时，建议采用字母上面的数字键盘，不要使用小键盘。</p>
+<p>③ 如何在Windows与Linux系统之间切换呢？</p>
+<p>答：如果想从Windows中进入Linux系统，使用鼠标在Linux界面按一下就可以自动进入Linux操作系统了；如果想从Linux系统切换回Windows系统，则可以使用快捷键<code>Ctrl + Alt</code>。</p>
+<h1 id="四、Linux连接工具MX使用"><a href="#四、Linux连接工具MX使用" class="headerlink" title="四、Linux连接工具MX使用"></a>四、Linux连接工具MX使用</h1><h2 id="为什么要使用远程连接工具？"><a href="#为什么要使用远程连接工具？" class="headerlink" title="为什么要使用远程连接工具？"></a>为什么要使用远程连接工具？</h2><p>答：因为一般的大数据的服务器都是放在机房的，我们不可能每天都跑到机房里去操作这些机器。所以，我们需要使用远程工具，通过网络连接到机房里的机器。</p class='item-img' data-src='/2026/11/05/linxu1/image-20210906113433486.png'><img src="/2026/11/05/linxu1/image-20210906113433486.png" class="" title="Hexo 博客封面示例">
+<h2 id="虚拟机网络配置"><a href="#虚拟机网络配置" class="headerlink" title="虚拟机网络配置"></a>虚拟机网络配置</h2><p>我们需要远程连接虚拟机，如果使用随机IP我们再重启或更改网络环境后，IP会随机变化，需要频繁修改网络连接配置，为方便学习，我们将其修改为固定IP。</p>
+<p>node1 =&gt; 192.168.88.161</p>
+<p>node2 =&gt; 192.168.88.162</p>
+<p>node3 =&gt; 192.168.88.163</p>
+<p>除了以上服务器的IP以外，我们还需要配置虚拟机的IP地址，否则无法实现远程连接。</p>
+<p>远程工具 =&gt; ==经过VMware路由器== =&gt; 转发网络请求 =&gt; node1/node2/node3</p>
+<p>配置如下：</p class='item-img' data-src='/2026/11/05/linxu1/image-20210906113936884.png'><img src="/2026/11/05/linxu1/image-20210906113936884.png" class="" title="Hexo 博客封面示例">
+<p>选择NAT模式，修改子网IP为指定网段，此处IP设置为192.168.88.0，点击应用。</p class='item-img' data-src='/2026/11/05/linxu1/image-20210906113956841.png'><img src="/2026/11/05/linxu1/image-20210906113956841.png" class="" title="Hexo 博客封面示例">
+<p>选择DHCP设置，将起始IP设置为192.168.88.1，终止IP设置为192.168.88.254，点击确定。</p class='item-img' data-src='/2026/11/05/linxu1/image-20210906114011791.png'><img src="/2026/11/05/linxu1/image-20210906114011791.png" class="" title="Hexo 博客封面示例">
+<p>点击NAT设置，将网关IP设置为192.168.88.2，点击确定后，返回上一级点击确定，设置生效。</p class='item-img' data-src='/2026/11/05/linxu1/image-20220704163409375.png'><img src="/2026/11/05/linxu1/image-20220704163409375.png" class="" title="Hexo 博客封面示例">
+<h2 id="获取Linux操作系统IP地址"><a href="#获取Linux操作系统IP地址" class="headerlink" title="获取Linux操作系统IP地址"></a>获取Linux操作系统IP地址</h2><p>① 打开终端</p>
+<p>② 在终端中，输入一个命令：<code>ip 空格 a</code>命令</p>
+<blockquote>
+<p>ip命令，a是一个参数，代表all，显示所有网卡的IP信息</p>
+</blockquote>
+<p>③ 查看一个叫做ens33网卡的IP地址，这个地址叫做物理IP或者简单理解就是你插网线那个网卡的IP地址</p class='item-img' data-src='/2026/11/05/linxu1/image-20211211150117256.png'><img src="/2026/11/05/linxu1/image-20211211150117256.png" class="" title="Hexo 博客封面示例">
+<p>④ 在Windows操作系统中，远程测试一下这个IP地址是否可以连接（<code>ping命令</code>）</p>
+<p>Windows电脑：<code>Windows键 + R</code>，输入<code>cmd</code>就可以打开DOS窗口了</p class='item-img' data-src='/2026/11/05/linxu1/image-20211211150455954.png'><img src="/2026/11/05/linxu1/image-20211211150455954.png" class="" title="Hexo 博客封面示例">
+<img src="/2026/11/05/linxu1/image-20211211150647440.png" class="" title="Hexo 博客封面示例">
+<h2 id="聊一聊Linux系统账号"><a href="#聊一聊Linux系统账号" class="headerlink" title="聊一聊Linux系统账号"></a>聊一聊Linux系统账号</h2><p>问题：是不是有了IP地址，我们可以连接Linux操作系统了</p>
+<p>答：IP只能保障两台计算机互相通信，如果想进行连接，除了有Linux的IP地址以外，还需要一个Linux的账号与密码。</p>
+<p>账号一般分为两大类：① 普通账号（如itcast账号） ② 超级管理员（如root账号）</p>
+<p>① 普通账号作用：一般可以用于登录操作系统，可以对自己的家目录（文件夹）进行管理</p>
+<p>② 超级管理员作用：包括系统管理、所有用户的管理、软件的安装卸载、包括网络的配置等等，都可以通过root超级管理员进行实现。</p>
+<p>咱们已经安装好的系统，可以通过itcast或者root账号进行管理。</p>
+<p>默认情况下，Linux系统中的两个账号（itcast与root）密码都是<code>123456</code></p>
+<blockquote>
+<p>在学习阶段，推荐使用root账号进行远程管理。但是操作时一定要特别小心。</p>
+</blockquote>
+<p>问题：如何使用命令从itcast普通账号切换到root管理员账号</p>
+<p>答：可以使用<code>su</code>命令</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs powershell">[<span class="hljs-type">itcast</span>@<span class="hljs-type">node1</span> ~]<span class="hljs-variable">$</span> su - root<br>密码：输入<span class="hljs-number">123456</span>即可（但是输入的字符你看不见）<br><br>说明：以上命令的主要功能是从itcast普通账号切换到root超级管理员，要输入密码。<br>-横岗说明：-横岗在Linux操作系统中代表，切换用户的同时，把当前位置也切换到root管理员的家目录<br><br>[<span class="hljs-type">itcast</span>@<span class="hljs-type">node1</span> ~] : 波浪线代表itcast的家<br>[<span class="hljs-type">root</span>@<span class="hljs-type">node1</span> ~] : 波浪线代表root的家<br></code></pre></td></tr></table></figure>
+<h2 id="安装MX远程连接软件"><a href="#安装MX远程连接软件" class="headerlink" title="安装MX远程连接软件"></a>安装MX远程连接软件</h2><p>MX是一款强大的远程终端连接工具。可以用于远程连接Linux系统，通过远程方式执行命令完成任务。</p>
+<p>建立连接：</p class='item-img' data-src='/2026/11/05/linxu1/image-20230629233612025.png'><img src="/2026/11/05/linxu1/image-20230629233612025.png" class="" title="Hexo 博客封面示例">
+<p>参数配置：</p class='item-img' data-src='/2026/11/05/linxu1/image-20230629233658841.png'><img src="/2026/11/05/linxu1/image-20230629233658841.png" class="" title="Hexo 博客封面示例">
+<h2 id="小结-2"><a href="#小结-2" class="headerlink" title="小结"></a>小结</h2><p>为什么需要MX软件？</p>
+<p>MX连接Linux服务器需要哪些参数？</p>
+<h1 id="五、Linux的目录结构（易错）"><a href="#五、Linux的目录结构（易错）" class="headerlink" title="五、Linux的目录结构（易错）"></a>五、Linux的目录结构（易错）</h1><h2 id="Linux目录与Windows目录区别"><a href="#Linux目录与Windows目录区别" class="headerlink" title="Linux目录与Windows目录区别"></a>Linux目录与Windows目录区别</h2><p>Linux的目录结构是一个树型结构<br>Windows 系统 可以拥有多个盘符, 如 C盘、D盘、E盘<br>Linux 没有盘符 这个概念, 只有一个根目录 /, 所有文件都在它下面</p class='item-img' data-src='/2026/11/05/linxu1/image-20210906114619712.png'><img src="/2026/11/05/linxu1/image-20210906114619712.png" class="" title="Hexo 博客封面示例">
+<h2 id="常见目录介绍（记住重点）"><a href="#常见目录介绍（记住重点）" class="headerlink" title="常见目录介绍（记住重点）"></a>常见目录介绍（记住重点）</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>目录</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>==/bin==</td>
+<td>二进制命令所在的目录(普通命令 =&gt; 普通用户itcast和超级管理员root)</td>
+</tr>
+<tr>
+<td>/boot</td>
+<td>系统引导程序所需要的文件目录，相当于Windows中的C盘</td>
+</tr>
+<tr>
+<td>/dev</td>
+<td>/device缩写，设备文件目录，磁盘，光驱 =&gt; /dev/sr0</td>
+</tr>
+<tr>
+<td>==/etc==</td>
+<td>系统配置文件目录，启动程序，几乎所有的软件都会把自己的配置文件安装在/etc中</td>
+</tr>
+<tr>
+<td>==/home==</td>
+<td>普通用户的家目录，默认用户数据存放目录，itheima账号 =&gt; /home/itheima文件夹</td>
+</tr>
+<tr>
+<td>/lib</td>
+<td>共享库文件和内核模块存放目录，软件安装、运行依赖库文件.a、.so文件</td>
+</tr>
+<tr>
+<td>/mnt</td>
+<td>临时挂载储存设备的挂载点，插入u盘、移动硬盘 =&gt; 先挂载 =&gt; /mnt中访问</td>
+</tr>
+<tr>
+<td>/opt</td>
+<td>额外的应用软件包， 安装qq、游戏、wps办公软件</td>
+</tr>
+<tr>
+<td>/proc</td>
+<td>process进程目录，操作系统运行时，进程信息和内核信息存放在这里</td>
+</tr>
+<tr>
+<td>==/root==</td>
+<td>Linux超级权限用户root的家目录，超级管理员root =&gt; /root</td>
+</tr>
+<tr>
+<td>==/sbin==</td>
+<td>和管理系统相关的命令，【超级管理员用】，s = super超级</td>
+</tr>
+<tr>
+<td>==/tmp==</td>
+<td>临时文件目录，这个目录被当作回收站使用</td>
+</tr>
+<tr>
+<td>==/usr==</td>
+<td>用户或系统软件应用程序目录，类似Windows中的Program files</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>① 普及概念：<code>用户的家目录</code></p>
+<p>普通用户：itcast，普通用户的家 =&gt; /home，如itcast家目录 =&gt; /home/itcast文件夹</p>
+<p>超级管理员：root，超级管理员的家 =&gt; /root</p>
+<p>② 普及概念：<code>系统配置文件目录</code></p>
+<p>/etc ：与操作系统相关，系统软件相关，比如网卡配置 =&gt; 88.100 ~ 88.200</p>
+<p>③ 普及概念：<code>/tmp目录</code></p>
+<p>临时文件目录，类似Windows中的垃圾回收站。</p>
+<p>④ 普及概念：<code>/usr目录</code></p>
+<p>Linux系统中的程序目录，安装软件、程序默认都会自动安装到此目录，类似Windows中的Program files文件夹</p>
+<h2 id="小结-3"><a href="#小结-3" class="headerlink" title="小结"></a>小结</h2><p>了解Linux系统的目录结构</p>
+<p>能够说出几个重点目录的作用</p>
+<h1 id="六、Linux常见命令（重点中重点）"><a href="#六、Linux常见命令（重点中重点）" class="headerlink" title="六、Linux常见命令（重点中重点）"></a>六、Linux常见命令（重点中重点）</h1 class='item-img' data-src='/2026/11/05/linxu1/image-20220922161602415.png'><img src="/2026/11/05/linxu1/image-20220922161602415.png" class="" title="Hexo 博客封面示例">
+<h2 id="命令结构"><a href="#命令结构" class="headerlink" title="命令结构"></a>命令结构</h2><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs powershell">command [-<span class="hljs-type">options</span>] [<span class="hljs-type">parameter</span>]<br><br>说明:<br>command : 命令名, 相应功能的英文单词或单词的缩写<br>[-<span class="hljs-type">options</span>] : 选项, 可用来对命令进行控制, 也可以省略<br><span class="hljs-keyword">parameter</span> : 传给命令的参数, 可以是 零个、一个 或者 多个<br></code></pre></td></tr></table></figure>
+<p>命令有三种情况：</p>
+<p>① 只有命令，没有选项也没有参数</p>
+<p>② 除了命令以外，还有选项，但是没有参数</p>
+<p>③ 除了命令以外，还要有选项和参数</p>
+<h2 id="ls命令"><a href="#ls命令" class="headerlink" title="ls命令"></a>ls命令</h2><p> 作用 ：ls 是英文单词list show的简写, 其功能为列出目录的内容，是用户最常用的命令之一</p>
+<p>格式</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-built_in">ls</span> [选项] [参数=&gt;路径]<br></code></pre></td></tr></table></figure>
+<p>ls常用选项</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>选项</strong></th>
+<th><strong>含义</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>-a</strong></td>
+<td>all所有, 显示指定目录下所有子目录与文件, 包含隐藏文件</td>
+</tr>
+<tr>
+<td><strong>-l</strong></td>
+<td>list，以列表方式显示文件的详细信息</td>
+</tr>
+<tr>
+<td><strong>-h</strong></td>
+<td>配合 -l 以人性化的方式显示文件大小（文件大小 + 单位）</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>案例演示：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-built_in">ls</span>           <span class="hljs-comment">#查看当前目录内容 (缺点: 隐藏文件看不到,以 .开头的文件) ！</span><br><span class="hljs-built_in">ls</span> <span class="hljs-literal">-a</span>        <span class="hljs-comment">#查看当前目录内容 ,包括隐藏文件 </span><br><span class="hljs-built_in">ls</span> –al       <span class="hljs-comment">#查看目录内容的详细信息(查看文件类型、权限、大小等) </span><br><span class="hljs-built_in">ls</span> <span class="hljs-literal">-lh</span>       <span class="hljs-comment">#查看目录内容的详细信息,以K,M,G方式显示文件大小 </span><br><span class="hljs-built_in">ls</span> /root     <span class="hljs-comment">#查看/root目录下内容</span><br><br>快捷键 ll 相当 <span class="hljs-built_in">ls</span><br>ll           <span class="hljs-comment">#等价于ls -l</span><br></code></pre></td></tr></table></figure>
+<p>ls -l与ll显示信息说明：</p class='item-img' data-src='/2026/11/05/linxu1/image-20230105155405997.png'><img src="/2026/11/05/linxu1/image-20230105155405997.png" class="" title="Hexo 博客封面示例">
+<h2 id="cd命令-gt-pwd命令-gt-cd"><a href="#cd命令-gt-pwd命令-gt-cd" class="headerlink" title="cd命令 =&gt; pwd命令 =&gt; cd ~"></a>cd命令 =&gt; pwd命令 =&gt; cd ~</h2><p>作用：cd 是英文单词 change directory 的缩写, 其功能为 <code>更改当前的工作目录</code>, 也是用户最常用的命令之一。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cd</td>
+<td>切换到用户主目录（root用户主目录是/root,其他用户是/home/用户名）等价于 cd ~</td>
+</tr>
+<tr>
+<td>cd 目录</td>
+<td>切换到指定目录下 =&gt; cd /etc</td>
+</tr>
+<tr>
+<td>cd ..</td>
+<td>切换到上级目录</td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p> 提示：执行 pwd 指令可立刻得知您目前所在的工作目录的绝对路径名称。</p>
+</blockquote>
+<p>案例演示：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-built_in">cd</span>              <span class="hljs-comment">#回到用户主目录</span><br><span class="hljs-built_in">cd</span>  test       <span class="hljs-comment">#切换到当前目录下的test目录（相对路径） </span><br><span class="hljs-built_in">cd</span>  /usr/share  <span class="hljs-comment">#切换到指定目录（绝对路径）</span><br><span class="hljs-built_in">cd</span> ..         <span class="hljs-comment">#回到上一级目录 </span><br><span class="hljs-built_in">cd</span> ../../      <span class="hljs-comment">#回到上上一级目录</span><br><span class="hljs-built_in">cd</span> ../<span class="hljs-built_in">dir</span>     <span class="hljs-comment">#回到上一级的dir目录 </span><br></code></pre></td></tr></table></figure>
+<p>普及：路径有两种写法</p>
+<p>==绝对路径== ：<code>从根目录一级一级向下移动，不能越级</code>。如/home/itheima</p>
+<p>例如：访问根目录下的usr目录下local目录下的hadoop文件夹</p>
+<p>cd /usr/local/hadoop =&gt; 路径不需要记忆，用到的时候，直接按Tab键（自动补全）</p>
+<p>==相对路径== ：顾名思义，有一个参考点 =&gt; 以<code>当前位置</code>作为参考</p>
+<p>① 同级关系 =&gt; cd  ./home或cd  home</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-comment"># 当前我位于/根目录下面   home文件夹   boot文件夹   usr文件夹</span><br><span class="hljs-comment"># cd ./home  或者  cd home</span><br></code></pre></td></tr></table></figure>
+<p>② 上一级关系 =&gt; cd ../ =&gt; 上两级 =&gt; cd ../../</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-comment"># cd ..  注意在Linux系统中..就代表上一级路径</span><br></code></pre></td></tr></table></figure>
+<p>③ 同级的下一级关系</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-comment"># cd 同级目录/</span><br></code></pre></td></tr></table></figure>
+<p>扩展：在Linux操作系统中，我们可以通过<code>pwd</code>命令，查看当前工作目录！！！</p>
+<h2 id="mkdir命令"><a href="#mkdir命令" class="headerlink" title="mkdir命令"></a>mkdir命令</h2><p>作用：mkdir命令用于创建目录</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs powershell">mkdir [-<span class="hljs-type">p</span>] dirName<br><br>参数：<br><span class="hljs-literal">-p</span>：一次创建多级目录<br></code></pre></td></tr></table></figure>
+<p>案例演示：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs powershell">mkdir bigdata 		  <span class="hljs-comment">#创建单级目录 </span><br>mkdir <span class="hljs-literal">-p</span> aaa/bbb/ccc  <span class="hljs-comment">#创建多级目录 </span><br></code></pre></td></tr></table></figure>
+<h2 id="touch命令"><a href="#touch命令" class="headerlink" title="touch命令"></a>touch命令</h2><p>作用：touch命令创建文件</p>
+<p>格式：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell">touch 文件名<br></code></pre></td></tr></table></figure>
+<p>案例演示：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs powershell">touch a.txt  	   <span class="hljs-comment">#在当前目录创建a.txt文件 </span><br>touch /root/a.txt  <span class="hljs-comment">#在/root目录创建a.txt文件</span><br></code></pre></td></tr></table></figure>
+<h2 id="rm命令"><a href="#rm命令" class="headerlink" title="rm命令"></a>rm命令</h2><p>作用：rm（remove）命令用于删除文件或者目录</p>
+<p>格式：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-built_in">rm</span> [参数] 文件或者目录名<br></code></pre></td></tr></table></figure>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>英文</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-f</td>
+<td>force (强制)</td>
+<td>强制删除,忽略不存在的文件或目录, 无需提示</td>
+</tr>
+<tr>
+<td>-r</td>
+<td>recursive (递归)</td>
+<td>递归地删除目录下的内容, 删除目录时必须加此参数</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>案例演示：</p class='item-img' data-src='/2026/11/05/linxu1/image-20210906115918008.png'><img src="/2026/11/05/linxu1/image-20210906115918008.png" class="" title="Hexo 博客封面示例">
+<blockquote>
+<p>rm命令在使用时一定要慎重，慎重，在慎重！</p>
+</blockquote>
+<p>网上经常流传这样一个故事 =&gt; <code>rm -rf /*</code></p>
+<p>rm -rf 强制删除不提示</p>
+<p>/根目录</p>
+<p>*所有</p>
+<p>强制删除根目录下的所有文件 =&gt; 跑路</p>
+<h2 id="cp命令-复制"><a href="#cp命令-复制" class="headerlink" title="cp命令(复制)"></a>cp命令(复制)</h2><p>copy缩写</p>
+<p>作用：cp命令用来实现文件或者目录的复制</p>
+<p>格式：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-built_in">cp</span>  源文件位置  目标路径<br>注：如果复制文件可以不需要添加任何参数，但是如果要复制一个文件夹则必须添加一个<span class="hljs-literal">-r</span>选项代表递归复制<br></code></pre></td></tr></table></figure>
+<p>案例演示：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">touch readme.txt  <span class="hljs-comment"># 创建一个文件</span><br>cp readme.txt /tmp/	 <span class="hljs-comment"># 把readme.txt文件拷贝到/tmp目录一份</span><br><br>mdkir bigdata  <span class="hljs-comment"># 创建一个文件夹，也可以放置一些文件在里面</span><br>cp -r bigdata /tmp/  <span class="hljs-comment"># 把bigdata整个文件夹拷贝到/tmp目录</span><br></code></pre></td></tr></table></figure>
+<h2 id="mv命令-剪切或重命名"><a href="#mv命令-剪切或重命名" class="headerlink" title="mv命令(剪切或重命名)"></a>mv命令(剪切或重命名)</h2><p>move缩写</p>
+<p>作用：mv命令用于文件、目录的移动和重命名</p>
+<p>格式：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-built_in">mv</span> 源文件路径 目标路径<br>注意：<span class="hljs-built_in">mv</span>没有任何选项，移动文件和文件夹都可以<br></code></pre></td></tr></table></figure>
+<p>移动案例演示：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs powershell">touch python.txt<br><span class="hljs-built_in">mv</span> python.txt /tmp/   <span class="hljs-comment">#将python.txt移动到/tmp目录</span><br>mkdir bigdata<br><span class="hljs-built_in">mv</span> bigdata /tmp/	  <span class="hljs-comment">#将bigdata文件夹移动到/tmp目录</span><br></code></pre></td></tr></table></figure>
+<p>重命名案例演示：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-built_in">mv</span> a.txt b.txt  <span class="hljs-comment">#将a.txt重命名为b.txt</span><br><span class="hljs-built_in">mv</span> dir2 dir22   <span class="hljs-comment">#将dir2目录重命名为dir22</span><br></code></pre></td></tr></table></figure>
+<p>答疑：涉及到路径中的文件访问，各位小伙伴有一个误解？总是分不清到底什么时候用./或者什么时候用/</p class='item-img' data-src='/2026/11/05/linxu1/image-20220923102632478.png'><img src="/2026/11/05/linxu1/image-20220923102632478.png" class="" title="Hexo 博客封面示例">
+<p>答：在Linux操作系统中，要想访问文件有两种路径：绝对路径 和 相对路径；在上方的案例中，我们采用的实际是绝对路径，因为/itcast采用根目录开头。但是我们ls查看的实际上并不是/根目录下的文件，而是当前你所在位置的下的文件信息。也就是说itcast是在当前家目录中，我们要想访问这个文件不应该使用/根目录，因为这是完全不同的路径。</p>
+<p>以上写法应该更改为：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-built_in">mv</span> linux.txt ./itcast/<br></code></pre></td></tr></table></figure>
+<h2 id="cat命令"><a href="#cat命令" class="headerlink" title="cat命令"></a>cat命令</h2><p>扩展：在Shell脚本中，有两个符号（&gt; 和 &gt;&gt;），重定向 =&gt; 就是把前面命令的执行结果重定向到某个文件中</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-built_in">echo</span> <span class="hljs-number">111</span> &gt; linux.txt    <span class="hljs-comment"># 把echo的执行结果输入到linux.txt</span><br><span class="hljs-built_in">echo</span> <span class="hljs-number">222</span> &gt;&gt; linux.txt   <span class="hljs-comment"># 把echo的执行结果追加到linux.txt</span><br><br>&gt; 覆盖输出重定向，先清空文件内容，然后把前面的结果输入到文件中<br>&gt;&gt; 追加输出重定向，不清空文件内容，然后把前面的结果追加到文件的尾部<br></code></pre></td></tr></table></figure>
+<p>cat命令主要用于查看==小文件==中的文件内容！</p>
+<p>作用：用于显示文件内容</p>
+<p>格式：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-built_in">cat</span> 文件名称<br></code></pre></td></tr></table></figure>
+<p>案例演示：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-built_in">echo</span> <span class="hljs-number">111</span> &gt; linux.txt<br><span class="hljs-built_in">echo</span> <span class="hljs-number">222</span> &gt;&gt; linux.txt<br><br><span class="hljs-built_in">cat</span> linux.txt<br></code></pre></td></tr></table></figure>
+<p>注：如果不小心，只输入了cat就回车了，系统就会处于等待状态，等待文件的输入，但是由于没有文件，则会导致一直卡在某个位置，如何解决？</p>
+<p>答：在Linux操作系统中有一个快捷键 =&gt; <code>Ctrl + C</code>，在Linux中代表中止当前正在执行的进程。</p>
+<h2 id="more命令"><a href="#more命令" class="headerlink" title="more命令"></a>more命令</h2><p>more命令主要用于查看==大文件==中文件内容！（超过多屏）</p>
+<p>作用： 用于显示文件内容，可以按页或者按行显示文件内容</p>
+<p>格式：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs powershell">more 文件名称<br><br>快捷键<br>Enter: 向下n行, 需要定义, 默认为<span class="hljs-number">1</span>行<br>空格键: 向下滚动一屏 或 Ctrl + F<br>b键: 返回上一屏 或 Ctrl+B <br>q: 退出more<br></code></pre></td></tr></table></figure>
+<p>案例演示：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell">more /etc/sysctl.conf<br></code></pre></td></tr></table></figure>
+<h2 id="ps命令"><a href="#ps命令" class="headerlink" title="ps命令"></a>ps命令</h2><p>process缩写 =&gt; 进程</p>
+<p>作用：ps命令用来列出系统中当前运行的进程</p>
+<p>格式</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-built_in">ps</span> [<span class="hljs-type">options</span>]<br></code></pre></td></tr></table></figure>
+<p>案例演示：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-built_in">ps</span> <span class="hljs-literal">-ef</span> <span class="hljs-comment">#查看正在运行的所有进程</span><br></code></pre></td></tr></table></figure class='item-img' data-src='/2026/11/05/linxu1/image-20220923105607419.png'><img src="/2026/11/05/linxu1/image-20220923105607419.png" class="" title="Hexo 博客封面示例">
+<p>==UID ：启动这个进程的UID（用户）编号==</p>
+<p>==PID ：关键，代表进程的ID =&gt; 每个进程的ID编号都是唯一的==</p>
+<p>PPID ：父进程，如果这个值不为0，则代表当前这个进程的父进程编号</p>
+<p>C ：CPU占有率</p>
+<p>STIME ：启动时间</p>
+<p>TTY ：在哪个终端打开的</p>
+<p>TIME ：运行时间</p>
+<p>==CMD ：进程的名称或者进程的位置==</p>
+<h2 id="kill命令"><a href="#kill命令" class="headerlink" title="kill命令"></a>kill命令</h2><p>os.kill(进程PID，发送的信号)</p>
+<p>-9：强制杀死进程</p>
+<p>-15：正常结束进程</p>
+<p>作用：kill命令用于终止执行中的程序</p>
+<p>格式：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-built_in">kill</span> [选项] [进程号]<br></code></pre></td></tr></table></figure>
+<p>案例：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs powershell">测试：可以开两个窗口<br>第一个窗口运行top命令<br>第二个窗口通过<span class="hljs-built_in">ps</span> <span class="hljs-literal">-ef</span>查看进程编号，比如进程号为<span class="hljs-number">12345</span>，则在第二个窗口执行以下操作可以结束进程。<br><br><span class="hljs-built_in">kill</span> <span class="hljs-literal">-9</span> <span class="hljs-number">12345</span> <span class="hljs-comment">#强制杀死pid为12345的进程</span><br><span class="hljs-built_in">kill</span> <span class="hljs-literal">-15</span> <span class="hljs-number">12345</span> <span class="hljs-comment">#正常结束pid为12345的进程（默认）</span><br></code></pre></td></tr></table></figure>
+<h2 id="ifconfig命令"><a href="#ifconfig命令" class="headerlink" title="ifconfig命令"></a>ifconfig命令</h2><p>在Windows中，我们可以通过ipconfig获取计算机的IP地址；但是在Linux操作系统中，我们可以使用：</p>
+<p>ip a 或 ifconfig</p>
+<p>作用：ifconfig命令用来查看ip地址</p>
+<p>格式：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell">ifconfig<br></code></pre></td></tr></table></figure>
+<p>案例演示：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs powershell">[<span class="hljs-type">root</span>@<span class="hljs-type">node1</span> ~]<span class="hljs-comment"># ifconfig</span><br>ens33: flags=<span class="hljs-number">4163</span>&lt;UP,BROADCAST,RUNNING,MULTICAST&gt;  mtu <span class="hljs-number">1500</span><br>        inet <span class="hljs-number">192.168</span>.<span class="hljs-number">88.100</span>  netmask <span class="hljs-number">255.255</span>.<span class="hljs-number">255.0</span>  broadcast <span class="hljs-number">192.168</span>.<span class="hljs-number">88.255</span><br>        inet6 fe80::<span class="hljs-number">20</span>c:<span class="hljs-number">29</span>ff:fe49:b3ec  prefixlen <span class="hljs-number">64</span>  scopeid <span class="hljs-number">0</span>x20&lt;link&gt;<br>        ether <span class="hljs-number">00</span>:<span class="hljs-number">0</span>c:<span class="hljs-number">29</span>:<span class="hljs-number">49</span>:b3:ec  txqueuelen <span class="hljs-number">1000</span>  (Ethernet)<br>        ...<br>lo: flags=<span class="hljs-number">73</span>&lt;UP,LOOPBACK,RUNNING&gt;  mtu <span class="hljs-number">65536</span><br>        inet <span class="hljs-number">127.0</span>.<span class="hljs-number">0.1</span>  netmask <span class="hljs-number">255.0</span>.<span class="hljs-number">0.0</span><br>        inet6 ::<span class="hljs-number">1</span>  prefixlen <span class="hljs-number">128</span>  scopeid <span class="hljs-number">0</span>x10&lt;host&gt;<br>        loop  txqueuelen <span class="hljs-number">1000</span>  (Local Loopback)<br>        RX packets <span class="hljs-number">90</span>  bytes <span class="hljs-number">17886</span> (<span class="hljs-number">17.4</span> KiB)<br>    	...<br></code></pre></td></tr></table></figure>
+<h2 id="clear命令"><a href="#clear命令" class="headerlink" title="clear命令"></a>clear命令</h2><p>作用：clear命令用来清屏，可以使用<code>Ctrl + L</code>来替换</p>
+<p>格式：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-built_in">clear</span><br></code></pre></td></tr></table></figure>
+<p>案例演示：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell">[<span class="hljs-type">root</span>@<span class="hljs-type">node1</span> ~]<span class="hljs-comment"># clear</span><br></code></pre></td></tr></table></figure>
+<h2 id="重启与关机命令-超管"><a href="#重启与关机命令-超管" class="headerlink" title="重启与关机命令(超管)"></a>重启与关机命令(超管)</h2><p>重启：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell">reboot<br></code></pre></td></tr></table></figure>
+<p>关机：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs powershell">shutdown <span class="hljs-literal">-h</span> <span class="hljs-number">0</span> : 立刻关机(断电关机)<br>halt : 立刻关机 (不断电关机)<br></code></pre></td></tr></table></figure>
+<h2 id="which命令"><a href="#which命令" class="headerlink" title="which命令"></a>which命令</h2><p>作用：which显示执行命令的绝对位置</p>
+<p>在Linux操作系统中，一切皆文件，命令也是一个文件，如果想查看其具体位置，可以通过which语句。</p>
+<h2 id="find命令"><a href="#find命令" class="headerlink" title="find命令"></a>find命令</h2><p>作用：根据文件名称或大小搜索文件</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs powershell">find / <span class="hljs-literal">-name</span> <span class="hljs-string">&quot;test&quot;</span><br><br>查找小于<span class="hljs-number">10</span>KB的文件： find / <span class="hljs-literal">-size</span> <span class="hljs-literal">-10k</span><br>查找大于<span class="hljs-number">100</span>MB的文件：find / <span class="hljs-literal">-size</span> +<span class="hljs-number">100</span>M<br>查找大于<span class="hljs-number">1</span>GB的文件：find / <span class="hljs-literal">-size</span> +<span class="hljs-number">1</span>G<br></code></pre></td></tr></table></figure>
+<h2 id="grep命令"><a href="#grep命令" class="headerlink" title="grep命令"></a>grep命令</h2><p>作用：对文件内容进行检索</p>
+<p>案例演示：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs powershell">grep lang anaconda<span class="hljs-literal">-ks</span>.cfg 		<span class="hljs-comment">#在文件中查找lang</span><br>grep <span class="hljs-literal">-n</span> lang anaconda<span class="hljs-literal">-ks</span>.cfg    <span class="hljs-comment">#在文件中查找lang并显示行号信息</span><br></code></pre></td></tr></table></figure>
+<h2 id="管道命令-Shift"><a href="#管道命令-Shift" class="headerlink" title="|管道命令(Shift + \)"></a>|管道命令(Shift + \)</h2><p>管道作用：就是把|管道前面命令的执行结果作为后面命令的参数</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-comment"># ps -ef | grep crond</span><br></code></pre></td></tr></table></figure>
+<p>主要作用就是把当前系统中的所有正在运行的进程查询出来，然后传递给grep命令作为参数</p>
+<p>grep  mysql  (正在运行的进程)，又由于grep代表关键词筛选，所以以上完整功能代表在所有正在运行的进程中查找mysql进程！</p>
+<p>案例演示：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-built_in">ps</span>  <span class="hljs-literal">-ef</span>| grep mysql : 在所有进程中快速找到包含mysql内容的进程<br></code></pre></td></tr></table></figure>
+<h2 id="tar命令"><a href="#tar命令" class="headerlink" title="tar命令"></a>tar命令</h2><p>作用：压缩文件与解压缩文件</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell">tar [选项]<br></code></pre></td></tr></table></figure>
+<p>选项说明：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>选项</th>
+<th>解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-c</td>
+<td>创建一个新tar文件，就是把多个文件放在一起，但是没有压缩 =&gt; 10M + 10M + 10M</td>
+</tr>
+<tr>
+<td>-v</td>
+<td>显示运行过程的信息，显示压缩或者解压缩进度 =&gt; 显示进度信息</td>
+</tr>
+<tr>
+<td>-f</td>
+<td>指定文件名，代表指定压缩后的文件名称 =&gt; 指定文件名称（必选选项）</td>
+</tr>
+<tr>
+<td>-z</td>
+<td>调用gzip压缩命令进行解、压缩，就是把文件压缩为.gz格式 =&gt; .gz格式 =&gt; xxx.tar.gz</td>
+</tr>
+<tr>
+<td>-x</td>
+<td>解包</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>注意：-c和-x正好相反，只能出现一个。-c负责打包，-x负责解压缩</p>
+<p>解压：解压缩其实非常简单，只需要把压缩选项中的-c换成-x就可以实现解压缩</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs powershell">tar <span class="hljs-literal">-zxvf</span> redis<span class="hljs-literal">-3</span>.<span class="hljs-number">2.8</span>.tar.gz 			  <span class="hljs-comment">#将文件解压到当前目录</span><br>tar <span class="hljs-literal">-zxvf</span> redis<span class="hljs-literal">-3</span>.<span class="hljs-number">2.8</span>.tar.gz <span class="hljs-literal">-C</span> /root/<span class="hljs-built_in">dir</span> <span class="hljs-comment">#将文件解压到指定目录</span><br>简写形式<br>tar <span class="hljs-literal">-xf</span> redis<span class="hljs-literal">-3</span>.<span class="hljs-number">2.8</span>.tar.gz  <br></code></pre></td></tr></table></figure>
+<p>压缩：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs powershell">tar <span class="hljs-literal">-zcvf</span> test.tar.gz /root/test 	       <span class="hljs-comment">#打包并压缩</span><br>简写形式<br>tar <span class="hljs-literal">-zcf</span> test.tar.gz /root/test<br>多文件压缩<br>tar <span class="hljs-literal">-zcvf</span> python.tar.gz linux.txt readme.txt   <span class="hljs-comment">#把多个文件压缩到同一个压缩包中</span><br></code></pre></td></tr></table></figure>
+<p>查看压缩包中的文件：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell">tar <span class="hljs-literal">-tf</span> redis<span class="hljs-literal">-3</span>.<span class="hljs-number">2.8</span>.tar.gz  <span class="hljs-comment"># 查看压缩包中的内容</span><br></code></pre></td></tr></table></figure>
+<h2 id="useradd命令-超级命令"><a href="#useradd命令-超级命令" class="headerlink" title="useradd命令(超级命令)"></a>useradd命令(超级命令)</h2><p>作用：创建账号</p>
+<p>案例演示：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs powershell">useradd itheima  <span class="hljs-comment"># 创建账号</span><br>passwd  itheima  <span class="hljs-comment"># 设置密码</span><br></code></pre></td></tr></table></figure>
+<p>扩展：id命令，可以用于查看某个账号是否存在</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell">id itheima<br></code></pre></td></tr></table></figure>
+<h2 id="userdel命令-超级命令"><a href="#userdel命令-超级命令" class="headerlink" title="userdel命令(超级命令)"></a>userdel命令(超级命令)</h2><p>作用：删除账号</p>
+<p>-r选项：删除用户的同时，删除用户的家目录 =&gt; /home/用户名文件夹</p>
+<p>案例演示：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell">userdel <span class="hljs-literal">-r</span> itheima<br></code></pre></td></tr></table></figure>
+<h2 id="passwd命令"><a href="#passwd命令" class="headerlink" title="passwd命令"></a>passwd命令</h2><p>作用：为Linux用户添加密码，因为默认创建的Linux账号没有密码，Linux出于安全考虑，不允许没有密码的用户登录Linux操作系统。</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-comment"># passwd 用户名称 + 回车</span><br>输入密码<br>确认密码<br></code></pre></td></tr></table></figure>
+<h2 id="su命令"><a href="#su命令" class="headerlink" title="su命令"></a>su命令</h2><p>作用：切换（用户）账号</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-comment"># su 账号名称</span><br><span class="hljs-comment"># su - itheima</span><br></code></pre></td></tr></table></figure>
+<p>-横岗：代表切换用户的同时，把当前的目录切换到用户的家目录</p>
+<h2 id="chmod命令"><a href="#chmod命令" class="headerlink" title="chmod命令"></a>chmod命令</h2><p>作用：更改文件权限</p>
+<p>文件权限概述</p>
+<p>Linux操作系统是==多任务多用户==操作系统，每当我们使用用户名登录操作系统时，Linux都会对该用户进行认证、授权审计等操作。操作系统为了识别每个用户，会给每个用户定义一个ID，就是UID。为了方便用户管理，Linux允许把多个用户放入一个用户组；在Linux系统中，用户组也有一个ID，GID。</p>
+<p>用户和用户组的概念</p class='item-img' data-src='/2026/11/05/linxu1/image-20220706111855714.png'><img src="/2026/11/05/linxu1/image-20220706111855714.png" class="" title="Hexo 博客封面示例">
+<p>在Linux操作系统中，root的权限是最高的，相当于windows的administrator，拥有最高权限，能执行任何命令和操作，而其他用户都是普通用户。</p>
+<p>Linux对文件创建者（所属用户），所属用户组，其他用户都赋予不同的权限。</p>
+<p>查看文件权限</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-comment"># ls -l</span><br></code></pre></td></tr></table></figure class='item-img' data-src='/2026/11/05/linxu1/image-20210906145652208.png'><img src="/2026/11/05/linxu1/image-20210906145652208.png" class="" title="Hexo 博客封面示例">
+<p>文件权限解读</p>
+<p>r/w/x</p>
+<p>r：只读权限</p>
+<p>w：只写权限</p>
+<p>x：主要针对脚本文件，如.sh脚本文件，代表可以对其进行运行 =&gt; 类似Windows中的.exe</p class='item-img' data-src='/2026/11/05/linxu1/image-20210906145713681.png'><img src="/2026/11/05/linxu1/image-20210906145713681.png" class="" title="Hexo 博客封面示例">
+<p>第1个小列：文件类型，-是一个普通文件，d代表是一个文件夹</p>
+<p>第234个小列：文件拥有者权限</p>
+<p>第567个小列：所属组内用户权限</p>
+<p>第8910个下列：其他用户权限（既不是拥有者也不是组内用户）</p>
+<p>==r: 对文件是指可读取内容，对目录是可以读目录下的文件信息==</p>
+<p>==w: 对文件是指可修改文件内容，对目录 是指可以在其中创建或删除子节点(目录或文件)==</p>
+<p>==x: 对文件是指是否可以运行这个文件，对目录是指是否可以cd进入这个目录==</p>
+<blockquote>
+<p>在文件夹中，r和x权限一般属于组合权限，通常是一起出现的，很少单独出现。</p>
+<p>注意：以上r、w、x权限都只能针对普通用户，root可以为所欲为，因为其不受权限限制。</p>
+</blockquote class='item-img' data-src='/2026/11/05/linxu1/image-20210906145910494.png'><img src="/2026/11/05/linxu1/image-20210906145910494.png" class="" title="Hexo 博客封面示例">
+<p>chmod命令：chmod命令用来变更文件或目录的权限。</p>
+<p>chmod命令可以通过==字母修改文件权限==，也可以通过==数字方式修改文件权限==。</p>
+<p>字母形式：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-comment"># chmod u=rwx,g=rx,o=rx 文件名称</span><br>或<br><span class="hljs-comment"># chmod -R u=rwx,g=rx,o=rx 文件夹</span><br><span class="hljs-literal">-R</span>：递归修改，不仅可以修改文件夹本身的权限，还可以修改文件夹内部的所有文件权限<br><br>还可以使用+或-修改权限：<br><span class="hljs-comment"># chmod u-x 文件名称</span><br><br>如果针对u、g、o三者设置相同权限，我们还可以使用a来替代ugo<br><span class="hljs-comment"># chmod a=rwx 文件名称</span><br></code></pre></td></tr></table></figure>
+<p>数字形式：常见数字权限，777、755、644、600，这些都是文件权限。必须3位连续的数字。</p>
+<p>第1位数字u：拥有者权限</p>
+<p>第2位数字g：组内用户权限</p>
+<p>第3位数字o：其他用户权限</p>
+<p>思考一个问题：数字从何而来？</p>
+<p>答：每一个权限都有一个对应的数字，==r=4、w=2、x=1==</p>
+<p>思考一个问题：数字7、6、5怎么来的？</p>
+<p>答：通过4、2、1相加得到</p>
+<p>7 = 4 + 2 + 1 = r w x</p>
+<p>6 = 4 + 2 = r w</p>
+<p>5 = 4 + 1 = r x</p class='item-img' data-src='/2026/11/05/linxu1/image-20210906150018114.png'><img src="/2026/11/05/linxu1/image-20210906150018114.png" class="" title="Hexo 博客封面示例">
+<h2 id="Linux快捷键Ctrl-C"><a href="#Linux快捷键Ctrl-C" class="headerlink" title="Linux快捷键Ctrl + C"></a>Linux快捷键Ctrl + C</h2><p>Windows中：Ctrl + C代表复制</p>
+<p>Linux中：Ctrl + C不代表复制，而代表中止当前正在运行的程序</p>
+<h2 id="用户组与用户操作"><a href="#用户组与用户操作" class="headerlink" title="用户组与用户操作"></a>用户组与用户操作</h2><p>用户组创建：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs powershell">groupadd 用户组名称<br><br>tail <span class="hljs-literal">-1</span> /etc/<span class="hljs-built_in">group</span>   <span class="hljs-comment"># 代表查看一个文件的最后10行，如果指定了选项，则代表显示最后的指定行</span><br></code></pre></td></tr></table></figure>
+<p>用户组删除：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell">groupdel 用户组名称<br></code></pre></td></tr></table></figure>
+<p>把某个用户添加到某个用户组</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell">useradd 用户名称 <span class="hljs-literal">-g</span> 组名称<br></code></pre></td></tr></table></figure>
+<h2 id="history命令"><a href="#history命令" class="headerlink" title="history命令"></a>history命令</h2><p>作用：查看当前终端中，之前输入的指令信息</p>
+<h2 id="man命令（求帮助）"><a href="#man命令（求帮助）" class="headerlink" title="man命令（求帮助）"></a>man命令（求帮助）</h2><p>manual缩写，代表手册、文档</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-comment"># man tar</span><br></code></pre></td></tr></table></figure>
+<p>退出，按q</p>
+<h2 id="几个好用的快捷键"><a href="#几个好用的快捷键" class="headerlink" title="几个好用的快捷键"></a>几个好用的快捷键</h2><p>Tab键：针对命令或路径，具有提示功能（按1次或按2次）</p>
+<p>方向键上和下，查看上一个输入的或者下一个输入的Linux指令</p>
+<h1 id="七、Linux的vi-vim编辑器（重点）"><a href="#七、Linux的vi-vim编辑器（重点）" class="headerlink" title="七、Linux的vi/vim编辑器（重点）"></a>七、Linux的vi/vim编辑器（重点）</h1><p>vim改配置文件或者把其他的地方的配置拷贝到Linux系统中，一定一定要记得在插入模式下粘贴！！</p>
+<h2 id="vi-vim编辑器介绍"><a href="#vi-vim编辑器介绍" class="headerlink" title="vi/vim编辑器介绍"></a>vi/vim编辑器介绍</h2><p>vi是visual interface的简称, 是Linux中最经典的文本编辑器（Windows中的记事本）</p>
+<p>vi的核心设计思想：让程序员的手指始终保持在键盘的核心区域, 就能完成所有编辑操作</p>
+<p>vi的特点：</p>
+<ul>
+<li>只能是编辑文本内容, 不能对字体段落进行排版</li>
+<li>不支持鼠标操作</li>
+<li>没有菜单</li>
+<li>只有命令</li>
+</ul>
+<p>vim 是从vi发展出来的文本编辑器, 支持代码补全、编译及显示效果等方面编程的功能提别丰富, 在程序员中被广泛使用, 被称为编辑器之神。</p class='item-img' data-src='/2026/11/05/linxu1/image-20210906150233075.png'><img src="/2026/11/05/linxu1/image-20210906150233075.png" class="" title="Hexo 博客封面示例">
+<h2 id="打开文件"><a href="#打开文件" class="headerlink" title="打开文件"></a>打开文件</h2><figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs powershell">vi a.txt          <span class="hljs-comment">#直接打开文件</span><br>vim a.txt         <span class="hljs-comment">#vim是vi的增强版</span><br>vim +<span class="hljs-number">10</span> a.txt  	  <span class="hljs-comment">#直接打开文件，并定位到第10行</span><br></code></pre></td></tr></table></figure>
+<h2 id="VIM编辑器的三种模式"><a href="#VIM编辑器的三种模式" class="headerlink" title="VIM编辑器的三种模式"></a>VIM编辑器的三种模式</h2><p>在Vi/Vim编辑器中，一共有3种工作模式：==命令模式、插入模式（编辑模式）、末行模式（底行模式）==</p>
+<p>==命令模式：复制、粘贴、移动光标、撤销与恢复== </p>
+<p>==插入模式（编辑模式）：只能编辑文件内容（写字）== =&gt;  i =&gt; insert</p>
+<p>==底行模式（末行模式）：保存文件、退出文件、显示行号、搜索关键词==</p class='item-img' data-src='/2026/11/05/linxu1/image-20210906150356115.png'><img src="/2026/11/05/linxu1/image-20210906150356115.png" class="" title="Hexo 博客封面示例">
+<h2 id="命令模式相关命令"><a href="#命令模式相关命令" class="headerlink" title="命令模式相关命令"></a>命令模式相关命令</h2><p>当我们通过vim命令打开文件时，默认就处于==命令模式==</p>
+<blockquote>
+<p>小技巧：进入vim编辑器，先查看左下角有没有提示信息，如果没有任何信息，代表你当前位于命令模式！</p>
+</blockquote>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>命令</strong></th>
+<th><strong>功能</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>o</td>
+<td>在当前行后面插入一空行，除此以外，也会从命令模式切换到输入模式</td>
+</tr>
+<tr>
+<td>O</td>
+<td>在当前行前面插入一空行，除此以外，也会从命令模式切换到输入模式</td>
+</tr>
+<tr>
+<td>==dd==</td>
+<td>剪切或删除光标所在行（本质是剪切，但是如果剪切后不粘贴，则代表删除）</td>
+</tr>
+<tr>
+<td>ndd</td>
+<td>从光标位置向下连续剪切或删除 n 行</td>
+</tr>
+<tr>
+<td>==yy==</td>
+<td>复制光标所在行</td>
+</tr>
+<tr>
+<td>nyy</td>
+<td>从光标位置向下连续复制n行</td>
+</tr>
+<tr>
+<td>==p==</td>
+<td>粘贴</td>
+</tr>
+<tr>
+<td>==u==</td>
+<td>撤销上一次命令，相当于Windows中的Ctrl + Z</td>
+</tr>
+<tr>
+<td>==gg==</td>
+<td>回到文件顶部</td>
+</tr>
+<tr>
+<td>==G==</td>
+<td>回到文件末尾</td>
+</tr>
+<tr>
+<td>Ctrl + R</td>
+<td>恢复，与u相对应</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="编辑模式相关操作"><a href="#编辑模式相关操作" class="headerlink" title="编辑模式相关操作"></a>编辑模式相关操作</h2><p>如何进入编辑模式呢？</p>
+<p>答：按i（insert）、a（append）</p>
+<p>i：在当前光标的前面插入内容</p>
+<p>a：在当前光标的后面插入内容</p>
+<p>o：在光标的后一行插入内容</p>
+<p>O：在光标的前一行插入内容</p>
+<p>问题：如何从编辑模式回到命令模式</p>
+<p>答：按Esc键</p>
+<h2 id="底行模式相关命令"><a href="#底行模式相关命令" class="headerlink" title="底行模式相关命令"></a>底行模式相关命令</h2><p>重点记住3个字母即可，:w、:q、！</p>
+<p>==在Linux操作系统中，文件必须先保存后退出！==</p>
+<p>！叹号代表强制，强制保存、强制退出、强制保存并退出！</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>命令</strong></th>
+<th><strong>功能</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>:w  文件</td>
+<td>另存为</td>
+</tr>
+<tr>
+<td>==:w==</td>
+<td>保存(ctrl + s)</td>
+</tr>
+<tr>
+<td>==:q==</td>
+<td>退出, 如果没有保存,不允许退出</td>
+</tr>
+<tr>
+<td>:q!</td>
+<td>强行退出, 不保存退出</td>
+</tr>
+<tr>
+<td>==:wq==</td>
+<td>保存并退出</td>
+</tr>
+<tr>
+<td>:x</td>
+<td>保存并退出</td>
+</tr>
+<tr>
+<td>==:set  nu==</td>
+<td>设置行号，取消行号使用==:set nonu==</td>
+</tr>
+<tr>
+<td>:noh</td>
+<td>取消高亮</td>
+</tr>
+<tr>
+<td>/关键词</td>
+<td>搜索某一关键词</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>:wq和:x区别？</p>
+<p>答：</p>
+<p>如果文件内容有改变，两者的效果是一样的。</p>
+<p>如果文件内容没有改变，:x不会改变文件的最后修改时间，但是:wq会更新文件的最后修改时间。</p>
+<h2 id="Vim常见错误E325处理流程"><a href="#Vim常见错误E325处理流程" class="headerlink" title="Vim常见错误E325处理流程"></a>Vim常见错误E325处理流程</h2 class='item-img' data-src='/2026/11/05/linxu1/image-20220706161536604.png'><img src="/2026/11/05/linxu1/image-20220706161536604.png" class="" title="Hexo 博客封面示例">
+<p>如果在打开某个文件时，弹出以上提示，那代表你这个文件之前没有保存就强制退出了，触发了Vim的备份机制，产生了一个xxx.swp交换文件。</p>
+<p>以后每次打开之前的文件就会产生上面的提示，解决方案：</p>
+<p>① 之前的修改不重要，可以直接删除的情况</p>
+<p>直接回车，切换到错误的底部，然后按q，直接退出，然后执行删除操作</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-comment"># rm .源文件名称.swp</span><br></code></pre></td></tr></table></figure>
+<p>② 之前的修改很重要，需要先恢复内容，然后再解决报错问题</p>
+<p>第一步：直接回车，切换到错误的底部，找到回复菜单，一般是r，恢复文件内容</p>
+<p>第二步：针对找回的内容进行:wq保存并退出</p>
+<p>第三步：删除刚才产生的交换文件</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-comment"># rm .源文件名称.swp</span><br></code></pre></td></tr></table></figure>
+<h2 id="小结-4"><a href="#小结-4" class="headerlink" title="小结"></a>小结</h2><p>了解VIM编辑器的三种模式</p>
+<h1 id="八、Linux系统下如何安装软件（必备）"><a href="#八、Linux系统下如何安装软件（必备）" class="headerlink" title="八、Linux系统下如何安装软件（必备）"></a>八、Linux系统下如何安装软件（必备）</h1><h2 id="Linux下软件安装方式"><a href="#Linux下软件安装方式" class="headerlink" title="Linux下软件安装方式"></a>Linux下软件安装方式</h2><p>rpm包管理</p>
+<p>yum在线安装（重点掌握）</p>
+<h2 id="yum包管理工具（在线安装）"><a href="#yum包管理工具（在线安装）" class="headerlink" title="yum包管理工具（在线安装）"></a>yum包管理工具（在线安装）</h2><p>必须要有网络支持</p>
+<p>配置yum源，就是说下载软件要从哪里下载？</p class='item-img' data-src='/2026/11/05/linxu1/image-20220706171038500.png'><img src="/2026/11/05/linxu1/image-20220706171038500.png" class="" title="Hexo 博客封面示例">
+<p>安装腾讯的yum源：</p>
+<p>官方地址：<a target="_blank" rel="noopener" href="https://mirrors.cloud.tencent.com/">https://mirrors.cloud.tencent.com/</a></p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-comment"># mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup</span><br><span class="hljs-comment"># wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.cloud.tencent.com/repo/centos7_base.repo</span><br></code></pre></td></tr></table></figure>
+<p>扩展：国内做的比较好的镜像站</p>
+<p>① ==阿里云== ② ==腾讯云== ③ ==清华镜像站== ④ 七牛云 ⑤ 豆瓣镜像站</p>
+<p>更新缓存：</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs powershell">yum clean all<br>yum makecache<br></code></pre></td></tr></table></figure>
+<h2 id="yum实现软件安装、更新与卸载"><a href="#yum实现软件安装、更新与卸载" class="headerlink" title="yum实现软件安装、更新与卸载"></a>yum实现软件安装、更新与卸载</h2><p>搜索与卸载软件</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-comment"># rpm -qa |grep vim</span><br><span class="hljs-comment"># rpm -e vim-common-7.4.629-8.el7_9.x86_64 --nodeps</span><br><span class="hljs-comment"># rpm -e vim-enhanced-7.4.629-8.el7_9.x86_64 --nodeps</span><br><br>注：<br>rpm <span class="hljs-literal">-qa</span>，<span class="hljs-literal">-q</span>查询，<span class="hljs-literal">-a</span>所有，查询所有已安装软件<br>rpm <span class="hljs-literal">-e</span> 软件包完整名称，正常卸载软件，添加<span class="hljs-literal">--nodeps</span>就代表强制卸载操作<br>rpm最大问题，安装或卸载软件时存在依赖关系 =&gt; A软件 =&gt; B软件 =&gt; C软件 =&gt; D软件<br></code></pre></td></tr></table></figure>
+<p>搜索软件</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-comment"># yum search 软件包名称</span><br><br>yum search vim<br></code></pre></td></tr></table></figure>
+<p>安装软件</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs powershell">基本语法：<br><span class="hljs-comment"># yum install 软件名称（只写名字不需要写版本） -y</span><br>如果不写<span class="hljs-literal">-y</span>，默认会提示，是否需要安装，必须回y，才能继续安装<br><br><span class="hljs-comment"># yum install vim -y</span><br>选项：<br><span class="hljs-literal">-y</span>：确认，直接安装不提示<br><br><span class="hljs-comment"># yum install tree -y</span><br><span class="hljs-comment"># tree /tmp</span><br></code></pre></td></tr></table></figure>
+<p>卸载软件</p>
+<figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs powershell"><span class="hljs-comment"># yum remove 软件包名称 -y</span><br>选项：<br><span class="hljs-literal">-y</span>：确认，直接卸载不提示<br><br><span class="hljs-comment"># yum remove tree -y</span><br></code></pre></td></tr></table></figure>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2026/11/05/linxu2/">← Next linxu2</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/11/05/NLP5/">NLP5 Prev →</a></div></div></div><div id="comments"><div id="giscus"></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="To Top" style="opacity: 0; display: none;">∧ </a><a class="i-index" id="to-index" onClick="tocControl.change()" title="To Catalog"><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span></a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="Change Theme"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">John Doe</a></h1><div id="description"><p></p></div><div id="social-links"><a class="social" target="_blank" rel="noopener" href="https://github.com/juicer0801"><i class="fab fa-github" alt="GitHub"></i></a></div></div><div id="aside-block"><div id="toc-div"><h1>Catalog</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Linux%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%EF%BC%88%E5%A4%A7%E6%95%B0%E6%8D%AE%E5%9F%BA%E7%A1%80%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">Linux操作系统（大数据基础）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87"><span class="toc-number">2.</span> <span class="toc-text">学习目标</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0"><span class="toc-number">3.</span> <span class="toc-text">一、操作系统概述</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%88%86%E7%B1%BB"><span class="toc-number">3.1.</span> <span class="toc-text">计算机分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BB%84%E6%88%90"><span class="toc-number">3.2.</span> <span class="toc-text">计算机组成</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0"><span class="toc-number">3.3.</span> <span class="toc-text">操作系统概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E5%88%86%E7%B1%BB"><span class="toc-number">3.4.</span> <span class="toc-text">操作系统分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-number">3.5.</span> <span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81Linux%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E6%A6%82%E8%BF%B0"><span class="toc-number">4.</span> <span class="toc-text">二、Linux操作系统概述</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux%E8%B5%B7%E6%BA%90"><span class="toc-number">4.1.</span> <span class="toc-text">Linux起源</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux-%E7%9A%84%E5%90%AB%E4%B9%89"><span class="toc-number">4.2.</span> <span class="toc-text">Linux 的含义</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux%E5%8F%91%E8%A1%8C%E7%89%88"><span class="toc-number">4.3.</span> <span class="toc-text">Linux发行版</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93-1"><span class="toc-number">4.4.</span> <span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E8%99%9A%E6%8B%9F%E6%9C%BA%E4%B8%8ELinux%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85"><span class="toc-number">5.</span> <span class="toc-text">三、虚拟机与Linux系统安装</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E7%9A%84%E5%AE%89%E8%A3%85%E6%96%B9%E5%BC%8F"><span class="toc-number">5.1.</span> <span class="toc-text">系统的安装方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E6%9C%BA%E6%A6%82%E5%BF%B5"><span class="toc-number">5.2.</span> <span class="toc-text">虚拟机概念</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%9A%84%E5%AE%89%E8%A3%85"><span class="toc-number">5.3.</span> <span class="toc-text">虚拟机的安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux%E7%B3%BB%E7%BB%9F%E5%AE%89%E8%A3%85"><span class="toc-number">5.4.</span> <span class="toc-text">Linux系统安装</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E6%B1%87%E6%80%BB"><span class="toc-number">5.5.</span> <span class="toc-text">常见问题汇总</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B%E3%80%81Linux%E8%BF%9E%E6%8E%A5%E5%B7%A5%E5%85%B7MX%E4%BD%BF%E7%94%A8"><span class="toc-number">6.</span> <span class="toc-text">四、Linux连接工具MX使用</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E4%BD%BF%E7%94%A8%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5%E5%B7%A5%E5%85%B7%EF%BC%9F"><span class="toc-number">6.1.</span> <span class="toc-text">为什么要使用远程连接工具？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E6%9C%BA%E7%BD%91%E7%BB%9C%E9%85%8D%E7%BD%AE"><span class="toc-number">6.2.</span> <span class="toc-text">虚拟机网络配置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96Linux%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9FIP%E5%9C%B0%E5%9D%80"><span class="toc-number">6.3.</span> <span class="toc-text">获取Linux操作系统IP地址</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%81%8A%E4%B8%80%E8%81%8ALinux%E7%B3%BB%E7%BB%9F%E8%B4%A6%E5%8F%B7"><span class="toc-number">6.4.</span> <span class="toc-text">聊一聊Linux系统账号</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85MX%E8%BF%9C%E7%A8%8B%E8%BF%9E%E6%8E%A5%E8%BD%AF%E4%BB%B6"><span class="toc-number">6.5.</span> <span class="toc-text">安装MX远程连接软件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93-2"><span class="toc-number">6.6.</span> <span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%94%E3%80%81Linux%E7%9A%84%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84%EF%BC%88%E6%98%93%E9%94%99%EF%BC%89"><span class="toc-number">7.</span> <span class="toc-text">五、Linux的目录结构（易错）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux%E7%9B%AE%E5%BD%95%E4%B8%8EWindows%E7%9B%AE%E5%BD%95%E5%8C%BA%E5%88%AB"><span class="toc-number">7.1.</span> <span class="toc-text">Linux目录与Windows目录区别</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E7%9B%AE%E5%BD%95%E4%BB%8B%E7%BB%8D%EF%BC%88%E8%AE%B0%E4%BD%8F%E9%87%8D%E7%82%B9%EF%BC%89"><span class="toc-number">7.2.</span> <span class="toc-text">常见目录介绍（记住重点）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93-3"><span class="toc-number">7.3.</span> <span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%AD%E3%80%81Linux%E5%B8%B8%E8%A7%81%E5%91%BD%E4%BB%A4%EF%BC%88%E9%87%8D%E7%82%B9%E4%B8%AD%E9%87%8D%E7%82%B9%EF%BC%89"><span class="toc-number">8.</span> <span class="toc-text">六、Linux常见命令（重点中重点）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E7%BB%93%E6%9E%84"><span class="toc-number">8.1.</span> <span class="toc-text">命令结构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ls%E5%91%BD%E4%BB%A4"><span class="toc-number">8.2.</span> <span class="toc-text">ls命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cd%E5%91%BD%E4%BB%A4-gt-pwd%E5%91%BD%E4%BB%A4-gt-cd"><span class="toc-number">8.3.</span> <span class="toc-text">cd命令 &#x3D;&gt; pwd命令 &#x3D;&gt; cd ~</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mkdir%E5%91%BD%E4%BB%A4"><span class="toc-number">8.4.</span> <span class="toc-text">mkdir命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#touch%E5%91%BD%E4%BB%A4"><span class="toc-number">8.5.</span> <span class="toc-text">touch命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#rm%E5%91%BD%E4%BB%A4"><span class="toc-number">8.6.</span> <span class="toc-text">rm命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cp%E5%91%BD%E4%BB%A4-%E5%A4%8D%E5%88%B6"><span class="toc-number">8.7.</span> <span class="toc-text">cp命令(复制)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#mv%E5%91%BD%E4%BB%A4-%E5%89%AA%E5%88%87%E6%88%96%E9%87%8D%E5%91%BD%E5%90%8D"><span class="toc-number">8.8.</span> <span class="toc-text">mv命令(剪切或重命名)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cat%E5%91%BD%E4%BB%A4"><span class="toc-number">8.9.</span> <span class="toc-text">cat命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#more%E5%91%BD%E4%BB%A4"><span class="toc-number">8.10.</span> <span class="toc-text">more命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ps%E5%91%BD%E4%BB%A4"><span class="toc-number">8.11.</span> <span class="toc-text">ps命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#kill%E5%91%BD%E4%BB%A4"><span class="toc-number">8.12.</span> <span class="toc-text">kill命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ifconfig%E5%91%BD%E4%BB%A4"><span class="toc-number">8.13.</span> <span class="toc-text">ifconfig命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#clear%E5%91%BD%E4%BB%A4"><span class="toc-number">8.14.</span> <span class="toc-text">clear命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%87%8D%E5%90%AF%E4%B8%8E%E5%85%B3%E6%9C%BA%E5%91%BD%E4%BB%A4-%E8%B6%85%E7%AE%A1"><span class="toc-number">8.15.</span> <span class="toc-text">重启与关机命令(超管)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#which%E5%91%BD%E4%BB%A4"><span class="toc-number">8.16.</span> <span class="toc-text">which命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#find%E5%91%BD%E4%BB%A4"><span class="toc-number">8.17.</span> <span class="toc-text">find命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#grep%E5%91%BD%E4%BB%A4"><span class="toc-number">8.18.</span> <span class="toc-text">grep命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%A1%E9%81%93%E5%91%BD%E4%BB%A4-Shift"><span class="toc-number">8.19.</span> <span class="toc-text">|管道命令(Shift + \)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#tar%E5%91%BD%E4%BB%A4"><span class="toc-number">8.20.</span> <span class="toc-text">tar命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#useradd%E5%91%BD%E4%BB%A4-%E8%B6%85%E7%BA%A7%E5%91%BD%E4%BB%A4"><span class="toc-number">8.21.</span> <span class="toc-text">useradd命令(超级命令)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#userdel%E5%91%BD%E4%BB%A4-%E8%B6%85%E7%BA%A7%E5%91%BD%E4%BB%A4"><span class="toc-number">8.22.</span> <span class="toc-text">userdel命令(超级命令)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#passwd%E5%91%BD%E4%BB%A4"><span class="toc-number">8.23.</span> <span class="toc-text">passwd命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#su%E5%91%BD%E4%BB%A4"><span class="toc-number">8.24.</span> <span class="toc-text">su命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#chmod%E5%91%BD%E4%BB%A4"><span class="toc-number">8.25.</span> <span class="toc-text">chmod命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux%E5%BF%AB%E6%8D%B7%E9%94%AECtrl-C"><span class="toc-number">8.26.</span> <span class="toc-text">Linux快捷键Ctrl + C</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8%E6%88%B7%E7%BB%84%E4%B8%8E%E7%94%A8%E6%88%B7%E6%93%8D%E4%BD%9C"><span class="toc-number">8.27.</span> <span class="toc-text">用户组与用户操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#history%E5%91%BD%E4%BB%A4"><span class="toc-number">8.28.</span> <span class="toc-text">history命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#man%E5%91%BD%E4%BB%A4%EF%BC%88%E6%B1%82%E5%B8%AE%E5%8A%A9%EF%BC%89"><span class="toc-number">8.29.</span> <span class="toc-text">man命令（求帮助）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%A0%E4%B8%AA%E5%A5%BD%E7%94%A8%E7%9A%84%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="toc-number">8.30.</span> <span class="toc-text">几个好用的快捷键</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%83%E3%80%81Linux%E7%9A%84vi-vim%E7%BC%96%E8%BE%91%E5%99%A8%EF%BC%88%E9%87%8D%E7%82%B9%EF%BC%89"><span class="toc-number">9.</span> <span class="toc-text">七、Linux的vi&#x2F;vim编辑器（重点）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#vi-vim%E7%BC%96%E8%BE%91%E5%99%A8%E4%BB%8B%E7%BB%8D"><span class="toc-number">9.1.</span> <span class="toc-text">vi&#x2F;vim编辑器介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%93%E5%BC%80%E6%96%87%E4%BB%B6"><span class="toc-number">9.2.</span> <span class="toc-text">打开文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#VIM%E7%BC%96%E8%BE%91%E5%99%A8%E7%9A%84%E4%B8%89%E7%A7%8D%E6%A8%A1%E5%BC%8F"><span class="toc-number">9.3.</span> <span class="toc-text">VIM编辑器的三种模式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%91%BD%E4%BB%A4%E6%A8%A1%E5%BC%8F%E7%9B%B8%E5%85%B3%E5%91%BD%E4%BB%A4"><span class="toc-number">9.4.</span> <span class="toc-text">命令模式相关命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%96%E8%BE%91%E6%A8%A1%E5%BC%8F%E7%9B%B8%E5%85%B3%E6%93%8D%E4%BD%9C"><span class="toc-number">9.5.</span> <span class="toc-text">编辑模式相关操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BA%95%E8%A1%8C%E6%A8%A1%E5%BC%8F%E7%9B%B8%E5%85%B3%E5%91%BD%E4%BB%A4"><span class="toc-number">9.6.</span> <span class="toc-text">底行模式相关命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Vim%E5%B8%B8%E8%A7%81%E9%94%99%E8%AF%AFE325%E5%A4%84%E7%90%86%E6%B5%81%E7%A8%8B"><span class="toc-number">9.7.</span> <span class="toc-text">Vim常见错误E325处理流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93-4"><span class="toc-number">9.8.</span> <span class="toc-text">小结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%AB%E3%80%81Linux%E7%B3%BB%E7%BB%9F%E4%B8%8B%E5%A6%82%E4%BD%95%E5%AE%89%E8%A3%85%E8%BD%AF%E4%BB%B6%EF%BC%88%E5%BF%85%E5%A4%87%EF%BC%89"><span class="toc-number">10.</span> <span class="toc-text">八、Linux系统下如何安装软件（必备）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Linux%E4%B8%8B%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85%E6%96%B9%E5%BC%8F"><span class="toc-number">10.1.</span> <span class="toc-text">Linux下软件安装方式</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#yum%E5%8C%85%E7%AE%A1%E7%90%86%E5%B7%A5%E5%85%B7%EF%BC%88%E5%9C%A8%E7%BA%BF%E5%AE%89%E8%A3%85%EF%BC%89"><span class="toc-number">10.2.</span> <span class="toc-text">yum包管理工具（在线安装）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#yum%E5%AE%9E%E7%8E%B0%E8%BD%AF%E4%BB%B6%E5%AE%89%E8%A3%85%E3%80%81%E6%9B%B4%E6%96%B0%E4%B8%8E%E5%8D%B8%E8%BD%BD"><span class="toc-number">10.3.</span> <span class="toc-text">yum实现软件安装、更新与卸载</span></a></li></ol></li></ol></div></div><footer><nobr>Published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>
