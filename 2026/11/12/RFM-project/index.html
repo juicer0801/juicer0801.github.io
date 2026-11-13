@@ -1,0 +1,743 @@
+<!DOCTYPE html><html lang="en" theme-mode="auto"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>RFM_project | Hexo</title><meta name="description" content="RFM会员价值度模型案例学习目标 知道RFM模型的概念和使用方法 掌握如何使用Python进行RFM分群 知道如何使用Pyecharts绘制3D图形  1 会员价值度模型介绍 会员价值度用来评估用户的价值情况，是区分会员价值的重要模型和参考依据，也是衡量不同营销效果的关键指标之一。  价值度模型一般基于交易行为产生，衡量的是有实体转化价值的行为。常用的价值度模型是RFM  RFM模型是根据会员">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RFM_project">
+<meta property="og:url" content="http://example.com/2026/11/12/RFM-project/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="RFM会员价值度模型案例学习目标 知道RFM模型的概念和使用方法 掌握如何使用Python进行RFM分群 知道如何使用Pyecharts绘制3D图形  1 会员价值度模型介绍 会员价值度用来评估用户的价值情况，是区分会员价值的重要模型和参考依据，也是衡量不同营销效果的关键指标之一。  价值度模型一般基于交易行为产生，衡量的是有实体转化价值的行为。常用的价值度模型是RFM  RFM模型是根据会员">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2026/11/12/RFM-project/1743521875833.png">
+<meta property="article:published_time" content="2026-11-12T01:56:32.000Z">
+<meta property="article:modified_time" content="2026-11-13T15:37:11.971Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2026/11/12/RFM-project/1743521875833.png"><link rel="canonical" href="http://example.com/2026/11/12/RFM-project/"><link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="preload" as="font" crossorigin="anonymous" href="/font/Bender.ttf"><link rel="preload" as="font" crossorigin="anonymous" href="/font/BenderLight.woff2"><link rel="preload" as="font" crossorigin="anonymous" href="/font/JetBrainsMono-Regular.woff2"><link rel="stylesheet" href="/css/arknights.css"><style>@font-face {
+  font-family: Bender;
+  src: local('Bender'), url("/font/Bender.ttf"), url("/font/Bender.otf");
+}
+@font-face {
+  font-family: BenderLight;
+  src: local('BenderLight'), url("/font/BenderLight.woff2") format('woff2');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}
+</style><meta name="page-config" content="{&quot;code_fold&quot;:null}"><script class="pjax-js">var config = {"root":"/","code_fold":15,"search":{"preload":true,"activeHolder":"Enter here","blurHolder":"Search","noResult":"Data \"$0\" not found"},"code":{"codeInfo":"$0 - $1 lines","copy":"copy"}};
+var page_config = {
+  code_fold: null
+};
+function updatePageConfig() {
+  var newPageConfig = document.querySelector('meta[name="page-config"]');
+  if (newPageConfig) {
+    page_config = JSON.parse(newPageConfig.content);
+  }
+}
+document.addEventListener('pjax:complete', function() { updatePageConfig(); });
+updatePageConfig();</script><link type="text/css" rel="stylesheet" href="/lib/encrypt/hbe.style.css"><script src="//unpkg.com/mermaid@11.12.2/dist/mermaid.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.1/MathJax.js"></script><script>MathJax.Hub.Config({
+ menuSettings: {
+   zoom: "None"
+ },
+ showMathMenu: false,
+ jax: ["input/TeX","output/CommonHTML"],
+ extensions: ["tex2jax.js"],
+ TeX: {
+   extensions: ["AMSmath.js","AMSsymbols.js"],
+   equationNumbers: {
+     autoNumber: "AMS"
+   }
+ },
+ tex2jax: {
+   inlineMath: [["\\(", "\\)"]],
+   displayMath: [["\\[", "\\]"]]
+ }
+});</script><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lightgallery.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-zoom.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-thumbnail.css"><link type="text/css" rel="stylesheet" href="/lib/fontawesome/css/all.min.css"><script>if (window.localStorage.getItem('theme-mode') === 'light' || window.matchMedia('(prefers-color-scheme:light)').matches)
+ document.documentElement.setAttribute('theme-mode', 'light')
+if (window.localStorage.getItem('theme-mode') === 'dark' || window.matchMedia('(prefers-color-scheme:dark)').matches)
+ document.documentElement.setAttribute('theme-mode', 'dark')</script><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.woff2") format('woff2');
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><style>:root {
+ --dark-background: url('https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg');
+ --light-background: url('/img/bk.jpg');
+ --theme-encrypt-confirm: 'confirm'
+}</style><script defer src="/js/arknights.js"></script><script defer src="/js/search.js"></script><script defer src="https://vercount.one/js"></script><script defer type="module">import mermaid from '//unpkg.com/mermaid@11.12.2/dist/mermaid.esm.min.mjs';
+window.mermaid = mermaid;
+code.paintMermaid();
+</script><script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.1/MathJax.js"></script><script>MathJax.Hub.Config({
+  menuSettings: {
+    zoom: "None"
+  },
+  showMathMenu: false,
+  jax: ["input/TeX","output/CommonHTML"],
+  extensions: ["tex2jax.js"],
+  TeX: {
+    extensions: ["AMSmath.js","AMSsymbols.js"],
+    equationNumbers: {
+      autoNumber: "AMS"
+    }
+  },
+  tex2jax: {
+    inlineMath: [["\\(", "\\)"]],
+    displayMath: [["\\[", "\\]"]]
+  }
+});
+</script><script async src="//unpkg.com/lightgallery@2.7.1/lightgallery.min.js"></script><script async src="//unpkg.com/lightgallery@2.7.1/plugins/zoom/lg-zoom.min.js"></script><script async src="//unpkg.com/lightgallery@2.7.1/plugins/thumbnail/lg-thumbnail.min.js"></script><script async src="/lib/encrypt/hbe.js"></script><script async src="/js/pjax.js"></script><script class="pjax-js">reset= () => {document.querySelector('.lg-container')?.remove()
+lightGallery(document.getElementById('post-bg'), {
+  plugins: [lgZoom,lgThumbnail],
+  selector: '.item-img'})}</script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js','data-pjax','.vercount','meta[name=page-config]'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);document.addEventListener('pjax:success', _ => {
+ const script = document.createElement('script');
+ script.src = 'https://vercount.one/js';
+ document.head.appendChild(script);
+});reset()})</script><script class="pjax-js">reset= () => {window.giscusSettings = {
+ repo: 'juicer0801/juicer0801.github.io',
+ repoId: 'R_kgDOUcAR_w',
+ category: 'Announcements',
+ categoryId: 'DIC_kwDOUcAR_84DIlqM',
+ mapping: 'pathname',
+ strict: '0',
+ reactionsEnabled: '1',
+ emitMetadata: '0',
+ inputPosition: 'bottom',
+ lang: 'zh-CN',
+ crossorigin: 'anonymous' , loading: 'lazy'};window.giscusThemeConfig = { theme: 'preferred_color_scheme' };MathJax.Hub.Queue(["Typeset", MathJax.Hub]);document.querySelector('.lg-container')?.remove()
+const postBg = document.querySelector('#post-bg');
+if (postBg) lightGallery(postBg, {
+  plugins: [lgZoom,lgThumbnail],
+  selector: '.item-img'})}</script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js','data-pjax','.vercount','meta[name=page-config]'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);document.addEventListener('pjax:success', _ => {
+ const script = document.createElement('script');
+ script.src = 'https://vercount.one/js';
+ document.head.appendChild(script);
+});reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/tags/"><span class="navItemTitle">Tags</span></a></li><li class="navItem"><a class="navBlock" href="/categories/"><span class="navItemTitle">Categories</span></a></li><li class="navItem"><a class="navBlock" href="/friends"><span class="navItemTitle">友链</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>RFM_project</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2026-11-12T01:56:32.000Z" id="date"> 2026-11-12</time></div></span><br><span>Last Update: <div class="control"><time datetime="2026-11-13T15:37:11.971Z" id="updated"> 2026-11-13</time></div></span><br><span>Word Count: <div class="control">12.9k</div></span><br><span>Read Time: <div class="control">54 min</div></span><br><span id="vercount_container_page_pv">Page View: <span class="control" id="vercount_value_page_pv">loading...</span></span></div></div><hr><div id="post-content"><h1 id="RFM会员价值度模型案例"><a href="#RFM会员价值度模型案例" class="headerlink" title="RFM会员价值度模型案例"></a>RFM会员价值度模型案例</h1><h2 id="学习目标"><a href="#学习目标" class="headerlink" title="学习目标"></a>学习目标</h2><ul>
+<li>知道RFM模型的概念和使用方法</li>
+<li>掌握如何使用Python进行RFM分群</li>
+<li>知道如何使用Pyecharts绘制3D图形</li>
+</ul>
+<h2 id="1-会员价值度模型介绍"><a href="#1-会员价值度模型介绍" class="headerlink" title="1 会员价值度模型介绍"></a>1 会员价值度模型介绍</h2><ul>
+<li><p>会员价值度用来评估用户的价值情况，是区分会员价值的重要模型和参考依据，也是衡量不同营销效果的关键指标之一。</p>
+</li>
+<li><p>价值度模型一般基于交易行为产生，衡量的是有实体转化价值的行为。常用的价值度模型是RFM</p>
+</li>
+<li><p>RFM模型是根据会员</p>
+<ul>
+<li>最近一次购买时间R（Recency）</li>
+<li>购买频率F（Frequency）</li>
+<li>购买金额M（Monetary）计算得出RFM得分</li>
+<li>通过这3个维度来评估客户的订单活跃价值，常用来做客户分群或价值区分</li>
+<li>RFM模型基于一个固定时间点来做模型分析，不同时间计算的的RFM结果可能不一样</li>
+</ul>
+<p>| R    | F    | M    | 用户类别     |<br>| —— | —— | —— | —————— |<br>| 高   | 高   | 高   | 重要价值用户 |<br>| 高   | 低   | 高   | 重要发展用户 |<br>| 低   | 高   | 高   | 重要保持用户 |<br>| 低   | 低   | 高   | 重要挽留用户 |<br>| 高   | 高   | 低   | 一般价值用户 |<br>| 高   | 低   | 低   | 一般发展用户 |<br>| 低   | 高   | 低   | 一般保持用户 |<br>| 低   | 低   | 低   | 一般挽留用户 |</p>
+</li>
+<li><p>RFM模型的基本实现过程：</p>
+<ol>
+<li>设置要做计算时的截止时间节点（例如2017-5-30），用来做基于该时间的数据选取和计算。</li>
+<li>在会员数据库中，以今天为时间界限向前推固定周期（例如1年），得到包含每个会员的会员ID、订单时间、订单金额的原始数据集。一个会员可能会产生多条订单记录。</li>
+<li>数据预计算。从订单时间中找到各个会员距离截止时间节点最近的订单时间作为最近购买时间；以会员ID为维度统计每个用户的订单数量作为购买频率；将用户多个订单的订单金额求和得到总订单金额。由此得到R、F、M三个原始数据量。</li>
+<li>R、F、M分区。对于F和M变量来讲，值越大代表购买频率越高、订单金额越高；但对R来讲，值越小代表离截止时间节点越近，因此值越好。对R、F、M分别使用五分位法做数据分区（三分位也可以，分位数越多划分得越详细）。需要注意的是，对于R来讲需要倒过来划分，离截止时间越近的值划分越大。这样就得到每个用户的R、F、M三个变量的分位数值。</li>
+<li>将3个值组合或相加得到总的RFM得分。对于RFM总得分的计算有两种方式，一种是直接将3个值拼接到一起，例如RFM得分为312、333、132；另一种是直接将3个值相加求得一个新的汇总值，例如RFM得分为6、9、6。</li>
+</ol>
+</li>
+<li><p>Excel实现RFM划分案例</p>
+<ul>
+<li><p>以某电商公司为例</p>
+<ul>
+<li>R：例如：正常新用户注册1周内交易，7天是重要的值，日用品采购周期是1个月，30天是重要的值</li>
+<li>F：例如：1次购买，2次购买，3次购买，4~10次，10次以上</li>
+<li>M：例如：客单价300，热销单品价格240 等</li>
+</ul>
+</li>
+<li><p>常见的确定RFM划分区间的套路</p>
+<ul>
+<li>业务实际判断</li>
+<li>平均值或中位数</li>
+<li>二八法则</li>
+</ul>
+</li>
+<li><p>提取用户最近一次的交易时间，算出距离计算时间的差值</p>
+<ul>
+<li>获取当前时间=TODAY()</li>
+</ul>
+
+<ul>
+<li>计算时间间隔</li>
+</ul>
+
+</li>
+<li><p>根据天数长短赋予对应的R值，R值由我们自定，时间间隔越短R值越高</p>
+<ul>
+<li><code>=IF(D2&gt;60,1,IF(D2&gt;30,2,IF(D2&gt;14,3,IF(D2&gt;7,4,5))))</code></li>
+</ul>
+
+</li>
+<li><p>从历史数据中取出所有用户的购买次数，根据次数多少赋予对应的F分值；购买次数越多、F值越大</p>
+<ul>
+<li><code>=IF(E2&gt;10,5,IF(E2&gt;3,4,IF(E2&gt;2,3,IF(E2&gt;1,2,1))))</code></li>
+</ul>
+
+</li>
+<li><p>从历史数据中汇总，求得该用户的交易总额，根据金额大小赋予对应的M值；交易总额越大、M值越大</p>
+<ul>
+<li><p><code>=IF(F2&gt;1000,5,IF(F2&gt;500,4,IF(F2&gt;300,3,IF(F2&gt;230,2,1))))</code></p>
+
+</li>
+</ul>
+</li>
+<li><p>分别求出RFM的中值，例如中位数，用中值和用户的实际值进行比较，高于中值的为高，否则为低</p>
+
+</li>
+</ul>
+</li>
+<li><p>在得到不同会员的RFM之后，根据步骤⑤产生的两种结果有两种应用思路</p>
+<ul>
+<li>思路1：基于3个维度值做用户群体划分和解读，对用户的价值度做分析<ul>
+<li>比如，RFM得分为212的会员的F是1，往往购买频率较低，那就可以针对购买频率低的客户应定期发送促销活动邮件</li>
+<li>比如，RFM得分为321的会员虽然购买频率高但是订单金额低等，这些客户往往具有较高的购买黏性，可以考虑通过关联或搭配销售的方式提升订单金额。</li>
+</ul>
+</li>
+<li>思路2：基于RFM的汇总得分评估所有会员的价值度，并可以做价值度排名。同时，该得分还可以作为输入维度与其他维度一起作为其他数据分析和挖掘模型的输入变量，为分析建模提供基础。</li>
+</ul>
+</li>
+<li><p>RFM小结：</p>
+<ul>
+<li>R就是距离自定义的时间点最近一次购买的时间间隔、间隔越小得分越高</li>
+<li>F就是自定义的时间范围内购买频率、次数越多得分越高</li>
+<li>M就是自定义的时间范围内购买总金额，总额越大得分越高</li>
+<li>RFM的区间和其对应的得分由我们自定义</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-RFM计算案例"><a href="#2-RFM计算案例" class="headerlink" title="2 RFM计算案例"></a>2 RFM计算案例</h2><h3 id="2-1-案例背景"><a href="#2-1-案例背景" class="headerlink" title="2.1 案例背景"></a>2.1 案例背景</h3><ul>
+<li><strong>用户价值细分</strong>是了解用户价值度的重要途径，针对交易数据分析的常用模型是RFM模型</li>
+<li>业务对RFM的结果要求<ul>
+<li>对用户做分组</li>
+<li>将每个组的用户特征概括和总结出来，便于后续精细化运营不同的客户群体，且根据不同群体做定制化或差异性的营销和关怀</li>
+</ul>
+</li>
+<li><p>规划目标将RFM的3个维度分别做3个区间的离散化</p>
+<ul>
+<li>用户群体最大有3×3×3=27个</li>
+<li>划分区间过多则不利于用户群体的拆分</li>
+<li>区间过少则可能导致每个特征上的用户区分不显著</li>
+</ul>
+</li>
+<li><p>交付结果</p>
+<ul>
+<li>给业务部门做运营的分析结果要导出为Excel文件，用于做后续分析和二次加工使用</li>
+<li>RFM的结果还会供其他模型的建模使用，RFM本身的结果可以作为新的局部性特征，因此数据的输出需要有本地文件和写数据库两种方式</li>
+</ul>
+</li>
+<li>数据说明<ul>
+<li>案例的数据集为 <code>data/sales.xlsx</code></li>
+<li>选择近4年订单数据，从不同的年份对比不同时间下各个分组的绝对值变化情况，方便了解会员的波动</li>
+<li>程序输出RFM得分数据写入本地文件sales_rfm_score.xlsx和MySQL数据库sales_rfm_score表中</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-2-用到的技术点"><a href="#2-2-用到的技术点" class="headerlink" title="2.2 用到的技术点"></a>2.2 用到的技术点</h3><blockquote>
+<p>通过Python代码手动实现RFM模型，主要用到的库包括:</p>
+</blockquote>
+<ul>
+<li>time、numpy和pandas</li>
+<li>在结果展示时使用了pyecharts的3D柱形图</li>
+</ul>
+<h3 id="2-3-案例数据"><a href="#2-3-案例数据" class="headerlink" title="2.3 案例数据"></a>2.3 案例数据</h3>
+<ul>
+<li><p>案例数据是某企业从2015年到2018年共4年的用户订单抽样数据，数据来源于销售系统</p>
+</li>
+<li><p>数据在Excel中包含5个sheet，前4个sheet以年份为单位存储为单个sheet中，最后一张会员等级表为用户的等级表</p>
+</li>
+<li><p>前4张表的数据概要如下。</p>
+<ul>
+<li>特征变量数：4</li>
+</ul>
+</li>
+<li>数据记录数：<code>30774/41278/50839/81349</code><ul>
+<li>是否有NA值：有</li>
+</ul>
+</li>
+<li>是否有异常值：有</li>
+<li><p>具体数据特征如下（前4张表的数据字段说明）：</p>
+<ul>
+<li>会员ID：每个会员的ID唯一，由纯数字组成，整型</li>
+<li>提交日期：订单日提交日期</li>
+<li>订单号：订单ID，每个订单的ID唯一，由纯数字组成，整型</li>
+<li>订单金额：订单金额，浮点型数据</li>
+</ul>
+</li>
+<li><p>会员等级表中是所有会员的会员ID对应会员等级的情况，包括以下两个字段</p>
+<ul>
+<li>会员ID：该ID可与前面的订单表中的会员ID关联</li>
+<li>会员等级：会员等级以数字区分，数字越大，级别越高</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-4-代码"><a href="#2-4-代码" class="headerlink" title="2.4 代码"></a>2.4 代码</h3><h4 id="2-4-1-导入模块"><a href="#2-4-1-导入模块" class="headerlink" title="2.4.1 导入模块"></a>2.4.1 导入模块</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> time  <span class="hljs-comment"># 时间库</span><br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np  <span class="hljs-comment"># numpy库</span><br><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd  <span class="hljs-comment"># pandas库</span><br><span class="hljs-keyword">from</span> pyecharts.charts <span class="hljs-keyword">import</span> Bar3D <span class="hljs-comment"># 3D柱形图</span><br></code></pre></td></tr></table></figure>
+<h4 id="2-4-2-读取数据"><a href="#2-4-2-读取数据" class="headerlink" title="2.4.2 读取数据"></a>2.4.2 读取数据</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 1. 定义变量, 记录表名.</span><br>sheet_names = [<span class="hljs-string">&#x27;2015&#x27;</span>, <span class="hljs-string">&#x27;2016&#x27;</span>, <span class="hljs-string">&#x27;2017&#x27;</span>, <span class="hljs-string">&#x27;2018&#x27;</span>, <span class="hljs-string">&#x27;会员等级&#x27;</span>]<br><br><span class="hljs-comment"># 2. 读取5个excel表中的数据.</span><br>sheet_datas = pd.read_excel(<span class="hljs-string">&#x27;data/sales.xlsx&#x27;</span>, sheet_name=sheet_names)<br>sheet_datas  <span class="hljs-comment"># 共计: 154385行, 2列. </span><br><span class="hljs-built_in">type</span>(sheet_datas)  <span class="hljs-comment"># 查看变量类型: dict,   结果是字典形式: 键: Excel表格名, 值: 该表格的数据.</span><br><br><span class="hljs-comment"># 3. 查看下 2015年的数据</span><br>sheet_datas[<span class="hljs-string">&#x27;2015&#x27;</span>]<br></code></pre></td></tr></table></figure>
+<ul>
+<li>查看数据基本情况</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 4. 遍历, 查看数据(每个表格)的基本情况</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> sheet_names:<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;==================&quot; + <span class="hljs-subst">&#123;i&#125;</span> + &quot;======================&#x27;</span>)<br>    <span class="hljs-built_in">print</span>(sheet_datas[i].head())<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;==================&quot; + info + &quot;======================&#x27;</span>)<br>    <span class="hljs-built_in">print</span>(sheet_datas[i].info())<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;==================&quot; + describe + &quot;======================&#x27;</span>)<br>    <span class="hljs-built_in">print</span>(sheet_datas[i].describe())<br><br></code></pre></td></tr></table></figure>
+<blockquote>
+<font color='red'>输出结果：</font>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br></pre></td><td class="code"><pre><code class="hljs shell">==================&quot; + 2015 + &quot;======================<br>          会员ID         订单号       提交日期    订单金额<br>0  15278002468  3000304681 2015-01-01   499.0<br>1  39236378972  3000305791 2015-01-01  2588.0<br>2  38722039578  3000641787 2015-01-01   498.0<br>3  11049640063  3000798913 2015-01-01  1572.0<br>4  35038752292  3000821546 2015-01-01    10.1<br>==================&quot; + info + &quot;======================<br>&lt;class &#x27;pandas.core.frame.DataFrame&#x27;&gt;<br>RangeIndex: 30774 entries, 0 to 30773<br>Data columns (total 4 columns):<br><span class="hljs-meta prompt_"> # </span><span class="language-bash">  Column  Non-Null Count  Dtype</span>         <br>---  ------  --------------  -----         <br> 0   会员ID    30774 non-null  int64         <br> 1   订单号     30774 non-null  int64         <br> 2   提交日期    30774 non-null  datetime64[ns]<br> 3   订单金额    30774 non-null  float64       <br>dtypes: datetime64[ns](1), float64(1), int64(2)<br>memory usage: 961.8 KB<br>None<br>==================&quot; + describe + &quot;======================<br>               会员ID           订单号           订单金额<br>count  3.077400e+04  3.077400e+04   30774.000000<br>mean   2.918779e+10  4.020414e+09     960.991161<br>std    1.385333e+10  2.630510e+08    2068.107231<br>min    2.670000e+02  3.000305e+09       0.500000<br><span class="hljs-meta prompt_">25% </span><span class="language-bash">   1.944122e+10  3.885510e+09      59.000000</span><br><span class="hljs-meta prompt_">50% </span><span class="language-bash">   3.746545e+10  4.117491e+09     139.000000</span><br><span class="hljs-meta prompt_">75% </span><span class="language-bash">   3.923593e+10  4.234882e+09     899.000000</span><br>max    3.954613e+10  4.282025e+09  111750.000000<br>==================&quot; + 2016 + &quot;======================<br>          会员ID         订单号       提交日期    订单金额<br>0  39288120141  4282025766 2016-01-01    76.0<br>1  39293812118  4282037929 2016-01-01  7599.0<br>2  27596340905  4282038740 2016-01-01   802.0<br>3  15111475509  4282043819 2016-01-01    65.0<br>4  38896594001  4282051044 2016-01-01    95.0<br>==================&quot; + info + &quot;======================<br>&lt;class &#x27;pandas.core.frame.DataFrame&#x27;&gt;<br>RangeIndex: 41278 entries, 0 to 41277<br>Data columns (total 4 columns):<br><span class="hljs-meta prompt_"> # </span><span class="language-bash">  Column  Non-Null Count  Dtype</span>         <br>---  ------  --------------  -----         <br> 0   会员ID    41278 non-null  int64         <br> 1   订单号     41278 non-null  int64         <br> 2   提交日期    41278 non-null  datetime64[ns]<br> 3   订单金额    41277 non-null  float64       <br>dtypes: datetime64[ns](1), float64(1), int64(2)<br>memory usage: 1.3 MB<br>None<br>==================&quot; + describe + &quot;======================<br>               会员ID           订单号           订单金额<br>count  4.127800e+04  4.127800e+04   41277.000000<br>mean   2.908415e+10  4.313583e+09     957.106694<br>std    1.389468e+10  1.094572e+07    2478.560036<br>min    8.100000e+01  4.282026e+09       0.100000<br><span class="hljs-meta prompt_">25% </span><span class="language-bash">   1.934990e+10  4.309457e+09      59.000000</span><br><span class="hljs-meta prompt_">50% </span><span class="language-bash">   3.730339e+10  4.317545e+09     147.000000</span><br><span class="hljs-meta prompt_">75% </span><span class="language-bash">   3.923182e+10  4.321132e+09     888.000000</span><br>max    3.954554e+10  4.324911e+09  174900.000000<br>==================&quot; + 2017 + &quot;======================<br>          会员ID         订单号       提交日期    订单金额<br>0  38765290840  4324911135 2017-01-01  1799.0<br>1  39305832102  4324911213 2017-01-01   369.0<br>2  34190994969  4324911251 2017-01-01   189.0<br>3  38986333210  4324911283 2017-01-01   169.0<br>4      4271359  4324911355 2017-01-01    78.0<br>==================&quot; + info + &quot;======================<br>&lt;class &#x27;pandas.core.frame.DataFrame&#x27;&gt;<br>RangeIndex: 50839 entries, 0 to 50838<br>Data columns (total 4 columns):<br><span class="hljs-meta prompt_"> # </span><span class="language-bash">  Column  Non-Null Count  Dtype</span>         <br>---  ------  --------------  -----         <br> 0   会员ID    50839 non-null  int64         <br> 1   订单号     50839 non-null  int64         <br> 2   提交日期    50839 non-null  datetime64[ns]<br> 3   订单金额    50839 non-null  float64       <br>dtypes: datetime64[ns](1), float64(1), int64(2)<br>memory usage: 1.6 MB<br>None<br>==================&quot; + describe + &quot;======================<br>               会员ID           订单号           订单金额<br>count  5.083900e+04  5.083900e+04   50839.000000<br>mean   2.882368e+10  4.332466e+09     963.587872<br>std    1.409416e+10  4.404350e+06    2178.727261<br>min    2.780000e+02  4.324911e+09       0.300000<br><span class="hljs-meta prompt_">25% </span><span class="language-bash">   1.869274e+10  4.328415e+09      59.000000</span><br><span class="hljs-meta prompt_">50% </span><span class="language-bash">   3.688044e+10  4.331989e+09     149.000000</span><br><span class="hljs-meta prompt_">75% </span><span class="language-bash">   3.923020e+10  4.337515e+09     898.000000</span><br>max    3.954554e+10  4.338764e+09  123609.000000<br>==================&quot; + 2018 + &quot;======================<br>          会员ID         订单号       提交日期    订单金额<br>0  39229691808  4338764262 2018-01-01  3646.0<br>1  39293668916  4338764363 2018-01-01  3999.0<br>2  35059646224  4338764376 2018-01-01    10.1<br>3      1084397  4338770013 2018-01-01   828.0<br>4      3349915  4338770121 2018-01-01  3758.0<br>==================&quot; + info + &quot;======================<br>&lt;class &#x27;pandas.core.frame.DataFrame&#x27;&gt;<br>RangeIndex: 81349 entries, 0 to 81348<br>Data columns (total 4 columns):<br><span class="hljs-meta prompt_"> # </span><span class="language-bash">  Column  Non-Null Count  Dtype</span>         <br>---  ------  --------------  -----         <br> 0   会员ID    81349 non-null  int64         <br> 1   订单号     81349 non-null  int64         <br> 2   提交日期    81349 non-null  datetime64[ns]<br> 3   订单金额    81348 non-null  float64       <br>dtypes: datetime64[ns](1), float64(1), int64(2)<br>memory usage: 2.5 MB<br>None<br>==================&quot; + describe + &quot;======================<br>               会员ID           订单号           订单金额<br>count  8.134900e+04  8.134900e+04   81348.000000<br>mean   2.902317e+10  4.348372e+09     966.582792<br>std    1.404116e+10  4.183774e+06    2204.969534<br>min    2.780000e+02  4.338764e+09       0.000000<br><span class="hljs-meta prompt_">25% </span><span class="language-bash">   1.902755e+10  4.345654e+09      60.000000</span><br><span class="hljs-meta prompt_">50% </span><span class="language-bash">   3.740121e+10  4.349448e+09     149.000000</span><br><span class="hljs-meta prompt_">75% </span><span class="language-bash">   3.923380e+10  4.351639e+09     899.000000</span><br>max    3.954614e+10  4.354235e+09  174900.000000<br>==================&quot; + 会员等级 + &quot;======================<br>          会员ID  会员等级<br>0       100090     3<br>1  10012905801     1<br>2  10012935109     1<br>3  10013498043     1<br>4  10014087899     4<br>==================&quot; + info + &quot;======================<br>&lt;class &#x27;pandas.core.frame.DataFrame&#x27;&gt;<br>RangeIndex: 154385 entries, 0 to 154384<br>Data columns (total 2 columns):<br><span class="hljs-meta prompt_"> # </span><span class="language-bash">  Column  Non-Null Count   Dtype</span><br>---  ------  --------------   -----<br> 0   会员ID    154385 non-null  int64<br> 1   会员等级    154385 non-null  int64<br>dtypes: int64(2)<br>memory usage: 2.4 MB<br>None<br>==================&quot; + describe + &quot;======================<br>               会员ID           会员等级<br>count  1.543850e+05  154385.000000<br>mean   2.980055e+10       2.259701<br>std    1.365654e+10       1.346408<br>min    8.100000e+01       1.000000<br><span class="hljs-meta prompt_">25% </span><span class="language-bash">   2.213894e+10       1.000000</span><br><span class="hljs-meta prompt_">50% </span><span class="language-bash">   3.833022e+10       2.000000</span><br><span class="hljs-meta prompt_">75% </span><span class="language-bash">   3.927932e+10       3.000000</span><br>max    3.954614e+10       5.000000<br></code></pre></td></tr></table></figure>
+</blockquote>
+<ul>
+<li><p>结果说明</p>
+<ul>
+<li>每个sheet中的数据都能正常读取，无任何错误</li>
+<li>日期列（提交日期）已经被自动识别为日期格式，后期不必转换</li>
+<li>订单金额的分布是不均匀的，里面有明显的极值<ul>
+<li>例如2016年的数据中，最大值为174900，最小值仅为0.1</li>
+<li>极大极小值相差过大，数据会受极值影响</li>
+</ul>
+</li>
+<li>订单金额中的最小值包括0、0.1这样的金额，可能为非正常订单，与业务方沟通后确认<ul>
+<li>最大值的订单金额有效，通常是客户一次性购买多个大型商品</li>
+<li>而订单金额为0.1元这类使用优惠券支付的订单，没有实际意义</li>
+<li>除此0、0.1这样的金额之外，所有低于1元的订单均有这个问题，因此需要在后续处理中去掉</li>
+</ul>
+</li>
+<li>有的表中存在缺失值记录，但数量不多，选择丢弃或填充均可</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-4-3-数据预处理"><a href="#2-4-3-数据预处理" class="headerlink" title="2.4.3 数据预处理"></a>2.4.3 数据预处理</h4><ul>
+<li><p>数据清洗, 即: 删除缺失值, 去掉异常值.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 1.获取表名, 即: 2015 ~ 2018, 不要最后的&quot;会员等级&quot;</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> sheet_names[:-<span class="hljs-number">1</span>]:<br>    <span class="hljs-comment"># i就是 2015， 2016， 2017， 2018 四张表sheet表名</span><br>    <span class="hljs-comment"># 2. 删除缺失值.</span><br>    sheet_datas[i] = sheet_datas[i].dropna()  <span class="hljs-comment"># 删除缺失值.</span><br>    <span class="hljs-comment"># 3. 去掉订单金额小于1的数据.</span><br>    sheet_datas[i] = sheet_datas[i][sheet_datas[i][<span class="hljs-string">&#x27;订单金额&#x27;</span>] &gt; <span class="hljs-number">1</span>]<br>    <span class="hljs-comment"># 4. 创建新的字段, 用来记录每个sheet最后一笔消费的时间.</span><br>    <span class="hljs-comment"># 其实就是每年的 12月31日</span><br>    sheet_datas[i][<span class="hljs-string">&#x27;max_year_date&#x27;</span>] = sheet_datas[i][<span class="hljs-string">&#x27;提交日期&#x27;</span>].<span class="hljs-built_in">max</span>()  <br></code></pre></td></tr></table></figure>
+</li>
+<li><p>查看清洗后的数据</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 1. 遍历表格名列表, 获取到每个表格名</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> sheet_names:<br>    <span class="hljs-comment"># 2. 查看是否还有 空值 数据.</span><br>    <span class="hljs-built_in">print</span>(sheet_datas[i].isnull().<span class="hljs-built_in">sum</span>())   <span class="hljs-comment"># 统计空值数量, 都是0.</span><br>    <span class="hljs-comment"># 3. 查看下每个表格, 订单金额列, 最小值都是 1元 以上的价格.</span><br>    <span class="hljs-built_in">print</span>(sheet_datas[i].describe())<br></code></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li><p>把前四年的数据, 拼接到一起</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 1. 把前四年的数据, 拼接到一起.</span><br><span class="hljs-comment"># sheet_datas.values() 字典的values()方法, 用于获取字典中所有的值(每个值, 都是1个df对象, 对应1个sheet表格)，源数据是&#123;index：dataframe， ...&#125;这样的</span><br><span class="hljs-comment"># list(sheet_datas.values())        把上述的数据, 转成 列表形式</span><br><span class="hljs-comment"># list(sheet_datas.values())[0:-1]  获取到除了最后一张表(会员登记表)的所有数据.</span><br><span class="hljs-comment"># pd.concat()                       把前四年的数据(4个df对象), 拼接到一起.</span><br><span class="hljs-comment"># ingore_index=True 忽略索引</span><br>data_merge = pd.concat(<span class="hljs-built_in">list</span>(sheet_datas.values())[<span class="hljs-number">0</span>:-<span class="hljs-number">1</span>]， ingore_index=<span class="hljs-literal">True</span>)<br><br><span class="hljs-comment"># 2. 验证下上述的数据, 看下每年具体多少条数据.</span><br>data_merge[<span class="hljs-string">&#x27;max_year_date&#x27;</span>].value_counts()<br><br><span class="hljs-comment"># 3. 给拼接后的数据, 新增一列 year, 表示: 数据的年份.</span><br>data_merge[<span class="hljs-string">&#x27;year&#x27;</span>] = data_merge[<span class="hljs-string">&#x27;提交日期&#x27;</span>].dt.year<br><br><span class="hljs-comment"># 4. 给拼接后的数据, 新增一列, 表示: 提交订单的间隔时间.  </span><br><span class="hljs-comment"># 结果是: timedelta64[ns]类型, 即: 364 days 这样的数据.</span><br>data_merge[<span class="hljs-string">&#x27;date_interval&#x27;</span>] = data_merge[<span class="hljs-string">&#x27;max_year_date&#x27;</span>] - data_merge[<span class="hljs-string">&#x27;提交日期&#x27;</span>] <br><br><span class="hljs-comment"># 5. 去掉 date_interval列的 日期单位, 从 364 days =&gt; 364</span><br><span class="hljs-comment"># 结果是: int64类型, 即: 364 这样的数据.</span><br>data_merge[<span class="hljs-string">&#x27;date_interval&#x27;</span>] = data_merge[<span class="hljs-string">&#x27;date_interval&#x27;</span>].dt.days   <br>    <br><span class="hljs-comment"># 6. 查看处理后的数据</span><br>data_merge<br>data_merge.info()<br></code></pre></td></tr></table></figure>
+</li>
+</ul>
+
+<ul>
+<li>添加间隔日期列</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 计算日期间隔天数（该订单日期距离当年最后1天的天数），并添加列（该列的数据类型为timedelta64[ns]）</span><br>data_merge[<span class="hljs-string">&#x27;date_interval&#x27;</span>] = data_merge[<span class="hljs-string">&#x27;max_year_date&#x27;</span>] - data_merge[<span class="hljs-string">&#x27;提交日期&#x27;</span>]<br><span class="hljs-comment"># 转换日期间隔为数字 </span><br>data_merge[<span class="hljs-string">&#x27;date_interval&#x27;</span>] = data_merge[<span class="hljs-string">&#x27;date_interval&#x27;</span>].dt.days<br>data_merge.head()<br></code></pre></td></tr></table></figure>
+<blockquote>
+<font color='red'>输出结果：</font>
+
+
+<ul>
+<li>代码说明：<ul>
+<li>汇总所有数据: 将4年的数据使用pd.concat方法合并为一个完整的dataframe data_merge，后续的所有计算都能基于同一个dataframe进行，而不用写循环代码段对每个年份的数据单独计算</li>
+<li>获取各自年份数据:<ul>
+<li>先计算各自年份的最大日期与每个行的日期的差，得到日期间隔</li>
+<li>再增加一列新的字段，为每个记录行发生的年份，使用data_merge[‘提交日期’].dt.year实现</li>
+</ul>
+</li>
+<li>关于pandas的 datetime类型<ul>
+<li>dt是pandas中Series时间序列datetime类属性的访问对象</li>
+<li>除了代码中用到的year外，还包括：date、dayofweek、dayofyear、days_in_month、freq、days、hour、microsecond、minute、month、quarter、second、time、week、weekday、weekday_name、weekofyear等</li>
+</ul>
+</li>
+<li>转换日期间隔为数字：通过 .dt.days 方式获取时间差列中的间隔天数数字</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h4 id="2-4-4-计算RFM的原始值"><a href="#2-4-4-计算RFM的原始值" class="headerlink" title="2.4.4 计算RFM的原始值"></a>2.4.4 计算RFM的原始值</h4><ul>
+<li>分组后聚合计算</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 基于year、会员ID列做分组之后，分别对date_interval、提交日期、订单金额做不同的运算</span><br><span class="hljs-comment"># as_index=False表示重置索引</span><br><br><span class="hljs-comment"># 1. 根据年份, 会员id分组, 计算用户 最近一次购买的日期, 订单总数, 订单总金额.</span><br>rfm_gb = data_merge.groupby([<span class="hljs-string">&#x27;year&#x27;</span>, <span class="hljs-string">&#x27;会员ID&#x27;</span>], as_index=<span class="hljs-literal">False</span>).agg(&#123;<br>    <span class="hljs-comment"># R 求分组后date_interval列中最小值：计算当年该会员最后一次订单距离年末12月31日的间隔天数</span><br>    <span class="hljs-string">&#x27;date_interval&#x27;</span>: <span class="hljs-string">&#x27;min&#x27;</span>, <br>    <span class="hljs-comment"># F 订单频率，计算当年该会员一共消费多少次，对订单号列进行count计算</span><br>    <span class="hljs-string">&#x27;订单号&#x27;</span>: <span class="hljs-string">&#x27;count&#x27;</span>,<br>    <span class="hljs-comment"># M 计算订单总金额：计算当年该会员一共消费多少钱</span><br>    <span class="hljs-string">&#x27;订单金额&#x27;</span>: <span class="hljs-string">&#x27;sum&#x27;</span> <br>&#125;)<br><br><span class="hljs-comment"># 2. 修改列名</span><br>rfm_gb.columns = [<span class="hljs-string">&#x27;year&#x27;</span>, <span class="hljs-string">&#x27;会员ID&#x27;</span>, <span class="hljs-string">&#x27;r&#x27;</span>, <span class="hljs-string">&#x27;f&#x27;</span>, <span class="hljs-string">&#x27;m&#x27;</span>]<br><br><span class="hljs-comment"># 3. 查看聚合计算后的值</span><br>rfm_gb.describe()   <span class="hljs-comment"># r(最后一次购买日期) 越小越好,  f(订单总数), m(订单总金额)越大越好.</span><br></code></pre></td></tr></table></figure>
+<blockquote>
+<font color='red'>输出结果：</font>
+
+
+<ul>
+<li>代码说明：<ul>
+<li>上面代码框中的第一行代码，是基于年份和会员ID，分别做RFM原始值的聚合计算</li>
+<li>这里使用groupby分组，以year和会员ID为联合主键，设置as_index=False意味着year和会员ID不作为index列，而是普通的数据框结果列。后面的agg方法实际上是一个”批量”聚合功能的函数，它实现了对date_interval、提交日期、订单金额三列分别以min、count、sum做聚合计算的功能。否则，我们需要分别写3条goupby来实现3个聚合计算</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h4 id="2-4-5-确定RFM划分区间"><a href="#2-4-5-确定RFM划分区间" class="headerlink" title="2.4.5 确定RFM划分区间"></a>2.4.5 确定RFM划分区间</h4><blockquote>
+<p>在做RFM划分时，基本逻辑是分别对R、F、M做离散化操作，然后再计算RFM。而离散化本身有多种方法可选，由于我们要对数据做RFM离散化，因此需要先看下数据的基本分布状态</p>
+</blockquote>
+<ul>
+<li>查看数据分布</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># rfm_gb.iloc[:,2:]表示只选择rfm_gb的rfm三类数据，并返回新df，</span><br><span class="hljs-comment"># 再做.describe().T操作，查看数据分布情况</span><br>rfm_gb.iloc[:, <span class="hljs-number">2</span>:].describe().T<br></code></pre></td></tr></table></figure>
+<blockquote>
+<font color='red'>输出结果：</font>
+
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:right"></th>
+<th style="text-align:right">count</th>
+<th style="text-align:right">mean</th>
+<th style="text-align:right">std</th>
+<th style="text-align:right">min</th>
+<th style="text-align:right">25%</th>
+<th style="text-align:right">50%</th>
+<th style="text-align:right">75%</th>
+<th style="text-align:right">max</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:right">r</td>
+<td style="text-align:right">148591.0</td>
+<td style="text-align:right">165.524043</td>
+<td style="text-align:right">101.988472</td>
+<td style="text-align:right">0.0</td>
+<td style="text-align:right">79.0</td>
+<td style="text-align:right">156.0</td>
+<td style="text-align:right">255.0</td>
+<td style="text-align:right">365.0</td>
+</tr>
+<tr>
+<td style="text-align:right">f</td>
+<td style="text-align:right">148591.0</td>
+<td style="text-align:right">1.365002</td>
+<td style="text-align:right">2.626953</td>
+<td style="text-align:right">1.0</td>
+<td style="text-align:right">1.0</td>
+<td style="text-align:right">1.0</td>
+<td style="text-align:right">1.0</td>
+<td style="text-align:right">130.0</td>
+</tr>
+<tr>
+<td style="text-align:right">m</td>
+<td style="text-align:right">148591.0</td>
+<td style="text-align:right">1323.741329</td>
+<td style="text-align:right">3753.906883</td>
+<td style="text-align:right">1.5</td>
+<td style="text-align:right">69.0</td>
+<td style="text-align:right">189.0</td>
+<td style="text-align:right">1199.0</td>
+<td style="text-align:right">206251.8</td>
+</tr>
+</tbody>
+</table>
+</div>
+</blockquote>
+<ul>
+<li>通过观察数据分布情况，自定义区间边界，代码如下</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 自定义区间边界，划分为3个区间，注意起始边界小于最小值，四个值分别是 0， 四分之一位数...</span><br>r_bins = [-<span class="hljs-number">1</span>, <span class="hljs-number">79</span>, <span class="hljs-number">255</span>, <span class="hljs-number">365</span>]  <span class="hljs-comment"># 注意包右不包左不是写0，而是-1</span><br>f_bins = [<span class="hljs-number">0</span>, <span class="hljs-number">2</span>, <span class="hljs-number">5</span>, <span class="hljs-number">130</span>] 	<span class="hljs-comment"># f数据的分布比较极端，所以这里采用较小的值</span><br>m_bins = [<span class="hljs-number">0</span>, <span class="hljs-number">69</span>, <span class="hljs-number">1199</span>, <span class="hljs-number">206252</span>]<br></code></pre></td></tr></table></figure>
+<ul>
+<li>为什么做上边的自定义区间划分呢？汇总后的数据总共有14万条，从基本概要看出<ul>
+<li>r和m区间划分：<ul>
+<li>r和m的数据分布相对较为离散，表现在min、25%、50%、75%和max的数据没有特别集中</li>
+<li>而从f（购买频率）则可以看出，大部分用户的分布都趋近于1，表现是从min到75%的分段值都是1且mean（均值）才为1.365</li>
+<li>所以我们可以选择25%和75%作为r和m区间划分的2个边界值</li>
+</ul>
+</li>
+<li>f的分布情况说明<ul>
+<li>r和m本身能较好地区分用户特征，而f则无法区分（大量的用户只有1个订单）</li>
+<li>行业属性（家电）原因，1年购买1次比较普遍（其中包含新客户以及老客户在当年的第1次购买）</li>
+<li>与业务部门沟通，划分时可以使用2和5来作为边界<ul>
+<li>业务部门认为当年购买&gt;=2次可被定义为复购用户（而非累计订单的数量计算复购用户）</li>
+<li>业务部门认为普通用户购买5次已经是非常高的次数，超过该次数就属于非常高价值用户群体</li>
+<li>该值是基于业务经验和日常数据报表获得的</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>区间边界的基本原则如下<ul>
+<li>中间2个边界值：r和m是分别通过25%和75%的值获取的，f是业务与数据部门定义的。</li>
+<li>最小值边界：比各个维度的最小值小即可。</li>
+<li>最大值边界：大于等于各个维度的最大值即可</li>
+<li>最小值边界为什么要小于各个维度的最小值: <ul>
+<li>这是由于在边界上的数据归属有一个基本准则，要么属于区间左侧，要么属于区间右侧。如，f_bins中的2处于边界上，要么属于左侧区间，要么属于右侧区间</li>
+<li>在后续使用pd.cut方法中，对于自定义边界实行的是左开右闭的原则，即数据属于右侧区间，f_bins中的2就属于右侧区间。最左侧的值是无法划分为任何区间的，因此，在定义最小值时，一定要将最小值的边界值</li>
+<li>举例：[1，2，3，4，5]，假如数据划分的区间边界是[1，3，5]，即划分为2份<ul>
+<li>其中的2/3被划分到(1，3]区间中</li>
+<li>3/4/5被划分到(3，5]区间中</li>
+<li>1无法划分到任何一个正常区间内</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-4-6-RFM计算过程"><a href="#2-4-6-RFM计算过程" class="headerlink" title="2.4.6 RFM计算过程"></a>2.4.6 RFM计算过程</h4><ul>
+<li>RFM分箱得分</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 演示 pd.cut() 函数, 方便的将一列连续型数据切分成类别型(即: 把数据分成指定的n个区间, 包右不包左) </span><br><span class="hljs-comment"># pd.cut()  </span><br><span class="hljs-comment"># 参1: 要切的数值, 参2: 要切分成几组 / 传入切分阈值的列表 如果传入的是数值, 会做等距的划分</span><br><span class="hljs-comment"># 参数labels: 切分之后, 每一个类别 对应的取值, 默认使用每组的阈值(最小, 最大] 来作为取值</span><br><span class="hljs-comment"># 参数include_lowest, 默认是False, 即: 不包括下限(左区间), 设置为True后, 即为包括左区间</span><br><br><span class="hljs-comment"># 发现, 把r列的数据, 自动划分成了3个区间: (-0.365, 121.667], (121.667, 243.333], (243.333, 365.0]  四个数锁定3个区间</span><br>pd.cut(rfm_gb[<span class="hljs-string">&#x27;r&#x27;</span>], bins=<span class="hljs-number">3</span>)<br><br><span class="hljs-comment"># 查看类型, 还是一个 Series对象.</span><br><span class="hljs-built_in">type</span>(pd.cut(rfm_gb[<span class="hljs-string">&#x27;r&#x27;</span>], bins=<span class="hljs-number">3</span>))<br><br><span class="hljs-comment"># 给pd.cut()函数, 指定: 切割区间.</span><br>pd.cut(rfm_gb[<span class="hljs-string">&#x27;r&#x27;</span>], bins=r_bins)<br><br><br><span class="hljs-comment"># 具体的计算规则, labels参数, 设置每个分组对应的标签(即: 显示内容)</span><br><span class="hljs-comment"># f: recency(最近一次购买日期间隔), 值越小, 评分越高.</span><br>rfm_gb[<span class="hljs-string">&#x27;r_label&#x27;</span>] = pd.cut(rfm_gb[<span class="hljs-string">&#x27;r&#x27;</span>], bins=r_bins, labels=[<span class="hljs-number">3</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>])<br><span class="hljs-comment"># f: frequency(购买频次), 值越大, 评分越高.</span><br>rfm_gb[<span class="hljs-string">&#x27;f_label&#x27;</span>] = pd.cut(rfm_gb[<span class="hljs-string">&#x27;f&#x27;</span>], bins=f_bins, labels=[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>])<br><span class="hljs-comment"># m: monetary(购买总金额), 值越大, 评分越高.</span><br>rfm_gb[<span class="hljs-string">&#x27;m_label&#x27;</span>] = pd.cut(rfm_gb[<span class="hljs-string">&#x27;m&#x27;</span>], bins=m_bins, labels=[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>])<br><br><span class="hljs-comment"># 也可以用如下的方式计算</span><br>rfm_gb[<span class="hljs-string">&#x27;r_label&#x27;</span>]=pd.cut(rfm_gb[<span class="hljs-string">&#x27;r&#x27;</span>],bins=r_bins, labels=[i <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(r_range)-<span class="hljs-number">1</span>,<span class="hljs-number">0</span>,-<span class="hljs-number">1</span>)])<br>rfm_gb[<span class="hljs-string">&#x27;f_label&#x27;</span>]=pd.cut(rfm_gb[<span class="hljs-string">&#x27;f&#x27;</span>],bins=f_bins, labels=[i+<span class="hljs-number">1</span> <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(f)-<span class="hljs-number">1</span>)])<br>rfm_gb[<span class="hljs-string">&#x27;m_label&#x27;</span>]=pd.cut(rfm_gb[<span class="hljs-string">&#x27;m&#x27;</span>],bins=m_bins, labels=[i+<span class="hljs-number">1</span> <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(m)-<span class="hljs-number">1</span>)])<br><br><br><br><span class="hljs-comment"># 查看下计算后的结果.</span><br>rfm_gb[<span class="hljs-string">&#x27;r_label&#x27;</span>].value_counts().<span class="hljs-built_in">sum</span>()  <span class="hljs-comment"># 计算下数据条数, 看是否和r列的数据条数一致(其它两列也可以计算下)</span><br>rfm_gb<br></code></pre></td></tr></table></figure>
+<blockquote>
+<font color='red'>输出结果：</font>
+
+
+<ul>
+<li>代码说明：<ul>
+<li>每个rfm的过程使用了pd.cut方法，基于自定义的边界区间做划分</li>
+<li>labels用来显示每个离散化后的具体值。F和M的规则是值越大，等级越高</li>
+<li>而R的规则是值越小，等级越高，因此labels的规则与F和M相反</li>
+<li>在labels指定时需要注意，4个区间的结果是划分为3份</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<ul>
+<li>计算RFM组合</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 为了方便后续处理, 把r, f, m的标签 转换为 字符串类型.</span><br>rfm_gb[<span class="hljs-string">&#x27;r_label&#x27;</span>] = rfm_gb[<span class="hljs-string">&#x27;r_label&#x27;</span>].astype(<span class="hljs-built_in">str</span>)<br>rfm_gb[<span class="hljs-string">&#x27;f_label&#x27;</span>] = rfm_gb[<span class="hljs-string">&#x27;f_label&#x27;</span>].astype(<span class="hljs-built_in">str</span>)<br>rfm_gb[<span class="hljs-string">&#x27;m_label&#x27;</span>] = rfm_gb[<span class="hljs-string">&#x27;m_label&#x27;</span>].astype(<span class="hljs-built_in">str</span>)<br><br><span class="hljs-comment"># 计算 rfm最终评分结果.</span><br>rfm_gb[<span class="hljs-string">&#x27;rfm_group&#x27;</span>] = rfm_gb[<span class="hljs-string">&#x27;r_label&#x27;</span>] + rfm_gb[<span class="hljs-string">&#x27;f_label&#x27;</span>] + rfm_gb[<span class="hljs-string">&#x27;m_label&#x27;</span>]<br>rfm_gb<br><br><span class="hljs-comment"># 查看每年, 每种会员的总数.</span><br>rfm_gb.groupby([<span class="hljs-string">&#x27;year&#x27;</span>, <span class="hljs-string">&#x27;rfm_group&#x27;</span>])[<span class="hljs-string">&#x27;会员ID&#x27;</span>].count()<br></code></pre></td></tr></table></figure>
+<blockquote>
+<font color='red'>输出结果：</font>
+
+
+<ul>
+<li><p>代码说明：</p>
+<ul>
+<li><p>将3列作为字符串组合为新的分组</p>
+<ul>
+<li>代码中，先针对3列使用astype方法将数值型转换为字符串型</li>
+<li>然后使用pandas的字符串处理库str中的cat方法做字符串合并，该方法可以将右侧的数据合并到左侧</li>
+<li>再连续使用两个str.cat方法得到总的R、F、M字符串组合</li>
+</ul>
+</li>
+<li><p>【了解】Series.str.cat(others=None, sep=None, na_rep=None) 的说明：</p>
+<ul>
+<li><p>参数: </p>
+<ul>
+<li>others : 列表或复合列表,默认为None,如果为None则连接本身的元素 </li>
+<li>sep : 字符串 或者None,默认为None </li>
+<li>na_rep : 字符串或者 None, 默认 None。如果为None缺失值将被忽略。 </li>
+</ul>
+</li>
+<li><p>返回值: </p>
+<ul>
+<li>concat : 序列(Series)/索引(Index)/字符串(str)</li>
+</ul>
+</li>
+<li><p>示例代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-built_in">print</span>(pd.Series([<span class="hljs-string">&#x27;a&#x27;</span>, <span class="hljs-string">&#x27;b&#x27;</span>, <span class="hljs-string">&#x27;c&#x27;</span>]).<span class="hljs-built_in">str</span>.cat([<span class="hljs-string">&#x27;A&#x27;</span>, <span class="hljs-string">&#x27;B&#x27;</span>, <span class="hljs-string">&#x27;C&#x27;</span>]))<br><span class="hljs-built_in">print</span>(pd.Series([<span class="hljs-string">&#x27;a&#x27;</span>, <span class="hljs-string">&#x27;b&#x27;</span>, <span class="hljs-string">&#x27;c&#x27;</span>]).<span class="hljs-built_in">str</span>.cat([<span class="hljs-string">&#x27;A&#x27;</span>, <span class="hljs-string">&#x27;B&#x27;</span>, <span class="hljs-string">&#x27;C&#x27;</span>], sep=<span class="hljs-string">&#x27;,&#x27;</span>))<br><span class="hljs-comment"># 返回结果如下</span><br><span class="hljs-number">0</span>    aA<br><span class="hljs-number">1</span>    bB<br><span class="hljs-number">2</span>    cC<br>dtype: <span class="hljs-built_in">object</span><br><span class="hljs-number">0</span>    a,A<br><span class="hljs-number">1</span>    b,B<br><span class="hljs-number">2</span>    c,C<br>dtype: <span class="hljs-built_in">object</span><br></code></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<h4 id="2-4-7-RFM图形展示"><a href="#2-4-7-RFM图形展示" class="headerlink" title="2.4.7 RFM图形展示"></a>2.4.7 RFM图形展示</h4><blockquote>
+<p>为了更好地了解不同周期下RFM分组人数的变化，通过3D柱形图展示结果</p>
+</blockquote>
+<ul>
+<li>展示结果时只有3个维度，分别是年份、rfm分组和用户数量。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 图形数据汇总</span><br>display_data = rfm_gb.groupby([<span class="hljs-string">&#x27;rfm_group&#x27;</span>,<span class="hljs-string">&#x27;year&#x27;</span>],as_index=<span class="hljs-literal">False</span>)[<span class="hljs-string">&#x27;会员ID&#x27;</span>].count()<br>display_data.columns = [<span class="hljs-string">&#x27;rfm_group&#x27;</span>,<span class="hljs-string">&#x27;year&#x27;</span>,<span class="hljs-string">&#x27;number&#x27;</span>]<br>display_data[<span class="hljs-string">&#x27;rfm_group&#x27;</span>] = display_data[<span class="hljs-string">&#x27;rfm_group&#x27;</span>].astype(np.int32)<br>display_data.head()<br></code></pre></td></tr></table></figure>
+<blockquote>
+<font color='red'>输出结果：</font>
+
+
+<ul>
+<li>代码说明：<ul>
+<li>第1行代码使用数据框的groupby以rfm_group和year为联合对象，以会员ID会为计算维度做计数，得到每个RFM分组、年份下的会员数量</li>
+<li>第2行代码对结果列重命名</li>
+<li>第3行代码将rfm分组列转换为int32形式</li>
+</ul>
+</li>
+</ul>
+</blockquote>
+<ul>
+<li>出图</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 显示图形</span><br><span class="hljs-keyword">from</span> pyecharts.commons.utils <span class="hljs-keyword">import</span> JsCode<br><span class="hljs-keyword">import</span> pyecharts.options <span class="hljs-keyword">as</span> opts<br><br><span class="hljs-comment"># 颜色池</span><br>range_color = [<span class="hljs-string">&#x27;#313695&#x27;</span>, <span class="hljs-string">&#x27;#4575b4&#x27;</span>, <span class="hljs-string">&#x27;#74add1&#x27;</span>, <span class="hljs-string">&#x27;#abd9e9&#x27;</span>, <span class="hljs-string">&#x27;#e0f3f8&#x27;</span>, <span class="hljs-string">&#x27;#ffffbf&#x27;</span>,<br>               <span class="hljs-string">&#x27;#fee090&#x27;</span>, <span class="hljs-string">&#x27;#fdae61&#x27;</span>, <span class="hljs-string">&#x27;#f46d43&#x27;</span>, <span class="hljs-string">&#x27;#d73027&#x27;</span>, <span class="hljs-string">&#x27;#a50026&#x27;</span>]<br><br>range_max = <span class="hljs-built_in">int</span>(display_data[<span class="hljs-string">&#x27;number&#x27;</span>].<span class="hljs-built_in">max</span>())<br>c = (<br>    Bar3D()<span class="hljs-comment">#设置了一个3D柱形图对象</span><br>    .add(<br>        <span class="hljs-string">&quot;&quot;</span>,<span class="hljs-comment">#图例</span><br>        [d.tolist() <span class="hljs-keyword">for</span> d <span class="hljs-keyword">in</span> display_data.values],<span class="hljs-comment">#数据</span><br>        xaxis3d_opts=opts.Axis3DOpts(type_=<span class="hljs-string">&quot;category&quot;</span>, name=<span class="hljs-string">&#x27;分组名称&#x27;</span>),<span class="hljs-comment">#x轴数据类型，名称，rfm_group</span><br>        yaxis3d_opts=opts.Axis3DOpts(type_=<span class="hljs-string">&quot;category&quot;</span>, name=<span class="hljs-string">&#x27;年份&#x27;</span>),<span class="hljs-comment">#y轴数据类型，名称，year</span><br>        zaxis3d_opts=opts.Axis3DOpts(type_=<span class="hljs-string">&quot;value&quot;</span>, name=<span class="hljs-string">&#x27;会员数量&#x27;</span>),<span class="hljs-comment">#z轴数据类型，名称，number</span><br>    )<br>    .set_global_opts( <span class="hljs-comment"># 全局设置</span><br>        visualmap_opts=opts.VisualMapOpts(max_=range_max, range_color=range_color), <span class="hljs-comment">#设置颜色，及不同取值对应的颜色</span><br>        title_opts=opts.TitleOpts(title=<span class="hljs-string">&quot;RFM分组结果&quot;</span>),<span class="hljs-comment">#设置标题</span><br>    )<br>)<br>c.render() 		      <span class="hljs-comment">#数据保存到本地的网页中.</span><br><span class="hljs-comment"># c.render_notebook() #在notebook中显示</span><br></code></pre></td></tr></table></figure>
+<blockquote>
+<p><font color='red'>输出结果：</font> 在jupyterNotebook中可以旋转</p>
+
+</blockquote>
+<ul>
+<li>输出3D图像中<ul>
+<li>X轴为RFM_Group分组、Y轴为年份、Z轴为用户数量</li>
+<li>该3D图可旋转、缩放，以便查看不同细节</li>
+<li>调节左侧的滑块条，用来显示或不显示特定数量的分组结果</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-5-案例结论"><a href="#2-5-案例结论" class="headerlink" title="2.5 案例结论"></a>2.5 案例结论</h3><h4 id="2-5-1-基于图形的交互式分析"><a href="#2-5-1-基于图形的交互式分析" class="headerlink" title="2.5.1 基于图形的交互式分析"></a>2.5.1 基于图形的交互式分析</h4><ul>
+<li>重点人群分布：212群体<ul>
+<li>在整个分组中，212群体的用户是相对集中且变化最大的</li>
+<li>从2015年到2017年用户群体数量变化不大，但到2018年增长了近一倍</li>
+<li>这部分人群将作为重点分析人群</li>
+</ul>
+</li>
+<li>重点分组分布：<ul>
+<li>除了212人群外，312、213、211及112人群都在各个年份占据很大数量</li>
+<li>虽然各自规模不大，但组合起来的总量超过212本身，也要重点做分析。</li>
+<li>如果拖动左侧的滑块，仅过滤出用户数量在4085以内的分组结果。观察图形发现，很多分组的人群非常少，甚至没有人</li>
+</ul>
+</li>
+</ul>
+<h4 id="2-5-2-RFM用户特征分析"><a href="#2-5-2-RFM用户特征分析" class="headerlink" title="2.5.2 RFM用户特征分析"></a>2.5.2 RFM用户特征分析</h4><blockquote>
+<p>经过上面的分析，得到了要分析的重点客户群体。可根据用户的量级分为两类</p>
+<ul>
+<li>第1类是用户群体占比超过10%的群体</li>
+<li>第2类是占比在个位数的群体。这两类人由于量级不同，因此需要分别有针对性的策略场景。</li>
+<li>除此以外，我们还会增加第3类人群，虽然从用户量级上小，但是单个人的价值度非常高。</li>
+</ul>
+</blockquote>
+<ul>
+<li>第1类人群：212、211、312、112、213；占比超过10%的群体。由于这类人群基数大，必须采取批量操作和运营的方式落地运营策略，一般需要通过系统或产品实现，而不能主要依赖于人工<ul>
+<li>212：可发展的一般性群体。这类群体购买新近度和订单金额一般，且购买频率低。考虑到其最大的群体基础，以及在新近度和订单金额上都可以，因此可采取常规性的礼品兑换和赠送、购物社区活动、签到、免运费等手段维持并提升其消费状态。</li>
+<li>211：可发展的低价值群体。这类群体相对于212群体在订单金额上表现略差，因此在211群体策略的基础上，可以增加与订单相关的刺激措施，例如组合商品优惠券发送、积分购买商品等</li>
+<li>312：有潜力的一般性群体。这类群体购买新近度高，说明最近一次购买发生在很短时间之前，群体对于公司尚有比较熟悉的接触渠道和认知状态；购物频率低，说明对网站的忠诚度一般；订单金额处于中等层级，说明其还具有可提升的空间。因此，可以借助其最近购买的商品，为其定制一些与上次购买相关的商品，通过向上销售等策略提升购买频次和订单金额</li>
+<li>112：可挽回的一般性群体。这类群体购买新近度较低，说明距离上次购买时间较长，很可能用户已经处于沉默或预流失、流失阶段；购物频率低，说明对网站的忠诚度一般；订单金额处于中等层级，说明其还可能具有可提升的空间。因此，对这部分群体的策略首先是通过多种方式（例如邮件、短信等）触达客户并挽回，然后通过针对流失客户的专享优惠（例如流失用户专享优惠券）措施促进其消费。在此过程中，可通过增加接触频次和刺激力度的方式，增加用户的回访、复购以及订单价值回报</li>
+<li>213：可发展的高价值群体。这类人群发展的重点是提升购物频率，因此可指定不同的活动或事件来触达用户，促进其回访和购买，例如不同的节日活动、每周新品推送、高价值客户专享商品等。</li>
+</ul>
+</li>
+<li>第2类人群：占比为1%～10%的群体。这部分人群数量适中，在落地时无论是产品还是人工都可接入<ul>
+<li>311：有潜力的低价值群体。这部分用户与211群体类似，但在购物新近度上更好，因此对其可采取相同的策略。除此以外，在这类群体的最近接触渠道上可以增加营销或广告资源投入，通过这些渠道再次将客户引入网站完成消费。</li>
+<li>111：这是一类在各个维度上都比较差的客户群体。一般情况下，会在其他各个群体策略和管理都落地后才考虑他们。主要策略是先通过多种策略挽回客户，然后为客户推送与其类似的其他群体，或者当前热销的商品或折扣非常大的商品。在刺激消费时，可根据其消费水平、品类等情况，有针对性地设置商品暴露条件，先在优惠券及优惠商品的综合刺激下使其实现消费，再考虑消费频率以及订单金额的提升。</li>
+<li>313：有潜力的高价值群体。这类群体的消费新近度高且订单金额高，但购买频率低，因此只要提升其购买频次，用户群体的贡献价值就会倍增。提升购买频率上，除了在其最近一次的接触渠道上增加曝光外，与最近一次渠道相关的其他关联访问渠道也要考虑增加营销资源。另外，213中的策略也要组合应用其中</li>
+<li>113：可挽回的高价值群体。这类群体与112群体类似，但订单金额贡献更高，因此除了应用112中的策略外，可增加部分人工的参与来挽回这些高价值客户，例如线下访谈、客户电话沟通等</li>
+</ul>
+</li>
+<li>第3类群体：占比非常少，但却是非常重要的群体<ul>
+<li>333：绝对忠诚的高价值群体。虽然用户绝对数量只有355，但由于其各方面表现非常突出，因此可以倾斜更多的资源，例如设计VIP服务、专享服务、绿色通道等。另外，针对这部分人群的高价值附加服务的推荐也是提升其价值的重点策略</li>
+<li>233、223和133：一般性的高价值群体。这类群体的主要着手点是提升新近购买度，即促进其实现最近一次的购买，可通过DM、电话、客户拜访、线下访谈、微信、电子邮件等方式直接建立用户挽回通道，以挽回这部分高价值用户</li>
+<li>322、323和332：有潜力的普通群体。这类群体最近刚完成购买，需要提升的是购买频次及购买金额。因此可通过交叉销售、个性化推荐、向上销售、组合优惠券、打包商品销售等策略，提升其单次购买的订单金额及促进其重复购买</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-6-案例应用"><a href="#2-6-案例应用" class="headerlink" title="2.6 案例应用"></a>2.6 案例应用</h3><blockquote>
+<p>针对上述得到的分析结论，会员部门采取了以下措施</p>
+</blockquote>
+<ul>
+<li>分别针对3类群体，按照公司实际运营需求和当前目标，制定了不同的群体落地的排期</li>
+<li>录入数据库的RFM得分数据已经应用到其他数据模型中，成为建模输入的关键维度特征之一</li>
+</ul>
+<h3 id="2-7-案例注意点"><a href="#2-7-案例注意点" class="headerlink" title="2.7 案例注意点"></a>2.7 案例注意点</h3><blockquote>
+<p>R 最近一次消费的间隔时间</p>
+<p>F 消费频率</p>
+<p>M 消费总额</p>
+</blockquote>
+<ul>
+<li><p>不同品类、行业对于RFM的依赖度是有差异的，即使是一个公司在不同的发展阶段和周期下，3个维度的优先级上也会有调整</p>
+<ul>
+<li>大家电等消费周期较长的行业，R和M会更重要一些</li>
+<li>快消等消费周期短且快的行业，更看重R和F</li>
+<li>具体要根据当前运营需求与业务部门沟通</li>
+</ul>
+</li>
+<li><p>对R、F、M区间的划分是一个离散化的过程，具体需要划分为几个区间需要与业务方确认</p>
+<ul>
+<li>本案例划分为3个区间，结果对于业务分析而言有些多，意味着业务方需要制定十几套甚至更多的策略</li>
+<li>如果业务方要求简化，也可以划分为2个区间，这样出来的分组数最多有8组，策略制定更加简单</li>
+<li>具体是划分为2个还是3个，取决于当前业务方有多少资源可以投入到这个事情中来。</li>
+</ul>
+</li>
+<li><p>R、F、M的权重打分</p>
+<ul>
+<li>除了案例中提到的建模方式外，结合业务经验的专家打分法也是常用的思路，这时推荐结合AHP层次分析法打分，这样出来的权重结果更加科学、严谨。</li>
+<li>虽然订单数据库中的数据质量相对较高，但可能由于数据采集、数据库同步、ETL、查询、误操作等问题，还是会导致NA值的出现，而NA值的处理非常重要。</li>
+<li>R、F、M三个维度的处理（包括计算、离散化、组合、转换）之前都需要注意其数据类型和格式，尤其是有关时间项的转换操作应提前完成</li>
+</ul>
+</li>
+</ul>
+<h2 id="3-保存dataframe数据"><a href="#3-保存dataframe数据" class="headerlink" title="3 保存dataframe数据"></a>3 保存dataframe数据</h2><h3 id="3-1-将数据保存到Excel"><a href="#3-1-将数据保存到Excel" class="headerlink" title="3.1 将数据保存到Excel"></a>3.1 将数据保存到Excel</h3><blockquote>
+<p>保存RFM结果到Excel</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs python">rfm_gb.to_excel(<span class="hljs-string">&#x27;sales_rfm_score1.xlsx&#x27;</span>, index=<span class="hljs-literal">False</span>)  <span class="hljs-comment"># 保存数据为Excel, 不写出索引列</span><br></code></pre></td></tr></table></figure>
+<h3 id="3-2-将数据保存到mysql数据库"><a href="#3-2-将数据保存到mysql数据库" class="headerlink" title="3.2 将数据保存到mysql数据库"></a>3.2 将数据保存到mysql数据库</h3><ul>
+<li>定义数据库信息，注意数据库需要提前创建</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 需要安装pymysql，部分版本需要额外安装sqlalchemy</span><br><span class="hljs-comment"># 导入sqlalchemy的数据库引擎</span><br><span class="hljs-keyword">from</span> sqlalchemy <span class="hljs-keyword">import</span> create_engine<br><br><span class="hljs-comment"># 创建数据库引擎，传入url规则的字符串</span><br>engine = create_engine(<span class="hljs-string">&#x27;mysql+pymysql://root:123456@localhost:3306/rfm_db?charset=utf8&#x27;</span>)<br><span class="hljs-comment"># mysql+pymysql://root:123456@192.168.88.100:3306/test?charset=utf8</span><br><span class="hljs-comment"># mysql 表示数据库类型</span><br><span class="hljs-comment"># pymysql 表示python操作数据库的包</span><br><span class="hljs-comment"># root:123456 表示数据库的账号和密码，用冒号连接</span><br><span class="hljs-comment"># 192.168.88.100:3306/test 表示数据库的ip和端口，以及名叫test的数据库</span><br><span class="hljs-comment"># charset=utf8 规定编码格式</span><br><br><span class="hljs-comment"># df.to_sql()方法将df数据快速写入数据库</span><br>rfm_gb.to_sql(<span class="hljs-string">&#x27;rfm_table&#x27;</span>, engine, index=<span class="hljs-literal">False</span>, if_exists=<span class="hljs-string">&#x27;append&#x27;</span>)<br><span class="hljs-comment"># 第一个参数为数据表的名称</span><br><span class="hljs-comment"># 第二个参数engine为数据库交互引擎</span><br><span class="hljs-comment"># index=False 表示不添加自增主键</span><br><span class="hljs-comment"># if_exists=&#x27;append&#x27; 表示如果表存在就添加，表不存在就创建表并写入</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li>查看dataframe数据有多少条</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs python">rfm_gb.info()<br><span class="hljs-comment"># 返回结果如下</span><br>&lt;<span class="hljs-keyword">class</span> <span class="hljs-string">&#x27;pandas.core.frame.DataFrame&#x27;</span>&gt;<br>Int64Index: <span class="hljs-number">148591</span> entries, <span class="hljs-number">0</span> to <span class="hljs-number">148590</span><br>Data columns (total <span class="hljs-number">9</span> columns):<br> <span class="hljs-comment">#   Column     Non-Null Count   Dtype  </span><br>---  ------     --------------   -----  <br> <span class="hljs-number">0</span>   year       <span class="hljs-number">148591</span> non-null  int64  <br> <span class="hljs-number">1</span>   会员ID       <span class="hljs-number">148591</span> non-null  int64  <br> <span class="hljs-number">2</span>   r          <span class="hljs-number">148591</span> non-null  int64  <br> <span class="hljs-number">3</span>   f          <span class="hljs-number">148591</span> non-null  int64  <br> <span class="hljs-number">4</span>   m          <span class="hljs-number">148591</span> non-null  float64<br> <span class="hljs-number">5</span>   r_score    <span class="hljs-number">148591</span> non-null  <span class="hljs-built_in">object</span> <br> <span class="hljs-number">6</span>   f_score    <span class="hljs-number">148591</span> non-null  <span class="hljs-built_in">object</span> <br> <span class="hljs-number">7</span>   m_score    <span class="hljs-number">148591</span> non-null  <span class="hljs-built_in">object</span> <br> <span class="hljs-number">8</span>   rfm_group  <span class="hljs-number">148591</span> non-null  <span class="hljs-built_in">object</span> <br>dtypes: float64(<span class="hljs-number">1</span>), int64(<span class="hljs-number">4</span>), <span class="hljs-built_in">object</span>(<span class="hljs-number">4</span>)<br>memory usage: <span class="hljs-number">16.3</span>+ MB<br></code></pre></td></tr></table></figure>
+<ul>
+<li>在数据库中检查数据是否完整.</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs shell">USE test;<br>SELECT COUNT(*) FROM rmf_table;<br>exit<br><span class="hljs-meta prompt_"># </span><span class="language-bash">返回结果如下图</span><br></code></pre></td></tr></table></figure>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><ul>
+<li>RFM模型是经典的一种用户分群方法，操作起来比较简单，如果数据量不是很大的时候，直接使用Excel就可以实现</li>
+<li>RFM并不是在所有业务场景下都可以使用，一般用于零售行业（复购率相对高的行业）</li>
+<li>使用Python的cut方法对数据进行分组，需要注意分组区间默认是左开右闭</li>
+<li>使用Pyecharts可以方便的绘制出可以交互的3D图</li>
+</ul>
+<h2 id="RFM案例"><a href="#RFM案例" class="headerlink" title="RFM案例"></a>RFM案例</h2><ul>
+<li><p>导包</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 导包</span><br><span class="hljs-keyword">import</span> time<br><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np <br><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><span class="hljs-keyword">from</span> sqlalchemy <span class="hljs-keyword">import</span> create_engine<br><span class="hljs-keyword">from</span> pyecharts.charts <span class="hljs-keyword">import</span> Bar3D              <span class="hljs-comment"># 需要安装下, 即: pip install pyecharts</span><br><span class="hljs-keyword">from</span> pyecharts.commons.utils <span class="hljs-keyword">import</span> JsCode<br><span class="hljs-keyword">import</span> pyecharts.options <span class="hljs-keyword">as</span> opts<br><br><span class="hljs-comment"># 改变相对路径. </span><br><span class="hljs-keyword">import</span> os<br>os.chdir(<span class="hljs-string">r&#x27;D:\workspace\ai_22_work_bj\pandasProject\day05&#x27;</span>)<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>读取数据</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 1. 定义变量, 记录表名. </span><br>sheet_names = [<span class="hljs-string">&#x27;2015&#x27;</span>, <span class="hljs-string">&#x27;2016&#x27;</span>, <span class="hljs-string">&#x27;2017&#x27;</span>, <span class="hljs-string">&#x27;2018&#x27;</span>, <span class="hljs-string">&#x27;会员等级&#x27;</span>]<br><br><span class="hljs-comment"># 2. 读取上述的excel表, 获取到数据, 结果是: 字典类型,  键: Excel表名, 值: 该表的数据封装成的DataFrame对象.</span><br>sheet_dict = pd.read_excel(<span class="hljs-string">&#x27;./data/sales.xlsx&#x27;</span>, sheet_name=sheet_names)<br>sheet_dict      <span class="hljs-comment"># &#123;&#x27;2015&#x27;: df对象, &#x27;2016&#x27;: df对象, &#x27;2017&#x27;: df对象, &#x27;2018&#x27;: df对象, &#x27;会员等级&#x27;: df对象, &#125;</span><br><br><span class="hljs-comment"># 3. 查看上述数据的 类型.</span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">type</span>(sheet_dict))     <span class="hljs-comment"># &lt;class &#x27;dict&#x27;&gt;</span><br><br><span class="hljs-comment"># 4. 从字典中 获取 2015表 的数据.</span><br>sheet_dict[<span class="hljs-string">&#x27;2015&#x27;</span>]<br><br><span class="hljs-comment"># 5. 查看 2015表数据的 详细信息. </span><br>sheet_dict[<span class="hljs-string">&#x27;2015&#x27;</span>].info()<br><br><span class="hljs-comment"># 6. 查看 2015表数据的 统计信息.</span><br>sheet_dict[<span class="hljs-string">&#x27;2015&#x27;</span>].describe()<br><br><span class="hljs-comment"># 7. 查看 2016表数据的 详细信息. </span><br>sheet_dict[<span class="hljs-string">&#x27;2016&#x27;</span>].info()<br><br><span class="hljs-comment"># 8. 查看 各表的 详细信息, 统计信息. </span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> sheet_names:<br>    <span class="hljs-built_in">print</span>(sheet_dict[i])<br>    sheet_dict[i].info()<br>    sheet_dict[i].describe()<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>数据的预处理</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 1. 处理缺失值, 过滤掉不合法的数据, 新增: max_year_date列</span><br><span class="hljs-comment"># 1.1 遍历, 获取到前4张表, 即: 2015 ~ 2018年的所有表数据.</span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> sheet_names[:-<span class="hljs-number">1</span>]:<br>    <span class="hljs-comment"># 1.2 处理缺失值, 方案: 删除.</span><br>    sheet_dict[i] = sheet_dict[i].dropna()<br>    <span class="hljs-comment"># 1.3 过滤出合法值, 即: 金额在1元以上的订单.</span><br>    sheet_dict[i] = sheet_dict[i][sheet_dict[i][<span class="hljs-string">&#x27;订单金额&#x27;</span>] &gt; <span class="hljs-number">1</span>]<br>    <span class="hljs-comment"># 1.4 新增1列, 用于表示: 固定时间(统计时间)</span><br>    sheet_dict[i][<span class="hljs-string">&#x27;max_year_date&#x27;</span>] = sheet_dict[i][<span class="hljs-string">&#x27;提交日期&#x27;</span>].<span class="hljs-built_in">max</span>()<br>    <br>    <br><span class="hljs-comment"># 2 查看处理后的数据信息. </span><br><span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> sheet_names:<br>    <span class="hljs-built_in">print</span>(sheet_dict[i].info())        <span class="hljs-comment"># 表的详细信息</span><br>    <span class="hljs-built_in">print</span>(sheet_dict[i].describe())    <span class="hljs-comment"># 表的统计信息</span><br>    <br>    <br><span class="hljs-comment"># 3. 合并数据集, 获取到最终的处理后的 DataFrame对象.</span><br><span class="hljs-comment"># 3.1 获取到前4张表的数据, 拼接成新的DataFrame对象.</span><br>data_merge = pd.concat(<span class="hljs-built_in">list</span>(sheet_dict.values())[:-<span class="hljs-number">1</span>], ignore_index=<span class="hljs-literal">True</span>)<br><br><span class="hljs-comment"># 3.2 给表新增1列: 年.</span><br>data_merge[<span class="hljs-string">&#x27;year&#x27;</span>] = data_merge[<span class="hljs-string">&#x27;max_year_date&#x27;</span>].dt.year<br><br><span class="hljs-comment"># 3.3 给表新增1列 date_interval, 表示: 购买商品的间隔时间, 即: max_year_date - 提交日期</span><br>data_merge[<span class="hljs-string">&#x27;date_interval&#x27;</span>] = data_merge[<span class="hljs-string">&#x27;max_year_date&#x27;</span>] - data_merge[<span class="hljs-string">&#x27;提交日期&#x27;</span>]<br><span class="hljs-comment"># 3.4 把上述的时间间隔, 转成对应的 天数(数值)</span><br>data_merge[<span class="hljs-string">&#x27;date_interval&#x27;</span>] = data_merge[<span class="hljs-string">&#x27;date_interval&#x27;</span>].dt.days<br><span class="hljs-comment"># 3.5 查看最终合并后的结果.</span><br>data_merge<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>数据统计-&gt;分析</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 1. 按照 year, 会员ID分组, 分别计算: r(最近购买时间), f(频次), m(金额)三项的 原始数据.</span><br>rfm_gb = data_merge.groupby([<span class="hljs-string">&#x27;year&#x27;</span>, <span class="hljs-string">&#x27;会员ID&#x27;</span>], as_index=<span class="hljs-literal">False</span>).agg(&#123;<br>    <span class="hljs-string">&#x27;date_interval&#x27;</span>: <span class="hljs-string">&#x27;min&#x27;</span>,         <span class="hljs-comment"># 间隔时间的最小值 -&gt; r(recency)</span><br>    <span class="hljs-string">&#x27;订单号&#x27;</span>: <span class="hljs-string">&#x27;count&#x27;</span>,               <span class="hljs-comment"># 购买频次的数量 -&gt; f(frequency)</span><br>    <span class="hljs-string">&#x27;订单金额&#x27;</span>: <span class="hljs-string">&#x27;sum&#x27;</span>                <span class="hljs-comment"># 购买金额的和 -&gt; m(monetary)</span><br>&#125;)<br><br><span class="hljs-comment"># 2. 修改列名.</span><br>rfm_gb.columns = [<span class="hljs-string">&#x27;year&#x27;</span>, <span class="hljs-string">&#x27;会员ID&#x27;</span>, <span class="hljs-string">&#x27;r&#x27;</span>, <span class="hljs-string">&#x27;f&#x27;</span>, <span class="hljs-string">&#x27;m&#x27;</span>]<br>rfm_gb<br><br><br><span class="hljs-comment"># 3. 因为使用的是三分法, 所以需要确定4个值, 才能划分: 3个区间. 自定义区间即可.</span><br><span class="hljs-comment"># 3.1 查看 r, f, m的 分位数. </span><br>rfm_gb.iloc[:, <span class="hljs-number">2</span>:].describe().T<br><br><span class="hljs-comment"># 3.2 自定义区间.</span><br>r_bins = [-<span class="hljs-number">1</span>, <span class="hljs-number">79</span>, <span class="hljs-number">255</span>, <span class="hljs-number">365</span>]<br>f_bins = [<span class="hljs-number">0</span>, <span class="hljs-number">2</span>, <span class="hljs-number">5</span>, <span class="hljs-number">130</span>]<br>m_bins = [<span class="hljs-number">0</span>, <span class="hljs-number">69</span>, <span class="hljs-number">1199</span>, <span class="hljs-number">206252</span>]<br><br><br><span class="hljs-comment"># 4. 具体的划分区间的动作, 获取 r, f, m三项的 具体评分. </span><br><span class="hljs-comment"># 场景1: 演示 自动划分区间, 即: 给定区间数, 由Pandas自动划分区间.</span><br>pd.cut(rfm_gb[<span class="hljs-string">&#x27;r&#x27;</span>], bins=<span class="hljs-number">3</span>).unique()        <span class="hljs-comment"># Categories类型: [(-0.365, 121.667], (121.667, 243.333], (243.333, 365.0]]</span><br><br><span class="hljs-comment"># 场景2: 演示 自定义区间, 即: 我们给定数字, 由Pandas进行具体的划分.</span><br>pd.cut(rfm_gb[<span class="hljs-string">&#x27;r&#x27;</span>], bins=r_bins).unique()   <span class="hljs-comment"># Categories类型: [(-1, 79], (79, 255], (255, 365]]</span><br><br><span class="hljs-comment"># 场景3: 自定义区间 + 评分.</span><br>pd.cut(rfm_gb[<span class="hljs-string">&#x27;r&#x27;</span>], bins=r_bins, labels=[<span class="hljs-number">3</span>, <span class="hljs-number">2</span>, <span class="hljs-number">1</span>])      <span class="hljs-comment"># 可以, 但是不推荐, 因为值写死了. </span><br>pd.cut(rfm_gb[<span class="hljs-string">&#x27;f&#x27;</span>], bins=f_bins, labels=[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>])      <span class="hljs-comment"># 可以, 但是不推荐, 因为值写死了. </span><br>pd.cut(rfm_gb[<span class="hljs-string">&#x27;m&#x27;</span>], bins=m_bins, labels=[<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>])      <span class="hljs-comment"># 可以, 但是不推荐, 因为值写死了. </span><br><br><span class="hljs-comment"># 场景4: 最终版, 自定义区间 + 评分(结合区间值 列表的长度获取)</span><br><span class="hljs-comment"># r(Recency): 最后一次购买的时间, 越小越好, 评分是: 3, 2, 1</span><br>rfm_gb[<span class="hljs-string">&#x27;r_label&#x27;</span>] = pd.cut(rfm_gb[<span class="hljs-string">&#x27;r&#x27;</span>], bins=r_bins, labels=[i <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(r_bins) - <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, -<span class="hljs-number">1</span>)]) <span class="hljs-comment"># range(3, 0, -1) -&gt; [3, 2, 1]    </span><br><span class="hljs-comment"># f(Frequency): 购买频次, 越大越好, 评分是: 1, 2, 3</span><br>rfm_gb[<span class="hljs-string">&#x27;f_label&#x27;</span>] = pd.cut(rfm_gb[<span class="hljs-string">&#x27;f&#x27;</span>], bins=f_bins, labels=[i <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-built_in">len</span>(f_bins))]) <span class="hljs-comment"># range(1, 4) -&gt; [1, 2, 3]    </span><br><span class="hljs-comment"># m(Monetary): 购买金额, 越大越好, 评分是: 1, 2, 3</span><br>rfm_gb[<span class="hljs-string">&#x27;m_label&#x27;</span>] = pd.cut(rfm_gb[<span class="hljs-string">&#x27;m&#x27;</span>], bins=m_bins, labels=[i <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-built_in">len</span>(m_bins))]) <span class="hljs-comment"># range(1, 4) -&gt; [1, 2, 3]    </span><br>rfm_gb<br><br><br><span class="hljs-comment"># 5. 获取具体的 用户分群结果值. </span><br><span class="hljs-comment"># 思路1: 加权, r_lable * 权重 + f_label * 权重 + m_label * 权重</span><br><span class="hljs-comment"># 例如: r_label * 0.2 + f_label * 0.3 + m_label * 0.5</span><br><br><span class="hljs-comment"># 思路2: 拼接思路 即: r_label + f_label + m_label -&gt; 字符串类型. </span><br>rfm_gb[<span class="hljs-string">&#x27;r_label&#x27;</span>] = rfm_gb[<span class="hljs-string">&#x27;r_label&#x27;</span>].astype(<span class="hljs-built_in">str</span>)<br>rfm_gb[<span class="hljs-string">&#x27;f_label&#x27;</span>] = rfm_gb[<span class="hljs-string">&#x27;f_label&#x27;</span>].astype(<span class="hljs-built_in">str</span>)<br>rfm_gb[<span class="hljs-string">&#x27;m_label&#x27;</span>] = rfm_gb[<span class="hljs-string">&#x27;m_label&#x27;</span>].astype(<span class="hljs-built_in">str</span>)<br><br>rfm_gb[<span class="hljs-string">&#x27;rfm_group&#x27;</span>] = rfm_gb[<span class="hljs-string">&#x27;r_label&#x27;</span>] + rfm_gb[<span class="hljs-string">&#x27;f_label&#x27;</span>] + rfm_gb[<span class="hljs-string">&#x27;m_label&#x27;</span>]<br>rfm_gb<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>保存分析结果</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 1. 保存结果到 -&gt; Excel表.</span><br>rfm_gb.to_excel(<span class="hljs-string">&#x27;./data/sale_rfm_group.xlsx&#x27;</span>, index=<span class="hljs-literal">False</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;导出信息到Excel表 成功!&#x27;</span>)<br><br><br><span class="hljs-comment"># 2. 保存结果到 -&gt; Excel表, 例如: rfm_db数据库,  rfm_score 表.</span><br><span class="hljs-comment"># 2.1 创建引擎对象.</span><br>engine = create_engine(<span class="hljs-string">&#x27;mysql+pymysql://root:123456@localhost:3306/rfm_db?charset=utf8&#x27;</span>)<br>engine<br><br><br><span class="hljs-comment"># 2.2 导出数据到MySQL表中.</span><br><span class="hljs-comment"># 场景1: 导出指定字段.</span><br><span class="hljs-comment"># rfm_gb[[&#x27;year&#x27;, &#x27;会员ID&#x27;, &#x27;rfm_group&#x27;]].to_sql(&#x27;rfm_score&#x27;, engine, index=False, if_exists=&#x27;replace&#x27;)</span><br><br><span class="hljs-comment"># 场景2: 导出所有字段. </span><br>rfm_gb.to_sql(<span class="hljs-string">&#x27;rfm_score&#x27;</span>, engine, index=<span class="hljs-literal">False</span>, if_exists=<span class="hljs-string">&#x27;replace&#x27;</span>)<br><span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;导出数据到MySQL表 成功!&#x27;</span>)<br><br><br><span class="hljs-comment"># 2.3 查看导出后的结果, 即: 从SQL表中读取数据.</span><br>pd.read_sql(<span class="hljs-string">&#x27;select * from rfm_score limit 100;&#x27;</span>, engine)<br>pd.read_sql(<span class="hljs-string">&#x27;select count(1) from rfm_score;&#x27;</span>, engine)<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>数据可视化</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 1. 按照 用户分群类型(rfm_group), 年份分组, 统计会员总数. </span><br><span class="hljs-comment"># 思路1: value_counts()</span><br><span class="hljs-comment"># rfm_gb.groupby([&#x27;rfm_group&#x27;, &#x27;year&#x27;])[&#x27;会员ID&#x27;].value_counts()</span><br><br><span class="hljs-comment"># 思路2: groupby() + 聚合函数.</span><br>display_data = rfm_gb.groupby([<span class="hljs-string">&#x27;rfm_group&#x27;</span>, <span class="hljs-string">&#x27;year&#x27;</span>], as_index=<span class="hljs-literal">False</span>).agg(&#123;<span class="hljs-string">&#x27;会员ID&#x27;</span>: <span class="hljs-string">&#x27;count&#x27;</span>&#125;)<br><span class="hljs-comment"># 修改列名.</span><br>display_data.columns = [<span class="hljs-string">&#x27;rfm_group&#x27;</span>, <span class="hljs-string">&#x27;year&#x27;</span>, <span class="hljs-string">&#x27;number&#x27;</span>]<br><span class="hljs-comment"># 修改 rfm_group的类型为 int类型.</span><br>display_data[<span class="hljs-string">&#x27;rfm_group&#x27;</span>] = display_data[<span class="hljs-string">&#x27;rfm_group&#x27;</span>].astype(<span class="hljs-built_in">int</span>)<br><span class="hljs-comment"># 查看最终结果.</span><br>display_data<br><br><br><br><span class="hljs-comment"># 2. 可视化, 显示图形</span><br><br><span class="hljs-comment"># 颜色池</span><br>range_color = [<span class="hljs-string">&#x27;#313695&#x27;</span>, <span class="hljs-string">&#x27;#4575b4&#x27;</span>, <span class="hljs-string">&#x27;#74add1&#x27;</span>, <span class="hljs-string">&#x27;#abd9e9&#x27;</span>, <span class="hljs-string">&#x27;#e0f3f8&#x27;</span>, <span class="hljs-string">&#x27;#ffffbf&#x27;</span>,<br>               <span class="hljs-string">&#x27;#fee090&#x27;</span>, <span class="hljs-string">&#x27;#fdae61&#x27;</span>, <span class="hljs-string">&#x27;#f46d43&#x27;</span>, <span class="hljs-string">&#x27;#d73027&#x27;</span>, <span class="hljs-string">&#x27;#a50026&#x27;</span>]<br><br>range_max = <span class="hljs-built_in">int</span>(display_data[<span class="hljs-string">&#x27;number&#x27;</span>].<span class="hljs-built_in">max</span>())<br>c = (<br>    Bar3D()<span class="hljs-comment">#设置了一个3D柱形图对象</span><br>    .add(<br>        <span class="hljs-string">&quot;&quot;</span>,<span class="hljs-comment">#图例</span><br>        [d.tolist() <span class="hljs-keyword">for</span> d <span class="hljs-keyword">in</span> display_data.values],<span class="hljs-comment">#数据</span><br>        xaxis3d_opts=opts.Axis3DOpts(type_=<span class="hljs-string">&quot;category&quot;</span>, name=<span class="hljs-string">&#x27;分组名称&#x27;</span>),<span class="hljs-comment">#x轴数据类型，名称，rfm_group</span><br>        yaxis3d_opts=opts.Axis3DOpts(type_=<span class="hljs-string">&quot;category&quot;</span>, name=<span class="hljs-string">&#x27;年份&#x27;</span>),<span class="hljs-comment">#y轴数据类型，名称，year</span><br>        zaxis3d_opts=opts.Axis3DOpts(type_=<span class="hljs-string">&quot;value&quot;</span>, name=<span class="hljs-string">&#x27;会员数量&#x27;</span>),<span class="hljs-comment">#z轴数据类型，名称，number</span><br>    )<br>    .set_global_opts( <span class="hljs-comment"># 全局设置</span><br>        visualmap_opts=opts.VisualMapOpts(max_=range_max, range_color=range_color), <span class="hljs-comment">#设置颜色，及不同取值对应的颜色</span><br>        title_opts=opts.TitleOpts(title=<span class="hljs-string">&quot;RFM分组结果&quot;</span>),<span class="hljs-comment">#设置标题</span><br>    )<br>)<br>c.render() 		      <span class="hljs-comment"># 数据保存到本地的网页中.</span><br><span class="hljs-comment"># c.render_notebook() #在notebook中显示</span><br></code></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="扩展-Pandas绘图"><a href="#扩展-Pandas绘图" class="headerlink" title="扩展_Pandas绘图"></a>扩展_Pandas绘图</h2><ul>
+<li><p>需求1</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> pandas <span class="hljs-keyword">as</span> pd<br><span class="hljs-keyword">import</span> seaborn <span class="hljs-keyword">as</span> sns               <span class="hljs-comment"># 底层依赖 Matplotlib </span><br><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt<br><br>plt.rcParams[<span class="hljs-string">&#x27;font.sans-serif&#x27;</span>] = [<span class="hljs-string">&#x27;SimHei&#x27;</span>]<br>plt.rcParams[<span class="hljs-string">&#x27;axes.unicode_minus&#x27;</span>] = <span class="hljs-literal">False</span><br><br><br><span class="hljs-comment"># 1. 加载数据源, 获取到 df对象.</span><br>df = pd.read_csv(<span class="hljs-string">&#x27;./data/winemag-data_first150k.csv&#x27;</span>, index_col=<span class="hljs-number">0</span>)<br>df<br><br><br><span class="hljs-comment"># 需求1: 绘制图形, 展示 产葡萄酒最多的10个产地的信息. </span><br><span class="hljs-comment"># 方式1: 使用 groupby()方法.</span><br>df.groupby(<span class="hljs-string">&#x27;province&#x27;</span>)[<span class="hljs-string">&#x27;province&#x27;</span>].count().sort_values(ascending=<span class="hljs-literal">False</span>).head(<span class="hljs-number">10</span>)<br><br><span class="hljs-comment"># 方式2: value_counts()  统计每个值的次数, 等价于: groupby()方法 + 聚合count() + 排序(默认: 降序)</span><br>df[<span class="hljs-string">&#x27;province&#x27;</span>].value_counts().head(<span class="hljs-number">10</span>)<br><br><span class="hljs-comment"># 对上述结果进行可视化, 采用 Pandas自带的 绘图方式. </span><br><span class="hljs-comment"># df[&#x27;province&#x27;].value_counts().head(10).plot()                 # 折线图.</span><br><br><span class="hljs-comment"># 柱状图</span><br>text_kwargs = <span class="hljs-built_in">dict</span>(fontsize=<span class="hljs-number">15</span>, figsize=(<span class="hljs-number">10</span>, <span class="hljs-number">6</span>), color=[<span class="hljs-string">&#x27;r&#x27;</span>, <span class="hljs-string">&#x27;g&#x27;</span>, <span class="hljs-string">&#x27;b&#x27;</span>, <span class="hljs-string">&#x27;y&#x27;</span>, <span class="hljs-string">&#x27;c&#x27;</span>, <span class="hljs-string">&#x27;m&#x27;</span>, <span class="hljs-string">&#x27;k&#x27;</span>, <span class="hljs-string">&#x27;pink&#x27;</span>, <span class="hljs-string">&#x27;gray&#x27;</span>, <span class="hljs-string">&#x27;orange&#x27;</span>])<br><span class="hljs-comment"># print(text_kwargs)      # &#123;&#x27;fontsize&#x27;: 15, &#x27;figsize&#x27;: (10, 6), &#x27;color&#x27;: [&#x27;r&#x27;, &#x27;g&#x27;, &#x27;b&#x27;, &#x27;y&#x27;, &#x27;c&#x27;, &#x27;m&#x27;, &#x27;k&#x27;, &#x27;pink&#x27;, &#x27;gray&#x27;, &#x27;orange&#x27;]&#125;</span><br><br>df[<span class="hljs-string">&#x27;province&#x27;</span>].value_counts().head(<span class="hljs-number">10</span>).plot.bar(**text_kwargs)<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>需求2</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 需求2: 展示 产葡萄酒最多的10个产地的 占比.</span><br>(df[<span class="hljs-string">&#x27;province&#x27;</span>].value_counts().head(<span class="hljs-number">10</span>) / <span class="hljs-built_in">len</span>(df)).plot.bar(**text_kwargs)<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>需求3</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 需求3: 展示 每个评分的葡萄酒种类(个数) </span><br><span class="hljs-comment"># df[&#x27;points&#x27;].value_counts().sort_index().plot.bar(**text_kwargs)          # 柱状图</span><br><br><span class="hljs-comment"># 如果是固定值的数据, 不是分类性的, 可以直接使用: 折线图显示. </span><br><span class="hljs-comment"># df[&#x27;points&#x27;].value_counts().sort_index().plot.line(**text_kwargs)          # 折线图</span><br>df[<span class="hljs-string">&#x27;points&#x27;</span>].value_counts().sort_index().plot.area(**text_kwargs)            <span class="hljs-comment"># 面积图 = 把折线图的空白填充成颜色即可.</span><br></code></pre></td></tr></table></figure>
+</li>
+</ul>
+<h2 id="扩展-Seaborn绘图"><a href="#扩展-Seaborn绘图" class="headerlink" title="扩展_Seaborn绘图"></a>扩展_Seaborn绘图</h2><ul>
+<li><p>读取数据</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 1. 读取数据, 获取df对象. </span><br><span class="hljs-comment"># df = pd.read_csv(&#x27;./data/tips.csv&#x27;)</span><br>df = sns.load_dataset(<span class="hljs-string">&#x27;tips&#x27;</span>)       <span class="hljs-comment"># 加载Seaborn包自带的 内置数据集, 前提: 电脑要联网.</span><br>df<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>直方图</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># seaborn的绘图, 基本上都是:  图形名 + plot()即可.</span><br><span class="hljs-comment"># 例如: Pandas中 直方图叫 hist(), seaborn中 直方图叫 histplot()</span><br><span class="hljs-comment"># 2. 绘制图形, 展示 每天 男女 总账单的情况.</span><br><span class="hljs-comment"># 计数柱状图, data: 要操作的df对象, x: 绘制的列名, hue: 分组列名.</span><br><span class="hljs-comment"># sns.countplot(data=df, x=&#x27;day&#x27;, hue=&#x27;sex&#x27;)</span><br><br><span class="hljs-comment"># 3. 绘制图形, 展示 男女 总账单的情况.</span><br>fig, ax = plt.subplots(figsize=(<span class="hljs-number">10</span>, <span class="hljs-number">6</span>))<br><br><span class="hljs-comment"># 直方图, data: 要操作的df对象, x: 绘制的列名, hue: 分组列名.</span><br>sns.histplot(data=df, x=<span class="hljs-string">&#x27;total_bill&#x27;</span>, hue=<span class="hljs-string">&#x27;sex&#x27;</span>)<br><br>ax.set_title(<span class="hljs-string">&#x27;男女总账单分布情况&#x27;</span>, fontsize=<span class="hljs-number">20</span>)<br>plt.show()<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>散点图</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 需求: 描述 总账单金额 和 小费的分布情况(关系图) -&gt; 散点图</span><br><span class="hljs-comment"># x轴 -&gt; 总账单金额, y轴 -&gt; 小费金额.</span><br>fig, ax = plt.subplots(figsize=(<span class="hljs-number">10</span>, <span class="hljs-number">6</span>))<br><span class="hljs-comment"># 参1: 要操作的df对象, x: 总账单金额, y: 小费金额.</span><br>sns.scatterplot(data=df, x=<span class="hljs-string">&#x27;total_bill&#x27;</span>, y=<span class="hljs-string">&#x27;tip&#x27;</span>, hue=<span class="hljs-string">&#x27;sex&#x27;</span>)<br>ax.set_title(<span class="hljs-string">&#x27;总账单金额 和 小费金额 的关系图&#x27;</span>, fontsize=<span class="hljs-number">20</span>)<br>plt.show()<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python">fig, ax = plt.subplots(figsize=(<span class="hljs-number">10</span>, <span class="hljs-number">6</span>))<br><span class="hljs-comment"># 参1: 要操作的df对象, x: 总账单金额, y: 小费金额.</span><br>sns.regplot(data=df, x=<span class="hljs-string">&#x27;total_bill&#x27;</span>, y=<span class="hljs-string">&#x27;tip&#x27;</span>)       <span class="hljs-comment"># 会绘制1条拟合回归线, 默认是线性回归.</span><br>ax.set_title(<span class="hljs-string">&#x27;总账单金额 和 小费金额 的关系图&#x27;</span>, fontsize=<span class="hljs-number">20</span>)<br>plt.show()<br></code></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 参1: 要操作的df对象, x: 总账单金额, y: 小费金额.</span><br><span class="hljs-comment"># sns.jointplot(data=df, x=&#x27;total_bill&#x27;, y=&#x27;tip&#x27;, kind=&#x27;reg&#x27;)       # 会绘制1条拟合回归线, 默认是线性回归.</span><br>sns.jointplot(data=df, x=<span class="hljs-string">&#x27;total_bill&#x27;</span>, y=<span class="hljs-string">&#x27;tip&#x27;</span>, kind=<span class="hljs-string">&#x27;hex&#x27;</span>)         <span class="hljs-comment"># kind=&#x27;hex&#x27; -&gt; 蜂巢图</span><br>ax.set_title(<span class="hljs-string">&#x27;总账单金额 和 小费金额 的关系图&#x27;</span>, fontsize=<span class="hljs-number">20</span>)<br>plt.show()<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>箱线图</p class='item-img' data-src='/2026/11/12/RFM-project/1743521875833.png'><img src="/2026/11/12/RFM-project/1743521875833.png" class="" title="箱线图">
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 参1: 要操作的df对象, x: 时间(午餐, 晚餐), y: 账单总金额.</span><br><span class="hljs-comment"># 箱线图.</span><br>sns.boxplot(data=df, x=<span class="hljs-string">&#x27;time&#x27;</span>, y=<span class="hljs-string">&#x27;total_bill&#x27;</span>)         <span class="hljs-comment"># kind=&#x27;hex&#x27; -&gt; 蜂巢图</span><br>plt.show()<br></code></pre></td></tr></table></figure>
+</li>
+<li><p>小提琴图</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 参1: 要操作的df对象, x: 时间(午餐, 晚餐), y: 账单总金额.</span><br><span class="hljs-comment"># 小提琴图.</span><br>sns.violinplot(data=df, x=<span class="hljs-string">&#x27;time&#x27;</span>, y=<span class="hljs-string">&#x27;total_bill&#x27;</span>, hue=<span class="hljs-string">&#x27;sex&#x27;</span>, split=<span class="hljs-literal">True</span>)         <span class="hljs-comment"># kind=&#x27;hex&#x27; -&gt; 蜂巢图</span><br>plt.show()<br></code></pre></td></tr></table></figure>
+</li>
+</ul>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages" style="justify-content: flex-end"><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/11/11/python10/">python10 Prev →</a></div></div></div><div id="comments"><div id="giscus"></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="To Top" style="opacity: 0; display: none;">∧ </a><a class="i-index" id="to-index" onClick="tocControl.change()" title="To Catalog"><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span></a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="Change Theme"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">John Doe</a></h1><div id="description"><p></p></div><div id="social-links"><a class="social" target="_blank" rel="noopener" href="https://github.com/juicer0801"><i class="fab fa-github" alt="GitHub"></i></a></div></div><div id="aside-block"><div id="toc-div"><h1>Catalog</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#RFM%E4%BC%9A%E5%91%98%E4%BB%B7%E5%80%BC%E5%BA%A6%E6%A8%A1%E5%9E%8B%E6%A1%88%E4%BE%8B"><span class="toc-number">1.</span> <span class="toc-text">RFM会员价值度模型案例</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87"><span class="toc-number">1.1.</span> <span class="toc-text">学习目标</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%BC%9A%E5%91%98%E4%BB%B7%E5%80%BC%E5%BA%A6%E6%A8%A1%E5%9E%8B%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.2.</span> <span class="toc-text">1 会员价值度模型介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-RFM%E8%AE%A1%E7%AE%97%E6%A1%88%E4%BE%8B"><span class="toc-number">1.3.</span> <span class="toc-text">2 RFM计算案例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E6%A1%88%E4%BE%8B%E8%83%8C%E6%99%AF"><span class="toc-number">1.3.1.</span> <span class="toc-text">2.1 案例背景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E7%94%A8%E5%88%B0%E7%9A%84%E6%8A%80%E6%9C%AF%E7%82%B9"><span class="toc-number">1.3.2.</span> <span class="toc-text">2.2 用到的技术点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E6%A1%88%E4%BE%8B%E6%95%B0%E6%8D%AE"><span class="toc-number">1.3.3.</span> <span class="toc-text">2.3 案例数据</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-%E4%BB%A3%E7%A0%81"><span class="toc-number">1.3.4.</span> <span class="toc-text">2.4 代码</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-1-%E5%AF%BC%E5%85%A5%E6%A8%A1%E5%9D%97"><span class="toc-number">1.3.4.1.</span> <span class="toc-text">2.4.1 导入模块</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-2-%E8%AF%BB%E5%8F%96%E6%95%B0%E6%8D%AE"><span class="toc-number">1.3.4.2.</span> <span class="toc-text">2.4.2 读取数据</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-3-%E6%95%B0%E6%8D%AE%E9%A2%84%E5%A4%84%E7%90%86"><span class="toc-number">1.3.4.3.</span> <span class="toc-text">2.4.3 数据预处理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-4-%E8%AE%A1%E7%AE%97RFM%E7%9A%84%E5%8E%9F%E5%A7%8B%E5%80%BC"><span class="toc-number">1.3.4.4.</span> <span class="toc-text">2.4.4 计算RFM的原始值</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-5-%E7%A1%AE%E5%AE%9ARFM%E5%88%92%E5%88%86%E5%8C%BA%E9%97%B4"><span class="toc-number">1.3.4.5.</span> <span class="toc-text">2.4.5 确定RFM划分区间</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-6-RFM%E8%AE%A1%E7%AE%97%E8%BF%87%E7%A8%8B"><span class="toc-number">1.3.4.6.</span> <span class="toc-text">2.4.6 RFM计算过程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-4-7-RFM%E5%9B%BE%E5%BD%A2%E5%B1%95%E7%A4%BA"><span class="toc-number">1.3.4.7.</span> <span class="toc-text">2.4.7 RFM图形展示</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-%E6%A1%88%E4%BE%8B%E7%BB%93%E8%AE%BA"><span class="toc-number">1.3.5.</span> <span class="toc-text">2.5 案例结论</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#2-5-1-%E5%9F%BA%E4%BA%8E%E5%9B%BE%E5%BD%A2%E7%9A%84%E4%BA%A4%E4%BA%92%E5%BC%8F%E5%88%86%E6%9E%90"><span class="toc-number">1.3.5.1.</span> <span class="toc-text">2.5.1 基于图形的交互式分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-5-2-RFM%E7%94%A8%E6%88%B7%E7%89%B9%E5%BE%81%E5%88%86%E6%9E%90"><span class="toc-number">1.3.5.2.</span> <span class="toc-text">2.5.2 RFM用户特征分析</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-6-%E6%A1%88%E4%BE%8B%E5%BA%94%E7%94%A8"><span class="toc-number">1.3.6.</span> <span class="toc-text">2.6 案例应用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-7-%E6%A1%88%E4%BE%8B%E6%B3%A8%E6%84%8F%E7%82%B9"><span class="toc-number">1.3.7.</span> <span class="toc-text">2.7 案例注意点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E4%BF%9D%E5%AD%98dataframe%E6%95%B0%E6%8D%AE"><span class="toc-number">1.4.</span> <span class="toc-text">3 保存dataframe数据</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E5%B0%86%E6%95%B0%E6%8D%AE%E4%BF%9D%E5%AD%98%E5%88%B0Excel"><span class="toc-number">1.4.1.</span> <span class="toc-text">3.1 将数据保存到Excel</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E5%B0%86%E6%95%B0%E6%8D%AE%E4%BF%9D%E5%AD%98%E5%88%B0mysql%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="toc-number">1.4.2.</span> <span class="toc-text">3.2 将数据保存到mysql数据库</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-number">1.5.</span> <span class="toc-text">小结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RFM%E6%A1%88%E4%BE%8B"><span class="toc-number">1.6.</span> <span class="toc-text">RFM案例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%A9%E5%B1%95-Pandas%E7%BB%98%E5%9B%BE"><span class="toc-number">1.7.</span> <span class="toc-text">扩展_Pandas绘图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%89%A9%E5%B1%95-Seaborn%E7%BB%98%E5%9B%BE"><span class="toc-number">1.8.</span> <span class="toc-text">扩展_Seaborn绘图</span></a></li></ol></li></ol></div></div><footer><nobr>Published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>
