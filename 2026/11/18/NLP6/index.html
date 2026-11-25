@@ -1,0 +1,665 @@
+<!DOCTYPE html><html lang="en" theme-mode="auto"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>RNN及其变体 | Hexo</title><meta name="keywords" content="deeplearn,nlp,pytorch"><meta name="description" content="1 认识RNN模型学习目标 了解什么是RNN模型. 了解RNN模型的作用. 了解RNN模型的分类.  1 什么是RNN模型 RNN(Recurrent Neural Network), 中文称作循环神经网络, 它一般以序列数据为输入, 通过网络内部的结构设计有效捕捉序列之间的关系特征, 一般也是以序列形式进行输出. 一般单层神经网络结构:   RNN单层网络结构:   以时间步对RNN进行展开后的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RNN及其变体">
+<meta property="og:url" content="http://example.com/2026/11/18/NLP6/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1 认识RNN模型学习目标 了解什么是RNN模型. 了解RNN模型的作用. 了解RNN模型的分类.  1 什么是RNN模型 RNN(Recurrent Neural Network), 中文称作循环神经网络, 它一般以序列数据为输入, 通过网络内部的结构设计有效捕捉序列之间的关系特征, 一般也是以序列形式进行输出. 一般单层神经网络结构:   RNN单层网络结构:   以时间步对RNN进行展开后的">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/2026/11/18/NLP6/1.png">
+<meta property="og:image" content="http://example.com/2026/11/18/NLP6/RNN2.gif">
+<meta property="og:image" content="http://example.com/2026/11/18/NLP6/RNN1.gif">
+<meta property="og:image" content="http://example.com/2026/11/18/NLP6/RNN3.gif">
+<meta property="og:image" content="http://example.com/2026/11/18/NLP6/RNN6.gif">
+<meta property="og:image" content="http://example.com/2026/11/18/NLP6/RNN4.gif">
+<meta property="og:image" content="http://example.com/2026/11/18/NLP6/RNN7.gif">
+<meta property="og:image" content="http://example.com/2026/11/18/NLP6/RNN8.gif">
+<meta property="og:image" content="http://example.com/2026/11/18/NLP6/RNN9.gif">
+<meta property="og:image" content="http://example.com/2026/11/18/NLP6/Snipaste_2026-11-20_22-08-52.png">
+<meta property="og:image" content="http://example.com/2026/11/18/NLP6/10.png">
+<meta property="og:image" content="http://example.com/2026/11/18/NLP6/Snipaste_2026-11-20_22-42-03.png">
+<meta property="og:image" content="http://example.com/2026/11/18/NLP6/11.png">
+<meta property="og:image" content="http://example.com/2026/11/18/NLP6/Snipaste_2026-11-20_22-42-03.png">
+<meta property="og:image" content="http://example.com/2026/11/18/NLP6/12.png">
+<meta property="og:image" content="http://example.com/2026/11/18/NLP6/Snipaste_2026-11-20_22-46-48.png">
+<meta property="og:image" content="http://example.com/2026/11/18/NLP6/RNN15.png">
+<meta property="og:image" content="http://example.com/2026/11/18/NLP6/Snipaste_2026-11-20_22-47-11.png">
+<meta property="og:image" content="http://example.com/2026/11/18/NLP6/21.png">
+<meta property="og:image" content="http://example.com/2026/11/18/NLP6/Snipaste_2026-11-20_22-50-32.png">
+<meta property="og:image" content="http://example.com/2026/11/18/NLP6/22.png">
+<meta property="og:image" content="http://example.com/2026/11/18/NLP6/RNN21.gif">
+<meta property="og:image" content="http://example.com/2026/11/18/NLP6/Snipaste_2026-11-20_22-51-39.png">
+<meta property="og:image" content="http://example.com/2026/11/18/NLP6/RNN22.gif">
+<meta property="og:image" content="http://example.com/2026/11/18/NLP6/Snipaste_2026-11-20_23-03-16.png">
+<meta property="og:image" content="http://example.com/2026/11/18/NLP6/Snipaste_2026-11-20_23-35-38.png">
+<meta property="og:image" content="http://example.com/2026/11/18/NLP6/Snipaste_2026-11-21_11-24-25.png">
+<meta property="og:image" content="http://example.com/2026/11/18/NLP6/Snipaste_2026-11-21_12-08-16.png">
+<meta property="og:image" content="http://example.com/2026/11/18/NLP6/31.png">
+<meta property="og:image" content="http://example.com/2026/11/18/NLP6/22.png">
+<meta property="og:image" content="http://example.com/2026/11/18/NLP6/32.png">
+<meta property="og:image" content="http://example.com/2026/11/18/NLP6/Snipaste_2026-11-21_12-16-02.png">
+<meta property="og:image" content="http://example.com/2026/11/18/NLP6/RNN26.gif">
+<meta property="og:image" content="http://example.com/2026/11/18/NLP6/RNN27.gif">
+<meta property="og:image" content="http://example.com/2026/11/18/NLP6/34.png">
+<meta property="og:image" content="http://example.com/2026/11/18/NLP6/Snipaste_2026-11-21_12-22-57.png">
+<meta property="og:image" content="http://example.com/2026/11/18/NLP6/RNN28.gif">
+<meta property="og:image" content="http://example.com/2026/11/18/NLP6/35.png">
+<meta property="og:image" content="http://example.com/2026/11/18/NLP6/RNN29.gif">
+<meta property="og:image" content="http://example.com/2026/11/18/NLP6/Snipaste_2026-11-21_12-56-05.png">
+<meta property="og:image" content="http://example.com/2026/11/18/NLP6/37.png">
+<meta property="og:image" content="http://example.com/2026/11/18/NLP6/Snipaste_2026-11-21_12-59-11.png">
+<meta property="og:image" content="http://example.com/2026/11/18/NLP6/RNN30.gif">
+<meta property="og:image" content="http://example.com/2026/11/18/NLP6/38.png">
+<meta property="og:image" content="http://example.com/2026/11/18/NLP6/Snipaste_2026-11-21_15-08-07.png">
+<meta property="og:image" content="http://example.com/2026/11/18/NLP6/Snipaste_2026-11-21_17-35-18.png">
+<meta property="og:image" content="http://example.com/2026/11/18/NLP6/gru.png">
+<meta property="og:image" content="http://example.com/2026/11/18/NLP6/22.png">
+<meta property="og:image" content="http://example.com/2026/11/18/NLP6/gru2.png">
+<meta property="article:published_time" content="2026-11-18T11:25:31.000Z">
+<meta property="article:modified_time" content="2026-11-25T15:36:44.814Z">
+<meta property="article:author" content="Juicer">
+<meta property="article:tag" content="deeplearn">
+<meta property="article:tag" content="nlp">
+<meta property="article:tag" content="pytorch">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/2026/11/18/NLP6/1.png"><link rel="canonical" href="http://example.com/2026/11/18/NLP6/"><link rel="icon" type="image/x-icon" href="/favicon.ico"><link rel="preload" as="font" crossorigin="anonymous" href="/font/Bender.ttf"><link rel="preload" as="font" crossorigin="anonymous" href="/font/BenderLight.woff2"><link rel="preload" as="font" crossorigin="anonymous" href="/font/JetBrainsMono-Regular.woff2"><link rel="stylesheet" href="/css/arknights.css"><style>@font-face {
+  font-family: Bender;
+  src: local('Bender'), url("/font/Bender.ttf"), url("/font/Bender.otf");
+}
+@font-face {
+  font-family: BenderLight;
+  src: local('BenderLight'), url("/font/BenderLight.woff2") format('woff2');
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}
+</style><meta name="page-config" content="{&quot;code_fold&quot;:null}"><script class="pjax-js">var config = {"root":"/","code_fold":15,"search":{"preload":true,"activeHolder":"Enter here","blurHolder":"Search","noResult":"Data \"$0\" not found"},"code":{"codeInfo":"$0 - $1 lines","copy":"copy"}};
+var page_config = {
+  code_fold: null
+};
+function updatePageConfig() {
+  var newPageConfig = document.querySelector('meta[name="page-config"]');
+  if (newPageConfig) {
+    page_config = JSON.parse(newPageConfig.content);
+  }
+}
+document.addEventListener('pjax:complete', function() { updatePageConfig(); });
+updatePageConfig();</script><link type="text/css" rel="stylesheet" href="/lib/encrypt/hbe.style.css"><script src="//unpkg.com/mermaid@11.12.2/dist/mermaid.min.js"></script><script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.1/MathJax.js"></script><script>MathJax.Hub.Config({
+ menuSettings: {
+   zoom: "None"
+ },
+ showMathMenu: false,
+ jax: ["input/TeX","output/CommonHTML"],
+ extensions: ["tex2jax.js"],
+ TeX: {
+   extensions: ["AMSmath.js","AMSsymbols.js"],
+   equationNumbers: {
+     autoNumber: "AMS"
+   }
+ },
+ tex2jax: {
+   inlineMath: [["\\(", "\\)"]],
+   displayMath: [["\\[", "\\]"]]
+ }
+});</script><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lightgallery.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-zoom.css"><link type="text/css" rel="stylesheet" href="//unpkg.com/lightgallery@2.7.1/css/lg-thumbnail.css"><link type="text/css" rel="stylesheet" href="/lib/fontawesome/css/all.min.css"><script>if (window.localStorage.getItem('theme-mode') === 'light' || window.matchMedia('(prefers-color-scheme:light)').matches)
+ document.documentElement.setAttribute('theme-mode', 'light')
+if (window.localStorage.getItem('theme-mode') === 'dark' || window.matchMedia('(prefers-color-scheme:dark)').matches)
+ document.documentElement.setAttribute('theme-mode', 'dark')</script><style>@font-face {
+ font-family: BenderLight;
+ src: local('Bender'), url("/font/BenderLight.woff2") format('woff2');
+}
+@font-face {
+ font-family: 'JetBrains Mono';
+ src: local('JetBrains Mono'), url('/font/JetBrainsMono-Regular.woff2') format('woff2');
+}</style><style>:root {
+ --dark-background: url('https://ak.hypergryph.com/assets/index/images/ak/pc/bk.jpg');
+ --light-background: url('/img/bk.jpg');
+ --theme-encrypt-confirm: 'confirm'
+}</style><script defer src="/js/arknights.js"></script><script defer src="/js/search.js"></script><script defer src="https://vercount.one/js"></script><script defer type="module">import mermaid from '//unpkg.com/mermaid@11.12.2/dist/mermaid.esm.min.mjs';
+window.mermaid = mermaid;
+code.paintMermaid();
+</script><script src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.6.1/MathJax.js"></script><script>MathJax.Hub.Config({
+  menuSettings: {
+    zoom: "None"
+  },
+  showMathMenu: false,
+  jax: ["input/TeX","output/CommonHTML"],
+  extensions: ["tex2jax.js"],
+  TeX: {
+    extensions: ["AMSmath.js","AMSsymbols.js"],
+    equationNumbers: {
+      autoNumber: "AMS"
+    }
+  },
+  tex2jax: {
+    inlineMath: [["\\(", "\\)"]],
+    displayMath: [["\\[", "\\]"]]
+  }
+});
+</script><script async src="//unpkg.com/lightgallery@2.7.1/lightgallery.min.js"></script><script async src="//unpkg.com/lightgallery@2.7.1/plugins/zoom/lg-zoom.min.js"></script><script async src="//unpkg.com/lightgallery@2.7.1/plugins/thumbnail/lg-thumbnail.min.js"></script><script async src="/lib/encrypt/hbe.js"></script><script async src="/js/pjax.js"></script><script class="pjax-js">reset= () => {document.querySelector('.lg-container')?.remove()
+lightGallery(document.getElementById('post-bg'), {
+  plugins: [lgZoom,lgThumbnail],
+  selector: '.item-img'})}</script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js','data-pjax','.vercount','meta[name=page-config]'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);document.addEventListener('pjax:success', _ => {
+ const script = document.createElement('script');
+ script.src = 'https://vercount.one/js';
+ document.head.appendChild(script);
+});reset()})</script><script class="pjax-js">reset= () => {window.giscusSettings = {
+ repo: 'juicer0801/juicer0801.github.io',
+ repoId: 'R_kgDOUcAR_w',
+ category: 'Announcements',
+ categoryId: 'DIC_kwDOUcAR_84DIlqM',
+ mapping: 'pathname',
+ strict: '0',
+ reactionsEnabled: '1',
+ emitMetadata: '0',
+ inputPosition: 'bottom',
+ lang: 'zh-CN',
+ crossorigin: 'anonymous' , loading: 'lazy'};window.giscusThemeConfig = { theme: 'preferred_color_scheme' };MathJax.Hub.Queue(["Typeset", MathJax.Hub]);document.querySelector('.lg-container')?.remove()
+const postBg = document.querySelector('#post-bg');
+if (postBg) lightGallery(postBg, {
+  plugins: [lgZoom,lgThumbnail],
+  selector: '.item-img'})}</script><script>window.addEventListener("load",() => {pjax = new Pjax({
+ cacheBust: false,
+ selectors: ['title','article','#aside-block','.pjax-js','data-pjax','.vercount','meta[name=page-config]'],
+ switches: {'article': Pjax.switches.sideBySide},
+ switchesOptions: {
+   'article': {
+     classNames: {
+       remove: "pjax-out",
+       add: "pjax-in"
+     }
+   }
+ }
+});
+document.addEventListener("pjax:complete", reset);document.addEventListener('pjax:success', _ => {
+ const script = document.createElement('script');
+ script.src = 'https://vercount.one/js';
+ document.head.appendChild(script);
+});reset()})</script><meta name="generator" content="Hexo 8.1.2"></head><body><div class="loading" style="opacity: 0;"><div class="loadingBar left"></div><div class="loadingBar right"></div></div><main><header class="closed"><div class="navBtn"><i class="navBtnIcon"><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span><span class="navBtnIconBar"></span></i></div><nav><div class="navItem" id="search-header"><span class="navItemTitle"><input autocomplete="off" autocorrect="off" autocapitalize="none" placeholder="Search" spellcheck="false" maxlength="50" type="text" id="search-input"></span></div><div class="navItem" id="search-holder"></div><div class="search-popup" tabindex="0"><div id="search-result"></div></div><ol class="navContent"><li class="navItem"><a class="navBlock" href="/"><span class="navItemTitle">Home</span></a></li><li class="navItem" matchdata="categories,tags"><a class="navBlock" href="/archives/"><span class="navItemTitle">Archives</span></a></li><li class="navItem"><a class="navBlock" href="/tags/"><span class="navItemTitle">Tags</span></a></li><li class="navItem"><a class="navBlock" href="/categories/"><span class="navItemTitle">Categories</span></a></li><li class="navItem"><a class="navBlock" href="/friends"><span class="navItemTitle">友链</span></a></li></ol></nav></header><article><div id="post-bg"><div id="post-title"><h1>RNN及其变体</h1><div id="post-info"><span>First Post: <div class="control"><time datetime="2026-11-18T11:25:31.000Z" id="date"> 2026-11-18</time></div></span><br><span>Last Update: <div class="control"><time datetime="2026-11-25T15:36:44.814Z" id="updated"> 2026-11-25</time></div></span><br><span>Word Count: <div class="control">9.2k</div></span><br><span>Read Time: <div class="control">35 min</div></span><br><span id="vercount_container_page_pv">Page View: <span class="control" id="vercount_value_page_pv">loading...</span></span></div></div><hr><div id="post-content"><h1 id="1-认识RNN模型"><a href="#1-认识RNN模型" class="headerlink" title="1 认识RNN模型"></a>1 认识RNN模型</h1><h3 id="学习目标"><a href="#学习目标" class="headerlink" title="学习目标"></a>学习目标</h3><ul>
+<li>了解什么是RNN模型.</li>
+<li>了解RNN模型的作用.</li>
+<li>了解RNN模型的分类.</li>
+</ul>
+<h2 id="1-什么是RNN模型"><a href="#1-什么是RNN模型" class="headerlink" title="1 什么是RNN模型"></a>1 什么是RNN模型</h2><ul>
+<li>RNN(Recurrent Neural Network), 中文称作循环神经网络, 它一般以序列数据为输入, 通过网络内部的结构设计有效捕捉序列之间的关系特征, 一般也是以序列形式进行输出.</li>
+<li>一般单层神经网络结构:</li>
+</ul class='item-img' data-src='/2026/11/18/NLP6/1.png'><img src="/2026/11/18/NLP6/1.png" class="" title="Hexo 博客封面示例">
+<ul>
+<li>RNN单层网络结构:</li>
+</ul class='item-img' data-src='/2026/11/18/NLP6/RNN2.gif'><img src="/2026/11/18/NLP6/RNN2.gif" class="" title="Hexo 博客封面示例">
+<ul>
+<li>以时间步对RNN进行展开后的单层网络结构:</li>
+</ul class='item-img' data-src='/2026/11/18/NLP6/RNN1.gif'><img src="/2026/11/18/NLP6/RNN1.gif" class="" title="Hexo 博客封面示例">
+<ul>
+<li>RNN的循环机制使模型隐层上一时间步产生的结果, 能够作为当下时间步输入的一部分(当下时间步的输入除了正常的输入外还包括上一步的隐层输出)对当下时间步的输出产生影响.</li>
+</ul>
+<h2 id="2-RNN模型的作用"><a href="#2-RNN模型的作用" class="headerlink" title="2 RNN模型的作用"></a>2 RNN模型的作用</h2><ul>
+<li>因为RNN结构能够很好利用序列之间的关系, 因此针对自然界具有连续性的输入序列, 如人类的语言, 语音等进行很好的处理, 广泛应用于NLP领域的各项任务, 如文本分类, 情感分析, 意图识别, 机器翻译等.</li>
+<li>下面我们将以一个用户意图识别的例子进行简单的分析:</li>
+</ul class='item-img' data-src='/2026/11/18/NLP6/RNN3.gif'><img src="/2026/11/18/NLP6/RNN3.gif" class="" title="Hexo 博客封面示例">
+<ul>
+<li>第一步: 用户输入了”What time is it ?”, 我们首先需要对它进行基本的分词, 因为RNN是按照顺序工作的, 每次只接收一个单词进行处理.</li>
+</ul class='item-img' data-src='/2026/11/18/NLP6/RNN6.gif'><img src="/2026/11/18/NLP6/RNN6.gif" class="" title="Hexo 博客封面示例">
+<ul>
+<li>第二步: 首先将单词”What”输送给RNN, 它将产生一个输出O1.</li>
+</ul class='item-img' data-src='/2026/11/18/NLP6/RNN4.gif'><img src="/2026/11/18/NLP6/RNN4.gif" class="" title="Hexo 博客封面示例">
+<ul>
+<li>第三步: 继续将单词”time”输送给RNN, 但此时RNN不仅仅利用”time”来产生输出O2, 还会使用来自上一层隐层输出O1作为输入信息.</li>
+</ul class='item-img' data-src='/2026/11/18/NLP6/RNN7.gif'><img src="/2026/11/18/NLP6/RNN7.gif" class="" title="Hexo 博客封面示例">
+<ul>
+<li>第四步: 重复这样的步骤, 直到处理完所有的单词.</li>
+</ul class='item-img' data-src='/2026/11/18/NLP6/RNN8.gif'><img src="/2026/11/18/NLP6/RNN8.gif" class="" title="Hexo 博客封面示例">
+<ul>
+<li>第五步: 最后，将最终的隐层输出O5进行处理来解析用户意图.</li>
+</ul class='item-img' data-src='/2026/11/18/NLP6/RNN9.gif'><img src="/2026/11/18/NLP6/RNN9.gif" class="" title="Hexo 博客封面示例">
+<h2 id="3-RNN模型的分类"><a href="#3-RNN模型的分类" class="headerlink" title="3 RNN模型的分类"></a>3 RNN模型的分类</h2><ul>
+<li>这里我们将从两个角度对RNN模型进行分类. 第一个角度是输入和输出的结构, 第二个角度是RNN的内部构造.</li>
+<li>按照输入和输出的结构进行分类:<ul>
+<li>N vs N - RNN</li>
+<li>N vs 1 - RNN</li>
+<li>1 vs N - RNN</li>
+<li>N vs M - RNN</li>
+</ul>
+</li>
+<li>按照RNN的内部构造进行分类:<ul>
+<li>传统RNN</li>
+<li>LSTM</li>
+<li>Bi-LSTM</li>
+<li>GRU</li>
+<li>Bi-GRU</li>
+</ul>
+</li>
+</ul class='item-img' data-src='/2026/11/18/NLP6/Snipaste_2026-11-20_22-08-52.png'><img src="/2026/11/18/NLP6/Snipaste_2026-11-20_22-08-52.png" class="" title="分类笔记">
+<ul>
+<li>N vs N - RNN:<ul>
+<li>它是RNN最基础的结构形式, 最大的特点就是: 输入和输出序列是等长的. 由于这个限制的存在, 使其适用范围比较小, 可用于生成等长度的合辙诗句.</li>
+</ul>
+</li>
+</ul class='item-img' data-src='/2026/11/18/NLP6/10.png'><img src="/2026/11/18/NLP6/10.png" class="" title="N vs N - RNN">
+<img src="/2026/11/18/NLP6/Snipaste_2026-11-20_22-42-03.png" class="" title="N vs N - RNN">
+<ul>
+<li>N vs 1 - RNN:<ul>
+<li>有时候我们要处理的问题输入是一个序列，而要求输出是一个单独的值而不是序列，应该怎样建模呢？我们只要在最后一个隐层输出h上进行线性变换就可以了，大部分情况下，为了更好的明确结果, 还要使用sigmoid或者softmax进行处理. 这种结构经常被应用在文本分类问题上.</li>
+</ul>
+</li>
+</ul class='item-img' data-src='/2026/11/18/NLP6/11.png'><img src="/2026/11/18/NLP6/11.png" class="" title="N vs 1 - RNN">
+<img src="/2026/11/18/NLP6/Snipaste_2026-11-20_22-42-03.png" class="" title="N vs 1 - RNN">
+<ul>
+<li>1 vs N - RNN:<ul>
+<li>如果输入不是序列而输出为序列的情况怎么处理呢？我们最常采用的一种方式就是使该输入作用于每次的输出之上. 这种结构可用于将图片生成文字任务等.</li>
+</ul>
+</li>
+</ul class='item-img' data-src='/2026/11/18/NLP6/12.png'><img src="/2026/11/18/NLP6/12.png" class="" title="1 vs N - RNN">
+<img src="/2026/11/18/NLP6/Snipaste_2026-11-20_22-46-48.png" class="" title="1 vs N - RNN">
+<ul>
+<li>N vs M - RNN:<ul>
+<li>这是一种不限输入输出长度的RNN结构, 它由编码器和解码器两部分组成, 两者的内部结构都是某类RNN, 它也被称为seq2seq架构. 输入数据首先通过编码器, 最终输出一个隐含变量c, 之后最常用的做法是使用这个隐含变量c作用在解码器进行解码的每一步上, 以保证输入信息被有效利用.</li>
+</ul>
+</li>
+</ul class='item-img' data-src='/2026/11/18/NLP6/RNN15.png'><img src="/2026/11/18/NLP6/RNN15.png" class="" title="N vs M - RNN">
+<img src="/2026/11/18/NLP6/Snipaste_2026-11-20_22-47-11.png" class="" title="N vs M - RNN">
+<ul>
+<li>seq2seq架构最早被提出应用于机器翻译, 因为其输入输出不受限制，如今也是应用最广的RNN模型结构. 在机器翻译, 阅读理解, 文本摘要等众多领域都进行了非常多的应用实践.</li>
+<li>关于RNN的内部构造进行分类的内容我们将在后面使用单独的小节详细讲解.</li>
+</ul>
+<h2 id="4-小结"><a href="#4-小结" class="headerlink" title="4 小结"></a>4 小结</h2><ul>
+<li>学习了什么是RNN模型:<ul>
+<li>RNN(Recurrent Neural Network), 中文称作循环神经网络, 它一般以序列数据为输入, 通过网络内部的结构设计有效捕捉序列之间的关系特征, 一般也是以序列形式进行输出.</li>
+</ul>
+</li>
+<li>RNN的循环机制使模型隐层上一时间步产生的结果, 能够作为当下时间步输入的一部分(当下时间步的输入除了正常的输入外还包括上一步的隐层输出)对当下时间步的输出产生影响.</li>
+<li>学习了RNN模型的作用:<ul>
+<li>因为RNN结构能够很好利用序列之间的关系, 因此针对自然界具有连续性的输入序列, 如人类的语言, 语音等进行很好的处理, 广泛应用于NLP领域的各项任务, 如文本分类, 情感分析, 意图识别, 机器翻译等.</li>
+</ul>
+</li>
+<li>以一个用户意图识别的例子对RNN的运行过程进行简单的分析:<ul>
+<li>第一步: 用户输入了”What time is it ?”, 我们首先需要对它进行基本的分词, 因为RNN是按照顺序工作的, 每次只接收一个单词进行处理.</li>
+<li>第二步: 首先将单词”What”输送给RNN, 它将产生一个输出O1.</li>
+<li>第三步: 继续将单词”time”输送给RNN, 但此时RNN不仅仅利用”time”来产生输出O2, 还会使用来自上一层隐层输出O1作为输入信息.</li>
+<li>第四步: 重复这样的步骤, 直到处理完所有的单词.</li>
+<li>第五步: 最后，将最终的隐层输出O5进行处理来解析用户意图.</li>
+</ul>
+</li>
+<li>学习了RNN模型的分类:<ul>
+<li>这里我们将从两个角度对RNN模型进行分类. 第一个角度是输入和输出的结构, 第二个角度是RNN的内部构造.</li>
+</ul>
+</li>
+<li>按照输入和输出的结构进行分类:<ul>
+<li>N vs N - RNN</li>
+<li>N vs 1 - RNN</li>
+<li>1 vs N - RNN</li>
+<li>N vs M - RNN</li>
+</ul>
+</li>
+<li>N vs N - RNN:<ul>
+<li>它是RNN最基础的结构形式, 最大的特点就是: 输入和输出序列是等长的. 由于这个限制的存在, 使其适用范围比较小, 可用于生成等长度的合辙诗句.</li>
+</ul>
+</li>
+<li>N vs 1 - RNN:<ul>
+<li>有时候我们要处理的问题输入是一个序列，而要求输出是一个单独的值而不是序列，应该怎样建模呢？我们只要在最后一个隐层输出h上进行线性变换就可以了，大部分情况下，为了更好的明确结果, 还要使用sigmoid或者softmax进行处理. 这种结构经常被应用在文本分类问题上.</li>
+</ul>
+</li>
+<li>1 vs N - RNN:<ul>
+<li>如果输入不是序列而输出为序列的情况怎么处理呢？我们最常采用的一种方式就是使该输入作用于每次的输出之上. 这种结构可用于将图片生成文字任务等.</li>
+</ul>
+</li>
+<li>N vs M - RNN:<ul>
+<li>这是一种不限输入输出长度的RNN结构, 它由编码器和解码器两部分组成, 两者的内部结构都是某类RNN, 它也被称为seq2seq架构. 输入数据首先通过编码器, 最终输出一个隐含变量c, 之后最常用的做法是使用这个隐含变量c作用在解码器进行解码的每一步上, 以保证输入信息被有效利用.</li>
+<li>seq2seq架构最早被提出应用于机器翻译, 因为其输入输出不受限制，如今也是应用最广的RNN模型结构. 在机器翻译, 阅读理解, 文本摘要等众多领域都进行了非常多的应用实践.</li>
+</ul>
+</li>
+<li>按照RNN的内部构造进行分类:<ul>
+<li>传统RNN</li>
+<li>LSTM</li>
+<li>Bi-LSTM</li>
+<li>GRU</li>
+<li>Bi-GRU</li>
+</ul>
+</li>
+<li>关于RNN的内部构造进行分类的内容我们将在后面使用单独的小节详细讲解.</li>
+</ul>
+<h1 id="2-传统RNN模型"><a href="#2-传统RNN模型" class="headerlink" title="2 传统RNN模型"></a>2 传统RNN模型</h1><h3 id="学习目标-1"><a href="#学习目标-1" class="headerlink" title="学习目标"></a>学习目标</h3><ul>
+<li>了解传统RNN的内部结构及计算公式.</li>
+<li>掌握Pytorch中传统RNN工具的使用.</li>
+<li>了解传统RNN的优势与缺点.</li>
+</ul>
+<h2 id="1-传统RNN的内部结构图"><a href="#1-传统RNN的内部结构图" class="headerlink" title="1 传统RNN的内部结构图"></a>1 传统RNN的内部结构图</h2><h3 id="1-1-RNN结构分析"><a href="#1-1-RNN结构分析" class="headerlink" title="1.1 RNN结构分析"></a>1.1 RNN结构分析</h3 class='item-img' data-src='/2026/11/18/NLP6/21.png'><img src="/2026/11/18/NLP6/21.png" class="" title="RNN结构分析">
+<img src="/2026/11/18/NLP6/Snipaste_2026-11-20_22-50-32.png" class="" title="RNN结构分析">
+<ul>
+<li>结构解释图:</li>
+</ul class='item-img' data-src='/2026/11/18/NLP6/22.png'><img src="/2026/11/18/NLP6/22.png" class="" title="Hexo 博客封面示例">
+<ul>
+<li><p>内部结构分析:</p>
+<ul>
+<li>我们把目光集中在中间的方块部分, 它的输入有两部分, 分别是h(t-1)以及x(t), 代表上一时间步的隐层输出, 以及此时间步的输入, 它们进入RNN结构体后, 会”融合”到一起, 这种融合我们根据结构解释可知, 是将二者进行拼接, 形成新的张量[x(t), h(t-1)], 之后这个新的张量将通过一个全连接层(线性层), 该层使用tanh作为激活函数, 最终得到该时间步的输出h(t), 它将作为下一个时间步的输入和x(t+1)一起进入结构体. 以此类推.</li>
+</ul>
+</li>
+<li><p>内部结构过程演示:</p>
+</li>
+</ul class='item-img' data-src='/2026/11/18/NLP6/RNN21.gif'><img src="/2026/11/18/NLP6/RNN21.gif" class="" title="Hexo 博客封面示例">
+<img src="/2026/11/18/NLP6/Snipaste_2026-11-20_22-51-39.png" class="" title="Hexo 博客封面示例">
+<ul>
+<li>根据结构分析得出内部计算公式:<script type="math/tex; mode=display">
+h_t = tanh(W_t[X_t, h_{t-1}] + b_t)</script></li>
+<li>激活函数tanh的作用:<ul>
+<li>用于帮助调节流经网络的值, tanh函数将值压缩在-1和1之间.</li>
+</ul>
+</li>
+</ul class='item-img' data-src='/2026/11/18/NLP6/RNN22.gif'><img src="/2026/11/18/NLP6/RNN22.gif" class="" title="Hexo 博客封面示例">
+<img src="/2026/11/18/NLP6/Snipaste_2026-11-20_23-03-16.png" class="" title="RNN内部结构分析 %}
+
+图解：
+{% asset_img Snipaste_2026-11-20_23-09-34.png RNN内部结构分析">
+<h3 id="1-2-使用Pytorch构建RNN模型"><a href="#1-2-使用Pytorch构建RNN模型" class="headerlink" title="1.2 使用Pytorch构建RNN模型"></a>1.2 使用Pytorch构建RNN模型</h3><img src="/2026/11/18/NLP6/Snipaste_2026-11-20_23-35-38.png" class="" title="RNN参数介绍 %}
+
+• 栗子：RNN提取文本特征需求
+    • 数据：[3,1,5] 3个批次 每个批次1个单词 每个单词5个特征
+    • 模型 ：经过模型处理能变6个特征
+    • 探究：9个参数中 主参数和辅助参数的关系
+
+- 位置: 在torch.nn工具包之中, 通过torch.nn.RNN可调用
+- nn.RNN使用示例1:
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">import</span> torch<br><span class="hljs-keyword">import</span> torch.nn <span class="hljs-keyword">as</span> nn<br><br><span class="hljs-keyword">def</span>  <span class="hljs-title function_">dm_rnn_for_base</span>():<br>    <span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">    第一个参数：input_size(输入张量x的维度)</span><br><span class="hljs-string">    第二个参数：hidden_size(隐藏层的维度， 隐藏层的神经元个数)</span><br><span class="hljs-string">    第三个参数：num_layer(隐藏层的数量)</span><br><span class="hljs-string">    &#x27;&#x27;&#x27;</span><br>    rnn = nn.RNN(<span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">1</span>) <span class="hljs-comment">#A</span><br><br>    <span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">    第一个参数：sequence_length(输入序列的长度)</span><br><span class="hljs-string">    第二个参数：batch_size(批次的样本数量)</span><br><span class="hljs-string">    第三个参数：input_size(输入张量的维度)</span><br><span class="hljs-string">    &#x27;&#x27;&#x27;</span><br>    <span class="hljs-built_in">input</span> = torch.randn(<span class="hljs-number">1</span>, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>) <span class="hljs-comment">#B</span><br><br>    <span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">    第一个参数：num_layer * num_directions(层数*网络方向)</span><br><span class="hljs-string">    第二个参数：batch_size(批次的样本数)</span><br><span class="hljs-string">    第三个参数：hidden_size(隐藏层的维度， 隐藏层神经元的个数)</span><br><span class="hljs-string">    &#x27;&#x27;&#x27;</span><br>    h0 = torch.randn(<span class="hljs-number">1</span>, <span class="hljs-number">3</span>, <span class="hljs-number">6</span>) <span class="hljs-comment">#C</span><br><br>    <span class="hljs-comment"># [1,3,5],[1,3,6] ---&gt; [1,3,6],[1,3,6]</span><br>    output, hn = rnn(<span class="hljs-built_in">input</span>, h0)<br><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;output---&gt;&#x27;</span>,output.shape, output)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;hn---&gt;&#x27;</span>,hn.shape, hn)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;rnn模型---&gt;&#x27;</span>, rnn)<br><br><span class="hljs-comment"># 程序运行效果如下：</span><br>output---&gt; torch.Size([<span class="hljs-number">1</span>, <span class="hljs-number">3</span>, <span class="hljs-number">6</span>]) tensor([[[ <span class="hljs-number">0.8947</span>, -<span class="hljs-number">0.6040</span>,  <span class="hljs-number">0.9878</span>, -<span class="hljs-number">0.1070</span>, -<span class="hljs-number">0.7071</span>, -<span class="hljs-number">0.1434</span>],<br>         [ <span class="hljs-number">0.0955</span>, -<span class="hljs-number">0.8216</span>,  <span class="hljs-number">0.9475</span>, -<span class="hljs-number">0.7593</span>, -<span class="hljs-number">0.8068</span>, -<span class="hljs-number">0.5549</span>],<br>         [-<span class="hljs-number">0.1524</span>,  <span class="hljs-number">0.7519</span>, -<span class="hljs-number">0.1985</span>,  <span class="hljs-number">0.0937</span>,  <span class="hljs-number">0.2009</span>, -<span class="hljs-number">0.0244</span>]]],<br>       grad_fn=&lt;StackBackward0&gt;)<br><br>hn---&gt; torch.Size([<span class="hljs-number">1</span>, <span class="hljs-number">3</span>, <span class="hljs-number">6</span>]) tensor([[[ <span class="hljs-number">0.8947</span>, -<span class="hljs-number">0.6040</span>,  <span class="hljs-number">0.9878</span>, -<span class="hljs-number">0.1070</span>, -<span class="hljs-number">0.7071</span>, -<span class="hljs-number">0.1434</span>],<br>         [ <span class="hljs-number">0.0955</span>, -<span class="hljs-number">0.8216</span>,  <span class="hljs-number">0.9475</span>, -<span class="hljs-number">0.7593</span>, -<span class="hljs-number">0.8068</span>, -<span class="hljs-number">0.5549</span>],<br>         [-<span class="hljs-number">0.1524</span>,  <span class="hljs-number">0.7519</span>, -<span class="hljs-number">0.1985</span>,  <span class="hljs-number">0.0937</span>,  <span class="hljs-number">0.2009</span>, -<span class="hljs-number">0.0244</span>]]],<br>       grad_fn=&lt;StackBackward0&gt;)<br><br>rnn模型---&gt; RNN(<span class="hljs-number">5</span>, <span class="hljs-number">6</span>)<br></code></pre></td></tr></table></figure>
+
+5 6 1：
+{% asset_img Snipaste_2026-11-21_10-25-15.png RNN参数介绍">
+<ul>
+<li>nn.RNN使用示例2</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 输入数据长度发生变化</span><br><span class="hljs-keyword">def</span>  <span class="hljs-title function_">dm_rnn_for_sequencelen</span>():<br>    <span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">    第一个参数：input_size(输入张量x的维度)</span><br><span class="hljs-string">    第二个参数：hidden_size(隐藏层的维度， 隐藏层的神经元个数)</span><br><span class="hljs-string">    第三个参数：num_layer(隐藏层的数量)</span><br><span class="hljs-string">    &#x27;&#x27;&#x27;</span><br>    rnn = nn.RNN(<span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">1</span>) <span class="hljs-comment">#A</span><br>    <span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">    第一个参数：sequence_length(输入序列的长度)</span><br><span class="hljs-string">    第二个参数：batch_size(批次的样本数量)</span><br><span class="hljs-string">    第三个参数：input_size(输入张量的维度)</span><br><span class="hljs-string">    &#x27;&#x27;&#x27;</span><br>    <span class="hljs-built_in">input</span> = torch.randn(<span class="hljs-number">20</span>, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>) <span class="hljs-comment">#B</span><br>    <span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">    第一个参数：num_layer * num_directions(层数*网络方向)</span><br><span class="hljs-string">    第二个参数：batch_size(批次的样本数)</span><br><span class="hljs-string">    第三个参数：hidden_size(隐藏层的维度， 隐藏层神经元的个数)</span><br><span class="hljs-string">    &#x27;&#x27;&#x27;</span><br>    h0 = torch.randn(<span class="hljs-number">1</span>, <span class="hljs-number">3</span>, <span class="hljs-number">6</span>) <span class="hljs-comment">#C</span><br><br>    <span class="hljs-comment"># [20,3,5],[1,3,6] ---&gt;[20,3,6],[1,3,6]</span><br>    output, hn = rnn(<span class="hljs-built_in">input</span>, h0)  <span class="hljs-comment">#</span><br><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;output---&gt;&#x27;</span>, output.shape)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;hn---&gt;&#x27;</span>, hn.shape)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;rnn模型---&gt;&#x27;</span>, rnn)<br><br><span class="hljs-comment"># 程序运行效果如下：</span><br>output---&gt; torch.Size([<span class="hljs-number">20</span>, <span class="hljs-number">3</span>, <span class="hljs-number">6</span>])<br>hn---&gt; torch.Size([<span class="hljs-number">1</span>, <span class="hljs-number">3</span>, <span class="hljs-number">6</span>])<br>rnn模型---&gt; RNN(<span class="hljs-number">5</span>, <span class="hljs-number">6</span>)<br></code></pre></td></tr></table></figure>
+<ul>
+<li>nn.RNN使用示例3</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-keyword">def</span> <span class="hljs-title function_">dm_run_for_hiddennum</span>():<br>    <span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">    第一个参数：input_size(输入张量x的维度)</span><br><span class="hljs-string">    第二个参数：hidden_size(隐藏层的维度， 隐藏层的神经元个数)</span><br><span class="hljs-string">    第三个参数：num_layer(隐藏层的数量)</span><br><span class="hljs-string">    &#x27;&#x27;&#x27;</span><br>    rnn = nn.RNN(<span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">2</span>)  <span class="hljs-comment"># A 隐藏层个数从1--&gt;2 下面程序需要修改的地方？</span><br>    <span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">    第一个参数：sequence_length(输入序列的长度)</span><br><span class="hljs-string">    第二个参数：batch_size(批次的样本数量)</span><br><span class="hljs-string">    第三个参数：input_size(输入张量的维度)</span><br><span class="hljs-string">    &#x27;&#x27;&#x27;</span><br>    <span class="hljs-built_in">input</span> = torch.randn(<span class="hljs-number">1</span>, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>)  <span class="hljs-comment"># B</span><br>    <span class="hljs-string">&#x27;&#x27;&#x27;</span><br><span class="hljs-string">    第一个参数：num_layer * num_directions(层数*网络方向)</span><br><span class="hljs-string">    第二个参数：batch_size(批次的样本数)</span><br><span class="hljs-string">    第三个参数：hidden_size(隐藏层的维度， 隐藏层神经元的个数)</span><br><span class="hljs-string">    &#x27;&#x27;&#x27;</span><br>    h0 = torch.randn(<span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">6</span>)  <span class="hljs-comment"># C</span><br><br>    output, hn = rnn(<span class="hljs-built_in">input</span>, h0)  <span class="hljs-comment">#</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;output--&gt;&#x27;</span>, output.shape, output)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;hn--&gt;&#x27;</span>, hn.shape, hn)<br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;rnn模型--&gt;&#x27;</span>, rnn)  <span class="hljs-comment"># nn模型---&gt; RNN(5, 6, num_layers=11)</span><br><br>    <span class="hljs-comment"># 结论：若只有一个隐藏次 output输出结果等于hn</span><br>    <span class="hljs-comment"># 结论：如果有2个隐藏层，output的输出结果有2个，hn等于最后一个隐藏层</span><br><br><span class="hljs-comment"># 程序运行效果如下：</span><br>output--&gt; torch.Size([<span class="hljs-number">1</span>, <span class="hljs-number">3</span>, <span class="hljs-number">6</span>]) tensor([[[ <span class="hljs-number">0.4987</span>, -<span class="hljs-number">0.5756</span>,  <span class="hljs-number">0.1934</span>,  <span class="hljs-number">0.7284</span>,  <span class="hljs-number">0.4478</span>, -<span class="hljs-number">0.1244</span>],<br>         [ <span class="hljs-number">0.6753</span>,  <span class="hljs-number">0.5011</span>, -<span class="hljs-number">0.7141</span>,  <span class="hljs-number">0.4480</span>,  <span class="hljs-number">0.7186</span>,  <span class="hljs-number">0.5437</span>],<br>         [ <span class="hljs-number">0.6260</span>,  <span class="hljs-number">0.7600</span>, -<span class="hljs-number">0.7384</span>, -<span class="hljs-number">0.5080</span>,  <span class="hljs-number">0.9054</span>,  <span class="hljs-number">0.6011</span>]]],<br>       grad_fn=&lt;StackBackward0&gt;)<br>hn--&gt; torch.Size([<span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">6</span>]) tensor([[[ <span class="hljs-number">0.4862</span>,  <span class="hljs-number">0.6872</span>, -<span class="hljs-number">0.0437</span>, -<span class="hljs-number">0.7826</span>, -<span class="hljs-number">0.7136</span>, -<span class="hljs-number">0.5715</span>],<br>         [ <span class="hljs-number">0.8942</span>,  <span class="hljs-number">0.4524</span>, -<span class="hljs-number">0.1695</span>, -<span class="hljs-number">0.5536</span>, -<span class="hljs-number">0.4367</span>, -<span class="hljs-number">0.3353</span>],<br>         [ <span class="hljs-number">0.5592</span>,  <span class="hljs-number">0.0444</span>, -<span class="hljs-number">0.8384</span>, -<span class="hljs-number">0.5193</span>,  <span class="hljs-number">0.7049</span>, -<span class="hljs-number">0.0453</span>]],<br><br>        [[ <span class="hljs-number">0.4987</span>, -<span class="hljs-number">0.5756</span>,  <span class="hljs-number">0.1934</span>,  <span class="hljs-number">0.7284</span>,  <span class="hljs-number">0.4478</span>, -<span class="hljs-number">0.1244</span>],<br>         [ <span class="hljs-number">0.6753</span>,  <span class="hljs-number">0.5011</span>, -<span class="hljs-number">0.7141</span>,  <span class="hljs-number">0.4480</span>,  <span class="hljs-number">0.7186</span>,  <span class="hljs-number">0.5437</span>],<br>         [ <span class="hljs-number">0.6260</span>,  <span class="hljs-number">0.7600</span>, -<span class="hljs-number">0.7384</span>, -<span class="hljs-number">0.5080</span>,  <span class="hljs-number">0.9054</span>,  <span class="hljs-number">0.6011</span>]]],<br>       grad_fn=&lt;StackBackward0&gt;)<br>rnn模型---&gt; RNN(<span class="hljs-number">5</span>, <span class="hljs-number">6</span>, num_layers=<span class="hljs-number">2</span>)<br></code></pre></td></tr></table></figure>
+<h2 id="双层RNN"><a href="#双层RNN" class="headerlink" title="双层RNN"></a>双层RNN</h2 class='item-img' data-src='/2026/11/18/NLP6/Snipaste_2026-11-21_11-24-25.png'><img src="/2026/11/18/NLP6/Snipaste_2026-11-21_11-24-25.png" class="" title="双层RNN">
+<p>个人理解：<br>本来是x -&gt; y<br>现在是x -&gt; 中间的n个RNN层 -&gt; y</p>
+<h3 id="1-3-传统RNN优缺点"><a href="#1-3-传统RNN优缺点" class="headerlink" title="1.3 传统RNN优缺点"></a>1.3 传统RNN优缺点</h3><h4 id="1-传统RNN的优势"><a href="#1-传统RNN的优势" class="headerlink" title="1 传统RNN的优势"></a>1 传统RNN的优势</h4><ul>
+<li>由于内部结构简单, 对计算资源要求低, 相比之后我们要学习的RNN变体:LSTM和GRU模型参数总量少了很多, 在短序列任务上性能和效果都表现优异.</li>
+</ul>
+<h4 id="2-传统RNN的缺点"><a href="#2-传统RNN的缺点" class="headerlink" title="2 传统RNN的缺点"></a>2 传统RNN的缺点</h4><ul>
+<li>传统RNN在解决长序列之间的关联时, 通过实践，证明经典RNN表现很差, 原因是在进行反向传播的时候, 过长的序列导致梯度的计算异常, 发生梯度消失或爆炸.</li>
+</ul>
+<h4 id="3-梯度消失或爆炸介绍"><a href="#3-梯度消失或爆炸介绍" class="headerlink" title="3 梯度消失或爆炸介绍"></a>3 梯度消失或爆炸介绍</h4><p>根据反向传播算法和链式法则, 梯度的计算可以简化为以下公式</p>
+<script type="math/tex; mode=display">
+D_n=\sigma^{\prime}(z_1)w_1\cdot\sigma^{\prime}(z_2)w_2\cdot_{\cdots}\cdot\sigma^{\prime}(z_n)w_n</script><ul>
+<li>其中sigmoid的导数值域是固定的, 在[0, 0.25]之间, 而一旦公式中的w也小于1, 那么通过这样的公式连乘后, 最终的梯度就会变得非常非常小, 这种现象称作梯度消失. 反之, 如果我们人为的增大w的值, 使其大于1, 那么连乘够就可能造成梯度过大, 称作梯度爆炸.</li>
+<li>梯度消失或爆炸的危害:<ul>
+<li>如果在训练过程中发生了梯度消失，权重无法被更新，最终导致训练失败; 梯度爆炸所带来的梯度过大，大幅度更新网络参数，在极端情况下，结果会溢出（NaN值）.</li>
+</ul>
+</li>
+</ul>
+<h2 id="2-小结"><a href="#2-小结" class="headerlink" title="2 小结"></a>2 小结</h2><ul>
+<li>学习了传统RNN的结构并进行了分析;<ul>
+<li>它的输入有两部分, 分别是h(t-1)以及x(t), 代表上一时间步的隐层输出, 以及此时间步的输入, 它们进入RNN结构体后, 会”融合”到一起, 这种融合我们根据结构解释可知, 是将二者进行拼接, 形成新的张量[x(t), h(t-1)], 之后这个新的张量将通过一个全连接层(线性层), 该层使用tanh作为激活函数, 最终得到该时间步的输出h(t), 它将作为下一个时间步的输入和x(t+1)一起进入结构体. 以此类推.</li>
+</ul>
+</li>
+<li>根据结构分析得出了传统RNN的计算公式.</li>
+<li>学习了激活函数tanh的作用:<ul>
+<li>用于帮助调节流经网络的值, tanh函数将值压缩在-1和1之间.</li>
+</ul>
+</li>
+<li>学习了Pytorch中传统RNN工具的使用:<ul>
+<li>位置: 在torch.nn工具包之中, 通过torch.nn.RNN可调用.</li>
+</ul>
+</li>
+<li>nn.RNN类初始化主要参数解释:<ul>
+<li>input_size: 输入张量x中特征维度的大小.</li>
+<li>hidden_size: 隐层张量h中特征维度的大小.</li>
+<li>num_layers: 隐含层的数量.</li>
+<li>nonlinearity: 激活函数的选择, 默认是tanh.</li>
+</ul>
+</li>
+<li>nn.RNN类实例化对象主要参数解释:<ul>
+<li>input: 输入张量x.</li>
+<li>h0: 初始化的隐层张量h.</li>
+</ul>
+</li>
+<li>实现了nn.RNN的使用示例, 获得RNN的真实返回结果样式.</li>
+<li>学习了传统RNN的优势:<ul>
+<li>由于内部结构简单, 对计算资源要求低, 相比之后我们要学习的RNN变体:LSTM和GRU模型参数总量少了很多, 在短序列任务上性能和效果都表现优异.</li>
+</ul>
+</li>
+<li>学习了传统RNN的缺点:<ul>
+<li>传统RNN在解决长序列之间的关联时, 通过实践，证明经典RNN表现很差, 原因是在进行反向传播的时候, 过长的序列导致梯度的计算异常, 发生梯度消失或爆炸.</li>
+</ul>
+</li>
+<li>学习了什么是梯度消失或爆炸:<ul>
+<li>根据反向传播算法和链式法则, 得到梯度的计算的简化公式:其中sigmoid的导数值域是固定的, 在[0, 0.25]之间, 而一旦公式中的w也小于1, 那么通过这样的公式连乘后, 最终的梯度就会变得非常非常小, 这种现象称作梯度消失. 反之, 如果我们人为的增大w的值, 使其大于1, 那么连乘够就可能造成梯度过大, 称作梯度爆炸.</li>
+</ul>
+</li>
+<li>梯度消失或爆炸的危害:<ul>
+<li>如果在训练过程中发生了梯度消失，权重无法被更新，最终导致训练失败; 梯度爆炸所带来的梯度过大，大幅度更新网络参数，在极端情况下，结果会溢出（NaN值）.</li>
+</ul>
+</li>
+</ul>
+<h1 id="3-LSTM模型"><a href="#3-LSTM模型" class="headerlink" title="3 LSTM模型"></a>3 LSTM模型</h1><h3 id="学习目标-2"><a href="#学习目标-2" class="headerlink" title="学习目标"></a>学习目标</h3><ul>
+<li>了解LSTM内部结构及计算公式.</li>
+<li>掌握Pytorch中LSTM工具的使用.</li>
+<li>了解LSTM的优势与缺点.</li>
+</ul>
+<h2 id="1-LSTM介绍"><a href="#1-LSTM介绍" class="headerlink" title="1 LSTM介绍"></a>1 LSTM介绍</h2><p>LSTM（Long Short-Term Memory）也称长短时记忆结构, 它是传统RNN的变体, 与经典RNN相比能够有效捕捉长序列之间的语义关联, 缓解梯度消失或爆炸现象. 同时LSTM的结构更复杂, 它的核心结构可以分为四个部分去解析:</p>
+<ul>
+<li>遗忘门</li>
+<li>输入门</li>
+<li>细胞状态</li>
+<li>输出门</li>
+</ul>
+<h2 id="2-LSTM的内部结构图"><a href="#2-LSTM的内部结构图" class="headerlink" title="2 LSTM的内部结构图"></a>2 LSTM的内部结构图</h2 class='item-img' data-src='/2026/11/18/NLP6/Snipaste_2026-11-21_12-08-16.png'><img src="/2026/11/18/NLP6/Snipaste_2026-11-21_12-08-16.png" class="" title="LSTM结构大纲">
+<h3 id="2-1-LSTM结构分析"><a href="#2-1-LSTM结构分析" class="headerlink" title="2.1 LSTM结构分析"></a>2.1 LSTM结构分析</h3 class='item-img' data-src='/2026/11/18/NLP6/31.png'><img src="/2026/11/18/NLP6/31.png" class="" title="LSTM结构">
+<ul>
+<li>结构解释图:</li>
+</ul class='item-img' data-src='/2026/11/18/NLP6/22.png'><img src="/2026/11/18/NLP6/22.png" class="" title="结构解释图">
+<ul>
+<li>遗忘门部分结构图与计算公式:</li>
+</ul class='item-img' data-src='/2026/11/18/NLP6/32.png'><img src="/2026/11/18/NLP6/32.png" class="" title="遗忘门部分结构图与计算公式">
+<img src="/2026/11/18/NLP6/Snipaste_2026-11-21_12-16-02.png" class="" title="遗忘门部分结构图与计算公式">
+<ul>
+<li>遗忘门结构分析:<ul>
+<li>与传统RNN的内部结构计算非常相似, 首先将当前时间步输入x(t)与上一个时间步隐含状态h(t-1)拼接, 得到[x(t), h(t-1)], 然后通过一个全连接层做变换, 最后通过sigmoid函数进行激活得到f(t), 我们可以将f(t)看作是门值, 好比一扇门开合的大小程度, 门值都将作用在通过该扇门的张量, 遗忘门门值将作用的上一层的细胞状态上, 代表遗忘过去的多少信息, 又因为遗忘门门值是由x(t), h(t-1)计算得来的, 因此整个公式意味着根据当前时间步输入和上一个时间步隐含状态h(t-1)来决定遗忘多少上一层的细胞状态所携带的过往信息.</li>
+</ul>
+</li>
+<li>遗忘门内部结构过程演示:</li>
+</ul class='item-img' data-src='/2026/11/18/NLP6/RNN26.gif'><img src="/2026/11/18/NLP6/RNN26.gif" class="" title="遗忘门内部结构过程演示">
+<ul>
+<li>激活函数sigmiod的作用:<ul>
+<li>用于帮助调节流经网络的值, sigmoid函数将值压缩在0和1之间.</li>
+</ul>
+</li>
+</ul class='item-img' data-src='/2026/11/18/NLP6/RNN27.gif'><img src="/2026/11/18/NLP6/RNN27.gif" class="" title="激活函数sigmiod">
+<ul>
+<li>输入门部分结构图与计算公式:</li>
+</ul class='item-img' data-src='/2026/11/18/NLP6/34.png'><img src="/2026/11/18/NLP6/34.png" class="" title="输入门部分结构图与计算公式">
+<img src="/2026/11/18/NLP6/Snipaste_2026-11-21_12-22-57.png" class="" title="输入门部分结构图与计算公式">
+<ul>
+<li>输入门结构分析:<ul>
+<li>我们看到输入门的计算公式有两个, 第一个就是产生输入门门值的公式, 它和遗忘门公式几乎相同, 区别只是在于它们之后要作用的目标上. 这个公式意味着输入信息有多少需要进行过滤. 输入门的第二个公式是与传统RNN的内部结构计算相同. 对于LSTM来讲, 它得到的是当前的细胞状态, 而不是像经典RNN一样得到的是隐含状态.</li>
+</ul>
+</li>
+<li>输入门内部结构过程演示:</li>
+</ul class='item-img' data-src='/2026/11/18/NLP6/RNN28.gif'><img src="/2026/11/18/NLP6/RNN28.gif" class="" title="输入门内部结构过程演示">
+<ul>
+<li>细胞状态更新图与计算公式:</li>
+</ul class='item-img' data-src='/2026/11/18/NLP6/35.png'><img src="/2026/11/18/NLP6/35.png" class="" title="细胞状态更新图与计算公式">
+<ul>
+<li>细胞状态更新分析:<ul>
+<li>细胞更新的结构与计算公式非常容易理解, 这里没有全连接层, 只是将刚刚得到的遗忘门门值与上一个时间步得到的C(t-1)相乘, 再加上输入门门值与当前时间步得到的未更新C(t)相乘的结果. 最终得到更新后的C(t)作为下一个时间步输入的一部分. 整个细胞状态更新过程就是对遗忘门和输入门的应用.</li>
+</ul>
+</li>
+<li>细胞状态更新过程演示:</li>
+</ul class='item-img' data-src='/2026/11/18/NLP6/RNN29.gif'><img src="/2026/11/18/NLP6/RNN29.gif" class="" title="细胞状态更新过程演示">
+<img src="/2026/11/18/NLP6/Snipaste_2026-11-21_12-56-05.png" class="" title="细胞状态更新过程演示">
+<ul>
+<li>输出门部分结构图与计算公式:</li>
+</ul class='item-img' data-src='/2026/11/18/NLP6/37.png'><img src="/2026/11/18/NLP6/37.png" class="" title="输出门部分结构图与计算公式">
+<img src="/2026/11/18/NLP6/Snipaste_2026-11-21_12-59-11.png" class="" title="输出门部分结构图与计算公式">
+<ul>
+<li>输出门结构分析:<ul>
+<li>输出门部分的公式也是两个, 第一个即是计算输出门的门值, 它和遗忘门，输入门计算方式相同. 第二个即是使用这个门值产生隐含状态h(t), 他将作用在更新后的细胞状态C(t)上, 并做tanh激活, 最终得到h(t)作为下一时间步输入的一部分. 整个输出门的过程, 就是为了产生隐含状态h(t).</li>
+</ul>
+</li>
+<li>输出门内部结构过程演示:</li>
+</ul class='item-img' data-src='/2026/11/18/NLP6/RNN30.gif'><img src="/2026/11/18/NLP6/RNN30.gif" class="" title="输出门内部结构过程演示">
+<h3 id="2-2-Bi-LSTM介绍"><a href="#2-2-Bi-LSTM介绍" class="headerlink" title="2.2 Bi-LSTM介绍"></a>2.2 Bi-LSTM介绍</h3><p>Bi-LSTM即双向LSTM, 它没有改变LSTM本身任何的内部结构, 只是将LSTM应用两次且方向不同, 再将两次得到的LSTM结果进行拼接作为最终输出.</p class='item-img' data-src='/2026/11/18/NLP6/38.png'><img src="/2026/11/18/NLP6/38.png" class="" title="Bi-LSTM介绍">
+<img src="/2026/11/18/NLP6/Snipaste_2026-11-21_15-08-07.png" class="" title="Bi-LSTM介绍">
+<ul>
+<li>Bi-LSTM结构分析:<ul>
+<li>我们看到图中对”我爱中国”这句话或者叫这个输入序列, 进行了从左到右和从右到左两次LSTM处理, 将得到的结果张量进行了拼接作为最终输出. 这种结构能够捕捉语言语法中一些特定的前置或后置特征, 增强语义关联,但是模型参数和计算复杂度也随之增加了一倍, 一般需要对语料和计算资源进行评估后决定是否使用该结构.</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-3-使用Pytorch构建LSTM模型"><a href="#2-3-使用Pytorch构建LSTM模型" class="headerlink" title="2.3 使用Pytorch构建LSTM模型"></a>2.3 使用Pytorch构建LSTM模型</h3><ul>
+<li>位置: 在torch.nn工具包之中, 通过torch.nn.LSTM可调用.</li>
+<li>nn.LSTM类初始化主要参数解释:<ul>
+<li>input_size: 输入张量x中特征维度的大小.</li>
+<li>hidden_size: 隐层张量h中特征维度的大小.</li>
+<li>num_layers: 隐含层的数量.</li>
+<li>bidirectional: 是否选择使用双向LSTM, 如果为True, 则使用; 默认不使用.</li>
+</ul>
+</li>
+<li>nn.LSTM类实例化对象主要参数解释:<ul>
+<li>input: 输入张量x.</li>
+<li>h0: 初始化的隐层张量h.</li>
+<li>c0: 初始化的细胞状态张量c.</li>
+</ul>
+</li>
+<li>nn.LSTM使用示例:</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-comment"># 定义LSTM的参数含义: (input_size, hidden_size, num_layers)</span><br><span class="hljs-comment"># 定义输入张量的参数含义: (sequence_length, batch_size, input_size)</span><br><span class="hljs-comment"># 定义隐藏层初始张量和细胞初始状态张量的参数含义:</span><br><span class="hljs-comment"># (num_layers * num_directions, batch_size, hidden_size)</span><br><br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">import</span> torch.nn <span class="hljs-keyword">as</span> nn<br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">import</span> torch<br><span class="hljs-meta">&gt;&gt;&gt; </span>rnn = nn.LSTM(<span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">2</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">input</span> = torch.randn(<span class="hljs-number">1</span>, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>h0 = torch.randn(<span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">6</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>c0 = torch.randn(<span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">6</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>output, (hn, cn) = rnn(<span class="hljs-built_in">input</span>, (h0, c0))<br><span class="hljs-meta">&gt;&gt;&gt; </span>output<br>tensor([[[ <span class="hljs-number">0.0447</span>, -<span class="hljs-number">0.0335</span>,  <span class="hljs-number">0.1454</span>,  <span class="hljs-number">0.0438</span>,  <span class="hljs-number">0.0865</span>,  <span class="hljs-number">0.0416</span>],<br>         [ <span class="hljs-number">0.0105</span>,  <span class="hljs-number">0.1923</span>,  <span class="hljs-number">0.5507</span>, -<span class="hljs-number">0.1742</span>,  <span class="hljs-number">0.1569</span>, -<span class="hljs-number">0.0548</span>],<br>         [-<span class="hljs-number">0.1186</span>,  <span class="hljs-number">0.1835</span>, -<span class="hljs-number">0.0022</span>, -<span class="hljs-number">0.1388</span>, -<span class="hljs-number">0.0877</span>, -<span class="hljs-number">0.4007</span>]]],<br>       grad_fn=&lt;StackBackward&gt;)<br><span class="hljs-meta">&gt;&gt;&gt; </span>hn<br>tensor([[[ <span class="hljs-number">0.4647</span>, -<span class="hljs-number">0.2364</span>,  <span class="hljs-number">0.0645</span>, -<span class="hljs-number">0.3996</span>, -<span class="hljs-number">0.0500</span>, -<span class="hljs-number">0.0152</span>],<br>         [ <span class="hljs-number">0.3852</span>,  <span class="hljs-number">0.0704</span>,  <span class="hljs-number">0.2103</span>, -<span class="hljs-number">0.2524</span>,  <span class="hljs-number">0.0243</span>,  <span class="hljs-number">0.0477</span>],<br>         [ <span class="hljs-number">0.2571</span>,  <span class="hljs-number">0.0608</span>,  <span class="hljs-number">0.2322</span>,  <span class="hljs-number">0.1815</span>, -<span class="hljs-number">0.0513</span>, -<span class="hljs-number">0.0291</span>]],<br><br>        [[ <span class="hljs-number">0.0447</span>, -<span class="hljs-number">0.0335</span>,  <span class="hljs-number">0.1454</span>,  <span class="hljs-number">0.0438</span>,  <span class="hljs-number">0.0865</span>,  <span class="hljs-number">0.0416</span>],<br>         [ <span class="hljs-number">0.0105</span>,  <span class="hljs-number">0.1923</span>,  <span class="hljs-number">0.5507</span>, -<span class="hljs-number">0.1742</span>,  <span class="hljs-number">0.1569</span>, -<span class="hljs-number">0.0548</span>],<br>         [-<span class="hljs-number">0.1186</span>,  <span class="hljs-number">0.1835</span>, -<span class="hljs-number">0.0022</span>, -<span class="hljs-number">0.1388</span>, -<span class="hljs-number">0.0877</span>, -<span class="hljs-number">0.4007</span>]]],<br>       grad_fn=&lt;StackBackward&gt;)<br><span class="hljs-meta">&gt;&gt;&gt; </span>cn<br>tensor([[[ <span class="hljs-number">0.8083</span>, -<span class="hljs-number">0.5500</span>,  <span class="hljs-number">0.1009</span>, -<span class="hljs-number">0.5806</span>, -<span class="hljs-number">0.0668</span>, -<span class="hljs-number">0.1161</span>],<br>         [ <span class="hljs-number">0.7438</span>,  <span class="hljs-number">0.0957</span>,  <span class="hljs-number">0.5509</span>, -<span class="hljs-number">0.7725</span>,  <span class="hljs-number">0.0824</span>,  <span class="hljs-number">0.0626</span>],<br>         [ <span class="hljs-number">0.3131</span>,  <span class="hljs-number">0.0920</span>,  <span class="hljs-number">0.8359</span>,  <span class="hljs-number">0.9187</span>, -<span class="hljs-number">0.4826</span>, -<span class="hljs-number">0.0717</span>]],<br><br>        [[ <span class="hljs-number">0.1240</span>, -<span class="hljs-number">0.0526</span>,  <span class="hljs-number">0.3035</span>,  <span class="hljs-number">0.1099</span>,  <span class="hljs-number">0.5915</span>,  <span class="hljs-number">0.0828</span>],<br>         [ <span class="hljs-number">0.0203</span>,  <span class="hljs-number">0.8367</span>,  <span class="hljs-number">0.9832</span>, -<span class="hljs-number">0.4454</span>,  <span class="hljs-number">0.3917</span>, -<span class="hljs-number">0.1983</span>],<br>         [-<span class="hljs-number">0.2976</span>,  <span class="hljs-number">0.7764</span>, -<span class="hljs-number">0.0074</span>, -<span class="hljs-number">0.1965</span>, -<span class="hljs-number">0.1343</span>, -<span class="hljs-number">0.6683</span>]]],<br>       grad_fn=&lt;StackBackward&gt;)<br></code></pre></td></tr></table></figure>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">案例:</span><br><span class="hljs-string">    演示LSTM入门代码</span><br><span class="hljs-string"></span><br><span class="hljs-string">LSTM简介:</span><br><span class="hljs-string">    概述:</span><br><span class="hljs-string">        Long Short Term Memory, 长短时记忆结构, 能够解决传统RNN的弊端 -&gt; 处理长序列数据效果差的问题.</span><br><span class="hljs-string">    组成:</span><br><span class="hljs-string">        遗忘门, 输入门, 细胞状态, 输出门</span><br><span class="hljs-string">    优点:</span><br><span class="hljs-string">        1. 能够解决长时依赖.</span><br><span class="hljs-string">        2. 缓解梯度消失, 爆炸的问题 -&gt; 训练更稳定.</span><br><span class="hljs-string">        3. 能够抓取复杂的特征.</span><br><span class="hljs-string">    缺点:</span><br><span class="hljs-string">        1. 计算慢, 消耗资源大.</span><br><span class="hljs-string">        2. 调参相对较难.</span><br><span class="hljs-string">        3. 可解释性稍差.</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><br><span class="hljs-comment"># 导包</span><br><span class="hljs-keyword">import</span> torch<br><span class="hljs-keyword">import</span> torch.nn <span class="hljs-keyword">as</span> nn<br><br><br><span class="hljs-comment"># todo 1. 定义函数, 演示LSTM模型的用法.</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">lstm_demo</span>():<br>    <span class="hljs-comment"># 1. 创建LSTM模型对象.</span><br>    <span class="hljs-comment"># 参1: 词向量维度(输入的维度), 参2: 隐藏层的维度(输出的维度), 参3: LSTM的层数.  参4: 是否双向.</span><br>    lstm = nn.LSTM(input_size=<span class="hljs-number">5</span>, hidden_size=<span class="hljs-number">6</span>, num_layers=<span class="hljs-number">1</span>, bidirectional=<span class="hljs-literal">False</span>)<br><br>    <span class="hljs-comment"># 2. 构建输入张量.</span><br>    <span class="hljs-comment"># 参1: 句子的长度(seq_len), 参2: 批次大小(batch_size), 参3: 词向量维度(input_size).</span><br>    <span class="hljs-built_in">input</span> = torch.randn(<span class="hljs-number">4</span>, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>)<br><br>    <span class="hljs-comment"># 3. 初始化隐藏层 和 细胞状态.</span><br>    <span class="hljs-comment"># 参1: LSTM层数(隐藏层层数), 参2: 批次大小(batch_size), 参3: 隐藏层的维度(hidden_size).</span><br>    h0 = torch.randn(<span class="hljs-number">1</span>, <span class="hljs-number">3</span>, <span class="hljs-number">6</span>)<br>    c0 = torch.randn(<span class="hljs-number">1</span>, <span class="hljs-number">3</span>, <span class="hljs-number">6</span>)<br><br>    <span class="hljs-comment"># 4. 模型计算.</span><br>    <span class="hljs-comment"># 写法1: 手动传入 h0 和 c0</span><br>    <span class="hljs-comment"># 实参列表: 参1(input) -&gt; 输入张量,  参2 -&gt; 隐藏状态 和 细胞状态的元组形式.</span><br>    <span class="hljs-comment"># 返回值:   output -&gt; 本次的输出结果, (hn,cn) -&gt; 最后1个时间步的隐藏状态和细胞状态.</span><br>    output, (hn, cn) = lstm(<span class="hljs-built_in">input</span>, (h0, c0))<br><br>    <span class="hljs-comment"># 写法2: 不传入 h0和c0 -&gt; 底层会自动创建1个 全0的 h0(上一时刻隐藏状态) 和 c0(上一时刻细胞状态)</span><br>    <span class="hljs-comment"># output, (hn, cn) = lstm(input)</span><br><br><br><br>    <span class="hljs-comment"># 5. 打印结果.</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;output: <span class="hljs-subst">&#123;output&#125;</span>, <span class="hljs-subst">&#123;output.shape&#125;</span>&#x27;</span>)      <span class="hljs-comment"># shape: (4, 3, 6)</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;hn: <span class="hljs-subst">&#123;hn&#125;</span>, <span class="hljs-subst">&#123;hn.shape&#125;</span>&#x27;</span>)                  <span class="hljs-comment"># shape: (1, 3, 6)</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;cn: <span class="hljs-subst">&#123;cn&#125;</span>, <span class="hljs-subst">&#123;cn.shape&#125;</span>&#x27;</span>)                  <span class="hljs-comment"># shape: (1, 3, 6)</span><br><br><br><span class="hljs-comment"># todo 2. 测试代码</span><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    lstm_demo()<br></code></pre></td></tr></table></figure>
+<h3 id="2-4-LSTM优缺点"><a href="#2-4-LSTM优缺点" class="headerlink" title="2.4 LSTM优缺点"></a>2.4 LSTM优缺点</h3><ul>
+<li><p>LSTM优势:</p>
+<p>  LSTM的门结构能够有效减缓长序列问题中可能出现的梯度消失或爆炸, 虽然并不能杜绝这种现象, 但在更长的序列问题上表现优于传统RNN.</p>
+</li>
+<li><p>LSTM缺点:</p>
+<p>  由于内部结构相对较复杂, 因此训练效率在同等算力下较传统RNN低很多.</p>
+</li>
+</ul>
+<h2 id="3-小结"><a href="#3-小结" class="headerlink" title="3 小结"></a>3 小结</h2><ul>
+<li>LSTM（Long Short-Term Memory）也称长短时记忆结构, 它是传统RNN的变体, 与经典RNN相比能够有效捕捉长序列之间的语义关联, 缓解梯度消失或爆炸现象. 同时LSTM的结构更复杂, 它的核心结构可以分为四个部分去解析:<ul>
+<li>遗忘门</li>
+<li>输入门</li>
+<li>输出门</li>
+<li>细胞状态</li>
+</ul>
+</li>
+<li><p>遗忘门结构分析:</p>
+<p>  与传统RNN的内部结构计算非常相似, 首先将当前时间步输入x(t)与上一个时间步隐含状态h(t-1)拼接, 得到[x(t), h(t-1)], 然后通过一个全连接层做变换, 最后通过sigmoid函数进行激活得到f(t), 我们可以将f(t)看作是门值, 好比一扇门开合的大小程度, 门值都将作用在通过该扇门的张量, 遗忘门门值将作用的上一层的细胞状态上, 代表遗忘过去的多少信息, 又因为遗忘门门值是由x(t), h(t-1)计算得来的, 因此整个公式意味着根据当前时间步输入和上一个时间步隐含状态h(t-1)来决定遗忘多少上一层的细胞状态所携带的过往信息.</p>
+</li>
+<li><p>输入门结构分析:</p>
+<p>  我们看到输入门的计算公式有两个, 第一个就是产生输入门门值的公式, 它和遗忘门公式几乎相同, 区别只是在于它们之后要作用的目标上. 这个公式意味着输入信息有多少需要进行过滤. 输入门的第二个公式是与传统RNN的内部结构计算相同. 对于LSTM来讲, 它得到的是当前的细胞状态, 而不是像经典RNN一样得到的是隐含状态.</p>
+</li>
+<li><p>细胞状态更新分析:</p>
+<p>  细胞更新的结构与计算公式非常容易理解, 这里没有全连接层, 只是将刚刚得到的遗忘门门值与上一个时间步得到的C(t-1)相乘, 再加上输入门门值与当前时间步得到的未更新C(t)相乘的结果. 最终得到更新后的C(t)作为下一个时间步输入的一部分. 整个细胞状态更新过程就是对遗忘门和输入门的应用.</p>
+</li>
+<li><p>输出门结构分析:</p>
+<p>  输出门部分的公式也是两个, 第一个即是计算输出门的门值, 它和遗忘门，输入门计算方式相同. 第二个即是使用这个门值产生隐含状态h(t), 他将作用在更新后的细胞状态C(t)上, 并做tanh激活, 最终得到h(t)作为下一时间步输入的一部分. 整个输出门的过程, 就是为了产生隐含状态h(t).</p>
+</li>
+<li><p>什么是Bi-LSTM ?</p>
+<p>  Bi-LSTM即双向LSTM, 它没有改变LSTM本身任何的内部结构, 只是将LSTM应用两次且方向不同, 再将两次得到的LSTM结果进行拼接作为最终输出.</p>
+</li>
+<li><p>Pytorch中LSTM工具的使用:</p>
+<p>  位置: 在torch.nn工具包之中, 通过torch.nn.LSTM可调用.</p>
+</li>
+<li><p>LSTM优势:</p>
+<p>  LSTM的门结构能够有效减缓长序列问题中可能出现的梯度消失或爆炸, 虽然并不能杜绝这种现象, 但在更长的序列问题上表现优于传统RNN.</p>
+</li>
+<li><p>LSTM缺点:</p>
+<p>  由于内部结构相对较复杂, 因此训练效率在同等算力下较传统RNN低很多.</p>
+</li>
+</ul>
+<h1 id="4-GRU模型"><a href="#4-GRU模型" class="headerlink" title="4 GRU模型"></a>4 GRU模型</h1><h3 id="学习目标-3"><a href="#学习目标-3" class="headerlink" title="学习目标"></a>学习目标</h3><ul>
+<li>了解GRU内部结构及计算公式.</li>
+<li>掌握Pytorch中GRU工具的使用.</li>
+<li>了解GRU的优势与缺点.</li>
+</ul>
+<h2 id="1-GRU介绍"><a href="#1-GRU介绍" class="headerlink" title="1 GRU介绍"></a>1 GRU介绍</h2><p>GRU（Gated Recurrent Unit）也称门控循环单元结构, 它也是传统RNN的变体, 同LSTM一样能够有效捕捉长序列之间的语义关联, 缓解梯度消失或爆炸现象. 同时它的结构和计算要比LSTM更简单, 它的核心结构可以分为两个部分去解析:</p>
+<ul>
+<li>更新门</li>
+<li>重置门</li>
+</ul>
+<h2 id="2-GRU的内部结构图"><a href="#2-GRU的内部结构图" class="headerlink" title="2 GRU的内部结构图"></a>2 GRU的内部结构图</h2 class='item-img' data-src='/2026/11/18/NLP6/Snipaste_2026-11-21_17-35-18.png'><img src="/2026/11/18/NLP6/Snipaste_2026-11-21_17-35-18.png" class="" title="Hexo 博客封面示例">
+<h3 id="2-1-GRU结构分析"><a href="#2-1-GRU结构分析" class="headerlink" title="2.1 GRU结构分析"></a>2.1 GRU结构分析</h3 class='item-img' data-src='/2026/11/18/NLP6/gru.png'><img src="/2026/11/18/NLP6/gru.png" class="" title="GRU结构分析">
+<ul>
+<li>结构解释图:</li>
+</ul class='item-img' data-src='/2026/11/18/NLP6/22.png'><img src="/2026/11/18/NLP6/22.png" class="" title="结构解释图">
+<ul>
+<li>GRU的更新门和重置门结构图:</li>
+</ul class='item-img' data-src='/2026/11/18/NLP6/gru2.png'><img src="/2026/11/18/NLP6/gru2.png" class="" title="GRU的更新门和重置门结构图">
+<ul>
+<li>内部结构分析:<ul>
+<li>和之前分析过的LSTM中的门控一样, 首先计算更新门和重置门的门值, 分别是z(t)和r(t), 计算方法就是使用X(t)与h(t-1)拼接进行线性变换, 再经过sigmoid激活. 之后重置门门值作用在了h(t-1)上, 代表控制上一时间步传来的信息有多少可以被利用. 接着就是使用这个重置后的h(t-1)进行基本的RNN计算, 即与x(t)拼接进行线性变化, 经过tanh激活, 得到新的h(t). 最后更新门的门值会作用在新的h(t)，而1-门值会作用在h(t-1)上, 随后将两者的结果相加, 得到最终的隐含状态输出h(t), 这个过程意味着更新门有能力保留之前的结果, 当门值趋于1时, 输出就是新的h(t), 而当门值趋于0时, 输出就是上一时间步的h(t-1).</li>
+</ul>
+</li>
+</ul>
+<h3 id="2-2-Bi-GRU介绍"><a href="#2-2-Bi-GRU介绍" class="headerlink" title="2.2 Bi-GRU介绍"></a>2.2 Bi-GRU介绍</h3><p>Bi-GRU与Bi-LSTM的逻辑相同, 都是不改变其内部结构, 而是将模型应用两次且方向不同, 再将两次得到的LSTM结果进行拼接作为最终输出. 具体参见上小节中的Bi-LSTM.</p>
+<h3 id="2-3-使用Pytorch构建GRU模型"><a href="#2-3-使用Pytorch构建GRU模型" class="headerlink" title="2.3 使用Pytorch构建GRU模型"></a>2.3 使用Pytorch构建GRU模型</h3><ul>
+<li>位置: 在torch.nn工具包之中, 通过torch.nn.GRU可调用.</li>
+<li>nn.GRU类初始化主要参数解释:<ul>
+<li>input_size: 输入张量x中特征维度的大小.</li>
+<li>hidden_size: 隐层张量h中特征维度的大小.</li>
+<li>num_layers: 隐含层的数量.<ul>
+<li>bidirectional: 是否选择使用双向LSTM, 如果为True, 则使用; 默认不使用.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>nn.GRU类实例化对象主要参数解释:<ul>
+<li>input: 输入张量x.<ul>
+<li>h0: 初始化的隐层张量h.</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>nn.GRU使用示例:</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs python"><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">import</span> torch<br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-keyword">import</span> torch.nn <span class="hljs-keyword">as</span> nn<br><span class="hljs-meta">&gt;&gt;&gt; </span>rnn = nn.GRU(<span class="hljs-number">5</span>, <span class="hljs-number">6</span>, <span class="hljs-number">2</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span><span class="hljs-built_in">input</span> = torch.randn(<span class="hljs-number">1</span>, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>h0 = torch.randn(<span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">6</span>)<br><span class="hljs-meta">&gt;&gt;&gt; </span>output, hn = rnn(<span class="hljs-built_in">input</span>, h0)<br><span class="hljs-meta">&gt;&gt;&gt; </span>output<br>tensor([[[-<span class="hljs-number">0.2097</span>, -<span class="hljs-number">2.2225</span>,  <span class="hljs-number">0.6204</span>, -<span class="hljs-number">0.1745</span>, -<span class="hljs-number">0.1749</span>, -<span class="hljs-number">0.0460</span>],<br>         [-<span class="hljs-number">0.3820</span>,  <span class="hljs-number">0.0465</span>, -<span class="hljs-number">0.4798</span>,  <span class="hljs-number">0.6837</span>, -<span class="hljs-number">0.7894</span>,  <span class="hljs-number">0.5173</span>],<br>         [-<span class="hljs-number">0.0184</span>, -<span class="hljs-number">0.2758</span>,  <span class="hljs-number">1.2482</span>,  <span class="hljs-number">0.5514</span>, -<span class="hljs-number">0.9165</span>, -<span class="hljs-number">0.6667</span>]]],<br>       grad_fn=&lt;StackBackward&gt;)<br><span class="hljs-meta">&gt;&gt;&gt; </span>hn<br>tensor([[[ <span class="hljs-number">0.6578</span>, -<span class="hljs-number">0.4226</span>, -<span class="hljs-number">0.2129</span>, -<span class="hljs-number">0.3785</span>,  <span class="hljs-number">0.5070</span>,  <span class="hljs-number">0.4338</span>],<br>         [-<span class="hljs-number">0.5072</span>,  <span class="hljs-number">0.5948</span>,  <span class="hljs-number">0.8083</span>,  <span class="hljs-number">0.4618</span>,  <span class="hljs-number">0.1629</span>, -<span class="hljs-number">0.1591</span>],<br>         [ <span class="hljs-number">0.2430</span>, -<span class="hljs-number">0.4981</span>,  <span class="hljs-number">0.3846</span>, -<span class="hljs-number">0.4252</span>,  <span class="hljs-number">0.7191</span>,  <span class="hljs-number">0.5420</span>]],<br><br>        [[-<span class="hljs-number">0.2097</span>, -<span class="hljs-number">2.2225</span>,  <span class="hljs-number">0.6204</span>, -<span class="hljs-number">0.1745</span>, -<span class="hljs-number">0.1749</span>, -<span class="hljs-number">0.0460</span>],<br>         [-<span class="hljs-number">0.3820</span>,  <span class="hljs-number">0.0465</span>, -<span class="hljs-number">0.4798</span>,  <span class="hljs-number">0.6837</span>, -<span class="hljs-number">0.7894</span>,  <span class="hljs-number">0.5173</span>],<br>         [-<span class="hljs-number">0.0184</span>, -<span class="hljs-number">0.2758</span>,  <span class="hljs-number">1.2482</span>,  <span class="hljs-number">0.5514</span>, -<span class="hljs-number">0.9165</span>, -<span class="hljs-number">0.6667</span>]]],<br>       grad_fn=&lt;StackBackward&gt;)<br></code></pre></td></tr></table></figure>
+<p>课堂代码：<br><figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br></pre></td><td class="code"><pre><code class="hljs py"><span class="hljs-string">&quot;&quot;&quot;</span><br><span class="hljs-string">案例:</span><br><span class="hljs-string">    演示GRU代码</span><br><span class="hljs-string"></span><br><span class="hljs-string">GRU简介:</span><br><span class="hljs-string">    概述:</span><br><span class="hljs-string">        Gated Recurrent Unit, 门控循环单元结构, 可以理解为是一个 简化版的智能管家,</span><br><span class="hljs-string">        即能像LSTM那样处理长序列信息, 计算上也更简单, 更节省资源.</span><br><span class="hljs-string">    核心设计思路:</span><br><span class="hljs-string">        重置门, 更新门.       就是在LSTM的基础上, 对部分门做合并.</span><br><span class="hljs-string">    优点:</span><br><span class="hljs-string">        和LSTM一样, 既可以处理长序列语义关联, 能够有效缓解梯度消失和爆炸问题.</span><br><span class="hljs-string">        关于长序列的处理效果: 优于传统RNN</span><br><span class="hljs-string">        关于计算复杂度: 比LSTM要小.</span><br><span class="hljs-string">    缺点:</span><br><span class="hljs-string">        不能完全解决梯度消失, 爆炸问题, 不能并行计算.</span><br><span class="hljs-string">        在数据量和模型体量逐步增大的未来, 是RNN发展的关键瓶颈.</span><br><span class="hljs-string">&quot;&quot;&quot;</span><br><br><span class="hljs-comment"># 导包</span><br><span class="hljs-keyword">import</span> torch<br><span class="hljs-keyword">import</span> torch.nn <span class="hljs-keyword">as</span> nn<br><br><br><span class="hljs-comment"># todo 1.定义函数, 演示: GRU代码实现.</span><br><span class="hljs-keyword">def</span> <span class="hljs-title function_">gru_demo</span>():<br>    <span class="hljs-comment"># 1. 创建GRU模型对象.</span><br>    <span class="hljs-comment"># 参1: 输入特征维度(词向量维度), 参2: 隐藏层维度(输出维度), 参3: 层数</span><br>    gru = nn.GRU(input_size=<span class="hljs-number">5</span>, hidden_size=<span class="hljs-number">6</span>, num_layers=<span class="hljs-number">1</span>)<br><br>    <span class="hljs-comment"># 2. 创建输入数据.</span><br>    <span class="hljs-comment"># 参1: 句子长度(seq_len), 参2: 批次大小(batch_size), 参3: 输入特征维度(input_size)</span><br>    <span class="hljs-built_in">input</span> = torch.randn(<span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">5</span>)<br><br>    <span class="hljs-comment"># 3. 创建初始隐藏状态.</span><br>    <span class="hljs-comment"># 参1: 层数(num_layers), 参2: 批次大小(batch_size), 参3: 隐藏层维度(hidden_size)</span><br>    h0 = torch.zeros(<span class="hljs-number">1</span>, <span class="hljs-number">3</span>, <span class="hljs-number">6</span>)<br><br>    <span class="hljs-comment"># 4. 运行GRU模型.</span><br>    output, hn = gru(<span class="hljs-built_in">input</span>, h0)<br><br>    <span class="hljs-comment"># 5. 输出结果.</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;output: <span class="hljs-subst">&#123;output&#125;</span>, output.shape: <span class="hljs-subst">&#123;output.shape&#125;</span>&#x27;</span>)  <span class="hljs-comment"># shape: (2, 3, 6)</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;hidden: <span class="hljs-subst">&#123;hn&#125;</span>, hidden.shape: <span class="hljs-subst">&#123;hn.shape&#125;</span>&#x27;</span>)          <span class="hljs-comment"># shape: (1, 3, 6)</span><br>    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;gru模型: <span class="hljs-subst">&#123;gru&#125;</span>&#x27;</span>)                                   <span class="hljs-comment"># GRU(5, 6)</span><br><br><br><span class="hljs-comment"># todo 2. 测试代码</span><br><span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:<br>    gru_demo()<br></code></pre></td></tr></table></figure></p>
+<h3 id="2-4-GRU优缺点"><a href="#2-4-GRU优缺点" class="headerlink" title="2.4 GRU优缺点"></a>2.4 GRU优缺点</h3><ul>
+<li>GRU的优势:<ul>
+<li>GRU和LSTM作用相同, 在捕捉长序列语义关联时, 能有效抑制梯度消失或爆炸, 效果都优于传统RNN且计算复杂度相比LSTM要小.</li>
+</ul>
+</li>
+<li>GRU的缺点:<ul>
+<li>GRU仍然不能完全解决梯度消失问题, 同时其作用RNN的变体, 有着RNN结构本身的一大弊端, 即不可并行计算, 这在数据量和模型体量逐步增大的未来, 是RNN发展的关键瓶颈.</li>
+</ul>
+</li>
+</ul>
+<h2 id="3-小结-1"><a href="#3-小结-1" class="headerlink" title="3 小结"></a>3 小结</h2><ul>
+<li>GRU（Gated Recurrent Unit）也称门控循环单元结构, 它也是传统RNN的变体, 同LSTM一样能够有效捕捉长序列之间的语义关联, 缓解梯度消失或爆炸现象. 同时它的结构和计算要比LSTM更简单, 它的核心结构可以分为两个部分去解析:<ul>
+<li>更新门</li>
+<li>重置门</li>
+</ul>
+</li>
+<li>内部结构分析:<ul>
+<li>和之前分析过的LSTM中的门控一样, 首先计算更新门和重置门的门值, 分别是z(t)和r(t), 计算方法就是使用X(t)与h(t-1)拼接进行线性变换, 再经过sigmoid激活. 之后重置门门值作用在了h(t-1)上, 代表控制上一时间步传来的信息有多少可以被利用. 接着就是使用这个重置后的h(t-1)进行基本的RNN计算, 即与x(t)拼接进行线性变化, 经过tanh激活, 得到新的h(t). 最后更新门的门值会作用在新的h(t)，而1-门值会作用在h(t-1)上, 随后将两者的结果相加, 得到最终的隐含状态输出h(t), 这个过程意味着更新门有能力保留之前的结果, 当门值趋于1时, 输出就是新的h(t), 而当门值趋于0时, 输出就是上一时间步的h(t-1).</li>
+</ul>
+</li>
+<li>Bi-GRU与Bi-LSTM的逻辑相同, 都是不改变其内部结构, 而是将模型应用两次且方向不同, 再将两次得到的LSTM结果进行拼接作为最终输出. 具体参见上小节中的Bi-LSTM.</li>
+<li>Pytorch中GRU工具的使用:<ul>
+<li>位置: 在torch.nn工具包之中, 通过torch.nn.GRU可调用.</li>
+</ul>
+</li>
+<li>GRU的优势:<ul>
+<li>GRU和LSTM作用相同, 在捕捉长序列语义关联时, 能有效抑制梯度消失或爆炸, 效果都优于传统RNN且计算复杂度相比LSTM要小.</li>
+</ul>
+</li>
+<li>GRU的缺点:<ul>
+<li>GRU仍然不能完全解决梯度消失问题, 同时其作用RNN的变体, 有着RNN结构本身的一大弊端, 即不可并行计算, 这在数据量和模型体量逐步增大的未来, 是RNN发展的关键瓶颈.</li>
+</ul>
+</li>
+</ul>
+<div id="paginator"></div></div><div id="post-footer"><div id="pages"><div class="footer-link" style="width: 50%;text-align:right;border-right:1px #fe2 solid"><a href="/2026/11/20/Transformer/">← Next Transformer理解</a></div><div class="footer-link" style="width: 50%;right:1px;border-left:1px #fe2 solid"><a href="/2026/11/12/RFM-project/">RFM_project Prev →</a></div></div></div><div id="comments"><div id="giscus"></div></div></div><div class="bottom-btn"><div><a class="i-top" id="to-top" onClick="scrolls.scrolltop();" title="To Top" style="opacity: 0; display: none;">∧ </a><a class="i-index" id="to-index" onClick="tocControl.change()" title="To Catalog"><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span><span class="tocBtnIconBar"></span></a><a class="i-color" id="color-mode" onClick="colorMode.change()" title="Change Theme"></a><a onclick="BgmControl()"><svg id="bgm-control" viewBox="0 0 30 34" fill="#18d1ff" style="width: 24px; transition: transform .3s;margin-top: 4px"><path d="M25.998 23.422V11.29h3.999v12.132h-3.999zM19.497 6.234h4.001v22.243h-4.001V6.234zM12.998.867h4v32.978h-4V.867zm-6.5 5.367h4.001v22.243H6.498V6.234zm-6.5 5.056h4v12.132h-4V11.29z"></path></svg><audio id="bgm" src="/audio/bgm.mp3" autoplay loop crossorigin="anonymous"> </audio></a></div></div></article><aside><div id="about"><a href="/" id="logo"><img src="https://ak.hypergryph.com/assets/index/images/ak/pc/faction/1.png" alt="Hexo" style="margin:0;border-radius:0;"></a><h1 id="Dr"><a href="/">Juicer</a></h1><div id="description"><p></p></div><div id="social-links"><a class="social" target="_blank" rel="noopener" href="https://github.com/juicer0801"><i class="fab fa-github" alt="GitHub"></i></a></div></div><div id="aside-block"><div id="toc-div"><h1>Catalog</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-%E8%AE%A4%E8%AF%86RNN%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.</span> <span class="toc-text">1 认识RNN模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87"><span class="toc-number">1.1.</span> <span class="toc-text">学习目标</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AFRNN%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.2.</span> <span class="toc-text">1 什么是RNN模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-RNN%E6%A8%A1%E5%9E%8B%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-number">1.3.</span> <span class="toc-text">2 RNN模型的作用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-RNN%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%88%86%E7%B1%BB"><span class="toc-number">1.4.</span> <span class="toc-text">3 RNN模型的分类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E5%B0%8F%E7%BB%93"><span class="toc-number">1.5.</span> <span class="toc-text">4 小结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-%E4%BC%A0%E7%BB%9FRNN%E6%A8%A1%E5%9E%8B"><span class="toc-number">2.</span> <span class="toc-text">2 传统RNN模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87-1"><span class="toc-number">2.1.</span> <span class="toc-text">学习目标</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%BC%A0%E7%BB%9FRNN%E7%9A%84%E5%86%85%E9%83%A8%E7%BB%93%E6%9E%84%E5%9B%BE"><span class="toc-number">2.2.</span> <span class="toc-text">1 传统RNN的内部结构图</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-RNN%E7%BB%93%E6%9E%84%E5%88%86%E6%9E%90"><span class="toc-number">2.2.1.</span> <span class="toc-text">1.1 RNN结构分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E4%BD%BF%E7%94%A8Pytorch%E6%9E%84%E5%BB%BARNN%E6%A8%A1%E5%9E%8B"><span class="toc-number">2.2.2.</span> <span class="toc-text">1.2 使用Pytorch构建RNN模型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%8C%E5%B1%82RNN"><span class="toc-number">2.3.</span> <span class="toc-text">双层RNN</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E4%BC%A0%E7%BB%9FRNN%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-number">2.3.1.</span> <span class="toc-text">1.3 传统RNN优缺点</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E4%BC%A0%E7%BB%9FRNN%E7%9A%84%E4%BC%98%E5%8A%BF"><span class="toc-number">2.3.1.1.</span> <span class="toc-text">1 传统RNN的优势</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E4%BC%A0%E7%BB%9FRNN%E7%9A%84%E7%BC%BA%E7%82%B9"><span class="toc-number">2.3.1.2.</span> <span class="toc-text">2 传统RNN的缺点</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E6%A2%AF%E5%BA%A6%E6%B6%88%E5%A4%B1%E6%88%96%E7%88%86%E7%82%B8%E4%BB%8B%E7%BB%8D"><span class="toc-number">2.3.1.3.</span> <span class="toc-text">3 梯度消失或爆炸介绍</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%B0%8F%E7%BB%93"><span class="toc-number">2.4.</span> <span class="toc-text">2 小结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-LSTM%E6%A8%A1%E5%9E%8B"><span class="toc-number">3.</span> <span class="toc-text">3 LSTM模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87-2"><span class="toc-number">3.1.</span> <span class="toc-text">学习目标</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-LSTM%E4%BB%8B%E7%BB%8D"><span class="toc-number">3.2.</span> <span class="toc-text">1 LSTM介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-LSTM%E7%9A%84%E5%86%85%E9%83%A8%E7%BB%93%E6%9E%84%E5%9B%BE"><span class="toc-number">3.3.</span> <span class="toc-text">2 LSTM的内部结构图</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-LSTM%E7%BB%93%E6%9E%84%E5%88%86%E6%9E%90"><span class="toc-number">3.3.1.</span> <span class="toc-text">2.1 LSTM结构分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-Bi-LSTM%E4%BB%8B%E7%BB%8D"><span class="toc-number">3.3.2.</span> <span class="toc-text">2.2 Bi-LSTM介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E4%BD%BF%E7%94%A8Pytorch%E6%9E%84%E5%BB%BALSTM%E6%A8%A1%E5%9E%8B"><span class="toc-number">3.3.3.</span> <span class="toc-text">2.3 使用Pytorch构建LSTM模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-LSTM%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-number">3.3.4.</span> <span class="toc-text">2.4 LSTM优缺点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%B0%8F%E7%BB%93"><span class="toc-number">3.4.</span> <span class="toc-text">3 小结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-GRU%E6%A8%A1%E5%9E%8B"><span class="toc-number">4.</span> <span class="toc-text">4 GRU模型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%A6%E4%B9%A0%E7%9B%AE%E6%A0%87-3"><span class="toc-number">4.1.</span> <span class="toc-text">学习目标</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-GRU%E4%BB%8B%E7%BB%8D"><span class="toc-number">4.2.</span> <span class="toc-text">1 GRU介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-GRU%E7%9A%84%E5%86%85%E9%83%A8%E7%BB%93%E6%9E%84%E5%9B%BE"><span class="toc-number">4.3.</span> <span class="toc-text">2 GRU的内部结构图</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-GRU%E7%BB%93%E6%9E%84%E5%88%86%E6%9E%90"><span class="toc-number">4.3.1.</span> <span class="toc-text">2.1 GRU结构分析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-Bi-GRU%E4%BB%8B%E7%BB%8D"><span class="toc-number">4.3.2.</span> <span class="toc-text">2.2 Bi-GRU介绍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E4%BD%BF%E7%94%A8Pytorch%E6%9E%84%E5%BB%BAGRU%E6%A8%A1%E5%9E%8B"><span class="toc-number">4.3.3.</span> <span class="toc-text">2.3 使用Pytorch构建GRU模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-GRU%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="toc-number">4.3.4.</span> <span class="toc-text">2.4 GRU优缺点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%B0%8F%E7%BB%93-1"><span class="toc-number">4.4.</span> <span class="toc-text">3 小结</span></a></li></ol></li></ol></div></div><footer><nobr>Published with <a target="_blank" rel="noopener" href="http://hexo.io">Hexo</a></nobr><wbr><nobr> Theme <a target="_blank" rel="noopener" href="https://github.com/Yue-plus/hexo-theme-arknights">Arknights</a></nobr><wbr><nobr> by <a target="_blank" rel="noopener" href="https://github.com/Yue-plus">Yue_plus</a></nobr></footer></aside></main><canvas id="canvas-dust"></canvas></body></html>
